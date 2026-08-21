@@ -1,0 +1,67 @@
+/* newt-ui · User Profile Popout */
+
+.newt-profile {
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-lg);
+  width: 280px;
+  overflow: hidden;
+  box-shadow: var(--newt-shadow-elevation-high);
+  border: 1px solid var(--newt-border);
+}
+.newt-profile__banner {
+  height: 60px;
+  background: var(--newt-brand);
+}
+.newt-profile__head {
+  padding: 0 16px 12px;
+  position: relative;
+}
+.newt-profile__avatar-wrap {
+  position: absolute;
+  top: -24px;
+  left: 16px;
+  border: 4px solid var(--newt-bg-base);
+  border-radius: 50%;
+}
+.newt-profile__actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 0 36px;
+  gap: 8px;
+}
+.newt-profile__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--newt-text-primary);
+}
+.newt-profile__handle {
+  font-size: 13px;
+  color: var(--newt-text-muted);
+  margin-bottom: 10px;
+}
+.newt-profile__divider {
+  height: 1px;
+  background: var(--newt-border);
+  margin: 10px 0;
+}
+.newt-profile__section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--newt-text-muted);
+  margin-bottom: 6px;
+}
+.newt-profile__bio {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  line-height: 1.5;
+}
+.newt-profile__roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.newt-profile__body {
+  padding: 0 16px 16px;
+}

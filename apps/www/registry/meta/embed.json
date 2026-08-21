@@ -1,0 +1,19 @@
+{
+  "name": "embed",
+  "title": "Embed",
+  "description": "A Discord-style rich message embed with title, description, fields and footer.",
+  "vueFiles": [
+    "Embed.vue",
+    "EmbedEyebrow.vue",
+    "EmbedTitle.vue",
+    "EmbedDescription.vue",
+    "EmbedFields.vue",
+    "EmbedField.vue",
+    "EmbedFieldName.vue",
+    "EmbedFieldValue.vue",
+    "EmbedFooter.vue",
+    "index.ts"
+  ],
+  "reactDemo": "embed-demo",
+  "vueDemo": "EmbedDemo"
+}

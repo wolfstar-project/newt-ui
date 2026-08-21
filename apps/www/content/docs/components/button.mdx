@@ -1,0 +1,69 @@
+---
+title: Button
+description: Displays a Discord-styled button with brand, secondary, success, danger, link and icon variants.
+---
+
+<ComponentPreview name="button-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash npx newt-ui@latest add button ```
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="button" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button"
+```
+
+```tsx
+<Button variant="primary">Primary</Button>
+```
+
+## Examples
+
+### Variants
+
+```tsx
+<Button variant="primary">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="success">Success</Button>
+<Button variant="danger">Danger</Button>
+<Button variant="link">Link button</Button>
+```
+
+### Sizes
+
+```tsx
+<Button size="sm">Small</Button>
+<Button>Default</Button>
+<Button size="lg">Large</Button>
+```
+
+### Icon
+
+```tsx
+<Button variant="icon" size="icon" aria-label="Settings">
+  <SettingsIcon className="h-4 w-4" />
+</Button>
+```
+
+### Disabled
+
+```tsx
+<Button disabled>Disabled</Button>
+```

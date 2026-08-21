@@ -1,0 +1,20 @@
+/* newt-ui · Card / Panel */
+
+.newt-card {
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-lg);
+  border: 1px solid var(--newt-border);
+  padding: 20px;
+}
+
+.newt-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.newt-card__description {
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  margin: 0;
+}

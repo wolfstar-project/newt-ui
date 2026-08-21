@@ -1,0 +1,13 @@
+{
+  "name": "reply-preview",
+  "title": "Reply Preview",
+  "description": "A compact \"replying to\" bar showing the author and a truncated excerpt of the original message.",
+  "vueFiles": [
+    "ReplyPreview.vue",
+    "ReplyPreviewAuthor.vue",
+    "ReplyPreviewText.vue",
+    "index.ts"
+  ],
+  "reactDemo": "reply-preview-demo",
+  "vueDemo": "ReplyPreviewDemo"
+}

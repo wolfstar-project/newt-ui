@@ -1,0 +1,8 @@
+{
+  "name": "typing-indicator",
+  "title": "Typing Indicator",
+  "description": "Three bouncing dots with a label that signals someone is typing.",
+  "vueFiles": ["TypingIndicator.vue", "TypingIndicatorDots.vue", "index.ts"],
+  "reactDemo": "typing-indicator-demo",
+  "vueDemo": "TypingIndicatorDemo"
+}

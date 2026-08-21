@@ -1,0 +1,28 @@
+/* newt-ui · Pill Tabs */
+
+.newt-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--newt-bg-base);
+  padding: 4px;
+  border-radius: var(--newt-radius-md);
+  width: fit-content;
+}
+.newt-tab {
+  padding: 6px 14px;
+  border-radius: var(--newt-radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--newt-text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-tab--active {
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-primary);
+}
+.newt-tab:hover:not(.newt-tab--active) {
+  color: var(--newt-text-secondary);
+}

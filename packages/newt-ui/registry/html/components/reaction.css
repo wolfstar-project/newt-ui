@@ -1,0 +1,33 @@
+/* newt-ui · Reaction Pill */
+
+.newt-reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--newt-radius-md);
+  border: 1px solid var(--newt-border);
+  background: var(--newt-bg-surface);
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    border-color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-reaction:hover {
+  background: var(--newt-bg-hover);
+}
+.newt-reaction--active {
+  background: rgba(88, 101, 242, 0.15);
+  border-color: var(--newt-brand);
+  color: #b3baff;
+}
+.newt-reaction:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-reaction__count {
+  font-weight: 600;
+  font-size: 12px;
+}

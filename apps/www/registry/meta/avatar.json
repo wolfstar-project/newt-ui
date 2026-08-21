@@ -1,0 +1,14 @@
+{
+  "name": "avatar",
+  "title": "Avatar",
+  "description": "A circular user avatar with image support and initials fallback in three sizes.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": [
+    "Avatar.vue",
+    "AvatarImage.vue",
+    "AvatarFallback.vue",
+    "index.ts"
+  ],
+  "reactDemo": "avatar-demo",
+  "vueDemo": "AvatarDemo"
+}

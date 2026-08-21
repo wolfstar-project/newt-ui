@@ -1,0 +1,8 @@
+export { default as MessageGroup } from "./MessageGroup.vue"
+export { default as MessageGroupBody } from "./MessageGroupBody.vue"
+export { default as MessageGroupHeader } from "./MessageGroupHeader.vue"
+export { default as MessageGroupAuthor } from "./MessageGroupAuthor.vue"
+export { default as MessageGroupBotTag } from "./MessageGroupBotTag.vue"
+export { default as MessageGroupTime } from "./MessageGroupTime.vue"
+export { default as MessageGroupContent } from "./MessageGroupContent.vue"
+export { default as MessageGroupReactions } from "./MessageGroupReactions.vue"

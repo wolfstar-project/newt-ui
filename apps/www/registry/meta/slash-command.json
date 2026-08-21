@@ -1,0 +1,8 @@
+{
+  "name": "slash-command",
+  "title": "Slash Command Tag",
+  "description": "Inline monospace tag for referencing a /slash command in text.",
+  "vueFiles": ["SlashCommand.vue", "index.ts"],
+  "reactDemo": "slash-command-demo",
+  "vueDemo": "SlashCommandDemo"
+}

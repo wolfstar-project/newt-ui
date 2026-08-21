@@ -1,0 +1,9 @@
+{
+  "name": "progress",
+  "title": "Progress Bar",
+  "description": "A gradient progress bar for boosts, uploads and other long-running tasks.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": ["Progress.vue", "ProgressLabel.vue", "index.ts"],
+  "reactDemo": "progress-demo",
+  "vueDemo": "ProgressDemo"
+}

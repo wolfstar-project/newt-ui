@@ -1,0 +1,45 @@
+/* newt-ui · Typing Indicator */
+
+.newt-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--newt-text-muted);
+}
+.newt-typing__dots {
+  display: inline-flex;
+  gap: 3px;
+}
+.newt-typing__dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--newt-text-muted);
+  animation: newt-typing-bounce 1.2s ease-in-out infinite;
+}
+.newt-typing__dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.newt-typing__dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes newt-typing-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .newt-typing__dots span {
+    animation: none;
+    opacity: 0.8;
+  }
+}

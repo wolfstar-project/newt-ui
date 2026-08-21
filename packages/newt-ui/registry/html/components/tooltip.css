@@ -1,0 +1,26 @@
+/* newt-ui · Tooltip */
+
+.newt-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+.newt-tooltip__bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111214;
+  color: var(--newt-text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: var(--newt-radius-sm);
+  white-space: nowrap;
+  box-shadow: var(--newt-shadow-elevation-high);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-tooltip:hover .newt-tooltip__bubble {
+  opacity: 1;
+}

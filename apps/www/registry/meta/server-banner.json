@@ -1,0 +1,18 @@
+{
+  "name": "server-banner",
+  "title": "Server Banner",
+  "description": "Invite-style card with a server icon, name, live member counts and a join button.",
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["button"],
+  "vueFiles": [
+    "ServerBanner.vue",
+    "ServerBannerIcon.vue",
+    "ServerBannerInfo.vue",
+    "ServerBannerName.vue",
+    "ServerBannerMeta.vue",
+    "ServerBannerMetaItem.vue",
+    "index.ts"
+  ],
+  "reactDemo": "server-banner-demo",
+  "vueDemo": "ServerBannerDemo"
+}

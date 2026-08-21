@@ -1,0 +1,14 @@
+{
+  "name": "cooldown-bar",
+  "title": "Cooldown Bar",
+  "description": "A slim progress bar with a label and monospace countdown for command cooldowns.",
+  "vueFiles": [
+    "CooldownBar.vue",
+    "CooldownBarLabel.vue",
+    "CooldownBarValue.vue",
+    "CooldownBarTrack.vue",
+    "index.ts"
+  ],
+  "reactDemo": "cooldown-bar-demo",
+  "vueDemo": "CooldownBarDemo"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "mention",
+  "title": "Mention Chip",
+  "description": "An inline chip for user, channel and role mentions.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": ["Mention.vue", "index.ts"],
+  "reactDemo": "mention-demo",
+  "vueDemo": "MentionDemo"
+}

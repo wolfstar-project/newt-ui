@@ -1,0 +1,35 @@
+/* newt-ui · Reply Preview (Discord "replying to" bar) */
+
+.newt-reply {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--newt-text-muted);
+  margin-bottom: 4px;
+  padding-left: 18px;
+  position: relative;
+}
+.newt-reply::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-left: 2px solid var(--newt-border);
+  border-top: 2px solid var(--newt-border);
+  border-radius: 6px 0 0 0;
+  transform: translateY(-100%);
+}
+.newt-reply__author {
+  color: var(--newt-text-link);
+  font-weight: 500;
+}
+.newt-reply__text {
+  color: var(--newt-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 360px;
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": false,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "sortImports": {},
+  "sortPackageJson": true,
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/.output/**",
+    "**/.next/**",
+    "**/.nuxt/**",
+    "**/coverage/**",
+    "**/node_modules/**",
+    "**/.turbo/**",
+    "pnpm-lock.yaml",
+    "apps/*/public/r/**",
+    "apps/www/public/legacy/**",
+    ".claude/**",
+    ".skills/**"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "empty-state",
+  "title": "Empty State",
+  "description": "A centered placeholder with an icon, title, and hint shown when a list or view has no content.",
+  "vueFiles": [
+    "EmptyState.vue",
+    "EmptyStateIcon.vue",
+    "EmptyStateTitle.vue",
+    "EmptyStateDescription.vue",
+    "index.ts"
+  ],
+  "reactDemo": "empty-state-demo",
+  "vueDemo": "EmptyStateDemo"
+}

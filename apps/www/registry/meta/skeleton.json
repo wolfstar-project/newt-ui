@@ -1,0 +1,9 @@
+{
+  "name": "skeleton",
+  "title": "Skeleton Loader",
+  "description": "A shimmering placeholder shown while content is loading.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": ["Skeleton.vue", "index.ts"],
+  "reactDemo": "skeleton-demo",
+  "vueDemo": "SkeletonDemo"
+}

@@ -1,0 +1,59 @@
+{
+  "name": "@newt-devs/nuxt",
+  "version": "0.2.0",
+  "description": "Nuxt module for newt/ui — auto-imports your Discord-native newt/ui components and injects the --newt-* design tokens.",
+  "keywords": [
+    "design-system",
+    "discord",
+    "newt-devs",
+    "nuxt",
+    "nuxt-module",
+    "ui",
+    "vue"
+  ],
+  "homepage": "https://newt-devs.github.io/newt-ui",
+  "bugs": {
+    "url": "https://github.com/newt-devs/newt-ui/issues"
+  },
+  "license": "MIT",
+  "author": "Newt Devs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newt-devs/newt-ui.git",
+    "directory": "packages/module"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/module.mjs",
+  "types": "./dist/types.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "nuxt-module-build build",
+    "dev": "nuxt-module-build build --stub",
+    "lint": "oxlint -c ../../.oxlintrc.json .",
+    "lint:fix": "oxlint -c ../../.oxlintrc.json --fix .",
+    "prepack": "nuxt-module-build build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^4.5.2"
+  },
+  "devDependencies": {
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/schema": "^4.5.2",
+    "@types/node": "^22.10.2",
+    "nuxt": "^4.5.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "spoiler",
+  "title": "Spoiler",
+  "description": "Inline text hidden behind a dark block until the reader clicks to reveal it.",
+  "vueFiles": ["Spoiler.vue", "index.ts"],
+  "reactDemo": "spoiler-demo",
+  "vueDemo": "SpoilerDemo"
+}

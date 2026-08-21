@@ -1,0 +1,32 @@
+/* newt-ui · Member List Item */
+
+.newt-member {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+  transition: background var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-member:hover {
+  background: var(--newt-bg-hover);
+}
+.newt-member__info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
+}
+.newt-member__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--newt-text-primary);
+}
+.newt-member__role {
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+.newt-member__name--colored {
+  color: var(--newt-brand);
+}

@@ -1,0 +1,15 @@
+{
+  "name": "context-menu",
+  "title": "Context Menu",
+  "description": "A floating right-click style menu with items, keyboard shortcuts, dividers and a danger variant.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": [
+    "ContextMenu.vue",
+    "ContextMenuItem.vue",
+    "ContextMenuShortcut.vue",
+    "ContextMenuDivider.vue",
+    "index.ts"
+  ],
+  "reactDemo": "context-menu-demo",
+  "vueDemo": "ContextMenuDemo"
+}

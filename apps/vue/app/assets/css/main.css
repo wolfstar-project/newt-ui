@@ -1,0 +1,161 @@
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+@import "./docs.css";
+
+/*
+ * Explicit source registration (auto-detection is disabled above so the scan
+ * never walks out of `apps/vue` into the rest of the monorepo).
+ */
+@source "../../../app";
+@source "../../../content";
+
+/*
+ * newt/ui Tailwind theme.
+ *
+ * Every entry maps a Tailwind theme namespace onto a `--newt-*` CSS variable,
+ * which keeps the raw token contract (`var(--newt-brand)`) usable from plain
+ * CSS — `docs.css` and the registry's arbitrary values both rely on it — while
+ * Tailwind generates the utilities (`bg-newt-brand`, `rounded-md`,
+ * `shadow-elevation-high`, `ease-newt`, `duration-fast`, …).
+ *
+ * Source of truth for the token values:
+ * packages/newt-ui/registry/html/tokens.css
+ */
+@theme {
+  /* Surfaces */
+  --color-newt-bg-base: var(--newt-bg-base);
+  --color-newt-bg-surface: var(--newt-bg-surface);
+  --color-newt-bg-elevated: var(--newt-bg-elevated);
+  --color-newt-bg-floating: var(--newt-bg-floating);
+  --color-newt-bg-input: var(--newt-bg-input);
+  --color-newt-bg-hover: var(--newt-bg-hover);
+  --color-newt-bg-active: var(--newt-bg-active);
+  --color-newt-border: var(--newt-border);
+
+  /* Text */
+  --color-newt-text-primary: var(--newt-text-primary);
+  --color-newt-text-secondary: var(--newt-text-secondary);
+  --color-newt-text-muted: var(--newt-text-muted);
+  --color-newt-text-link: var(--newt-text-link);
+
+  /* Brand */
+  --color-newt-brand: var(--newt-brand);
+  --color-newt-brand-hover: var(--newt-brand-hover);
+  --color-newt-brand-active: var(--newt-brand-active);
+
+  /* Status */
+  --color-newt-online: var(--newt-online);
+  --color-newt-idle: var(--newt-idle);
+  --color-newt-dnd: var(--newt-dnd);
+  --color-newt-offline: var(--newt-offline);
+  --color-newt-danger: var(--newt-danger);
+  --color-newt-danger-hover: var(--newt-danger-hover);
+
+  /* Type */
+  --font-sans: var(--newt-font-sans);
+  --font-mono: var(--newt-font-mono);
+  --font-display: var(--newt-font-display);
+
+  /* Radius */
+  --radius-sm: var(--newt-radius-sm);
+  --radius-md: var(--newt-radius-md);
+  --radius-lg: var(--newt-radius-lg);
+  --radius-full: var(--newt-radius-full);
+
+  /* Shadows */
+  --shadow-elevation-low: var(--newt-shadow-elevation-low);
+  --shadow-elevation-high: var(--newt-shadow-elevation-high);
+
+  /* Motion */
+  --ease-newt: var(--newt-ease);
+  --transition-duration-fast: var(--newt-duration-fast);
+  --transition-duration-base: var(--newt-duration-base);
+}
+
+/* newt/ui design tokens — source of truth: packages/newt-ui/registry/html/tokens.css */
+@layer base {
+  :root {
+    /* Surfaces */
+    --newt-bg-base: #1e1f22;
+    --newt-bg-surface: #2b2d31;
+    --newt-bg-elevated: #313338;
+    --newt-bg-floating: #1e1f22;
+    --newt-bg-input: #1e1f22;
+    --newt-bg-hover: rgba(78, 80, 88, 0.4);
+    --newt-bg-active: rgba(78, 80, 88, 0.6);
+    --newt-border: #3f4147;
+
+    /* Text */
+    --newt-text-primary: #f2f3f5;
+    --newt-text-secondary: #b5bac1;
+    --newt-text-muted: #949ba4;
+    --newt-text-link: #00a8fc;
+
+    /* Brand */
+    --newt-brand: #5865f2;
+    --newt-brand-hover: #4752c4;
+    --newt-brand-active: #3c45a5;
+
+    /* Status */
+    --newt-online: #23a55a;
+    --newt-idle: #f0b232;
+    --newt-dnd: #f23f42;
+    --newt-offline: #80848e;
+    --newt-danger: #da373c;
+    --newt-danger-hover: #a12828;
+
+    /* Type */
+    --newt-font-sans:
+      "Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    --newt-font-mono:
+      "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --newt-font-display: "Inter", sans-serif;
+
+    /* Radius */
+    --newt-radius-sm: 4px;
+    --newt-radius-md: 8px;
+    --newt-radius-lg: 12px;
+    --newt-radius-full: 9999px;
+
+    /* Shadows */
+    --newt-shadow-elevation-low:
+      0 1px 0 rgba(0, 0, 0, 0.2), 0 1.5px 0 rgba(0, 0, 0, 0.05),
+      0 2px 0 rgba(0, 0, 0, 0.05);
+    --newt-shadow-elevation-high: 0 8px 16px rgba(0, 0, 0, 0.24);
+
+    /* Motion */
+    --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
+    --newt-duration-fast: 100ms;
+    --newt-duration-base: 150ms;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .newt-root {
+    font-family: var(--newt-font-sans);
+    color: var(--newt-text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+   * Tailwind v3 compatibility: v4's Preflight drops the implicit
+   * `border-color: theme(colors.gray.200)` and the `cursor: pointer` on
+   * buttons. Both are restored here so the registry components render exactly
+   * as they did under v3.
+   */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}

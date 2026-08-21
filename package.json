@@ -1,0 +1,50 @@
+{
+  "name": "newt-ui-monorepo",
+  "private": true,
+  "description": "Monorepo for newt/ui — Discord-native UI components (React, Vue, HTML/CSS) and CLIs. Part of the Newt Devs toolchain.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "changeset": "changeset",
+    "dev": "turbo run dev --parallel",
+    "format": "oxfmt -c tooling/oxc/.oxfmtrc.json --ignore-path .oxfmtignore .",
+    "format:check": "oxfmt -c tooling/oxc/.oxfmtrc.json --ignore-path .oxfmtignore --check .",
+    "knip": "knip",
+    "lint": "turbo run lint && oxlint -c .oxlintrc.json scripts",
+    "lint:ci": "pnpm run format:check && pnpm run lint",
+    "lint:fix": "turbo run lint:fix && oxlint -c .oxlintrc.json --fix scripts",
+    "prepare": "node .husky/install.mjs && skilld prepare --agent claude-code",
+    "registry:build": "turbo run registry:build",
+    "release": "turbo run build --filter=./packages/* && changeset publish",
+    "skills:add": "skilld add --agent claude-code",
+    "skills:install": "skilld install --agent claude-code",
+    "skills:list": "skilld list",
+    "skills:update": "skilld update --agent claude-code",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "version": "changeset version"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.1",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "husky": "^9.1.7",
+    "knip": "^6.2.4",
+    "nano-staged": "^1.0.2",
+    "oxfmt": "^0.64.0",
+    "oxlint": "^1.79.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "skilld": "^2.3.0",
+    "turbo": "^2.10.11",
+    "typescript": "^5.9.3"
+  },
+  "nano-staged": {
+    "*.{ts,mts,cts,tsx,vue,mjs,cjs,js,jsx,json,jsonc,yml,yaml,md,mdx,css}": "oxfmt -c tooling/oxc/.oxfmtrc.json --ignore-path .oxfmtignore --no-error-on-unmatched-pattern",
+    "*.{ts,mts,cts,tsx,vue,mjs,cjs,js,jsx}": "oxlint -c .oxlintrc.json --fix"
+  },
+  "engines": {
+    "node": ">=22.11"
+  },
+  "packageManager": "pnpm@11.22.0"
+}

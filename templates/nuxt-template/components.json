@@ -1,0 +1,20 @@
+{
+  "$schema": "https://newt-devs.github.io/newt-ui/schema.json",
+  "style": "default",
+  "typescript": true,
+  "framework": "nuxt",
+  "tailwind": {
+    "css": "app/assets/css/main.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "composables": "@/composables"
+  },
+  "iconLibrary": "lucide"
+}

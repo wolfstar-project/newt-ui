@@ -1,0 +1,78 @@
+---
+title: Form Fields
+description: Inputs, textareas, selects, labels, helper text, switches and checkboxes styled for the newt/ui dark theme.
+---
+
+<ComponentPreview name="form-fields-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash npx newt-ui@latest add form-fields ```
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="form-fields" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  Checkbox,
+  Field,
+  FieldHelp,
+  Input,
+  Label,
+  Select,
+  Switch,
+  Textarea,
+} from "@/components/ui/form-fields"
+```
+
+```tsx
+<Field>
+  <Label htmlFor="email">Email</Label>
+  <Input id="email" type="email" placeholder="you@example.com" />
+  <FieldHelp>We will never share your email.</FieldHelp>
+</Field>
+```
+
+## Examples
+
+### Textarea
+
+```tsx
+<Field>
+  <Label htmlFor="bio">About me</Label>
+  <Textarea id="bio" placeholder="Tell us about yourself" />
+</Field>
+```
+
+### Switch
+
+The switch is uncontrolled by default. Pass `checked` and `onCheckedChange` to control it.
+
+```tsx
+const [enabled, setEnabled] = React.useState(false)
+
+<Switch checked={enabled} onCheckedChange={setEnabled} aria-label="Enable" />
+```
+
+### Checkbox
+
+```tsx
+<label className="flex items-center gap-2">
+  <Checkbox defaultChecked />
+  <span>Remember me</span>
+</label>
+```

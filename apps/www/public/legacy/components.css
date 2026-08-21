@@ -1,0 +1,1652 @@
+/* ============================================================
+   newt-ui — Discord-native component library
+   Design tokens
+   ============================================================ */
+
+:root {
+  /* Surfaces */
+  --newt-bg-base: #1e1f22;
+  --newt-bg-surface: #2b2d31;
+  --newt-bg-elevated: #313338;
+  --newt-bg-floating: #1e1f22;
+  --newt-bg-input: #1e1f22;
+  --newt-bg-hover: rgba(78, 80, 88, 0.4);
+  --newt-bg-active: rgba(78, 80, 88, 0.6);
+  --newt-border: #3f4147;
+
+  /* Text */
+  --newt-text-primary: #f2f3f5;
+  --newt-text-secondary: #b5bac1;
+  --newt-text-muted: #949ba4;
+  --newt-text-link: #00a8fc;
+
+  /* Brand */
+  --newt-brand: #5865f2;
+  --newt-brand-hover: #4752c4;
+  --newt-brand-active: #3c45a5;
+
+  /* Status */
+  --newt-online: #23a55a;
+  --newt-idle: #f0b232;
+  --newt-dnd: #f23f42;
+  --newt-offline: #80848e;
+  --newt-danger: #da373c;
+  --newt-danger-hover: #a12828;
+
+  /* Type */
+  --newt-font-sans: "Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --newt-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --newt-font-display: "Inter", sans-serif;
+
+  /* Radius */
+  --newt-radius-sm: 4px;
+  --newt-radius-md: 8px;
+  --newt-radius-lg: 12px;
+  --newt-radius-full: 9999px;
+
+  /* Shadows */
+  --newt-shadow-elevation-low: 0 1px 0 rgba(0,0,0,0.2), 0 1.5px 0 rgba(0,0,0,0.05), 0 2px 0 rgba(0,0,0,0.05);
+  --newt-shadow-elevation-high: 0 8px 16px rgba(0,0,0,0.24);
+
+  /* Motion */
+  --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
+  --newt-duration-fast: 100ms;
+  --newt-duration-base: 150ms;
+}
+
+* { box-sizing: border-box; }
+
+.newt-root {
+  font-family: var(--newt-font-sans);
+  color: var(--newt-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   Button
+   ============================================================ */
+
+.newt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--newt-font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 10px 16px;
+  border-radius: var(--newt-radius-sm);
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+.newt-btn:active { transform: translateY(0.5px); }
+.newt-btn:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.newt-btn--primary {
+  background: var(--newt-brand);
+  color: #fff;
+}
+.newt-btn--primary:hover { background: var(--newt-brand-hover); }
+.newt-btn--primary:active { background: var(--newt-brand-active); }
+
+.newt-btn--secondary {
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-primary);
+}
+.newt-btn--secondary:hover { background: var(--newt-bg-hover); }
+
+.newt-btn--danger {
+  background: var(--newt-danger);
+  color: #fff;
+}
+.newt-btn--danger:hover { background: var(--newt-danger-hover); }
+
+.newt-btn--success {
+  background: var(--newt-online);
+  color: #fff;
+}
+.newt-btn--success:hover { filter: brightness(0.9); }
+
+.newt-btn--link {
+  background: transparent;
+  color: var(--newt-text-link);
+  padding: 4px 0;
+}
+.newt-btn--link:hover { text-decoration: underline; }
+
+.newt-btn--sm { padding: 6px 12px; font-size: 13px; }
+.newt-btn--lg { padding: 12px 24px; font-size: 16px; }
+
+.newt-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.newt-btn--icon {
+  padding: 8px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-secondary);
+}
+.newt-btn--icon:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+
+/* ============================================================
+   Badge
+   ============================================================ */
+
+.newt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  padding: 2px 8px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-secondary);
+}
+
+.newt-badge--brand { background: rgba(88, 101, 242, 0.15); color: #b3baff; }
+.newt-badge--success { background: rgba(35, 165, 90, 0.15); color: #45c178; }
+.newt-badge--warning { background: rgba(240, 178, 50, 0.15); color: #f3b95f; }
+.newt-badge--danger { background: rgba(242, 63, 66, 0.15); color: #f4878a; }
+
+.newt-badge--dot::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ============================================================
+   Status Indicator
+   ============================================================ */
+
+.newt-status {
+  position: relative;
+  display: inline-block;
+}
+
+.newt-status__dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid var(--newt-bg-base);
+  background: var(--newt-offline);
+}
+
+.newt-status__dot--online { background: var(--newt-online); }
+.newt-status__dot--idle {
+  background: var(--newt-bg-base);
+  border-color: var(--newt-bg-base);
+}
+.newt-status__dot--idle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--newt-idle);
+  clip-path: circle(60% at 35% 35%);
+}
+.newt-status__dot--dnd { background: var(--newt-bg-base); }
+.newt-status__dot--dnd::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65%;
+  height: 22%;
+  border-radius: 1px;
+  background: var(--newt-dnd);
+}
+.newt-status__dot--offline { background: var(--newt-offline); }
+.newt-status__dot--streaming { background: #593695; }
+
+/* presence glow — signature motif */
+/* online dot is plain — no pulse */
+
+
+
+
+
+/* ============================================================
+   Avatar
+   ============================================================ */
+
+.newt-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--newt-brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+.newt-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.newt-avatar--sm { width: 24px; height: 24px; font-size: 11px; }
+.newt-avatar--lg { width: 80px; height: 80px; font-size: 28px; }
+
+/* ============================================================
+   Embed (Discord message embed)
+   ============================================================ */
+
+.newt-embed {
+  display: flex;
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-md);
+  border-left: 4px solid var(--newt-brand);
+  max-width: 520px;
+  overflow: hidden;
+}
+
+.newt-embed__body {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.newt-embed__eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--newt-text-link);
+}
+
+.newt-embed__description {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.newt-embed__field-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+  margin-bottom: 2px;
+}
+
+.newt-embed__field-value {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   Card / Panel
+   ============================================================ */
+
+.newt-card {
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-lg);
+  border: 1px solid var(--newt-border);
+  padding: 20px;
+}
+
+.newt-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.newt-card__description {
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  margin: 0;
+}
+
+/* ============================================================
+   Input / Form Controls
+   ============================================================ */
+
+.newt-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.newt-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--newt-text-secondary);
+}
+
+.newt-input,
+.newt-textarea,
+.newt-select {
+  background: var(--newt-bg-input);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  color: var(--newt-text-primary);
+  font-size: 14px;
+  font-family: var(--newt-font-sans);
+  padding: 10px 12px;
+  width: 100%;
+}
+
+.newt-input:focus,
+.newt-textarea:focus,
+.newt-select:focus {
+  outline: none;
+  border-color: var(--newt-brand);
+}
+
+.newt-input::placeholder,
+.newt-textarea::placeholder { color: var(--newt-text-muted); }
+
+.newt-textarea { resize: vertical; min-height: 80px; }
+
+.newt-help { font-size: 12px; color: var(--newt-text-muted); }
+
+/* Toggle / Switch */
+.newt-switch {
+  position: relative;
+  display: inline-flex;
+  width: 40px;
+  height: 24px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.newt-switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--newt-text-muted);
+}
+.newt-switch--on { background: var(--newt-online); border-color: var(--newt-online); }
+.newt-switch--on .newt-switch__thumb {
+  transform: translateX(16px);
+  background: #fff;
+}
+
+/* ============================================================
+   Slash Command Block
+   ============================================================ */
+
+.newt-command {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(88, 101, 242, 0.15);
+  color: #b3baff;
+  font-family: var(--newt-font-mono);
+  font-size: 13px;
+  padding: 2px 8px 2px 6px;
+  border-radius: var(--newt-radius-sm);
+}
+.newt-command__icon { opacity: 0.8; }
+
+/* ============================================================
+   Pill Tabs
+   ============================================================ */
+
+.newt-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--newt-bg-base);
+  padding: 4px;
+  border-radius: var(--newt-radius-md);
+  width: fit-content;
+}
+.newt-tab {
+  padding: 6px 14px;
+  border-radius: var(--newt-radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--newt-text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.newt-tab--active {
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-primary);
+}
+.newt-tab:hover:not(.newt-tab--active) { color: var(--newt-text-secondary); }
+
+/* ============================================================
+   Tooltip
+   ============================================================ */
+
+.newt-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+.newt-tooltip__bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111214;
+  color: var(--newt-text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: var(--newt-radius-sm);
+  white-space: nowrap;
+  box-shadow: var(--newt-shadow-elevation-high);
+  opacity: 0;
+  pointer-events: none;
+}
+.newt-tooltip:hover .newt-tooltip__bubble { opacity: 1; }
+
+/* ============================================================
+   Modal
+   ============================================================ */
+
+.newt-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.newt-modal {
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-lg);
+  width: 440px;
+  max-width: 90vw;
+  box-shadow: var(--newt-shadow-elevation-high);
+}
+.newt-modal__header {
+  padding: 16px 16px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+.newt-modal__body {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  line-height: 20px;
+}
+.newt-modal__footer {
+  padding: 16px;
+  background: var(--newt-bg-surface);
+  border-radius: 0 0 var(--newt-radius-lg) var(--newt-radius-lg);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ============================================================
+   Toast / Notification
+   ============================================================ */
+
+.newt-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  padding: 12px 14px;
+  box-shadow: var(--newt-shadow-elevation-high);
+  max-width: 360px;
+}
+.newt-toast__icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.newt-toast--success .newt-toast__icon { background: var(--newt-online); }
+.newt-toast--error .newt-toast__icon { background: var(--newt-dnd); }
+.newt-toast__title { font-size: 14px; font-weight: 600; }
+.newt-toast__desc { font-size: 13px; color: var(--newt-text-secondary); margin-top: 2px; }
+
+/* ============================================================
+   Code Block
+   ============================================================ */
+
+.newt-code {
+  background: #111214;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  font-family: var(--newt-font-mono);
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  padding: 16px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.newt-code .tok-key { color: #569cd6; }
+.newt-code .tok-str { color: #ce9178; }
+.newt-code .tok-com { color: #6a9955; }
+.newt-code .tok-fn { color: #dcdcaa; }
+
+/* ============================================================
+   Reaction Pill
+   ============================================================ */
+
+.newt-reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--newt-radius-md);
+  border: 1px solid var(--newt-border);
+  background: var(--newt-bg-surface);
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+}
+.newt-reaction:hover { background: var(--newt-bg-hover); }
+.newt-reaction--active {
+  background: rgba(88, 101, 242, 0.15);
+  border-color: var(--newt-brand);
+  color: #b3baff;
+}
+.newt-reaction:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-reaction__count { font-weight: 600; font-size: 12px; }
+
+/* ============================================================
+   Reply Preview (Discord "replying to" bar)
+   ============================================================ */
+
+.newt-reply {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--newt-text-muted);
+  margin-bottom: 4px;
+  padding-left: 18px;
+  position: relative;
+}
+.newt-reply::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-left: 2px solid var(--newt-border);
+  border-top: 2px solid var(--newt-border);
+  border-radius: 6px 0 0 0;
+  transform: translateY(-100%);
+}
+.newt-reply__author { color: var(--newt-text-link); font-weight: 500; }
+.newt-reply__text {
+  color: var(--newt-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 360px;
+}
+
+/* ============================================================
+   Typing Indicator
+   ============================================================ */
+
+.newt-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--newt-text-muted);
+}
+.newt-typing__dots {
+  display: inline-flex;
+  gap: 3px;
+}
+.newt-typing__dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--newt-text-muted);
+}
+
+
+
+
+/* ============================================================
+   Progress Bar (server boost / upload style)
+   ============================================================ */
+
+.newt-progress {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-base);
+  overflow: hidden;
+}
+.newt-progress__fill {
+  height: 100%;
+  border-radius: var(--newt-radius-full);
+  background: linear-gradient(90deg, var(--newt-brand), #8c54ff);
+}
+.newt-progress__fill--success { background: linear-gradient(90deg, var(--newt-online), #45c178); }
+.newt-progress__fill--danger { background: linear-gradient(90deg, var(--newt-dnd), #f4878a); }
+
+.newt-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+  margin-bottom: 6px;
+}
+
+/* ============================================================
+   Member List Item
+   ============================================================ */
+
+.newt-member {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+}
+.newt-member:hover { background: var(--newt-bg-hover); }
+.newt-member__info { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.newt-member__name { font-size: 14px; font-weight: 500; color: var(--newt-text-primary); }
+.newt-member__role { font-size: 12px; color: var(--newt-text-muted); }
+.newt-member__name--colored { color: var(--newt-brand); }
+
+/* ============================================================
+   Role Tag
+   ============================================================ */
+
+.newt-role-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+}
+.newt-role-tag__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ============================================================
+   Divider with label (Discord date separators)
+   ============================================================ */
+
+.newt-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  color: var(--newt-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+.newt-divider::before,
+.newt-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--newt-border);
+}
+
+/* ============================================================
+   Mention Chip
+   ============================================================ */
+
+.newt-mention {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 4px;
+  border-radius: var(--newt-radius-sm);
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}
+.newt-mention--user {
+  background: rgba(88, 101, 242, 0.15);
+  color: #b3baff;
+}
+.newt-mention--user:hover { background: rgba(88, 101, 242, 0.3); }
+
+.newt-mention--channel {
+  background: rgba(148, 155, 164, 0.15);
+  color: var(--newt-text-link);
+}
+.newt-mention--channel:hover { background: rgba(148, 155, 164, 0.25); }
+
+.newt-mention--role {
+  background: rgba(240, 178, 50, 0.15);
+  color: #f3b95f;
+}
+.newt-mention--role:hover { background: rgba(240, 178, 50, 0.25); }
+
+/* ============================================================
+   Spoiler
+   ============================================================ */
+
+.newt-spoiler {
+  background: #1a1a1e;
+  color: transparent;
+  border-radius: var(--newt-radius-sm);
+  padding: 0 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.newt-spoiler--revealed {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+  user-select: text;
+  cursor: text;
+}
+.newt-spoiler:not(.newt-spoiler--revealed):hover { background: #232328; }
+
+/* ============================================================
+   Voice Channel Row
+   ============================================================ */
+
+.newt-voice-channel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 8px;
+  border-radius: var(--newt-radius-sm);
+}
+.newt-voice-channel__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--newt-text-muted);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.newt-voice-channel__header:hover { color: var(--newt-text-secondary); }
+.newt-voice-channel__icon { flex-shrink: 0; opacity: 0.8; }
+.newt-voice-channel__members {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 24px;
+}
+.newt-voice-channel__member {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 6px;
+  border-radius: var(--newt-radius-sm);
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+}
+.newt-voice-channel__member:hover { background: var(--newt-bg-hover); }
+.newt-voice-channel__member-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  color: var(--newt-text-muted);
+  font-size: 12px;
+}
+.newt-voice-channel__member-icons--muted { color: var(--newt-dnd); }
+
+/* ============================================================
+   Attachment / File Card
+   ============================================================ */
+
+.newt-attachment {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--newt-bg-surface);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  padding: 10px 12px;
+  max-width: 360px;
+}
+.newt-attachment__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--newt-font-mono);
+  flex-shrink: 0;
+}
+.newt-attachment__meta { flex: 1; min-width: 0; }
+.newt-attachment__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--newt-text-link);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.newt-attachment__size { font-size: 12px; color: var(--newt-text-muted); }
+
+/* ============================================================
+   Timeline / Event Log
+   ============================================================ */
+
+.newt-timeline {
+  display: flex;
+  flex-direction: column;
+}
+.newt-timeline__item {
+  display: flex;
+  gap: 12px;
+  position: relative;
+  padding-bottom: 20px;
+}
+.newt-timeline__item:last-child { padding-bottom: 0; }
+.newt-timeline__item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 24px;
+  bottom: 0;
+  width: 2px;
+  background: var(--newt-border);
+}
+.newt-timeline__dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--newt-bg-surface);
+  border: 2px solid var(--newt-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.newt-timeline__dot--success { border-color: var(--newt-online); color: var(--newt-online); }
+.newt-timeline__dot--danger { border-color: var(--newt-dnd); color: var(--newt-dnd); }
+.newt-timeline__dot--brand { border-color: var(--newt-brand); color: #b3baff; }
+.newt-timeline__content { flex: 1; padding-top: 1px; }
+.newt-timeline__title { font-size: 14px; font-weight: 600; color: var(--newt-text-primary); }
+.newt-timeline__meta { font-size: 12px; color: var(--newt-text-muted); margin-top: 2px; }
+
+/* ============================================================
+   Permission Row
+   ============================================================ */
+
+.newt-permission {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--newt-border);
+}
+.newt-permission:last-child { border-bottom: none; }
+.newt-permission__info { display: flex; flex-direction: column; gap: 2px; }
+.newt-permission__name { font-size: 14px; font-weight: 500; color: var(--newt-text-primary); }
+.newt-permission__desc { font-size: 12px; color: var(--newt-text-muted); }
+.newt-permission__states {
+  display: flex;
+  gap: 4px;
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-sm);
+  padding: 2px;
+}
+.newt-permission__state {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--newt-radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--newt-text-muted);
+  cursor: pointer;
+  font-size: 14px;
+}
+.newt-permission__state:hover { color: var(--newt-text-secondary); }
+.newt-permission__state--deny.newt-permission__state--active {
+  background: rgba(242, 63, 66, 0.15);
+  color: var(--newt-dnd);
+}
+.newt-permission__state--inherit.newt-permission__state--active {
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-secondary);
+}
+.newt-permission__state--allow.newt-permission__state--active {
+  background: rgba(35, 165, 90, 0.15);
+  color: var(--newt-online);
+}
+
+/* ============================================================
+   Token Field (masked input with reveal/copy)
+   ============================================================ */
+
+.newt-token-field {
+  display: flex;
+  gap: 8px;
+}
+.newt-token-field .newt-input {
+  font-family: var(--newt-font-mono);
+  letter-spacing: 0.05em;
+}
+
+/* ============================================================
+   Dropdown Menu
+   ============================================================ */
+
+.newt-dropdown {
+  background: var(--newt-bg-floating);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  box-shadow: var(--newt-shadow-elevation-high);
+  padding: 6px;
+  width: 240px;
+}
+.newt-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+}
+.newt-dropdown__item:hover,
+.newt-dropdown__item--active { background: var(--newt-brand); }
+.newt-dropdown__item:hover .newt-dropdown__desc,
+.newt-dropdown__item--active .newt-dropdown__desc { color: rgba(255,255,255,0.75); }
+.newt-dropdown__icon {
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+  color: var(--newt-text-muted);
+}
+.newt-dropdown__item:hover .newt-dropdown__icon,
+.newt-dropdown__item--active .newt-dropdown__icon { color: #fff; }
+.newt-dropdown__label { font-size: 14px; font-weight: 500; }
+.newt-dropdown__desc { font-size: 12px; color: var(--newt-text-muted); }
+.newt-dropdown__divider { height: 1px; background: var(--newt-border); margin: 4px 6px; }
+
+/* ============================================================
+   Skeleton Loader
+   ============================================================ */
+
+.newt-skeleton {
+  background: var(--newt-bg-hover);
+  border-radius: var(--newt-radius-sm);
+}
+.newt-skeleton--text { height: 14px; }
+.newt-skeleton--avatar { width: 40px; height: 40px; border-radius: 50%; }
+.newt-skeleton--title { height: 20px; width: 40%; }
+
+
+
+
+/* ============================================================
+   Empty State
+   ============================================================ */
+
+.newt-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 40px 20px;
+  color: var(--newt-text-muted);
+}
+.newt-empty-state__icon {
+  font-size: 40px;
+  margin-bottom: 4px;
+  opacity: 0.6;
+}
+.newt-empty-state__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+.newt-empty-state__desc {
+  font-size: 14px;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Context Menu
+   ============================================================ */
+
+.newt-context-menu {
+  background: var(--newt-bg-floating);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  box-shadow: var(--newt-shadow-elevation-high);
+  padding: 6px;
+  width: 188px;
+}
+.newt-context-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  border-radius: var(--newt-radius-sm);
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+}
+.newt-context-menu__item:hover {
+  background: var(--newt-brand);
+  color: #fff;
+}
+.newt-context-menu__item--danger { color: var(--newt-dnd); }
+.newt-context-menu__item--danger:hover { background: var(--newt-dnd); color: #fff; }
+.newt-context-menu__shortcut { font-size: 11px; color: var(--newt-text-muted); }
+.newt-context-menu__item:hover .newt-context-menu__shortcut { color: rgba(255,255,255,0.7); }
+.newt-context-menu__divider { height: 1px; background: var(--newt-border); margin: 4px 6px; }
+/* newt-ui · Server Banner */
+
+.newt-server-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-lg);
+  padding: 16px 20px;
+  max-width: 480px;
+}
+.newt-server-banner__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--newt-radius-lg);
+  background: var(--newt-brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.newt-server-banner__info { flex: 1; min-width: 0; }
+.newt-server-banner__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--newt-text-primary);
+}
+.newt-server-banner__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--newt-text-muted);
+  margin-top: 2px;
+}
+.newt-server-banner__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.newt-server-banner__meta-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.newt-server-banner__meta-dot--online { background: var(--newt-online); }
+.newt-server-banner__meta-dot--offline { background: var(--newt-offline); }
+
+/* ============================================================
+   Scrollbar Utility
+   ============================================================ */
+
+.newt-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--newt-bg-active) transparent;
+}
+.newt-scrollbar::-webkit-scrollbar { width: 16px; height: 16px; }
+.newt-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.newt-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--newt-bg-active);
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 8px;
+}
+.newt-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--newt-text-muted);
+  background-clip: padding-box;
+}
+.newt-scrollbar::-webkit-scrollbar-corner { background-color: transparent; }
+
+/* ============================================================
+   Keyboard Shortcut Tag
+   ============================================================ */
+
+.newt-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-family: var(--newt-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--newt-text-secondary);
+  background: var(--newt-bg-base);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  box-shadow: 0 1px 0 var(--newt-border);
+}
+
+/* ============================================================
+   Cooldown Bar
+   ============================================================ */
+
+.newt-cooldown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 260px;
+}
+.newt-cooldown__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+.newt-cooldown__label strong {
+  font-family: var(--newt-font-mono);
+  color: var(--newt-text-secondary);
+  font-weight: 600;
+}
+.newt-cooldown__track {
+  height: 6px;
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-full);
+  overflow: hidden;
+}
+.newt-cooldown__fill {
+  height: 100%;
+  background: var(--newt-idle);
+  border-radius: var(--newt-radius-full);
+}
+.newt-cooldown__fill--ready { background: var(--newt-online); }
+
+/* ============================================================
+   Pagination / Load More
+   ============================================================ */
+
+.newt-pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.newt-pagination__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--newt-text-secondary);
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+}
+.newt-pagination__btn:hover { background: var(--newt-bg-hover); color: var(--newt-text-primary); }
+.newt-pagination__btn--active {
+  background: var(--newt-brand);
+  color: #fff;
+  border-color: var(--newt-brand);
+}
+.newt-pagination__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.newt-pagination__ellipsis {
+  color: var(--newt-text-muted);
+  font-size: 13px;
+  padding: 0 4px;
+}
+
+.newt-load-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  color: var(--newt-text-muted);
+  font-size: 13px;
+}
+.newt-load-more::before,
+.newt-load-more::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--newt-border);
+}
+
+/* ============================================================
+   Stage Banner (announcement bar)
+   ============================================================ */
+
+.newt-stage-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--newt-brand);
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.newt-stage-banner__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  flex-shrink: 0;
+}
+.newt-stage-banner__action {
+  margin-left: auto;
+  background: rgba(0,0,0,0.2);
+  color: #fff;
+  border: none;
+  border-radius: var(--newt-radius-sm);
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.newt-stage-banner__action:hover { background: rgba(0,0,0,0.32); }
+.newt-stage-banner--dismissible .newt-stage-banner__close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.newt-stage-banner__close:hover { color: #fff; }
+
+/* ============================================================
+   Channel Topic Bar
+   ============================================================ */
+
+.newt-channel-topic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--newt-border);
+  font-size: 14px;
+  min-width: 0;
+}
+.newt-channel-topic__icon {
+  color: var(--newt-text-muted);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.newt-channel-topic__name {
+  font-weight: 700;
+  color: var(--newt-text-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.newt-channel-topic__divider {
+  width: 1px;
+  height: 18px;
+  background: var(--newt-border);
+  flex-shrink: 0;
+}
+.newt-channel-topic__desc {
+  color: var(--newt-text-muted);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Notification Badge
+   ============================================================ */
+
+.newt-notif-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--newt-dnd);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: var(--newt-radius-full);
+  border: 2px solid var(--newt-bg-base);
+  line-height: 1;
+}
+.newt-notif-badge--mention { background: var(--newt-dnd); }
+.newt-notif-badge--unread {
+  width: 8px;
+  height: 8px;
+  min-width: unset;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--newt-text-primary);
+}
+
+/* ============================================================
+   User Profile Popout
+   ============================================================ */
+
+.newt-profile {
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-lg);
+  width: 280px;
+  overflow: hidden;
+  box-shadow: var(--newt-shadow-elevation-high);
+  border: 1px solid var(--newt-border);
+}
+.newt-profile__banner {
+  height: 60px;
+  background: var(--newt-brand);
+}
+.newt-profile__head {
+  padding: 0 16px 12px;
+  position: relative;
+}
+.newt-profile__avatar-wrap {
+  position: absolute;
+  top: -24px;
+  left: 16px;
+  border: 4px solid var(--newt-bg-base);
+  border-radius: 50%;
+}
+.newt-profile__actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 0 36px;
+  gap: 8px;
+}
+.newt-profile__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--newt-text-primary);
+}
+.newt-profile__handle {
+  font-size: 13px;
+  color: var(--newt-text-muted);
+  margin-bottom: 10px;
+}
+.newt-profile__divider {
+  height: 1px;
+  background: var(--newt-border);
+  margin: 10px 0;
+}
+.newt-profile__section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--newt-text-muted);
+  margin-bottom: 6px;
+}
+.newt-profile__bio {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  line-height: 1.5;
+}
+.newt-profile__roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.newt-profile__body {
+  padding: 0 16px 16px;
+}
+
+/* ============================================================
+   Message Group
+   ============================================================ */
+
+.newt-message-group {
+  display: flex;
+  gap: 16px;
+  padding: 4px 0;
+}
+.newt-message-group:hover { background: rgba(0,0,0,0.06); }
+.newt-message-group__body { flex: 1; min-width: 0; }
+.newt-message-group__header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.newt-message-group__author {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+.newt-message-group__author--bot {
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--newt-brand);
+  color: #fff;
+  padding: 1px 4px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.newt-message-group__time {
+  font-size: 11px;
+  color: var(--newt-text-muted);
+}
+.newt-message-group__content {
+  font-size: 15px;
+  color: var(--newt-text-secondary);
+  line-height: 1.5;
+}
+.newt-message-group__reactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+/* ============================================================
+   Select Menu
+   ============================================================ */
+
+.newt-select-menu {
+  background: var(--newt-bg-floating);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  box-shadow: var(--newt-shadow-elevation-high);
+  padding: 6px;
+  min-width: 200px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.newt-select-menu__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-sm);
+  margin-bottom: 4px;
+}
+.newt-select-menu__search input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+  font-size: 14px;
+  width: 100%;
+}
+.newt-select-menu__search input::placeholder { color: var(--newt-text-muted); }
+.newt-select-menu__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--newt-text-muted);
+  padding: 4px 10px 2px;
+}
+.newt-select-menu__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+}
+.newt-select-menu__option:hover { background: var(--newt-brand); color: #fff; }
+.newt-select-menu__option--selected {
+  color: var(--newt-text-primary);
+}
+.newt-select-menu__option--selected::after {
+  content: "✓";
+  margin-left: auto;
+  color: var(--newt-brand);
+  font-weight: 700;
+}
+.newt-select-menu__option:hover::after { color: #fff; }
+.newt-select-menu__divider { height: 1px; background: var(--newt-border); margin: 4px 6px; }
+
+/* ============================================================
+   Bot Command Card
+   ============================================================ */
+
+.newt-command-card {
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  padding: 16px;
+  max-width: 480px;
+}
+.newt-command-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+.newt-command-card__name {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--newt-font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--newt-brand);
+}
+.newt-command-card__slash {
+  color: var(--newt-text-muted);
+  font-weight: 400;
+}
+.newt-command-card__desc {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.newt-command-card__options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.newt-command-card__option {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 12px;
+}
+.newt-command-card__opt-name {
+  font-family: var(--newt-font-mono);
+  color: var(--newt-text-primary);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.newt-command-card__opt-type {
+  color: var(--newt-text-muted);
+  font-family: var(--newt-font-mono);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.newt-command-card__opt-required {
+  color: var(--newt-dnd);
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.newt-command-card__opt-desc { color: var(--newt-text-muted); }

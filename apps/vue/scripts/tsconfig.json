@@ -1,0 +1,17 @@
+{
+  // Node-context build scripts. Nuxt's generated tsconfigs cover app/, server/
+  // and nuxt.config only, so `scripts/` needs its own project for type-aware
+  // linting and `tsx` to agree on the Node globals.
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["node"],
+    "strict": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["**/*.mts", "**/*.ts"]
+}

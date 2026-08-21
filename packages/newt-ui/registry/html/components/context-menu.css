@@ -1,0 +1,46 @@
+/* newt-ui · Context Menu */
+
+.newt-context-menu {
+  background: var(--newt-bg-floating);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  box-shadow: var(--newt-shadow-elevation-high);
+  padding: 6px;
+  width: 188px;
+}
+.newt-context-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  border-radius: var(--newt-radius-sm);
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-context-menu__item:hover {
+  background: var(--newt-brand);
+  color: #fff;
+}
+.newt-context-menu__item--danger {
+  color: var(--newt-dnd);
+}
+.newt-context-menu__item--danger:hover {
+  background: var(--newt-dnd);
+  color: #fff;
+}
+.newt-context-menu__shortcut {
+  font-size: 11px;
+  color: var(--newt-text-muted);
+}
+.newt-context-menu__item:hover .newt-context-menu__shortcut {
+  color: rgba(255, 255, 255, 0.7);
+}
+.newt-context-menu__divider {
+  height: 1px;
+  background: var(--newt-border);
+  margin: 4px 6px;
+}

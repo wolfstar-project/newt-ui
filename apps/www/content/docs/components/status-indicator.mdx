@@ -1,0 +1,50 @@
+---
+title: Status Indicator
+description: A presence dot anchored to an avatar, with online, idle, do-not-disturb, offline and streaming states.
+---
+
+<ComponentPreview name="status-indicator-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash npx newt-ui@latest add status-indicator ```
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="status-indicator" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import { StatusDot, StatusIndicator } from "@/components/ui/status-indicator"
+```
+
+```tsx
+<StatusIndicator aria-label="Online">
+  <Avatar>A</Avatar>
+  <StatusDot status="online" />
+</StatusIndicator>
+```
+
+## Examples
+
+### Statuses
+
+`StatusDot` accepts `status` of `online`, `idle`, `dnd`, `offline` (default) or `streaming`. The online dot renders a pulsing presence ring, which is disabled when the user prefers reduced motion.
+
+```tsx
+<StatusDot status="idle" />
+<StatusDot status="dnd" />
+<StatusDot status="streaming" />
+```

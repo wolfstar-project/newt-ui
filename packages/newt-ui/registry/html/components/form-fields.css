@@ -1,0 +1,85 @@
+/* newt-ui · Input / Form Controls */
+
+.newt-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.newt-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--newt-text-secondary);
+}
+
+.newt-input,
+.newt-textarea,
+.newt-select {
+  background: var(--newt-bg-input);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  color: var(--newt-text-primary);
+  font-size: 14px;
+  font-family: var(--newt-font-sans);
+  padding: 10px 12px;
+  transition: border-color var(--newt-duration-fast) var(--newt-ease);
+  width: 100%;
+}
+
+.newt-input:focus,
+.newt-textarea:focus,
+.newt-select:focus {
+  outline: none;
+  border-color: var(--newt-brand);
+}
+
+.newt-input::placeholder,
+.newt-textarea::placeholder {
+  color: var(--newt-text-muted);
+}
+
+.newt-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.newt-help {
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+
+/* Toggle / Switch */
+.newt-switch {
+  position: relative;
+  display: inline-flex;
+  width: 40px;
+  height: 24px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  cursor: pointer;
+  transition: background var(--newt-duration-base) var(--newt-ease);
+  flex-shrink: 0;
+}
+.newt-switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--newt-text-muted);
+  transition:
+    transform var(--newt-duration-base) var(--newt-ease),
+    background var(--newt-duration-base) var(--newt-ease);
+}
+.newt-switch--on {
+  background: var(--newt-online);
+  border-color: var(--newt-online);
+}
+.newt-switch--on .newt-switch__thumb {
+  transform: translateX(16px);
+  background: #fff;
+}

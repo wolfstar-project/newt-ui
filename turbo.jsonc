@@ -1,0 +1,30 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "tui",
+  "globalDependencies": [
+    "tooling/oxc/base.oxlintrc.json",
+    "tooling/oxc/.oxfmtrc.json",
+    ".oxlintrc.json",
+    ".oxfmtignore",
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build", "registry:build"],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**",
+        ".nuxt/**",
+        ".output/**",
+      ],
+    },
+    "registry:build": {
+      "outputs": ["public/r/**", "public/registry/**"],
+    },
+    "dev": { "cache": false, "persistent": true },
+    "lint": {},
+    "lint:fix": { "cache": false },
+    "typecheck": { "dependsOn": ["^build"] },
+    "test": { "dependsOn": ["^build"] },
+  },
+}

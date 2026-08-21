@@ -1,0 +1,13 @@
+**/dist/**
+**/.output/**
+**/.next/**
+**/.nuxt/**
+**/coverage/**
+**/node_modules/**
+**/.turbo/**
+pnpm-lock.yaml
+apps/*/public/r/**
+apps/www/public/legacy/**
+/index.html
+.claude/**
+.skills/**

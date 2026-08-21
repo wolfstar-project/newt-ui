@@ -1,0 +1,16 @@
+{
+  "name": "attachment",
+  "title": "Attachment Card",
+  "description": "File card showing a type icon, file name, size and a download action.",
+  "registryDependencies": ["button"],
+  "vueFiles": [
+    "Attachment.vue",
+    "AttachmentIcon.vue",
+    "AttachmentMeta.vue",
+    "AttachmentName.vue",
+    "AttachmentSize.vue",
+    "index.ts"
+  ],
+  "reactDemo": "attachment-demo",
+  "vueDemo": "AttachmentDemo"
+}

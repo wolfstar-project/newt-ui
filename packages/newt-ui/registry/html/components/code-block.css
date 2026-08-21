@@ -1,0 +1,25 @@
+/* newt-ui · Code Block */
+
+.newt-code {
+  background: #111214;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  font-family: var(--newt-font-mono);
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  padding: 16px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.newt-code .tok-key {
+  color: #569cd6;
+}
+.newt-code .tok-str {
+  color: #ce9178;
+}
+.newt-code .tok-com {
+  color: #6a9955;
+}
+.newt-code .tok-fn {
+  color: #dcdcaa;
+}

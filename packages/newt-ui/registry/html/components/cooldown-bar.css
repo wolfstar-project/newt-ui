@@ -1,0 +1,33 @@
+/* newt-ui · Cooldown Bar */
+
+.newt-cooldown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 260px;
+}
+.newt-cooldown__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+.newt-cooldown__label strong {
+  font-family: var(--newt-font-mono);
+  color: var(--newt-text-secondary);
+  font-weight: 600;
+}
+.newt-cooldown__track {
+  height: 6px;
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-full);
+  overflow: hidden;
+}
+.newt-cooldown__fill {
+  height: 100%;
+  background: var(--newt-idle);
+  border-radius: var(--newt-radius-full);
+}
+.newt-cooldown__fill--ready {
+  background: var(--newt-online);
+}

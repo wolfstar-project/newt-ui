@@ -1,0 +1,17 @@
+{
+  "name": "dropdown",
+  "title": "Dropdown Menu",
+  "description": "A floating menu panel with icon, label and description items that highlight in brand color.",
+  "vueFiles": [
+    "Dropdown.vue",
+    "DropdownItem.vue",
+    "DropdownIcon.vue",
+    "DropdownContent.vue",
+    "DropdownLabel.vue",
+    "DropdownDescription.vue",
+    "DropdownDivider.vue",
+    "index.ts"
+  ],
+  "reactDemo": "dropdown-demo",
+  "vueDemo": "DropdownDemo"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "reaction",
+  "title": "Reaction Pill",
+  "description": "A toggleable emoji reaction pill with a count, as seen under chat messages.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": ["Reaction.vue", "index.ts"],
+  "reactDemo": "reaction-demo",
+  "vueDemo": "ReactionDemo"
+}

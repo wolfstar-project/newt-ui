@@ -1,0 +1,1206 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "newt-ui-vue",
+  "homepage": "https://newt-devs.github.io/newt-ui",
+  "items": [
+    {
+      "name": "attachment",
+      "type": "registry:ui",
+      "title": "Attachment Card",
+      "description": "File card showing a type icon, file name, size and a download action.",
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/default/ui/attachment/Attachment.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/attachment/AttachmentIcon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/attachment/AttachmentMeta.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/attachment/AttachmentName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/attachment/AttachmentSize.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/attachment/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "A circular user avatar with image support and initials fallback in three sizes.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/avatar/Avatar.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/avatar/AvatarImage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/avatar/AvatarFallback.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/avatar/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "A small pill used to label status, counts or categories.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/badge/Badge.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/badge/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "bot-command-card",
+      "type": "registry:ui",
+      "title": "Bot Command Card",
+      "description": "A card documenting a slash command, its owning bot and its typed options.",
+      "registryDependencies": ["badge"],
+      "files": [
+        {
+          "path": "registry/default/ui/bot-command-card/BotCommandCard.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/bot-command-card/BotCommandCardHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/bot-command-card/BotCommandCardName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/bot-command-card/BotCommandCardDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/bot-command-card/BotCommandCardOptions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/bot-command-card/BotCommandCardOption.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/bot-command-card/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Displays a Discord-styled button with brand, secondary, success, danger, link and icon variants.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/button/Button.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/button/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "A bordered, elevated panel for grouping related content.",
+      "files": [
+        {
+          "path": "registry/default/ui/card/Card.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/card/CardTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/card/CardDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/card/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "channel-topic",
+      "type": "registry:ui",
+      "title": "Channel Topic Bar",
+      "description": "A header bar showing the channel name and a truncating topic description.",
+      "files": [
+        {
+          "path": "registry/default/ui/channel-topic/ChannelTopic.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/channel-topic/ChannelTopicIcon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/channel-topic/ChannelTopicName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/channel-topic/ChannelTopicDivider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/channel-topic/ChannelTopicDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/channel-topic/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code Block",
+      "description": "A monospace preformatted block with optional syntax-highlight tokens.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/code-block/CodeBlock.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/code-block/CodeToken.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/code-block/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "A floating right-click style menu with items, keyboard shortcuts, dividers and a danger variant.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/context-menu/ContextMenu.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/context-menu/ContextMenuItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/context-menu/ContextMenuShortcut.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/context-menu/ContextMenuDivider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/context-menu/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "cooldown-bar",
+      "type": "registry:ui",
+      "title": "Cooldown Bar",
+      "description": "A slim progress bar with a label and monospace countdown for command cooldowns.",
+      "files": [
+        {
+          "path": "registry/default/ui/cooldown-bar/CooldownBar.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/cooldown-bar/CooldownBarLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/cooldown-bar/CooldownBarValue.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/cooldown-bar/CooldownBarTrack.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/cooldown-bar/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "divider",
+      "type": "registry:ui",
+      "title": "Divider",
+      "description": "A horizontal rule with an optional centered label, like Discord's date separators.",
+      "files": [
+        {
+          "path": "registry/default/ui/divider/Divider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/divider/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "A floating menu panel with icon, label and description items that highlight in brand color.",
+      "files": [
+        {
+          "path": "registry/default/ui/dropdown/Dropdown.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/dropdown/DropdownItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/dropdown/DropdownIcon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/dropdown/DropdownContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/dropdown/DropdownLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/dropdown/DropdownDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/dropdown/DropdownDivider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/dropdown/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "embed",
+      "type": "registry:ui",
+      "title": "Embed",
+      "description": "A Discord-style rich message embed with title, description, fields and footer.",
+      "files": [
+        {
+          "path": "registry/default/ui/embed/Embed.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/embed/EmbedEyebrow.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/embed/EmbedTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/embed/EmbedDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/embed/EmbedFields.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/embed/EmbedField.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/embed/EmbedFieldName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/embed/EmbedFieldValue.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/embed/EmbedFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/embed/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "A centered placeholder with an icon, title, and hint shown when a list or view has no content.",
+      "files": [
+        {
+          "path": "registry/default/ui/empty-state/EmptyState.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/empty-state/EmptyStateIcon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/empty-state/EmptyStateTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/empty-state/EmptyStateDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/empty-state/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "form-fields",
+      "type": "registry:ui",
+      "title": "Form Fields",
+      "description": "Inputs, textareas, selects, labels, helper text, switches and checkboxes styled for the newt/ui dark theme.",
+      "files": [
+        {
+          "path": "registry/default/ui/form-fields/Field.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/form-fields/Label.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/form-fields/Input.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/form-fields/Textarea.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/form-fields/Select.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/form-fields/FieldHelp.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/form-fields/Switch.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/form-fields/Checkbox.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/form-fields/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kbd-tag",
+      "type": "registry:ui",
+      "title": "Keyboard Shortcut Tag",
+      "description": "A small monospace tag for displaying keyboard shortcuts.",
+      "files": [
+        {
+          "path": "registry/default/ui/kbd-tag/KbdTag.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/kbd-tag/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "member-list",
+      "type": "registry:ui",
+      "title": "Member List Row",
+      "description": "A hoverable row showing a member's avatar, presence, name and role.",
+      "registryDependencies": ["avatar", "status-indicator", "role-tag"],
+      "files": [
+        {
+          "path": "registry/default/ui/member-list/MemberList.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/member-list/MemberListItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/member-list/MemberListInfo.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/member-list/MemberListName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/member-list/MemberListRole.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/member-list/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "mention",
+      "type": "registry:ui",
+      "title": "Mention Chip",
+      "description": "An inline chip for user, channel and role mentions.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/mention/Mention.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/mention/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "message-group",
+      "type": "registry:ui",
+      "title": "Message Group",
+      "description": "A chat message row with avatar, author header, content and reactions.",
+      "registryDependencies": ["avatar", "status-indicator", "reaction"],
+      "files": [
+        {
+          "path": "registry/default/ui/message-group/MessageGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/message-group/MessageGroupBody.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/message-group/MessageGroupHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/message-group/MessageGroupAuthor.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/message-group/MessageGroupBotTag.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/message-group/MessageGroupTime.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/message-group/MessageGroupContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/message-group/MessageGroupReactions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/message-group/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "A centered dialog over a dimmed overlay that closes on Escape, overlay click or an explicit close control.",
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/default/ui/modal/Modal.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/modal/ModalHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/modal/ModalBody.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/modal/ModalFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/modal/ModalClose.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/modal/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "notif-badge",
+      "type": "registry:ui",
+      "title": "Notification Badge",
+      "description": "A small count badge or unread dot for signalling new activity on avatars and channels.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["avatar"],
+      "files": [
+        {
+          "path": "registry/default/ui/notif-badge/NotifBadge.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/notif-badge/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Numbered page buttons with previous/next controls, plus a divider-style load-more row.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/default/ui/pagination/Pagination.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/pagination/PaginationButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/pagination/PaginationEllipsis.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/pagination/LoadMore.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/pagination/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "permission",
+      "type": "registry:ui",
+      "title": "Permission Row",
+      "description": "A settings row with a deny / inherit / allow tri-state toggle.",
+      "files": [
+        {
+          "path": "registry/default/ui/permission/Permission.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/permission/PermissionInfo.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/permission/PermissionName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/permission/PermissionDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/permission/PermissionStates.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/permission/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress Bar",
+      "description": "A gradient progress bar for boosts, uploads and other long-running tasks.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/progress/Progress.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/progress/ProgressLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/progress/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "reaction",
+      "type": "registry:ui",
+      "title": "Reaction Pill",
+      "description": "A toggleable emoji reaction pill with a count, as seen under chat messages.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/reaction/Reaction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/reaction/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "reply-preview",
+      "type": "registry:ui",
+      "title": "Reply Preview",
+      "description": "A compact \"replying to\" bar showing the author and a truncated excerpt of the original message.",
+      "files": [
+        {
+          "path": "registry/default/ui/reply-preview/ReplyPreview.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/reply-preview/ReplyPreviewAuthor.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/reply-preview/ReplyPreviewText.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/reply-preview/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "role-tag",
+      "type": "registry:ui",
+      "title": "Role Tag",
+      "description": "A compact bordered tag with a coloured dot for displaying a member's role.",
+      "files": [
+        {
+          "path": "registry/default/ui/role-tag/RoleTag.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/role-tag/RoleTagDot.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/role-tag/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scrollbar",
+      "type": "registry:ui",
+      "title": "Scrollbar Utility",
+      "description": "Discord-styled thin, rounded scrollbars for any scrollable container.",
+      "files": [
+        {
+          "path": "registry/default/ui/scrollbar/ScrollArea.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/scrollbar/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select-menu",
+      "type": "registry:ui",
+      "title": "Select Menu",
+      "description": "A floating listbox with optional search, section labels, dividers and selected options.",
+      "files": [
+        {
+          "path": "registry/default/ui/select-menu/SelectMenu.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/select-menu/SelectMenuSearch.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/select-menu/SelectMenuLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/select-menu/SelectMenuOption.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/select-menu/SelectMenuDivider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/select-menu/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "server-banner",
+      "type": "registry:ui",
+      "title": "Server Banner",
+      "description": "Invite-style card with a server icon, name, live member counts and a join button.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/default/ui/server-banner/ServerBanner.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/server-banner/ServerBannerIcon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/server-banner/ServerBannerInfo.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/server-banner/ServerBannerName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/server-banner/ServerBannerMeta.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/server-banner/ServerBannerMetaItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/server-banner/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton Loader",
+      "description": "A shimmering placeholder shown while content is loading.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/skeleton/Skeleton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/skeleton/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slash-command",
+      "type": "registry:ui",
+      "title": "Slash Command Tag",
+      "description": "Inline monospace tag for referencing a /slash command in text.",
+      "files": [
+        {
+          "path": "registry/default/ui/slash-command/SlashCommand.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/slash-command/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spoiler",
+      "type": "registry:ui",
+      "title": "Spoiler",
+      "description": "Inline text hidden behind a dark block until the reader clicks to reveal it.",
+      "files": [
+        {
+          "path": "registry/default/ui/spoiler/Spoiler.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/spoiler/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "stage-banner",
+      "type": "registry:ui",
+      "title": "Stage Banner",
+      "description": "A full-width announcement strip with a status dot, optional action button and dismiss control.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/stage-banner/StageBanner.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/stage-banner/StageBannerDot.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/stage-banner/StageBannerAction.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/stage-banner/StageBannerClose.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/stage-banner/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "status-indicator",
+      "type": "registry:ui",
+      "title": "Status Indicator",
+      "description": "A presence dot anchored to an avatar, with online, idle, do-not-disturb, offline and streaming states.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["avatar"],
+      "files": [
+        {
+          "path": "registry/default/ui/status-indicator/StatusIndicator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/status-indicator/StatusDot.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/status-indicator/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "A pill-style tab list that switches the active tab on click.",
+      "files": [
+        {
+          "path": "registry/default/ui/tabs/Tabs.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/tabs/TabsTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/tabs/TabsContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/tabs/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Event Timeline",
+      "description": "A vertical event log with connected status dots, titles and metadata.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/timeline/Timeline.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/timeline/TimelineItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/timeline/TimelineDot.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/timeline/TimelineContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/timeline/TimelineTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/timeline/TimelineMeta.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/timeline/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "A transient notification with a status icon that auto-dismisses after a timeout or when closed.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/default/ui/toast/Toast.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/toast/ToastIcon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/toast/ToastContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/toast/ToastTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/toast/ToastDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/toast/ToastClose.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/toast/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "token-field",
+      "type": "registry:ui",
+      "title": "Token Field",
+      "description": "A read-only, masked monospace input with reveal and copy-to-clipboard actions for secrets such as bot tokens.",
+      "registryDependencies": ["form-fields", "button"],
+      "files": [
+        {
+          "path": "registry/default/ui/token-field/TokenField.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/token-field/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A small floating label that appears above an element on hover or focus.",
+      "files": [
+        {
+          "path": "registry/default/ui/tooltip/Tooltip.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/tooltip/TooltipTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/tooltip/TooltipContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/tooltip/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "typing-indicator",
+      "type": "registry:ui",
+      "title": "Typing Indicator",
+      "description": "Three bouncing dots with a label that signals someone is typing.",
+      "files": [
+        {
+          "path": "registry/default/ui/typing-indicator/TypingIndicator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/typing-indicator/TypingIndicatorDots.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/typing-indicator/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "user-profile",
+      "type": "registry:ui",
+      "title": "User Profile Popout",
+      "description": "Floating profile card with a banner, overlapping avatar, bio section and role tags.",
+      "registryDependencies": [
+        "avatar",
+        "status-indicator",
+        "role-tag",
+        "button"
+      ],
+      "files": [
+        {
+          "path": "registry/default/ui/user-profile/UserProfile.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileBanner.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileHead.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileActions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileAvatar.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileHandle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileDivider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileBody.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileSectionLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileBio.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/UserProfileRoles.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/user-profile/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "voice-channel",
+      "type": "registry:ui",
+      "title": "Voice Channel Row",
+      "description": "A sidebar voice channel row with a collapsible header and the list of connected members.",
+      "registryDependencies": ["avatar"],
+      "files": [
+        {
+          "path": "registry/default/ui/voice-channel/VoiceChannel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/voice-channel/VoiceChannelHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/voice-channel/VoiceChannelIcon.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/voice-channel/VoiceChannelMembers.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/voice-channel/VoiceChannelMember.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/voice-channel/VoiceChannelMemberIcons.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/voice-channel/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "theme-newt",
+      "type": "registry:theme",
+      "title": "newt/ui theme",
+      "description": "The Discord-inspired --newt-* design tokens, for Tailwind v3 and v4."
+    }
+  ]
+}

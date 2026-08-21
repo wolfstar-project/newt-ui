@@ -1,0 +1,15 @@
+{
+  "name": "select-menu",
+  "title": "Select Menu",
+  "description": "A floating listbox with optional search, section labels, dividers and selected options.",
+  "vueFiles": [
+    "SelectMenu.vue",
+    "SelectMenuSearch.vue",
+    "SelectMenuLabel.vue",
+    "SelectMenuOption.vue",
+    "SelectMenuDivider.vue",
+    "index.ts"
+  ],
+  "reactDemo": "select-menu-demo",
+  "vueDemo": "SelectMenuDemo"
+}

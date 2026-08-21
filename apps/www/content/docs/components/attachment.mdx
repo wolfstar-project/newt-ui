@@ -1,0 +1,51 @@
+---
+title: Attachment Card
+description: File card showing a type icon, file name, size and a download action.
+---
+
+<ComponentPreview name="attachment-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash npx newt-ui@latest add attachment ```
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="attachment" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  Attachment,
+  AttachmentIcon,
+  AttachmentMeta,
+  AttachmentName,
+  AttachmentSize,
+} from "@/components/ui/attachment"
+import { Button } from "@/components/ui/button"
+```
+
+```tsx
+<Attachment>
+  <AttachmentIcon>PDF</AttachmentIcon>
+  <AttachmentMeta>
+    <AttachmentName>report.pdf</AttachmentName>
+    <AttachmentSize>1.2 MB</AttachmentSize>
+  </AttachmentMeta>
+  <Button variant="icon" aria-label="Download file">
+    ⬇
+  </Button>
+</Attachment>
+```

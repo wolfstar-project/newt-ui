@@ -1,0 +1,40 @@
+/* newt-ui · Skeleton Loader */
+
+.newt-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--newt-bg-elevated) 25%,
+    var(--newt-bg-hover) 50%,
+    var(--newt-bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--newt-radius-sm);
+  animation: newt-skeleton-shimmer 1.6s ease-in-out infinite;
+}
+.newt-skeleton--text {
+  height: 14px;
+}
+.newt-skeleton--avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.newt-skeleton--title {
+  height: 20px;
+  width: 40%;
+}
+
+@keyframes newt-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .newt-skeleton {
+    animation: none;
+    opacity: 0.6;
+  }
+}

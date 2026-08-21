@@ -1,0 +1,279 @@
+{
+  "$schema": "https://newt-devs.github.io/newt-ui/registry-schema.json",
+  "name": "newt-ui",
+  "tokens": "tokens.css",
+  "components": [
+    {
+      "name": "button",
+      "title": "Button",
+      "rootClass": "newt-btn",
+      "files": ["button.css", "button.html"]
+    },
+    {
+      "name": "badge",
+      "title": "Badge",
+      "rootClass": "newt-badge",
+      "files": ["badge.css", "badge.html"]
+    },
+    {
+      "name": "status-indicator",
+      "title": "Status Indicator",
+      "rootClass": "newt-status",
+      "files": ["status-indicator.css", "status-indicator.html"],
+      "uses": ["avatar"]
+    },
+    {
+      "name": "avatar",
+      "title": "Avatar",
+      "rootClass": "newt-avatar",
+      "files": ["avatar.css", "avatar.html"]
+    },
+    {
+      "name": "embed",
+      "title": "Embed",
+      "rootClass": "newt-embed",
+      "files": ["embed.css", "embed.html"]
+    },
+    {
+      "name": "card",
+      "title": "Card",
+      "rootClass": "newt-card",
+      "files": ["card.css", "card.html"]
+    },
+    {
+      "name": "form-fields",
+      "title": "Form Fields",
+      "rootClass": "newt-field",
+      "files": ["form-fields.css", "form-fields.html"]
+    },
+    {
+      "name": "slash-command",
+      "title": "Slash Command Tag",
+      "rootClass": "newt-command",
+      "files": ["slash-command.css", "slash-command.html"]
+    },
+    {
+      "name": "tabs",
+      "title": "Tabs",
+      "rootClass": "newt-tabs",
+      "files": ["tabs.css", "tabs.html"],
+      "js": "tabs.js"
+    },
+    {
+      "name": "tooltip",
+      "title": "Tooltip",
+      "rootClass": "newt-tooltip",
+      "files": ["tooltip.css", "tooltip.html"]
+    },
+    {
+      "name": "modal",
+      "title": "Modal",
+      "rootClass": "newt-modal",
+      "files": ["modal.css", "modal.html"],
+      "js": "modal.js"
+    },
+    {
+      "name": "toast",
+      "title": "Toast",
+      "rootClass": "newt-toast",
+      "files": ["toast.css", "toast.html"],
+      "js": "toast.js"
+    },
+    {
+      "name": "code-block",
+      "title": "Code Block",
+      "rootClass": "newt-code",
+      "files": ["code-block.css", "code-block.html"]
+    },
+    {
+      "name": "reaction",
+      "title": "Reaction Pill",
+      "rootClass": "newt-reaction",
+      "files": ["reaction.css", "reaction.html"]
+    },
+    {
+      "name": "reply-preview",
+      "title": "Reply Preview",
+      "rootClass": "newt-reply",
+      "files": ["reply-preview.css", "reply-preview.html"]
+    },
+    {
+      "name": "typing-indicator",
+      "title": "Typing Indicator",
+      "rootClass": "newt-typing",
+      "files": ["typing-indicator.css", "typing-indicator.html"]
+    },
+    {
+      "name": "progress",
+      "title": "Progress Bar",
+      "rootClass": "newt-progress",
+      "files": ["progress.css", "progress.html"]
+    },
+    {
+      "name": "member-list",
+      "title": "Member List Row",
+      "rootClass": "newt-member",
+      "files": ["member-list.css", "member-list.html"],
+      "uses": ["avatar", "status-indicator", "role-tag"]
+    },
+    {
+      "name": "role-tag",
+      "title": "Role Tag",
+      "rootClass": "newt-role-tag",
+      "files": ["role-tag.css", "role-tag.html"]
+    },
+    {
+      "name": "divider",
+      "title": "Divider",
+      "rootClass": "newt-divider",
+      "files": ["divider.css", "divider.html"]
+    },
+    {
+      "name": "mention",
+      "title": "Mention Chip",
+      "rootClass": "newt-mention",
+      "files": ["mention.css", "mention.html"]
+    },
+    {
+      "name": "spoiler",
+      "title": "Spoiler",
+      "rootClass": "newt-spoiler",
+      "files": ["spoiler.css", "spoiler.html"]
+    },
+    {
+      "name": "voice-channel",
+      "title": "Voice Channel Row",
+      "rootClass": "newt-voice-channel",
+      "files": ["voice-channel.css", "voice-channel.html"],
+      "uses": ["avatar"]
+    },
+    {
+      "name": "attachment",
+      "title": "Attachment Card",
+      "rootClass": "newt-attachment",
+      "files": ["attachment.css", "attachment.html"],
+      "uses": ["button"]
+    },
+    {
+      "name": "timeline",
+      "title": "Event Timeline",
+      "rootClass": "newt-timeline",
+      "files": ["timeline.css", "timeline.html"]
+    },
+    {
+      "name": "permission",
+      "title": "Permission Row",
+      "rootClass": "newt-permission",
+      "files": ["permission.css", "permission.html"]
+    },
+    {
+      "name": "token-field",
+      "title": "Token Field",
+      "rootClass": "newt-token-field",
+      "files": ["token-field.css", "token-field.html"],
+      "js": "token-field.js",
+      "uses": ["form-fields", "button"]
+    },
+    {
+      "name": "dropdown",
+      "title": "Dropdown Menu",
+      "rootClass": "newt-dropdown",
+      "files": ["dropdown.css", "dropdown.html"]
+    },
+    {
+      "name": "skeleton",
+      "title": "Skeleton Loader",
+      "rootClass": "newt-skeleton",
+      "files": ["skeleton.css", "skeleton.html"]
+    },
+    {
+      "name": "empty-state",
+      "title": "Empty State",
+      "rootClass": "newt-empty-state",
+      "files": ["empty-state.css", "empty-state.html"]
+    },
+    {
+      "name": "context-menu",
+      "title": "Context Menu",
+      "rootClass": "newt-context-menu",
+      "files": ["context-menu.css", "context-menu.html"]
+    },
+    {
+      "name": "server-banner",
+      "title": "Server Banner",
+      "rootClass": "newt-server-banner",
+      "files": ["server-banner.css", "server-banner.html"],
+      "uses": ["button"]
+    },
+    {
+      "name": "kbd-tag",
+      "title": "Keyboard Shortcut Tag",
+      "rootClass": "newt-kbd",
+      "files": ["kbd-tag.css", "kbd-tag.html"]
+    },
+    {
+      "name": "cooldown-bar",
+      "title": "Cooldown Bar",
+      "rootClass": "newt-cooldown",
+      "files": ["cooldown-bar.css", "cooldown-bar.html"]
+    },
+    {
+      "name": "pagination",
+      "title": "Pagination / Load More",
+      "rootClass": "newt-pagination",
+      "files": ["pagination.css", "pagination.html"],
+      "uses": ["button"]
+    },
+    {
+      "name": "stage-banner",
+      "title": "Stage Banner",
+      "rootClass": "newt-stage-banner",
+      "files": ["stage-banner.css", "stage-banner.html"]
+    },
+    {
+      "name": "scrollbar",
+      "title": "Scrollbar Utility",
+      "rootClass": "newt-scrollbar",
+      "files": ["scrollbar.css", "scrollbar.html"]
+    },
+    {
+      "name": "channel-topic",
+      "title": "Channel Topic Bar",
+      "rootClass": "newt-channel-topic",
+      "files": ["channel-topic.css", "channel-topic.html"]
+    },
+    {
+      "name": "notif-badge",
+      "title": "Notification Badge",
+      "rootClass": "newt-notif-badge",
+      "files": ["notif-badge.css", "notif-badge.html"]
+    },
+    {
+      "name": "user-profile",
+      "title": "User Profile Popout",
+      "rootClass": "newt-profile",
+      "files": ["user-profile.css", "user-profile.html"],
+      "uses": ["avatar", "status-indicator", "role-tag", "button"]
+    },
+    {
+      "name": "message-group",
+      "title": "Message Group",
+      "rootClass": "newt-message-group",
+      "files": ["message-group.css", "message-group.html"],
+      "uses": ["avatar", "status-indicator", "reaction"]
+    },
+    {
+      "name": "select-menu",
+      "title": "Select Menu",
+      "rootClass": "newt-select-menu",
+      "files": ["select-menu.css", "select-menu.html"]
+    },
+    {
+      "name": "bot-command-card",
+      "title": "Bot Command Card",
+      "rootClass": "newt-command-card",
+      "files": ["bot-command-card.css", "bot-command-card.html"],
+      "uses": ["badge"]
+    }
+  ]
+}

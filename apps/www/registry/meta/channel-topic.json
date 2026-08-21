@@ -1,0 +1,15 @@
+{
+  "name": "channel-topic",
+  "title": "Channel Topic Bar",
+  "description": "A header bar showing the channel name and a truncating topic description.",
+  "vueFiles": [
+    "ChannelTopic.vue",
+    "ChannelTopicIcon.vue",
+    "ChannelTopicName.vue",
+    "ChannelTopicDivider.vue",
+    "ChannelTopicDescription.vue",
+    "index.ts"
+  ],
+  "reactDemo": "channel-topic-demo",
+  "vueDemo": "ChannelTopicDemo"
+}

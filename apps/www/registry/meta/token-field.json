@@ -1,0 +1,9 @@
+{
+  "name": "token-field",
+  "title": "Token Field",
+  "description": "A read-only, masked monospace input with reveal and copy-to-clipboard actions for secrets such as bot tokens.",
+  "registryDependencies": ["form-fields", "button"],
+  "vueFiles": ["TokenField.vue", "index.ts"],
+  "reactDemo": "token-field-demo",
+  "vueDemo": "TokenFieldDemo"
+}

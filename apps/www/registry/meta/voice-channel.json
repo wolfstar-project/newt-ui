@@ -1,0 +1,17 @@
+{
+  "name": "voice-channel",
+  "title": "Voice Channel Row",
+  "description": "A sidebar voice channel row with a collapsible header and the list of connected members.",
+  "registryDependencies": ["avatar"],
+  "vueFiles": [
+    "VoiceChannel.vue",
+    "VoiceChannelHeader.vue",
+    "VoiceChannelIcon.vue",
+    "VoiceChannelMembers.vue",
+    "VoiceChannelMember.vue",
+    "VoiceChannelMemberIcons.vue",
+    "index.ts"
+  ],
+  "reactDemo": "voice-channel-demo",
+  "vueDemo": "VoiceChannelDemo"
+}

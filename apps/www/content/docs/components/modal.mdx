@@ -1,0 +1,58 @@
+---
+title: Modal
+description: A centered dialog over a dimmed overlay that closes on Escape, overlay click or an explicit close control.
+---
+
+<ComponentPreview name="modal-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash npx newt-ui@latest add modal ```
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="modal" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  Modal,
+  ModalBody,
+  ModalClose,
+  ModalFooter,
+  ModalHeader,
+} from "@/components/ui/modal"
+```
+
+```tsx
+const [open, setOpen] = React.useState(false)
+
+<Modal open={open} onOpenChange={setOpen}>
+  <ModalHeader>Modal title</ModalHeader>
+  <ModalBody>Modal body content goes here.</ModalBody>
+  <ModalFooter>
+    <ModalClose asChild>
+      <Button variant="secondary">Cancel</Button>
+    </ModalClose>
+    <Button variant="danger">Confirm</Button>
+  </ModalFooter>
+</Modal>
+```
+
+## Behaviour
+
+- `open` controls visibility; `onOpenChange(false)` is called when the user presses Escape, clicks the overlay, or activates a `ModalClose`.
+- `ModalHeader` is wired to the dialog via `aria-labelledby` automatically.
+- `ModalClose` renders a plain `<button>` by default; pass `asChild` to attach the close behaviour to your own element.

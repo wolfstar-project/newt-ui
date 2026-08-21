@@ -1,0 +1,65 @@
+/* newt-ui · Embed (Discord message embed) */
+
+.newt-embed {
+  display: flex;
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-md);
+  border-left: 4px solid var(--newt-brand);
+  max-width: 520px;
+  overflow: hidden;
+}
+
+.newt-embed__body {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.newt-embed__eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--newt-text-link);
+}
+
+.newt-embed__description {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.newt-embed__field-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+  margin-bottom: 2px;
+}
+
+.newt-embed__field-value {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+  margin-top: 4px;
+}

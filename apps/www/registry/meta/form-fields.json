@@ -1,0 +1,18 @@
+{
+  "name": "form-fields",
+  "title": "Form Fields",
+  "description": "Inputs, textareas, selects, labels, helper text, switches and checkboxes styled for the newt/ui dark theme.",
+  "vueFiles": [
+    "Field.vue",
+    "Label.vue",
+    "Input.vue",
+    "Textarea.vue",
+    "Select.vue",
+    "FieldHelp.vue",
+    "Switch.vue",
+    "Checkbox.vue",
+    "index.ts"
+  ],
+  "reactDemo": "form-fields-demo",
+  "vueDemo": "FormFieldsDemo"
+}

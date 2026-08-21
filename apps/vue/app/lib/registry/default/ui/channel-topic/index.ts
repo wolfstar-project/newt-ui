@@ -1,0 +1,5 @@
+export { default as ChannelTopic } from "./ChannelTopic.vue"
+export { default as ChannelTopicIcon } from "./ChannelTopicIcon.vue"
+export { default as ChannelTopicName } from "./ChannelTopicName.vue"
+export { default as ChannelTopicDivider } from "./ChannelTopicDivider.vue"
+export { default as ChannelTopicDescription } from "./ChannelTopicDescription.vue"

@@ -1,0 +1,9 @@
+{
+  "name": "button",
+  "title": "Button",
+  "description": "Displays a Discord-styled button with brand, secondary, success, danger, link and icon variants.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": ["Button.vue", "index.ts"],
+  "reactDemo": "button-demo",
+  "vueDemo": "ButtonDemo"
+}

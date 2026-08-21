@@ -1,0 +1,50 @@
+/* newt-ui · Message Group */
+
+.newt-message-group {
+  display: flex;
+  gap: 16px;
+  padding: 4px 0;
+}
+.newt-message-group:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+.newt-message-group__body {
+  flex: 1;
+  min-width: 0;
+}
+.newt-message-group__header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.newt-message-group__author {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+.newt-message-group__author--bot {
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--newt-brand);
+  color: #fff;
+  padding: 1px 4px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.newt-message-group__time {
+  font-size: 11px;
+  color: var(--newt-text-muted);
+}
+.newt-message-group__content {
+  font-size: 15px;
+  color: var(--newt-text-secondary);
+  line-height: 1.5;
+}
+.newt-message-group__reactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}

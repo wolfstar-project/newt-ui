@@ -1,0 +1,36 @@
+/* newt-ui · Mention Chip */
+
+.newt-mention {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 4px;
+  border-radius: var(--newt-radius-sm);
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-mention--user {
+  background: rgba(88, 101, 242, 0.15);
+  color: #b3baff;
+}
+.newt-mention--user:hover {
+  background: rgba(88, 101, 242, 0.3);
+}
+
+.newt-mention--channel {
+  background: rgba(148, 155, 164, 0.15);
+  color: var(--newt-text-link);
+}
+.newt-mention--channel:hover {
+  background: rgba(148, 155, 164, 0.25);
+}
+
+.newt-mention--role {
+  background: rgba(240, 178, 50, 0.15);
+  color: #f3b95f;
+}
+.newt-mention--role:hover {
+  background: rgba(240, 178, 50, 0.25);
+}

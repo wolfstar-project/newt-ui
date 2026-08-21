@@ -1,0 +1,6 @@
+export { default as VoiceChannel } from "./VoiceChannel.vue"
+export { default as VoiceChannelHeader } from "./VoiceChannelHeader.vue"
+export { default as VoiceChannelIcon } from "./VoiceChannelIcon.vue"
+export { default as VoiceChannelMembers } from "./VoiceChannelMembers.vue"
+export { default as VoiceChannelMember } from "./VoiceChannelMember.vue"
+export { default as VoiceChannelMemberIcons } from "./VoiceChannelMemberIcons.vue"

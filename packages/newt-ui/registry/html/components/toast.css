@@ -1,0 +1,37 @@
+/* newt-ui · Toast / Notification */
+
+.newt-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  padding: 12px 14px;
+  box-shadow: var(--newt-shadow-elevation-high);
+  max-width: 360px;
+}
+.newt-toast__icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.newt-toast--success .newt-toast__icon {
+  background: var(--newt-online);
+}
+.newt-toast--error .newt-toast__icon {
+  background: var(--newt-dnd);
+}
+.newt-toast__title {
+  font-size: 14px;
+  font-weight: 600;
+}
+.newt-toast__desc {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  margin-top: 2px;
+}

@@ -1,0 +1,17 @@
+{
+  "name": "timeline",
+  "title": "Event Timeline",
+  "description": "A vertical event log with connected status dots, titles and metadata.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": [
+    "Timeline.vue",
+    "TimelineItem.vue",
+    "TimelineDot.vue",
+    "TimelineContent.vue",
+    "TimelineTitle.vue",
+    "TimelineMeta.vue",
+    "index.ts"
+  ],
+  "reactDemo": "timeline-demo",
+  "vueDemo": "TimelineDemo"
+}

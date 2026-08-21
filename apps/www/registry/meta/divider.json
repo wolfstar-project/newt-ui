@@ -1,0 +1,8 @@
+{
+  "name": "divider",
+  "title": "Divider",
+  "description": "A horizontal rule with an optional centered label, like Discord's date separators.",
+  "vueFiles": ["Divider.vue", "index.ts"],
+  "reactDemo": "divider-demo",
+  "vueDemo": "DividerDemo"
+}

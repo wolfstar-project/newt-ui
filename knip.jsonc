@@ -1,0 +1,71 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  // Matches the wolfstar-project convention: the registry ships intentionally
+  // unused public exports (every component is a copy-paste target), so export
+  // level reporting is off and only files/dependencies are enforced.
+  "rules": {
+    "exports": "off",
+    "types": "off",
+    "enumMembers": "off",
+  },
+  "workspaces": {
+    ".": {
+      "entry": ["scripts/*.{mjs,ts}"],
+      "project": ["scripts/**/*.{mjs,ts}"],
+    },
+    "apps/www": {
+      "entry": [
+        "app/**/*.{ts,tsx}",
+        "components/**/*.tsx",
+        "mdx-components.tsx",
+        "registry/index.ts",
+        "registry/default/**/*.{ts,tsx}",
+        "scripts/build-registry.mts",
+      ],
+      "project": ["**/*.{ts,tsx}"],
+      "ignore": ["__registry__/**"],
+    },
+    "apps/vue": {
+      "entry": [
+        "app/pages/**/*.vue",
+        "app/components/**/*.vue",
+        "app/lib/registry/index.ts",
+        "app/lib/registry/default/**/*.{ts,vue}",
+        // Nuxt auto-imports these directories; nothing imports them explicitly.
+        "app/composables/**/*.ts",
+        "app/utils/**/*.ts",
+        "scripts/build-registry.mts",
+      ],
+      "project": ["app/**/*.{ts,vue}", "nuxt.config.ts"],
+      "ignore": ["app/__registry__/**"],
+      "ignoreDependencies": ["vue-router"],
+    },
+    "packages/newt-ui": {
+      "entry": ["src/index.ts", "cli/index.js"],
+      "project": ["src/**/*.ts"],
+    },
+    "packages/cli": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.ts"],
+    },
+    "packages/module": {
+      "entry": ["src/module.ts"],
+      "project": ["src/**/*.ts"],
+      "ignoreDependencies": ["nuxt"],
+    },
+    "templates/next-template": {
+      "entry": ["app/**/*.{ts,tsx}", "lib/utils.ts"],
+      "project": ["**/*.{ts,tsx}"],
+      "ignoreDependencies": ["class-variance-authority", "lucide-react"],
+    },
+    "templates/nuxt-template": {
+      "entry": ["app/pages/**/*.vue", "app/lib/utils.ts", "app/app.vue"],
+      "project": ["app/**/*.{ts,vue}", "nuxt.config.ts"],
+      "ignoreDependencies": [
+        "class-variance-authority",
+        "lucide-vue-next",
+        "vue",
+      ],
+    },
+  },
+}

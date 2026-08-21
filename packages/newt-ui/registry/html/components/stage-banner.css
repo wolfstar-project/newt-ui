@@ -1,0 +1,46 @@
+/* newt-ui · Stage Banner */
+
+.newt-stage-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--newt-brand);
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.newt-stage-banner__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  flex-shrink: 0;
+}
+.newt-stage-banner__action {
+  margin-left: auto;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  border: none;
+  border-radius: var(--newt-radius-sm);
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.newt-stage-banner__action:hover {
+  background: rgba(0, 0, 0, 0.32);
+}
+.newt-stage-banner--dismissible .newt-stage-banner__close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.newt-stage-banner__close:hover {
+  color: #fff;
+}

@@ -1,0 +1,3866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>newt/ui — Discord-native components</title>
+<!-- Fonts: bunny.net (privacy-friendly, no Google tracking) -->
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800|jetbrains-mono:400,500,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   newt-ui — Discord-native component library
+   Design tokens
+   ============================================================ */
+
+:root {
+  /* Surfaces */
+  --newt-bg-base: #1e1f22;
+  --newt-bg-surface: #2b2d31;
+  --newt-bg-elevated: #313338;
+  --newt-bg-floating: #1e1f22;
+  --newt-bg-input: #1e1f22;
+  --newt-bg-hover: rgba(78, 80, 88, 0.4);
+  --newt-bg-active: rgba(78, 80, 88, 0.6);
+  --newt-border: #3f4147;
+
+  /* Text */
+  --newt-text-primary: #f2f3f5;
+  --newt-text-secondary: #b5bac1;
+  --newt-text-muted: #949ba4;
+  --newt-text-link: #00a8fc;
+
+  /* Brand */
+  --newt-brand: #5865f2;
+  --newt-brand-hover: #4752c4;
+  --newt-brand-active: #3c45a5;
+
+  /* Status */
+  --newt-online: #23a55a;
+  --newt-idle: #f0b232;
+  --newt-dnd: #f23f42;
+  --newt-offline: #80848e;
+  --newt-danger: #da373c;
+  --newt-danger-hover: #a12828;
+
+  /* Type */
+  --newt-font-sans: "Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --newt-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --newt-font-display: "Inter", sans-serif;
+
+  /* Radius */
+  --newt-radius-sm: 4px;
+  --newt-radius-md: 8px;
+  --newt-radius-lg: 12px;
+  --newt-radius-full: 9999px;
+
+  /* Shadows */
+  --newt-shadow-elevation-low: 0 1px 0 rgba(0,0,0,0.2), 0 1.5px 0 rgba(0,0,0,0.05), 0 2px 0 rgba(0,0,0,0.05);
+  --newt-shadow-elevation-high: 0 8px 16px rgba(0,0,0,0.24);
+
+  /* Motion */
+  --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
+  --newt-duration-fast: 100ms;
+  --newt-duration-base: 150ms;
+}
+
+* { box-sizing: border-box; }
+
+.newt-root {
+  font-family: var(--newt-font-sans);
+  color: var(--newt-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   Button
+   ============================================================ */
+
+.newt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--newt-font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 10px 16px;
+  border-radius: var(--newt-radius-sm);
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+.newt-btn:active { transform: translateY(0.5px); }
+.newt-btn:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.newt-btn--primary {
+  background: var(--newt-brand);
+  color: #fff;
+}
+.newt-btn--primary:hover { background: var(--newt-brand-hover); }
+.newt-btn--primary:active { background: var(--newt-brand-active); }
+
+.newt-btn--secondary {
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-primary);
+}
+.newt-btn--secondary:hover { background: var(--newt-bg-hover); }
+
+.newt-btn--danger {
+  background: var(--newt-danger);
+  color: #fff;
+}
+.newt-btn--danger:hover { background: var(--newt-danger-hover); }
+
+.newt-btn--success {
+  background: var(--newt-online);
+  color: #fff;
+}
+.newt-btn--success:hover { filter: brightness(0.9); }
+
+.newt-btn--link {
+  background: transparent;
+  color: var(--newt-text-link);
+  padding: 4px 0;
+}
+.newt-btn--link:hover { text-decoration: underline; }
+
+.newt-btn--sm { padding: 6px 12px; font-size: 13px; }
+.newt-btn--lg { padding: 12px 24px; font-size: 16px; }
+
+.newt-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.newt-btn--icon {
+  padding: 8px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-secondary);
+}
+.newt-btn--icon:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+
+/* ============================================================
+   Badge
+   ============================================================ */
+
+.newt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  padding: 2px 8px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-secondary);
+}
+
+.newt-badge--brand { background: rgba(88, 101, 242, 0.15); color: #b3baff; }
+.newt-badge--success { background: rgba(35, 165, 90, 0.15); color: #45c178; }
+.newt-badge--warning { background: rgba(240, 178, 50, 0.15); color: #f3b95f; }
+.newt-badge--danger { background: rgba(242, 63, 66, 0.15); color: #f4878a; }
+
+.newt-badge--dot::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ============================================================
+   Status Indicator
+   ============================================================ */
+
+.newt-status {
+  position: relative;
+  display: inline-block;
+}
+
+.newt-status__dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid var(--newt-bg-base);
+  background: var(--newt-offline);
+}
+
+.newt-status__dot--online { background: var(--newt-online); }
+.newt-status__dot--idle {
+  background: var(--newt-bg-base);
+  border-color: var(--newt-bg-base);
+}
+.newt-status__dot--idle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--newt-idle);
+  clip-path: circle(60% at 35% 35%);
+}
+.newt-status__dot--dnd { background: var(--newt-bg-base); }
+.newt-status__dot--dnd::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65%;
+  height: 22%;
+  border-radius: 1px;
+  background: var(--newt-dnd);
+}
+.newt-status__dot--offline { background: var(--newt-offline); }
+.newt-status__dot--streaming { background: #593695; }
+
+/* presence glow — signature motif */
+/* online dot is plain — no pulse */
+
+
+
+
+
+/* ============================================================
+   Avatar
+   ============================================================ */
+
+.newt-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--newt-brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+.newt-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.newt-avatar--sm { width: 24px; height: 24px; font-size: 11px; }
+.newt-avatar--lg { width: 80px; height: 80px; font-size: 28px; }
+
+/* ============================================================
+   Embed (Discord message embed)
+   ============================================================ */
+
+.newt-embed {
+  display: flex;
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-md);
+  border-left: 4px solid var(--newt-brand);
+  max-width: 520px;
+  overflow: hidden;
+}
+
+.newt-embed__body {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.newt-embed__eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--newt-text-link);
+}
+
+.newt-embed__description {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.newt-embed__field-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+  margin-bottom: 2px;
+}
+
+.newt-embed__field-value {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   Card / Panel
+   ============================================================ */
+
+.newt-card {
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-lg);
+  border: 1px solid var(--newt-border);
+  padding: 20px;
+}
+
+.newt-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.newt-card__description {
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  margin: 0;
+}
+
+/* ============================================================
+   Input / Form Controls
+   ============================================================ */
+
+.newt-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.newt-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--newt-text-secondary);
+}
+
+.newt-input,
+.newt-textarea,
+.newt-select {
+  background: var(--newt-bg-input);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  color: var(--newt-text-primary);
+  font-size: 14px;
+  font-family: var(--newt-font-sans);
+  padding: 10px 12px;
+  width: 100%;
+}
+
+.newt-input:focus,
+.newt-textarea:focus,
+.newt-select:focus {
+  outline: none;
+  border-color: var(--newt-brand);
+}
+
+.newt-input::placeholder,
+.newt-textarea::placeholder { color: var(--newt-text-muted); }
+
+.newt-textarea { resize: vertical; min-height: 80px; }
+
+.newt-help { font-size: 12px; color: var(--newt-text-muted); }
+
+/* Toggle / Switch */
+.newt-switch {
+  position: relative;
+  display: inline-flex;
+  width: 40px;
+  height: 24px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.newt-switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--newt-text-muted);
+}
+.newt-switch--on { background: var(--newt-online); border-color: var(--newt-online); }
+.newt-switch--on .newt-switch__thumb {
+  transform: translateX(16px);
+  background: #fff;
+}
+
+/* ============================================================
+   Slash Command Block
+   ============================================================ */
+
+.newt-command {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(88, 101, 242, 0.15);
+  color: #b3baff;
+  font-family: var(--newt-font-mono);
+  font-size: 13px;
+  padding: 2px 8px 2px 6px;
+  border-radius: var(--newt-radius-sm);
+}
+.newt-command__icon { opacity: 0.8; }
+
+/* ============================================================
+   Pill Tabs
+   ============================================================ */
+
+.newt-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--newt-bg-base);
+  padding: 4px;
+  border-radius: var(--newt-radius-md);
+  width: fit-content;
+}
+.newt-tab {
+  padding: 6px 14px;
+  border-radius: var(--newt-radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--newt-text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.newt-tab--active {
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-primary);
+}
+.newt-tab:hover:not(.newt-tab--active) { color: var(--newt-text-secondary); }
+
+/* ============================================================
+   Tooltip
+   ============================================================ */
+
+.newt-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+.newt-tooltip__bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111214;
+  color: var(--newt-text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: var(--newt-radius-sm);
+  white-space: nowrap;
+  box-shadow: var(--newt-shadow-elevation-high);
+  opacity: 0;
+  pointer-events: none;
+}
+.newt-tooltip:hover .newt-tooltip__bubble { opacity: 1; }
+
+/* ============================================================
+   Modal
+   ============================================================ */
+
+.newt-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.newt-modal {
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-lg);
+  width: 440px;
+  max-width: 90vw;
+  box-shadow: var(--newt-shadow-elevation-high);
+}
+.newt-modal__header {
+  padding: 16px 16px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+.newt-modal__body {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  line-height: 20px;
+}
+.newt-modal__footer {
+  padding: 16px;
+  background: var(--newt-bg-surface);
+  border-radius: 0 0 var(--newt-radius-lg) var(--newt-radius-lg);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ============================================================
+   Toast / Notification
+   ============================================================ */
+
+.newt-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  padding: 12px 14px;
+  box-shadow: var(--newt-shadow-elevation-high);
+  max-width: 360px;
+}
+.newt-toast__icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.newt-toast--success .newt-toast__icon { background: var(--newt-online); }
+.newt-toast--error .newt-toast__icon { background: var(--newt-dnd); }
+.newt-toast__title { font-size: 14px; font-weight: 600; }
+.newt-toast__desc { font-size: 13px; color: var(--newt-text-secondary); margin-top: 2px; }
+
+/* ============================================================
+   Code Block
+   ============================================================ */
+
+.newt-code {
+  background: #111214;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  font-family: var(--newt-font-mono);
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  padding: 16px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.newt-code .tok-key { color: #569cd6; }
+.newt-code .tok-str { color: #ce9178; }
+.newt-code .tok-com { color: #6a9955; }
+.newt-code .tok-fn { color: #dcdcaa; }
+
+/* ============================================================
+   Reaction Pill
+   ============================================================ */
+
+.newt-reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--newt-radius-md);
+  border: 1px solid var(--newt-border);
+  background: var(--newt-bg-surface);
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+}
+.newt-reaction:hover { background: var(--newt-bg-hover); }
+.newt-reaction--active {
+  background: rgba(88, 101, 242, 0.15);
+  border-color: var(--newt-brand);
+  color: #b3baff;
+}
+.newt-reaction:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-reaction__count { font-weight: 600; font-size: 12px; }
+
+/* ============================================================
+   Reply Preview (Discord "replying to" bar)
+   ============================================================ */
+
+.newt-reply {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--newt-text-muted);
+  margin-bottom: 4px;
+  padding-left: 18px;
+  position: relative;
+}
+.newt-reply::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-left: 2px solid var(--newt-border);
+  border-top: 2px solid var(--newt-border);
+  border-radius: 6px 0 0 0;
+  transform: translateY(-100%);
+}
+.newt-reply__author { color: var(--newt-text-link); font-weight: 500; }
+.newt-reply__text {
+  color: var(--newt-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 360px;
+}
+
+/* ============================================================
+   Typing Indicator
+   ============================================================ */
+
+.newt-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--newt-text-muted);
+}
+.newt-typing__dots {
+  display: inline-flex;
+  gap: 3px;
+}
+.newt-typing__dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--newt-text-muted);
+}
+
+
+
+
+/* ============================================================
+   Progress Bar (server boost / upload style)
+   ============================================================ */
+
+.newt-progress {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-base);
+  overflow: hidden;
+}
+.newt-progress__fill {
+  height: 100%;
+  border-radius: var(--newt-radius-full);
+  background: linear-gradient(90deg, var(--newt-brand), #8c54ff);
+}
+.newt-progress__fill--success { background: linear-gradient(90deg, var(--newt-online), #45c178); }
+.newt-progress__fill--danger { background: linear-gradient(90deg, var(--newt-dnd), #f4878a); }
+
+.newt-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+  margin-bottom: 6px;
+}
+
+/* ============================================================
+   Member List Item
+   ============================================================ */
+
+.newt-member {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+}
+.newt-member:hover { background: var(--newt-bg-hover); }
+.newt-member__info { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.newt-member__name { font-size: 14px; font-weight: 500; color: var(--newt-text-primary); }
+.newt-member__role { font-size: 12px; color: var(--newt-text-muted); }
+.newt-member__name--colored { color: var(--newt-brand); }
+
+/* ============================================================
+   Role Tag
+   ============================================================ */
+
+.newt-role-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+}
+.newt-role-tag__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ============================================================
+   Divider with label (Discord date separators)
+   ============================================================ */
+
+.newt-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  color: var(--newt-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+.newt-divider::before,
+.newt-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--newt-border);
+}
+
+/* ============================================================
+   Mention Chip
+   ============================================================ */
+
+.newt-mention {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 4px;
+  border-radius: var(--newt-radius-sm);
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}
+.newt-mention--user {
+  background: rgba(88, 101, 242, 0.15);
+  color: #b3baff;
+}
+.newt-mention--user:hover { background: rgba(88, 101, 242, 0.3); }
+
+.newt-mention--channel {
+  background: rgba(148, 155, 164, 0.15);
+  color: var(--newt-text-link);
+}
+.newt-mention--channel:hover { background: rgba(148, 155, 164, 0.25); }
+
+.newt-mention--role {
+  background: rgba(240, 178, 50, 0.15);
+  color: #f3b95f;
+}
+.newt-mention--role:hover { background: rgba(240, 178, 50, 0.25); }
+
+/* ============================================================
+   Spoiler
+   ============================================================ */
+
+.newt-spoiler {
+  background: #1a1a1e;
+  color: transparent;
+  border-radius: var(--newt-radius-sm);
+  padding: 0 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.newt-spoiler--revealed {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+  user-select: text;
+  cursor: text;
+}
+.newt-spoiler:not(.newt-spoiler--revealed):hover { background: #232328; }
+
+/* ============================================================
+   Voice Channel Row
+   ============================================================ */
+
+.newt-voice-channel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 8px;
+  border-radius: var(--newt-radius-sm);
+}
+.newt-voice-channel__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--newt-text-muted);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.newt-voice-channel__header:hover { color: var(--newt-text-secondary); }
+.newt-voice-channel__icon { flex-shrink: 0; opacity: 0.8; }
+.newt-voice-channel__members {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 24px;
+}
+.newt-voice-channel__member {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 6px;
+  border-radius: var(--newt-radius-sm);
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+}
+.newt-voice-channel__member:hover { background: var(--newt-bg-hover); }
+.newt-voice-channel__member-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  color: var(--newt-text-muted);
+  font-size: 12px;
+}
+.newt-voice-channel__member-icons--muted { color: var(--newt-dnd); }
+
+/* ============================================================
+   Attachment / File Card
+   ============================================================ */
+
+.newt-attachment {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--newt-bg-surface);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  padding: 10px 12px;
+  max-width: 360px;
+}
+.newt-attachment__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--newt-font-mono);
+  flex-shrink: 0;
+}
+.newt-attachment__meta { flex: 1; min-width: 0; }
+.newt-attachment__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--newt-text-link);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.newt-attachment__size { font-size: 12px; color: var(--newt-text-muted); }
+
+/* ============================================================
+   Timeline / Event Log
+   ============================================================ */
+
+.newt-timeline {
+  display: flex;
+  flex-direction: column;
+}
+.newt-timeline__item {
+  display: flex;
+  gap: 12px;
+  position: relative;
+  padding-bottom: 20px;
+}
+.newt-timeline__item:last-child { padding-bottom: 0; }
+.newt-timeline__item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 24px;
+  bottom: 0;
+  width: 2px;
+  background: var(--newt-border);
+}
+.newt-timeline__dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--newt-bg-surface);
+  border: 2px solid var(--newt-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.newt-timeline__dot--success { border-color: var(--newt-online); color: var(--newt-online); }
+.newt-timeline__dot--danger { border-color: var(--newt-dnd); color: var(--newt-dnd); }
+.newt-timeline__dot--brand { border-color: var(--newt-brand); color: #b3baff; }
+.newt-timeline__content { flex: 1; padding-top: 1px; }
+.newt-timeline__title { font-size: 14px; font-weight: 600; color: var(--newt-text-primary); }
+.newt-timeline__meta { font-size: 12px; color: var(--newt-text-muted); margin-top: 2px; }
+
+/* ============================================================
+   Permission Row
+   ============================================================ */
+
+.newt-permission {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--newt-border);
+}
+.newt-permission:last-child { border-bottom: none; }
+.newt-permission__info { display: flex; flex-direction: column; gap: 2px; }
+.newt-permission__name { font-size: 14px; font-weight: 500; color: var(--newt-text-primary); }
+.newt-permission__desc { font-size: 12px; color: var(--newt-text-muted); }
+.newt-permission__states {
+  display: flex;
+  gap: 4px;
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-sm);
+  padding: 2px;
+}
+.newt-permission__state {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--newt-radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--newt-text-muted);
+  cursor: pointer;
+  font-size: 14px;
+}
+.newt-permission__state:hover { color: var(--newt-text-secondary); }
+.newt-permission__state--deny.newt-permission__state--active {
+  background: rgba(242, 63, 66, 0.15);
+  color: var(--newt-dnd);
+}
+.newt-permission__state--inherit.newt-permission__state--active {
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-secondary);
+}
+.newt-permission__state--allow.newt-permission__state--active {
+  background: rgba(35, 165, 90, 0.15);
+  color: var(--newt-online);
+}
+
+/* ============================================================
+   Token Field (masked input with reveal/copy)
+   ============================================================ */
+
+.newt-token-field {
+  display: flex;
+  gap: 8px;
+}
+.newt-token-field .newt-input {
+  font-family: var(--newt-font-mono);
+  letter-spacing: 0.05em;
+}
+
+/* ============================================================
+   Dropdown Menu
+   ============================================================ */
+
+.newt-dropdown {
+  background: var(--newt-bg-floating);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  box-shadow: var(--newt-shadow-elevation-high);
+  padding: 6px;
+  width: 240px;
+}
+.newt-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+}
+.newt-dropdown__item:hover,
+.newt-dropdown__item--active { background: var(--newt-brand); }
+.newt-dropdown__item:hover .newt-dropdown__desc,
+.newt-dropdown__item--active .newt-dropdown__desc { color: rgba(255,255,255,0.75); }
+.newt-dropdown__icon {
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+  color: var(--newt-text-muted);
+}
+.newt-dropdown__item:hover .newt-dropdown__icon,
+.newt-dropdown__item--active .newt-dropdown__icon { color: #fff; }
+.newt-dropdown__label { font-size: 14px; font-weight: 500; }
+.newt-dropdown__desc { font-size: 12px; color: var(--newt-text-muted); }
+.newt-dropdown__divider { height: 1px; background: var(--newt-border); margin: 4px 6px; }
+
+/* ============================================================
+   Skeleton Loader
+   ============================================================ */
+
+.newt-skeleton {
+  background: var(--newt-bg-hover);
+  border-radius: var(--newt-radius-sm);
+}
+.newt-skeleton--text { height: 14px; }
+.newt-skeleton--avatar { width: 40px; height: 40px; border-radius: 50%; }
+.newt-skeleton--title { height: 20px; width: 40%; }
+
+
+
+
+/* ============================================================
+   Empty State
+   ============================================================ */
+
+.newt-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 40px 20px;
+  color: var(--newt-text-muted);
+}
+.newt-empty-state__icon {
+  font-size: 40px;
+  margin-bottom: 4px;
+  opacity: 0.6;
+}
+.newt-empty-state__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+.newt-empty-state__desc {
+  font-size: 14px;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Context Menu
+   ============================================================ */
+
+.newt-context-menu {
+  background: var(--newt-bg-floating);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  box-shadow: var(--newt-shadow-elevation-high);
+  padding: 6px;
+  width: 188px;
+}
+.newt-context-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  border-radius: var(--newt-radius-sm);
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+}
+.newt-context-menu__item:hover {
+  background: var(--newt-brand);
+  color: #fff;
+}
+.newt-context-menu__item--danger { color: var(--newt-dnd); }
+.newt-context-menu__item--danger:hover { background: var(--newt-dnd); color: #fff; }
+.newt-context-menu__shortcut { font-size: 11px; color: var(--newt-text-muted); }
+.newt-context-menu__item:hover .newt-context-menu__shortcut { color: rgba(255,255,255,0.7); }
+.newt-context-menu__divider { height: 1px; background: var(--newt-border); margin: 4px 6px; }
+
+/* ============================================================
+   Server Banner
+   ============================================================ */
+
+.newt-server-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-lg);
+  padding: 16px 20px;
+  max-width: 480px;
+}
+.newt-server-banner__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--newt-radius-lg);
+  background: var(--newt-brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.newt-server-banner__info { flex: 1; min-width: 0; }
+.newt-server-banner__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--newt-text-primary);
+}
+.newt-server-banner__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--newt-text-muted);
+  margin-top: 2px;
+}
+.newt-server-banner__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.newt-server-banner__meta-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.newt-server-banner__meta-dot--online { background: var(--newt-online); }
+.newt-server-banner__meta-dot--offline { background: var(--newt-offline); }
+
+/* ============================================================
+   Scrollbar Utility
+   ============================================================ */
+
+.newt-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--newt-bg-active) transparent;
+}
+.newt-scrollbar::-webkit-scrollbar { width: 16px; height: 16px; }
+.newt-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.newt-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--newt-bg-active);
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 8px;
+}
+.newt-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--newt-text-muted);
+  background-clip: padding-box;
+}
+.newt-scrollbar::-webkit-scrollbar-corner { background-color: transparent; }
+
+/* ============================================================
+   Keyboard Shortcut Tag
+   ============================================================ */
+
+.newt-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-family: var(--newt-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--newt-text-secondary);
+  background: var(--newt-bg-base);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  box-shadow: 0 1px 0 var(--newt-border);
+}
+
+/* ============================================================
+   Cooldown Bar
+   ============================================================ */
+
+.newt-cooldown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 260px;
+}
+.newt-cooldown__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+.newt-cooldown__label strong {
+  font-family: var(--newt-font-mono);
+  color: var(--newt-text-secondary);
+  font-weight: 600;
+}
+.newt-cooldown__track {
+  height: 6px;
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-full);
+  overflow: hidden;
+}
+.newt-cooldown__fill {
+  height: 100%;
+  background: var(--newt-idle);
+  border-radius: var(--newt-radius-full);
+}
+.newt-cooldown__fill--ready { background: var(--newt-online); }
+
+/* ============================================================
+   Pagination / Load More
+   ============================================================ */
+
+.newt-pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.newt-pagination__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--newt-text-secondary);
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+}
+.newt-pagination__btn:hover { background: var(--newt-bg-hover); color: var(--newt-text-primary); }
+.newt-pagination__btn--active {
+  background: var(--newt-brand);
+  color: #fff;
+  border-color: var(--newt-brand);
+}
+.newt-pagination__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.newt-pagination__ellipsis {
+  color: var(--newt-text-muted);
+  font-size: 13px;
+  padding: 0 4px;
+}
+
+.newt-load-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  color: var(--newt-text-muted);
+  font-size: 13px;
+}
+.newt-load-more::before,
+.newt-load-more::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--newt-border);
+}
+
+/* ============================================================
+   Stage Banner (announcement bar)
+   ============================================================ */
+
+.newt-stage-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--newt-brand);
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.newt-stage-banner__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  flex-shrink: 0;
+}
+.newt-stage-banner__action {
+  margin-left: auto;
+  background: rgba(0,0,0,0.2);
+  color: #fff;
+  border: none;
+  border-radius: var(--newt-radius-sm);
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.newt-stage-banner__action:hover { background: rgba(0,0,0,0.32); }
+.newt-stage-banner--dismissible .newt-stage-banner__close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.newt-stage-banner__close:hover { color: #fff; }
+
+
+/* ============================================================
+   Channel Topic Bar
+   ============================================================ */
+
+.newt-channel-topic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--newt-border);
+  font-size: 14px;
+  min-width: 0;
+}
+.newt-channel-topic__icon {
+  color: var(--newt-text-muted);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.newt-channel-topic__name {
+  font-weight: 700;
+  color: var(--newt-text-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.newt-channel-topic__divider {
+  width: 1px;
+  height: 18px;
+  background: var(--newt-border);
+  flex-shrink: 0;
+}
+.newt-channel-topic__desc {
+  color: var(--newt-text-muted);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Notification Badge
+   ============================================================ */
+
+.newt-notif-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--newt-dnd);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: var(--newt-radius-full);
+  border: 2px solid var(--newt-bg-base);
+  line-height: 1;
+}
+.newt-notif-badge--mention { background: var(--newt-dnd); }
+.newt-notif-badge--unread {
+  width: 8px;
+  height: 8px;
+  min-width: unset;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--newt-text-primary);
+}
+
+/* ============================================================
+   User Profile Popout
+   ============================================================ */
+
+.newt-profile {
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-lg);
+  width: 280px;
+  overflow: hidden;
+  box-shadow: var(--newt-shadow-elevation-high);
+  border: 1px solid var(--newt-border);
+}
+.newt-profile__banner {
+  height: 60px;
+  background: var(--newt-brand);
+}
+.newt-profile__head {
+  padding: 0 16px 12px;
+  position: relative;
+}
+.newt-profile__avatar-wrap {
+  position: absolute;
+  top: -24px;
+  left: 16px;
+  border: 4px solid var(--newt-bg-base);
+  border-radius: 50%;
+}
+.newt-profile__actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 0 36px;
+  gap: 8px;
+}
+.newt-profile__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--newt-text-primary);
+}
+.newt-profile__handle {
+  font-size: 13px;
+  color: var(--newt-text-muted);
+  margin-bottom: 10px;
+}
+.newt-profile__divider {
+  height: 1px;
+  background: var(--newt-border);
+  margin: 10px 0;
+}
+.newt-profile__section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--newt-text-muted);
+  margin-bottom: 6px;
+}
+.newt-profile__bio {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  line-height: 1.5;
+}
+.newt-profile__roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.newt-profile__body {
+  padding: 0 16px 16px;
+}
+
+/* ============================================================
+   Message Group
+   ============================================================ */
+
+.newt-message-group {
+  display: flex;
+  gap: 16px;
+  padding: 4px 0;
+}
+.newt-message-group:hover { background: rgba(0,0,0,0.06); }
+.newt-message-group__body { flex: 1; min-width: 0; }
+.newt-message-group__header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.newt-message-group__author {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+.newt-message-group__author--bot {
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--newt-brand);
+  color: #fff;
+  padding: 1px 4px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.newt-message-group__time {
+  font-size: 11px;
+  color: var(--newt-text-muted);
+}
+.newt-message-group__content {
+  font-size: 15px;
+  color: var(--newt-text-secondary);
+  line-height: 1.5;
+}
+.newt-message-group__reactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+/* ============================================================
+   Select Menu
+   ============================================================ */
+
+.newt-select-menu {
+  background: var(--newt-bg-floating);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  box-shadow: var(--newt-shadow-elevation-high);
+  padding: 6px;
+  min-width: 200px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.newt-select-menu__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-sm);
+  margin-bottom: 4px;
+}
+.newt-select-menu__search input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+  font-size: 14px;
+  width: 100%;
+}
+.newt-select-menu__search input::placeholder { color: var(--newt-text-muted); }
+.newt-select-menu__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--newt-text-muted);
+  padding: 4px 10px 2px;
+}
+.newt-select-menu__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+}
+.newt-select-menu__option:hover { background: var(--newt-brand); color: #fff; }
+.newt-select-menu__option--selected {
+  color: var(--newt-text-primary);
+}
+.newt-select-menu__option--selected::after {
+  content: "✓";
+  margin-left: auto;
+  color: var(--newt-brand);
+  font-weight: 700;
+}
+.newt-select-menu__option:hover::after { color: #fff; }
+.newt-select-menu__divider { height: 1px; background: var(--newt-border); margin: 4px 6px; }
+
+/* ============================================================
+   Bot Command Card
+   ============================================================ */
+
+.newt-command-card {
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  padding: 16px;
+  max-width: 480px;
+}
+.newt-command-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+.newt-command-card__name {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--newt-font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--newt-brand);
+}
+.newt-command-card__slash {
+  color: var(--newt-text-muted);
+  font-weight: 400;
+}
+.newt-command-card__desc {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.newt-command-card__options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.newt-command-card__option {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 12px;
+}
+.newt-command-card__opt-name {
+  font-family: var(--newt-font-mono);
+  color: var(--newt-text-primary);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.newt-command-card__opt-type {
+  color: var(--newt-text-muted);
+  font-family: var(--newt-font-mono);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.newt-command-card__opt-required {
+  color: var(--newt-dnd);
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.newt-command-card__opt-desc { color: var(--newt-text-muted); }
+
+</style>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: auto; }
+
+/* ===== Scrollbars (Discord-style) ===== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--newt-bg-active) transparent;
+}
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--newt-bg-active);
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--newt-text-muted);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+.sidenav__scroll {
+  scrollbar-color: var(--newt-bg-elevated) transparent;
+}
+.sidenav__scroll::-webkit-scrollbar-thumb {
+  background-color: var(--newt-bg-elevated);
+  background-clip: padding-box;
+}
+.sidenav__scroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--newt-bg-active);
+  background-clip: padding-box;
+}
+body {
+  background: var(--newt-bg-base);
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+}
+
+/* ===== Layout: fixed sidebar + content column ===== */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidenav {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 264px;
+  background: var(--newt-bg-surface);
+  border-right: 1px solid var(--newt-border);
+  display: flex;
+  flex-direction: column;
+  z-index: 30;
+}
+.sidenav__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--newt-border);
+  font-family: var(--newt-font-mono);
+  font-weight: 700;
+  font-size: 15px;
+}
+.sidenav__brand-icon {
+  color: var(--newt-brand);
+}
+.sidenav__brand-ver {
+  font-size: 11px;
+  color: var(--newt-text-muted);
+  font-weight: 400;
+}
+.sidenav__scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0 24px;
+}
+.sidenav__group {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--newt-text-muted);
+  padding: 18px 20px 6px;
+}
+.sidenav__group:first-child { padding-top: 4px; }
+.sidenav__link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 20px;
+  border-left: 2px solid transparent;
+  color: var(--newt-text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.sidenav__link:hover { color: var(--newt-text-secondary); }
+.sidenav__link.is-active { color: var(--newt-text-primary); border-left-color: var(--newt-brand); background: var(--newt-bg-hover); }
+.sidenav__link .h { color: var(--newt-text-muted); font-weight: 600; font-family: var(--newt-font-mono); }
+
+.sidenav__footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--newt-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sidenav__footer-meta { display: flex; flex-direction: column; line-height: 1.25; }
+.sidenav__footer-name { font-size: 13px; font-weight: 600; font-family: var(--newt-font-mono); }
+.sidenav__footer-sub { font-size: 11px; color: var(--newt-text-muted); }
+
+/* mobile nav toggle */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 50;
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  color: var(--newt-text-primary);
+  width: 36px; height: 36px;
+  align-items: center; justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+}
+.sidenav-overlay { display: none; }
+
+/* ===== Main content ===== */
+.main {
+  margin-left: 264px;
+  flex: 1;
+  min-width: 0;
+}
+
+.page-header {
+  border-bottom: 1px solid var(--newt-border);
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+}
+.page-header__main {
+  padding: 64px 48px;
+  border-right: 1px solid var(--newt-border);
+}
+.page-header__eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  color: var(--newt-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--newt-font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--newt-border);
+}
+.page-header__eyebrow b { color: var(--newt-text-secondary); font-weight: 600; }
+.page-header h1 {
+  font-size: 46px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 22px;
+  max-width: 620px;
+}
+.page-header h1 em {
+  font-style: normal;
+  font-family: var(--newt-font-mono);
+  font-weight: 500;
+  font-size: 0.62em;
+  color: var(--newt-text-muted);
+  display: block;
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+.page-header p.lead {
+  font-size: 15px;
+  color: var(--newt-text-secondary);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  border-left: 2px solid var(--newt-brand);
+  padding-left: 16px;
+}
+.page-header__cta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+/* Manifest column */
+.page-header__manifest {
+  padding: 64px 32px;
+  display: flex;
+  flex-direction: column;
+}
+.manifest__heading {
+  font-family: var(--newt-font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--newt-text-muted);
+  margin-bottom: 16px;
+}
+.manifest__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--newt-border);
+  font-size: 13px;
+}
+.manifest__row:last-child { border-bottom: none; }
+.manifest__key { color: var(--newt-text-muted); }
+.manifest__val {
+  font-family: var(--newt-font-mono);
+  color: var(--newt-text-primary);
+  text-align: right;
+}
+.manifest__val--brand { color: var(--newt-brand); }
+
+.content { padding: 0 48px 96px; max-width: 1100px; }
+
+/* Section anchors */
+.component-section {
+  padding: 40px 0;
+  border-bottom: 1px solid var(--newt-border);
+  scroll-margin-top: 24px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+}
+.component-section:first-child { padding-top: 48px; }
+.component-section:last-child { border-bottom: none; }
+
+.component-section__head {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+}
+.component-section__num {
+  font-family: var(--newt-font-mono);
+  font-size: 11px;
+  color: var(--newt-text-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.component-section__title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.component-section__class {
+  font-family: var(--newt-font-mono);
+  font-size: 12px;
+  color: var(--newt-text-muted);
+  display: block;
+  margin-top: 4px;
+}
+.component-section__desc {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+  line-height: 1.6;
+}
+
+/* Preview frame */
+.preview {
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  padding: 28px;
+  padding-top: 40px;
+  position: relative;
+}
+.preview::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 8px; height: 8px;
+  border-top: 1px solid var(--newt-brand);
+  border-left: 1px solid var(--newt-brand);
+}
+.preview__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+.preview--col .preview__content { flex-direction: column; align-items: flex-start; }
+.preview__copy {
+  position: absolute;
+  top: 8px; right: 8px;
+  font-family: var(--newt-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--newt-text-muted);
+  background: transparent;
+  border: 1px solid var(--newt-border);
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.preview__copy:hover { color: var(--newt-text-primary); border-color: var(--newt-text-muted); }
+.preview__copy.is-copied { color: var(--newt-online); border-color: var(--newt-online); }
+.preview + .preview { margin-top: 12px; }
+.preview--dark { background: var(--newt-bg-base); }
+.preview__group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.preview__group-label { font-size: 12px; color: var(--newt-text-muted); }
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+/* category divider in content */
+.category-heading {
+  font-family: var(--newt-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--newt-brand);
+  padding: 56px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.category-heading::before { content: "§"; color: var(--newt-text-muted); }
+.category-heading:first-of-type { padding-top: 0; }
+
+/* footer */
+.page-footer {
+  margin-top: 0;
+  padding: 32px 48px;
+  border-top: 1px solid var(--newt-border);
+  color: var(--newt-text-muted);
+  font-size: 12px;
+  font-family: var(--newt-font-mono);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.page-footer__row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.page-footer a { color: var(--newt-text-secondary); text-decoration: none; }
+.page-footer a:hover { color: var(--newt-text-primary); }
+.page-footer__disclaimer {
+  border-top: 1px solid var(--newt-border);
+  padding-top: 16px;
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--newt-text-muted);
+  max-width: 760px;
+}
+
+/* utility */
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+
+.av-1 { background: var(--newt-brand); }
+.av-2 { background: var(--newt-online); }
+.av-3 { background: var(--newt-dnd); }
+
+@media (max-width: 980px) {
+  .sidenav {
+    transform: translateX(-100%);
+    box-shadow: var(--newt-shadow-elevation-high);
+  }
+  .sidenav.is-open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .menu-toggle { display: flex; }
+  .sidenav-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 25;
+  }
+  .sidenav-overlay.is-open { display: block; }
+  .page-header { grid-template-columns: 1fr; padding-top: 56px; }
+  .page-header__main { padding: 32px 24px; border-right: none; border-bottom: 1px solid var(--newt-border); }
+  .page-header__manifest { padding: 32px 24px; }
+  .page-header h1 { font-size: 30px; }
+  .content { padding: 0 24px 64px; }
+  .preview { padding: 20px; }
+  .component-section { grid-template-columns: 1fr; gap: 14px; }
+  .component-section__head { position: static; }
+}
+</style>
+
+<body class="newt-root">
+
+<button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+<div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+<div class="layout">
+  <nav class="sidenav" id="sidenav">
+    <div class="sidenav__brand">
+      <span class="sidenav__brand-icon">newt</span><span>/ui</span>
+      <span class="sidenav__brand-ver">v0.1</span>
+    </div>
+    <div class="sidenav__scroll">
+      <div class="sidenav__group">Getting started</div>
+      <a class="sidenav__link" href="#overview">Overview</a>
+      <a class="sidenav__link" href="#installation">Installation</a>
+      <a class="sidenav__link" href="#cdn">CDN (jsDelivr)</a>
+      <a class="sidenav__link" href="#tokens">Design tokens</a>
+
+      <div class="sidenav__group">Actions</div>
+      <a class="sidenav__link" href="#button"><span class="h">#</span> Button</a>
+      <a class="sidenav__link" href="#dropdown"><span class="h">#</span> Dropdown menu</a>
+      <a class="sidenav__link" href="#context-menu"><span class="h">#</span> Context menu</a>
+      <a class="sidenav__link" href="#kbd-tag"><span class="h">#</span> Keyboard shortcut</a>
+      <a class="sidenav__link" href="#tabs"><span class="h">#</span> Tabs</a>
+
+      <div class="sidenav__group">Feedback</div>
+      <a class="sidenav__link" href="#badge"><span class="h">#</span> Badge</a>
+      <a class="sidenav__link" href="#toast"><span class="h">#</span> Toast</a>
+      <a class="sidenav__link" href="#modal"><span class="h">#</span> Modal</a>
+      <a class="sidenav__link" href="#tooltip"><span class="h">#</span> Tooltip</a>
+      <a class="sidenav__link" href="#progress"><span class="h">#</span> Progress bar</a>
+      <a class="sidenav__link" href="#cooldown-bar"><span class="h">#</span> Cooldown bar</a>
+      <a class="sidenav__link" href="#skeleton"><span class="h">#</span> Skeleton loader</a>
+      <a class="sidenav__link" href="#empty-state"><span class="h">#</span> Empty state</a>
+      <a class="sidenav__link" href="#pagination"><span class="h">#</span> Pagination</a>
+
+      <div class="sidenav__group">Identity &amp; presence</div>
+      <a class="sidenav__link" href="#avatar"><span class="h">#</span> Avatar</a>
+      <a class="sidenav__link" href="#status-indicator"><span class="h">#</span> Status indicator</a>
+      <a class="sidenav__link" href="#member-list"><span class="h">#</span> Member list row</a>
+      <a class="sidenav__link" href="#role-tag"><span class="h">#</span> Role tag</a>
+      <a class="sidenav__link" href="#voice-channel"><span class="h">#</span> Voice channel</a>
+      <a class="sidenav__link" href="#server-banner"><span class="h">#</span> Server banner</a>
+      <a class="sidenav__link" href="#stage-banner"><span class="h">#</span> Stage banner</a>
+      <a class="sidenav__link" href="#typing"><span class="h">#</span> Typing indicator</a>
+
+      <div class="sidenav__group">Messaging</div>
+      <a class="sidenav__link" href="#embed"><span class="h">#</span> Embed</a>
+      <a class="sidenav__link" href="#reaction"><span class="h">#</span> Reaction pill</a>
+      <a class="sidenav__link" href="#reply-preview"><span class="h">#</span> Reply preview</a>
+      <a class="sidenav__link" href="#mention"><span class="h">#</span> Mention chips</a>
+      <a class="sidenav__link" href="#spoiler"><span class="h">#</span> Spoiler</a>
+      <a class="sidenav__link" href="#attachment"><span class="h">#</span> Attachment card</a>
+      <a class="sidenav__link" href="#slash-command"><span class="h">#</span> Slash command</a>
+      <a class="sidenav__link" href="#divider"><span class="h">#</span> Divider</a>
+
+      <div class="sidenav__group">Forms &amp; data</div>
+      <a class="sidenav__link" href="#form-fields"><span class="h">#</span> Form fields</a>
+      <a class="sidenav__link" href="#token-field"><span class="h">#</span> Token field</a>
+      <a class="sidenav__link" href="#card"><span class="h">#</span> Card</a>
+      <a class="sidenav__link" href="#permission"><span class="h">#</span> Permission row</a>
+      <a class="sidenav__link" href="#timeline"><span class="h">#</span> Event timeline</a>
+      <a class="sidenav__link" href="#code-block"><span class="h">#</span> Code block</a>
+
+      <div class="sidenav__group">Messaging</div>
+      <a class="sidenav__link" href="#message-group"><span class="h">#</span> Message group</a>
+      <a class="sidenav__link" href="#channel-topic"><span class="h">#</span> Channel topic bar</a>
+      <a class="sidenav__link" href="#notif-badge"><span class="h">#</span> Notification badge</a>
+      <a class="sidenav__link" href="#user-profile"><span class="h">#</span> User profile popout</a>
+      <a class="sidenav__link" href="#select-menu"><span class="h">#</span> Select menu</a>
+      <a class="sidenav__link" href="#bot-command-card"><span class="h">#</span> Bot command card</a>
+
+      <div class="sidenav__group">Using with AI</div>
+      <a class="sidenav__link" href="#ai-guide">Implementation guide</a>
+
+      <div class="sidenav__group">Ecosystem</div>
+      <a class="sidenav__link" href="#ecosystem">Ecosystem</a>
+    </div>
+    <div class="sidenav__footer">
+      <div class="newt-status">
+        <div class="newt-avatar newt-avatar--sm av-1">N</div>
+        <div class="newt-status__dot newt-status__dot--online"></div>
+      </div>
+      <div class="sidenav__footer-meta">
+        <span class="sidenav__footer-name">newt-devs</span>
+        <span class="sidenav__footer-sub">v0.1.0 · 43 components</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main">
+    <header class="page-header" id="overview">
+      <div class="page-header__main">
+        <div class="page-header__eyebrow">
+          <span>newt/ui</span>
+          <span>·</span>
+          <span><b>v0.1.0</b></span>
+          <span>·</span>
+          <span>early access</span>
+        </div>
+        <h1><em>component spec —</em>Discord-styled UI, copy-pasted into your project.</h1>
+        <p class="lead">
+          A component library, design token system, and AI agent guide for building
+          Discord-styled UI — bots, dashboards, and docs that look like they belong
+          in the client. Built by Newt Devs, the team behind <strong>newt-dsl</strong> and <strong>newt-trace</strong>.
+        </p>
+        <div class="page-header__cta">
+          <button class="newt-btn newt-btn--primary newt-btn--lg">Get started</button>
+          <button class="newt-btn newt-btn--secondary newt-btn--lg">View on GitHub</button>
+        </div>
+      </div>
+      <div class="page-header__manifest">
+        <div class="manifest__heading">package.json</div>
+        <div class="manifest__row">
+          <span class="manifest__key">components</span>
+          <span class="manifest__val manifest__val--brand">43</span>
+        </div>
+        <div class="manifest__row">
+          <span class="manifest__key">dependencies</span>
+          <span class="manifest__val">0</span>
+        </div>
+        <div class="manifest__row">
+          <span class="manifest__key">license</span>
+          <span class="manifest__val">MIT</span>
+        </div>
+        <div class="manifest__row">
+          <span class="manifest__key">install</span>
+          <span class="manifest__val">npx newt-ui</span>
+        </div>
+        <div class="manifest__row">
+          <span class="manifest__key">tokens</span>
+          <span class="manifest__val">CSS vars</span>
+        </div>
+        <div class="manifest__row">
+          <span class="manifest__key">framework</span>
+          <span class="manifest__val">agnostic</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- INSTALLATION -->
+      <section class="component-section" id="installation">
+        <div class="component-section__head">
+          <div class="component-section__num">01</div>
+          <div class="component-section__title">Installation</div>
+          <p class="component-section__desc">
+            Install the CLI and add components directly into your project — same
+            pattern as shadcn. No runtime dependency; components are copied into your
+            codebase so you fully own them.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content" style="width:100%;">
+          <pre class="newt-code" style="width:100%;"><span class="tok-com"># install the CLI</span>
+npx newt-ui@latest init
+
+<span class="tok-com"># add a component</span>
+npx newt-ui@latest add status-indicator embed slash-command
+
+<span class="tok-com"># list everything available</span>
+npx newt-ui@latest list</pre>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- CDN / JSDELIVR -->
+      <section class="component-section" id="cdn">
+        <div class="component-section__head">
+          <div class="component-section__num">02</div>
+          <div class="component-section__title">CDN <span class="component-section__class">jsDelivr</span></div>
+          <p class="component-section__desc">
+            For static sites or quick prototypes, skip the CLI entirely and load the
+            design tokens + component styles straight from jsDelivr. Two paths are
+            available — the GitHub path works immediately after pushing, the npm path
+            requires <code class="component-section__class">npm publish</code> first.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content" style="width:100%;">
+          <pre class="newt-code" style="width:100%;"><span class="tok-com">&lt;!-- pinned to a release tag (recommended) --&gt;</span>
+<span class="tok-com">&lt;!-- from GitHub (works immediately after pushing) --&gt;</span>
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/newt-devs/newt-ui@main/registry/tokens.css"&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/newt-devs/newt-ui@main/registry/components/button.css"&gt;
+
+<span class="tok-com">&lt;!-- pinned to a release tag on npm (after npm publish) --&gt;</span>
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@newt-devs/ui@0.1.0/registry/tokens.css"&gt;
+
+<span class="tok-com">&lt;!-- pin to a specific git tag for stability --&gt;</span>
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/newt-devs/newt-ui@v0.1.0/registry/tokens.css"&gt;</pre>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- DESIGN TOKENS -->
+      <section class="component-section" id="tokens">
+        <div class="component-section__head">
+          <div class="component-section__num">03</div>
+          <div class="component-section__title">Design tokens</div>
+          <p class="component-section__desc">
+            Every component is built on CSS variables matching Discord's actual
+            surface and accent colors, so themes stay consistent across light client,
+            dark client, and AMOLED. Never hardcode a hex value — reference a
+            <code class="component-section__class">--newt-*</code> token.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <span class="newt-badge newt-badge--brand newt-badge--dot">--newt-brand · #5865f2</span>
+          <span class="newt-badge newt-badge--dot" style="color:#23a55a">--newt-online · #23a55a</span>
+          <span class="newt-badge newt-badge--dot" style="color:#f0b232">--newt-idle · #f0b232</span>
+          <span class="newt-badge newt-badge--dot" style="color:#f23f42">--newt-dnd · #f23f42</span>
+          <span class="newt-badge newt-badge--dot" style="color:#80848e">--newt-offline · #80848e</span>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <div class="category-heading">Actions</div>
+
+      <!-- BUTTON -->
+      <section class="component-section" id="button">
+        <div class="component-section__head">
+          <div class="component-section__num">04</div>
+          <div class="component-section__title">Button<span class="component-section__class">.newt-btn</span></div>
+          <p class="component-section__desc">
+            Five variants matching Discord's action hierarchy — primary actions use
+            brand blurple, destructive actions use the same red as "Leave Server."
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <button class="newt-btn newt-btn--primary">Primary</button>
+          <button class="newt-btn newt-btn--secondary">Secondary</button>
+          <button class="newt-btn newt-btn--success">Success</button>
+          <button class="newt-btn newt-btn--danger">Danger</button>
+          <button class="newt-btn newt-btn--link">Link button</button>
+          <button class="newt-btn newt-btn--icon" aria-label="Settings">⚙</button>
+          <button class="newt-btn newt-btn--primary" disabled>Disabled</button>
+        </div>
+        </div>
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <button class="newt-btn newt-btn--primary newt-btn--sm">Small</button>
+          <button class="newt-btn newt-btn--primary">Default</button>
+          <button class="newt-btn newt-btn--primary newt-btn--lg">Large</button>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- DROPDOWN -->
+      <section class="component-section" id="dropdown">
+        <div class="component-section__head">
+          <div class="component-section__num">05</div>
+          <div class="component-section__title">Dropdown menu<span class="component-section__class">.newt-dropdown</span></div>
+          <p class="component-section__desc">
+            Rich dropdown items with icon + label + description — useful for command
+            pickers and config selectors in docs.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-dropdown" role="menu">
+            <div class="newt-dropdown__item newt-dropdown__item--active" role="menuitem">
+              <span class="newt-dropdown__icon" aria-hidden="true">⚡</span>
+              <div>
+                <div class="newt-dropdown__label">Quick deploy</div>
+                <div class="newt-dropdown__desc">Push to staging instantly</div>
+              </div>
+            </div>
+            <div class="newt-dropdown__item" role="menuitem">
+              <span class="newt-dropdown__icon" aria-hidden="true">🔍</span>
+              <div>
+                <div class="newt-dropdown__label">Inspect traces</div>
+                <div class="newt-dropdown__desc">Open the live trace viewer</div>
+              </div>
+            </div>
+            <div class="newt-dropdown__divider"></div>
+            <div class="newt-dropdown__item" role="menuitem">
+              <span class="newt-dropdown__icon" aria-hidden="true">⚙</span>
+              <div>
+                <div class="newt-dropdown__label">Settings</div>
+                <div class="newt-dropdown__desc">Configure newt-dsl runtime</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- CONTEXT MENU -->
+      <section class="component-section" id="context-menu">
+        <div class="component-section__head">
+          <div class="component-section__num">06</div>
+          <div class="component-section__title">Context menu<span class="component-section__class">.newt-context-menu</span></div>
+          <p class="component-section__desc">
+            Right-click style message actions — danger items reuse the same red as
+            destructive buttons.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-context-menu" role="menu">
+            <div class="newt-context-menu__item" role="menuitem">Add Reaction</div>
+            <div class="newt-context-menu__item" role="menuitem">
+              Reply
+              <span class="newt-context-menu__shortcut">R</span>
+            </div>
+            <div class="newt-context-menu__item" role="menuitem">Copy Text</div>
+            <div class="newt-context-menu__divider"></div>
+            <div class="newt-context-menu__item newt-context-menu__item--danger" role="menuitem">Delete Message</div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- KBD TAG -->
+      <section class="component-section" id="kbd-tag">
+        <div class="component-section__head">
+          <div class="component-section__num">07</div>
+          <div class="component-section__title">Keyboard shortcut tag<span class="component-section__class">.newt-kbd</span></div>
+          <p class="component-section__desc">
+            Small key-cap style tags for documenting keyboard shortcuts — pairs well
+            with the context menu's shortcut hints.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <span class="newt-kbd">Ctrl</span><span class="newt-kbd">K</span>
+          <span style="width:12px;"></span>
+          <span class="newt-kbd">⇧</span><span class="newt-kbd">Enter</span>
+          <span style="width:12px;"></span>
+          <span class="newt-kbd">Esc</span>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- TABS -->
+      <section class="component-section" id="tabs">
+        <div class="component-section__head">
+          <div class="component-section__num">08</div>
+          <div class="component-section__title">Tabs<span class="component-section__class">.newt-tabs</span></div>
+          <p class="component-section__desc">
+            Pill-style tab group for switching between related views.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-tabs" role="tablist">
+            <button class="newt-tab newt-tab--active" role="tab" aria-selected="true">Overview</button>
+            <button class="newt-tab" role="tab" aria-selected="false">Activity</button>
+            <button class="newt-tab" role="tab" aria-selected="false">Settings</button>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <div class="category-heading">Feedback</div>
+
+      <!-- BADGE -->
+      <section class="component-section" id="badge">
+        <div class="component-section__head">
+          <div class="component-section__num">09</div>
+          <div class="component-section__title">Badge<span class="component-section__class">.newt-badge</span></div>
+          <p class="component-section__desc">
+            Small status labels for tags, counts, and metadata.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <span class="newt-badge">Default</span>
+          <span class="newt-badge newt-badge--brand newt-badge--dot">Brand</span>
+          <span class="newt-badge newt-badge--success newt-badge--dot">Online</span>
+          <span class="newt-badge newt-badge--warning newt-badge--dot">Pending</span>
+          <span class="newt-badge newt-badge--danger newt-badge--dot">Error</span>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- TOAST -->
+      <section class="component-section" id="toast">
+        <div class="component-section__head">
+          <div class="component-section__num">10</div>
+          <div class="component-section__title">Toast<span class="component-section__class">.newt-toast</span></div>
+          <p class="component-section__desc">
+            Lightweight feedback notifications for confirmation flows and inline notices.
+            Use <code class="component-section__class">role="status" aria-live="polite"</code>.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--col">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-toast newt-toast--success" role="status" aria-live="polite">
+            <div class="newt-toast__icon">✓</div>
+            <div>
+              <div class="newt-toast__title">Deployment succeeded</div>
+              <div class="newt-toast__desc">newt-trace-bot v2.3.1 is now live on 4 shards.</div>
+            </div>
+          </div>
+          <div class="newt-toast newt-toast--error" role="status" aria-live="polite">
+            <div class="newt-toast__icon">!</div>
+            <div>
+              <div class="newt-toast__title">Webhook delivery failed</div>
+              <div class="newt-toast__desc">Endpoint returned 503 after 3 retries.</div>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- MODAL -->
+      <section class="component-section" id="modal">
+        <div class="component-section__head">
+          <div class="component-section__num">11</div>
+          <div class="component-section__title">Modal<span class="component-section__class">.newt-modal</span></div>
+          <p class="component-section__desc">
+            Confirmation dialog styled after Discord's settings modal. Requires a
+            focus trap and <code class="component-section__class">Escape</code> to close — see <code class="component-section__class">modal.js</code> in the registry.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--dark">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-modal" role="dialog" aria-modal="true" aria-labelledby="modal-demo-title" style="width:100%; max-width:440px;">
+            <div class="newt-modal__header" id="modal-demo-title">Remove bot from server?</div>
+            <div class="newt-modal__body">
+              This action can't be undone. newt-trace-bot will stop collecting
+              telemetry for this server immediately.
+            </div>
+            <div class="newt-modal__footer">
+              <button class="newt-btn newt-btn--secondary">Cancel</button>
+              <button class="newt-btn newt-btn--danger">Remove bot</button>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- TOOLTIP -->
+      <section class="component-section" id="tooltip">
+        <div class="component-section__head">
+          <div class="component-section__num">12</div>
+          <div class="component-section__title">Tooltip<span class="component-section__class">.newt-tooltip</span></div>
+          <p class="component-section__desc">
+            Hover bubble for icon-only controls and contextual hints.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview" style="padding-top:60px;">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <span class="newt-tooltip">
+            <button class="newt-btn newt-btn--icon" aria-describedby="tooltip-demo">?</button>
+            <span class="newt-tooltip__bubble" id="tooltip-demo" role="tooltip">Hover to see this tooltip</span>
+          </span>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- PROGRESS -->
+      <section class="component-section" id="progress">
+        <div class="component-section__head">
+          <div class="component-section__num">13</div>
+          <div class="component-section__title">Progress bar<span class="component-section__class">.newt-progress</span></div>
+          <p class="component-section__desc">
+            Gradient progress bars styled after server boost progress — use the
+            success/danger fill modifiers for build or upload states.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--col" style="max-width:420px;">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div style="width:100%;">
+            <div class="newt-progress-label"><span>Server boost progress</span><span>7 / 14</span></div>
+            <div class="newt-progress"><div class="newt-progress__fill" style="width:50%;"></div></div>
+          </div>
+          <div style="width:100%;">
+            <div class="newt-progress-label"><span>Build deployed</span><span>100%</span></div>
+            <div class="newt-progress"><div class="newt-progress__fill newt-progress__fill--success" style="width:100%;"></div></div>
+          </div>
+          <div style="width:100%;">
+            <div class="newt-progress-label"><span>Error budget consumed</span><span>92%</span></div>
+            <div class="newt-progress"><div class="newt-progress__fill newt-progress__fill--danger" style="width:92%;"></div></div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- COOLDOWN BAR -->
+      <section class="component-section" id="cooldown-bar">
+        <div class="component-section__head">
+          <div class="component-section__num">14</div>
+          <div class="component-section__title">Cooldown bar<span class="component-section__class">.newt-cooldown</span></div>
+          <p class="component-section__desc">
+            A countdown-flavored progress variant for command cooldowns and rate
+            limits — amber while waiting, green once ready.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--col">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content" style="width:100%; flex-direction:column; gap:14px;">
+          <div class="newt-cooldown">
+            <div class="newt-cooldown__label">
+              <span>/deploy cooldown</span>
+              <strong>3.2s</strong>
+            </div>
+            <div class="newt-cooldown__track">
+              <div class="newt-cooldown__fill" style="width:40%;"></div>
+            </div>
+          </div>
+          <div class="newt-cooldown">
+            <div class="newt-cooldown__label">
+              <span>/trace tail cooldown</span>
+              <strong>Ready</strong>
+            </div>
+            <div class="newt-cooldown__track">
+              <div class="newt-cooldown__fill newt-cooldown__fill--ready" style="width:100%;"></div>
+            </div>
+          </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- SKELETON -->
+      <section class="component-section" id="skeleton">
+        <div class="component-section__head">
+          <div class="component-section__num">15</div>
+          <div class="component-section__title">Skeleton loader<span class="component-section__class">.newt-skeleton</span></div>
+          <p class="component-section__desc">
+            Flat placeholder blocks for "fetching messages" loading states.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--col" style="max-width:420px;">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="row" style="width:100%;">
+            <div class="newt-skeleton newt-skeleton--avatar"></div>
+            <div class="col" style="flex:1; gap:6px;">
+              <div class="newt-skeleton newt-skeleton--title"></div>
+              <div class="newt-skeleton newt-skeleton--text" style="width:80%;"></div>
+            </div>
+          </div>
+          <div class="row" style="width:100%;">
+            <div class="newt-skeleton newt-skeleton--avatar"></div>
+            <div class="col" style="flex:1; gap:6px;">
+              <div class="newt-skeleton newt-skeleton--title" style="width:30%;"></div>
+              <div class="newt-skeleton newt-skeleton--text" style="width:60%;"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- EMPTY STATE -->
+      <section class="component-section" id="empty-state">
+        <div class="component-section__head">
+          <div class="component-section__num">16</div>
+          <div class="component-section__title">Empty state<span class="component-section__class">.newt-empty-state</span></div>
+          <p class="component-section__desc">
+            Icon + title + description pattern for channels or dashboards with
+            nothing to show yet.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview" style="max-width:420px;">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-card" style="width:100%;">
+            <div class="newt-empty-state">
+              <div class="newt-empty-state__icon" aria-hidden="true">📭</div>
+              <div class="newt-empty-state__title">No events yet</div>
+              <div class="newt-empty-state__desc">
+                newt-trace hasn't received any lifecycle events from this bot.
+                Run a command in your server to see them appear here.
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- PAGINATION -->
+      <section class="component-section" id="pagination">
+        <div class="component-section__head">
+          <div class="component-section__num">17</div>
+          <div class="component-section__title">Pagination<span class="component-section__class">.newt-pagination</span></div>
+          <p class="component-section__desc">
+            Page-number controls for paged data, plus a "load more" divider pattern
+            for infinite-scroll style message logs.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--col">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content" style="width:100%; flex-direction:column; gap:18px; align-items:flex-start;">
+          <div class="newt-pagination" role="navigation" aria-label="Pagination">
+            <button class="newt-pagination__btn" aria-label="Previous page">‹</button>
+            <button class="newt-pagination__btn newt-pagination__btn--active" aria-current="page">1</button>
+            <button class="newt-pagination__btn">2</button>
+            <button class="newt-pagination__btn">3</button>
+            <span class="newt-pagination__ellipsis">…</span>
+            <button class="newt-pagination__btn">12</button>
+            <button class="newt-pagination__btn" aria-label="Next page">›</button>
+          </div>
+          <div class="newt-load-more" style="width:100%;">
+            <button class="newt-btn newt-btn--secondary newt-btn--sm">Load 20 earlier events</button>
+          </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <div class="category-heading">Identity &amp; presence</div>
+
+      <!-- AVATAR -->
+      <section class="component-section" id="avatar">
+        <div class="component-section__head">
+          <div class="component-section__num">18</div>
+          <div class="component-section__title">Avatar<span class="component-section__class">.newt-avatar</span></div>
+          <p class="component-section__desc">
+            Circular avatar with size modifiers, used as the base for status,
+            member list, and voice channel components.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-avatar newt-avatar--sm av-1">N</div>
+          <div class="newt-avatar av-2">N</div>
+          <div class="newt-avatar newt-avatar--lg av-3">N</div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- STATUS INDICATOR -->
+      <section class="component-section" id="status-indicator">
+        <div class="component-section__head">
+          <div class="component-section__num">19</div>
+          <div class="component-section__title">Status indicator<span class="component-section__class">.newt-status</span></div>
+          <p class="component-section__desc">
+            Status dots ship with the idle crescent and the DND bar baked into the
+            shape itself — readable even without color, for accessibility.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="preview__group">
+            <div class="newt-status"><div class="newt-avatar av-1">A</div><div class="newt-status__dot newt-status__dot--online"></div></div>
+            <span class="preview__group-label">Online</span>
+          </div>
+          <div class="preview__group">
+            <div class="newt-status"><div class="newt-avatar av-2">B</div><div class="newt-status__dot newt-status__dot--idle"></div></div>
+            <span class="preview__group-label">Idle</span>
+          </div>
+          <div class="preview__group">
+            <div class="newt-status"><div class="newt-avatar av-3">C</div><div class="newt-status__dot newt-status__dot--dnd"></div></div>
+            <span class="preview__group-label">Do Not Disturb</span>
+          </div>
+          <div class="preview__group">
+            <div class="newt-status"><div class="newt-avatar" style="background:#444">D</div><div class="newt-status__dot newt-status__dot--offline"></div></div>
+            <span class="preview__group-label">Offline</span>
+          </div>
+          <div class="preview__group">
+            <div class="newt-status"><div class="newt-avatar av-2">S</div><div class="newt-status__dot newt-status__dot--streaming"></div></div>
+            <span class="preview__group-label">Streaming</span>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- MEMBER LIST -->
+      <section class="component-section" id="member-list">
+        <div class="component-section__head">
+          <div class="component-section__num">20</div>
+          <div class="component-section__title">Member list row<span class="component-section__class">.newt-member</span></div>
+          <p class="component-section__desc">
+            Member rows with presence dots and role tags — drop into a sidebar for a
+            server member list or staff directory.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--col" style="max-width:280px;">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-divider">ONLINE — 2</div>
+          <div class="newt-member" style="width:100%;">
+            <div class="newt-status"><div class="newt-avatar newt-avatar--sm av-1">A</div><div class="newt-status__dot newt-status__dot--online"></div></div>
+            <div class="newt-member__info">
+              <span class="newt-member__name newt-member__name--colored">newt-trace-bot</span>
+              <span class="newt-member__role">Telemetry</span>
+            </div>
+            <span class="newt-role-tag" style="color:#5865f2; margin-left:auto;"><span class="newt-role-tag__dot"></span>BOT</span>
+          </div>
+          <div class="newt-member" style="width:100%;">
+            <div class="newt-status"><div class="newt-avatar newt-avatar--sm av-2">L</div><div class="newt-status__dot newt-status__dot--idle"></div></div>
+            <div class="newt-member__info">
+              <span class="newt-member__name">lina</span>
+              <span class="newt-member__role">Maintainer</span>
+            </div>
+          </div>
+          <div class="newt-divider">OFFLINE — 1</div>
+          <div class="newt-member" style="opacity:0.5; width:100%;">
+            <div class="newt-status"><div class="newt-avatar newt-avatar--sm" style="background:#444;">R</div><div class="newt-status__dot newt-status__dot--offline"></div></div>
+            <div class="newt-member__info">
+              <span class="newt-member__name">rui</span>
+              <span class="newt-member__role">Contributor</span>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- ROLE TAG -->
+      <section class="component-section" id="role-tag">
+        <div class="component-section__head">
+          <div class="component-section__num">21</div>
+          <div class="component-section__title">Role tag<span class="component-section__class">.newt-role-tag</span></div>
+          <p class="component-section__desc">
+            Colored dot + label, typically anchored to the right of a member row.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <span class="newt-role-tag" style="color:#5865f2;"><span class="newt-role-tag__dot"></span>BOT</span>
+          <span class="newt-role-tag" style="color:#23a55a;"><span class="newt-role-tag__dot"></span>MAINTAINER</span>
+          <span class="newt-role-tag" style="color:#f0b232;"><span class="newt-role-tag__dot"></span>BETA</span>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- VOICE CHANNEL -->
+      <section class="component-section" id="voice-channel">
+        <div class="component-section__head">
+          <div class="component-section__num">22</div>
+          <div class="component-section__title">Voice channel row<span class="component-section__class">.newt-voice-channel</span></div>
+          <p class="component-section__desc">
+            Voice channel rows with nested member presence — useful for status pages
+            showing "who's online" for a bot's support server.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview" style="max-width:280px;">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-voice-channel" style="width:100%;">
+            <div class="newt-voice-channel__header">
+              <span class="newt-voice-channel__icon" aria-hidden="true">🔊</span>
+              General
+            </div>
+            <div class="newt-voice-channel__members">
+              <div class="newt-voice-channel__member">
+                <div class="newt-avatar newt-avatar--sm av-1">A</div>
+                lina
+                <div class="newt-voice-channel__member-icons">🎙️</div>
+              </div>
+              <div class="newt-voice-channel__member">
+                <div class="newt-avatar newt-avatar--sm av-2">B</div>
+                rui
+                <div class="newt-voice-channel__member-icons newt-voice-channel__member-icons--muted">🔇</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- SERVER BANNER -->
+      <section class="component-section" id="server-banner">
+        <div class="component-section__head">
+          <div class="component-section__num">23</div>
+          <div class="component-section__title">Server banner<span class="component-section__class">.newt-server-banner</span></div>
+          <p class="component-section__desc">
+            Server icon, name, and live member counts — for bot invite pages or
+            "this bot is in N servers" landing sections.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-server-banner">
+            <div class="newt-server-banner__icon" aria-hidden="true">N</div>
+            <div class="newt-server-banner__info">
+              <div class="newt-server-banner__name">Newt Devs</div>
+              <div class="newt-server-banner__meta">
+                <span class="newt-server-banner__meta-item">
+                  <span class="newt-server-banner__meta-dot newt-server-banner__meta-dot--online"></span>
+                  142 Online
+                </span>
+                <span class="newt-server-banner__meta-item">
+                  <span class="newt-server-banner__meta-dot newt-server-banner__meta-dot--offline"></span>
+                  1,024 Members
+                </span>
+              </div>
+            </div>
+            <button class="newt-btn newt-btn--primary">Join</button>
+          </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- STAGE BANNER -->
+      <section class="component-section" id="stage-banner">
+        <div class="component-section__head">
+          <div class="component-section__num">24</div>
+          <div class="component-section__title">Stage banner<span class="component-section__class">.newt-stage-banner</span></div>
+          <p class="component-section__desc">
+            A thin announcement bar, styled after Discord's "Stage starting soon"
+            notices — useful for the docs site itself to announce new releases.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--col">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content" style="width:100%; flex-direction:column; gap:10px;">
+          <div class="newt-stage-banner">
+            <span class="newt-stage-banner__dot" aria-hidden="true"></span>
+            newt-ui v0.2 is in preview — try the new pagination and cooldown components.
+            <button class="newt-stage-banner__action">View changelog</button>
+          </div>
+          <div class="newt-stage-banner newt-stage-banner--dismissible" style="background: var(--newt-bg-elevated); color: var(--newt-text-primary); border: 1px solid var(--newt-border);">
+            <span class="newt-stage-banner__dot" aria-hidden="true" style="background: var(--newt-online);"></span>
+            newt-trace-bot is back online across all shards.
+            <button class="newt-stage-banner__close" aria-label="Dismiss">×</button>
+          </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- TYPING -->
+      <section class="component-section" id="typing">
+        <div class="component-section__head">
+          <div class="component-section__num">25</div>
+          <div class="component-section__title">Typing indicator<span class="component-section__class">.newt-typing</span></div>
+          <p class="component-section__desc">
+            A static three-dot marker for "bot is typing" or "deployment in
+            progress" states — paired with an <code class="component-section__class">aria-label</code> for screen readers.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-typing" role="status" aria-label="newt-trace-bot is typing">
+            <div class="newt-typing__dots"><span></span><span></span><span></span></div>
+            newt-trace-bot is typing...
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <div class="category-heading">Messaging</div>
+
+      <!-- EMBED -->
+      <section class="component-section" id="embed">
+        <div class="component-section__head">
+          <div class="component-section__num">26</div>
+          <div class="component-section__title">Embed<span class="component-section__class">.newt-embed</span></div>
+          <p class="component-section__desc">
+            A faithful recreation of Discord's embed card — used by newt-trace to
+            render lifecycle event summaries directly in dashboards.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-embed">
+            <div class="newt-embed__body">
+              <div class="newt-embed__eyebrow">newt-trace · lifecycle event</div>
+              <div class="newt-embed__title">Command latency spike detected</div>
+              <div class="newt-embed__description">
+                /play command p95 latency exceeded 800ms over the last 5 minutes
+                across 3 shards.
+              </div>
+              <div class="newt-embed__fields">
+                <div>
+                  <div class="newt-embed__field-name">Shard</div>
+                  <div class="newt-embed__field-value">2, 5, 7</div>
+                </div>
+                <div>
+                  <div class="newt-embed__field-name">p95 latency</div>
+                  <div class="newt-embed__field-value">842ms</div>
+                </div>
+                <div>
+                  <div class="newt-embed__field-name">Trigger</div>
+                  <div class="newt-embed__field-value">threshold rule</div>
+                </div>
+              </div>
+              <div class="newt-embed__footer">
+                <div class="newt-avatar newt-avatar--sm av-1" style="width:16px;height:16px;font-size:9px;">N</div>
+                newt-trace · Just now
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- REACTION -->
+      <section class="component-section" id="reaction">
+        <div class="component-section__head">
+          <div class="component-section__num">27</div>
+          <div class="component-section__title">Reaction pill<span class="component-section__class">.newt-reaction</span></div>
+          <p class="component-section__desc">
+            Clickable reaction pills with an active state for "you reacted" — fully
+            keyboard accessible via <code class="component-section__class">aria-pressed</code>.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <button class="newt-reaction newt-reaction--active" aria-pressed="true" aria-label="👍 reaction, 12 people, you reacted">
+            <span aria-hidden="true">👍</span><span class="newt-reaction__count">12</span>
+          </button>
+          <button class="newt-reaction" aria-pressed="false" aria-label="🚀 reaction, 4 people">
+            <span aria-hidden="true">🚀</span><span class="newt-reaction__count">4</span>
+          </button>
+          <button class="newt-reaction" aria-pressed="false" aria-label="👀 reaction, 2 people">
+            <span aria-hidden="true">👀</span><span class="newt-reaction__count">2</span>
+          </button>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- REPLY PREVIEW -->
+      <section class="component-section" id="reply-preview">
+        <div class="component-section__head">
+          <div class="component-section__num">28</div>
+          <div class="component-section__title">Reply preview<span class="component-section__class">.newt-reply</span></div>
+          <p class="component-section__desc">
+            The "replying to" bar shown above a message that's responding to another.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--col">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-reply">
+            <span class="newt-reply__author">@newt-trace-bot</span>
+            <span class="newt-reply__text">deployment finished — 4 shards reporting healthy</span>
+          </div>
+          <div style="color: var(--newt-text-secondary); font-size: 15px;">Nice, latency looks back to normal too 🎉</div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- MENTIONS -->
+      <section class="component-section" id="mention">
+        <div class="component-section__head">
+          <div class="component-section__num">29</div>
+          <div class="component-section__title">Mention chips<span class="component-section__class">.newt-mention</span></div>
+          <p class="component-section__desc">
+            Inline mention chips for users, channels, and roles, each with distinct
+            accent colors.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <span class="newt-mention newt-mention--user">@lina</span>
+          <span class="newt-mention newt-mention--channel">#deploys</span>
+          <span class="newt-mention newt-mention--role">@Maintainers</span>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- SPOILER -->
+      <section class="component-section" id="spoiler">
+        <div class="component-section__head">
+          <div class="component-section__num">30</div>
+          <div class="component-section__title">Spoiler<span class="component-section__class">.newt-spoiler</span></div>
+          <p class="component-section__desc">
+            Spoiler tags reveal on click, just like
+            <code class="component-section__class">||spoiler||</code> syntax. Click the
+            block below to reveal it.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview" style="font-size:15px; color: var(--newt-text-secondary);">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          The fix is in — root cause was
+          <span class="newt-spoiler" tabindex="0" role="button" aria-label="Spoiler, click to reveal" onclick="this.classList.toggle('newt-spoiler--revealed')">a hardcoded shard ID</span>.
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- ATTACHMENT -->
+      <section class="component-section" id="attachment">
+        <div class="component-section__head">
+          <div class="component-section__num">31</div>
+          <div class="component-section__title">Attachment card<span class="component-section__class">.newt-attachment</span></div>
+          <p class="component-section__desc">
+            File icon, name, size, and download button — for showing uploaded files
+            in messages.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-attachment">
+            <div class="newt-attachment__icon">JSON</div>
+            <div class="newt-attachment__meta">
+              <div class="newt-attachment__name">trace-export-2026-06-12.json</div>
+              <div class="newt-attachment__size">1.4 MB</div>
+            </div>
+            <button class="newt-btn newt-btn--icon" aria-label="Download file">⬇</button>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- SLASH COMMAND -->
+      <section class="component-section" id="slash-command">
+        <div class="component-section__head">
+          <div class="component-section__num">32</div>
+          <div class="component-section__title">Slash command tag<span class="component-section__class">.newt-command</span></div>
+          <p class="component-section__desc">
+            Inline command tokens for docs and changelogs — reference newt-dsl
+            commands the same way Discord renders them in chat.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <span class="newt-command"><span class="newt-command__icon">/</span>deploy</span>
+          <span class="newt-command"><span class="newt-command__icon">/</span>trace tail</span>
+          <span class="newt-command"><span class="newt-command__icon">/</span>config set</span>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- DIVIDER -->
+      <section class="component-section" id="divider">
+        <div class="component-section__head">
+          <div class="component-section__num">33</div>
+          <div class="component-section__title">Divider<span class="component-section__class">.newt-divider</span></div>
+          <p class="component-section__desc">
+            Labeled section divider, used for date separators and group headers.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview" style="max-width:420px;">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-divider" style="width:100%;">JUNE 12, 2026</div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <div class="category-heading">Forms &amp; data</div>
+
+      <!-- FORM FIELDS -->
+      <section class="component-section" id="form-fields">
+        <div class="component-section__head">
+          <div class="component-section__num">34</div>
+          <div class="component-section__title">Form fields<span class="component-section__class">.newt-field</span></div>
+          <p class="component-section__desc">
+            Inputs match Discord's settings modal styling — flat dark fields,
+            uppercase micro-labels, and blurple focus rings.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content"><div class="preview-grid">
+          <div class="newt-field">
+            <label class="newt-label" for="demo-username">Bot username</label>
+            <input class="newt-input" id="demo-username" type="text" value="newt-trace-bot" />
+            <span class="newt-help">This is how your bot appears in the member list.</span>
+          </div>
+          <div class="newt-field">
+            <label class="newt-label" for="demo-status">Status message</label>
+            <select class="newt-select" id="demo-status">
+              <option>Watching for lifecycle events</option>
+              <option>Listening to /commands</option>
+              <option>Playing with newt-dsl</option>
+            </select>
+          </div>
+          <div class="newt-field">
+            <label class="newt-label" for="demo-payload">Webhook payload</label>
+            <textarea class="newt-textarea" id="demo-payload">{ "event": "command.invoked", "shard": 2 }</textarea>
+          </div>
+          <div class="newt-field">
+            <span class="newt-label">Toggles</span>
+            <div class="col">
+              <div class="row" style="justify-content:space-between;">
+                <span>Enable telemetry export</span>
+                <div class="newt-switch newt-switch--on" role="switch" aria-checked="true" tabindex="0"><div class="newt-switch__thumb"></div></div>
+              </div>
+              <div class="row" style="justify-content:space-between;">
+                <span>Verbose logging</span>
+                <div class="newt-switch" role="switch" aria-checked="false" tabindex="0"><div class="newt-switch__thumb"></div></div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+        </div>
+              </div>
+      </section>
+
+      <!-- TOKEN FIELD -->
+      <section class="component-section" id="token-field">
+        <div class="component-section__head">
+          <div class="component-section__num">35</div>
+          <div class="component-section__title">Token field<span class="component-section__class">.newt-token-field</span></div>
+          <p class="component-section__desc">
+            Masked input with reveal and copy buttons — common in bot-setup UI for
+            API keys and tokens.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview" style="max-width:420px;">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-field" style="width:100%;">
+            <label class="newt-label" for="demo-token">Bot token</label>
+            <div class="newt-token-field">
+              <input class="newt-input" id="demo-token" type="password" value="••••••••••••••••" readonly />
+              <button class="newt-btn newt-btn--secondary" data-newt-token-toggle>Reveal</button>
+              <button class="newt-btn newt-btn--secondary" data-newt-token-copy>Copy</button>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- CARD -->
+      <section class="component-section" id="card">
+        <div class="component-section__head">
+          <div class="component-section__num">36</div>
+          <div class="component-section__title">Card<span class="component-section__class">.newt-card</span></div>
+          <p class="component-section__desc">
+            Generic panel for grouping content — base for confirmation dialogs and
+            ecosystem links.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content"><div class="preview-grid">
+          <div class="newt-card">
+            <div class="newt-card__title">newt-dsl</div>
+            <p class="newt-card__description">A human-readable language for building Discord bots.</p>
+          </div>
+          <div class="newt-card">
+            <div class="newt-card__title">newt-trace</div>
+            <p class="newt-card__description">Discord-native telemetry SDK — runtime events as structured data.</p>
+          </div>
+        </div></div>
+        </div>
+              </div>
+      </section>
+
+      <!-- PERMISSION -->
+      <section class="component-section" id="permission">
+        <div class="component-section__head">
+          <div class="component-section__num">37</div>
+          <div class="component-section__title">Permission row<span class="component-section__class">.newt-permission</span></div>
+          <p class="component-section__desc">
+            Three-state permission rows (deny / inherit / allow) matching Discord's
+            role permission editor — handy for bot setup docs.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview" style="max-width:520px;">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div style="width:100%;">
+            <div class="newt-permission">
+              <div class="newt-permission__info">
+                <span class="newt-permission__name">Manage Channels</span>
+                <span class="newt-permission__desc">Create, edit, or delete channels.</span>
+              </div>
+              <div class="newt-permission__states" role="group" aria-label="Manage Channels permission">
+                <button class="newt-permission__state newt-permission__state--deny" aria-pressed="false" aria-label="Deny">✕</button>
+                <button class="newt-permission__state newt-permission__state--inherit newt-permission__state--active" aria-pressed="true" aria-label="Inherit">/</button>
+                <button class="newt-permission__state newt-permission__state--allow" aria-pressed="false" aria-label="Allow">✓</button>
+              </div>
+            </div>
+            <div class="newt-permission">
+              <div class="newt-permission__info">
+                <span class="newt-permission__name">Send Messages</span>
+                <span class="newt-permission__desc">Allows posting in this channel.</span>
+              </div>
+              <div class="newt-permission__states" role="group" aria-label="Send Messages permission">
+                <button class="newt-permission__state newt-permission__state--deny" aria-pressed="false" aria-label="Deny">✕</button>
+                <button class="newt-permission__state newt-permission__state--inherit" aria-pressed="false" aria-label="Inherit">/</button>
+                <button class="newt-permission__state newt-permission__state--allow newt-permission__state--active" aria-pressed="true" aria-label="Allow">✓</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- TIMELINE -->
+      <section class="component-section" id="timeline">
+        <div class="component-section__head">
+          <div class="component-section__num">38</div>
+          <div class="component-section__title">Event timeline<span class="component-section__class">.newt-timeline</span></div>
+          <p class="component-section__desc">
+            A vertical event log for lifecycle traces — each dot reflects the event's
+            outcome using the same status colors as presence indicators.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview" style="max-width:480px;">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-timeline" style="width:100%;">
+            <div class="newt-timeline__item">
+              <div class="newt-timeline__dot newt-timeline__dot--brand" aria-hidden="true">↻</div>
+              <div class="newt-timeline__content">
+                <div class="newt-timeline__title">Deployment started</div>
+                <div class="newt-timeline__meta">newt-trace-bot v2.3.1 · 12:01 PM</div>
+              </div>
+            </div>
+            <div class="newt-timeline__item">
+              <div class="newt-timeline__dot newt-timeline__dot--danger" aria-hidden="true">!</div>
+              <div class="newt-timeline__content">
+                <div class="newt-timeline__title">Shard 5 connection dropped</div>
+                <div class="newt-timeline__meta">Auto-reconnect triggered · 12:02 PM</div>
+              </div>
+            </div>
+            <div class="newt-timeline__item">
+              <div class="newt-timeline__dot newt-timeline__dot--success" aria-hidden="true">✓</div>
+              <div class="newt-timeline__content">
+                <div class="newt-timeline__title">All shards healthy</div>
+                <div class="newt-timeline__meta">4/4 shards reporting · 12:04 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+              </div>
+      </section>
+
+      <!-- CODE BLOCK -->
+      <section class="component-section" id="code-block">
+        <div class="component-section__head">
+          <div class="component-section__num">39</div>
+          <div class="component-section__title">Code block<span class="component-section__class">.newt-code</span></div>
+          <p class="component-section__desc">
+            Syntax-highlighted code blocks with token classes for keys, strings,
+            comments, and functions.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <pre class="newt-code" style="width:100%;"><span class="tok-com">// example</span>
+<span class="tok-key">const</span> <span class="tok-fn">greet</span> = () => <span class="tok-str">"hello"</span>;</pre>
+        </div>
+        </div>
+              </div>
+      </section>
+      <div class="category-heading">Messaging</div>
+
+      <!-- MESSAGE GROUP -->
+      <section class="component-section" id="message-group">
+        <div class="component-section__head">
+          <div class="component-section__num">40</div>
+          <div class="component-section__title">Message group<span class="component-section__class">.newt-message-group</span></div>
+          <p class="component-section__desc">
+            A complete composed message — avatar, username, bot tag, timestamp,
+            content, and reactions in one block. The building unit for any
+            "message feed" view.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--dark">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content" style="width:100%;">
+          <div class="newt-message-group">
+            <div class="newt-status">
+              <div class="newt-avatar av-1">N</div>
+              <div class="newt-status__dot newt-status__dot--online"></div>
+            </div>
+            <div class="newt-message-group__body">
+              <div class="newt-message-group__header">
+                <span class="newt-message-group__author">newt-trace</span>
+                <span class="newt-message-group__author--bot">BOT</span>
+                <span class="newt-message-group__time">Today at 14:23</span>
+              </div>
+              <div class="newt-message-group__content">
+                Deployment complete. All 4 shards are healthy and accepting connections.
+              </div>
+              <div class="newt-message-group__reactions">
+                <button class="newt-reaction newt-reaction--active" aria-pressed="true">
+                  <span aria-hidden="true">✅</span><span class="newt-reaction__count">3</span>
+                </button>
+                <button class="newt-reaction" aria-pressed="false">
+                  <span aria-hidden="true">🚀</span><span class="newt-reaction__count">1</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- CHANNEL TOPIC BAR -->
+      <section class="component-section" id="channel-topic">
+        <div class="component-section__head">
+          <div class="component-section__num">41</div>
+          <div class="component-section__title">Channel topic bar<span class="component-section__class">.newt-channel-topic</span></div>
+          <p class="component-section__desc">
+            The channel name and topic description header — used at the top of
+            any view that mirrors a Discord channel.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content" style="width:100%;">
+          <div class="newt-channel-topic" style="width:100%;">
+            <span class="newt-channel-topic__icon" aria-hidden="true">#</span>
+            <span class="newt-channel-topic__name">deploys</span>
+            <span class="newt-channel-topic__divider"></span>
+            <span class="newt-channel-topic__desc">Automated deploy notifications and shard health from newt-trace</span>
+          </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <div class="category-heading">Identity &amp; presence</div>
+
+      <!-- NOTIFICATION BADGE -->
+      <section class="component-section" id="notif-badge">
+        <div class="component-section__head">
+          <div class="component-section__num">42</div>
+          <div class="component-section__title">Notification badge<span class="component-section__class">.newt-notif-badge</span></div>
+          <p class="component-section__desc">
+            The red count bubble that sits on server icons and channel rows.
+            Separate from <code class="component-section__class">.newt-badge</code>
+            — this is positional and numeric, not a label.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content" style="gap:24px;">
+          <div style="position:relative; display:inline-block;">
+            <div class="newt-avatar av-1">N</div>
+            <div class="newt-notif-badge" style="position:absolute;top:-4px;right:-4px;">3</div>
+          </div>
+          <div style="position:relative; display:inline-block;">
+            <div class="newt-avatar av-2">S</div>
+            <div class="newt-notif-badge" style="position:absolute;top:-4px;right:-4px;">99+</div>
+          </div>
+          <div style="position:relative; display:inline-block;">
+            <div class="newt-avatar" style="background:#444;">R</div>
+            <div class="newt-notif-badge newt-notif-badge--unread" style="position:absolute;top:0;right:0;"></div>
+          </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- USER PROFILE POPOUT -->
+      <section class="component-section" id="user-profile">
+        <div class="component-section__head">
+          <div class="component-section__num">43</div>
+          <div class="component-section__title">User profile popout<span class="component-section__class">.newt-profile</span></div>
+          <p class="component-section__desc">
+            The floating profile card that appears on clicking a user — banner,
+            avatar, username, bio, and role tags.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview preview--dark">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-profile">
+            <div class="newt-profile__banner av-1"></div>
+            <div class="newt-profile__head">
+              <div class="newt-profile__actions">
+                <button class="newt-btn newt-btn--icon" aria-label="Send message">✉</button>
+              </div>
+              <div class="newt-profile__avatar-wrap">
+                <div class="newt-status">
+                  <div class="newt-avatar newt-avatar--lg av-1">L</div>
+                  <div class="newt-status__dot newt-status__dot--online"></div>
+                </div>
+              </div>
+              <div class="newt-profile__name">lina</div>
+              <div class="newt-profile__handle">lina#0001</div>
+              <div class="newt-profile__divider"></div>
+            </div>
+            <div class="newt-profile__body">
+              <div class="newt-profile__section-label">About me</div>
+              <div class="newt-profile__bio">Maintainer of newt-devs. Building the Discord developer lifecycle.</div>
+              <div class="newt-profile__divider"></div>
+              <div class="newt-profile__section-label">Roles</div>
+              <div class="newt-profile__roles">
+                <span class="newt-role-tag" style="color:#5865f2;"><span class="newt-role-tag__dot"></span>Maintainer</span>
+                <span class="newt-role-tag" style="color:#23a55a;"><span class="newt-role-tag__dot"></span>Contributor</span>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <div class="category-heading">Actions</div>
+
+      <!-- SELECT MENU -->
+      <section class="component-section" id="select-menu">
+        <div class="component-section__head">
+          <div class="component-section__num">44</div>
+          <div class="component-section__title">Select menu<span class="component-section__class">.newt-select-menu</span></div>
+          <p class="component-section__desc">
+            A Discord-styled option picker — richer than a plain
+            <code class="component-section__class">&lt;select&gt;</code>, used in
+            modals and command interactions.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-select-menu" role="listbox" aria-label="Select a shard">
+            <div class="newt-select-menu__search">
+              <span style="color:var(--newt-text-muted);">🔍</span>
+              <input type="text" placeholder="Search…" aria-label="Search options" />
+            </div>
+            <div class="newt-select-menu__label">Shards</div>
+            <div class="newt-select-menu__option newt-select-menu__option--selected" role="option" aria-selected="true">Shard 0 — 342ms</div>
+            <div class="newt-select-menu__option" role="option" aria-selected="false">Shard 1 — 289ms</div>
+            <div class="newt-select-menu__option" role="option" aria-selected="false">Shard 2 — 401ms</div>
+            <div class="newt-select-menu__divider"></div>
+            <div class="newt-select-menu__label">All</div>
+            <div class="newt-select-menu__option" role="option" aria-selected="false">All shards</div>
+          </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- BOT COMMAND CARD -->
+      <section class="component-section" id="bot-command-card">
+        <div class="component-section__head">
+          <div class="component-section__num">45</div>
+          <div class="component-section__title">Bot command card<span class="component-section__class">.newt-command-card</span></div>
+          <p class="component-section__desc">
+            Command name, description, and option list — for bot documentation
+            pages and the newt-dsl command reference.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content">
+          <div class="newt-command-card">
+            <div class="newt-command-card__header">
+              <span class="newt-command-card__name">
+                <span class="newt-command-card__slash">/</span>trace
+              </span>
+              <span class="newt-badge newt-badge--brand">newt-trace</span>
+            </div>
+            <div class="newt-command-card__desc">
+              Stream live lifecycle events from a bot shard directly into this channel.
+            </div>
+            <div class="newt-command-card__options">
+              <div class="newt-command-card__option">
+                <span class="newt-command-card__opt-name">shard</span>
+                <span class="newt-command-card__opt-type">INTEGER</span>
+                <span class="newt-command-card__opt-required">required</span>
+                <span class="newt-command-card__opt-desc">Shard ID to subscribe to</span>
+              </div>
+              <div class="newt-command-card__option">
+                <span class="newt-command-card__opt-name">filter</span>
+                <span class="newt-command-card__opt-type">STRING</span>
+                <span class="newt-command-card__opt-desc">Event type filter, e.g. <code>command.invoked</code></span>
+              </div>
+              <div class="newt-command-card__option">
+                <span class="newt-command-card__opt-name">limit</span>
+                <span class="newt-command-card__opt-type">INTEGER</span>
+                <span class="newt-command-card__opt-desc">Max events to stream (default 50)</span>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <div class="category-heading">Using with AI</div>
+
+      <!-- AI IMPLEMENTATION GUIDE -->
+      <section class="component-section" id="ai-guide">
+        <div class="component-section__head">
+          <div class="component-section__num">46</div>
+          <div class="component-section__title">AI implementation guide</div>
+          <p class="component-section__desc">
+            How to use newt/ui with AI tools — prompting patterns, wiring
+            components to real bot data, and integrating newt-trace telemetry.
+          </p>
+        </div>
+        <div class="component-section__body">
+
+          <div class="preview preview--col">
+            <button class="preview__copy" data-newt-copy>Copy</button>
+            <div class="preview__content" style="flex-direction:column; gap:0; width:100%;">
+              <div style="font-family:var(--newt-font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--newt-text-muted); margin-bottom:12px;">Pattern 1 — prompt Claude with the token file</div>
+              <pre class="newt-code" style="width:100%;">You are building a Discord bot dashboard. Use only CSS classes
+from the newt/ui component library. The available CSS variables are:
+  --newt-bg-base, --newt-bg-surface, --newt-bg-elevated
+  --newt-brand (#5865f2), --newt-online, --newt-dnd, --newt-idle
+  --newt-text-primary, --newt-text-secondary, --newt-text-muted
+  --newt-border, --newt-font-sans, --newt-font-mono
+
+Generate only HTML using .newt-* class names. No inline styles.
+No new CSS classes. No animations or transitions.</pre>
+            </div>
+          </div>
+
+          <div class="preview preview--col" style="margin-top:12px;">
+            <button class="preview__copy" data-newt-copy>Copy</button>
+            <div class="preview__content" style="flex-direction:column; gap:0; width:100%;">
+              <div style="font-family:var(--newt-font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--newt-text-muted); margin-bottom:12px;">Pattern 2 — pipe newt-trace events into an embed</div>
+              <pre class="newt-code" style="width:100%;"><span class="tok-com">// newt-trace emits structured lifecycle events</span>
+<span class="tok-key">const</span> event = {
+  type: <span class="tok-str">"command.invoked"</span>,
+  shard: <span class="tok-num">2</span>,
+  latency: <span class="tok-num">842</span>,
+  timestamp: <span class="tok-str">"2026-06-13T14:23:00Z"</span>
+};
+
+<span class="tok-com">// Map directly to .newt-embed fields</span>
+<span class="tok-fn">renderEmbed</span>({
+  eyebrow: <span class="tok-str">`newt-trace · shard ${event.shard}`</span>,
+  title: event.type,
+  fields: [
+    { name: <span class="tok-str">"Latency"</span>, value: <span class="tok-str">`${event.latency}ms`</span> },
+    { name: <span class="tok-str">"Time"</span>,    value: event.timestamp }
+  ]
+});</pre>
+            </div>
+          </div>
+
+          <div class="preview preview--col" style="margin-top:12px;">
+            <button class="preview__copy" data-newt-copy>Copy</button>
+            <div class="preview__content" style="flex-direction:column; gap:0; width:100%;">
+              <div style="font-family:var(--newt-font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--newt-text-muted); margin-bottom:12px;">Pattern 3 — newt-trace event stream → timeline</div>
+              <pre class="newt-code" style="width:100%;"><span class="tok-com">// newt-trace lifecycle stream → .newt-timeline</span>
+<span class="tok-key">const</span> dotVariant = (event) => ({
+  <span class="tok-str">"shard.connected"</span>:    <span class="tok-str">"--success"</span>,
+  <span class="tok-str">"shard.disconnected"</span>: <span class="tok-str">"--danger"</span>,
+  <span class="tok-str">"command.invoked"</span>:    <span class="tok-str">"--brand"</span>,
+})[event.type] ?? <span class="tok-str">""</span>;
+
+events.<span class="tok-fn">map</span>(e => <span class="tok-str">`
+  &lt;div class="newt-timeline__item"&gt;
+    &lt;div class="newt-timeline__dot newt-timeline__dot${dotVariant(e)}"&gt;
+    &lt;/div&gt;
+    &lt;div class="newt-timeline__content"&gt;
+      &lt;div class="newt-timeline__title"&gt;${e.type}&lt;/div&gt;
+      &lt;div class="newt-timeline__meta"&gt;shard ${e.shard} · ${e.timestamp}&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+`</span>).<span class="tok-fn">join</span>(<span class="tok-str">""</span>);</pre>
+            </div>
+          </div>
+
+          <div class="preview preview--col" style="margin-top:12px;">
+            <button class="preview__copy" data-newt-copy>Copy</button>
+            <div class="preview__content" style="flex-direction:column; gap:0; width:100%;">
+              <div style="font-family:var(--newt-font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--newt-text-muted); margin-bottom:12px;">Pattern 4 — status from shard health → presence dots</div>
+              <pre class="newt-code" style="width:100%;"><span class="tok-com">// Map shard health to .newt-status__dot variants</span>
+<span class="tok-key">const</span> shardStatus = (shard) => ({
+  <span class="tok-str">"healthy"</span>:      <span class="tok-str">"online"</span>,
+  <span class="tok-str">"degraded"</span>:     <span class="tok-str">"idle"</span>,
+  <span class="tok-str">"disconnected"</span>: <span class="tok-str">"dnd"</span>,
+  <span class="tok-str">"unknown"</span>:      <span class="tok-str">"offline"</span>,
+})[shard.health] ?? <span class="tok-str">"offline"</span>;
+
+<span class="tok-com">// Use in .newt-member or .newt-server-banner</span>
+<span class="tok-fn">renderMember</span>({
+  name: <span class="tok-str">`Shard ${shard.id}`</span>,
+  role: <span class="tok-str">`${shard.guilds} guilds`</span>,
+  status: <span class="tok-fn">shardStatus</span>(shard)
+});</pre>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="category-heading">Ecosystem</div>
+
+      <!-- ECOSYSTEM -->
+      <section class="component-section" id="ecosystem">
+        <div class="component-section__head">
+          <div class="component-section__num">47</div>
+          <div class="component-section__title">Ecosystem</div>
+          <p class="component-section__desc">
+            Part of the Newt Devs toolchain for the Discord developer lifecycle.
+          </p>
+        </div>
+        <div class="component-section__body">
+        <div class="preview">
+          <button class="preview__copy" data-newt-copy>Copy</button>
+          <div class="preview__content"><div class="preview-grid">
+          <div class="newt-card">
+            <div class="newt-card__title">newt-dsl</div>
+            <p class="newt-card__description">A human-readable language for building Discord bots.</p>
+          </div>
+          <div class="newt-card">
+            <div class="newt-card__title">newt-trace</div>
+            <p class="newt-card__description">Discord-native telemetry SDK — runtime events as structured data.</p>
+          </div>
+        </div></div>
+        </div>
+              </div>
+      </section>
+
+    </div>
+
+    <footer class="page-footer">
+      <div class="page-footer__row">
+        <span>newt/ui · MIT License · built by Newt Devs</span>
+        <span><a href="https://github.com/newt-devs">github.com/newt-devs</a> · <a href="#ai-guide">AI guide</a> · <a href="#installation">CLI</a> · <a href="#cdn">CDN</a> · <a href="https://github.com/newt-devs/newt-ui/tree/main/docs/setup">Setup guides</a></span>
+      </div>
+      <p class="page-footer__disclaimer">
+        newt/ui is an independent, open-source project built by Newt Devs. It is
+        not affiliated with, endorsed by, or sponsored by Discord Inc. "Discord"
+        and the Discord logo are trademarks of Discord Inc.; this project does
+        not use or redistribute Discord's logos, wordmarks, or other copyrighted
+        brand assets — its components are original CSS inspired by Discord's
+        publicly observable visual style. See
+        <a href="https://github.com/newt-devs/newt-ui/blob/main/DISCLAIMER.md">DISCLAIMER.md</a>
+        for details.
+      </p>
+    </footer>
+  </div>
+</div>
+
+<script>
+  const sidenav = document.getElementById('sidenav');
+  const overlay = document.getElementById('sidenavOverlay');
+  const toggle = document.getElementById('menuToggle');
+
+  function closeNav() {
+    sidenav.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+  }
+  toggle.addEventListener('click', () => {
+    sidenav.classList.toggle('is-open');
+    overlay.classList.toggle('is-open');
+  });
+  overlay.addEventListener('click', closeNav);
+  sidenav.querySelectorAll('.sidenav__link').forEach((link) => {
+    link.addEventListener('click', closeNav);
+  });
+
+  // Active link highlight on scroll
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.sidenav__link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        navLinks.forEach((link) => link.classList.remove('is-active'));
+        const active = document.querySelector(`.sidenav__link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -75% 0px' });
+  sections.forEach((section) => observer.observe(section));
+
+  // Token field reveal/copy
+  document.querySelectorAll('[data-newt-token-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const input = btn.closest('.newt-token-field').querySelector('input');
+      const revealed = input.type === 'text';
+      input.type = revealed ? 'password' : 'text';
+      btn.textContent = revealed ? 'Reveal' : 'Hide';
+    });
+  });
+  document.querySelectorAll('[data-newt-token-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const input = btn.closest('.newt-token-field').querySelector('input');
+      try {
+        await navigator.clipboard.writeText(input.value);
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => (btn.textContent = original), 1500);
+      } catch (e) {}
+    });
+  });
+
+  // Preview markup copy
+  function formatMarkup(html) {
+    return html
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0)
+      .join('\n');
+  }
+  document.querySelectorAll('[data-newt-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const content = btn.nextElementSibling;
+      if (!content) return;
+      const markup = formatMarkup(content.innerHTML);
+      try {
+        await navigator.clipboard.writeText(markup);
+        btn.textContent = 'Copied';
+        btn.classList.add('is-copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('is-copied');
+        }, 1500);
+      } catch (e) {}
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+/* newt-ui · Token Field (masked input with reveal/copy) */
+
+.newt-token-field {
+  display: flex;
+  gap: 8px;
+}
+.newt-token-field .newt-input {
+  font-family: var(--newt-font-mono);
+  letter-spacing: 0.05em;
+}

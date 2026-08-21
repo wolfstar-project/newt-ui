@@ -1,0 +1,47 @@
+---
+title: Skeleton Loader
+description: A shimmering placeholder shown while content is loading.
+---
+
+<ComponentPreview name="skeleton-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash npx newt-ui@latest add skeleton ```
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="skeleton" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import { Skeleton } from "@/components/ui/skeleton"
+```
+
+```tsx
+<div className="flex gap-3">
+  <Skeleton variant="avatar" />
+  <div className="flex flex-1 flex-col gap-1.5">
+    <Skeleton variant="title" />
+    <Skeleton variant="text" className="w-[80%]" />
+  </div>
+</div>
+```
+
+## Examples
+
+### Variants
+
+`variant` accepts `"text"` (14px tall), `"avatar"` (40px circle), `"title"` (20px tall, 40% wide) or `"default"` (size it yourself with `className`). Animation is disabled automatically when the user prefers reduced motion.

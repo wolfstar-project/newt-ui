@@ -1,0 +1,15 @@
+{
+  "name": "stage-banner",
+  "title": "Stage Banner",
+  "description": "A full-width announcement strip with a status dot, optional action button and dismiss control.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": [
+    "StageBanner.vue",
+    "StageBannerDot.vue",
+    "StageBannerAction.vue",
+    "StageBannerClose.vue",
+    "index.ts"
+  ],
+  "reactDemo": "stage-banner-demo",
+  "vueDemo": "StageBannerDemo"
+}

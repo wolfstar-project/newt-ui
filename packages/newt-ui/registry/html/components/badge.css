@@ -1,0 +1,39 @@
+/* newt-ui · Badge */
+
+.newt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  padding: 2px 8px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-secondary);
+}
+
+.newt-badge--brand {
+  background: rgba(88, 101, 242, 0.15);
+  color: #b3baff;
+}
+.newt-badge--success {
+  background: rgba(35, 165, 90, 0.15);
+  color: #45c178;
+}
+.newt-badge--warning {
+  background: rgba(240, 178, 50, 0.15);
+  color: #f3b95f;
+}
+.newt-badge--danger {
+  background: rgba(242, 63, 66, 0.15);
+  color: #f4878a;
+}
+
+.newt-badge--dot::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}

@@ -1,0 +1,40 @@
+name: Setup toolchain
+description: Setup pinned Node.js and pnpm versions with local caches
+
+runs:
+  using: composite
+  steps:
+    - name: Setup pnpm
+      uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+      with:
+        version: 11.22.0
+        run_install: false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      with:
+        node-version-file: package.json
+        cache: pnpm
+
+    - name: Verify package manager metadata
+      shell: bash
+      run: |
+        expected="pnpm@$(pnpm --version)"
+        actual="$(node --print "require('./package.json').packageManager" | cut -d+ -f1)"
+        if [[ "$actual" != "$expected" ]]; then
+          echo "package.json packageManager must be $expected, found $actual" >&2
+          exit 1
+        fi
+
+    - name: Cache Turborepo
+      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+      with:
+        path: .turbo
+        key: ${{ runner.os }}-turbo-${{ github.ref_name }}-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-turbo-${{ github.ref_name }}-
+          ${{ runner.os }}-turbo-
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile

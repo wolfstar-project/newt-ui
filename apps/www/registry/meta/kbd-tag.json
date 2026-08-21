@@ -1,0 +1,8 @@
+{
+  "name": "kbd-tag",
+  "title": "Keyboard Shortcut Tag",
+  "description": "A small monospace tag for displaying keyboard shortcuts.",
+  "vueFiles": ["KbdTag.vue", "index.ts"],
+  "reactDemo": "kbd-tag-demo",
+  "vueDemo": "KbdTagDemo"
+}

@@ -1,0 +1,63 @@
+/* newt-ui · Timeline / Event Log */
+
+.newt-timeline {
+  display: flex;
+  flex-direction: column;
+}
+.newt-timeline__item {
+  display: flex;
+  gap: 12px;
+  position: relative;
+  padding-bottom: 20px;
+}
+.newt-timeline__item:last-child {
+  padding-bottom: 0;
+}
+.newt-timeline__item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 24px;
+  bottom: 0;
+  width: 2px;
+  background: var(--newt-border);
+}
+.newt-timeline__dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--newt-bg-surface);
+  border: 2px solid var(--newt-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.newt-timeline__dot--success {
+  border-color: var(--newt-online);
+  color: var(--newt-online);
+}
+.newt-timeline__dot--danger {
+  border-color: var(--newt-dnd);
+  color: var(--newt-dnd);
+}
+.newt-timeline__dot--brand {
+  border-color: var(--newt-brand);
+  color: #b3baff;
+}
+.newt-timeline__content {
+  flex: 1;
+  padding-top: 1px;
+}
+.newt-timeline__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+.newt-timeline__meta {
+  font-size: 12px;
+  color: var(--newt-text-muted);
+  margin-top: 2px;
+}

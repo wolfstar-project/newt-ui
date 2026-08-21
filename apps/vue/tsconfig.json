@@ -1,0 +1,8 @@
+{
+  // Nuxt 4 generates the real path aliases (`@/*` and `~/*` both resolve to
+  // `app/`); overriding `paths` here would shadow them.
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "strict": true
+  }
+}

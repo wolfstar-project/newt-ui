@@ -1,0 +1,85 @@
+/* newt-ui · Status Indicator */
+
+.newt-status {
+  position: relative;
+  display: inline-block;
+}
+
+.newt-status__dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid var(--newt-bg-base);
+  background: var(--newt-offline);
+}
+
+.newt-status__dot--online {
+  background: var(--newt-online);
+}
+.newt-status__dot--idle {
+  background: var(--newt-bg-base);
+  border-color: var(--newt-bg-base);
+}
+.newt-status__dot--idle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--newt-idle);
+  clip-path: circle(60% at 35% 35%);
+}
+.newt-status__dot--dnd {
+  background: var(--newt-bg-base);
+}
+.newt-status__dot--dnd::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65%;
+  height: 22%;
+  border-radius: 1px;
+  background: var(--newt-dnd);
+}
+.newt-status__dot--offline {
+  background: var(--newt-offline);
+}
+.newt-status__dot--streaming {
+  background: #593695;
+}
+
+/* presence glow — signature motif */
+.newt-status__dot--online::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--newt-online);
+  opacity: 0;
+  animation: newt-presence-pulse 2.4s ease-out infinite;
+}
+
+@keyframes newt-presence-pulse {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.6;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .newt-status__dot--online::after {
+    animation: none;
+  }
+}

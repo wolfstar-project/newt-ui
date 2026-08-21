@@ -1,0 +1,58 @@
+/* newt-ui · Server Banner */
+
+.newt-server-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--newt-bg-elevated);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-lg);
+  padding: 16px 20px;
+  max-width: 480px;
+}
+.newt-server-banner__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--newt-radius-lg);
+  background: var(--newt-brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.newt-server-banner__info {
+  flex: 1;
+  min-width: 0;
+}
+.newt-server-banner__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--newt-text-primary);
+}
+.newt-server-banner__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--newt-text-muted);
+  margin-top: 2px;
+}
+.newt-server-banner__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.newt-server-banner__meta-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.newt-server-banner__meta-dot--online {
+  background: var(--newt-online);
+}
+.newt-server-banner__meta-dot--offline {
+  background: var(--newt-offline);
+}

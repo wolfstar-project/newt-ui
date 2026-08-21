@@ -1,0 +1,13 @@
+{
+  "name": "tooltip",
+  "title": "Tooltip",
+  "description": "A small floating label that appears above an element on hover or focus.",
+  "vueFiles": [
+    "Tooltip.vue",
+    "TooltipTrigger.vue",
+    "TooltipContent.vue",
+    "index.ts"
+  ],
+  "reactDemo": "tooltip-demo",
+  "vueDemo": "TooltipDemo"
+}

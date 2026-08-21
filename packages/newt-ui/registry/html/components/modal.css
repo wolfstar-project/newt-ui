@@ -1,0 +1,37 @@
+/* newt-ui · Modal */
+
+.newt-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.newt-modal {
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-lg);
+  width: 440px;
+  max-width: 90vw;
+  box-shadow: var(--newt-shadow-elevation-high);
+}
+.newt-modal__header {
+  padding: 16px 16px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+.newt-modal__body {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  line-height: 20px;
+}
+.newt-modal__footer {
+  padding: 16px;
+  background: var(--newt-bg-surface);
+  border-radius: 0 0 var(--newt-radius-lg) var(--newt-radius-lg);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

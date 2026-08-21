@@ -1,0 +1,9 @@
+{
+  "name": "badge",
+  "title": "Badge",
+  "description": "A small pill used to label status, counts or categories.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": ["Badge.vue", "index.ts"],
+  "reactDemo": "badge-demo",
+  "vueDemo": "BadgeDemo"
+}

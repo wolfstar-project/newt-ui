@@ -1,0 +1,23 @@
+{
+  "name": "user-profile",
+  "title": "User Profile Popout",
+  "description": "Floating profile card with a banner, overlapping avatar, bio section and role tags.",
+  "registryDependencies": ["avatar", "status-indicator", "role-tag", "button"],
+  "vueFiles": [
+    "UserProfile.vue",
+    "UserProfileBanner.vue",
+    "UserProfileHead.vue",
+    "UserProfileActions.vue",
+    "UserProfileAvatar.vue",
+    "UserProfileName.vue",
+    "UserProfileHandle.vue",
+    "UserProfileDivider.vue",
+    "UserProfileBody.vue",
+    "UserProfileSectionLabel.vue",
+    "UserProfileBio.vue",
+    "UserProfileRoles.vue",
+    "index.ts"
+  ],
+  "reactDemo": "user-profile-demo",
+  "vueDemo": "UserProfileDemo"
+}

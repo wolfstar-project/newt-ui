@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "extends": ["./tooling/oxc/base.oxlintrc.json"],
+  "ignorePatterns": [
+    "**/next-env.d.ts",
+    ".claude/**",
+    ".skills/**",
+    "apps/*/public/legacy/**",
+    "packages/newt-ui/registry/html/**"
+  ]
+}

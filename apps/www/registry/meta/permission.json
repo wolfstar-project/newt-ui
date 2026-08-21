@@ -1,0 +1,15 @@
+{
+  "name": "permission",
+  "title": "Permission Row",
+  "description": "A settings row with a deny / inherit / allow tri-state toggle.",
+  "vueFiles": [
+    "Permission.vue",
+    "PermissionInfo.vue",
+    "PermissionName.vue",
+    "PermissionDescription.vue",
+    "PermissionStates.vue",
+    "index.ts"
+  ],
+  "reactDemo": "permission-demo",
+  "vueDemo": "PermissionDemo"
+}

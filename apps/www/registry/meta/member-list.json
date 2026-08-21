@@ -1,0 +1,16 @@
+{
+  "name": "member-list",
+  "title": "Member List Row",
+  "description": "A hoverable row showing a member's avatar, presence, name and role.",
+  "registryDependencies": ["avatar", "status-indicator", "role-tag"],
+  "vueFiles": [
+    "MemberList.vue",
+    "MemberListItem.vue",
+    "MemberListInfo.vue",
+    "MemberListName.vue",
+    "MemberListRole.vue",
+    "index.ts"
+  ],
+  "reactDemo": "member-list-demo",
+  "vueDemo": "MemberListDemo"
+}

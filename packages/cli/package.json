@@ -1,0 +1,65 @@
+{
+  "name": "newt-ui-vue",
+  "version": "0.2.0",
+  "description": "CLI for newt/ui — Discord-native UI components for Vue & Nuxt (shadcn-style registry). Part of the Newt Devs toolchain.",
+  "keywords": [
+    "component-library",
+    "design-system",
+    "discord",
+    "discord-bot",
+    "newt-devs",
+    "nuxt",
+    "shadcn",
+    "ui",
+    "vue"
+  ],
+  "homepage": "https://newt-devs.github.io/newt-ui",
+  "bugs": {
+    "url": "https://github.com/newt-devs/newt-ui/issues"
+  },
+  "license": "MIT",
+  "author": "Newt Devs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newt-devs/newt-ui.git",
+    "directory": "packages/cli"
+  },
+  "bin": {
+    "newt-ui-vue": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsdown --config-loader unrun",
+    "dev": "tsdown --config-loader unrun --watch",
+    "lint": "oxlint -c ../../.oxlintrc.json .",
+    "lint:fix": "oxlint -c ../../.oxlintrc.json --fix .",
+    "prepack": "pnpm run build",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.7.0",
+    "cross-spawn": "^7.0.6",
+    "mri": "^1.2.0",
+    "package-manager-detector": "^1.8.0",
+    "picocolors": "^1.1.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.6",
+    "@types/node": "^22.10.2",
+    "tsdown": "^0.22.14",
+    "typescript": "^5.7.2",
+    "unrun": "^0.3.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

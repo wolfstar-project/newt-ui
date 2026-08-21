@@ -1,0 +1,8 @@
+{
+  "name": "role-tag",
+  "title": "Role Tag",
+  "description": "A compact bordered tag with a coloured dot for displaying a member's role.",
+  "vueFiles": ["RoleTag.vue", "RoleTagDot.vue", "index.ts"],
+  "reactDemo": "role-tag-demo",
+  "vueDemo": "RoleTagDemo"
+}

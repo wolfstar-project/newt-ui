@@ -1,0 +1,197 @@
+skills:
+  frontend-design:
+    repo: anthropics/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/frontend-design
+    ref: main
+  skill-creator:
+    repo: anthropics/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/skill-creator
+    ref: main
+  webapp-testing:
+    repo: anthropics/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/webapp-testing
+    ref: main
+  accessibility:
+    repo: addyosmani/web-quality-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/accessibility
+    ref: main
+  best-practices:
+    repo: addyosmani/web-quality-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/best-practices
+    ref: main
+  core-web-vitals:
+    repo: addyosmani/web-quality-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/core-web-vitals
+    ref: main
+  performance:
+    repo: addyosmani/web-quality-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/performance
+    ref: main
+  seo:
+    repo: addyosmani/web-quality-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/seo
+    ref: main
+  web-quality-audit:
+    repo: addyosmani/web-quality-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/web-quality-audit
+    ref: main
+  nuxt:
+    repo: onmax/nuxt-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/nuxt
+    ref: main
+  nuxt-content:
+    repo: onmax/nuxt-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/nuxt-content
+    ref: main
+  nuxt-modules:
+    repo: onmax/nuxt-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/nuxt-modules
+    ref: main
+  nuxt-seo:
+    repo: onmax/nuxt-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/nuxt-seo
+    ref: main
+  vue:
+    repo: antfu/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/vue
+    ref: main
+  vue-best-practices:
+    repo: vuejs-ai/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/vue-best-practices
+    ref: main
+  vue-testing-best-practices:
+    repo: vuejs-ai/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/vue-testing-best-practices
+    ref: main
+  baseline-ui:
+    repo: ibelick/ui-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/baseline-ui
+    ref: main
+  fixing-motion-performance:
+    repo: ibelick/ui-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/fixing-motion-performance
+    ref: main
+  animation-vocabulary:
+    repo: emilkowalski/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/animation-vocabulary
+    ref: main
+  emil-design-eng:
+    repo: emilkowalski/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/emil-design-eng
+    ref: main
+  find-animation-opportunities:
+    repo: emilkowalski/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/find-animation-opportunities
+    ref: main
+  improve-animations:
+    repo: emilkowalski/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/improve-animations
+    ref: main
+  review-animations:
+    repo: emilkowalski/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/review-animations
+    ref: main
+  web-design-guidelines:
+    repo: vercel-labs/agent-skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/web-design-guidelines
+    ref: main
+  systematic-debugging:
+    repo: obra/superpowers
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/systematic-debugging
+    ref: main
+  writing-plans:
+    repo: obra/superpowers
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/writing-plans
+    ref: main
+  improve-codebase-architecture:
+    repo: mattpocock/skills
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/engineering/improve-codebase-architecture
+    ref: main
+  git-commit:
+    repo: github/awesome-copilot
+    source: github
+    syncedAt: 2026-08-21
+    generator: external
+    path: skills/git-commit
+    ref: main

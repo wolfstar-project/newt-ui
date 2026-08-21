@@ -1,0 +1,80 @@
+---
+title: User Profile Popout
+description: Floating profile card with a banner, overlapping avatar, bio section and role tags.
+---
+
+<ComponentPreview name="user-profile-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash npx newt-ui@latest add user-profile ```
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="user-profile" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  UserProfile,
+  UserProfileActions,
+  UserProfileAvatar,
+  UserProfileBanner,
+  UserProfileBio,
+  UserProfileBody,
+  UserProfileDivider,
+  UserProfileHandle,
+  UserProfileHead,
+  UserProfileName,
+  UserProfileRoles,
+  UserProfileSectionLabel,
+} from "@/components/ui/user-profile"
+import { Avatar } from "@/components/ui/avatar"
+import { StatusIndicator } from "@/components/ui/status-indicator"
+import { RoleTag } from "@/components/ui/role-tag"
+import { Button } from "@/components/ui/button"
+```
+
+```tsx
+<UserProfile>
+  <UserProfileBanner />
+  <UserProfileHead>
+    <UserProfileActions>
+      <Button variant="icon" aria-label="Send message">
+        ✉
+      </Button>
+    </UserProfileActions>
+    <UserProfileAvatar>
+      <StatusIndicator status="online">
+        <Avatar size="lg">U</Avatar>
+      </StatusIndicator>
+    </UserProfileAvatar>
+    <UserProfileName>username</UserProfileName>
+    <UserProfileHandle>username#0000</UserProfileHandle>
+    <UserProfileDivider />
+  </UserProfileHead>
+  <UserProfileBody>
+    <UserProfileSectionLabel>About me</UserProfileSectionLabel>
+    <UserProfileBio>Bio text goes here.</UserProfileBio>
+    <UserProfileDivider />
+    <UserProfileSectionLabel>Roles</UserProfileSectionLabel>
+    <UserProfileRoles>
+      <RoleTag>Role</RoleTag>
+    </UserProfileRoles>
+  </UserProfileBody>
+</UserProfile>
+```
+
+`UserProfileBanner` accepts a `className` or `style` to override the default brand color with a custom banner image or gradient.

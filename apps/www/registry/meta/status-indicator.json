@@ -1,0 +1,10 @@
+{
+  "name": "status-indicator",
+  "title": "Status Indicator",
+  "description": "A presence dot anchored to an avatar, with online, idle, do-not-disturb, offline and streaming states.",
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["avatar"],
+  "vueFiles": ["StatusIndicator.vue", "StatusDot.vue", "index.ts"],
+  "reactDemo": "status-indicator-demo",
+  "vueDemo": "StatusIndicatorDemo"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "modal",
+  "title": "Modal",
+  "description": "A centered dialog over a dimmed overlay that closes on Escape, overlay click or an explicit close control.",
+  "registryDependencies": ["button"],
+  "vueFiles": [
+    "Modal.vue",
+    "ModalHeader.vue",
+    "ModalBody.vue",
+    "ModalFooter.vue",
+    "ModalClose.vue",
+    "index.ts"
+  ],
+  "reactDemo": "modal-demo",
+  "vueDemo": "ModalDemo"
+}

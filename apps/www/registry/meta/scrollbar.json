@@ -1,0 +1,8 @@
+{
+  "name": "scrollbar",
+  "title": "Scrollbar Utility",
+  "description": "Discord-styled thin, rounded scrollbars for any scrollable container.",
+  "vueFiles": ["ScrollArea.vue", "index.ts"],
+  "reactDemo": "scrollbar-demo",
+  "vueDemo": "ScrollbarDemo"
+}

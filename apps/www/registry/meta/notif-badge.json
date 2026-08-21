@@ -1,0 +1,10 @@
+{
+  "name": "notif-badge",
+  "title": "Notification Badge",
+  "description": "A small count badge or unread dot for signalling new activity on avatars and channels.",
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["avatar"],
+  "vueFiles": ["NotifBadge.vue", "index.ts"],
+  "reactDemo": "notif-badge-demo",
+  "vueDemo": "NotifBadgeDemo"
+}

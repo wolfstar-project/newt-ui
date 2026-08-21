@@ -1,0 +1,64 @@
+/* newt-ui · Permission Row */
+
+.newt-permission {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--newt-border);
+}
+.newt-permission:last-child {
+  border-bottom: none;
+}
+.newt-permission__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.newt-permission__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--newt-text-primary);
+}
+.newt-permission__desc {
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+.newt-permission__states {
+  display: flex;
+  gap: 4px;
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-sm);
+  padding: 2px;
+}
+.newt-permission__state {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--newt-radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--newt-text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-permission__state:hover {
+  color: var(--newt-text-secondary);
+}
+.newt-permission__state--deny.newt-permission__state--active {
+  background: rgba(242, 63, 66, 0.15);
+  color: var(--newt-dnd);
+}
+.newt-permission__state--inherit.newt-permission__state--active {
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-secondary);
+}
+.newt-permission__state--allow.newt-permission__state--active {
+  background: rgba(35, 165, 90, 0.15);
+  color: var(--newt-online);
+}

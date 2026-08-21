@@ -1,0 +1,22 @@
+/* newt-ui · Spoiler */
+
+.newt-spoiler {
+  background: #1a1a1e;
+  color: transparent;
+  border-radius: var(--newt-radius-sm);
+  padding: 0 4px;
+  cursor: pointer;
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    color 0s;
+  user-select: none;
+}
+.newt-spoiler--revealed {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+  user-select: text;
+  cursor: text;
+}
+.newt-spoiler:not(.newt-spoiler--revealed):hover {
+  background: #232328;
+}

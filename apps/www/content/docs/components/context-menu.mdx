@@ -1,0 +1,58 @@
+---
+title: Context Menu
+description: A floating right-click style menu with items, keyboard shortcuts, dividers and a danger variant.
+---
+
+<ComponentPreview name="context-menu-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash npx newt-ui@latest add context-menu ```
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="context-menu" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  ContextMenu,
+  ContextMenuDivider,
+  ContextMenuItem,
+  ContextMenuShortcut,
+} from "@/components/ui/context-menu"
+```
+
+```tsx
+<ContextMenu>
+  <ContextMenuItem>Action one</ContextMenuItem>
+  <ContextMenuItem>
+    Action two
+    <ContextMenuShortcut>Ctrl+K</ContextMenuShortcut>
+  </ContextMenuItem>
+  <ContextMenuDivider />
+  <ContextMenuItem variant="danger">Delete</ContextMenuItem>
+</ContextMenu>
+```
+
+## Examples
+
+### Danger item
+
+```tsx
+<ContextMenuItem variant="danger" onClick={handleDelete}>
+  Delete
+</ContextMenuItem>
+```

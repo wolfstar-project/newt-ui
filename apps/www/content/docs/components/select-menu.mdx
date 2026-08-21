@@ -1,0 +1,54 @@
+---
+title: Select Menu
+description: A floating listbox with optional search, section labels, dividers and selected options.
+---
+
+<ComponentPreview name="select-menu-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash npx newt-ui@latest add select-menu ```
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="select-menu" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  SelectMenu,
+  SelectMenuDivider,
+  SelectMenuLabel,
+  SelectMenuOption,
+  SelectMenuSearch,
+} from "@/components/ui/select-menu"
+```
+
+```tsx
+<SelectMenu aria-label="Select an option">
+  <SelectMenuSearch placeholder="Search…" aria-label="Search options" />
+  <SelectMenuLabel>Options</SelectMenuLabel>
+  <SelectMenuOption selected>Option one</SelectMenuOption>
+  <SelectMenuOption>Option two</SelectMenuOption>
+  <SelectMenuDivider />
+  <SelectMenuOption>Option three</SelectMenuOption>
+</SelectMenu>
+```
+
+## Examples
+
+### Selection state
+
+`SelectMenuOption` is presentational: pass `selected` to show the check mark and handle `onClick` to update your own state. The menu itself is a `role="listbox"`; options set `aria-selected` automatically.

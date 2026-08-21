@@ -1,0 +1,5 @@
+export { default as Attachment } from "./Attachment.vue"
+export { default as AttachmentIcon } from "./AttachmentIcon.vue"
+export { default as AttachmentMeta } from "./AttachmentMeta.vue"
+export { default as AttachmentName } from "./AttachmentName.vue"
+export { default as AttachmentSize } from "./AttachmentSize.vue"

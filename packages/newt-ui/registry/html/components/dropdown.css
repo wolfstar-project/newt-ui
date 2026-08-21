@@ -1,0 +1,50 @@
+/* newt-ui · Dropdown Menu */
+
+.newt-dropdown {
+  background: var(--newt-bg-floating);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  box-shadow: var(--newt-shadow-elevation-high);
+  padding: 6px;
+  width: 240px;
+}
+.newt-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+  transition: background var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-dropdown__item:hover,
+.newt-dropdown__item--active {
+  background: var(--newt-brand);
+}
+.newt-dropdown__item:hover .newt-dropdown__desc,
+.newt-dropdown__item--active .newt-dropdown__desc {
+  color: rgba(255, 255, 255, 0.75);
+}
+.newt-dropdown__icon {
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+  color: var(--newt-text-muted);
+}
+.newt-dropdown__item:hover .newt-dropdown__icon,
+.newt-dropdown__item--active .newt-dropdown__icon {
+  color: #fff;
+}
+.newt-dropdown__label {
+  font-size: 14px;
+  font-weight: 500;
+}
+.newt-dropdown__desc {
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+.newt-dropdown__divider {
+  height: 1px;
+  background: var(--newt-border);
+  margin: 4px 6px;
+}

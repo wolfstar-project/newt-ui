@@ -1,0 +1,16 @@
+/* newt-ui · Slash Command Block */
+
+.newt-command {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(88, 101, 242, 0.15);
+  color: #b3baff;
+  font-family: var(--newt-font-mono);
+  font-size: 13px;
+  padding: 2px 8px 2px 6px;
+  border-radius: var(--newt-radius-sm);
+}
+.newt-command__icon {
+  opacity: 0.8;
+}
