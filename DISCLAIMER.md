@@ -2,10 +2,10 @@
 
 ## Trademark & affiliation
 
-**newt/ui** is an independent, open-source project created and maintained by
-**Newt Devs**. It is **not affiliated with, endorsed by, sponsored by, or in
-any way officially connected with Discord Inc.**, or any of its subsidiaries
-or affiliates.
+**newt/ui** is an independent, open-source project, originally created by
+[newt-max](https://github.com/newt-max) (see [`NOTICE`](./NOTICE)). It is
+**not affiliated with, endorsed by, sponsored by, or in any way officially
+connected with Discord Inc.**, or any of its subsidiaries or affiliates.
 
 "Discord" and the Discord logo, wordmark, and Clyde mascot are trademarks of
 Discord Inc. This project does not use, reproduce, or redistribute any of
@@ -28,7 +28,7 @@ this project.
 
 If you are Discord Inc. (or represent Discord Inc.) and have concerns about
 any content in this repository, please open an issue at
-[github.com/newt-devs/newt-ui/issues](https://github.com/newt-devs/newt-ui/issues)
+[github.com/wolfstar-project/newt-ui/issues](https://github.com/wolfstar-project/newt-ui/issues)
 and we will review it promptly.
 
 ## Use of newt/ui in your projects
@@ -48,4 +48,5 @@ applicable. In particular:
 ## No warranty
 
 newt/ui is provided "as is", without warranty of any kind, express or implied.
-See `LICENSE` for the full MIT license text.
+See `LICENSE` for the full Apache License 2.0 text and `NOTICE` for
+attribution.

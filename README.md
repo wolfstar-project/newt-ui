@@ -3,9 +3,7 @@
 A Discord-styled component library for **React**, **Vue** and plain
 **HTML/CSS**, built on a shared `--newt-*` design-token system. Copy-paste
 components you own (shadcn-style), a CLI for each framework, and a docs site
-per framework. Part of the [Newt Devs](https://github.com/newt-devs)
-toolchain, alongside [newt-dsl](https://github.com/newt-devs/newt-dsl) and
-[newt-trace](https://github.com/newt-devs/newt-trace).
+per framework.
 
 > **Not affiliated with Discord Inc.** newt/ui is an independent project,
 > visually inspired by Discord's UI. See [`DISCLAIMER.md`](./DISCLAIMER.md).
@@ -28,23 +26,24 @@ apps/
       meta/*.json           Per-component metadata (source for generated files)
     content/docs/
       components/*.mdx      Component docs
-      installation/*.md     Setup guides (HTML, React, Next.js, Vue/Nuxt, newt-dsl)
+      installation/*.md     Setup guides (HTML, React, Next.js, Vue/Nuxt)
     components/docs/        Docs chrome: side nav, page header, section, preview frame
     registry-categories.ts  Side-nav taxonomy (6 groups, all 43 components)
     lib/utils.ts            cn()
-    styles/globals.css      Tailwind + --newt-* tokens
+    styles/globals.css      Tailwind v3 + --newt-* tokens
     styles/docs.css         Docs styling, ported from the original index.html
     components.json
-  vue/                      Vue docs site (Nuxt) — shadcn-vue layout
-    src/lib/registry/
+  vue/                      Vue docs site (Nuxt 4) — shadcn-vue layout
+    app/lib/registry/
       default/ui/<name>/    {Component.vue, index.ts} per component
       default/example/*.vue Demos
       schema.ts, registry-ui.ts, registry-examples.ts
-    src/content/docs/       Markdown docs
+    app/assets/css/main.css Tailwind v4 (`@theme`) + --newt-* tokens
+    content/docs/           Markdown docs
 packages/
   newt-ui/                  `newt-ui` CLI (React) + registry/html (original HTML/CSS sources, tokens.css)
   cli/                      `newt-ui-vue` CLI (Vue)
-  module/                   `@newt-devs/nuxt` Nuxt module
+  module/                   `@newt-ui/nuxt` Nuxt module
 templates/
   next-template/            Next.js starter preconfigured with newt/ui
   nuxt-template/            Nuxt starter preconfigured with newt/ui
@@ -109,9 +108,11 @@ Detailed guides live in
 
 `packages/newt-ui/registry/html/tokens.css` is the single source of truth.
 Both apps map every token to Tailwind utilities (`bg-newt-brand`,
-`text-newt-text-muted`, `rounded-md`, `shadow-elevation-high`, …) through the
-`newtPreset` in `tailwind.config.ts`. Never hardcode a hex value that exists
-as a token.
+`text-newt-text-muted`, `rounded-md`, `shadow-elevation-high`, …) — `apps/www`
+through the `newtPreset` in `tailwind.config.ts` (Tailwind v3), `apps/vue`
+through an `@theme` block in `app/assets/css/main.css` (Tailwind v4). Never
+hardcode a hex value that exists as a token. See the `newt-ui-registry` skill
+for how one registry serves both majors.
 
 ## Development
 
@@ -134,19 +135,18 @@ newt/ui was originally created by [newt-max](https://github.com/newt-max),
 who granted permission for this fork to be maintained here on the condition
 that the original authorship is credited. This repository builds on that work
 — the design tokens, the component set, and the HTML/CSS spec all originate
-from it.
+from it. See [`NOTICE`](./NOTICE).
 
 ## License
 
-[MIT](./LICENSE) © Newt Devs — see [Credits](#credits) for the original
+[Apache-2.0](./LICENSE) — see [`NOTICE`](./NOTICE) for the original
 authorship.
 
 ## Docs styling
 
 Both docs sites reuse the look of the original single-page showcase
-(`index.html`, kept at the repo root and served at
-`apps/www/public/legacy/index.html`): fixed 264px side nav, `package.json`
+(`apps/www/public/legacy/index.html`): fixed 264px side nav, `package.json`
 manifest column in the page header, numbered component sections with a sticky
 head, and preview frames with a brand corner marker and a copy button. The CSS
 is ported verbatim into `apps/www/styles/docs.css` and
-`apps/vue/src/assets/css/docs.css`.
+`apps/vue/app/assets/css/docs.css`.
