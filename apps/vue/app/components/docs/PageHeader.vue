@@ -41,7 +41,7 @@ const manifest = computed<ManifestRow[]>(() => [
       <p class="lead">
         A component library, design token system, and AI agent guide for
         building Discord-styled UI — bots, dashboards, and docs that look like
-        they belong in the client. Built by Newt Devs, the team behind
+        they belong in the client. Built by WolfStar, the team behind
         <strong>newt-dsl</strong> and <strong>newt-trace</strong>.
       </p>
       <div class="page-header__cta">

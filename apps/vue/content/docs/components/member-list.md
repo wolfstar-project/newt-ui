@@ -8,7 +8,7 @@ description: A hoverable row showing a member's avatar, presence, name and role.
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add member-list
+npx @wolfstar/newt-ui-vue@latest add member-list
 ```
 
 ## Usage

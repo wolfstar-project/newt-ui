@@ -8,7 +8,7 @@ description: A floating right-click style menu with items, keyboard shortcuts, d
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add context-menu
+npx @wolfstar/newt-ui-vue@latest add context-menu
 ```
 
 ## Usage

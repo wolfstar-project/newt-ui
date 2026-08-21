@@ -1,27 +1,27 @@
 {
-  "name": "newt-ui-vue",
+  "name": "@wolfstar/newt-ui-vue",
   "version": "0.2.0",
-  "description": "CLI for newt/ui — Discord-native UI components for Vue & Nuxt (shadcn-style registry). Part of the Newt Devs toolchain.",
+  "description": "CLI for newt/ui — Discord-native UI components for Vue & Nuxt (shadcn-style registry). Part of the WolfStar toolchain.",
   "keywords": [
     "component-library",
     "design-system",
     "discord",
     "discord-bot",
-    "newt-devs",
     "nuxt",
     "shadcn",
     "ui",
-    "vue"
+    "vue",
+    "wolfstar"
   ],
-  "homepage": "https://newt-devs.github.io/newt-ui",
+  "homepage": "https://wolfstar-project.github.io/newt-ui",
   "bugs": {
-    "url": "https://github.com/newt-devs/newt-ui/issues"
+    "url": "https://github.com/wolfstar-project/newt-ui/issues"
   },
-  "license": "MIT",
-  "author": "Newt Devs",
+  "license": "Apache-2.0",
+  "author": "@wolfstar",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/newt-devs/newt-ui.git",
+    "url": "git+https://github.com/wolfstar-project/newt-ui.git",
     "directory": "packages/cli"
   },
   "bin": {

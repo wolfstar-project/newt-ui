@@ -8,7 +8,7 @@ description: A floating menu panel with icon, label and description items that h
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add dropdown
+npx @wolfstar/newt-ui-vue@latest add dropdown
 ```
 
 ## Usage

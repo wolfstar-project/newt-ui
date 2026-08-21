@@ -1,7 +1,7 @@
 # AGENT_GUIDE.md — Building components for newt/ui
 
 This document is written for AI agents (and humans) extending **newt/ui**, the
-Discord-native component library published by Newt Devs. Follow it exactly when
+Discord-native component library published by WolfStar. Follow it exactly when
 adding, modifying, or porting components, so the library stays visually and
 structurally consistent regardless of who — or what — builds the next piece.
 

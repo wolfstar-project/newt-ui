@@ -37,7 +37,7 @@ export async function list(options: ListOptions): Promise<void> {
   }
   outro(
     highlighter.dim(
-      `${items.length} item(s). Add with: npx newt-ui-vue add <name>`
+      `${items.length} item(s). Add with: npx @wolfstar/newt-ui-vue add <name>`
     )
   )
 }

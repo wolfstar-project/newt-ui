@@ -8,7 +8,7 @@ description: A horizontal rule with an optional centered label, like Discord's d
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add divider
+npx @wolfstar/newt-ui-vue@latest add divider
 ```
 
 ## Usage

@@ -5,7 +5,7 @@ import {
   type RegistryItem,
 } from "./schema.js"
 
-const DEFAULT_REGISTRY_URL = "https://newt-devs.github.io/newt-ui/vue/r"
+const DEFAULT_REGISTRY_URL = "https://wolfstar-project.github.io/newt-ui/vue/r"
 
 export function getRegistryUrl(override?: string): string {
   const url = override ?? process.env.NEWT_REGISTRY_URL ?? DEFAULT_REGISTRY_URL

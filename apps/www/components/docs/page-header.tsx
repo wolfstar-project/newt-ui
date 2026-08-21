@@ -4,8 +4,8 @@ import { ui } from "@/registry/registry-ui"
 const MANIFEST: [string, string, boolean?][] = [
   ["components", String(ui.length), true],
   ["dependencies", "0"],
-  ["license", "MIT"],
-  ["install", "npx newt-ui"],
+  ["license", "Apache-2.0"],
+  ["install", "npx @wolfstar/newt-ui"],
   ["tokens", "CSS vars"],
   ["frameworks", "React · Vue"],
 ]
@@ -30,7 +30,7 @@ export function PageHeader() {
         <p className="lead">
           A component library, design token system, and AI agent guide for
           building Discord-styled UI — bots, dashboards, and docs that look like
-          they belong in the client. Built by Newt Devs, the team behind{" "}
+          they belong in the client. Built by WolfStar, the team behind{" "}
           <strong>newt-dsl</strong> and <strong>newt-trace</strong>.
         </p>
         <div className="page-header__cta">
@@ -42,7 +42,7 @@ export function PageHeader() {
           </a>
           <a
             className={buttonVariants({ variant: "secondary", size: "lg" })}
-            href="https://github.com/newt-devs/newt-ui"
+            href="https://github.com/wolfstar-project/newt-ui"
           >
             View on GitHub
           </a>

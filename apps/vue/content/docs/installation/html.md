@@ -13,7 +13,7 @@ there's no unused CSS and you own every file.
 **1. Install**
 
 ```bash
-npx @newt-devs/ui@latest init
+npx @wolfstar/newt-ui@latest init
 ```
 
 This creates `newt-ui.json` (config) and copies `registry/tokens.css` into
@@ -22,7 +22,7 @@ This creates `newt-ui.json` (config) and copies `registry/tokens.css` into
 **2. Add components**
 
 ```bash
-npx @newt-devs/ui@latest add button embed status-indicator
+npx @wolfstar/newt-ui@latest add button embed status-indicator
 ```
 
 Components land in `components/ui/` by default. Each is a `.css` file (and
@@ -66,7 +66,7 @@ optionally `.html` + `.js`) that you copy-paste markup from.
 **4. See all available components**
 
 ```bash
-npx @newt-devs/ui@latest list
+npx @wolfstar/newt-ui@latest list
 ```
 
 ---
@@ -84,15 +84,15 @@ Pin to a version tag in production.
     <!-- Works immediately after pushing to GitHub -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/newt-devs/newt-ui@main/registry/tokens.css"
+      href="https://cdn.jsdelivr.net/gh/wolfstar-project/newt-ui@main/registry/tokens.css"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/newt-devs/newt-ui@main/registry/components/button.css"
+      href="https://cdn.jsdelivr.net/gh/wolfstar-project/newt-ui@main/registry/components/button.css"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/newt-devs/newt-ui@main/registry/components/embed.css"
+      href="https://cdn.jsdelivr.net/gh/wolfstar-project/newt-ui@main/registry/components/embed.css"
     />
   </head>
   <body class="newt-root">
@@ -106,7 +106,7 @@ Or pin to a release tag (after `npm publish`):
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@newt-devs/ui@0.1.0/registry/tokens.css"
+  href="https://cdn.jsdelivr.net/npm/@wolfstar/newt-ui@0.1.0/registry/tokens.css"
 />
 ```
 
@@ -118,7 +118,7 @@ Or pin to a release tag (after `npm publish`):
 ## Option C — Download the CSS directly
 
 Download `registry/tokens.css` and whichever `registry/components/*.css` files
-you need from the [GitHub repo](https://github.com/newt-devs/newt-ui), drop
+you need from the [GitHub repo](https://github.com/wolfstar-project/newt-ui), drop
 them into your project, and link them as normal stylesheets. No CLI, no CDN
 dependency.
 

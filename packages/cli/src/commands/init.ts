@@ -73,7 +73,7 @@ export async function init(options: InitOptions): Promise<void> {
   const config = await promptForConfig(cwd, options)
   await runInit(cwd, config, options)
   outro(
-    `Success! Project initialization completed. You may now add components: ${highlighter.info("npx newt-ui-vue add button")}`
+    `Success! Project initialization completed. You may now add components: ${highlighter.info("npx @wolfstar/newt-ui-vue add button")}`
   )
 }
 
@@ -108,7 +108,7 @@ async function promptForConfig(
 ): Promise<RawConfig> {
   const framework = options.framework ?? detectFramework(cwd)
   const defaults: RawConfig = rawConfigSchema.parse({
-    $schema: "https://newt-devs.github.io/newt-ui/schema.json",
+    $schema: "https://wolfstar-project.github.io/newt-ui/schema.json",
     style: "default",
     typescript: true,
     framework,
@@ -346,7 +346,7 @@ function printNuxtInstructions(css: string): void {
   )
   logger.log(
     highlighter.dim(
-      "  Tip: @newt-devs/nuxt auto-imports every component in your ui directory — see https://newt-devs.github.io/newt-ui"
+      "  Tip: @wolfstar/nuxt-newt-ui auto-imports every component in your ui directory — see https://wolfstar-project.github.io/newt-ui"
     )
   )
 }

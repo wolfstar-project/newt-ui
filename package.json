@@ -1,8 +1,8 @@
 {
   "name": "newt-ui-monorepo",
   "private": true,
-  "description": "Monorepo for newt/ui — Discord-native UI components (React, Vue, HTML/CSS) and CLIs. Part of the Newt Devs toolchain.",
-  "license": "MIT",
+  "description": "Monorepo for newt/ui — Discord-native UI components (React, Vue, HTML/CSS) and CLIs. Part of the WolfStar toolchain.",
+  "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "build": "turbo run build",

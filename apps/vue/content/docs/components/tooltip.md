@@ -8,7 +8,7 @@ description: A small floating label that appears above an element on hover or fo
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add tooltip
+npx @wolfstar/newt-ui-vue@latest add tooltip
 ```
 
 ## Usage

@@ -8,7 +8,7 @@ description: A Discord-style rich message embed with title, description, fields 
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add embed
+npx @wolfstar/newt-ui-vue@latest add embed
 ```
 
 ## Usage

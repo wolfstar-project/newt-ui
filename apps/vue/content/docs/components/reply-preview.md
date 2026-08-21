@@ -8,7 +8,7 @@ description: A compact "replying to" bar showing the author and a truncated exce
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add reply-preview
+npx @wolfstar/newt-ui-vue@latest add reply-preview
 ```
 
 ## Usage

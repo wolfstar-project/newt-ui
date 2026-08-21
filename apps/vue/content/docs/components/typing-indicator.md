@@ -8,7 +8,7 @@ description: Three bouncing dots with a label that signals someone is typing.
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add typing-indicator
+npx @wolfstar/newt-ui-vue@latest add typing-indicator
 ```
 
 ## Usage

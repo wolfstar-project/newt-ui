@@ -10,16 +10,9 @@ permissions:
 
 jobs:
   label_sync:
-    name: 🏷️ Sync repository labels
-    runs-on: ubuntu-latest
     permissions:
       issues: write # create and update repository labels
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      - uses: crazy-max/ghaction-github-labeler@24d110aa46a59976b8a7f35518cb7f14f434c916 # v5.3.0
-        with:
-          yaml-file: .github/labels.yml
-          skip-delete: false
+    uses: wolfstar-project/.github/.github/workflows/reusable-labelsync.yml@fb3b0e52ddb109fec8a64f26a9295c9e72528dc8
+    with:
+      merge-labels: true
+      repository-overwrite-labels: wolfstar-project/newt-ui

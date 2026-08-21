@@ -51,7 +51,9 @@
     "packages/module": {
       "entry": ["src/module.ts"],
       "project": ["src/**/*.ts"],
-      "ignoreDependencies": ["nuxt"],
+      // `@nuxt/schema` only shows up in the generated `dist/module.d.mts`, which
+      // knip does not scan; `nuxt` is a dev-time peer of the module builder.
+      "ignoreDependencies": ["@nuxt/schema", "nuxt"],
     },
     "templates/next-template": {
       "entry": ["app/**/*.{ts,tsx}", "lib/utils.ts"],

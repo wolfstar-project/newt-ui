@@ -8,7 +8,7 @@ description: A transient notification with a status icon that auto-dismisses aft
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add toast
+npx @wolfstar/newt-ui-vue@latest add toast
 ```
 
 ## Usage

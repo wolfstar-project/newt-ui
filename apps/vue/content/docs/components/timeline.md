@@ -8,7 +8,7 @@ description: A vertical event log with connected status dots, titles and metadat
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add timeline
+npx @wolfstar/newt-ui-vue@latest add timeline
 ```
 
 ## Usage

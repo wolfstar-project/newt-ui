@@ -8,7 +8,7 @@ description: Inputs, textareas, selects, labels, helper text, switches and check
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add form-fields
+npx @wolfstar/newt-ui-vue@latest add form-fields
 ```
 
 ## Usage

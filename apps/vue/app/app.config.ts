@@ -7,14 +7,16 @@ export default defineAppConfig({
     name: "newt/ui",
     version: "0.1.0",
     channel: "early access",
-    license: "MIT",
-    author: "Newt Devs",
-    cli: "npx newt-ui-vue",
+    license: "Apache-2.0",
+    author: "WolfStar",
+    cli: "npx @wolfstar/newt-ui-vue",
   },
   links: {
-    github: "https://github.com/newt-devs",
-    repo: "https://github.com/newt-devs/newt-ui",
-    setupGuides: "https://github.com/newt-devs/newt-ui/tree/main/docs/setup",
-    disclaimer: "https://github.com/newt-devs/newt-ui/blob/main/DISCLAIMER.md",
+    github: "https://github.com/wolfstar-project",
+    repo: "https://github.com/wolfstar-project/newt-ui",
+    setupGuides:
+      "https://github.com/wolfstar-project/newt-ui/tree/main/docs/setup",
+    disclaimer:
+      "https://github.com/wolfstar-project/newt-ui/blob/main/DISCLAIMER.md",
   },
 })

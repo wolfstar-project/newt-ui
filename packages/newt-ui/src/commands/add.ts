@@ -43,7 +43,7 @@ export async function add(options: AddOptions): Promise<void> {
   const config = await getConfig(cwd)
   if (!config) {
     throw new Error(
-      `Configuration is missing. Please run ${highlighter.info("npx newt-ui init")} to create a components.json file.`
+      `Configuration is missing. Please run ${highlighter.info("npx @wolfstar/newt-ui init")} to create a components.json file.`
     )
   }
 

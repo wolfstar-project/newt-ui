@@ -8,7 +8,7 @@ description: Invite-style card with a server icon, name, live member counts and 
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add server-banner
+npx @wolfstar/newt-ui-vue@latest add server-banner
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ import { Button } from "@/components/ui/button"
   <ServerBanner>
     <ServerBannerIcon>N</ServerBannerIcon>
     <ServerBannerInfo>
-      <ServerBannerName>Newt Devs</ServerBannerName>
+      <ServerBannerName>WolfStar</ServerBannerName>
       <ServerBannerMeta>
         <ServerBannerMetaItem status="online">142 Online</ServerBannerMetaItem>
         <ServerBannerMetaItem status="offline"

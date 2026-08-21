@@ -8,7 +8,7 @@ description: A compact bordered tag with a coloured dot for displaying a member'
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add role-tag
+npx @wolfstar/newt-ui-vue@latest add role-tag
 ```
 
 ## Usage

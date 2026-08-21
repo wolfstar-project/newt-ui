@@ -96,7 +96,7 @@ watch(
         <StatusDot status="online" />
       </StatusIndicator>
       <div class="sidenav__footer-meta">
-        <span class="sidenav__footer-name">newt-devs</span>
+        <span class="sidenav__footer-name">wolfstar-project</span>
         <span class="sidenav__footer-sub"
           >v{{ site.version }} · {{ componentCount }} components</span
         >

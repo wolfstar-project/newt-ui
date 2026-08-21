@@ -1,6 +1,6 @@
 # Setup — newt-dsl & newt-trace Integration
 
-This guide is specific to the Newt Devs toolchain. It shows how to wire
+This guide is specific to the WolfStar toolchain. It shows how to wire
 **newt-trace** telemetry events and **newt-dsl** bot commands directly into
 newt/ui components — building a real-time bot dashboard with zero boilerplate.
 
@@ -24,8 +24,8 @@ newt/ui component prop or element — no transformation layer needed.
 ## 1. Install newt/ui in your dashboard project
 
 ```bash
-npx @newt-devs/ui@latest init
-npx @newt-devs/ui@latest add \
+npx @wolfstar/newt-ui@latest init
+npx @wolfstar/newt-ui@latest add \
   embed timeline status-indicator member-list \
   progress cooldown-bar badge bot-command-card \
   message-group channel-topic server-banner

@@ -1,7 +1,7 @@
 # next-template
 
 A minimal [Next.js 15](https://nextjs.org) + React 19 starter preconfigured with
-[newt/ui](https://newt-devs.github.io/newt-ui) — Discord-native components you
+[newt/ui](https://wolfstar-project.github.io/newt-ui) — Discord-native components you
 copy into your project.
 
 ## Getting started
@@ -25,9 +25,9 @@ Open http://localhost:3000.
 ## Adding components
 
 ```bash
-npx newt-ui add button
-npx newt-ui list
-npx newt-ui diff button
+npx @wolfstar/newt-ui add button
+npx @wolfstar/newt-ui list
+npx @wolfstar/newt-ui diff button
 ```
 
 Components land in `components/ui/` and are yours to edit.

@@ -175,7 +175,7 @@ const themeItem = {
 const registryJson = {
   $schema: "https://ui.shadcn.com/schema/registry.json",
   name: "newt-ui",
-  homepage: "https://newt-devs.github.io/newt-ui",
+  homepage: "https://wolfstar-project.github.io/newt-ui",
   items: reactUi
     .map((i) =>
       Object.assign({}, i, {

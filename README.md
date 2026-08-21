@@ -41,9 +41,9 @@ apps/
     app/assets/css/main.css Tailwind v4 (`@theme`) + --newt-* tokens
     content/docs/           Markdown docs
 packages/
-  newt-ui/                  `newt-ui` CLI (React) + registry/html (original HTML/CSS sources, tokens.css)
-  cli/                      `newt-ui-vue` CLI (Vue)
-  module/                   `@newt-ui/nuxt` Nuxt module
+  newt-ui/                  `@wolfstar/newt-ui` CLI (React) + registry/html (original HTML/CSS sources, tokens.css)
+  cli/                      `@wolfstar/newt-ui-vue` CLI (Vue)
+  module/                   `@wolfstar/nuxt-newt-ui` Nuxt module
 templates/
   next-template/            Next.js starter preconfigured with newt/ui
   nuxt-template/            Nuxt starter preconfigured with newt/ui
@@ -54,8 +54,8 @@ templates/
 ### React
 
 ```bash
-npx newt-ui@latest init
-npx newt-ui@latest add button embed status-indicator
+npx @wolfstar/newt-ui@latest init
+npx @wolfstar/newt-ui@latest add button embed status-indicator
 ```
 
 ```tsx
@@ -67,8 +67,8 @@ import { Button } from "@/components/ui/button"
 ### Vue / Nuxt
 
 ```bash
-npx newt-ui-vue@latest init
-npx newt-ui-vue@latest add button embed status-indicator
+npx @wolfstar/newt-ui-vue@latest init
+npx @wolfstar/newt-ui-vue@latest add button embed status-indicator
 ```
 
 ```vue
@@ -84,8 +84,8 @@ import { Button } from "@/components/ui/button"
 ### Plain HTML / CSS
 
 ```bash
-npx newt-ui-html init
-npx newt-ui-html add button embed
+npx @wolfstar/newt-ui --legacy init
+npx @wolfstar/newt-ui --legacy add button embed
 ```
 
 or via CDN:
@@ -93,11 +93,11 @@ or via CDN:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/newt-ui@latest/registry/html/tokens.css"
+  href="https://cdn.jsdelivr.net/npm/@wolfstar/newt-ui@latest/registry/html/tokens.css"
 />
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/newt-ui@latest/registry/html/components/button.css"
+  href="https://cdn.jsdelivr.net/npm/@wolfstar/newt-ui@latest/registry/html/components/button.css"
 />
 ```
 
