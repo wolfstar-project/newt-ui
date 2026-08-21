@@ -128,9 +128,18 @@ node scripts/gen-registry.mjs # regenerate registry indexes from registry/meta
 See [`CONTRIBUTING.md`](./CONTRIBUTING.md) and
 [`AGENT_GUIDE.md`](./AGENT_GUIDE.md) for conventions.
 
+## Credits
+
+newt/ui was originally created by [newt-max](https://github.com/newt-max),
+who granted permission for this fork to be maintained here on the condition
+that the original authorship is credited. This repository builds on that work
+— the design tokens, the component set, and the HTML/CSS spec all originate
+from it.
+
 ## License
 
-[MIT](./LICENSE) © Newt Devs
+[MIT](./LICENSE) © Newt Devs — see [Credits](#credits) for the original
+authorship.
 
 ## Docs styling
 
