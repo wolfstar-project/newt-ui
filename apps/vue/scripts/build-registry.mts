@@ -14,7 +14,7 @@ async function buildIndex(allItems: Registry) {
     .filter((i) => ["registry:ui", "registry:lib"].includes(i.type))
     .map((i) =>
       Object.assign({}, i, {
-        files: i.files?.map((f) => (typeof f === "string" ? f : f.path)),
+        files: i.files?.map((f) => (f instanceof Object ? f.path : f)),
       })
     )
   await fs.mkdir(REGISTRY_PATH, { recursive: true })
@@ -39,7 +39,7 @@ async function buildStyles(allItems: Registry) {
       }
       const files = await Promise.all(
         item.files.map(async (f) => {
-          const file = typeof f === "string" ? { path: f, type: item.type } : f
+          const file = f instanceof Object ? f : { path: f, type: item.type }
           const abs = file.path.startsWith("lib/")
             ? path.join(SRC, file.path.replace(/^lib\//, ""))
             : path.join(SRC, "registry", style.name, file.path)

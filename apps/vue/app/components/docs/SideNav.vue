@@ -25,7 +25,7 @@ const { activeId, refresh } = useScrollSpy({
 
 const routeActiveId = computed<string>(() => {
   const name = route.params.name
-  return typeof name === "string" ? name : ""
+  return Array.isArray(name) ? "" : (name ?? "")
 })
 
 function href(link: DocsNavLink): string {

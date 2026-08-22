@@ -18,14 +18,17 @@ function titleFor(name: string): string {
   return ui.find((item) => item.name === name)?.title ?? name
 }
 
+/** Side-nav model shape returned by {@link useDocsNav}. */
+export interface DocsNavResult {
+  groups: DocsNavGroup[]
+  componentCount: number
+}
+
 /**
  * Side-nav model: the hand-written "Getting started" links followed by one
  * group per registry category.
  */
-export function useDocsNav(): {
-  groups: DocsNavGroup[]
-  componentCount: number
-} {
+export function useDocsNav(): DocsNavResult {
   const groups: DocsNavGroup[] = [
     {
       label: "Getting started",
