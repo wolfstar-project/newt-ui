@@ -39,13 +39,23 @@ jobs:
       - name: Check snapshot changes
         id: snapshot_changes
         shell: bash
+        # Context expressions are passed in via `env:` and read back as shell
+        # variables instead of being interpolated directly into the script.
+        # Direct `${{ }}` interpolation in a `run:` block splices the
+        # (potentially attacker-influenced) value into the script text before
+        # bash ever sees it, which is a code-injection vector; env vars are
+        # passed as plain strings and can't break out of the shell context.
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_BEFORE: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             echo "publish=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          if [ -z "${{ github.event.before }}" ] || [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+          if [ -z "$EVENT_BEFORE" ] || [ "$EVENT_BEFORE" = "0000000000000000000000000000000000000000" ]; then
             echo "publish=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -54,7 +64,7 @@ jobs:
           # `git diff` (e.g. an unreachable `before` SHA) must fail this step
           # via `set -e`, not silently resolve to "no relevant changes" — a
           # nonzero exit inside an `if` condition does not trigger `set -e`.
-          changed_files="$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")"
+          changed_files="$(git diff --name-only "$EVENT_BEFORE" "$HEAD_SHA")"
           if echo "$changed_files" | grep -qE '^(packages/|package.json$)'; then
             echo "publish=true" >> "$GITHUB_OUTPUT"
           else
@@ -69,9 +79,9 @@ jobs:
       github.repository_owner == 'wolfstar-project'
       && needs.snapshot_filter.outputs.publish == 'true'
     permissions:
-      contents: read
-      pull-requests: read
-      id-token: write
+      contents: read # checkout the repo
+      pull-requests: read # changesets reads PR metadata to build the snapshot changelog
+      id-token: write # npm provenance / OIDC trusted publishing for the @next snapshot
     steps:
       - name: Checkout Project
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -100,14 +110,21 @@ jobs:
     runs-on: ubuntu-24.04-arm
     if: github.repository_owner == 'wolfstar-project'
     permissions:
-      contents: write
-      pull-requests: write
-      id-token: write
+      contents: write # changesets/action commits/pushes the "Version Packages" branch and publishes tags
+      pull-requests: write # changesets/action opens/updates the "Version Packages" release PR
+      id-token: write # npm provenance / OIDC trusted publishing when `pnpm run publish` runs
     steps:
       - name: Checkout Project
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          # `token:` (not the default GITHUB_TOKEN) so that changesets/action's
+          # commits/PRs are attributed to WOLFSTAR_TOKEN and can trigger other
+          # workflows. persist-credentials is left at its safe default (false)
+          # since changesets/action authenticates its own git operations via a
+          # ~/.netrc it writes from the GITHUB_TOKEN env var below — it does
+          # not rely on credentials persisted in .git/config by this step.
+          persist-credentials: false
           token: ${{ secrets.WOLFSTAR_TOKEN }}
 
       - name: Setup
