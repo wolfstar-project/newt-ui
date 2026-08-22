@@ -300,7 +300,7 @@ function printTailwindInstructions(
     )
     if (!theme) {
       logger.warn(
-        `The registry was unreachable, so only the raw ${highlighter.info("--newt-*")} variables were written. Re-run ${highlighter.info("newt-ui-vue init")} when you are online to add the @theme block.`
+        `The registry was unreachable, so only the raw ${highlighter.info("--newt-*")} variables were written. Re-run ${highlighter.info("@wolfstar/newt-ui-vue init")} when you are online to add the @theme block.`
       )
     }
     return
@@ -309,7 +309,7 @@ function printTailwindInstructions(
   const extend = theme?.tailwind?.config?.theme?.extend
   if (!extend) {
     logger.warn(
-      `The registry was unreachable, so the v3 preset could not be printed. Re-run ${highlighter.info("newt-ui-vue init")} when you are online.`
+      `The registry was unreachable, so the v3 preset could not be printed. Re-run ${highlighter.info("@wolfstar/newt-ui-vue init")} when you are online.`
     )
     return
   }
