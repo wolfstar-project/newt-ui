@@ -1,6 +1,6 @@
 {
   "name": "@wolfstar/newt-ui-vue",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "CLI for newt/ui — Discord-native UI components for Vue & Nuxt (shadcn-style registry). Part of the WolfStar toolchain.",
   "keywords": [
     "component-library",
