@@ -18,7 +18,9 @@ export function normalizeFile(
   file: RegistryItemFile,
   fallbackType: RegistryItemType
 ): NormalizedFile | null {
-  if (typeof file === "string") return null
+  // `RegistryItemFile` is `string | { path, content?, type?, target? }`; a bare
+  // string entry carries no content to write, so skip it.
+  if (!(file instanceof Object)) return null
   if (file.content === undefined) return null
   return {
     path: file.path,

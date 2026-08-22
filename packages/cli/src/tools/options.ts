@@ -113,7 +113,8 @@ export function isFrameworkName(
 export function flagString(
   value: string | boolean | undefined
 ): string | undefined {
-  return typeof value === "string" && value.length > 0 ? value : undefined
+  if (value === undefined || value === true || value === false) return undefined
+  return value.length > 0 ? value : undefined
 }
 
 /** Read a boolean flag, tolerating `--flag=true` style input. */

@@ -45,9 +45,8 @@ function pascalCase(name: string): string {
 }
 
 function demoFor(name: string): Component | undefined {
-  const entry: Record<string, unknown> | undefined =
-    Index.default[`${pascalCase(name)}Demo`]
-  return entry?.component as Component | undefined
+  const entry = Index.default[`${pascalCase(name)}Demo`]
+  return entry?.component
 }
 
 let counter = STATIC_SECTIONS

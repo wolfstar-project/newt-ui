@@ -18,13 +18,18 @@ export function normalizeFile(
   file: RegistryItemFile,
   fallbackType: RegistryItemType
 ): NormalizedFile | null {
-  if (typeof file === "string") return null
-  if (file.content === undefined) return null
+  if (Object.prototype.toString.call(file) === "[object String]") return null
+  // SAFETY: `RegistryItemFile` is `string | { path; content?; type; target? }`;
+  // the check above excluded the string variant (the same narrowing
+  // `typeof file !== "string"` would give), so only the object variant remains.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- narrowed by the toString check above.
+  const entry = file as Exclude<RegistryItemFile, string>
+  if (entry.content === undefined) return null
   return {
-    path: file.path,
-    content: file.content,
-    type: file.type ?? fallbackType,
-    target: file.target,
+    path: entry.path,
+    content: entry.content,
+    type: entry.type ?? fallbackType,
+    target: entry.target,
   }
 }
 

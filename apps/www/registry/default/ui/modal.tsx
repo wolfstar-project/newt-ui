@@ -133,9 +133,12 @@ const ModalClose = React.forwardRef<HTMLButtonElement, ModalCloseProps>(
       if (!e.defaultPrevented) close()
     }
     if (asChild && React.isValidElement(children)) {
-      // asChild can't know the child's prop types at compile time.
+      // SAFETY: asChild renders an arbitrary child element and must inject an
+      // onClick handler; React.isValidElement only narrows to
+      // ReactElement<unknown>, so the caller-supplied element's prop shape
+      // can't be verified from ReactNode alone.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      const child = children as unknown as React.ReactElement<{
+      const child = children as React.ReactElement<{
         onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
       }>
       return React.cloneElement(child, {

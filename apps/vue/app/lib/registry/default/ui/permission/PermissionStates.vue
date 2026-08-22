@@ -18,11 +18,11 @@ const options: { value: PermissionValue; label: string; glyph: string }[] = [
   { value: "allow", label: "Allow", glyph: "✓" },
 ]
 
-const activeClasses: Record<PermissionValue, string> = {
+const activeClasses = {
   deny: "bg-[rgba(242,63,66,0.15)] text-newt-dnd hover:text-newt-dnd",
   inherit: "bg-newt-bg-elevated text-newt-text-secondary",
   allow: "bg-[rgba(35,165,90,0.15)] text-newt-online hover:text-newt-online",
-}
+} satisfies Record<PermissionValue, string>
 
 function select(value: PermissionValue) {
   if (props.disabled) return

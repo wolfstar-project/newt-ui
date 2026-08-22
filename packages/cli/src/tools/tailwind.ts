@@ -1,5 +1,7 @@
 import path from "node:path"
 
+import { z } from "zod"
+
 import { findFirstExisting, readFileIfExists } from "./fileSystem.js"
 import { TAILWIND_CONFIG_CANDIDATES } from "./options.js"
 import type { RegistryItem } from "./schema.js"
@@ -35,25 +37,31 @@ export async function detectTailwindMajor(
   return findFirstExisting(cwd, TAILWIND_CONFIG_CANDIDATES) ? 3 : 4
 }
 
+/**
+ * The `dependencies`/`devDependencies` maps we need out of `package.json`.
+ * Each key is left unvalidated (`unknown`) since we only ever look up a
+ * single known key (`tailwindcss`) afterwards; a malformed neighbouring
+ * dependency entry should not stop that lookup from succeeding.
+ */
+const packageJsonSchema = z.object({
+  dependencies: z.record(z.string(), z.unknown()).optional(),
+  devDependencies: z.record(z.string(), z.unknown()).optional(),
+})
+
 function readTailwindRange(packageJson: string): string | undefined {
-  let parsed: unknown
+  let raw: unknown
   try {
-    parsed = JSON.parse(packageJson)
+    raw = JSON.parse(packageJson)
   } catch {
     return undefined
   }
-  if (!isRecord(parsed)) return undefined
+  const parsed = packageJsonSchema.safeParse(raw)
+  if (!parsed.success) return undefined
   for (const field of ["dependencies", "devDependencies"] as const) {
-    const deps = parsed[field]
-    if (!isRecord(deps)) continue
-    const value = deps["tailwindcss"]
-    if (typeof value === "string") return value
+    const range = z.string().safeParse(parsed.data[field]?.tailwindcss)
+    if (range.success) return range.data
   }
   return undefined
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value)
 }
 
 function majorFromRange(range: string): TailwindMajor | undefined {
@@ -101,18 +109,25 @@ export function renderItemCss(
   }
   if (item.css) {
     for (const [selector, body] of Object.entries(item.css)) {
-      parts.push(
-        typeof body === "string"
-          ? `${selector} {\n${indent(body)}\n}`
-          : block(selector, body as Record<string, unknown>)
-      )
+      if (body instanceof Object) {
+        // SAFETY: `registryItemCssSchema` allows a `css` entry to be either a
+        // string or a plain object of CSS custom properties; `body` is not a
+        // string here (excluded by the `instanceof Object` check above), so it
+        // is always that key/value record, never an array or class instance.
+        parts.push(block(selector, body as Record<string, string | number>))
+      } else {
+        parts.push(`${selector} {\n${indent(body)}\n}`)
+      }
     }
   }
 
   return parts.length > 0 ? `${parts.join("\n\n")}\n` : ""
 }
 
-function block(selector: string, entries: Record<string, unknown>): string {
+function block(
+  selector: string,
+  entries: Record<string, string | number>
+): string {
   const body = Object.entries(entries)
     .map(([key, value]) => `  ${cssProperty(key)}: ${String(value)};`)
     .join("\n")

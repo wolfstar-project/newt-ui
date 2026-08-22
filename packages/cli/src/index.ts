@@ -33,7 +33,10 @@ function getPackageInfo(): PackageJson {
   const here = path.dirname(fileURLToPath(import.meta.url))
   for (const candidate of ["../package.json", "../../package.json"]) {
     try {
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- reading our own package.json.
+      // SAFETY: this always resolves to the CLI's own package.json (one of the two
+      // relative candidates above), whose `name`/`version` fields we author and
+      // control ourselves.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
       return require(path.resolve(here, candidate)) as PackageJson
     } catch {
       // try next

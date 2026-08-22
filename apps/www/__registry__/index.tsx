@@ -2,30 +2,51 @@
 // @ts-nocheck
 import * as React from "react"
 
-export const Index: Record<string, any> = {
-  default: {
-    attachment: {
+interface RegistryIndexEntry {
+  name: string
+  type: string
+  registryDependencies: string[]
+  files: string[]
+  component: React.ComponentType
+}
+
+// Keys are the registry component/example names; built via `Object.fromEntries`
+// (instead of a `Record<string, any>` literal) so the lookup map stays
+// indexable by an arbitrary string without widening away the entry type.
+const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
+  [
+    "attachment",
+    {
       name: "attachment",
       type: "registry:ui",
       registryDependencies: ["button"],
       files: ["registry/default/ui/attachment.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/attachment")),
     },
-    avatar: {
+  ],
+  [
+    "avatar",
+    {
       name: "avatar",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/avatar.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/avatar")),
     },
-    badge: {
+  ],
+  [
+    "badge",
+    {
       name: "badge",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/badge.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/badge")),
     },
-    "bot-command-card": {
+  ],
+  [
+    "bot-command-card",
+    {
       name: "bot-command-card",
       type: "registry:ui",
       registryDependencies: ["badge"],
@@ -34,21 +55,30 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/ui/bot-command-card")
       ),
     },
-    button: {
+  ],
+  [
+    "button",
+    {
       name: "button",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/button.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/button")),
     },
-    card: {
+  ],
+  [
+    "card",
+    {
       name: "card",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/card.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/card")),
     },
-    "channel-topic": {
+  ],
+  [
+    "channel-topic",
+    {
       name: "channel-topic",
       type: "registry:ui",
       registryDependencies: [],
@@ -57,84 +87,120 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/ui/channel-topic")
       ),
     },
-    "code-block": {
+  ],
+  [
+    "code-block",
+    {
       name: "code-block",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/code-block.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/code-block")),
     },
-    "context-menu": {
+  ],
+  [
+    "context-menu",
+    {
       name: "context-menu",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/context-menu.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/context-menu")),
     },
-    "cooldown-bar": {
+  ],
+  [
+    "cooldown-bar",
+    {
       name: "cooldown-bar",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/cooldown-bar.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/cooldown-bar")),
     },
-    divider: {
+  ],
+  [
+    "divider",
+    {
       name: "divider",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/divider.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/divider")),
     },
-    dropdown: {
+  ],
+  [
+    "dropdown",
+    {
       name: "dropdown",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/dropdown.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/dropdown")),
     },
-    embed: {
+  ],
+  [
+    "embed",
+    {
       name: "embed",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/embed.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/embed")),
     },
-    "empty-state": {
+  ],
+  [
+    "empty-state",
+    {
       name: "empty-state",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/empty-state.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/empty-state")),
     },
-    "form-fields": {
+  ],
+  [
+    "form-fields",
+    {
       name: "form-fields",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/form-fields.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/form-fields")),
     },
-    "kbd-tag": {
+  ],
+  [
+    "kbd-tag",
+    {
       name: "kbd-tag",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/kbd-tag.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/kbd-tag")),
     },
-    "member-list": {
+  ],
+  [
+    "member-list",
+    {
       name: "member-list",
       type: "registry:ui",
       registryDependencies: ["avatar", "status-indicator", "role-tag"],
       files: ["registry/default/ui/member-list.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/member-list")),
     },
-    mention: {
+  ],
+  [
+    "mention",
+    {
       name: "mention",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/mention.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/mention")),
     },
-    "message-group": {
+  ],
+  [
+    "message-group",
+    {
       name: "message-group",
       type: "registry:ui",
       registryDependencies: ["avatar", "status-indicator", "reaction"],
@@ -143,49 +209,70 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/ui/message-group")
       ),
     },
-    modal: {
+  ],
+  [
+    "modal",
+    {
       name: "modal",
       type: "registry:ui",
       registryDependencies: ["button"],
       files: ["registry/default/ui/modal.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/modal")),
     },
-    "notif-badge": {
+  ],
+  [
+    "notif-badge",
+    {
       name: "notif-badge",
       type: "registry:ui",
       registryDependencies: ["avatar"],
       files: ["registry/default/ui/notif-badge.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/notif-badge")),
     },
-    pagination: {
+  ],
+  [
+    "pagination",
+    {
       name: "pagination",
       type: "registry:ui",
       registryDependencies: ["button"],
       files: ["registry/default/ui/pagination.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/pagination")),
     },
-    permission: {
+  ],
+  [
+    "permission",
+    {
       name: "permission",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/permission.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/permission")),
     },
-    progress: {
+  ],
+  [
+    "progress",
+    {
       name: "progress",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/progress.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/progress")),
     },
-    reaction: {
+  ],
+  [
+    "reaction",
+    {
       name: "reaction",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/reaction.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/reaction")),
     },
-    "reply-preview": {
+  ],
+  [
+    "reply-preview",
+    {
       name: "reply-preview",
       type: "registry:ui",
       registryDependencies: [],
@@ -194,28 +281,40 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/ui/reply-preview")
       ),
     },
-    "role-tag": {
+  ],
+  [
+    "role-tag",
+    {
       name: "role-tag",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/role-tag.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/role-tag")),
     },
-    scrollbar: {
+  ],
+  [
+    "scrollbar",
+    {
       name: "scrollbar",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/scrollbar.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/scrollbar")),
     },
-    "select-menu": {
+  ],
+  [
+    "select-menu",
+    {
       name: "select-menu",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/select-menu.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/select-menu")),
     },
-    "server-banner": {
+  ],
+  [
+    "server-banner",
+    {
       name: "server-banner",
       type: "registry:ui",
       registryDependencies: ["button"],
@@ -224,14 +323,20 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/ui/server-banner")
       ),
     },
-    skeleton: {
+  ],
+  [
+    "skeleton",
+    {
       name: "skeleton",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/skeleton.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/skeleton")),
     },
-    "slash-command": {
+  ],
+  [
+    "slash-command",
+    {
       name: "slash-command",
       type: "registry:ui",
       registryDependencies: [],
@@ -240,21 +345,30 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/ui/slash-command")
       ),
     },
-    spoiler: {
+  ],
+  [
+    "spoiler",
+    {
       name: "spoiler",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/spoiler.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/spoiler")),
     },
-    "stage-banner": {
+  ],
+  [
+    "stage-banner",
+    {
       name: "stage-banner",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/stage-banner.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/stage-banner")),
     },
-    "status-indicator": {
+  ],
+  [
+    "status-indicator",
+    {
       name: "status-indicator",
       type: "registry:ui",
       registryDependencies: ["avatar"],
@@ -263,42 +377,60 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/ui/status-indicator")
       ),
     },
-    tabs: {
+  ],
+  [
+    "tabs",
+    {
       name: "tabs",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/tabs.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/tabs")),
     },
-    timeline: {
+  ],
+  [
+    "timeline",
+    {
       name: "timeline",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/timeline.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/timeline")),
     },
-    toast: {
+  ],
+  [
+    "toast",
+    {
       name: "toast",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/toast.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/toast")),
     },
-    "token-field": {
+  ],
+  [
+    "token-field",
+    {
       name: "token-field",
       type: "registry:ui",
       registryDependencies: ["form-fields", "button"],
       files: ["registry/default/ui/token-field.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/token-field")),
     },
-    tooltip: {
+  ],
+  [
+    "tooltip",
+    {
       name: "tooltip",
       type: "registry:ui",
       registryDependencies: [],
       files: ["registry/default/ui/tooltip.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/tooltip")),
     },
-    "typing-indicator": {
+  ],
+  [
+    "typing-indicator",
+    {
       name: "typing-indicator",
       type: "registry:ui",
       registryDependencies: [],
@@ -307,7 +439,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/ui/typing-indicator")
       ),
     },
-    "user-profile": {
+  ],
+  [
+    "user-profile",
+    {
       name: "user-profile",
       type: "registry:ui",
       registryDependencies: [
@@ -319,7 +454,10 @@ export const Index: Record<string, any> = {
       files: ["registry/default/ui/user-profile.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/user-profile")),
     },
-    "voice-channel": {
+  ],
+  [
+    "voice-channel",
+    {
       name: "voice-channel",
       type: "registry:ui",
       registryDependencies: ["avatar"],
@@ -328,7 +466,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/ui/voice-channel")
       ),
     },
-    "attachment-demo": {
+  ],
+  [
+    "attachment-demo",
+    {
       name: "attachment-demo",
       type: "registry:example",
       registryDependencies: ["attachment"],
@@ -337,7 +478,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/attachment-demo")
       ),
     },
-    "avatar-demo": {
+  ],
+  [
+    "avatar-demo",
+    {
       name: "avatar-demo",
       type: "registry:example",
       registryDependencies: ["avatar"],
@@ -346,7 +490,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/avatar-demo")
       ),
     },
-    "badge-demo": {
+  ],
+  [
+    "badge-demo",
+    {
       name: "badge-demo",
       type: "registry:example",
       registryDependencies: ["badge"],
@@ -355,7 +502,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/badge-demo")
       ),
     },
-    "bot-command-card-demo": {
+  ],
+  [
+    "bot-command-card-demo",
+    {
       name: "bot-command-card-demo",
       type: "registry:example",
       registryDependencies: ["bot-command-card"],
@@ -364,7 +514,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/bot-command-card-demo")
       ),
     },
-    "button-demo": {
+  ],
+  [
+    "button-demo",
+    {
       name: "button-demo",
       type: "registry:example",
       registryDependencies: ["button"],
@@ -373,7 +526,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/button-demo")
       ),
     },
-    "card-demo": {
+  ],
+  [
+    "card-demo",
+    {
       name: "card-demo",
       type: "registry:example",
       registryDependencies: ["card"],
@@ -382,7 +538,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/card-demo")
       ),
     },
-    "channel-topic-demo": {
+  ],
+  [
+    "channel-topic-demo",
+    {
       name: "channel-topic-demo",
       type: "registry:example",
       registryDependencies: ["channel-topic"],
@@ -391,7 +550,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/channel-topic-demo")
       ),
     },
-    "code-block-demo": {
+  ],
+  [
+    "code-block-demo",
+    {
       name: "code-block-demo",
       type: "registry:example",
       registryDependencies: ["code-block"],
@@ -400,7 +562,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/code-block-demo")
       ),
     },
-    "context-menu-demo": {
+  ],
+  [
+    "context-menu-demo",
+    {
       name: "context-menu-demo",
       type: "registry:example",
       registryDependencies: ["context-menu"],
@@ -409,7 +574,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/context-menu-demo")
       ),
     },
-    "cooldown-bar-demo": {
+  ],
+  [
+    "cooldown-bar-demo",
+    {
       name: "cooldown-bar-demo",
       type: "registry:example",
       registryDependencies: ["cooldown-bar"],
@@ -418,7 +586,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/cooldown-bar-demo")
       ),
     },
-    "divider-demo": {
+  ],
+  [
+    "divider-demo",
+    {
       name: "divider-demo",
       type: "registry:example",
       registryDependencies: ["divider"],
@@ -427,7 +598,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/divider-demo")
       ),
     },
-    "dropdown-demo": {
+  ],
+  [
+    "dropdown-demo",
+    {
       name: "dropdown-demo",
       type: "registry:example",
       registryDependencies: ["dropdown"],
@@ -436,7 +610,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/dropdown-demo")
       ),
     },
-    "embed-demo": {
+  ],
+  [
+    "embed-demo",
+    {
       name: "embed-demo",
       type: "registry:example",
       registryDependencies: ["embed"],
@@ -445,7 +622,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/embed-demo")
       ),
     },
-    "empty-state-demo": {
+  ],
+  [
+    "empty-state-demo",
+    {
       name: "empty-state-demo",
       type: "registry:example",
       registryDependencies: ["empty-state"],
@@ -454,7 +634,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/empty-state-demo")
       ),
     },
-    "form-fields-demo": {
+  ],
+  [
+    "form-fields-demo",
+    {
       name: "form-fields-demo",
       type: "registry:example",
       registryDependencies: ["form-fields"],
@@ -463,7 +646,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/form-fields-demo")
       ),
     },
-    "kbd-tag-demo": {
+  ],
+  [
+    "kbd-tag-demo",
+    {
       name: "kbd-tag-demo",
       type: "registry:example",
       registryDependencies: ["kbd-tag"],
@@ -472,7 +658,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/kbd-tag-demo")
       ),
     },
-    "member-list-demo": {
+  ],
+  [
+    "member-list-demo",
+    {
       name: "member-list-demo",
       type: "registry:example",
       registryDependencies: ["member-list"],
@@ -481,7 +670,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/member-list-demo")
       ),
     },
-    "mention-demo": {
+  ],
+  [
+    "mention-demo",
+    {
       name: "mention-demo",
       type: "registry:example",
       registryDependencies: ["mention"],
@@ -490,7 +682,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/mention-demo")
       ),
     },
-    "message-group-demo": {
+  ],
+  [
+    "message-group-demo",
+    {
       name: "message-group-demo",
       type: "registry:example",
       registryDependencies: ["message-group"],
@@ -499,7 +694,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/message-group-demo")
       ),
     },
-    "modal-demo": {
+  ],
+  [
+    "modal-demo",
+    {
       name: "modal-demo",
       type: "registry:example",
       registryDependencies: ["modal"],
@@ -508,7 +706,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/modal-demo")
       ),
     },
-    "notif-badge-demo": {
+  ],
+  [
+    "notif-badge-demo",
+    {
       name: "notif-badge-demo",
       type: "registry:example",
       registryDependencies: ["notif-badge"],
@@ -517,7 +718,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/notif-badge-demo")
       ),
     },
-    "pagination-demo": {
+  ],
+  [
+    "pagination-demo",
+    {
       name: "pagination-demo",
       type: "registry:example",
       registryDependencies: ["pagination"],
@@ -526,7 +730,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/pagination-demo")
       ),
     },
-    "permission-demo": {
+  ],
+  [
+    "permission-demo",
+    {
       name: "permission-demo",
       type: "registry:example",
       registryDependencies: ["permission"],
@@ -535,7 +742,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/permission-demo")
       ),
     },
-    "progress-demo": {
+  ],
+  [
+    "progress-demo",
+    {
       name: "progress-demo",
       type: "registry:example",
       registryDependencies: ["progress"],
@@ -544,7 +754,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/progress-demo")
       ),
     },
-    "reaction-demo": {
+  ],
+  [
+    "reaction-demo",
+    {
       name: "reaction-demo",
       type: "registry:example",
       registryDependencies: ["reaction"],
@@ -553,7 +766,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/reaction-demo")
       ),
     },
-    "reply-preview-demo": {
+  ],
+  [
+    "reply-preview-demo",
+    {
       name: "reply-preview-demo",
       type: "registry:example",
       registryDependencies: ["reply-preview"],
@@ -562,7 +778,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/reply-preview-demo")
       ),
     },
-    "role-tag-demo": {
+  ],
+  [
+    "role-tag-demo",
+    {
       name: "role-tag-demo",
       type: "registry:example",
       registryDependencies: ["role-tag"],
@@ -571,7 +790,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/role-tag-demo")
       ),
     },
-    "scrollbar-demo": {
+  ],
+  [
+    "scrollbar-demo",
+    {
       name: "scrollbar-demo",
       type: "registry:example",
       registryDependencies: ["scrollbar"],
@@ -580,7 +802,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/scrollbar-demo")
       ),
     },
-    "select-menu-demo": {
+  ],
+  [
+    "select-menu-demo",
+    {
       name: "select-menu-demo",
       type: "registry:example",
       registryDependencies: ["select-menu"],
@@ -589,7 +814,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/select-menu-demo")
       ),
     },
-    "server-banner-demo": {
+  ],
+  [
+    "server-banner-demo",
+    {
       name: "server-banner-demo",
       type: "registry:example",
       registryDependencies: ["server-banner"],
@@ -598,7 +826,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/server-banner-demo")
       ),
     },
-    "skeleton-demo": {
+  ],
+  [
+    "skeleton-demo",
+    {
       name: "skeleton-demo",
       type: "registry:example",
       registryDependencies: ["skeleton"],
@@ -607,7 +838,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/skeleton-demo")
       ),
     },
-    "slash-command-demo": {
+  ],
+  [
+    "slash-command-demo",
+    {
       name: "slash-command-demo",
       type: "registry:example",
       registryDependencies: ["slash-command"],
@@ -616,7 +850,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/slash-command-demo")
       ),
     },
-    "spoiler-demo": {
+  ],
+  [
+    "spoiler-demo",
+    {
       name: "spoiler-demo",
       type: "registry:example",
       registryDependencies: ["spoiler"],
@@ -625,7 +862,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/spoiler-demo")
       ),
     },
-    "stage-banner-demo": {
+  ],
+  [
+    "stage-banner-demo",
+    {
       name: "stage-banner-demo",
       type: "registry:example",
       registryDependencies: ["stage-banner"],
@@ -634,7 +874,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/stage-banner-demo")
       ),
     },
-    "status-indicator-demo": {
+  ],
+  [
+    "status-indicator-demo",
+    {
       name: "status-indicator-demo",
       type: "registry:example",
       registryDependencies: ["status-indicator"],
@@ -643,7 +886,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/status-indicator-demo")
       ),
     },
-    "tabs-demo": {
+  ],
+  [
+    "tabs-demo",
+    {
       name: "tabs-demo",
       type: "registry:example",
       registryDependencies: ["tabs"],
@@ -652,7 +898,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/tabs-demo")
       ),
     },
-    "timeline-demo": {
+  ],
+  [
+    "timeline-demo",
+    {
       name: "timeline-demo",
       type: "registry:example",
       registryDependencies: ["timeline"],
@@ -661,7 +910,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/timeline-demo")
       ),
     },
-    "toast-demo": {
+  ],
+  [
+    "toast-demo",
+    {
       name: "toast-demo",
       type: "registry:example",
       registryDependencies: ["toast"],
@@ -670,7 +922,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/toast-demo")
       ),
     },
-    "token-field-demo": {
+  ],
+  [
+    "token-field-demo",
+    {
       name: "token-field-demo",
       type: "registry:example",
       registryDependencies: ["token-field"],
@@ -679,7 +934,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/token-field-demo")
       ),
     },
-    "tooltip-demo": {
+  ],
+  [
+    "tooltip-demo",
+    {
       name: "tooltip-demo",
       type: "registry:example",
       registryDependencies: ["tooltip"],
@@ -688,7 +946,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/tooltip-demo")
       ),
     },
-    "typing-indicator-demo": {
+  ],
+  [
+    "typing-indicator-demo",
+    {
       name: "typing-indicator-demo",
       type: "registry:example",
       registryDependencies: ["typing-indicator"],
@@ -697,7 +958,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/typing-indicator-demo")
       ),
     },
-    "user-profile-demo": {
+  ],
+  [
+    "user-profile-demo",
+    {
       name: "user-profile-demo",
       type: "registry:example",
       registryDependencies: ["user-profile"],
@@ -706,7 +970,10 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/user-profile-demo")
       ),
     },
-    "voice-channel-demo": {
+  ],
+  [
+    "voice-channel-demo",
+    {
       name: "voice-channel-demo",
       type: "registry:example",
       registryDependencies: ["voice-channel"],
@@ -715,5 +982,9 @@ export const Index: Record<string, any> = {
         () => import("@/registry/default/example/voice-channel-demo")
       ),
     },
-  },
+  ],
+]
+
+export const Index = {
+  default: Object.fromEntries(registryIndexEntries),
 }

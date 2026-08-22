@@ -1,5 +1,11 @@
 // Root CSS class per component, mirrored from packages/newt-ui/registry/html/registry.json.
-export const rootClasses: Record<string, string> = {
+/** Owner contract for the lookup below — keeps it indexable by an arbitrary
+ * component slug without widening the literal values away to `Record`. */
+export interface RootClassMap {
+  readonly [component: string]: string
+}
+
+export const rootClasses: RootClassMap = {
   button: "newt-btn",
   badge: "newt-badge",
   "status-indicator": "newt-status",

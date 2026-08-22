@@ -15,8 +15,14 @@
  * overriding one variable, exactly like the plain HTML/CSS distribution.
  */
 
+/** Owner contract for a `--newt-*` token lookup — indexable by an arbitrary
+ * token name without widening the literal values away to `Record`. */
+export interface NewtTokenMap {
+  readonly [token: string]: string
+}
+
 /** Raw token values, written to `:root` / the dark selector. */
-export const newtTokens: Record<string, string> = {
+export const newtTokens: NewtTokenMap = {
   "newt-bg-base": "#1e1f22",
   "newt-bg-surface": "#2b2d31",
   "newt-bg-elevated": "#313338",
@@ -84,12 +90,18 @@ const RADII = ["sm", "md", "lg", "full"] as const
 const FONTS = ["sans", "mono", "display"] as const
 const SHADOWS = ["elevation-low", "elevation-high"] as const
 
+/** Owner contract for the `@theme` entries below — same indexable shape as
+ * `NewtTokenMap`, kept distinct to name the Tailwind v4 side of the contract. */
+export interface TailwindV4Theme {
+  readonly [property: string]: string
+}
+
 /**
  * Tailwind v4 `@theme` entries. Each one aliases the matching `--newt-*`
  * variable rather than duplicating its value, so overriding the variable at
  * runtime still restyles every generated utility.
  */
-export const tailwindV4Theme: Record<string, string> = {
+export const tailwindV4Theme: TailwindV4Theme = {
   ...Object.fromEntries(
     COLORS.map((name) => [`--color-newt-${name}`, `var(--newt-${name})`])
   ),
@@ -106,10 +118,24 @@ export const tailwindV4Theme: Record<string, string> = {
 }
 
 /**
+ * Owner contract for the v3 `theme.extend` block — names each Tailwind
+ * extension bucket instead of collapsing them into an unsafe `Record<string,
+ * unknown>`, so every value keeps a concrete `string` contract.
+ */
+export interface TailwindV3Theme {
+  colors: { newt: Record<string, string> }
+  fontFamily: Record<string, string>
+  borderRadius: Record<string, string>
+  boxShadow: Record<string, string>
+  transitionTimingFunction: Record<string, string>
+  transitionDuration: Record<string, string>
+}
+
+/**
  * Tailwind v3 `theme.extend`. Same utilities, expressed the way a v3 JS config
  * expects them.
  */
-export const tailwindV3Theme: Record<string, unknown> = {
+export const tailwindV3Theme: TailwindV3Theme = {
   colors: {
     newt: Object.fromEntries(
       COLORS.map((name) => [

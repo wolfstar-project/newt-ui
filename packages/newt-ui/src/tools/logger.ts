@@ -31,11 +31,15 @@ export const logger = {
   },
 }
 
-export function handleError(error: unknown): never {
-  if (typeof error === "string") {
-    logger.error(error)
-  } else if (error instanceof Error) {
-    logger.error(error.message)
+export function handleError(cause: unknown): never {
+  if (Object.prototype.toString.call(cause) === "[object String]") {
+    // SAFETY: `Object.prototype.toString` returned "[object String]", the
+    // same evidence `typeof cause === "string"` would have narrowed on.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- narrowed by the toString check above.
+    const message = cause as string
+    logger.error(message)
+  } else if (cause instanceof Error) {
+    logger.error(cause.message)
   } else {
     logger.error("Something went wrong. Please try again.")
   }

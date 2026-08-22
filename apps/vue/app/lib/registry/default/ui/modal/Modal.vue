@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   onBeforeUnmount,
+  onMounted,
   provide,
   useId,
   watch,
@@ -32,19 +33,22 @@ function onOverlayClick(e: MouseEvent) {
   if (e.target === e.currentTarget) close()
 }
 
-watch(
-  open,
-  (isOpen) => {
-    if (typeof document === "undefined") return
-    if (isOpen) document.addEventListener("keydown", onKeyDown)
-    else document.removeEventListener("keydown", onKeyDown)
-  },
-  { immediate: true }
-)
+// `onMounted` only ever runs in the browser (Vue skips it during SSR), so
+// registering the watcher from inside it keeps `document` access client-only
+// without probing for it at runtime.
+onMounted(() => {
+  watch(
+    open,
+    (isOpen) => {
+      if (isOpen) document.addEventListener("keydown", onKeyDown)
+      else document.removeEventListener("keydown", onKeyDown)
+    },
+    { immediate: true }
+  )
+})
 
 onBeforeUnmount(() => {
-  if (typeof document !== "undefined")
-    document.removeEventListener("keydown", onKeyDown)
+  document.removeEventListener("keydown", onKeyDown)
 })
 
 provide(MODAL_CONTEXT_KEY, { close, titleId })

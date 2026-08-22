@@ -8,6 +8,13 @@ import { registryItemSchema, type Registry } from "../registry/schema"
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r")
 
+type RegistryItemFile = NonNullable<Registry[number]["files"]>[number]
+
+/** Registry file entries are either a plain path or an object carrying one. */
+function isFilePathShorthand(f: RegistryItemFile): f is string {
+  return Object.prototype.toString.call(f) === "[object String]"
+}
+
 async function buildRegistryIndex(allItems: Registry) {
   const items = allItems
     .filter((item) =>
@@ -15,7 +22,7 @@ async function buildRegistryIndex(allItems: Registry) {
     )
     .map((item) =>
       Object.assign({}, item, {
-        files: item.files?.map((f) => (typeof f === "string" ? f : f.path)),
+        files: item.files?.map((f) => (isFilePathShorthand(f) ? f : f.path)),
       })
     )
   await fs.mkdir(REGISTRY_PATH, { recursive: true })
@@ -40,7 +47,7 @@ async function buildStyles(allItems: Registry) {
       }
       const files = await Promise.all(
         item.files.map(async (f) => {
-          const file = typeof f === "string" ? { path: f, type: item.type } : f
+          const file = isFilePathShorthand(f) ? { path: f, type: item.type } : f
           const abs = file.path.startsWith("lib/")
             ? path.join(process.cwd(), file.path)
             : path.join(process.cwd(), "registry", style.name, file.path)

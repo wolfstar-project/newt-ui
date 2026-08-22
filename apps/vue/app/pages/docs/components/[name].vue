@@ -30,9 +30,8 @@ const index = computed<number>(
   () => order.indexOf(name.value) + 1 + STATIC_SECTIONS
 )
 const demo = computed<Component | undefined>(() => {
-  const entry: Record<string, unknown> | undefined =
-    Index.default[`${pascalCase(name.value)}Demo`]
-  return entry?.component as Component | undefined
+  const entry = Index.default[`${pascalCase(name.value)}Demo`]
+  return entry?.component
 })
 
 useHead(() => ({ title: `${item.value?.title ?? name.value} — newt/ui` }))

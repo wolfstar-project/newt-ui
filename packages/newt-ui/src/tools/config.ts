@@ -79,6 +79,11 @@ async function readTsConfigPaths(
         .replace(/\/\*[\s\S]*?\*\//g, "")
         .replace(/^\s*\/\/.*$/gm, "")
         .replace(/,(\s*[}\]])/g, "$1")
+      // SAFETY: tsconfig/jsconfig content is untrusted JSON with no schema
+      // validated here; every read below goes through `?.` and `??`, and if
+      // `parsed` itself isn't an object (e.g. `null`), the property access
+      // throws and is caught by the surrounding try/catch, which falls back
+      // to `{ baseUrl: ".", paths: {} }` below.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- best-effort tsconfig read, no runtime schema needed here.
       const parsed = JSON.parse(cleaned) as TsConfigLike
       return {
