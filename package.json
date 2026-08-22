@@ -1,8 +1,8 @@
 {
   "name": "newt-ui-monorepo",
   "private": true,
-  "description": "Monorepo for newt/ui — Discord-native UI components (React, Vue, HTML/CSS) and CLIs. Part of the Newt Devs toolchain.",
-  "license": "MIT",
+  "description": "Monorepo for newt/ui — Discord-native UI components (React, Vue, HTML/CSS) and CLIs. Part of the WolfStar toolchain.",
+  "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "build": "turbo run build",
@@ -15,8 +15,9 @@
     "lint:ci": "pnpm run format:check && pnpm run lint",
     "lint:fix": "turbo run lint:fix && oxlint -c .oxlintrc.json --fix scripts",
     "prepare": "node .husky/install.mjs && skilld prepare --agent claude-code",
+    "publish": "turbo run build --filter=./packages/* && changeset publish",
+    "publish:snapshot": "node scripts/publish-snapshot.mjs",
     "registry:build": "turbo run registry:build",
-    "release": "turbo run build --filter=./packages/* && changeset publish",
     "skills:add": "skilld add --agent claude-code",
     "skills:install": "skilld install --agent claude-code",
     "skills:list": "skilld list",

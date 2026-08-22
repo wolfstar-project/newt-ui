@@ -8,7 +8,7 @@ description: A bordered, elevated panel for grouping related content.
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add card
+npx @wolfstar/newt-ui-vue@latest add card
 ```
 
 ## Usage

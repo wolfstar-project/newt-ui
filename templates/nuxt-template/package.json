@@ -10,6 +10,7 @@
     "generate": "nuxt generate",
     "lint": "oxlint -c ../../.oxlintrc.json .",
     "lint:fix": "oxlint -c ../../.oxlintrc.json --fix .",
+    "postinstall": "nuxt prepare",
     "preview": "nuxt preview",
     "typecheck": "nuxt prepare && vue-tsc --noEmit"
   },

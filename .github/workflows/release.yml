@@ -6,42 +6,125 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  CI: "true"
+
+permissions: {}
+
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 
-env:
-  CI: "true"
-
-permissions:
-  contents: read
-
 jobs:
-  release:
-    name: 🚀 Version or publish
+  snapshot_filter:
+    name: Snapshot filter
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 20
+    if: |
+      github.repository_owner == 'wolfstar-project'
+      && (
+          (github.event_name == 'push' && !contains(github.event.head_commit.message, 'chore: version packages') && !contains(github.event.head_commit.message, 'chore: update changelog and release'))
+          || github.event_name == 'workflow_dispatch'
+      )
     permissions:
-      contents: write # changesets/action pushes the version PR / release commit
-      pull-requests: write # changesets/action opens/updates the version PR
-      id-token: write # npm provenance
+      contents: read
+    outputs:
+      publish: ${{ steps.snapshot_changes.outputs.publish }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout Project
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-          persist-credentials: true
+          persist-credentials: false
+
+      - name: Check snapshot changes
+        id: snapshot_changes
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ -z "${{ github.event.before }}" ] || [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Assigned separately (not piped straight into the `if`): a failed
+          # `git diff` (e.g. an unreachable `before` SHA) must fail this step
+          # via `set -e`, not silently resolve to "no relevant changes" — a
+          # nonzero exit inside an `if` condition does not trigger `set -e`.
+          changed_files="$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")"
+          if echo "$changed_files" | grep -qE '^(packages/|package.json$)'; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  snapshot:
+    name: Publish @next snapshot
+    runs-on: ubuntu-24.04-arm
+    needs: snapshot_filter
+    if: |
+      github.repository_owner == 'wolfstar-project'
+      && needs.snapshot_filter.outputs.publish == 'true'
+    permissions:
+      contents: read
+      pull-requests: read
+      id-token: write
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup
         uses: ./.github/actions/setup-toolchain
+        with:
+          registry-url: https://registry.npmjs.org/
 
-      - name: 🚀 Create release pull request or publish
+      - name: Publish snapshot
+        run: pnpm run publish:snapshot
+        env:
+          # Changelog generator (@changesets/get-github-info) requires a token
+          GITHUB_TOKEN: ${{ secrets.WOLFSTAR_TOKEN }}
+          # setup-node writes .npmrc with ${NODE_AUTH_TOKEN}; npm also checks NPM_TOKEN
+          # before falling back to OIDC trusted publishing (which is not configured here).
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+
+  release:
+    name: Create Release PR or Publish
+    runs-on: ubuntu-24.04-arm
+    if: github.repository_owner == 'wolfstar-project'
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.WOLFSTAR_TOKEN }}
+
+      - name: Setup
+        uses: ./.github/actions/setup-toolchain
+        with:
+          registry-url: https://registry.npmjs.org/
+
+      - name: Process Changesets
         id: changesets
         uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
         with:
-          publish: pnpm run release
-          title: "chore: version packages"
-          commit: "chore: version packages"
+          publish: pnpm run publish
+          title: "chore: update changelog and release"
+          commit: "chore: update changelog and release"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.WOLFSTAR_TOKEN }}
+          # Must match the repo secret name documented in .changeset/README.md
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
           NPM_CONFIG_PROVENANCE: true

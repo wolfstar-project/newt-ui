@@ -10,20 +10,20 @@ import { rootClasses } from "@/registry/registry-root-classes"
 import { ui } from "@/registry/registry-ui"
 
 const INSTALL_SNIPPET = `# install the CLI
-npx newt-ui@latest init
+npx @wolfstar/newt-ui@latest init
 
 # add a component
-npx newt-ui@latest add status-indicator embed slash-command
+npx @wolfstar/newt-ui@latest add status-indicator embed slash-command
 
 # list everything available
-npx newt-ui@latest list`
+npx @wolfstar/newt-ui@latest list`
 
 const CDN_SNIPPET = `<!-- design tokens + a single component, straight from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/newt-ui@latest/registry/html/tokens.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/newt-ui@latest/registry/html/components/button.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@wolfstar/newt-ui@latest/registry/html/tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@wolfstar/newt-ui@latest/registry/html/components/button.css">
 
 <!-- pin to a git tag for stability -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/newt-devs/newt-ui@v0.2.0/packages/newt-ui/registry/html/tokens.css">`
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wolfstar-project/newt-ui@v0.2.0/packages/newt-ui/registry/html/tokens.css">`
 
 const TOKENS_SNIPPET = `:root {
   --newt-bg-base: #1e1f22;      /* app background, deepest layer */
@@ -114,7 +114,7 @@ export default function Home() {
           id="ecosystem"
           index={index + 1}
           title="Ecosystem"
-          description="Part of the Newt Devs toolchain for the Discord developer lifecycle."
+          description="Part of the WolfStar toolchain for the Discord developer lifecycle."
         >
           <Preview>
             <div className="preview-grid">

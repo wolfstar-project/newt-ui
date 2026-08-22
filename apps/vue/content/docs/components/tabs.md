@@ -8,7 +8,7 @@ description: A pill-style tab list that switches the active tab on click.
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add tabs
+npx @wolfstar/newt-ui-vue@latest add tabs
 ```
 
 ## Usage

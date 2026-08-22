@@ -8,7 +8,7 @@ description: A centered dialog over a dimmed overlay that closes on Escape, over
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add modal
+npx @wolfstar/newt-ui-vue@latest add modal
 ```
 
 ## Usage

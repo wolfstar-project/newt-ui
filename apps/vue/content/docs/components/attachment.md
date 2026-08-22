@@ -8,7 +8,7 @@ description: File card showing a type icon, file name, size and a download actio
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add attachment
+npx @wolfstar/newt-ui-vue@latest add attachment
 ```
 
 ## Usage

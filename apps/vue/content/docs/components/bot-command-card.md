@@ -8,7 +8,7 @@ description: A card documenting a slash command, its owning bot and its typed op
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add bot-command-card
+npx @wolfstar/newt-ui-vue@latest add bot-command-card
 ```
 
 ## Usage

@@ -1,7 +1,7 @@
 # nuxt-template
 
 A minimal [Nuxt 3](https://nuxt.com) starter preconfigured with
-[newt/ui](https://newt-devs.github.io/newt-ui) — Discord-native components you
+[newt/ui](https://wolfstar-project.github.io/newt-ui) — Discord-native components you
 copy into your project.
 
 ## Getting started
@@ -26,9 +26,9 @@ Open http://localhost:3000.
 ## Adding components
 
 ```bash
-npx newt-ui-vue add button
-npx newt-ui-vue list
-npx newt-ui-vue diff button
+npx @wolfstar/newt-ui-vue add button
+npx @wolfstar/newt-ui-vue list
+npx @wolfstar/newt-ui-vue diff button
 ```
 
 Each component is a directory in `src/components/ui/` and is yours to edit:
@@ -54,12 +54,12 @@ import { Button } from "@/components/ui/button"
 Add the Nuxt module to drop the imports entirely:
 
 ```bash
-pnpm add -D @newt-devs/nuxt
+pnpm add -D @wolfstar/nuxt-newt-ui
 ```
 
 ```ts
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/tailwindcss", "@newt-devs/nuxt"],
+  modules: ["@nuxtjs/tailwindcss", "@wolfstar/nuxt-newt-ui"],
   newt: { css: false }, // tokens already live in src/assets/css/tailwind.css
 })
 ```

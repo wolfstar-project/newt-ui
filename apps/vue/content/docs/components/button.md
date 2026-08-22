@@ -8,7 +8,7 @@ description: Displays a Discord-styled button with brand, secondary, success, da
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add button
+npx @wolfstar/newt-ui-vue@latest add button
 ```
 
 ## Usage

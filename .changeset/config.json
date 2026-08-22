@@ -7,5 +7,9 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["www", "vue-www", "next-template", "nuxt-template"]
+  "ignore": ["www", "vue-www", "next-template", "nuxt-template"],
+  "snapshot": {
+    "useCalculatedVersion": true,
+    "prereleaseTemplate": "{tag}-{datetime}"
+  }
 }

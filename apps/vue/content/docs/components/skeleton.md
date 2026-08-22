@@ -8,7 +8,7 @@ description: A shimmering placeholder shown while content is loading.
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add skeleton
+npx @wolfstar/newt-ui-vue@latest add skeleton
 ```
 
 ## Usage

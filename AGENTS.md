@@ -17,9 +17,9 @@ apps/
   www/    React docs site (Next.js) — shadcn-ui layout: registry/default/{ui,example}
   vue/    Vue docs site (Nuxt 4 + Tailwind 4) — shadcn-vue layout: app/lib/registry/default/ui/<name>/
 packages/
-  newt-ui/   `newt-ui` CLI (React) + registry/html (original HTML/CSS + tokens.css)
-  cli/       `newt-ui-vue` CLI
-  module/    `@newt-devs/nuxt` Nuxt module
+  newt-ui/   `@wolfstar/newt-ui` CLI (React) + registry/html (original HTML/CSS + tokens.css)
+  cli/       `@wolfstar/newt-ui-vue` CLI
+  module/    `@wolfstar/nuxt-newt-ui` Nuxt module
 templates/
   next-template/, nuxt-template/   Starter apps preconfigured with newt/ui
 tooling/oxc/   Shared oxlint + oxfmt configuration

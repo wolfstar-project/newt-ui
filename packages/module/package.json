@@ -1,25 +1,25 @@
 {
-  "name": "@newt-devs/nuxt",
+  "name": "@wolfstar/nuxt-newt-ui",
   "version": "0.2.0",
   "description": "Nuxt module for newt/ui — auto-imports your Discord-native newt/ui components and injects the --newt-* design tokens.",
   "keywords": [
     "design-system",
     "discord",
-    "newt-devs",
     "nuxt",
     "nuxt-module",
     "ui",
-    "vue"
+    "vue",
+    "wolfstar"
   ],
-  "homepage": "https://newt-devs.github.io/newt-ui",
+  "homepage": "https://wolfstar-project.github.io/newt-ui",
   "bugs": {
-    "url": "https://github.com/newt-devs/newt-ui/issues"
+    "url": "https://github.com/wolfstar-project/newt-ui/issues"
   },
-  "license": "MIT",
-  "author": "Newt Devs",
+  "license": "Apache-2.0",
+  "author": "@wolfstar",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/newt-devs/newt-ui.git",
+    "url": "git+https://github.com/wolfstar-project/newt-ui.git",
     "directory": "packages/module"
   },
   "files": [
@@ -34,6 +34,10 @@
       "import": "./dist/module.mjs"
     },
     "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "build": "nuxt-module-build build",

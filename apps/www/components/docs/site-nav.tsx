@@ -122,7 +122,7 @@ export function SiteNav() {
             <StatusDot status="online" />
           </StatusIndicator>
           <div className="sidenav__footer-meta">
-            <span className="sidenav__footer-name">newt-devs</span>
+            <span className="sidenav__footer-name">wolfstar-project</span>
             <span className="sidenav__footer-sub">
               v0.2.0 · {ui.length} components
             </span>

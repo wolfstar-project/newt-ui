@@ -1,6 +1,12 @@
 name: Setup toolchain
 description: Setup pinned Node.js and pnpm versions with local caches
 
+inputs:
+  registry-url:
+    description: Optional npm registry to configure for authenticated publishing
+    required: false
+    default: ""
+
 runs:
   using: composite
   steps:
@@ -15,6 +21,7 @@ runs:
       with:
         node-version-file: package.json
         cache: pnpm
+        registry-url: ${{ inputs.registry-url }}
 
     - name: Verify package manager metadata
       shell: bash

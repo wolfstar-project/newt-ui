@@ -8,7 +8,7 @@ description: A header bar showing the channel name and a truncating topic descri
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add channel-topic
+npx @wolfstar/newt-ui-vue@latest add channel-topic
 ```
 
 ## Usage

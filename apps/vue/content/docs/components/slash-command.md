@@ -8,7 +8,7 @@ description: Inline monospace tag for referencing a /slash command in text.
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add slash-command
+npx @wolfstar/newt-ui-vue@latest add slash-command
 ```
 
 ## Usage

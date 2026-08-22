@@ -8,7 +8,7 @@ description: A small count badge or unread dot for signalling new activity on av
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add notif-badge
+npx @wolfstar/newt-ui-vue@latest add notif-badge
 ```
 
 ## Usage

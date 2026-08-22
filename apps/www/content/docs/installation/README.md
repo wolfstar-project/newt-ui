@@ -17,9 +17,9 @@ Choose the guide that matches your project:
 ### Install tokens + components
 
 ```bash
-npx @newt-devs/ui@latest init
-npx @newt-devs/ui@latest add <component> [<component> ...]
-npx @newt-devs/ui@latest list   # see everything available
+npx @wolfstar/newt-ui@latest init
+npx @wolfstar/newt-ui@latest add <component> [<component> ...]
+npx @wolfstar/newt-ui@latest list   # see everything available
 ```
 
 ### CDN (no install)
@@ -28,11 +28,11 @@ npx @newt-devs/ui@latest list   # see everything available
 <!-- Works immediately after pushing to GitHub -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/newt-devs/newt-ui@main/registry/tokens.css"
+  href="https://cdn.jsdelivr.net/gh/wolfstar-project/newt-ui@main/registry/tokens.css"
 />
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/newt-devs/newt-ui@main/registry/components/button.css"
+  href="https://cdn.jsdelivr.net/gh/wolfstar-project/newt-ui@main/registry/components/button.css"
 />
 ```
 

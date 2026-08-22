@@ -8,7 +8,7 @@ description: A chat message row with avatar, author header, content and reaction
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add message-group
+npx @wolfstar/newt-ui-vue@latest add message-group
 ```
 
 ## Usage

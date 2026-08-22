@@ -8,7 +8,7 @@ description: A full-width announcement strip with a status dot, optional action 
 ## Installation
 
 ```bash
-npx newt-ui-vue@latest add stage-banner
+npx @wolfstar/newt-ui-vue@latest add stage-banner
 ```
 
 ## Usage
