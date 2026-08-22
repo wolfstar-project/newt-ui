@@ -16,7 +16,7 @@
  */
 
 /** Raw token values, written to `:root` / the dark selector. */
-export const newtTokens: Record<string, string> = {
+export const newtTokens = {
   "newt-bg-base": "#1e1f22",
   "newt-bg-surface": "#2b2d31",
   "newt-bg-elevated": "#313338",
@@ -53,7 +53,7 @@ export const newtTokens: Record<string, string> = {
   "newt-ease": "cubic-bezier(0.3, 0.7, 0.4, 1)",
   "newt-duration-fast": "100ms",
   "newt-duration-base": "150ms",
-}
+} satisfies Record<string, string>
 
 /** Colour tokens, in the order the docs sidebar and the token table use. */
 const COLORS = [
@@ -89,44 +89,59 @@ const SHADOWS = ["elevation-low", "elevation-high"] as const
  * variable rather than duplicating its value, so overriding the variable at
  * runtime still restyles every generated utility.
  */
-export const tailwindV4Theme: Record<string, string> = {
+export const tailwindV4Theme = {
   ...Object.fromEntries(
-    COLORS.map((name) => [`--color-newt-${name}`, `var(--newt-${name})`])
+    COLORS.map(
+      (name) => [`--color-newt-${name}`, `var(--newt-${name})`] as const
+    )
   ),
   ...Object.fromEntries(
-    RADII.map((name) => [`--radius-${name}`, `var(--newt-radius-${name})`])
+    RADII.map(
+      (name) => [`--radius-${name}`, `var(--newt-radius-${name})`] as const
+    )
   ),
   ...Object.fromEntries(
-    FONTS.map((name) => [`--font-${name}`, `var(--newt-font-${name})`])
+    FONTS.map((name) => [`--font-${name}`, `var(--newt-font-${name})`] as const)
   ),
   ...Object.fromEntries(
-    SHADOWS.map((name) => [`--shadow-${name}`, `var(--newt-shadow-${name})`])
+    SHADOWS.map(
+      (name) => [`--shadow-${name}`, `var(--newt-shadow-${name})`] as const
+    )
   ),
   "--ease-newt": "var(--newt-ease)",
-}
+} satisfies Record<string, string>
 
 /**
  * Tailwind v3 `theme.extend`. Same utilities, expressed the way a v3 JS config
  * expects them.
  */
-export const tailwindV3Theme: Record<string, unknown> = {
+type TailwindV3Theme = {
+  colors: { newt: Record<string, string> }
+  fontFamily: Record<string, string>
+  borderRadius: Record<string, string>
+  boxShadow: Record<string, string>
+  transitionTimingFunction: Record<string, string>
+  transitionDuration: Record<string, string>
+}
+
+export const tailwindV3Theme = {
   colors: {
     newt: Object.fromEntries(
-      COLORS.map((name) => [
-        name === "border" ? "border" : name,
-        `var(--newt-${name})`,
-      ])
+      COLORS.map(
+        (name) =>
+          [name === "border" ? "border" : name, `var(--newt-${name})`] as const
+      )
     ),
   },
   fontFamily: Object.fromEntries(
-    FONTS.map((name) => [name, `var(--newt-font-${name})`])
+    FONTS.map((name) => [name, `var(--newt-font-${name})`] as const)
   ),
   borderRadius: Object.fromEntries(
-    RADII.map((name) => [name, `var(--newt-radius-${name})`])
+    RADII.map((name) => [name, `var(--newt-radius-${name})`] as const)
   ),
   boxShadow: Object.fromEntries(
-    SHADOWS.map((name) => [name, `var(--newt-shadow-${name})`])
+    SHADOWS.map((name) => [name, `var(--newt-shadow-${name})`] as const)
   ),
   transitionTimingFunction: { newt: "var(--newt-ease)" },
   transitionDuration: { fast: "100ms", base: "150ms" },
-}
+} satisfies TailwindV3Theme

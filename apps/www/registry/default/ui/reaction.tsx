@@ -21,6 +21,10 @@ const reactionVariants = cva(
   }
 )
 
+function isStringNode(value: React.ReactNode): value is string {
+  return Object.prototype.toString.call(value) === "[object String]"
+}
+
 export interface ReactionProps
   extends
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children">,
@@ -66,7 +70,7 @@ const Reaction = React.forwardRef<HTMLButtonElement, ReactionProps>(
 
     const label =
       ariaLabel ??
-      `${typeof emoji === "string" ? emoji : "Emoji"} reaction, ${count} ${
+      `${isStringNode(emoji) ? emoji : "Emoji"} reaction, ${count} ${
         count === 1 ? "person" : "people"
       }${active ? ", you reacted" : ""}`
 
