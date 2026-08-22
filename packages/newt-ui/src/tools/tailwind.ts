@@ -1,5 +1,7 @@
 import path from "node:path"
 
+import { z } from "zod"
+
 import { findFirstExisting, readFileIfExists } from "./fileSystem.js"
 import { TAILWIND_CONFIG_CANDIDATES } from "./options.js"
 import type { RegistryItem } from "./schema.js"
@@ -35,6 +37,12 @@ export async function detectTailwindMajor(
   return findFirstExisting(cwd, TAILWIND_CONFIG_CANDIDATES) ? 3 : 4
 }
 
+/** Only the two dependency maps we care about; every other field is ignored. */
+const packageJsonDependenciesSchema = z.object({
+  dependencies: z.record(z.string(), z.string()).optional(),
+  devDependencies: z.record(z.string(), z.string()).optional(),
+})
+
 function readTailwindRange(packageJson: string): string | undefined {
   let parsed: unknown
   try {
@@ -42,18 +50,12 @@ function readTailwindRange(packageJson: string): string | undefined {
   } catch {
     return undefined
   }
-  if (!isRecord(parsed)) return undefined
-  for (const field of ["dependencies", "devDependencies"] as const) {
-    const deps = parsed[field]
-    if (!isRecord(deps)) continue
-    const value = deps["tailwindcss"]
-    if (typeof value === "string") return value
-  }
-  return undefined
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value)
+  const result = packageJsonDependenciesSchema.safeParse(parsed)
+  if (!result.success) return undefined
+  return (
+    result.data.dependencies?.tailwindcss ??
+    result.data.devDependencies?.tailwindcss
+  )
 }
 
 function majorFromRange(range: string): TailwindMajor | undefined {
@@ -101,18 +103,33 @@ export function renderItemCss(
   }
   if (item.css) {
     for (const [selector, body] of Object.entries(item.css)) {
-      parts.push(
-        typeof body === "string"
-          ? `${selector} {\n${indent(body)}\n}`
-          : block(selector, body as Record<string, unknown>)
-      )
+      if (Object.prototype.toString.call(body) === "[object String]") {
+        // SAFETY: `Object.prototype.toString` confirmed `body` is a string
+        // here, the same narrowing `typeof body === "string"` would give.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- narrowed by the toString check above.
+        const css = body as string
+        parts.push(`${selector} {\n${indent(css)}\n}`)
+        continue
+      }
+      // SAFETY: the check above excluded the string variant, so `body` is
+      // the nested css-declarations object described by
+      // `registryItemCssSchema` in schema.ts.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- narrowed by the toString check above.
+      const declarations = body as Record<string, CssPropertyValue>
+      parts.push(block(selector, declarations))
     }
   }
 
   return parts.length > 0 ? `${parts.join("\n\n")}\n` : ""
 }
 
-function block(selector: string, entries: Record<string, unknown>): string {
+/** The concrete value contract for a rendered CSS custom property. */
+type CssPropertyValue = string | number
+
+function block(
+  selector: string,
+  entries: Record<string, CssPropertyValue>
+): string {
   const body = Object.entries(entries)
     .map(([key, value]) => `  ${cssProperty(key)}: ${String(value)};`)
     .join("\n")

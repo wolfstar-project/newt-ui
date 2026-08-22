@@ -12,7 +12,16 @@ export function getRegistryUrl(override?: string): string {
   return url.replace(/\/+$/, "")
 }
 
-async function fetchJson(url: string): Promise<unknown> {
+/** The domain shape of a parsed JSON document, before schema validation. */
+type JsonValue =
+  | boolean
+  | number
+  | string
+  | null
+  | JsonValue[]
+  | { [key: string]: JsonValue }
+
+async function fetchJson(url: string): Promise<JsonValue> {
   const response = await fetch(url)
   if (!response.ok) {
     throw new Error(

@@ -33,6 +33,11 @@ function getPackageInfo(): PackageJson {
   const here = path.dirname(fileURLToPath(import.meta.url))
   for (const candidate of ["../package.json", "../../package.json"]) {
     try {
+      // SAFETY: this reads the package's own package.json (a file we control,
+      // not external input), not a user-supplied payload. `require` throws on
+      // a missing or malformed file, which the surrounding try/catch handles
+      // by trying the next candidate and eventually falling back to the
+      // hardcoded default below.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- reading our own package.json.
       return require(path.resolve(here, candidate)) as PackageJson
     } catch {
