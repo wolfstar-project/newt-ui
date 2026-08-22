@@ -1,5 +1,6 @@
 import { log } from "@clack/prompts"
 import color from "picocolors"
+import { z } from "zod"
 
 export const highlighter = {
   error: (value: string): string => color.red(value),
@@ -31,11 +32,14 @@ export const logger = {
   },
 }
 
-export function handleError(error: unknown): never {
-  if (typeof error === "string") {
-    logger.error(error)
-  } else if (error instanceof Error) {
-    logger.error(error.message)
+export function handleError(cause: unknown): never {
+  // A rejected promise's reason can be any thrown value, so decode it into a
+  // known shape here instead of narrowing it ad hoc at each call site.
+  const asString = z.string().safeParse(cause)
+  if (asString.success) {
+    logger.error(asString.data)
+  } else if (cause instanceof Error) {
+    logger.error(cause.message)
   } else {
     logger.error("Something went wrong. Please try again.")
   }
