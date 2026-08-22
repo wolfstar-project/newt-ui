@@ -13,7 +13,7 @@ there's no unused CSS and you own every file.
 **1. Install**
 
 ```bash
-npx @wolfstar/newt-ui@latest init
+npx @wolfstar/newt-ui-html init
 ```
 
 This creates `newt-ui.json` (config) and copies `registry/tokens.css` into
@@ -22,7 +22,7 @@ This creates `newt-ui.json` (config) and copies `registry/tokens.css` into
 **2. Add components**
 
 ```bash
-npx @wolfstar/newt-ui@latest add button embed status-indicator
+npx @wolfstar/newt-ui-html add button embed status-indicator
 ```
 
 Components land in `components/ui/` by default. Each is a `.css` file (and
@@ -66,7 +66,7 @@ optionally `.html` + `.js`) that you copy-paste markup from.
 **4. See all available components**
 
 ```bash
-npx @wolfstar/newt-ui@latest list
+npx @wolfstar/newt-ui-html list
 ```
 
 ---

@@ -90,7 +90,8 @@ merged:
 1. Fix the underlying issue (npm token, network, build failure, etc.).
 2. Re-run the failed **Create Release PR or Publish** job from **Actions**, or
    trigger **release** manually via **Run workflow** on `main`.
-3. The job runs `pnpm run publish` (`pnpm build && changeset publish`).
+3. The job runs `pnpm run publish` (builds only `packages/*`, then
+   `changeset publish`).
    `changeset publish` is idempotent and skips packages already published at
    the current version.
 

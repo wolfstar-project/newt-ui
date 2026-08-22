@@ -45,5 +45,5 @@ if (!(await hasUnreleasedChangesets())) {
 }
 
 run("changeset", ["version", "--snapshot", "next"])
-run("pnpm", ["build"])
+run("pnpm", ["exec", "turbo", "run", "build", "--filter=./packages/*"])
 run("changeset", ["publish", "--tag", "next", "--no-git-tag"])

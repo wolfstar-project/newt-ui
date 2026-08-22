@@ -50,7 +50,12 @@ jobs:
             exit 0
           fi
 
-          if git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -qE '^(packages/|package.json$)'; then
+          # Assigned separately (not piped straight into the `if`): a failed
+          # `git diff` (e.g. an unreachable `before` SHA) must fail this step
+          # via `set -e`, not silently resolve to "no relevant changes" — a
+          # nonzero exit inside an `if` condition does not trigger `set -e`.
+          changed_files="$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")"
+          if echo "$changed_files" | grep -qE '^(packages/|package.json$)'; then
             echo "publish=true" >> "$GITHUB_OUTPUT"
           else
             echo "publish=false" >> "$GITHUB_OUTPUT"
