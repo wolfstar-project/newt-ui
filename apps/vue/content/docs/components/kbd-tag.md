@@ -8,7 +8,7 @@ description: A small monospace tag for displaying keyboard shortcuts.
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add kbd-tag
+npx @newtui/vue@latest add kbd-tag
 ```
 
 ## Usage

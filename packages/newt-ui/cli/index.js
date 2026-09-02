@@ -25,7 +25,7 @@ function loadConfig(cwd) {
   const configPath = join(cwd, CONFIG_FILE)
   if (!existsSync(configPath)) {
     console.error(
-      `No ${CONFIG_FILE} found. Run \`npx @wolfstar/newt-ui-html init\` first.`
+      `No ${CONFIG_FILE} found. Run \`npx @newtui/html init\` first.`
     )
     process.exit(1)
   }
@@ -53,12 +53,8 @@ function cmdInit(cwd) {
   mkdirSync(dirname(tokensDest), { recursive: true })
   copyFileSync(join(REGISTRY_DIR, registry.tokens), tokensDest)
   console.log(`Added design tokens -> ${config.tokensFile}`)
-  console.log(
-    "\nNext: npx @wolfstar/newt-ui-html add <component> [...components]"
-  )
-  console.log(
-    "Run `npx @wolfstar/newt-ui-html list` to see available components."
-  )
+  console.log("\nNext: npx @newtui/html add <component> [...components]")
+  console.log("Run `npx @newtui/html list` to see available components.")
 }
 
 function cmdList() {
@@ -134,8 +130,8 @@ switch (command) {
     console.log(`newt-ui — Discord-native UI components
 
 Usage:
-  npx @wolfstar/newt-ui-html init        Set up newt-ui in the current project
-  npx @wolfstar/newt-ui-html list         List available components
-  npx @wolfstar/newt-ui-html add <names...>   Add one or more components
+  npx @newtui/html init        Set up newt-ui in the current project
+  npx @newtui/html list         List available components
+  npx @newtui/html add <names...>   Add one or more components
 `)
 }

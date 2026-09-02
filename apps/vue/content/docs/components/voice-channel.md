@@ -8,7 +8,7 @@ description: A sidebar voice channel row with a collapsible header and the list 
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add voice-channel
+npx @newtui/vue@latest add voice-channel
 ```
 
 ## Usage

@@ -8,7 +8,7 @@ description: Invite-style card with a server icon, name, live member counts and 
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add server-banner
+npx @newtui/vue@latest add server-banner
 ```
 
 ## Usage

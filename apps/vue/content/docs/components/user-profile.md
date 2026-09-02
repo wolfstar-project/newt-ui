@@ -8,7 +8,7 @@ description: Floating profile card with a banner, overlapping avatar, bio sectio
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add user-profile
+npx @newtui/vue@latest add user-profile
 ```
 
 ## Usage

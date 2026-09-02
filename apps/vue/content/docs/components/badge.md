@@ -8,7 +8,7 @@ description: A small pill used to label status, counts or categories.
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add badge
+npx @newtui/vue@latest add badge
 ```
 
 ## Usage

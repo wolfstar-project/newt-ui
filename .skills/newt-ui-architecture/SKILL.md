@@ -12,16 +12,16 @@ flows back.
 
 ## Package ownership
 
-- `packages/newt-ui`: the `@wolfstar/newt-ui` CLI (React) **and** `registry/html/`, the
+- `packages/newt-ui`: the `@newtui/react` CLI (React) **and** `registry/html/`, the
   canonical HTML/CSS/JS source of every component plus `tokens.css`. The
   legacy `newt-ui-html` bin (`cli/index.js`) copies straight out of that
   directory. This package owns the design tokens; nothing else may redefine a
   value.
-- `packages/cli`: the `@wolfstar/newt-ui-vue` CLI. Same command surface as `@wolfstar/newt-ui`,
+- `packages/cli`: the `@newtui/vue` CLI. Same command surface as `@newtui/react`,
   different targets (`components/ui/<name>/` directories instead of one file).
   Logic is deliberately duplicated between the two CLIs rather than shared —
   they publish independently and must not depend on each other.
-- `packages/module`: `@wolfstar/nuxt-newt-ui`, auto-imports a consumer's
+- `packages/module`: `@newtui/nuxt`, auto-imports a consumer's
   `components/ui/**` and injects the tokens. Runtime-only; it never reads the
   registry.
 - `apps/www`: React docs site (Next.js), shadcn-ui layout. Owns

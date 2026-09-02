@@ -5,7 +5,7 @@
       This project is preconfigured with the newt/ui design tokens and Tailwind
       preset. Add components with
       <code class="font-mono text-newt-text-link"
-        >npx @wolfstar/newt-ui-vue add button</code
+        >npx @newtui/vue add button</code
       >.
     </p>
     <div class="mt-10 rounded-md bg-newt-bg-surface p-6 shadow-elevation-low">

@@ -8,7 +8,7 @@ description: A toggleable emoji reaction pill with a count, as seen under chat m
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add reaction
+npx @newtui/vue@latest add reaction
 ```
 
 ## Usage

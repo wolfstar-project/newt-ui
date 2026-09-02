@@ -8,7 +8,7 @@ description: A gradient progress bar for boosts, uploads and other long-running 
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add progress
+npx @newtui/vue@latest add progress
 ```
 
 ## Usage

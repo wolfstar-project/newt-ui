@@ -8,7 +8,7 @@ description: Inline text hidden behind a dark block until the reader clicks to r
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add spoiler
+npx @newtui/vue@latest add spoiler
 ```
 
 ## Usage

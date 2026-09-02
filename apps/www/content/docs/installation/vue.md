@@ -7,8 +7,8 @@ Works with Vue 3 (Vite or Nuxt 3). newt/ui is plain CSS — no Vue plugin needed
 ## 1. Install via CLI
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest init
-npx @wolfstar/newt-ui-vue@latest add button embed status-indicator timeline badge
+npx @newtui/vue@latest init
+npx @newtui/vue@latest add button embed status-indicator timeline badge
 ```
 
 ---
@@ -246,5 +246,5 @@ components/
   ShardList.vue
   DeployButton.vue
 styles/
-  newt-tokens.css    ← from npx @wolfstar/newt-ui-vue init
+  newt-tokens.css    ← from npx @newtui/vue init
 ```

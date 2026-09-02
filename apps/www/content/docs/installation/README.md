@@ -17,9 +17,9 @@ Choose the guide that matches your project:
 ### Install tokens + components
 
 ```bash
-npx @wolfstar/newt-ui@latest init
-npx @wolfstar/newt-ui@latest add <component> [<component> ...]
-npx @wolfstar/newt-ui@latest list   # see everything available
+npx @newtui/react@latest init
+npx @newtui/react@latest add <component> [<component> ...]
+npx @newtui/react@latest list   # see everything available
 ```
 
 ### CDN (no install)

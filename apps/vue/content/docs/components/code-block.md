@@ -8,7 +8,7 @@ description: A monospace preformatted block with optional syntax-highlight token
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add code-block
+npx @newtui/vue@latest add code-block
 ```
 
 ## Usage

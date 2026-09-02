@@ -9,7 +9,7 @@ export default defineAppConfig({
     channel: "early access",
     license: "Apache-2.0",
     author: "WolfStar",
-    cli: "npx @wolfstar/newt-ui-vue",
+    cli: "npx @newtui/vue",
   },
   links: {
     github: "https://github.com/wolfstar-project",

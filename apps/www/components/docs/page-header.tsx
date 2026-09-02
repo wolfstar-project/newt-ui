@@ -5,7 +5,7 @@ const MANIFEST: [string, string, boolean?][] = [
   ["components", String(ui.length), true],
   ["dependencies", "0"],
   ["license", "Apache-2.0"],
-  ["install", "npx @wolfstar/newt-ui"],
+  ["install", "npx @newtui/react"],
   ["tokens", "CSS vars"],
   ["frameworks", "React · Vue"],
 ]

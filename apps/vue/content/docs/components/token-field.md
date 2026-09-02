@@ -8,7 +8,7 @@ description: A read-only, masked monospace input with reveal and copy-to-clipboa
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add token-field
+npx @newtui/vue@latest add token-field
 ```
 
 ## Usage
