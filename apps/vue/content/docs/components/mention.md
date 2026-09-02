@@ -8,7 +8,7 @@ description: An inline chip for user, channel and role mentions.
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add mention
+npx @newtui/vue@latest add mention
 ```
 
 ## Usage

@@ -8,7 +8,7 @@ description: A presence dot anchored to an avatar, with online, idle, do-not-dis
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add status-indicator
+npx @newtui/vue@latest add status-indicator
 ```
 
 ## Usage

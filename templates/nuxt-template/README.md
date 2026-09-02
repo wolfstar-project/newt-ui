@@ -26,9 +26,9 @@ Open http://localhost:3000.
 ## Adding components
 
 ```bash
-npx @wolfstar/newt-ui-vue add button
-npx @wolfstar/newt-ui-vue list
-npx @wolfstar/newt-ui-vue diff button
+npx @newtui/vue add button
+npx @newtui/vue list
+npx @newtui/vue diff button
 ```
 
 Each component is a directory in `src/components/ui/` and is yours to edit:
@@ -54,12 +54,12 @@ import { Button } from "@/components/ui/button"
 Add the Nuxt module to drop the imports entirely:
 
 ```bash
-pnpm add -D @wolfstar/nuxt-newt-ui
+pnpm add -D @newtui/nuxt
 ```
 
 ```ts
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/tailwindcss", "@wolfstar/nuxt-newt-ui"],
+  modules: ["@nuxtjs/tailwindcss", "@newtui/nuxt"],
   newt: { css: false }, // tokens already live in src/assets/css/tailwind.css
 })
 ```

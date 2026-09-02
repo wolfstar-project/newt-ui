@@ -8,7 +8,7 @@ description: Discord-styled thin, rounded scrollbars for any scrollable containe
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add scrollbar
+npx @newtui/vue@latest add scrollbar
 ```
 
 ## Usage

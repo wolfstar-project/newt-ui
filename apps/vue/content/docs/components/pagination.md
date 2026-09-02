@@ -8,7 +8,7 @@ description: Numbered page buttons with previous/next controls, plus a divider-s
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add pagination
+npx @newtui/vue@latest add pagination
 ```
 
 ## Usage

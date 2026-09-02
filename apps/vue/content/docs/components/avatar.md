@@ -8,7 +8,7 @@ description: A circular user avatar with image support and initials fallback in 
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add avatar
+npx @newtui/vue@latest add avatar
 ```
 
 ## Usage

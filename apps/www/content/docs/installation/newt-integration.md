@@ -23,12 +23,12 @@ newt/ui component prop or element — no transformation layer needed.
 
 ## 1. Install newt/ui in your dashboard project
 
-Use `@wolfstar/newt-ui` for a React dashboard or `@wolfstar/newt-ui-vue` for
+Use `@newtui/react` for a React dashboard or `@newtui/vue` for
 a Vue one — the rest of this guide applies to either.
 
 ```bash
-npx @wolfstar/newt-ui@latest init
-npx @wolfstar/newt-ui@latest add \
+npx @newtui/react@latest init
+npx @newtui/react@latest add \
   embed timeline status-indicator member-list \
   progress cooldown-bar badge bot-command-card \
   message-group channel-topic server-banner

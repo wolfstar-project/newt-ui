@@ -8,7 +8,7 @@ description: A centered placeholder with an icon, title, and hint shown when a l
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add empty-state
+npx @newtui/vue@latest add empty-state
 ```
 
 ## Usage

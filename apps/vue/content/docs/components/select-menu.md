@@ -8,7 +8,7 @@ description: A floating listbox with optional search, section labels, dividers a
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add select-menu
+npx @newtui/vue@latest add select-menu
 ```
 
 ## Usage

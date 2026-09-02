@@ -10,17 +10,17 @@ import { rootClasses } from "@/registry/registry-root-classes"
 import { ui } from "@/registry/registry-ui"
 
 const INSTALL_SNIPPET = `# install the CLI
-npx @wolfstar/newt-ui@latest init
+npx @newtui/react@latest init
 
 # add a component
-npx @wolfstar/newt-ui@latest add status-indicator embed slash-command
+npx @newtui/react@latest add status-indicator embed slash-command
 
 # list everything available
-npx @wolfstar/newt-ui@latest list`
+npx @newtui/react@latest list`
 
 const CDN_SNIPPET = `<!-- design tokens + a single component, straight from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@wolfstar/newt-ui@latest/registry/html/tokens.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@wolfstar/newt-ui@latest/registry/html/components/button.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@newtui/react@latest/registry/html/tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@newtui/react@latest/registry/html/components/button.css">
 
 <!-- pin to a git tag for stability -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wolfstar-project/newt-ui@v0.2.0/packages/newt-ui/registry/html/tokens.css">`

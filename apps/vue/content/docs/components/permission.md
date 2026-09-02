@@ -8,7 +8,7 @@ description: A settings row with a deny / inherit / allow tri-state toggle.
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add permission
+npx @newtui/vue@latest add permission
 ```
 
 ## Usage

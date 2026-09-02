@@ -8,7 +8,7 @@ description: A slim progress bar with a label and monospace countdown for comman
 ## Installation
 
 ```bash
-npx @wolfstar/newt-ui-vue@latest add cooldown-bar
+npx @newtui/vue@latest add cooldown-bar
 ```
 
 ## Usage

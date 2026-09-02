@@ -8,8 +8,8 @@ newt/ui is plain CSS — no special Next.js plugin needed.
 ## 1. Install via CLI
 
 ```bash
-npx @wolfstar/newt-ui@latest init
-npx @wolfstar/newt-ui@latest add button embed status-indicator member-list timeline
+npx @newtui/react@latest init
+npx @newtui/react@latest add button embed status-indicator member-list timeline
 ```
 
 By default, files land in `components/ui/` and tokens in `styles/`.

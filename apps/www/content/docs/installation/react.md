@@ -11,8 +11,8 @@ This works with Create React App, Vite, Parcel, or any React setup.
 From your React project root:
 
 ```bash
-npx @wolfstar/newt-ui@latest init
-npx @wolfstar/newt-ui@latest add button embed status-indicator avatar badge
+npx @newtui/react@latest init
+npx @newtui/react@latest add button embed status-indicator avatar badge
 ```
 
 Files land in `components/ui/` (configurable in `newt-ui.json`).

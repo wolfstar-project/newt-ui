@@ -6,7 +6,7 @@ export default function Home() {
         This project is preconfigured with the newt/ui design tokens and
         Tailwind preset. Add components with{" "}
         <code className="font-mono text-newt-text-link">
-          npx @wolfstar/newt-ui add button
+          npx @newtui/react add button
         </code>
         .
       </p>

@@ -75,13 +75,13 @@ const tokens: TokenSwatch[] = [
 ]
 
 const installCommand = `# install the CLI
-npx @wolfstar/newt-ui-vue@latest init
+npx @newtui/vue@latest init
 
 # add a component
-npx @wolfstar/newt-ui-vue@latest add status-indicator embed slash-command
+npx @newtui/vue@latest add status-indicator embed slash-command
 
 # list everything available
-npx @wolfstar/newt-ui-vue@latest list`
+npx @newtui/vue@latest list`
 
 useHead({ title: "newt/ui — Vue component spec" })
 </script>
@@ -99,14 +99,14 @@ useHead({ title: "newt/ui — Vue component spec" })
       <Preview :code="installCommand">
         <CodeBlock class="w-full"
           ><CodeToken kind="comment"># install the CLI</CodeToken>
-          npx @wolfstar/newt-ui-vue@latest init
+          npx @newtui/vue@latest init
 
           <CodeToken kind="comment"># add a component</CodeToken>
-          npx @wolfstar/newt-ui-vue@latest add status-indicator embed
+          npx @newtui/vue@latest add status-indicator embed
           slash-command
 
           <CodeToken kind="comment"># list everything available</CodeToken>
-          npx @wolfstar/newt-ui-vue@latest list</CodeBlock
+          npx @newtui/vue@latest list</CodeBlock
         >
       </Preview>
     </ComponentSection>
