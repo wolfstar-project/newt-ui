@@ -102,8 +102,7 @@ useHead({ title: "newt/ui — Vue component spec" })
           npx @newtui/vue@latest init
 
           <CodeToken kind="comment"># add a component</CodeToken>
-          npx @newtui/vue@latest add status-indicator embed
-          slash-command
+          npx @newtui/vue@latest add status-indicator embed slash-command
 
           <CodeToken kind="comment"># list everything available</CodeToken>
           npx @newtui/vue@latest list</CodeBlock

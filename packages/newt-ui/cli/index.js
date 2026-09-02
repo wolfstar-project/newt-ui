@@ -53,12 +53,8 @@ function cmdInit(cwd) {
   mkdirSync(dirname(tokensDest), { recursive: true })
   copyFileSync(join(REGISTRY_DIR, registry.tokens), tokensDest)
   console.log(`Added design tokens -> ${config.tokensFile}`)
-  console.log(
-    "\nNext: npx @newtui/html add <component> [...components]"
-  )
-  console.log(
-    "Run `npx @newtui/html list` to see available components."
-  )
+  console.log("\nNext: npx @newtui/html add <component> [...components]")
+  console.log("Run `npx @newtui/html list` to see available components.")
 }
 
 function cmdList() {
