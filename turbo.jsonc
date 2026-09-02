@@ -21,6 +21,12 @@
     "registry:build": {
       "outputs": ["public/r/**", "public/registry/**"],
     },
+    // The docs site bundles both registries into its own `dist/`, so it needs
+    // the two registry builds rather than a build of the apps that own them.
+    "docs#build": {
+      "dependsOn": ["www#registry:build", "vue-www#registry:build"],
+      "outputs": ["dist/**"],
+    },
     "dev": { "cache": false, "persistent": true },
     "lint": {},
     "lint:fix": { "cache": false },

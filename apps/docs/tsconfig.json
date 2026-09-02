@@ -1,0 +1,25 @@
+{
+  // No `baseUrl`: the `typescript-native-bridge` fork removed it. `paths`
+  // alone resolves relative to this file, which is what the aliases in
+  // `vite.config.ts` mirror.
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": false,
+    "types": ["vite/client"],
+    "paths": {
+      "@/lib/registry/*": ["../vue/app/lib/registry/*"],
+      "@/lib/utils": ["./src/lib/utils.ts"],
+      "@/registry/*": ["../www/registry/*"]
+    }
+  },
+  "include": ["src", "scripts", "vite.config.ts"]
+}

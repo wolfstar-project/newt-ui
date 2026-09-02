@@ -1,0 +1,464 @@
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+
+/*
+ * Auto-detection is off above, so every directory the scanner may walk is named
+ * here. The two registries live outside this app and both are scanned: a demo
+ * renders React or Vue depending on the framework switch.
+ */
+@source "../";
+@source "../../../www/registry";
+@source "../../../vue/app/lib/registry";
+
+/* ------------------------------------------------------------------ *
+ * (a) newt token bridge
+ *
+ * Every entry maps a Tailwind theme namespace onto a `--newt-*` CSS
+ * variable, which keeps the raw token contract (`var(--newt-brand)`)
+ * usable from plain CSS while Tailwind generates the utilities
+ * (`bg-newt-brand`, `rounded-md`, `shadow-elevation-high`, `ease-newt`,
+ * `duration-fast`, …). The registry components read both.
+ *
+ * Source of truth for the token values:
+ * packages/newt-ui/registry/html/tokens.css
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Surfaces */
+  --color-newt-bg-base: var(--newt-bg-base);
+  --color-newt-bg-surface: var(--newt-bg-surface);
+  --color-newt-bg-elevated: var(--newt-bg-elevated);
+  --color-newt-bg-floating: var(--newt-bg-floating);
+  --color-newt-bg-input: var(--newt-bg-input);
+  --color-newt-bg-hover: var(--newt-bg-hover);
+  --color-newt-bg-active: var(--newt-bg-active);
+  --color-newt-border: var(--newt-border);
+
+  /* Text */
+  --color-newt-text-primary: var(--newt-text-primary);
+  --color-newt-text-secondary: var(--newt-text-secondary);
+  --color-newt-text-muted: var(--newt-text-muted);
+  --color-newt-text-link: var(--newt-text-link);
+
+  /* Brand */
+  --color-newt-brand: var(--newt-brand);
+  --color-newt-brand-hover: var(--newt-brand-hover);
+  --color-newt-brand-active: var(--newt-brand-active);
+
+  /* Status */
+  --color-newt-online: var(--newt-online);
+  --color-newt-idle: var(--newt-idle);
+  --color-newt-dnd: var(--newt-dnd);
+  --color-newt-offline: var(--newt-offline);
+  --color-newt-danger: var(--newt-danger);
+  --color-newt-danger-hover: var(--newt-danger-hover);
+
+  /* Type */
+  --font-sans: var(--newt-font-sans);
+  --font-mono: var(--newt-font-mono);
+  --font-display: var(--newt-font-display);
+
+  /* Radius */
+  --radius-sm: var(--newt-radius-sm);
+  --radius-md: var(--newt-radius-md);
+  --radius-lg: var(--newt-radius-lg);
+  --radius-full: var(--newt-radius-full);
+
+  /* Shadows */
+  --shadow-elevation-low: var(--newt-shadow-elevation-low);
+  --shadow-elevation-high: var(--newt-shadow-elevation-high);
+
+  /* Motion */
+  --ease-newt: var(--newt-ease);
+  --transition-duration-fast: var(--newt-duration-fast);
+  --transition-duration-base: var(--newt-duration-base);
+}
+
+/* newt/ui design tokens — source of truth: packages/newt-ui/registry/html/tokens.css */
+@layer base {
+  :root {
+    /* Surfaces */
+    --newt-bg-base: #1e1f22;
+    --newt-bg-surface: #2b2d31;
+    --newt-bg-elevated: #313338;
+    --newt-bg-floating: #1e1f22;
+    --newt-bg-input: #1e1f22;
+    --newt-bg-hover: rgba(78, 80, 88, 0.4);
+    --newt-bg-active: rgba(78, 80, 88, 0.6);
+    --newt-border: #3f4147;
+
+    /* Text */
+    --newt-text-primary: #f2f3f5;
+    --newt-text-secondary: #b5bac1;
+    --newt-text-muted: #949ba4;
+    --newt-text-link: #00a8fc;
+
+    /* Brand */
+    --newt-brand: #5865f2;
+    --newt-brand-hover: #4752c4;
+    --newt-brand-active: #3c45a5;
+
+    /* Status */
+    --newt-online: #23a55a;
+    --newt-idle: #f0b232;
+    --newt-dnd: #f23f42;
+    --newt-offline: #80848e;
+    --newt-danger: #da373c;
+    --newt-danger-hover: #a12828;
+
+    /* Type */
+    --newt-font-sans:
+      "Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    --newt-font-mono:
+      "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --newt-font-display: "Inter", sans-serif;
+
+    /* Radius */
+    --newt-radius-sm: 4px;
+    --newt-radius-md: 8px;
+    --newt-radius-lg: 12px;
+    --newt-radius-full: 9999px;
+
+    /* Shadows */
+    --newt-shadow-elevation-low:
+      0 1px 0 rgba(0, 0, 0, 0.2), 0 1.5px 0 rgba(0, 0, 0, 0.05),
+      0 2px 0 rgba(0, 0, 0, 0.05);
+    --newt-shadow-elevation-high: 0 8px 16px rgba(0, 0, 0, 0.24);
+
+    /* Motion */
+    --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
+    --newt-duration-fast: 100ms;
+    --newt-duration-base: 150ms;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /*
+   * Tailwind v3 compatibility: v4's Preflight drops the implicit
+   * `border-color: theme(colors.gray.200)` and the `cursor: pointer` on
+   * buttons. Both are restored here so the registry components render exactly
+   * as they did under v3.
+   */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * (b) the site palette
+ *
+ * The chrome around a demo is its own system: a loom vocabulary, no
+ * radius anywhere, and one attribute on the root swaps the whole page.
+ * The raw values sit on `:root` so plain CSS can read them; the `@theme`
+ * block below turns each one into a utility (`bg-ground`, `text-weft-dim`,
+ * `border-reed`, `text-indigo`, `bg-indigo-wash`, …).
+ * ------------------------------------------------------------------ */
+:root {
+  --p-ground: #0b0d14;
+  --p-raised: #12151f;
+  --p-sunken: #070910;
+  --p-shed: #191d29;
+  --p-reed: #1c2030;
+  --p-reed-lit: #2b3145;
+
+  --p-weft: #e9e5db;
+  --p-weft-dim: #9b9789;
+  --p-weft-faint: #6a6759;
+
+  --p-indigo: #5f72ef;
+  --p-indigo-wash: #1a1f42;
+  --p-jade: #4fa88b;
+  --p-madder: #d2624f;
+
+  --shadow-layer: 0 18px 44px -16px rgb(0 0 0 / 0.62);
+
+  /*
+   * The two framework marks in their own colours, which is the one place on the
+   * site carrying a colour the palette does not own. A mark is somebody else's,
+   * and a reader recognises it by its colour or not at all.
+   */
+  --brand-react: #61dafb;
+  --brand-vue: #41b883;
+}
+
+:root[data-theme="light"] {
+  --p-ground: #f2f1ec;
+  --p-raised: #faf9f5;
+  --p-sunken: #e8e6df;
+  --p-shed: #f1efe8;
+  --p-reed: #dcd9d0;
+  --p-reed-lit: #c2beb2;
+
+  --p-weft: #14161d;
+  --p-weft-dim: #5c594f;
+  --p-weft-faint: #8a8779;
+
+  --p-indigo: #3a49c4;
+  --p-indigo-wash: #e4e5f7;
+  --p-jade: #2f7a61;
+  --p-madder: #b04430;
+
+  --shadow-layer: 0 18px 44px -16px rgb(26 24 20 / 0.24);
+
+  /* React's cyan has too little contrast on the light ground, so it takes the
+   * darker blue React's own documentation uses there. */
+  --brand-react: #087ea4;
+}
+
+/*
+ * The site ships ONE density. These are the comfortable values, and a control
+ * reads them rather than declaring sizes of its own.
+ */
+:root {
+  --ctl-h: 34px;
+  --cell-x: 14px;
+  --stack: 10px;
+  --reed-tick: 1px;
+  --reed-pitch: 6px;
+  --ui-text: 14px;
+
+  /* a duration is named for what it moves */
+  --dur-instant: 90ms;
+  --dur-local: 160ms;
+  --dur-overlay: 240ms;
+
+  --ease-beat: cubic-bezier(0.2, 0.9, 0.24, 1);
+  --ease-glide: cubic-bezier(0.33, 0, 0.15, 1);
+
+  /* every layer that leaves the flow declares its rank here */
+  --z-sticky: 10;
+  --z-panel: 20;
+  --z-modal: 50;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0ms;
+    --dur-local: 0ms;
+    --dur-overlay: 0ms;
+  }
+}
+
+/* every name comes from the loom. the semantic colours are dyes. */
+@theme {
+  --font-ui: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-ground: var(--p-ground);
+  --color-raised: var(--p-raised);
+  --color-sunken: var(--p-sunken);
+  --color-shed: var(--p-shed);
+  --color-reed: var(--p-reed);
+  --color-reed-lit: var(--p-reed-lit);
+
+  --color-weft: var(--p-weft);
+  --color-weft-dim: var(--p-weft-dim);
+  --color-weft-faint: var(--p-weft-faint);
+
+  --color-indigo: var(--p-indigo);
+  --color-indigo-wash: var(--p-indigo-wash);
+  --color-jade: var(--p-jade);
+  --color-madder: var(--p-madder);
+
+  /*
+   * The reading column does not follow the interface: 15px body copy is a
+   * better article at every width than the 14px the controls take.
+   */
+  --text-prose: 15px;
+  --text-prose--line-height: 1.7;
+}
+
+/* ------------------------------------------------------------------ *
+ * (c) base rules and utilities
+ * ------------------------------------------------------------------ */
+
+/*
+ * The palette swaps on one attribute, so the whole page changes colour at once.
+ * A transition on every element that reads the palette starts thousands of
+ * animations; the cross fade is five, and it is the same picture.
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-overlay);
+  animation-timing-function: var(--ease-glide);
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 7rem;
+  }
+
+  body {
+    background-color: var(--color-ground);
+    color: var(--color-weft);
+    font-family: var(--font-ui);
+    font-size: var(--ui-text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-indigo);
+    outline-offset: 1px;
+  }
+
+  ::selection {
+    background-color: var(--color-indigo);
+    color: #fff;
+  }
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* a utility, so a state variant can dye the edge of a part the site does not own */
+@utility selvedge-on {
+  --selvedge: var(--color-indigo);
+}
+
+@layer components {
+  /*
+   * A demo brings the Discord typography with it. The frame around it stays on
+   * the site face, so the boundary between the two systems is visible.
+   */
+  .newt-root {
+    font-family: var(--newt-font-sans);
+    color: var(--newt-text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* the reed: the evenly spaced slots that hold the warp on a loom */
+  .reed-edge {
+    position: relative;
+  }
+
+  .reed-edge::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 2px;
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--color-reed-lit) 0 var(--reed-tick),
+      transparent var(--reed-tick) var(--reed-pitch)
+    );
+  }
+
+  /* the same pitch turned a quarter, for the leading edge of a column */
+  .warp-line {
+    position: relative;
+  }
+
+  .warp-line::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 1px;
+    background-image: repeating-linear-gradient(
+      0deg,
+      var(--color-reed) 0 var(--reed-tick),
+      transparent var(--reed-tick) var(--reed-pitch)
+    );
+  }
+
+  /* the loom seen head on: warp threads standing in the reed */
+  .warp-field {
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--color-reed) 0 var(--reed-tick),
+      transparent var(--reed-tick) var(--reed-pitch)
+    );
+  }
+
+  /* the cloth line the hero rests on: two picks beaten together */
+  .reed-band {
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--color-indigo) 0 var(--reed-tick),
+      transparent var(--reed-tick) var(--reed-pitch)
+    );
+  }
+
+  /*
+   * The selvedge is the finished edge of a cloth. It marks a choice, which is
+   * why it is transparent until `selvedge-on` dyes it.
+   */
+  .selvedge {
+    position: relative;
+    --selvedge: transparent;
+  }
+
+  .selvedge::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 2px;
+    background-image: repeating-linear-gradient(
+      0deg,
+      var(--selvedge) 0 var(--reed-tick),
+      transparent var(--reed-tick) var(--reed-pitch)
+    );
+  }
+
+  /* the surface every site control shares */
+  .ctl {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid var(--color-reed);
+    background-color: var(--color-ground);
+    padding-inline: var(--cell-x);
+    color: var(--color-weft);
+    transition: border-color var(--dur-instant) var(--ease-beat);
+  }
+
+  .ctl:hover {
+    border-color: var(--color-reed-lit);
+  }
+
+  /* every surface that leaves the flow draws the same edge and the same shadow */
+  .layer {
+    border: 1px solid var(--color-reed-lit);
+    background-color: var(--color-raised);
+    box-shadow: var(--shadow-layer);
+  }
+
+  /* the frame every demo sits in, drawn once because two frameworks both draw it */
+  .demo-frame {
+    display: flex;
+    max-width: 100%;
+    flex-direction: column;
+    border: 1px solid var(--color-reed);
+    background-color: var(--color-raised);
+  }
+
+  .demo-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .demo-caption {
+    border-top: 1px solid var(--color-reed);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-data);
+    font-size: 12px;
+    color: var(--color-weft-faint);
+  }
+}

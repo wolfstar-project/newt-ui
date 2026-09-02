@@ -14,8 +14,16 @@ source into the user's project, there is no runtime package dependency.
 
 ```
 apps/
-  www/    React docs site (Next.js) — shadcn-ui layout: registry/default/{ui,example}
-  vue/    Vue docs site (Nuxt 4 + Tailwind 4) — shadcn-vue layout: app/lib/registry/default/ui/<name>/
+  docs/   THE documentation site (Vite + React + Vue). One site for both
+          frameworks: a React/Vue switcher picks which registry renders each
+          demo. It reads `apps/www/registry` and `apps/vue/app/lib/registry`
+          directly through path aliases and bundles both built registries
+          into its own `dist/`.
+  www/    React registry source + builder (Next.js) — shadcn-ui layout:
+          registry/default/{ui,example}. No longer ships docs pages.
+  vue/    Vue registry source + builder (Nuxt 4 + Tailwind 4) — shadcn-vue
+          layout: app/lib/registry/default/ui/<name>/. No longer ships docs
+          pages.
 packages/
   newt-ui/   `@wolfstar/newt-ui` CLI (React) + registry/html (original HTML/CSS + tokens.css)
   cli/       `@wolfstar/newt-ui-vue` CLI
@@ -113,8 +121,8 @@ version:
    dependencies, registryDependencies, vueFiles) — this drives the
    generated registry indexes.
 5. Add the component to a category in
-   `apps/www/registry/registry-categories.ts` (and its Vue copy) so it
-   appears in the docs side nav.
+   `apps/www/registry/registry-categories.ts` — the single taxonomy the
+   docs site reads for both frameworks — so it appears in the side nav.
 6. Run `node scripts/gen-registry.mjs`, then `pnpm typecheck && pnpm build`.
 
 ## Trademark note

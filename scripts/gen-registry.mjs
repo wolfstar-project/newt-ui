@@ -242,12 +242,10 @@ for (const m of metas) {
       WWW,
       `registry/default/example/${m.reactDemo ?? `${m.name}-demo`}.tsx`
     ),
-    join(WWW, `content/docs/components/${m.name}.mdx`),
     join(
       VUE,
       `app/lib/registry/default/example/${m.vueDemo ?? `${pascal(m.name)}Demo`}.vue`
     ),
-    join(VUE, `content/docs/components/${m.name}.md`),
     ...(m.vueFiles ?? [`${pascal(m.name)}.vue`, "index.ts"]).map((f) =>
       join(VUE, `app/lib/registry/default/ui/${m.name}/${f}`)
     ),

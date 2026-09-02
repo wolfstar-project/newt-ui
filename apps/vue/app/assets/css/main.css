@@ -1,21 +1,19 @@
 @import "tailwindcss" source(none);
 @import "tw-animate-css";
-@import "./docs.css";
 
 /*
  * Explicit source registration (auto-detection is disabled above so the scan
  * never walks out of `apps/vue` into the rest of the monorepo).
  */
 @source "../../../app";
-@source "../../../content";
 
 /*
  * newt/ui Tailwind theme.
  *
  * Every entry maps a Tailwind theme namespace onto a `--newt-*` CSS variable,
  * which keeps the raw token contract (`var(--newt-brand)`) usable from plain
- * CSS — `docs.css` and the registry's arbitrary values both rely on it — while
- * Tailwind generates the utilities (`bg-newt-brand`, `rounded-md`,
+ * CSS — the registry's arbitrary values rely on it — while Tailwind
+ * generates the utilities (`bg-newt-brand`, `rounded-md`,
  * `shadow-elevation-high`, `ease-newt`, `duration-fast`, …).
  *
  * Source of truth for the token values:
