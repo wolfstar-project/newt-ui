@@ -38,7 +38,7 @@ function cmdInit(cwd) {
     console.log(`${CONFIG_FILE} already exists. Skipping.`)
   } else {
     const config = {
-      $schema: "https://wolfstar-project.github.io/newt-ui/config-schema.json",
+      $schema: "https://newtui.dev/config-schema.json",
       componentsDir: "components/ui",
       tokensFile: "styles/newt-tokens.css",
     }

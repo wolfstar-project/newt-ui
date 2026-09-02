@@ -22,6 +22,6 @@ export const SITE = {
   reactCli: "npx @wolfstar/newt-ui@latest",
   vueCli: "npx @wolfstar/newt-ui-vue@latest",
   nuxtModule: "@wolfstar/nuxt-newt-ui",
-  registryUrl: "https://wolfstar-project.github.io/newt-ui/r",
-  vueRegistryUrl: "https://wolfstar-project.github.io/newt-ui/vue/r",
+  registryUrl: "https://newtui.dev/r",
+  vueRegistryUrl: "https://newtui.dev/vue/r",
 } as const

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://wolfstar-project.github.io/newt-ui/registry-schema.json",
+  "$schema": "https://newtui.dev/registry-schema.json",
   "name": "newt-ui",
   "tokens": "tokens.css",
   "components": [

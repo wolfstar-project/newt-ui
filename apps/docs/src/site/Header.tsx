@@ -1,8 +1,6 @@
 import { SITE } from "../content/site"
 import { cn } from "../lib/utils"
 import { Link, usePath } from "./router"
-import { Segmented } from "./Segmented"
-import { THEMES, useSettings } from "./settings"
 import { Wordmark } from "./Wordmark"
 
 /* `match` is a prefix, so every page under a section lights its own link */
@@ -23,12 +21,11 @@ interface HeaderProps {
 }
 
 export function Header({ onOpenNav }: HeaderProps) {
-  const { theme, setTheme } = useSettings()
   const path = usePath()
 
   return (
     <header className="reed-edge sticky top-0 z-(--z-sticky) bg-ground/85 backdrop-blur-md">
-      <div className="mx-auto flex h-15 max-w-360 items-center gap-5 px-4 sm:px-6">
+      <div className="mx-auto flex h-15 max-w-320 items-center gap-5 px-4 sm:px-6">
         {/* the 19px lockup sits low against the 14px nav baseline once centred */}
         <Link
           href="/"
@@ -65,12 +62,6 @@ export function Header({ onOpenNav }: HeaderProps) {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
-          <Segmented
-            legend="Appearance"
-            options={THEMES}
-            value={theme}
-            onSelect={setTheme}
-          />
           <button
             type="button"
             onClick={onOpenNav}

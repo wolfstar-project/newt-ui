@@ -1,6 +1,6 @@
 # @wolfstar/nuxt-newt-ui
 
-Nuxt module for [newt/ui](https://wolfstar-project.github.io/newt-ui) — auto-imports the
+Nuxt module for [newt/ui](https://newtui.dev) — auto-imports the
 Discord-native components you copied into your project with
 [`newt-ui-vue`](../cli) and injects the `--newt-*` design tokens.
 

@@ -13,7 +13,7 @@ import { Link } from "../site/router"
 import { useSettings } from "../site/settings"
 
 const LINK =
-  "text-indigo underline underline-offset-4 transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft"
+  "text-link underline underline-offset-4 transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft"
 
 const INIT_REACT = `${SITE.reactCli} init`
 const INIT_VUE = `${SITE.vueCli} init`

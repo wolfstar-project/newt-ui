@@ -22,7 +22,10 @@ export function Segmented<T extends string>({
 }: SegmentedProps<T>) {
   return (
     <fieldset
-      className={cn("inline-flex items-center border border-reed", className)}
+      className={cn(
+        "inline-flex items-center border border-reed bg-ground",
+        className
+      )}
     >
       <legend className="sr-only">{legend}</legend>
       {options.map((option) => (
@@ -31,7 +34,7 @@ export function Segmented<T extends string>({
           type="button"
           aria-pressed={option === value}
           onClick={() => onSelect(option)}
-          className="flex h-(--ctl-h) cursor-pointer items-center px-(--cell-x) font-data text-[12px] text-weft-dim transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft aria-pressed:bg-indigo-wash aria-pressed:text-weft"
+          className="flex h-7 cursor-pointer items-center px-3 font-data text-[11px] tracking-[0.04em] text-weft-dim uppercase transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft aria-pressed:bg-indigo aria-pressed:text-white"
         >
           {option}
         </button>

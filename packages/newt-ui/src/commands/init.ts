@@ -89,7 +89,7 @@ async function promptForConfig(
   options: InitOptions
 ): Promise<RawConfig> {
   const defaults: RawConfig = rawConfigSchema.parse({
-    $schema: "https://wolfstar-project.github.io/newt-ui/schema.json",
+    $schema: "https://newtui.dev/schema.json",
     style: "default",
     rsc: true,
     tsx: true,

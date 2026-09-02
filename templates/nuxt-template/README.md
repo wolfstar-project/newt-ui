@@ -1,7 +1,7 @@
 # nuxt-template
 
 A minimal [Nuxt 3](https://nuxt.com) starter preconfigured with
-[newt/ui](https://wolfstar-project.github.io/newt-ui) — Discord-native components you
+[newt/ui](https://newtui.dev) — Discord-native components you
 copy into your project.
 
 ## Getting started

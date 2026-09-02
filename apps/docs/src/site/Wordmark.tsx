@@ -33,7 +33,8 @@ export function Wordmark({ className }: WordmarkProps) {
   return (
     <span className={cn("inline-flex items-center gap-2", className)}>
       <NewtMark className="size-4.5 text-indigo" />
-      <span className="font-ui text-[19px] leading-none font-bold tracking-[-0.045em] text-weft">
+      {/* the mark is drawn, the name is typed: the mono face says it is a package */}
+      <span className="font-data text-[16px] leading-none font-bold tracking-[-0.02em] text-weft">
         newt/ui
       </span>
     </span>

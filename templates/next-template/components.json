@@ -1,5 +1,5 @@
 {
-  "$schema": "https://wolfstar-project.github.io/newt-ui/schema.json",
+  "$schema": "https://newtui.dev/schema.json",
   "style": "default",
   "rsc": true,
   "tsx": true,

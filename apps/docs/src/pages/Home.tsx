@@ -1,5 +1,7 @@
 import { Suspense, type ReactNode } from "react"
 
+import { buttonVariants } from "@/registry/default/ui/button"
+
 import {
   COMPONENTS,
   findComponent,
@@ -17,12 +19,16 @@ import { VueIsland } from "../site/VueIsland"
 import { vueDemo } from "../vue/demos"
 
 const LINK =
-  "text-indigo underline underline-offset-4 transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft"
+  "text-link underline underline-offset-4 transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft"
 
-const CTA_PRIMARY =
-  "inline-flex h-(--ctl-h) items-center border border-indigo bg-indigo px-(--cell-x) text-[13px] text-ground transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:bg-indigo/90"
+/*
+ * The two calls to action are the library's own button, not a pair the site
+ * drew for itself: the first thing a reader sees is a component from the
+ * registry they are being offered.
+ */
+const CTA_PRIMARY = buttonVariants({ variant: "primary" })
 
-const CTA_SECONDARY = "ctl inline-flex h-(--ctl-h) items-center text-[13px]"
+const CTA_SECONDARY = buttonVariants({ variant: "secondary" })
 
 /*
  * The two marks are the only colours on the site the palette does not own: a
@@ -149,7 +155,7 @@ export function Home() {
     <div className="flex flex-col">
       <section className="relative overflow-hidden">
         <div className="warp-field pointer-events-none absolute inset-x-0 top-0 h-64 opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
-        <div className="relative mx-auto flex max-w-360 flex-col gap-8 px-4 pt-20 pb-14 sm:px-6">
+        <div className="relative mx-auto flex max-w-320 flex-col gap-8 px-4 pt-20 pb-14 sm:px-6">
           <p className="flex items-center gap-2.5 font-data text-[11px] tracking-[0.18em] text-weft-faint uppercase">
             <span className="flex items-center gap-2">
               <ReactMark />
@@ -200,7 +206,7 @@ export function Home() {
         <div className="reed-band h-0.5 w-full" />
       </section>
 
-      <section className="mx-auto flex w-full max-w-360 flex-col gap-6 px-4 py-14 sm:px-6">
+      <section className="mx-auto flex w-full max-w-320 flex-col gap-6 px-4 py-14 sm:px-6">
         <h2 className="font-data text-[11px] tracking-[0.18em] text-weft-faint uppercase">
           Three of them, running
         </h2>
@@ -217,7 +223,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="mx-auto grid w-full max-w-360 gap-6 px-4 pb-8 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
+      <section className="mx-auto grid w-full max-w-320 gap-6 px-4 pb-8 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
         <Pitch title="One token system, three targets">
           The tokens are declared once and every surface reads them: the plain
           HTML and CSS build, the React wrappers, and the Vue single file
@@ -243,7 +249,7 @@ export function Home() {
         </Pitch>
       </section>
 
-      <section className="mx-auto w-full max-w-360 px-4 pb-14 sm:px-6">
+      <section className="mx-auto w-full max-w-320 px-4 pb-14 sm:px-6">
         <p className="text-prose text-weft-dim">
           <span>The </span>
           <Link href="/docs/installation" className={LINK}>

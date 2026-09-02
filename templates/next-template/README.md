@@ -1,7 +1,7 @@
 # next-template
 
 A minimal [Next.js 15](https://nextjs.org) + React 19 starter preconfigured with
-[newt/ui](https://wolfstar-project.github.io/newt-ui) — Discord-native components you
+[newt/ui](https://newtui.dev) — Discord-native components you
 copy into your project.
 
 ## Getting started

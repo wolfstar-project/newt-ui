@@ -1,9 +1,10 @@
+import { buttonVariants } from "@/registry/default/ui/button"
+
 import { Lede, PageTitle } from "../site/Prose"
 import { Link } from "../site/router"
 
 /* the same pair of controls the overview ends on, so the way back is familiar */
-const CTA =
-  "ctl inline-flex h-(--ctl-h) items-center px-(--cell-x) text-[13px] transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft"
+const CTA = buttonVariants({ variant: "secondary" })
 
 /*
  * A 404 that stays calm: it says what happened, offers the two pages worth

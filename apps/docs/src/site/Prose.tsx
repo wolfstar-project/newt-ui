@@ -11,7 +11,7 @@ export function PageTitle({ children, className }: ProseProps) {
   return (
     <h1
       className={cn(
-        "font-ui text-[30px] leading-tight font-bold tracking-[-0.03em] text-weft",
+        "font-ui text-[36px] leading-[1.15] font-bold tracking-[-0.025em] text-weft",
         className
       )}
     >
@@ -40,7 +40,7 @@ export function Section({ id, title, children, className }: SectionProps) {
       id={id}
       className={cn("flex scroll-mt-28 flex-col gap-4", className)}
     >
-      <h2 className="font-ui text-[19px] font-semibold tracking-[-0.02em] text-weft">
+      <h2 className="font-ui text-[20px] font-bold tracking-[-0.02em] text-weft">
         {title}
       </h2>
       {children}
@@ -72,13 +72,18 @@ export function List({ children, className }: ProseProps) {
 /* named for what it is not: this is a run of code inside a sentence */
 export function InlineCode({ children, className }: ProseProps) {
   return (
-    <code className={cn("font-data text-[13px] text-indigo", className)}>
+    <code
+      className={cn(
+        "bg-sunken px-1 font-data text-[12.5px] text-weft",
+        className
+      )}
+    >
       {children}
     </code>
   )
 }
 
-/* the one aside on the site: a selvedge, a wash of shed, and nothing else */
+/* the one aside on the site: a brand rule, a wash of the hover surface */
 export function Note({ children, className }: ProseProps) {
   return (
     <aside

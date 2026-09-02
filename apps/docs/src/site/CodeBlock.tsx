@@ -33,11 +33,16 @@ export function CodeBlock({ code, shell = false, className }: CodeBlockProps) {
   return (
     <div
       className={cn(
-        "group relative max-w-2xl border border-reed bg-sunken",
+        "relative max-w-2xl border border-reed bg-sunken",
         className
       )}
     >
-      <pre className="overflow-x-auto p-4 font-data text-[13px] leading-relaxed text-weft">
+      {/* the corner tick a preview is signed with, drawn on the border itself */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-px -left-px size-2 border-t border-l border-indigo"
+      />
+      <pre className="overflow-x-auto p-4 pt-9 font-data text-[13px] leading-relaxed text-weft">
         {shell
           ? code.split("\n").map((line, index) => (
               <span key={`${index}:${line}`} className="block">
@@ -52,7 +57,12 @@ export function CodeBlock({ code, shell = false, className }: CodeBlockProps) {
         type="button"
         onClick={copy}
         aria-label={copied ? "Copied to clipboard" : "Copy code to clipboard"}
-        className="absolute top-2 right-2 h-6 cursor-pointer border border-reed bg-ground px-2 font-data text-[11px] text-weft-dim opacity-0 transition-colors duration-(--dur-instant) ease-(--ease-beat) group-hover:opacity-100 hover:text-weft focus-visible:opacity-100"
+        className={cn(
+          "absolute top-2 right-2 h-6 cursor-pointer border px-2 font-data text-[11px] tracking-[0.04em] uppercase transition-colors duration-(--dur-instant) ease-(--ease-beat)",
+          copied
+            ? "border-jade text-jade"
+            : "border-reed text-weft-faint hover:border-weft-faint hover:text-weft"
+        )}
       >
         {copied ? "copied" : "copy"}
       </button>

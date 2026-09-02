@@ -6,7 +6,7 @@ const LINK =
 export function Footer() {
   return (
     <footer className="mt-24 border-t border-reed">
-      <div className="mx-auto flex max-w-360 flex-wrap items-center justify-between gap-4 px-4 py-8 text-weft-dim sm:px-6">
+      <div className="mx-auto flex max-w-320 flex-wrap items-center justify-between gap-4 px-4 py-8 text-weft-dim sm:px-6">
         <p>
           Apache-2.0 licensed, built by WolfStar. The components are yours to
           change once they are copied into your project.

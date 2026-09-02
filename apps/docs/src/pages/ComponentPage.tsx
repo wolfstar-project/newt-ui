@@ -34,7 +34,7 @@ const VUE_EXTENSION = ".vue"
 const INLINE_IMPORT_LIMIT = 4
 
 const LINK =
-  "text-indigo underline underline-offset-4 transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft"
+  "text-link underline underline-offset-4 transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft"
 
 const EYEBROW =
   "font-data text-[11px] tracking-[0.13em] text-weft-faint uppercase"

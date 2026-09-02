@@ -108,7 +108,7 @@ async function promptForConfig(
 ): Promise<RawConfig> {
   const framework = options.framework ?? detectFramework(cwd)
   const defaults: RawConfig = rawConfigSchema.parse({
-    $schema: "https://wolfstar-project.github.io/newt-ui/schema.json",
+    $schema: "https://newtui.dev/schema.json",
     style: "default",
     typescript: true,
     framework,
@@ -346,7 +346,7 @@ function printNuxtInstructions(css: string): void {
   )
   logger.log(
     highlighter.dim(
-      "  Tip: @wolfstar/nuxt-newt-ui auto-imports every component in your ui directory — see https://wolfstar-project.github.io/newt-ui"
+      "  Tip: @wolfstar/nuxt-newt-ui auto-imports every component in your ui directory — see https://newtui.dev"
     )
   )
 }

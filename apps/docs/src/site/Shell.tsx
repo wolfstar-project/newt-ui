@@ -97,7 +97,7 @@ export function Shell({ children, wide = false }: ShellProps) {
       {wide ? (
         <main>{children}</main>
       ) : (
-        <div className="mx-auto flex max-w-360 gap-12 px-4 sm:px-6">
+        <div className="mx-auto flex max-w-320 gap-12 px-4 sm:px-6">
           <div className="hidden w-56 shrink-0 lg:block">
             <div className="sticky top-15">
               <div className="max-h-[calc(100dvh-3.75rem)] overflow-y-auto">
