@@ -1,3 +1,5 @@
+import type { ReactNode } from "react"
+
 import { cn } from "../lib/utils"
 
 interface SegmentedProps<T extends string> {
@@ -5,6 +7,8 @@ interface SegmentedProps<T extends string> {
   readonly options: readonly T[]
   readonly value: T
   readonly onSelect: (next: T) => void
+  /** an option's mark, when the choice reads faster by colour than by word */
+  readonly icons?: Partial<Record<T, ReactNode>>
   readonly className?: string
 }
 
@@ -18,6 +22,7 @@ export function Segmented<T extends string>({
   options,
   value,
   onSelect,
+  icons,
   className,
 }: SegmentedProps<T>) {
   return (
@@ -34,8 +39,9 @@ export function Segmented<T extends string>({
           type="button"
           aria-pressed={option === value}
           onClick={() => onSelect(option)}
-          className="flex h-7 cursor-pointer items-center px-3 font-data text-[11px] tracking-[0.04em] text-weft-dim uppercase transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft aria-pressed:bg-indigo aria-pressed:text-white"
+          className="flex h-7 cursor-pointer items-center gap-1.5 px-3 font-data text-[11px] tracking-[0.04em] text-weft-dim uppercase transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft aria-pressed:bg-indigo aria-pressed:text-white"
         >
+          {icons?.[option]}
           {option}
         </button>
       ))}

@@ -3,14 +3,29 @@ import { useEffect, useState, type ReactNode } from "react"
 import { cn } from "../lib/utils"
 import { useSettings } from "./settings"
 
+/** the corner tick's colour: the framework a block is written in, or the brand when it is neither */
+type Accent = "brand" | "react" | "vue"
+
+const ACCENT_BORDER = {
+  brand: "border-indigo",
+  react: "border-[var(--brand-react)]",
+  vue: "border-[var(--brand-vue)]",
+} satisfies Record<Accent, string>
+
 interface CodeBlockProps {
   readonly code: string
   /** a shell block prints a prompt the reader must not carry into their terminal */
   readonly shell?: boolean
+  readonly accent?: Accent
   readonly className?: string
 }
 
-export function CodeBlock({ code, shell = false, className }: CodeBlockProps) {
+export function CodeBlock({
+  code,
+  shell = false,
+  accent = "brand",
+  className,
+}: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
@@ -40,7 +55,10 @@ export function CodeBlock({ code, shell = false, className }: CodeBlockProps) {
       {/* the corner tick a preview is signed with, drawn on the border itself */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -top-px -left-px size-2 border-t border-l border-indigo"
+        className={cn(
+          "pointer-events-none absolute -top-px -left-px size-2 border-t border-l",
+          ACCENT_BORDER[accent]
+        )}
       />
       <pre className="overflow-x-auto p-4 pt-9 font-data text-[13px] leading-relaxed text-weft">
         {shell
@@ -89,6 +107,7 @@ export function FrameworkBlock({
     <CodeBlock
       code={framework === "react" ? react : vue}
       shell={shell}
+      accent={framework}
       className={className}
     />
   )

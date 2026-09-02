@@ -12,6 +12,7 @@ import { SITE } from "../content/site"
 import { FrameworkBlock } from "../site/CodeBlock"
 import { Demo } from "../site/Demo"
 import { DemoBoundary } from "../site/DemoBoundary"
+import { ReactMark, VueMark } from "../site/FrameworkMark"
 import { InlineCode } from "../site/Prose"
 import { Link } from "../site/router"
 import { useSettings } from "../site/settings"
@@ -29,61 +30,6 @@ const LINK =
 const CTA_PRIMARY = buttonVariants({ variant: "primary" })
 
 const CTA_SECONDARY = buttonVariants({ variant: "secondary" })
-
-/*
- * The two marks are the only colours on the site the palette does not own: a
- * framework is recognised by its own hue before it is read as a word.
- */
-function ReactMark() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="h-3.5 w-3.5 text-[var(--brand-react)]"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <g fill="none" stroke="currentColor" strokeWidth="1.5">
-        <ellipse cx="12" cy="12" rx="10.5" ry="4" />
-        <ellipse
-          cx="12"
-          cy="12"
-          rx="10.5"
-          ry="4"
-          transform="rotate(60 12 12)"
-        />
-        <ellipse
-          cx="12"
-          cy="12"
-          rx="10.5"
-          ry="4"
-          transform="rotate(120 12 12)"
-        />
-      </g>
-      <circle cx="12" cy="12" r="2.1" fill="currentColor" />
-    </svg>
-  )
-}
-
-function VueMark() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="h-3.5 w-3.5 text-[var(--brand-vue)]"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <g
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinejoin="round"
-      >
-        <path d="M1.5 4.5 12 21 22.5 4.5" />
-        <path d="M8 4.5 12 10.5 16 4.5" />
-      </g>
-    </svg>
-  )
-}
 
 /* the three that carry the most of the library between them */
 const FEATURED = ["user-profile", "embed", "member-list"] as const

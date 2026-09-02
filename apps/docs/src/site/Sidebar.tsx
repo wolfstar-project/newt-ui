@@ -1,8 +1,11 @@
 import { NAV } from "../content/nav"
 import { cn } from "../lib/utils"
+import { ReactMark, VueMark } from "./FrameworkMark"
 import { Link, usePath } from "./router"
 import { Segmented } from "./Segmented"
 import { FRAMEWORKS, useSettings } from "./settings"
+
+const FRAMEWORK_ICONS = { react: <ReactMark />, vue: <VueMark /> } as const
 
 const EYEBROW =
   "text-[11px] font-bold tracking-[0.04em] text-weft-faint uppercase"
@@ -36,6 +39,7 @@ function FrameworkChoice() {
         options={FRAMEWORKS}
         value={framework}
         onSelect={setFramework}
+        icons={FRAMEWORK_ICONS}
         className="self-start"
       />
     </div>
