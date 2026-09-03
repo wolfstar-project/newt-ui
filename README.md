@@ -156,8 +156,7 @@ authorship.
 the site, and each Vue demo is mounted as an island in a React node. The
 framework switcher in the sidebar decides which registry a page reads from —
 every install command, import line and live demo follows it — and the choice
-survives a reload (`localStorage`) and can be shared through a `?framework=`
-query parameter.
+survives a reload through `localStorage`.
 
 The two registries are consumed in place through Vite path aliases
 (`@/registry` → `apps/www/registry`, `@/lib/registry` →
