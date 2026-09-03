@@ -1,4 +1,4 @@
-# @wolfstar/newt-ui
+# @newtui/react
 
 ## 1.0.0
 

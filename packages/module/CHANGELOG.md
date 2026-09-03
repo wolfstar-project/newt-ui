@@ -1,4 +1,4 @@
-# @wolfstar/nuxt-newt-ui
+# @newtui/nuxt
 
 ## 1.0.0
 

@@ -1,4 +1,4 @@
-# @wolfstar/newt-ui-vue
+# @newtui/vue
 
 ## 1.0.0
 
