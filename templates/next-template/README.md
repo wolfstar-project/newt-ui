@@ -25,9 +25,9 @@ Open http://localhost:3000.
 ## Adding components
 
 ```bash
-npx @wolfstar/newt-ui add button
-npx @wolfstar/newt-ui list
-npx @wolfstar/newt-ui diff button
+npx @newtui/react add button
+npx @newtui/react list
+npx @newtui/react diff button
 ```
 
 Components land in `components/ui/` and are yours to edit.

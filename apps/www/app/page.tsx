@@ -7,7 +7,7 @@ export default function HomePage() {
       <p className="text-newt-text-secondary">
         This deployment only serves the React component registry under{" "}
         <code className="text-newt-text-primary">/r</code>, consumed by the{" "}
-        <code className="text-newt-text-primary">@wolfstar/newt-ui</code> CLI.
+        <code className="text-newt-text-primary">@newtui/react</code> CLI.
       </p>
       <a
         className="text-newt-text-link underline underline-offset-4"

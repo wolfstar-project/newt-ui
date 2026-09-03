@@ -1,4 +1,4 @@
-# @wolfstar/nuxt-newt-ui
+# @newtui/nuxt
 
 Nuxt module for [newt/ui](https://newtui.dev) — auto-imports the
 Discord-native components you copied into your project with
@@ -7,20 +7,20 @@ Discord-native components you copied into your project with
 ## Installation
 
 ```bash
-pnpm add -D @wolfstar/nuxt-newt-ui
+pnpm add -D @newtui/nuxt
 ```
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ["@wolfstar/nuxt-newt-ui"],
+  modules: ["@newtui/nuxt"],
 })
 ```
 
 Then add components as usual:
 
 ```bash
-npx @wolfstar/newt-ui-vue add button
+npx @newtui/vue add button
 ```
 
 ```vue
@@ -35,7 +35,7 @@ No import needed — everything under `components/ui/**` is registered.
 
 ```ts
 export default defineNuxtConfig({
-  modules: ["@wolfstar/nuxt-newt-ui"],
+  modules: ["@newtui/nuxt"],
   newt: {
     prefix: "Newt", // <NewtButton /> instead of <Button />. Default: "".
     componentDir: "components", // relative to srcDir. `<componentDir>/ui/**` is registered.

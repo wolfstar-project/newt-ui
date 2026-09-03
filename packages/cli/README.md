@@ -3,10 +3,10 @@
 CLI for [newt/ui](https://newtui.dev) — Discord-native UI components for Vue & Nuxt, distributed shadcn-style: the source is copied into your project, you own it.
 
 ```bash
-npx @wolfstar/newt-ui-vue init          # writes components.json, lib/utils.ts, appends --newt-* tokens to your CSS
-npx @wolfstar/newt-ui-vue add button    # copies components/ui/button/{Button.vue,index.ts} + deps
-npx @wolfstar/newt-ui-vue list          # lists registry items
-npx @wolfstar/newt-ui-vue diff button   # compares local files with the registry
+npx @newtui/vue init          # writes components.json, lib/utils.ts, appends --newt-* tokens to your CSS
+npx @newtui/vue add button    # copies components/ui/button/{Button.vue,index.ts} + deps
+npx @newtui/vue list          # lists registry items
+npx @newtui/vue diff button   # compares local files with the registry
 ```
 
 ## Components are directories
@@ -67,11 +67,11 @@ Override with `--registry <url>` or `NEWT_REGISTRY_URL`, or set `"registry"` in 
 ## Nuxt
 
 For auto-imported components without manual imports, add the
-[`@wolfstar/nuxt-newt-ui`](../module) module:
+[`@newtui/nuxt`](../module) module:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ["@wolfstar/nuxt-newt-ui"],
+  modules: ["@newtui/nuxt"],
 })
 ```
 

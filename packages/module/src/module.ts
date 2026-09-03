@@ -25,7 +25,7 @@ export const DEFAULT_COMPONENT_DIR = "components"
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: "@wolfstar/nuxt-newt-ui",
+    name: "@newtui/nuxt",
     configKey: "newt",
     compatibility: {
       nuxt: ">=4.0.0",

@@ -25,9 +25,9 @@ apps/
           layout: app/lib/registry/default/ui/<name>/. No longer ships docs
           pages.
 packages/
-  newt-ui/   `@wolfstar/newt-ui` CLI (React) + registry/html (original HTML/CSS + tokens.css)
-  cli/       `@wolfstar/newt-ui-vue` CLI
-  module/    `@wolfstar/nuxt-newt-ui` Nuxt module
+  newt-ui/   `@newtui/react` CLI (React) + registry/html (original HTML/CSS + tokens.css)
+  cli/       `@newtui/vue` CLI
+  module/    `@newtui/nuxt` Nuxt module
 templates/
   next-template/, nuxt-template/   Starter apps preconfigured with newt/ui
 tooling/oxc/   Shared oxlint + oxfmt configuration

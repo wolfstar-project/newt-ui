@@ -67,7 +67,7 @@ export async function init(options: InitOptions): Promise<void> {
   const config = await promptForConfig(cwd, options)
   await runInit(cwd, config, options)
   outro(
-    `Success! Project initialization completed. You may now add components: ${highlighter.info("npx @wolfstar/newt-ui add button")}`
+    `Success! Project initialization completed. You may now add components: ${highlighter.info("npx @newtui/react add button")}`
   )
 }
 
@@ -273,7 +273,7 @@ function printTailwindInstructions(
     )
     if (!theme) {
       logger.warn(
-        `The registry was unreachable, so only the raw ${highlighter.info("--newt-*")} variables were written. Re-run ${highlighter.info("@wolfstar/newt-ui init")} when you are online to add the @theme block.`
+        `The registry was unreachable, so only the raw ${highlighter.info("--newt-*")} variables were written. Re-run ${highlighter.info("@newtui/react init")} when you are online to add the @theme block.`
       )
     }
     return
@@ -282,7 +282,7 @@ function printTailwindInstructions(
   const extend = theme?.tailwind?.config?.theme?.extend
   if (!extend) {
     logger.warn(
-      `The registry was unreachable, so the v3 preset could not be printed. Re-run ${highlighter.info("@wolfstar/newt-ui init")} when you are online.`
+      `The registry was unreachable, so the v3 preset could not be printed. Re-run ${highlighter.info("@newtui/react init")} when you are online.`
     )
     return
   }

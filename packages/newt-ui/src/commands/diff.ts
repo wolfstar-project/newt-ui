@@ -26,7 +26,7 @@ export async function diff(options: DiffOptions): Promise<void> {
   const config = await getConfig(cwd)
   if (!config) {
     throw new Error(
-      `Configuration is missing. Please run ${highlighter.info("npx @wolfstar/newt-ui init")} first.`
+      `Configuration is missing. Please run ${highlighter.info("npx @newtui/react init")} first.`
     )
   }
   if (!options.component) {
@@ -72,7 +72,7 @@ export async function diff(options: DiffOptions): Promise<void> {
   }
   outro(
     highlighter.dim(
-      `Run ${highlighter.info(`npx @wolfstar/newt-ui add ${item.name} --overwrite`)} to update.`
+      `Run ${highlighter.info(`npx @newtui/react add ${item.name} --overwrite`)} to update.`
     )
   )
 }

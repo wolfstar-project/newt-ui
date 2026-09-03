@@ -19,9 +19,9 @@ export const SITE = {
   github: "https://github.com/wolfstar-project/newt-ui",
   disclaimer:
     "https://github.com/wolfstar-project/newt-ui/blob/main/DISCLAIMER.md",
-  reactCli: "npx @wolfstar/newt-ui@latest",
-  vueCli: "npx @wolfstar/newt-ui-vue@latest",
-  nuxtModule: "@wolfstar/nuxt-newt-ui",
+  reactCli: "npx @newtui/react@latest",
+  vueCli: "npx @newtui/vue@latest",
+  nuxtModule: "@newtui/nuxt",
   registryUrl: "https://newtui.dev/r",
   vueRegistryUrl: "https://newtui.dev/vue/r",
 } as const

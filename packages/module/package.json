@@ -1,5 +1,5 @@
 {
-  "name": "@wolfstar/nuxt-newt-ui",
+  "name": "@newtui/nuxt",
   "version": "0.3.0",
   "description": "Nuxt module for newt/ui — auto-imports your Discord-native newt/ui components and injects the --newt-* design tokens.",
   "keywords": [
