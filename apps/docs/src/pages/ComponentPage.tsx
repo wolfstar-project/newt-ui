@@ -1,4 +1,4 @@
-import { Suspense } from "react"
+import { Suspense, useEffect, useState } from "react"
 
 import { rootClasses } from "@/registry/registry-root-classes"
 
@@ -9,12 +9,15 @@ import {
   type ComponentMeta,
 } from "../content/components"
 import { SITE } from "../content/site"
-import { FrameworkBlock } from "../site/CodeBlock"
+import { Breadcrumb } from "../site/Breadcrumb"
+import { CodeBlock, FrameworkBlock } from "../site/CodeBlock"
 import { Demo } from "../site/Demo"
 import { DemoBoundary } from "../site/DemoBoundary"
 import { InlineCode, Lede, List, P, PageTitle, Section } from "../site/Prose"
 import { Link } from "../site/router"
 import { useSettings } from "../site/settings"
+import { reactSource, vueSource } from "../site/source"
+import { Tabs } from "../site/Tabs"
 import { VueIsland } from "../site/VueIsland"
 import { vueDemo } from "../vue/demos"
 import { NotFound } from "./NotFound"
@@ -98,6 +101,57 @@ function LiveDemo({ meta }: MetaProps) {
 }
 
 /*
+ * The Code tab shows the demo file itself, fetched on first open rather than
+ * bundled with the page: a reader who never opens it never pays for it.
+ */
+function DemoSource({ meta }: MetaProps) {
+  const { framework } = useSettings()
+  const [source, setSource] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    setSource(undefined)
+    const load =
+      framework === "vue"
+        ? vueSource(meta.vueDemo)
+        : reactSource(meta.reactDemo)
+    if (!load) return undefined
+    let live = true
+    void load.then((text) => {
+      if (live) setSource(text)
+    })
+    return () => {
+      live = false
+    }
+  }, [framework, meta.reactDemo, meta.vueDemo])
+
+  if (source === undefined) {
+    return (
+      <p className="font-data text-[13px] text-weft-faint">
+        Loading the source
+      </p>
+    )
+  }
+
+  return <CodeBlock code={source} lang={framework === "vue" ? "html" : "tsx"} />
+}
+
+/** The demo and the file that renders it, one tab each. */
+function PreviewCode({ meta }: MetaProps) {
+  return (
+    <Tabs
+      tabs={[
+        {
+          value: "preview",
+          label: "Preview",
+          content: <LiveDemo meta={meta} />,
+        },
+        { value: "code", label: "Code", content: <DemoSource meta={meta} /> },
+      ]}
+    />
+  )
+}
+
+/*
  * The BEM class the plain HTML/CSS build puts on the outermost element. It is
  * the one name that survives every framework, so it is what a reader greps for
  * when they are styling around the component rather than editing it. The
@@ -114,9 +168,17 @@ function RootClass({ meta }: MetaProps) {
   )
 }
 
+/*
+ * A plain heading rather than `Section`: this now lives inside the Manual
+ * tab of the Installation section, not at the top level of the page, so it
+ * does not carry its own id or belong in the On This Page index.
+ */
 function Dependencies({ meta }: MetaProps) {
   return (
-    <Section id="dependencies" title="Dependencies">
+    <div className="flex flex-col gap-4">
+      <h3 className="font-ui text-[15px] font-semibold text-weft">
+        Dependencies
+      </h3>
       {meta.dependencies.length > 0 && (
         <div className="flex flex-col gap-3">
           <P>
@@ -150,18 +212,83 @@ function Dependencies({ meta }: MetaProps) {
           </List>
         </div>
       )}
-    </Section>
+    </div>
   )
 }
 
-function Article({ meta }: MetaProps) {
+function Installation({ meta }: MetaProps) {
   const directory = `${UI_ALIAS}/${meta.name}`
   const install = `add ${meta.name}`
   const hasDependencies =
     meta.dependencies.length > 0 || meta.registryDependencies.length > 0
 
   return (
+    <Section id="installation" title="Installation">
+      <Tabs
+        tabs={[
+          {
+            value: "cli",
+            label: "CLI",
+            content: (
+              <FrameworkBlock
+                shell
+                lang="bash"
+                react={`${SITE.reactCli} ${install}`}
+                vue={`${SITE.vueCli} ${install}`}
+              />
+            ),
+          },
+          {
+            value: "manual",
+            label: "Manual",
+            content: (
+              <div className="flex flex-col gap-5">
+                {hasDependencies && <Dependencies meta={meta} />}
+                <div className="flex flex-col gap-3">
+                  <P>
+                    Copy the file below into your project, at the path your ui
+                    alias names.
+                  </P>
+                  <FrameworkBlock
+                    react={`${directory}.tsx`}
+                    vue={meta.vueFiles
+                      .map((file) => `${directory}/${file}`)
+                      .join("\n")}
+                  />
+                </div>
+              </div>
+            ),
+          },
+        ]}
+      />
+    </Section>
+  )
+}
+
+function Usage({ meta }: MetaProps) {
+  const directory = `${UI_ALIAS}/${meta.name}`
+  return (
+    <Section id="usage" title="Usage">
+      <FrameworkBlock
+        lang="typescript"
+        react={importLine([pascalCase(meta.name)], directory)}
+        vue={importLine(vueExports(meta), directory)}
+      />
+    </Section>
+  )
+}
+
+function Article({ meta }: MetaProps) {
+  return (
     <article className="flex flex-col gap-14">
+      <Breadcrumb
+        trail={[
+          { label: "Docs", href: "/docs/installation" },
+          { label: "Components", href: "/docs/components/button" },
+          { label: meta.title },
+        ]}
+      />
+
       <header className="flex flex-col gap-5">
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
           <p className={EYEBROW}>{meta.category}</p>
@@ -169,35 +296,15 @@ function Article({ meta }: MetaProps) {
         </div>
         <PageTitle>{meta.title}</PageTitle>
         <Lede>{meta.description}</Lede>
-        <div className="flex flex-col gap-3">
-          <FrameworkBlock
-            shell
-            lang="bash"
-            react={`${SITE.reactCli} ${install}`}
-            vue={`${SITE.vueCli} ${install}`}
-          />
-          <FrameworkBlock
-            lang="typescript"
-            react={importLine([pascalCase(meta.name)], directory)}
-            vue={importLine(vueExports(meta), directory)}
-          />
-        </div>
       </header>
 
-      <LiveDemo meta={meta} />
-
-      {hasDependencies && <Dependencies meta={meta} />}
-
-      <Section id="files" title="Files">
-        <P>
-          What the command above writes, relative to the component alias in your
-          configuration.
-        </P>
-        <FrameworkBlock
-          react={`${directory}.tsx`}
-          vue={meta.vueFiles.map((file) => `${directory}/${file}`).join("\n")}
-        />
+      <Section id="preview" title="Preview">
+        <PreviewCode meta={meta} />
       </Section>
+
+      <Installation meta={meta} />
+
+      <Usage meta={meta} />
 
       <Section id="tokens" title="Tokens">
         <P>
