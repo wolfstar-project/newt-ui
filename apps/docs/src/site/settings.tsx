@@ -51,13 +51,32 @@ export function SettingsProvider({
   const [framework, setFramework] = useState<Framework>(initialFramework)
 
   /*
+   * An entry the reader goes back to carries the framework it was written in,
+   * so the switch follows the address rather than outliving it. An entry that
+   * names no framework leaves the current one alone.
+   */
+  useEffect(() => {
+    const onPopState = () => {
+      const restored = toFramework(
+        new URLSearchParams(window.location.search).get(FRAMEWORK_PARAM)
+      )
+      if (restored) setFramework(restored)
+    }
+    window.addEventListener("popstate", onPopState)
+    return () => window.removeEventListener("popstate", onPopState)
+  }, [])
+
+  /*
    * The framework lives in the URL so a page can be linked in either language,
    * and it replaces the entry rather than adding one: the back button belongs
-   * to the pages a reader visited, not to a switch they flicked.
+   * to the pages a reader visited, not to a switch they flicked. A URL that
+   * already says so is left untouched, so restoring an entry does not rewrite
+   * the entry that was restored.
    */
   useEffect(() => {
     window.localStorage.setItem(FRAMEWORK_KEY, framework)
     const url = new URL(window.location.href)
+    if (url.searchParams.get(FRAMEWORK_PARAM) === framework) return
     url.searchParams.set(FRAMEWORK_PARAM, framework)
     window.history.replaceState(window.history.state, "", url)
   }, [framework])

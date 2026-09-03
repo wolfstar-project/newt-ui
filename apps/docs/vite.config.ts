@@ -17,7 +17,16 @@ import { defineConfig } from "vite"
  * longest prefix first: `@/lib/registry` has to be tried before `@/lib/utils`,
  * or the shorter one never gets the chance to be wrong about it.
  */
+/*
+ * The site is published on its own domain, so it is served from the root and
+ * the base is that root: both CLIs fetch their registry from
+ * `https://newtui.dev/r` and `https://newtui.dev/vue/r`, which are the paths
+ * `scripts/bundle-registry.mjs` writes. Serving this build under a path
+ * prefix instead would need `base` set to that prefix, or every asset URL
+ * resolves at the wrong origin root.
+ */
 export default defineConfig({
+  base: "/",
   plugins: [react(), vue(), tailwindcss()],
   resolve: {
     alias: [
