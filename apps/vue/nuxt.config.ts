@@ -15,8 +15,6 @@ export default defineNuxtConfig({
 
   typescript: { strict: true, typeCheck: false },
 
-  components: [{ path: "~/components", pathPrefix: false }],
-
   app: {
     head: {
       title: "newt/ui — Vue",

@@ -11,3 +11,7 @@ apps/www/public/legacy/**
 /index.html
 .claude/**
 .skills/**
+
+# Symlink to AGENTS.md. oxfmt follows the link and rewrites it as a plain
+# file, which destroys the link; the target itself is formatted already.
+/CLAUDE.md

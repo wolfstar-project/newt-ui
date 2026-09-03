@@ -1,0 +1,458 @@
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+
+/*
+ * Auto-detection is off above, so every directory the scanner may walk is named
+ * here. The two registries live outside this app and both are scanned: a demo
+ * renders React or Vue depending on the framework switch.
+ */
+@source "../";
+@source "../../../www/registry";
+@source "../../../vue/app/lib/registry";
+
+/* ------------------------------------------------------------------ *
+ * (a) newt token bridge
+ *
+ * Every entry maps a Tailwind theme namespace onto a `--newt-*` CSS
+ * variable, which keeps the raw token contract (`var(--newt-brand)`)
+ * usable from plain CSS while Tailwind generates the utilities
+ * (`bg-newt-brand`, `rounded-md`, `shadow-elevation-high`, `ease-newt`,
+ * `duration-fast`, …). The registry components read both.
+ *
+ * Source of truth for the token values:
+ * packages/newt-ui/registry/html/tokens.css
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Surfaces */
+  --color-newt-bg-base: var(--newt-bg-base);
+  --color-newt-bg-surface: var(--newt-bg-surface);
+  --color-newt-bg-elevated: var(--newt-bg-elevated);
+  --color-newt-bg-floating: var(--newt-bg-floating);
+  --color-newt-bg-input: var(--newt-bg-input);
+  --color-newt-bg-hover: var(--newt-bg-hover);
+  --color-newt-bg-active: var(--newt-bg-active);
+  --color-newt-border: var(--newt-border);
+
+  /* Text */
+  --color-newt-text-primary: var(--newt-text-primary);
+  --color-newt-text-secondary: var(--newt-text-secondary);
+  --color-newt-text-muted: var(--newt-text-muted);
+  --color-newt-text-link: var(--newt-text-link);
+
+  /* Brand */
+  --color-newt-brand: var(--newt-brand);
+  --color-newt-brand-hover: var(--newt-brand-hover);
+  --color-newt-brand-active: var(--newt-brand-active);
+
+  /* Status */
+  --color-newt-online: var(--newt-online);
+  --color-newt-idle: var(--newt-idle);
+  --color-newt-dnd: var(--newt-dnd);
+  --color-newt-offline: var(--newt-offline);
+  --color-newt-danger: var(--newt-danger);
+  --color-newt-danger-hover: var(--newt-danger-hover);
+
+  /* Type */
+  --font-sans: var(--newt-font-sans);
+  --font-mono: var(--newt-font-mono);
+  --font-display: var(--newt-font-display);
+
+  /* Radius */
+  --radius-sm: var(--newt-radius-sm);
+  --radius-md: var(--newt-radius-md);
+  --radius-lg: var(--newt-radius-lg);
+  --radius-full: var(--newt-radius-full);
+
+  /* Shadows */
+  --shadow-elevation-low: var(--newt-shadow-elevation-low);
+  --shadow-elevation-high: var(--newt-shadow-elevation-high);
+
+  /* Motion */
+  --ease-newt: var(--newt-ease);
+  --transition-duration-fast: var(--newt-duration-fast);
+  --transition-duration-base: var(--newt-duration-base);
+}
+
+/* newt/ui design tokens — source of truth: packages/newt-ui/registry/html/tokens.css */
+@layer base {
+  :root {
+    /* Surfaces */
+    --newt-bg-base: #1e1f22;
+    --newt-bg-surface: #2b2d31;
+    --newt-bg-elevated: #313338;
+    --newt-bg-floating: #1e1f22;
+    --newt-bg-input: #1e1f22;
+    --newt-bg-hover: rgba(78, 80, 88, 0.4);
+    --newt-bg-active: rgba(78, 80, 88, 0.6);
+    --newt-border: #3f4147;
+
+    /* Text */
+    --newt-text-primary: #f2f3f5;
+    --newt-text-secondary: #b5bac1;
+    --newt-text-muted: #949ba4;
+    --newt-text-link: #00a8fc;
+
+    /* Brand */
+    --newt-brand: #5865f2;
+    --newt-brand-hover: #4752c4;
+    --newt-brand-active: #3c45a5;
+
+    /* Status */
+    --newt-online: #23a55a;
+    --newt-idle: #f0b232;
+    --newt-dnd: #f23f42;
+    --newt-offline: #80848e;
+    --newt-danger: #da373c;
+    --newt-danger-hover: #a12828;
+
+    /* Type */
+    --newt-font-sans:
+      "Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    --newt-font-mono:
+      "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --newt-font-display: "Inter", sans-serif;
+
+    /* Radius */
+    --newt-radius-sm: 4px;
+    --newt-radius-md: 8px;
+    --newt-radius-lg: 12px;
+    --newt-radius-full: 9999px;
+
+    /* Shadows */
+    --newt-shadow-elevation-low:
+      0 1px 0 rgba(0, 0, 0, 0.2), 0 1.5px 0 rgba(0, 0, 0, 0.05),
+      0 2px 0 rgba(0, 0, 0, 0.05);
+    --newt-shadow-elevation-high: 0 8px 16px rgba(0, 0, 0, 0.24);
+
+    /* Motion */
+    --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
+    --newt-duration-fast: 100ms;
+    --newt-duration-base: 150ms;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /*
+   * Tailwind v3 compatibility: v4's Preflight drops the implicit
+   * `border-color: theme(colors.gray.200)` and the `cursor: pointer` on
+   * buttons. Both are restored here so the registry components render exactly
+   * as they did under v3.
+   */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * (b) the site palette
+ *
+ * The chrome around a demo has its own names, but not its own colours:
+ * every one of them resolves to a `--newt-*` token, so the documentation
+ * and the components it documents are the same Discord-inspired system.
+ * The site is dark only — the token layer declares no light values, and
+ * a second palette invented here would not be the library's.
+ * ------------------------------------------------------------------ */
+:root {
+  /* surfaces, from the page up to the panels that sit on it */
+  --p-ground: var(--newt-bg-base);
+  --p-raised: var(--newt-bg-elevated);
+  --p-sunken: var(--newt-bg-surface);
+  --p-shed: var(--newt-bg-hover);
+  --p-reed: var(--newt-border);
+  --p-reed-lit: var(--newt-bg-active);
+
+  --p-weft: var(--newt-text-primary);
+  --p-weft-dim: var(--newt-text-secondary);
+  --p-weft-faint: var(--newt-text-muted);
+
+  --p-indigo: var(--newt-brand);
+  --p-indigo-wash: var(--newt-bg-hover);
+  --p-jade: var(--newt-online);
+  --p-madder: var(--newt-dnd);
+
+  --shadow-layer: var(--newt-shadow-elevation-high);
+
+  /*
+   * The two framework marks in their own colours, which is the one place on the
+   * site carrying a colour the palette does not own. A mark is somebody else's,
+   * and a reader recognises it by its colour or not at all.
+   */
+  --brand-react: #61dafb;
+  --brand-vue: #41b883;
+}
+
+/*
+ * The site ships ONE density. These are the comfortable values, and a control
+ * reads them rather than declaring sizes of its own.
+ */
+:root {
+  --ctl-h: 34px;
+  --cell-x: 14px;
+  --stack: 10px;
+  --ui-text: 14px;
+
+  /* motion comes from the token layer, so the chrome moves like a component */
+  --dur-instant: var(--newt-duration-fast);
+  --dur-local: var(--newt-duration-base);
+  --dur-overlay: 240ms;
+
+  --ease-beat: var(--newt-ease);
+  --ease-glide: var(--newt-ease);
+
+  /* every layer that leaves the flow declares its rank here */
+  --z-sticky: 10;
+  --z-panel: 20;
+  --z-modal: 50;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0ms;
+    --dur-local: 0ms;
+    --dur-overlay: 0ms;
+  }
+}
+
+@theme {
+  --font-ui: var(--newt-font-sans);
+  --font-data: var(--newt-font-mono);
+
+  --color-ground: var(--p-ground);
+  --color-raised: var(--p-raised);
+  --color-sunken: var(--p-sunken);
+  --color-shed: var(--p-shed);
+  --color-reed: var(--p-reed);
+  --color-reed-lit: var(--p-reed-lit);
+
+  --color-weft: var(--p-weft);
+  --color-weft-dim: var(--p-weft-dim);
+  --color-weft-faint: var(--p-weft-faint);
+
+  --color-indigo: var(--p-indigo);
+  --color-link: var(--newt-text-link);
+  --color-indigo-wash: var(--p-indigo-wash);
+  --color-jade: var(--p-jade);
+  --color-madder: var(--p-madder);
+
+  /*
+   * The reading column does not follow the interface: 15px body copy is a
+   * better article at every width than the 14px the controls take.
+   */
+  --text-prose: 15px;
+  --text-prose--line-height: 1.7;
+}
+
+/* ------------------------------------------------------------------ *
+ * (c) base rules and utilities
+ * ------------------------------------------------------------------ */
+
+/* Scrollbars, in the client's own idiom */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--newt-bg-active) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--newt-bg-active);
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--newt-text-muted);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 7rem;
+  }
+
+  body {
+    background-color: var(--color-ground);
+    color: var(--color-weft);
+    font-family: var(--font-ui);
+    font-size: var(--ui-text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--newt-text-link);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-indigo);
+    color: #fff;
+  }
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* a utility, so a state variant can dye the edge of a part the site does not own */
+@utility selvedge-on {
+  --selvedge: var(--color-indigo);
+}
+
+@layer components {
+  /*
+   * A demo brings the library's typography with it. The frame around it is
+   * built from the same tokens, so the two only differ where they should.
+   */
+  .newt-root {
+    font-family: var(--newt-font-sans);
+    color: var(--newt-text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* the hairline that closes the top bar against the page */
+  .reed-edge {
+    position: relative;
+  }
+
+  .reed-edge::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: var(--color-reed);
+  }
+
+  /* the leading edge of a column */
+  .warp-line {
+    position: relative;
+  }
+
+  .warp-line::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 1px;
+    background-color: var(--color-reed);
+  }
+
+  /* the brand glow the hero sits in, the one soft thing on the page */
+  .warp-field {
+    background-image: radial-gradient(
+      ellipse 80% 100% at 50% 0%,
+      color-mix(in srgb, var(--newt-brand) 22%, transparent),
+      transparent 70%
+    );
+  }
+
+  /* the line the hero rests on */
+  .reed-band {
+    background-color: var(--color-indigo);
+  }
+
+  /*
+   * The selvedge is the finished edge of a cloth. It marks a choice, which is
+   * why it is transparent until `selvedge-on` dyes it.
+   */
+  .selvedge {
+    position: relative;
+    --selvedge: transparent;
+  }
+
+  .selvedge::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 2px;
+    background-color: var(--selvedge);
+  }
+
+  /* the surface every site control shares */
+  .ctl {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid var(--color-reed);
+    background-color: var(--color-raised);
+    padding-inline: var(--cell-x);
+    color: var(--color-weft);
+    transition: background-color var(--dur-instant) var(--ease-beat);
+  }
+
+  .ctl:hover {
+    background-color: var(--color-shed);
+  }
+
+  /* every surface that leaves the flow draws the same edge and the same shadow */
+  .layer {
+    border: 1px solid var(--color-reed);
+    background-color: var(--color-raised);
+    box-shadow: var(--shadow-layer);
+  }
+
+  /*
+   * The frame every demo sits in, drawn once because two frameworks both draw
+   * it. The corner tick is the one mark the documentation signs a preview with.
+   */
+  .demo-frame {
+    position: relative;
+    display: flex;
+    max-width: 100%;
+    flex-direction: column;
+    border: 1px solid var(--color-reed);
+    background-color: var(--color-raised);
+  }
+
+  .demo-frame::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid var(--color-indigo);
+    border-left: 1px solid var(--color-indigo);
+  }
+
+  .demo-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.75rem 1.5rem 1.5rem;
+  }
+
+  .demo-caption {
+    border-top: 1px solid var(--color-reed);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-data);
+    font-size: 12px;
+    color: var(--color-weft-faint);
+  }
+}

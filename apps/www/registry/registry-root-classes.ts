@@ -47,7 +47,7 @@ const rootClassEntries = [
 ] as const
 
 // Component names are looked up by arbitrary route params (see
-// app/docs/components/[name]/page.tsx), so this stays a genuine open
+// apps/docs/src/pages/ComponentPage.tsx), so this stays a genuine open
 // dictionary rather than a closed, literal-keyed type.
 export const rootClasses: Record<string, string> =
   Object.fromEntries(rootClassEntries)

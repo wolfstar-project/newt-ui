@@ -13,11 +13,15 @@
       "entry": ["scripts/*.{mjs,ts}"],
       "project": ["scripts/**/*.{mjs,ts}"],
     },
+    "apps/docs": {
+      "entry": ["src/main.tsx", "scripts/*.mjs", "vite.config.ts"],
+      // `.css` is in `project` so knip follows `src/styles/site.css`, which is
+      // where `tailwindcss` and `tw-animate-css` are imported from.
+      "project": ["src/**/*.{ts,tsx,css}", "scripts/**/*.mjs"],
+    },
     "apps/www": {
       "entry": [
         "app/**/*.{ts,tsx}",
-        "components/**/*.tsx",
-        "mdx-components.tsx",
         "registry/index.ts",
         "registry/default/**/*.{ts,tsx}",
         "scripts/build-registry.mts",
@@ -27,12 +31,10 @@
     },
     "apps/vue": {
       "entry": [
-        "app/pages/**/*.vue",
-        "app/components/**/*.vue",
+        "app/app.vue",
         "app/lib/registry/index.ts",
         "app/lib/registry/default/**/*.{ts,vue}",
-        // Nuxt auto-imports these directories; nothing imports them explicitly.
-        "app/composables/**/*.ts",
+        // Nuxt auto-imports this directory; nothing imports it explicitly.
         "app/utils/**/*.ts",
         "scripts/build-registry.mts",
       ],

@@ -1,6 +1,6 @@
 # newt-ui-vue
 
-CLI for [newt/ui](https://wolfstar-project.github.io/newt-ui) — Discord-native UI components for Vue & Nuxt, distributed shadcn-style: the source is copied into your project, you own it.
+CLI for [newt/ui](https://newtui.dev) — Discord-native UI components for Vue & Nuxt, distributed shadcn-style: the source is copied into your project, you own it.
 
 ```bash
 npx @newtui/vue init          # writes components.json, lib/utils.ts, appends --newt-* tokens to your CSS
@@ -61,7 +61,7 @@ installed with the package manager detected from your lockfile
 
 ## Registry
 
-Components are fetched from `https://wolfstar-project.github.io/newt-ui/vue/r/styles/<style>/<name>.json`.
+Components are fetched from `https://newtui.dev/vue/r/styles/<style>/<name>.json`.
 Override with `--registry <url>` or `NEWT_REGISTRY_URL`, or set `"registry"` in `components.json`.
 
 ## Nuxt
