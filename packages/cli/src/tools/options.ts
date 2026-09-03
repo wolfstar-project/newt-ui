@@ -53,13 +53,24 @@ export const FLAG_ALIASES = {
 /** The shape `mri` produces for our flag set (values are unvalidated). */
 export type Flags = Partial<Record<BooleanFlag | StringFlag, string | boolean>>
 
-/** npm packages `init` installs into the user's project. */
-export const PROJECT_DEPENDENCIES = [
-  "clsx",
-  "tailwind-merge",
+/*
+ * npm packages `init` installs into the user's project, chosen by the Tailwind
+ * major it detected. `cn` is one compiled implementation of what `clsx` and
+ * `tailwind-merge` do together, but its conflict tables are built for Tailwind
+ * v4 only, so a v3 project keeps the pair that understands v3 class names.
+ */
+const SHARED_DEPENDENCIES = [
   "class-variance-authority",
   "tailwindcss-animate",
 ] as const
+
+export const PROJECT_DEPENDENCIES_V3 = [
+  "clsx",
+  "tailwind-merge",
+  ...SHARED_DEPENDENCIES,
+] as const
+
+export const PROJECT_DEPENDENCIES_V4 = ["cn", ...SHARED_DEPENDENCIES] as const
 
 /** Nuxt config files `init` looks for when detecting the framework. */
 export const NUXT_CONFIG_CANDIDATES = [

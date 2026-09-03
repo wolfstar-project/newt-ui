@@ -30,7 +30,8 @@ import { highlighter, logger } from "../tools/logger.js"
 import {
   CSS_CANDIDATES,
   NUXT_CONFIG_CANDIDATES,
-  PROJECT_DEPENDENCIES,
+  PROJECT_DEPENDENCIES_V3,
+  PROJECT_DEPENDENCIES_V4,
   TAILWIND_CONFIG_CANDIDATES,
   VITE_CONFIG_CANDIDATES,
 } from "../tools/options.js"
@@ -59,7 +60,16 @@ export interface InitOptions {
   registry?: string
 }
 
-const UTILS_SOURCE = `import { type ClassValue, clsx } from "clsx"
+/*
+ * `cn` merges Tailwind classes in one compiled pass, but its tables are built
+ * for Tailwind v4. A v3 project gets the `clsx` + `tailwind-merge` pair that
+ * still understands v3 class names, so `init` writes whichever one matches the
+ * major it detected.
+ */
+const UTILS_SOURCE_V4 = `export { cn } from "cn"
+`
+
+const UTILS_SOURCE_V3 = `import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -196,6 +206,10 @@ async function runInit(
 
   const config = await resolveConfigPaths(cwd, rawConfig)
 
+  /* read before anything is written: it decides both the utils source and the deps */
+  const cssPath = config.resolvedPaths.tailwindCss
+  const major = await detectTailwindMajor(cwd, cssPath)
+
   // lib/utils.ts
   const utilsSpinner = spinner()
   utilsSpinner.start("Writing lib/utils...")
@@ -206,12 +220,15 @@ async function runInit(
       `${relativePath(cwd, utilsPath)} already exists, skipped.`
     )
   } else {
-    const source = config.typescript
-      ? UTILS_SOURCE
-      : UTILS_SOURCE.replace("type ClassValue, ", "").replace(
-          ": ClassValue[]",
-          ""
-        )
+    const source =
+      major === 4
+        ? UTILS_SOURCE_V4
+        : config.typescript
+          ? UTILS_SOURCE_V3
+          : UTILS_SOURCE_V3.replace("type ClassValue, ", "").replace(
+              ": ClassValue[]",
+              ""
+            )
     await writeFileAt(utilsPath, source)
     utilsSpinner.stop(
       `Wrote ${highlighter.info(relativePath(cwd, utilsPath))}.`
@@ -221,9 +238,7 @@ async function runInit(
   // tokens -> global css
   const cssSpinner = spinner()
   cssSpinner.start("Adding newt/ui design tokens to CSS...")
-  const cssPath = config.resolvedPaths.tailwindCss
   const existingCss = (await readFileIfExists(cssPath)) ?? ""
-  const major = await detectTailwindMajor(cwd, cssPath)
   const theme = await fetchTheme(options.registry, config.style)
   if (existingCss.includes(TOKENS_MARKER)) {
     cssSpinner.stop(
@@ -243,7 +258,10 @@ async function runInit(
 
   // dependencies
   if (!options.skipInstall) {
-    await installDependencies(cwd, [...PROJECT_DEPENDENCIES])
+    await installDependencies(
+      cwd,
+      major === 4 ? [...PROJECT_DEPENDENCIES_V4] : [...PROJECT_DEPENDENCIES_V3]
+    )
     logger.success("Installed dependencies.")
   }
 

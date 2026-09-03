@@ -26,7 +26,7 @@ ${SITE.vueCli} add modal badge`
 
 const REACT_FILES = `components.json                 init — the config file
 app/globals.css                 init — the --newt-* token block
-lib/utils.ts                    init — cn(), clsx + tailwind-merge
+lib/utils.ts                    init — cn(), from the cn package
 
 components/ui/button.tsx        add button
 components/ui/modal.tsx         add modal badge
@@ -34,7 +34,7 @@ components/ui/badge.tsx`
 
 const VUE_FILES = `components.json                     init — the config file
 src/assets/css/tailwind.css         init — the --newt-* token block
-lib/utils.ts                        init — cn(), clsx + tailwind-merge
+lib/utils.ts                        init — cn(), from the cn package
 
 components/ui/button/Button.vue     add button
 components/ui/button/index.ts
@@ -179,11 +179,12 @@ export function Installation() {
             />
           </li>
           <li>
-            Four npm packages, which <InlineCode>init</InlineCode> installs for
-            you: <InlineCode>clsx</InlineCode>,{" "}
-            <InlineCode>tailwind-merge</InlineCode>,{" "}
-            <InlineCode>class-variance-authority</InlineCode> and{" "}
-            <InlineCode>tailwindcss-animate</InlineCode>.
+            The npm packages <InlineCode>init</InlineCode> installs for you:{" "}
+            <InlineCode>class-variance-authority</InlineCode>,{" "}
+            <InlineCode>tailwindcss-animate</InlineCode>, and the class merger
+            that matches your Tailwind major — <InlineCode>cn</InlineCode> on
+            v4, <InlineCode>clsx</InlineCode> with{" "}
+            <InlineCode>tailwind-merge</InlineCode> on v3.
           </li>
         </List>
         <Note>
@@ -200,11 +201,12 @@ export function Installation() {
           <InlineCode>components.json</InlineCode> at the root of your project,
           which is the same file shadcn reads, so a project using both CLIs
           keeps one config and not two. A <InlineCode>cn</InlineCode> helper at
-          the path your utils alias names, which is{" "}
+          the path your utils alias names — a re-export of the{" "}
+          <InlineCode>cn</InlineCode> package on Tailwind v4, and{" "}
           <InlineCode>clsx</InlineCode> passed through{" "}
-          <InlineCode>tailwind-merge</InlineCode>. And the{" "}
-          <InlineCode>--newt-*</InlineCode> token block, appended to the global
-          stylesheet it found.
+          <InlineCode>tailwind-merge</InlineCode> on v3, whose tables still
+          understand v3 class names. And the <InlineCode>--newt-*</InlineCode>{" "}
+          token block, appended to the global stylesheet it found.
         </P>
         <P>
           <FrameworkText

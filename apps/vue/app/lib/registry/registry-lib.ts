@@ -4,7 +4,7 @@ export const lib: Registry = [
   {
     name: "utils",
     type: "registry:lib",
-    dependencies: ["clsx", "tailwind-merge"],
+    dependencies: ["cn"],
     files: [{ path: "lib/utils.ts", type: "registry:lib" }],
   },
 ]
