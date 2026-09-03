@@ -5,6 +5,7 @@ import { Footer } from "./Footer"
 import { Header } from "./Header"
 import { Link, usePath } from "./router"
 import { Sidebar } from "./Sidebar"
+import { Toc } from "./Toc"
 
 const EYEBROW =
   "font-data text-[11px] tracking-[0.13em] text-weft-faint uppercase"
@@ -97,18 +98,28 @@ export function Shell({ children, wide = false }: ShellProps) {
       {wide ? (
         <main>{children}</main>
       ) : (
-        <div className="mx-auto flex max-w-320 gap-12 px-4 sm:px-6">
-          <div className="hidden w-56 shrink-0 lg:block">
-            <div className="sticky top-15">
-              <div className="max-h-[calc(100dvh-3.75rem)] overflow-y-auto">
-                <Sidebar className="py-10 pr-2" />
-              </div>
+        /*
+         * Three columns: the navigation, the page, and the index of the page.
+         * The outer two are sticky and scroll on their own, so only the middle
+         * one moves with the document.
+         */
+        <div className="mx-auto flex max-w-320 items-start gap-10 px-4 sm:px-6">
+          <div className="sticky top-15 hidden w-64 shrink-0 lg:block">
+            <div className="max-h-[calc(100dvh-3.75rem)] overflow-y-auto py-10 pr-2">
+              <Sidebar />
             </div>
           </div>
-          <main className="min-w-0 flex-1 py-12">
+
+          <main className="min-w-0 flex-1 py-12 xl:max-w-[46rem]">
             {children}
             <Pager />
           </main>
+
+          <div className="sticky top-15 hidden w-60 shrink-0 xl:block">
+            <div className="max-h-[calc(100dvh-3.75rem)] overflow-y-auto py-12 pl-2">
+              <Toc />
+            </div>
+          </div>
         </div>
       )}
 
