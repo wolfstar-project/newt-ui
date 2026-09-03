@@ -1,4 +1,18 @@
-# @wolfstar/newt-ui-vue
+# @newtui/vue
+
+## 1.0.0
+
+### Major Changes
+
+- 81c01a0: Rename the published packages to the `@newtui` npm scope:
+
+  - `@wolfstar/newt-ui` is now `@newtui/react`
+  - `@wolfstar/newt-ui-vue` is now `@newtui/vue`
+  - `@wolfstar/nuxt-newt-ui` is now `@newtui/nuxt`
+  - the planned HTML package is now `@newtui/html`
+
+  Update your dependencies and imports to the new names. The CLI binaries
+  (`newt-ui`, `newt-ui-vue`, `newt-ui-html`) are unchanged.
 
 ## 0.3.0
 
