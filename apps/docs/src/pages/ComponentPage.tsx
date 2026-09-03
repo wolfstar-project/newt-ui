@@ -172,10 +172,12 @@ function Article({ meta }: MetaProps) {
         <div className="flex flex-col gap-3">
           <FrameworkBlock
             shell
+            lang="bash"
             react={`${SITE.reactCli} ${install}`}
             vue={`${SITE.vueCli} ${install}`}
           />
           <FrameworkBlock
+            lang="typescript"
             react={importLine([pascalCase(meta.name)], directory)}
             vue={importLine(vueExports(meta), directory)}
           />

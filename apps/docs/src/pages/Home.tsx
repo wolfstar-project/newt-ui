@@ -130,6 +130,7 @@ export function Home() {
           </div>
           <FrameworkBlock
             shell
+            lang="bash"
             react={`${SITE.reactCli} init\n${SITE.reactCli} add button`}
             vue={`${SITE.vueCli} init\n${SITE.vueCli} add button`}
             className="max-w-sm"

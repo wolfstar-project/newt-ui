@@ -194,7 +194,7 @@ export function Installation() {
       </Section>
 
       <Section id="init" title="Run init once">
-        <FrameworkBlock shell react={INIT_REACT} vue={INIT_VUE} />
+        <FrameworkBlock shell lang="bash" react={INIT_REACT} vue={INIT_VUE} />
         <P>
           It asks a handful of questions and then writes three things.{" "}
           <InlineCode>components.json</InlineCode> at the root of your project,
@@ -257,7 +257,7 @@ export function Installation() {
       </Section>
 
       <Section id="add" title="Then add what you need">
-        <FrameworkBlock shell react={ADD_REACT} vue={ADD_VUE} />
+        <FrameworkBlock shell lang="bash" react={ADD_REACT} vue={ADD_VUE} />
         <P>
           Registry dependencies are resolved before anything is written, so you
           name what you want and get what it is built out of. The modal above
@@ -335,7 +335,11 @@ export function Installation() {
           stylesheet <InlineCode>init</InlineCode> wrote into is actually
           loaded:
         </P>
-        <FrameworkBlock react={TOKENS_REACT} vue={TOKENS_VUE} />
+        <FrameworkBlock
+          lang="typescript"
+          react={TOKENS_REACT}
+          vue={TOKENS_VUE}
+        />
         <Note>
           Overriding a token is a one-line change in your own stylesheet, and it
           reaches every component at once. Hardcoding a hex that already exists
@@ -355,7 +359,7 @@ export function Installation() {
             to your CSS so the variables are there before your own styles run.
             It needs Nuxt 4.
           </P>
-          <CodeBlock code={NUXT_CONFIG} />
+          <CodeBlock code={NUXT_CONFIG} lang="typescript" />
           <P>
             The three options are all optional. <InlineCode>prefix</InlineCode>{" "}
             namespaces the auto-imported names if a bare{" "}
@@ -376,7 +380,7 @@ export function Installation() {
             Router project the tokens land in the stylesheet your layout already
             imports. The class goes on the body:
           </P>
-          <CodeBlock code={NEXT_LAYOUT} />
+          <CodeBlock code={NEXT_LAYOUT} lang="tsx" />
           <P>
             Nine of the components ship with a{" "}
             <InlineCode>&quot;use client&quot;</InlineCode> directive — the
@@ -398,7 +402,7 @@ export function Installation() {
           <InlineCode>--legacy</InlineCode> — the same program is also exposed
           as the <InlineCode>newt-ui-html</InlineCode> binary.
         </P>
-        <CodeBlock shell code={HTML_CLI} />
+        <CodeBlock shell lang="bash" code={HTML_CLI} />
         <P>
           <InlineCode>init</InlineCode> writes{" "}
           <InlineCode>newt-ui.json</InlineCode> and copies{" "}
@@ -410,7 +414,7 @@ export function Installation() {
           <InlineCode>components/ui</InlineCode>, following the same dependency
           links as the registry. The HTML file is the markup to copy:
         </P>
-        <CodeBlock code={HTML_MARKUP} />
+        <CodeBlock code={HTML_MARKUP} lang="html" />
         <P>
           These are local files served by your own site. There is no CDN to
           point at, which is the point: nothing is fetched at runtime and

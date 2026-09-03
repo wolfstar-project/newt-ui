@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react"
 
 import { cn } from "../lib/utils"
+import { tokenizeLines, type Lang } from "./highlight"
 import { useSettings } from "./settings"
 
 /** the corner tick's colour: the framework a block is written in, or the brand when it is neither */
@@ -16,17 +17,37 @@ interface CodeBlockProps {
   readonly code: string
   /** a shell block prints a prompt the reader must not carry into their terminal */
   readonly shell?: boolean
+  /** a listing that is not source in this language stays plain, unhighlighted text */
+  readonly lang?: Lang
   readonly accent?: Accent
   readonly className?: string
 }
 
+type Lines = Awaited<ReturnType<typeof tokenizeLines>>
+
 export function CodeBlock({
   code,
   shell = false,
+  lang,
   accent = "brand",
   className,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
+  const [lines, setLines] = useState<Lines | undefined>(undefined)
+
+  useEffect(() => {
+    if (!lang) {
+      setLines(undefined)
+      return undefined
+    }
+    let live = true
+    void tokenizeLines(code, lang).then((result) => {
+      if (live) setLines(result)
+    })
+    return () => {
+      live = false
+    }
+  }, [code, lang])
 
   useEffect(() => {
     if (!copied) return undefined
@@ -61,15 +82,22 @@ export function CodeBlock({
         )}
       />
       <pre className="overflow-x-auto p-4 pt-9 font-data text-[13px] leading-relaxed text-weft">
-        {shell
-          ? code.split("\n").map((line, index) => (
-              <span key={`${index}:${line}`} className="block">
-                {/* outside the copied range, so a selection yields the command alone */}
-                <span className="text-weft-faint select-none">$ </span>
-                {line}
+        {code.split("\n").map((line, index) => (
+          <span key={`${index}:${line}`} className="block">
+            {shell && (
+              /* outside the copied range, so a selection yields the command alone */
+              <span className="text-weft-faint select-none">$ </span>
+            )}
+            {lines?.[index]?.map((token, tokenIndex) => (
+              <span
+                key={`${tokenIndex}:${token.content}`}
+                style={{ color: token.color }}
+              >
+                {token.content}
               </span>
-            ))
-          : code}
+            )) ?? line}
+          </span>
+        ))}
       </pre>
       <button
         type="button"
@@ -92,6 +120,7 @@ interface FrameworkBlockProps {
   readonly react: string
   readonly vue: string
   readonly shell?: boolean
+  readonly lang?: Lang
   readonly className?: string
 }
 
@@ -100,6 +129,7 @@ export function FrameworkBlock({
   react,
   vue,
   shell,
+  lang,
   className,
 }: FrameworkBlockProps) {
   const { framework } = useSettings()
@@ -107,6 +137,7 @@ export function FrameworkBlock({
     <CodeBlock
       code={framework === "react" ? react : vue}
       shell={shell}
+      lang={lang}
       accent={framework}
       className={className}
     />
