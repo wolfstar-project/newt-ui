@@ -21,11 +21,11 @@ apps/www/__registry__/{index.tsx,demos.tsx} (demos: static imports, so docs prer
 apps/vue/app/lib/registry/registry-ui.ts    (Vue index)
 apps/vue/app/lib/registry/registry-examples.ts
 apps/vue/app/__registry__/index.ts
-packages/newt-ui/registry.json              (shadcn registry schema)
-packages/cli/registry.json
+packages/newtui/registry.react.json         (shadcn registry schema)
+packages/newtui/registry.vue.json
         |  apps/*/scripts/build-registry.mts
         v
-apps/*/public/r/{index.json,styles/<style>/<name>.json}   <- what the CLIs fetch
+apps/*/public/r/{index.json,styles/<style>/<name>.json}   <- what the CLI fetches
 ```
 
 The generator also warns about missing files. A `missing:` line is a failure,
@@ -37,10 +37,16 @@ not a note.
   `dependencies`, `registryDependencies`, `vueFiles`, `reactDemo`, `vueDemo`)
   and putting it in a category in `registry-categories.ts` (both copies).
 - `registryDependencies` names other newt/ui components and must be resolvable
-  recursively by the CLIs. `dependencies` names npm packages only.
+  recursively by the CLI. `dependencies` names npm packages only.
+- Every published item carries `framework: "react" | "vue"`, stamped by the
+  app's `build-registry.mts` (React items come from `apps/www`, Vue items from
+  `apps/vue`). The field is part of `registryItemSchema`, so adding a field
+  means editing all four copies of that schema — `apps/www/registry`,
+  `apps/vue/app/lib/registry`, and `packages/newtui/src/tools` — or the
+  build-time `parse` strips it before the CLI ever sees it.
 - Never hand-edit a generated file. Regenerate.
 - Token values live once, in `apps/www/registry/registry-tokens.ts`, mirroring
-  `packages/newt-ui/registry/html/tokens.css`. Changing a colour means
+  `packages/newtui/registry/html/tokens.css`. Changing a colour means
   changing those two, then regenerating.
 
 ## Tailwind v3 and v4 must both work

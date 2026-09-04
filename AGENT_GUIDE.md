@@ -19,7 +19,7 @@ shadcn-vue (Vue). Every component exists in three forms:
 
 | Form                             | Location                                                                                                                             | Notes                                                              |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| HTML/CSS (canonical visual spec) | `packages/newt-ui/registry/html/components/<name>.{css,html,js}`                                                                     | Original sources. `tokens.css` lives next to them.                 |
+| HTML/CSS (canonical visual spec) | `packages/newtui/registry/html/components/<name>.{css,html,js}`                                                                      | Original sources. `tokens.css` lives next to them.                 |
 | React                            | `apps/www/registry/default/ui/<name>.tsx` + `example/<name>-demo.tsx` + `content/docs/components/<name>.mdx`                         | `cva` + `cn` + Tailwind utilities mapped to `--newt-*` tokens.     |
 | Vue                              | `apps/vue/src/lib/registry/default/ui/<name>/{Pascal.vue,index.ts}` + `example/PascalDemo.vue` + `content/docs/components/<name>.md` | SFC `<script setup lang="ts">`, variants exported from `index.ts`. |
 
@@ -44,7 +44,7 @@ plus framework wrappers (React first). Everything is built from a single token
 file (`tokens.css`) so any component automatically matches Discord's actual
 client surfaces, colors, and motion.
 
-Source of truth for tokens: `packages/newt-ui/registry/html/tokens.css`, `:root` block (mirrored into `apps/www/styles/globals.css` and `apps/vue/src/assets/css/tailwind.css`). Never hardcode a
+Source of truth for tokens: `packages/newtui/registry/html/tokens.css`, `:root` block (mirrored into `apps/www/styles/globals.css` and `apps/vue/src/assets/css/tailwind.css`). Never hardcode a
 color, radius, font, or shadow — reference a `--newt-*` variable. If a value you
 need doesn't exist as a token, propose adding it to `:root` rather than inlining
 a raw hex code.
@@ -180,7 +180,7 @@ showing a channel's name and topic description, e.g. for a bot's dashboard
 that mirrors a Discord channel view).
 
 **Step 1 — Confirm it doesn't already exist.** Check `index.html` section IDs
-and `packages/newt-ui/registry/html/components/` for `.newt-channel-topic*`. Not found → proceed.
+and `packages/newtui/registry/html/components/` for `.newt-channel-topic*`. Not found → proceed.
 
 **Step 2 — Pick the root class.** `.newt-channel-topic`. Sub-elements:
 `.newt-channel-topic__icon`, `.newt-channel-topic__name`,

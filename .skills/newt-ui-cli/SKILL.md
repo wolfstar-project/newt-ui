@@ -1,15 +1,30 @@
 ---
 name: newt-ui-cli
-description: Use when adding or changing newt-ui / newt-ui-vue CLI commands, flags, prompts, output, exit codes, or file writing.
+description: Use when adding or changing newtui CLI commands, flags, prompts, output, exit codes, or file writing.
 ---
 
-# newt/ui CLIs
+# newt/ui CLI
 
-Two published CLIs with the same command surface: `newt-ui` (React,
-`packages/newt-ui`) and `newt-ui-vue` (Vue, `packages/cli`), plus the legacy
-`newt-ui-html` bin that copies the raw HTML/CSS registry. They follow the
-`create-http-framework` layout: `mri` for parsing, `@clack/prompts` for
-interaction, `tsdown` for the build.
+One published CLI, `newtui` (`packages/newtui`), serving React and Vue from a
+single command surface, plus the legacy `newtui-html` bin that copies the raw
+HTML/CSS registry. `packages/newt-ui` (`@newtui/react`) and `packages/cli`
+(`@newtui/vue`) are deprecation wrappers that forward to it and hold no logic.
+It follows the `create-http-framework` layout: `mri` for parsing,
+`@clack/prompts` for interaction, `tsdown` for the build.
+
+## Framework dispatch
+
+`components.json` carries `framework: "react" | "vue"`, written by `init` from
+detection or `--framework`, and read back by every other command. Vue projects
+also carry `bundler: "nuxt" | "vite"`. Behaviour that differs between the two
+frameworks — registry base url, import rewriting, write targets, `"use client"`
+versus `lang="ts"` stripping — branches on that one field, never on a guess at
+the call site.
+
+A `components.json` written by either old CLI is migrated on read
+(`migrateRawConfig` in `config.ts`): the old Vue `framework: "nuxt" | "vite"`
+becomes `bundler`, and the old React `tsx` becomes `typescript`. Any new
+compatibility shim belongs there, not spread across the commands.
 
 ## Layout
 
@@ -44,15 +59,15 @@ interaction, `tsdown` for the build.
 - React writes `ui/<name>.tsx`. Vue writes a directory
   `ui/<name>/{Component.vue,index.ts}` — one component per file, plus the
   barrel that exports the cva variants.
-- The two CLIs stay independent copies. Do not factor shared code into a
-  third package.
 
 ## Adding a command
 
 1. Add it to `COMMANDS` in `options.ts` with its flags.
 2. Implement it in `src/commands/<name>.ts`.
-3. Add it to `printHelp()` and to the README of the package.
+3. Add it to `printHelp()`, to the package README, and to the flag list on
+   the docs Installation page.
 4. Verify interactive and non-interactive paths.
-5. Build (`pnpm --filter <pkg> build`) and smoke-test the built `dist/index.js`
-   against a local registry — serve `apps/*/public` over HTTP and run the real
-   command in a scratch directory. Do not claim a CLI works without doing this.
+5. Build (`pnpm --filter newtui build`) and smoke-test the built
+   `dist/index.js` against a local registry — serve `apps/www/public` and
+   `apps/vue/public` over HTTP and run the real command in a scratch directory,
+   once per framework. Do not claim the CLI works without doing this.

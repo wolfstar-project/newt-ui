@@ -1,5 +1,5 @@
 /**
- * Static option tables for the `newt-ui-vue` CLI.
+ * Static option tables for the `newtui` CLI.
  *
  * Everything here is declared `as const` so the derived union types stay in
  * sync with the values the argv parser and the commands actually accept.
@@ -11,14 +11,25 @@ export type CommandName = (typeof COMMANDS)[number]
 export const PACKAGE_MANAGERS = ["npm", "yarn", "pnpm", "bun"] as const
 export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
 
-export const FRAMEWORKS = ["nuxt", "vite"] as const
+/** The UI framework a project targets, and the key registry items carry. */
+export const FRAMEWORKS = ["react", "vue"] as const
 export type FrameworkName = (typeof FRAMEWORKS)[number]
+
+/**
+ * The build tool a Vue project uses. Only Vue projects need this — it decides
+ * which stylesheet `init` looks for and which setup instructions it prints.
+ * Earlier releases of the Vue CLI stored these values under `framework`;
+ * `config.ts` migrates such a `components.json` on read.
+ */
+export const BUNDLERS = ["nuxt", "vite"] as const
+export type BundlerName = (typeof BUNDLERS)[number]
 
 export const BOOLEAN_FLAGS = [
   "all",
   "defaults",
   "help",
   "json",
+  "legacy",
   "overwrite",
   "skip-install",
   "version",
@@ -27,6 +38,7 @@ export const BOOLEAN_FLAGS = [
 export type BooleanFlag = (typeof BOOLEAN_FLAGS)[number]
 
 export const STRING_FLAGS = [
+  "bundler",
   "css",
   "cwd",
   "framework",
@@ -38,6 +50,7 @@ export type StringFlag = (typeof STRING_FLAGS)[number]
 
 export const FLAG_ALIASES = {
   a: "all",
+  b: "bundler",
   c: "cwd",
   d: "defaults",
   f: "framework",
@@ -72,22 +85,37 @@ export const PROJECT_DEPENDENCIES_V3 = [
 
 export const PROJECT_DEPENDENCIES_V4 = ["cn", ...SHARED_DEPENDENCIES] as const
 
-/** Nuxt config files `init` looks for when detecting the framework. */
+/** Nuxt config files `init` looks for when detecting a Vue project's bundler. */
 export const NUXT_CONFIG_CANDIDATES = [
   "nuxt.config.ts",
   "nuxt.config.js",
   "nuxt.config.mjs",
 ] as const
 
-/** Vite config files `init` looks for when detecting the framework. */
+/** Vite config files `init` looks for when detecting a Vue project's bundler. */
 export const VITE_CONFIG_CANDIDATES = [
   "vite.config.ts",
   "vite.config.js",
   "vite.config.mjs",
 ] as const
 
-/** Global stylesheets `init` looks for, per framework. */
+/** Next.js config files `init` looks for when detecting a React project. */
+export const NEXT_CONFIG_CANDIDATES = [
+  "next.config.ts",
+  "next.config.js",
+  "next.config.mjs",
+] as const
+
+/** Global stylesheets `init` looks for, per framework (Vue splits by bundler). */
 export const CSS_CANDIDATES = {
+  react: [
+    "app/globals.css",
+    "src/app/globals.css",
+    "styles/globals.css",
+    "src/styles/globals.css",
+    "src/index.css",
+    "src/app.css",
+  ],
   nuxt: [
     "src/assets/css/tailwind.css",
     "assets/css/tailwind.css",
@@ -100,7 +128,7 @@ export const CSS_CANDIDATES = {
     "src/style.css",
     "src/index.css",
   ],
-} as const satisfies Record<FrameworkName, readonly string[]>
+} as const satisfies Record<"react" | BundlerName, readonly string[]>
 
 /** Tailwind config files `init` looks for, in order of preference. */
 export const TAILWIND_CONFIG_CANDIDATES = [
@@ -118,6 +146,10 @@ export function isFrameworkName(
   value: string | undefined
 ): value is FrameworkName {
   return FRAMEWORKS.some((framework) => framework === value)
+}
+
+export function isBundlerName(value: string | undefined): value is BundlerName {
+  return BUNDLERS.some((bundler) => bundler === value)
 }
 
 /** Read a flag that expects a value, ignoring `--flag` used without one. */

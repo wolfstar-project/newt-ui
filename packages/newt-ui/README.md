@@ -1,31 +1,12 @@
-# newt-ui
+# @newtui/react
 
-CLI for [newt/ui](https://newtui.dev) — Discord-native UI components for React, distributed shadcn-style: the source is copied into your project, you own it.
+> **Deprecated.** The React and Vue CLIs were merged into a single unscoped package: [`newtui`](https://www.npmjs.com/package/newtui).
 
-```bash
-npx @newtui/react init          # writes components.json, lib/utils.ts, appends --newt-* tokens to your CSS
-npx @newtui/react add button    # copies components + resolves registryDependencies + installs npm deps
-npx @newtui/react list          # lists registry items
-npx @newtui/react diff button   # compares local files with the registry
-```
-
-## Registry
-
-Components are fetched from `https://newtui.dev/r/styles/<style>/<name>.json`.
-Override with `--registry <url>` or `NEWT_REGISTRY_URL`, or set `"registry"` in `components.json`.
-
-## Legacy HTML/CSS registry
-
-The original framework-less HTML/CSS CLI is still shipped:
+This package now only ships a wrapper that forwards to `newtui`, so existing scripts keep working. It will be removed in the next major.
 
 ```bash
-npx @newtui/react --legacy init
-npx @newtui/react --legacy add button   # same thing
+npx newtui init      # instead of npx @newtui/react init
+npx newtui add button
 ```
 
-## Development
-
-```bash
-pnpm build       # tsup -> dist/index.js
-pnpm typecheck   # tsc --noEmit
-```
+`newtui` detects React projects and records `framework: "react"` in `components.json`. An existing config written by this CLI is migrated automatically — see the [`newtui` README](../newtui/README.md).

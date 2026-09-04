@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* newt/ui design tokens — source of truth: packages/newt-ui/registry/html/tokens.css */
+/* newt/ui design tokens — source of truth: packages/newtui/registry/html/tokens.css */
 @layer base {
   :root {
     /* Surfaces */

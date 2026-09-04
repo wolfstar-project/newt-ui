@@ -43,8 +43,9 @@ apps/
     app/assets/css/main.css Tailwind v4 (`@theme`) + --newt-* tokens
     scripts/build-registry.mts  Emits public/r for the Vue CLI
 packages/
-  newt-ui/                  `@newtui/react` CLI (React) + registry/html (original HTML/CSS sources, tokens.css)
-  cli/                      `@newtui/vue` CLI (Vue)
+  newtui/                   `newtui` CLI (React + Vue) + registry/html (original HTML/CSS sources, tokens.css)
+  newt-ui/                  `@newtui/react` deprecation wrapper around `newtui`
+  cli/                      `@newtui/vue` deprecation wrapper around `newtui`
   module/                   `@newtui/nuxt` Nuxt module
 templates/
   next-template/            Next.js starter preconfigured with newt/ui
@@ -56,8 +57,8 @@ templates/
 ### React
 
 ```bash
-npx @newtui/react@latest init
-npx @newtui/react@latest add button embed status-indicator
+npx newtui@latest init
+npx newtui@latest add button embed status-indicator
 ```
 
 ```tsx
@@ -69,8 +70,8 @@ import { Button } from "@/components/ui/button"
 ### Vue / Nuxt
 
 ```bash
-npx @newtui/vue@latest init
-npx @newtui/vue@latest add button embed status-indicator
+npx newtui@latest init
+npx newtui@latest add button embed status-indicator
 ```
 
 ```vue
@@ -86,8 +87,8 @@ import { Button } from "@/components/ui/button"
 ### Plain HTML / CSS
 
 ```bash
-npx @newtui/react --legacy init
-npx @newtui/react --legacy add button embed
+npx newtui --legacy init
+npx newtui --legacy add button embed
 ```
 
 or via CDN:
@@ -95,13 +96,17 @@ or via CDN:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@newtui/react@latest/registry/html/tokens.css"
+  href="https://cdn.jsdelivr.net/npm/newtui@latest/registry/html/tokens.css"
 />
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@newtui/react@latest/registry/html/components/button.css"
+  href="https://cdn.jsdelivr.net/npm/newtui@latest/registry/html/components/button.css"
 />
 ```
+
+One CLI serves both frameworks: `init` detects React or Vue and records the
+result as `framework` in `components.json`, which every later command reads
+back. Pass `--framework react|vue` to override it.
 
 Detailed guides live on the documentation site (`apps/docs`), which serves the
 same installation page for React and Vue behind a framework switcher — see
@@ -109,7 +114,7 @@ same installation page for React and Vue behind a framework switcher — see
 
 ## Design tokens
 
-`packages/newt-ui/registry/html/tokens.css` is the single source of truth.
+`packages/newtui/registry/html/tokens.css` is the single source of truth.
 Every app maps the tokens to Tailwind utilities (`bg-newt-brand`,
 `text-newt-text-muted`, `rounded-md`, `shadow-elevation-high`, …) — `apps/www`
 through the `newtPreset` in `tailwind.config.ts` (Tailwind v3), `apps/vue` and

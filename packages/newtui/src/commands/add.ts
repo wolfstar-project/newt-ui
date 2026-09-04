@@ -43,13 +43,16 @@ export async function add(options: AddOptions): Promise<void> {
   const config = await getConfig(cwd)
   if (!config) {
     throw new Error(
-      `Configuration is missing. Please run ${highlighter.info("npx @newtui/vue init")} to create a components.json file.`
+      `Configuration is missing. Please run ${highlighter.info("npx newtui init")} to create a components.json file.`
     )
   }
 
   intro(highlighter.bold("newt/ui — add"))
 
-  const registryUrl = getRegistryUrl(options.registry ?? config.registry)
+  const registryUrl = getRegistryUrl(
+    config.framework,
+    options.registry ?? config.registry
+  )
   let selected = options.components
 
   if (options.all || selected.length === 0) {
@@ -120,6 +123,7 @@ async function runAdd(
 
       // Vue components are directories (`ui/button/Button.vue`), so `--path`
       // keeps the component directory instead of flattening to a file name.
+      // React items are single files, where this resolves to the base name.
       let target = resolveTargetPath(file, item, config)
       if (options.path && !file.target) {
         const relative = relativePath(config.resolvedPaths.ui, target)

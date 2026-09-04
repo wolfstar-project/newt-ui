@@ -4,9 +4,7 @@
     <p class="mt-3 text-newt-text-secondary">
       This project is preconfigured with the newt/ui design tokens and Tailwind
       preset. Add components with
-      <code class="font-mono text-newt-text-link"
-        >npx @newtui/vue add button</code
-      >.
+      <code class="font-mono text-newt-text-link">npx newtui add button</code>.
     </p>
     <div class="mt-10 rounded-md bg-newt-bg-surface p-6 shadow-elevation-low">
       <p class="text-sm text-newt-text-muted">

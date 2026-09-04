@@ -19,8 +19,8 @@ export const SITE = {
   github: "https://github.com/wolfstar-project/newt-ui",
   disclaimer:
     "https://github.com/wolfstar-project/newt-ui/blob/main/DISCLAIMER.md",
-  reactCli: "npx @newtui/react@latest",
-  vueCli: "npx @newtui/vue@latest",
+  // One CLI for both frameworks; it detects React or Vue during `init`.
+  cli: "npx newtui@latest",
   nuxtModule: "@newtui/nuxt",
   registryUrl: "https://newtui.dev/r",
   vueRegistryUrl: "https://newtui.dev/vue/r",

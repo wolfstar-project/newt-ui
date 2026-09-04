@@ -9,7 +9,7 @@ import {
   type ComponentMeta,
 } from "../content/components"
 import { SITE } from "../content/site"
-import { FrameworkBlock } from "../site/CodeBlock"
+import { CodeBlock } from "../site/CodeBlock"
 import { Demo } from "../site/Demo"
 import { DemoBoundary } from "../site/DemoBoundary"
 import { ReactMark, VueMark } from "../site/FrameworkMark"
@@ -128,11 +128,10 @@ export function Home() {
               Browse the components
             </Link>
           </div>
-          <FrameworkBlock
+          <CodeBlock
             shell
             lang="bash"
-            react={`${SITE.reactCli} init\n${SITE.reactCli} add button`}
-            vue={`${SITE.vueCli} init\n${SITE.vueCli} add button`}
+            code={`${SITE.cli} init\n${SITE.cli} add button`}
             className="max-w-sm"
           />
           <p className="text-weft-dim">
