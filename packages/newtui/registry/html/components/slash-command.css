@@ -1,16 +1,55 @@
-/* newt-ui · Slash Command Block */
+/* newt-ui · Slash Command */
 
 .newt-command {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
-  background: rgba(88, 101, 242, 0.15);
-  color: #b3baff;
-  font-family: var(--newt-font-mono);
-  font-size: 13px;
+  gap: 4px;
   padding: 2px 8px 2px 6px;
   border-radius: var(--newt-radius-sm);
+  background: color-mix(in srgb, var(--newt-brand) 15%, transparent);
+  color: var(--newt-mention-text);
+  font-family: var(--newt-font-mono);
+  font-size: 13px;
 }
+
 .newt-command__icon {
   opacity: 0.8;
+}
+
+/* Command path: name, then the optional group and subcommand segments. */
+.newt-command__name,
+.newt-command__segment {
+  font-weight: 600;
+}
+
+.newt-command__option {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* The option the caret currently sits in, as the client highlights it. */
+.newt-command__option--focused {
+  padding: 0 2px;
+  border-radius: var(--newt-radius-sm);
+  background: color-mix(in srgb, var(--newt-brand) 35%, transparent);
+}
+
+.newt-command__option-name {
+  color: var(--newt-text-muted);
+}
+.newt-command__option-name::after {
+  content: ":";
+}
+
+.newt-command__option-value {
+  font-weight: 500;
+  color: var(--newt-text-primary);
+}
+
+/* No value yet — the option's description stands in, in italics. */
+.newt-command__option-placeholder {
+  font-style: italic;
+  color: var(--newt-text-muted);
 }

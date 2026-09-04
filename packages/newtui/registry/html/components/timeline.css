@@ -45,7 +45,7 @@
 }
 .newt-timeline__dot--brand {
   border-color: var(--newt-brand);
-  color: #b3baff;
+  color: var(--newt-mention-text);
 }
 .newt-timeline__content {
   flex: 1;

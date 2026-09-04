@@ -15,6 +15,16 @@ interface RegistryIndexEntry {
 // indexable by an arbitrary string without widening away the entry type.
 const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
   [
+    "action-row",
+    {
+      name: "action-row",
+      type: "registry:ui",
+      registryDependencies: ["button"],
+      files: ["registry/default/ui/action-row.tsx"],
+      component: React.lazy(() => import("@/registry/default/ui/action-row")),
+    },
+  ],
+  [
     "attachment",
     {
       name: "attachment",
@@ -86,6 +96,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       component: React.lazy(
         () => import("@/registry/default/ui/channel-topic")
       ),
+    },
+  ],
+  [
+    "chat",
+    {
+      name: "chat",
+      type: "registry:ui",
+      registryDependencies: ["scrollbar", "message-list", "message-composer"],
+      files: ["registry/default/ui/chat.tsx"],
+      component: React.lazy(() => import("@/registry/default/ui/chat")),
     },
   ],
   [
@@ -169,6 +189,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "inline-code",
+    {
+      name: "inline-code",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/default/ui/inline-code.tsx"],
+      component: React.lazy(() => import("@/registry/default/ui/inline-code")),
+    },
+  ],
+  [
     "kbd-tag",
     {
       name: "kbd-tag",
@@ -199,15 +229,42 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "message-composer",
+    {
+      name: "message-composer",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/default/ui/message-composer.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/ui/message-composer")
+      ),
+    },
+  ],
+  [
     "message-group",
     {
       name: "message-group",
       type: "registry:ui",
-      registryDependencies: ["avatar", "status-indicator", "reaction"],
+      registryDependencies: [
+        "avatar",
+        "reaction",
+        "reply-preview",
+        "status-indicator",
+      ],
       files: ["registry/default/ui/message-group.tsx"],
       component: React.lazy(
         () => import("@/registry/default/ui/message-group")
       ),
+    },
+  ],
+  [
+    "message-list",
+    {
+      name: "message-list",
+      type: "registry:ui",
+      registryDependencies: ["message-group"],
+      files: ["registry/default/ui/message-list.tsx"],
+      component: React.lazy(() => import("@/registry/default/ui/message-list")),
     },
   ],
   [
@@ -468,6 +525,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "action-row-demo",
+    {
+      name: "action-row-demo",
+      type: "registry:example",
+      registryDependencies: ["action-row"],
+      files: ["registry/default/example/action-row-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/action-row-demo")
+      ),
+    },
+  ],
+  [
     "attachment-demo",
     {
       name: "attachment-demo",
@@ -548,6 +617,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/example/channel-topic-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/default/example/channel-topic-demo")
+      ),
+    },
+  ],
+  [
+    "chat-demo",
+    {
+      name: "chat-demo",
+      type: "registry:example",
+      registryDependencies: ["chat"],
+      files: ["registry/default/example/chat-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/chat-demo")
       ),
     },
   ],
@@ -648,6 +729,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "inline-code-demo",
+    {
+      name: "inline-code-demo",
+      type: "registry:example",
+      registryDependencies: ["inline-code"],
+      files: ["registry/default/example/inline-code-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/inline-code-demo")
+      ),
+    },
+  ],
+  [
     "kbd-tag-demo",
     {
       name: "kbd-tag-demo",
@@ -684,6 +777,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "message-composer-demo",
+    {
+      name: "message-composer-demo",
+      type: "registry:example",
+      registryDependencies: ["message-composer"],
+      files: ["registry/default/example/message-composer-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/message-composer-demo")
+      ),
+    },
+  ],
+  [
     "message-group-demo",
     {
       name: "message-group-demo",
@@ -692,6 +797,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/example/message-group-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/default/example/message-group-demo")
+      ),
+    },
+  ],
+  [
+    "message-list-demo",
+    {
+      name: "message-list-demo",
+      type: "registry:example",
+      registryDependencies: ["message-list"],
+      files: ["registry/default/example/message-list-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/message-list-demo")
       ),
     },
   ],

@@ -1,11 +1,14 @@
-/* newt-ui · Embed (Discord message embed) */
+/* newt-ui · Embed (Discord-inspired message embed) */
 
 .newt-embed {
+  /* Override per embed to carry the bot's accent colour. */
+  --newt-embed-color: var(--newt-brand);
+
   display: flex;
-  background: var(--newt-bg-elevated);
+  max-width: var(--newt-embed-max-width);
   border-radius: var(--newt-radius-md);
-  border-left: 4px solid var(--newt-brand);
-  max-width: 520px;
+  border-left: 4px solid var(--newt-embed-color);
+  background: var(--newt-bg-elevated);
   overflow: hidden;
 }
 
@@ -16,6 +19,30 @@
   gap: 8px;
   flex: 1;
   min-width: 0;
+}
+
+.newt-embed__author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.newt-embed__author-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--newt-radius-full);
+  object-fit: cover;
+}
+
+.newt-embed__author-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .newt-embed__eyebrow {
@@ -59,7 +86,21 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+  margin-top: 4px;
   font-size: 12px;
   color: var(--newt-text-muted);
-  margin-top: 4px;
+}
+
+.newt-embed__footer-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--newt-radius-full);
+  object-fit: cover;
+}
+
+/* Middle dot, the way Discord separates footer text from the timestamp. */
+.newt-embed__footer-separator {
+  margin: 0 4px;
 }

@@ -263,10 +263,44 @@
       "uses": ["avatar", "status-indicator", "reaction"]
     },
     {
+      "name": "message-list",
+      "title": "Message List",
+      "rootClass": "newt-message-list",
+      "files": ["message-list.css", "message-list.html"],
+      "uses": ["message-group"]
+    },
+    {
+      "name": "message-composer",
+      "title": "Message Composer",
+      "rootClass": "newt-composer",
+      "files": ["message-composer.css", "message-composer.html"]
+    },
+    {
+      "name": "chat",
+      "title": "Chat",
+      "rootClass": "newt-chat",
+      "files": ["chat.css", "chat.html"],
+      "uses": ["message-list", "message-composer", "scrollbar"]
+    },
+    {
+      "name": "inline-code",
+      "title": "Inline Code",
+      "rootClass": "newt-inline-code",
+      "files": ["inline-code.css", "inline-code.html"]
+    },
+    {
+      "name": "action-row",
+      "title": "Action Row",
+      "rootClass": "newt-action-row",
+      "files": ["action-row.css", "action-row.html"],
+      "uses": ["button"]
+    },
+    {
       "name": "select-menu",
       "title": "Select Menu",
       "rootClass": "newt-select-menu",
-      "files": ["select-menu.css", "select-menu.html"]
+      "files": ["select-menu.css", "select-menu.html"],
+      "js": "select-menu.js"
     },
     {
       "name": "bot-command-card",

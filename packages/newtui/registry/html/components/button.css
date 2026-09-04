@@ -96,3 +96,27 @@
   background: var(--newt-bg-hover);
   color: var(--newt-text-primary);
 }
+
+/*
+ * Emoji, label and the link-out glyph. The label is the only flexible track:
+ * an over-long label ellipsises instead of pushing the glyphs out of the pill.
+ */
+.newt-btn__emoji {
+  flex-shrink: 0;
+  width: 1.375em;
+  height: 1.375em;
+  object-fit: contain;
+  vertical-align: bottom;
+}
+
+.newt-btn__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.newt-btn__launch {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}

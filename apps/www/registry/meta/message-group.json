@@ -1,10 +1,17 @@
 {
   "name": "message-group",
   "title": "Message Group",
-  "description": "A chat message row with avatar, author header, content and reactions.",
-  "registryDependencies": ["avatar", "status-indicator", "reaction"],
+  "description": "A grouped chat message with author, timestamp, reply preview, reactions and an ephemeral state.",
+  "registryDependencies": [
+    "avatar",
+    "reaction",
+    "reply-preview",
+    "status-indicator"
+  ],
   "vueFiles": [
     "MessageGroup.vue",
+    "MessageGroupAvatar.vue",
+    "MessageGroupReply.vue",
     "MessageGroupBody.vue",
     "MessageGroupHeader.vue",
     "MessageGroupAuthor.vue",
@@ -12,6 +19,8 @@
     "MessageGroupTime.vue",
     "MessageGroupContent.vue",
     "MessageGroupReactions.vue",
+    "MessageGroupEphemeralNotice.vue",
+    "MessageGroupEphemeralAction.vue",
     "index.ts"
   ],
   "reactDemo": "message-group-demo",

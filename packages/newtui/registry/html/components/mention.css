@@ -4,33 +4,82 @@
   display: inline-flex;
   align-items: center;
   gap: 2px;
+  min-height: 22px;
+  margin: 0;
   padding: 0 4px;
+  border: 0;
   border-radius: var(--newt-radius-sm);
+  background: color-mix(in srgb, var(--newt-mention-color) 15%, transparent);
+  color: var(--newt-mention-color);
+  font: inherit;
   font-weight: 500;
   font-size: 14px;
+  line-height: 20px;
+  /*
+   * `middle`, not `baseline`: the chip is an inline-flex box, so a baseline
+   * alignment resolves from its first flex item. With an avatar that item is
+   * the image, whose baseline is its bottom edge, which pushes the chip above
+   * the text baseline and inflates the surrounding line box.
+   */
+  vertical-align: middle;
   cursor: pointer;
-  transition: background var(--newt-duration-fast) var(--newt-ease);
-}
-.newt-mention--user {
-  background: rgba(88, 101, 242, 0.15);
-  color: #b3baff;
-}
-.newt-mention--user:hover {
-  background: rgba(88, 101, 242, 0.3);
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
 }
 
+/* Tint of the chip; also the hover fill for roles, which carry their own hue. */
+.newt-mention--user,
+.newt-mention--app {
+  --newt-mention-color: var(--newt-mention-text);
+  --newt-mention-solid: var(--newt-brand);
+}
 .newt-mention--channel {
-  background: rgba(148, 155, 164, 0.15);
-  color: var(--newt-text-link);
+  --newt-mention-color: var(--newt-text-link);
+  --newt-mention-solid: var(--newt-brand);
 }
-.newt-mention--channel:hover {
-  background: rgba(148, 155, 164, 0.25);
+.newt-mention--role {
+  --newt-mention-color: var(--newt-mention-role);
+  --newt-mention-solid: var(--newt-mention-color);
 }
 
-.newt-mention--role {
-  background: rgba(240, 178, 50, 0.15);
-  color: #f3b95f;
+/*
+ * Hover only where a pointer can actually hover: on touch the solid state
+ * would stick after a tap.
+ */
+@media (hover: hover) and (pointer: fine) {
+  .newt-mention:hover {
+    background: var(--newt-mention-solid);
+    color: #fff;
+  }
 }
-.newt-mention--role:hover {
-  background: rgba(240, 178, 50, 0.25);
+
+.newt-mention:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.newt-mention__avatar {
+  display: none;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--newt-radius-full);
+  object-fit: cover;
+}
+
+.newt-mention__icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* The avatar is desktop-only: at phone widths it crowds the line. */
+@media (width >= 48rem) {
+  .newt-mention__avatar {
+    display: block;
+  }
+  .newt-mention--with-avatar {
+    padding-left: 2px;
+  }
 }

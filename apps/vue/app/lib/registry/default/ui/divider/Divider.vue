@@ -3,7 +3,16 @@ import type { HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-const props = defineProps<{ class?: HTMLAttributes["class"] }>()
+import { dividerVariants, type DividerVariants } from "."
+
+const props = withDefaults(
+  defineProps<{
+    class?: HTMLAttributes["class"]
+    spacing?: DividerVariants["spacing"]
+    line?: boolean
+  }>(),
+  { line: true }
+)
 </script>
 
 <template>
@@ -11,9 +20,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
     role="separator"
     :class="
       cn(
-        'my-4 flex items-center gap-3 text-xs font-semibold text-newt-text-muted',
-        'before:h-px before:flex-1 before:bg-newt-border before:content-[\'\']',
-        'after:h-px after:flex-1 after:bg-newt-border after:content-[\'\']',
+        dividerVariants({ spacing: props.spacing, line: props.line }),
         props.class
       )
     "

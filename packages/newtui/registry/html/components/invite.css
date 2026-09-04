@@ -1,0 +1,76 @@
+/* newt-ui · Invite (server invite card in a message) */
+
+.newt-invite {
+  max-width: 432px;
+  padding: 8px 16px 16px;
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-primary);
+}
+
+.newt-invite__eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--newt-text-muted);
+}
+
+.newt-invite__body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.newt-invite__icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--newt-radius-md);
+  object-fit: cover;
+}
+
+.newt-invite__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.newt-invite__name {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--newt-text-primary);
+  text-decoration: none;
+}
+.newt-invite__name:hover {
+  text-decoration: underline;
+}
+
+.newt-invite__counts {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 2px;
+  font-size: 14px;
+  color: var(--newt-text-muted);
+}
+
+.newt-invite__count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Presence dot: green for online, muted for the total member count. */
+.newt-invite__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-offline);
+}
+.newt-invite__count--online .newt-invite__dot {
+  background: var(--newt-online);
+}

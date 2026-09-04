@@ -1,0 +1,9 @@
+{
+  "name": "action-row",
+  "title": "Action Row",
+  "description": "The row of buttons and selects attached under a message.",
+  "registryDependencies": ["button"],
+  "vueFiles": ["ActionRow.vue", "index.ts"],
+  "reactDemo": "action-row-demo",
+  "vueDemo": "ActionRowDemo"
+}

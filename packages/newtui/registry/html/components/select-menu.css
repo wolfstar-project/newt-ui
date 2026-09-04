@@ -1,15 +1,88 @@
-/* newt-ui · Select Menu */
+/* newt-ui · Select Menu (Discord-inspired string select) */
 
 .newt-select-menu {
-  background: var(--newt-bg-floating);
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.newt-select-menu__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 8px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-input);
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.newt-select-menu__trigger:hover {
+  border-color: var(--newt-bg-base);
+}
+.newt-select-menu__trigger:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-select-menu__trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.newt-select-menu__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.newt-select-menu__value--placeholder {
+  color: var(--newt-text-muted);
+}
+
+.newt-select-menu__chevron {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+/* Points down when closed, flips when the listbox opens. */
+.newt-select-menu__trigger[aria-expanded="true"] .newt-select-menu__chevron {
+  transform: rotate(180deg);
+}
+
+.newt-select-menu__panel {
+  position: absolute;
+  z-index: 1002;
+  left: 0;
+  top: calc(100% + 4px);
+  width: 100%;
+  padding: 6px;
   border: 1px solid var(--newt-border);
   border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-floating);
   box-shadow: var(--newt-shadow-elevation-high);
-  padding: 6px;
-  min-width: 200px;
-  max-height: 320px;
-  overflow-y: auto;
 }
+/* Flipped above the trigger when there is no room below it. */
+.newt-select-menu__panel[data-placement="above"] {
+  top: auto;
+  bottom: calc(100% + 4px);
+}
+.newt-select-menu__panel[hidden] {
+  display: none;
+}
+
+.newt-select-menu__listbox {
+  max-height: 320px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
 .newt-select-menu__search {
   display: flex;
   align-items: center;
@@ -31,6 +104,7 @@
 .newt-select-menu__search input::placeholder {
   color: var(--newt-text-muted);
 }
+
 .newt-select-menu__label {
   font-size: 11px;
   font-weight: 700;
@@ -39,6 +113,7 @@
   color: var(--newt-text-muted);
   padding: 4px 10px 2px;
 }
+
 .newt-select-menu__option {
   display: flex;
   align-items: center;
@@ -49,7 +124,12 @@
   font-size: 14px;
   color: var(--newt-text-secondary);
 }
-.newt-select-menu__option:hover {
+/*
+ * Focus stays on the trigger while the listbox is open, so the "active" row is
+ * pointed at with aria-activedescendant and highlighted through this class.
+ */
+.newt-select-menu__option:hover,
+.newt-select-menu__option--active {
   background: var(--newt-brand);
   color: #fff;
 }
@@ -62,9 +142,31 @@
   color: var(--newt-brand);
   font-weight: 700;
 }
-.newt-select-menu__option:hover::after {
+.newt-select-menu__option--selected:hover::after,
+.newt-select-menu__option--selected.newt-select-menu__option--active::after {
   color: #fff;
 }
+.newt-select-menu__option[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: none;
+  color: var(--newt-text-muted);
+}
+
+.newt-select-menu__option-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.newt-select-menu__option-description {
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+.newt-select-menu__option--active .newt-select-menu__option-description,
+.newt-select-menu__option:hover .newt-select-menu__option-description {
+  color: #fff;
+}
+
 .newt-select-menu__divider {
   height: 1px;
   background: var(--newt-border);

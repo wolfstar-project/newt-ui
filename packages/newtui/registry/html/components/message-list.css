@@ -1,0 +1,20 @@
+/* newt-ui · Message List (the log of grouped messages in a channel) */
+
+.newt-message-list {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 4px 8px 16px;
+}
+
+@media (width >= 40rem) {
+  .newt-message-list {
+    padding-inline: 16px;
+  }
+}
+
+/* Rows sit flush inside the log: the list owns the padding, not the row. */
+.newt-message-list > .newt-message-group {
+  padding: 6px 8px;
+  border-radius: var(--newt-radius-sm);
+}

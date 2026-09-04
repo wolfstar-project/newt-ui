@@ -7,7 +7,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
 </script>
 
 <template>
-  <span :class="cn('font-medium text-newt-text-link', props.class)">
+  <span :class="cn('shrink-0 font-medium text-newt-text-link', props.class)">
     <slot />
   </span>
 </template>

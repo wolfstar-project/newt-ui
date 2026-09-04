@@ -7,7 +7,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
 </script>
 
 <template>
-  <div :class="cn('min-w-0 flex-1', props.class)">
+  <div data-slot="message-body" :class="cn('min-w-0 flex-1', props.class)">
     <slot />
   </div>
 </template>

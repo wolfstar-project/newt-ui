@@ -2,41 +2,23 @@
 
 import * as React from "react"
 
-import {
-  SelectMenu,
-  SelectMenuLabel,
-  SelectMenuOption,
-  SelectMenuSearch,
-} from "@/registry/default/ui/select-menu"
+import { SelectMenu } from "@/registry/default/ui/select-menu"
 
-const options = ["Option one", "Option two", "Option three"]
+const OPTIONS = [
+  { value: "one", label: "Option one", description: "What this option does" },
+  { value: "two", label: "Option two" },
+  { value: "three", label: "Option three", disabled: true },
+]
 
 export default function SelectMenuDemo() {
-  const [selected, setSelected] = React.useState(options[0])
-  const [query, setQuery] = React.useState("")
-
-  const visible = options.filter((option) =>
-    option.toLowerCase().includes(query.trim().toLowerCase())
-  )
+  const [value, setValue] = React.useState<string>()
 
   return (
-    <SelectMenu aria-label="Select an option">
-      <SelectMenuSearch
-        placeholder="Search…"
-        aria-label="Search options"
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
-      />
-      <SelectMenuLabel>Options</SelectMenuLabel>
-      {visible.map((option) => (
-        <SelectMenuOption
-          key={option}
-          selected={option === selected}
-          onClick={() => setSelected(option)}
-        >
-          {option}
-        </SelectMenuOption>
-      ))}
-    </SelectMenu>
+    <SelectMenu
+      options={OPTIONS}
+      value={value}
+      onValueChange={setValue}
+      label="Select an option"
+    />
   )
 }

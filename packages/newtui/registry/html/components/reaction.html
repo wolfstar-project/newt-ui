@@ -1,14 +1,14 @@
-<button
-  class="newt-reaction newt-reaction--active"
-  aria-pressed="true"
-  aria-label="👍 reaction, 12 people, you reacted"
->
-  <span aria-hidden="true">👍</span><span class="newt-reaction__count">12</span>
-</button>
-<button
-  class="newt-reaction"
-  aria-pressed="false"
-  aria-label="🚀 reaction, 4 people"
->
-  <span aria-hidden="true">🚀</span><span class="newt-reaction__count">4</span>
-</button>
+<div class="newt-reaction-group">
+  <button
+    class="newt-reaction newt-reaction--active"
+    type="button"
+    aria-pressed="true"
+  >
+    <span aria-hidden="true">👍</span
+    ><span class="newt-reaction__count">12</span>
+  </button>
+  <button class="newt-reaction" type="button" aria-pressed="false">
+    <span aria-hidden="true">🚀</span
+    ><span class="newt-reaction__count">4</span>
+  </button>
+</div>

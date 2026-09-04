@@ -1,19 +1,71 @@
-<div class="newt-select-menu" role="listbox" aria-label="Select an option">
-  <div class="newt-select-menu__search">
-    <input type="text" placeholder="Search…" aria-label="Search options" />
-  </div>
-  <div class="newt-select-menu__label">Options</div>
-  <div
-    class="newt-select-menu__option newt-select-menu__option--selected"
-    role="option"
-    aria-selected="true"
+<div class="newt-select-menu" data-newt-select>
+  <button
+    class="newt-select-menu__trigger"
+    type="button"
+    role="combobox"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-controls="select-menu-listbox"
   >
-    Option one
-  </div>
-  <div class="newt-select-menu__option" role="option" aria-selected="false">
-    Option two
-  </div>
-  <div class="newt-select-menu__option" role="option" aria-selected="false">
-    Option three
+    <span class="newt-select-menu__value newt-select-menu__value--placeholder">
+      Make a selection
+    </span>
+    <svg
+      class="newt-select-menu__chevron"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        fill="currentColor"
+        d="M5.3 9.3a1 1 0 0 1 1.4 0l5.3 5.29 5.3-5.3a1 1 0 1 1 1.4 1.42l-6 6a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.42Z"
+      />
+    </svg>
+  </button>
+  <div class="newt-select-menu__panel" data-placement="below" hidden>
+    <ul
+      class="newt-select-menu__listbox"
+      id="select-menu-listbox"
+      role="listbox"
+      aria-label="Select an option"
+    >
+      <li
+        class="newt-select-menu__option"
+        id="select-menu-option-0"
+        role="option"
+        aria-selected="false"
+        data-value="one"
+      >
+        <span class="newt-select-menu__option-body">
+          <span>Option one</span>
+          <span class="newt-select-menu__option-description">
+            What this option does
+          </span>
+        </span>
+      </li>
+      <li
+        class="newt-select-menu__option"
+        id="select-menu-option-1"
+        role="option"
+        aria-selected="false"
+        data-value="two"
+      >
+        <span class="newt-select-menu__option-body"
+          ><span>Option two</span></span
+        >
+      </li>
+      <li
+        class="newt-select-menu__option"
+        id="select-menu-option-2"
+        role="option"
+        aria-selected="false"
+        aria-disabled="true"
+        data-value="three"
+      >
+        <span class="newt-select-menu__option-body">
+          <span>Option three</span>
+        </span>
+      </li>
+    </ul>
   </div>
 </div>

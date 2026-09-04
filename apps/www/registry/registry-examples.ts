@@ -3,6 +3,17 @@ import { Registry } from "@/registry/schema"
 
 export const examples: Registry = [
   {
+    name: "action-row-demo",
+    type: "registry:example",
+    registryDependencies: ["action-row"],
+    files: [
+      {
+        path: "example/action-row-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "attachment-demo",
     type: "registry:example",
     registryDependencies: ["attachment"],
@@ -75,6 +86,17 @@ export const examples: Registry = [
     files: [
       {
         path: "example/channel-topic-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "chat-demo",
+    type: "registry:example",
+    registryDependencies: ["chat"],
+    files: [
+      {
+        path: "example/chat-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -168,6 +190,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "inline-code-demo",
+    type: "registry:example",
+    registryDependencies: ["inline-code"],
+    files: [
+      {
+        path: "example/inline-code-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "kbd-tag-demo",
     type: "registry:example",
     registryDependencies: ["kbd-tag"],
@@ -201,12 +234,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "message-composer-demo",
+    type: "registry:example",
+    registryDependencies: ["message-composer"],
+    files: [
+      {
+        path: "example/message-composer-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "message-group-demo",
     type: "registry:example",
     registryDependencies: ["message-group"],
     files: [
       {
         path: "example/message-group-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "message-list-demo",
+    type: "registry:example",
+    registryDependencies: ["message-list"],
+    files: [
+      {
+        path: "example/message-list-demo.tsx",
         type: "registry:example",
       },
     ],
