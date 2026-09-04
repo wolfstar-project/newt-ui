@@ -8,12 +8,16 @@ import { registryItemSchema, type Registry } from "../app/lib/registry/schema"
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r")
 const SRC = path.join(process.cwd(), "app/lib")
+// Every item in this app targets Vue; the field is stamped here so a
+// consumer reading a single item JSON knows which framework it belongs to.
+const REGISTRY_FRAMEWORK = "vue" as const
 
 async function buildIndex(allItems: Registry) {
   const items = allItems
     .filter((i) => ["registry:ui", "registry:lib"].includes(i.type))
     .map((i) =>
       Object.assign({}, i, {
+        framework: REGISTRY_FRAMEWORK,
         files: i.files?.map((f) => (f instanceof Object ? f.path : f)),
       })
     )
@@ -33,7 +37,14 @@ async function buildStyles(allItems: Registry) {
       if (!item.files) {
         await fs.writeFile(
           path.join(target, `${item.name}.json`),
-          JSON.stringify(registryItemSchema.parse(item), null, 2)
+          JSON.stringify(
+            registryItemSchema.parse({
+              ...item,
+              framework: REGISTRY_FRAMEWORK,
+            }),
+            null,
+            2
+          )
         )
         continue
       }
@@ -46,7 +57,11 @@ async function buildStyles(allItems: Registry) {
           return { ...file, content: await fs.readFile(abs, "utf8") }
         })
       )
-      const payload = registryItemSchema.parse({ ...item, files })
+      const payload = registryItemSchema.parse({
+        ...item,
+        framework: REGISTRY_FRAMEWORK,
+        files,
+      })
       await fs.writeFile(
         path.join(target, `${item.name}.json`),
         JSON.stringify(payload, null, 2)

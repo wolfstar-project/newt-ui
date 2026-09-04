@@ -195,40 +195,9 @@ importers:
 
   packages/cli:
     dependencies:
-      '@clack/prompts':
-        specifier: ^1.7.0
-        version: 1.7.0
-      cross-spawn:
-        specifier: ^7.0.6
-        version: 7.0.6
-      mri:
-        specifier: ^1.2.0
-        version: 1.2.0
-      package-manager-detector:
-        specifier: ^1.8.0
-        version: 1.8.0
-      picocolors:
-        specifier: ^1.1.1
-        version: 1.1.1
-      zod:
-        specifier: ^3.24.1
-        version: 3.25.76
-    devDependencies:
-      '@types/cross-spawn':
-        specifier: ^6.0.6
-        version: 6.0.6
-      '@types/node':
-        specifier: ^22.10.2
-        version: 22.20.1
-      tsdown:
-        specifier: ^0.22.14
-        version: 0.22.14(@volar/typescript@2.4.28(typescript-native-bridge@6.0.3-bridge.13.tsgo.7.0.2))(oxc-resolver@11.24.2)(tsx@4.23.12)(typescript-native-bridge@6.0.3-bridge.13.tsgo.7.0.2)(unrun@0.3.1)(vue-tsc@3.3.10(typescript-native-bridge@6.0.3-bridge.13.tsgo.7.0.2))
-      typescript:
-        specifier: npm:typescript-native-bridge@6.0.3-bridge.13.tsgo.7.0.2
-        version: typescript-native-bridge@6.0.3-bridge.13.tsgo.7.0.2
-      unrun:
-        specifier: ^0.3.1
-        version: 0.3.1
+      newtui:
+        specifier: workspace:*
+        version: link:../newtui
 
   packages/module:
     dependencies:
@@ -253,6 +222,12 @@ importers:
         version: typescript-native-bridge@6.0.3-bridge.13.tsgo.7.0.2
 
   packages/newt-ui:
+    dependencies:
+      newtui:
+        specifier: workspace:*
+        version: link:../newtui
+
+  packages/newtui:
     dependencies:
       '@clack/prompts':
         specifier: ^1.7.0

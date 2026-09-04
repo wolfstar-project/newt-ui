@@ -15,14 +15,12 @@ import { useSettings } from "../site/settings"
 const LINK =
   "text-link underline underline-offset-4 transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft"
 
-const INIT_REACT = `${SITE.reactCli} init`
-const INIT_VUE = `${SITE.vueCli} init`
+// One CLI serves both frameworks, so these commands do not vary by framework
+// — only the files they write do (REACT_FILES / VUE_FILES below).
+const INIT = `${SITE.cli} init`
 
-const ADD_REACT = `${SITE.reactCli} add button
-${SITE.reactCli} add modal badge`
-
-const ADD_VUE = `${SITE.vueCli} add button
-${SITE.vueCli} add modal badge`
+const ADD = `${SITE.cli} add button
+${SITE.cli} add modal badge`
 
 const REACT_FILES = `components.json                 init — the config file
 app/globals.css                 init — the --newt-* token block
@@ -84,8 +82,8 @@ export default function RootLayout({
   )
 }`
 
-const HTML_CLI = `${SITE.reactCli} --legacy init
-${SITE.reactCli} --legacy add button`
+const HTML_CLI = `${SITE.cli} --legacy init
+${SITE.cli} --legacy add button`
 
 const HTML_MARKUP = `<!-- tokens first: every component reads var(--newt-*) -->
 <link rel="stylesheet" href="styles/newt-tokens.css" />
@@ -96,10 +94,12 @@ const HTML_MARKUP = `<!-- tokens first: every component reads var(--newt-*) -->
   <button class="newt-btn newt-btn--secondary">Secondary</button>
 </body>`
 
-const FLAGS_REACT = `-c, --cwd <dir>        working directory
+const FLAGS = `-c, --cwd <dir>        working directory
 -r, --registry <url>   registry base url (or NEWT_REGISTRY_URL)
 -y, --yes              skip confirmation prompts
 -d, --defaults         use the default configuration (init)
+-f, --framework <name> react or vue (init, list)
+-b, --bundler <name>   the Vue build tool: nuxt or vite (init)
     --css <path>       path to your global css file (init)
     --skip-install     skip installing dependencies (init, add)
 -o, --overwrite        overwrite existing files (add)
@@ -107,22 +107,7 @@ const FLAGS_REACT = `-c, --cwd <dir>        working directory
 -p, --path <path>      the path to add the component to (add)
 -t, --type <type>      filter by registry item type (list)
     --json             output as JSON (list)
-    --legacy           use the HTML/CSS CLI (same as newt-ui-html)
--h, --help             display the help
--v, --version          display the version number`
-
-const FLAGS_VUE = `-c, --cwd <dir>        working directory
--r, --registry <url>   registry base url (or NEWT_REGISTRY_URL)
--y, --yes              skip confirmation prompts
--d, --defaults         use the default configuration (init)
--f, --framework <name> nuxt or vite (init)
-    --css <path>       path to your global css file (init)
-    --skip-install     skip installing dependencies (init, add)
--o, --overwrite        overwrite existing files (add)
--a, --all              add every available component (add)
--p, --path <path>      the path to add the component to (add)
--t, --type <type>      filter by registry item type (list)
-    --json             output as JSON (list)
+    --legacy           use the HTML/CSS CLI (same as newtui-html)
 -h, --help             display the help
 -v, --version          display the version number`
 
@@ -195,7 +180,7 @@ export function Installation() {
       </Section>
 
       <Section id="init" title="Run init once">
-        <FrameworkBlock shell lang="bash" react={INIT_REACT} vue={INIT_VUE} />
+        <CodeBlock shell lang="bash" code={INIT} />
         <P>
           It asks a handful of questions and then writes three things.{" "}
           <InlineCode>components.json</InlineCode> at the root of your project,
@@ -259,7 +244,7 @@ export function Installation() {
       </Section>
 
       <Section id="add" title="Then add what you need">
-        <FrameworkBlock shell lang="bash" react={ADD_REACT} vue={ADD_VUE} />
+        <CodeBlock shell lang="bash" code={ADD} />
         <P>
           Registry dependencies are resolved before anything is written, so you
           name what you want and get what it is built out of. The modal above
@@ -325,8 +310,8 @@ export function Installation() {
           Every colour, radius, shadow, font and duration in the library is a{" "}
           <InlineCode>--newt-*</InlineCode> custom property. The source of truth
           is one file in the repository,{" "}
-          <InlineCode>packages/newt-ui/registry/html/tokens.css</InlineCode>,
-          and all three flavours read from it: the Tailwind theme maps its
+          <InlineCode>packages/newtui/registry/html/tokens.css</InlineCode>, and
+          all three flavours read from it: the Tailwind theme maps its
           namespaces onto those variables, and the plain CSS components use{" "}
           <InlineCode>var(--newt-brand)</InlineCode> directly.
         </P>
@@ -400,9 +385,9 @@ export function Installation() {
         <P>
           The same components exist as plain CSS with BEM class names, with no
           Tailwind, no framework and no build step. That flavour ships inside
-          the React package, and the CLI reaches it through{" "}
+          the CLI package, and is reached through{" "}
           <InlineCode>--legacy</InlineCode> — the same program is also exposed
-          as the <InlineCode>newt-ui-html</InlineCode> binary.
+          as the <InlineCode>newtui-html</InlineCode> binary.
         </P>
         <CodeBlock shell lang="bash" code={HTML_CLI} />
         <P>
@@ -426,7 +411,7 @@ export function Installation() {
       </Section>
 
       <Section id="options" title="Options">
-        <FrameworkBlock react={FLAGS_REACT} vue={FLAGS_VUE} />
+        <CodeBlock code={FLAGS} />
         <P>
           <InlineCode>--registry</InlineCode> overrides where items are fetched
           from, and so does the <InlineCode>NEWT_REGISTRY_URL</InlineCode>{" "}

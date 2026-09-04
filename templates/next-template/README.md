@@ -25,9 +25,9 @@ Open http://localhost:3000.
 ## Adding components
 
 ```bash
-npx @newtui/react add button
-npx @newtui/react list
-npx @newtui/react diff button
+npx newtui add button
+npx newtui list
+npx newtui diff button
 ```
 
 Components land in `components/ui/` and are yours to edit.

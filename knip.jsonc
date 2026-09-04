@@ -42,13 +42,19 @@
       "ignore": ["app/__registry__/**"],
       "ignoreDependencies": ["vue-router"],
     },
-    "packages/newt-ui": {
+    "packages/newtui": {
       "entry": ["src/index.ts", "cli/index.js"],
       "project": ["src/**/*.ts"],
     },
+    // The two scoped packages are deprecation wrappers around `newtui`; their
+    // only source is the bin that forwards to it.
+    "packages/newt-ui": {
+      "entry": ["bin/*.js"],
+      "project": ["bin/*.js"],
+    },
     "packages/cli": {
-      "entry": ["src/index.ts"],
-      "project": ["src/**/*.ts"],
+      "entry": ["bin/*.js"],
+      "project": ["bin/*.js"],
     },
     "packages/module": {
       "entry": ["src/module.ts"],

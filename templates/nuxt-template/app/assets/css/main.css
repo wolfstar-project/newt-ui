@@ -4,7 +4,7 @@
 /*
  * newt/ui design tokens.
  * Source of truth for the values: the newt/ui registry theme item
- * (`npx @newtui/vue init` writes this block for you).
+ * (`npx newtui init` writes this block for you).
  */
 @theme {
   /* Surfaces */

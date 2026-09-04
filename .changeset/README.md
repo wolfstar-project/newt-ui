@@ -1,9 +1,10 @@
 # Releasing with Changesets
 
 newt/ui uses [`@changesets/cli`](https://github.com/changesets/changesets) for
-monorepo releases. Each `@newtui/*` package (`@newtui/react`,
-`@newtui/vue`, `@newtui/nuxt`) is versioned independently
-according to the changesets included in each release.
+monorepo releases. Each published package — `newtui` (the CLI),
+`@newtui/nuxt` (the Nuxt module), and the `@newtui/react` / `@newtui/vue`
+deprecation wrappers — is versioned independently according to the changesets
+included in each release.
 
 ---
 
@@ -47,10 +48,10 @@ PR.
 
 Repository secrets (**Settings → Secrets and variables → Actions**):
 
-| Secret              | Description                                                                                                                                                                                                                                                                                                                                    |
-| :------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `WOLFSTAR_TOKEN`    | A GitHub PAT with `repo` and `workflow` scopes. Used by `changesets/action` to push commits and open PRs (the default `GITHUB_TOKEN` does not trigger other workflows). Also required by the `@next` snapshot job.                                                                                                                             |
-| `NPM_PUBLISH_TOKEN` | An npm **granular access token** with type **Automation** (bypasses 2FA) and publish access to all `@newtui/*` packages. Wired as both `NODE_AUTH_TOKEN` and `NPM_TOKEN` in `release.yml`. Classic publish tokens will fail with `ERR_PNPM_OTP_NON_INTERACTIVE` in CI. Do not rename this secret to `NPM_TOKEN` without updating the workflow. |
+| Secret              | Description                                                                                                                                                                                                                                                                                                                                                                         |
+| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `WOLFSTAR_TOKEN`    | A GitHub PAT with `repo` and `workflow` scopes. Used by `changesets/action` to push commits and open PRs (the default `GITHUB_TOKEN` does not trigger other workflows). Also required by the `@next` snapshot job.                                                                                                                                                                  |
+| `NPM_PUBLISH_TOKEN` | An npm **granular access token** with type **Automation** (bypasses 2FA) and publish access to the unscoped `newtui` package and to all `@newtui/*` packages. Wired as both `NODE_AUTH_TOKEN` and `NPM_TOKEN` in `release.yml`. Classic publish tokens will fail with `ERR_PNPM_OTP_NON_INTERACTIVE` in CI. Do not rename this secret to `NPM_TOKEN` without updating the workflow. |
 
 ### 3. Install the autofix.ci GitHub App (optional)
 
@@ -118,7 +119,7 @@ changesets first and exits cleanly instead of failing the job.
 No manual action is needed. Consumers can install the latest canary via:
 
 ```sh
-pnpm add @newtui/react@next
+pnpm add newtui@next
 ```
 
 ---

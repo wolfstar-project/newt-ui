@@ -9,7 +9,7 @@ A component is done when it exists in all three forms and they look identical.
 
 ## The three forms
 
-1. **HTML/CSS** — `packages/newt-ui/registry/html/components/<name>.{css,html,js}`.
+1. **HTML/CSS** — `packages/newtui/registry/html/components/<name>.{css,html,js}`.
    BEM-lite classes prefixed `newt-`: `.newt-block`, `.newt-block__element`,
    `.newt-block--variant`. This is the visual spec.
 2. **React** — `apps/www/registry/default/ui/<name>.tsx`. `cva` for variants,

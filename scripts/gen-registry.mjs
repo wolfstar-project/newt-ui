@@ -3,7 +3,7 @@
  * Generates registry index files for both apps from apps/www/registry/meta/*.json:
  *  - apps/www/registry/registry-ui.ts, registry-examples.ts, apps/www/__registry__/index.tsx
  *  - apps/vue/app/lib/registry/registry-ui.ts, registry-examples.ts, apps/vue/app/__registry__/index.ts
- *  - packages/newt-ui/registry.json (shadcn registry schema)
+ *  - packages/newtui/registry.react.json, registry.vue.json (shadcn registry schema)
  * Run: node scripts/gen-registry.mjs
  */
 import {
@@ -179,7 +179,10 @@ writeFileSync(
   `${header}import { defineAsyncComponent } from "vue"\n\n// Consumers (e.g. app/pages/index.vue) read entries through a local\n// \`Record<string, unknown>\` binding, which requires this contract to carry\n// its own index signature — kept to the concrete value types below rather\n// than \`unknown\`/\`any\` so it stays a real contract instead of an escape hatch.\ninterface RegistryIndexEntry {\n  [key: string]: string | string[] | ReturnType<typeof defineAsyncComponent> | undefined\n  name: string\n  type: string\n  registryDependencies: string[]\n  files: string[]\n  component?: ReturnType<typeof defineAsyncComponent>\n}\n\n// Keys are the registry component/example names; built via \`Object.fromEntries\`\n// (instead of a \`Record<string, any>\` literal) so the lookup map stays\n// indexable by an arbitrary string without widening away the entry type.\nconst registryIndexEntries: Array<[string, RegistryIndexEntry]> = [\n${vueIndex}\n]\n\nexport const Index = {\n  default: Object.fromEntries(registryIndexEntries),\n}\n`
 )
 
-// ---------- packages/newt-ui/registry.json (shadcn registry schema) ----------
+// ---------- packages/newtui/registry.<framework>.json (shadcn registry schema) ----------
+// One manifest per framework rather than one combined file: the two
+// registries use the same item names (`button`, `avatar`, ...), which a
+// single shadcn registry cannot hold twice.
 /**
  * The theme item carries the design tokens (raw `--newt-*`, the Tailwind v4
  * `@theme` entries, and the v3 `theme.extend`). Its values live in
@@ -202,16 +205,17 @@ const registryJson = {
   items: reactUi
     .map((i) =>
       Object.assign({}, i, {
+        framework: "react",
         files: i.files.map((f) => ({
           path: `registry/default/${f.path}`,
           type: f.type,
         })),
       })
     )
-    .concat([themeItem]),
+    .concat([{ ...themeItem, framework: "react" }]),
 }
 writeFileSync(
-  join(ROOT, "packages/newt-ui/registry.json"),
+  join(ROOT, "packages/newtui/registry.react.json"),
   j(registryJson) + "\n"
 )
 const vueRegistryJson = {
@@ -220,16 +224,17 @@ const vueRegistryJson = {
   items: vueUi
     .map((i) =>
       Object.assign({}, i, {
+        framework: "vue",
         files: i.files.map((f) => ({
           path: `registry/default/${f.path}`,
           type: f.type,
         })),
       })
     )
-    .concat([themeItem]),
+    .concat([{ ...themeItem, framework: "vue" }]),
 }
 writeFileSync(
-  join(ROOT, "packages/cli/registry.json"),
+  join(ROOT, "packages/newtui/registry.vue.json"),
   j(vueRegistryJson) + "\n"
 )
 

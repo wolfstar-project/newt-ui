@@ -2,7 +2,7 @@
  * The `--newt-*` design tokens, expressed once and projected into both Tailwind
  * versions so a single registry serves v3 and v4 consumers.
  *
- * Source of truth for the values: `packages/newt-ui/registry/html/tokens.css`.
+ * Source of truth for the values: `packages/newtui/registry/html/tokens.css`.
  *
  * - Tailwind v3 reads `tailwindV3Theme` and merges it into `theme.extend` of
  *   the user's `tailwind.config.ts`.

@@ -25,7 +25,7 @@ function loadConfig(cwd) {
   const configPath = join(cwd, CONFIG_FILE)
   if (!existsSync(configPath)) {
     console.error(
-      `No ${CONFIG_FILE} found. Run \`npx @newtui/html init\` first.`
+      `No ${CONFIG_FILE} found. Run \`npx newtui-html init\` first.`
     )
     process.exit(1)
   }
@@ -53,8 +53,8 @@ function cmdInit(cwd) {
   mkdirSync(dirname(tokensDest), { recursive: true })
   copyFileSync(join(REGISTRY_DIR, registry.tokens), tokensDest)
   console.log(`Added design tokens -> ${config.tokensFile}`)
-  console.log("\nNext: npx @newtui/html add <component> [...components]")
-  console.log("Run `npx @newtui/html list` to see available components.")
+  console.log("\nNext: npx newtui-html add <component> [...components]")
+  console.log("Run `npx newtui-html list` to see available components.")
 }
 
 function cmdList() {
@@ -84,7 +84,7 @@ function resolveDeps(registry, names) {
 
 function cmdAdd(cwd, names) {
   if (names.length === 0) {
-    console.error("Usage: newt-ui add <component> [...components]")
+    console.error("Usage: newtui-html add <component> [...components]")
     process.exit(1)
   }
   const registry = loadRegistry()
@@ -127,11 +127,11 @@ switch (command) {
     cmdList()
     break
   default:
-    console.log(`newt-ui — Discord-native UI components
+    console.log(`newtui-html — Discord-native UI components
 
 Usage:
-  npx @newtui/html init        Set up newt-ui in the current project
-  npx @newtui/html list         List available components
-  npx @newtui/html add <names...>   Add one or more components
+  npx newtui-html init        Set up newt/ui in the current project
+  npx newtui-html list         List available components
+  npx newtui-html add <names...>   Add one or more components
 `)
 }

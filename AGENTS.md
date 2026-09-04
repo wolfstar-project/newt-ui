@@ -25,8 +25,9 @@ apps/
           layout: app/lib/registry/default/ui/<name>/. No longer ships docs
           pages.
 packages/
-  newt-ui/   `@newtui/react` CLI (React) + registry/html (original HTML/CSS + tokens.css)
-  cli/       `@newtui/vue` CLI
+  newtui/    `newtui` CLI (React + Vue) + registry/html (original HTML/CSS + tokens.css)
+  newt-ui/   `@newtui/react` deprecation wrapper forwarding to `newtui`
+  cli/       `@newtui/vue` deprecation wrapper forwarding to `newtui`
   module/    `@newtui/nuxt` Nuxt module
 templates/
   next-template/, nuxt-template/   Starter apps preconfigured with newt/ui
@@ -94,7 +95,7 @@ runs all three plus `typecheck`, `build`, and `zizmor`.
 
 ## Design tokens
 
-`packages/newt-ui/registry/html/tokens.css` is the single source of truth
+`packages/newtui/registry/html/tokens.css` is the single source of truth
 for every `--newt-*` CSS variable. Both docs apps mirror it into their own
 global stylesheet and map every token to a Tailwind utility (`bg-newt-brand`,
 `text-newt-text-muted`, `rounded-md`, `shadow-elevation-high`, …) — `apps/www`
@@ -110,7 +111,7 @@ system, accessibility requirements, and a full worked example. Short
 version:
 
 1. Original HTML/CSS (if authoring the canonical spec) goes in
-   `packages/newt-ui/registry/html/components/<name>.{css,html,js}`.
+   `packages/newtui/registry/html/components/<name>.{css,html,js}`.
 2. React: `apps/www/registry/default/ui/<name>.tsx` (cva + `cn` + Tailwind),
    `apps/www/registry/default/example/<name>-demo.tsx`,
    `apps/www/content/docs/components/<name>.mdx`.

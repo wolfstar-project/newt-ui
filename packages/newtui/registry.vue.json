@@ -34,7 +34,8 @@
           "path": "registry/default/ui/attachment/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "avatar",
@@ -59,7 +60,8 @@
           "path": "registry/default/ui/avatar/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "badge",
@@ -76,7 +78,8 @@
           "path": "registry/default/ui/badge/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "bot-command-card",
@@ -113,7 +116,8 @@
           "path": "registry/default/ui/bot-command-card/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "button",
@@ -130,7 +134,8 @@
           "path": "registry/default/ui/button/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "card",
@@ -154,7 +159,8 @@
           "path": "registry/default/ui/card/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "channel-topic",
@@ -186,7 +192,8 @@
           "path": "registry/default/ui/channel-topic/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "code-block",
@@ -207,7 +214,8 @@
           "path": "registry/default/ui/code-block/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "context-menu",
@@ -236,7 +244,8 @@
           "path": "registry/default/ui/context-menu/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "cooldown-bar",
@@ -264,7 +273,8 @@
           "path": "registry/default/ui/cooldown-bar/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "divider",
@@ -280,7 +290,8 @@
           "path": "registry/default/ui/divider/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "dropdown",
@@ -320,7 +331,8 @@
           "path": "registry/default/ui/dropdown/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "embed",
@@ -368,7 +380,8 @@
           "path": "registry/default/ui/embed/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "empty-state",
@@ -396,7 +409,8 @@
           "path": "registry/default/ui/empty-state/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "form-fields",
@@ -440,7 +454,8 @@
           "path": "registry/default/ui/form-fields/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "kbd-tag",
@@ -456,7 +471,8 @@
           "path": "registry/default/ui/kbd-tag/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "member-list",
@@ -489,7 +505,8 @@
           "path": "registry/default/ui/member-list/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "mention",
@@ -506,7 +523,8 @@
           "path": "registry/default/ui/mention/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "message-group",
@@ -551,7 +569,8 @@
           "path": "registry/default/ui/message-group/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "modal",
@@ -584,7 +603,8 @@
           "path": "registry/default/ui/modal/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "notif-badge",
@@ -602,7 +622,8 @@
           "path": "registry/default/ui/notif-badge/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "pagination",
@@ -632,7 +653,8 @@
           "path": "registry/default/ui/pagination/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "permission",
@@ -664,7 +686,8 @@
           "path": "registry/default/ui/permission/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "progress",
@@ -685,7 +708,8 @@
           "path": "registry/default/ui/progress/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "reaction",
@@ -702,7 +726,8 @@
           "path": "registry/default/ui/reaction/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "reply-preview",
@@ -726,7 +751,8 @@
           "path": "registry/default/ui/reply-preview/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "role-tag",
@@ -746,7 +772,8 @@
           "path": "registry/default/ui/role-tag/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "scrollbar",
@@ -762,7 +789,8 @@
           "path": "registry/default/ui/scrollbar/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "select-menu",
@@ -794,7 +822,8 @@
           "path": "registry/default/ui/select-menu/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "server-banner",
@@ -832,7 +861,8 @@
           "path": "registry/default/ui/server-banner/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "skeleton",
@@ -849,7 +879,8 @@
           "path": "registry/default/ui/skeleton/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "slash-command",
@@ -865,7 +896,8 @@
           "path": "registry/default/ui/slash-command/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "spoiler",
@@ -881,7 +913,8 @@
           "path": "registry/default/ui/spoiler/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "stage-banner",
@@ -910,7 +943,8 @@
           "path": "registry/default/ui/stage-banner/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "status-indicator",
@@ -932,7 +966,8 @@
           "path": "registry/default/ui/status-indicator/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "tabs",
@@ -956,7 +991,8 @@
           "path": "registry/default/ui/tabs/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "timeline",
@@ -993,7 +1029,8 @@
           "path": "registry/default/ui/timeline/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "toast",
@@ -1030,7 +1067,8 @@
           "path": "registry/default/ui/toast/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "token-field",
@@ -1047,7 +1085,8 @@
           "path": "registry/default/ui/token-field/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "tooltip",
@@ -1071,7 +1110,8 @@
           "path": "registry/default/ui/tooltip/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "typing-indicator",
@@ -1091,7 +1131,8 @@
           "path": "registry/default/ui/typing-indicator/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "user-profile",
@@ -1157,7 +1198,8 @@
           "path": "registry/default/ui/user-profile/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "voice-channel",
@@ -1194,13 +1236,15 @@
           "path": "registry/default/ui/voice-channel/index.ts",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "framework": "vue"
     },
     {
       "name": "theme-newt",
       "type": "registry:theme",
       "title": "newt/ui theme",
-      "description": "The Discord-inspired --newt-* design tokens, for Tailwind v3 and v4."
+      "description": "The Discord-inspired --newt-* design tokens, for Tailwind v3 and v4.",
+      "framework": "vue"
     }
   ]
 }

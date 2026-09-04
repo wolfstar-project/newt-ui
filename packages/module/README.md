@@ -2,7 +2,7 @@
 
 Nuxt module for [newt/ui](https://newtui.dev) — auto-imports the
 Discord-native components you copied into your project with
-[`newt-ui-vue`](../cli) and injects the `--newt-*` design tokens.
+[`newtui`](../newtui) and injects the `--newt-*` design tokens.
 
 ## Installation
 
@@ -20,7 +20,7 @@ export default defineNuxtConfig({
 Then add components as usual:
 
 ```bash
-npx @newtui/vue add button
+npx newtui add button
 ```
 
 ```vue
@@ -51,7 +51,7 @@ export default defineNuxtConfig({
 | `css`          | `boolean` | `true`         | Adds `runtime/tokens.css` (the `--newt-*` tokens) to `nuxt.options.css`. |
 
 Set `css: false` if your global stylesheet already contains the tokens (for
-example when `newt-ui-vue init` appended them to `assets/css/tailwind.css`).
+example when `newtui init` appended them to `assets/css/tailwind.css`).
 
 ## Tailwind
 

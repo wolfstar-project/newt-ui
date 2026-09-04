@@ -4,7 +4,7 @@ import type { Config } from "tailwindcss"
  * newt/ui Tailwind preset.
  * Every color/radius/font/shadow maps to a `--newt-*` CSS variable defined in
  * the app's global stylesheet (source of truth:
- * packages/newt-ui/registry/html/tokens.css).
+ * packages/newtui/registry/html/tokens.css).
  */
 export const newtPreset: Omit<Config, "content"> = {
   darkMode: ["class"],

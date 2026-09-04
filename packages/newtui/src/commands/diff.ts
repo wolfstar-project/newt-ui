@@ -26,18 +26,21 @@ export async function diff(options: DiffOptions): Promise<void> {
   const config = await getConfig(cwd)
   if (!config) {
     throw new Error(
-      `Configuration is missing. Please run ${highlighter.info("npx @newtui/react init")} first.`
+      `Configuration is missing. Please run ${highlighter.info("npx newtui init")} first.`
     )
   }
   if (!options.component) {
     throw new Error(
-      "Please specify a component name, e.g. `newt-ui diff button`."
+      "Please specify a component name, e.g. `newtui diff button`."
     )
   }
 
   intro(highlighter.bold("newt/ui — diff"))
 
-  const registryUrl = getRegistryUrl(options.registry ?? config.registry)
+  const registryUrl = getRegistryUrl(
+    config.framework,
+    options.registry ?? config.registry
+  )
   const item = await getRegistryItem(
     registryUrl,
     config.style,
@@ -72,7 +75,7 @@ export async function diff(options: DiffOptions): Promise<void> {
   }
   outro(
     highlighter.dim(
-      `Run ${highlighter.info(`npx @newtui/react add ${item.name} --overwrite`)} to update.`
+      `Run ${highlighter.info(`npx newtui add ${item.name} --overwrite`)} to update.`
     )
   )
 }

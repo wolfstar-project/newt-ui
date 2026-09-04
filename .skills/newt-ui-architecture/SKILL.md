@@ -12,15 +12,14 @@ flows back.
 
 ## Package ownership
 
-- `packages/newt-ui`: the `@newtui/react` CLI (React) **and** `registry/html/`, the
-  canonical HTML/CSS/JS source of every component plus `tokens.css`. The
-  legacy `newt-ui-html` bin (`cli/index.js`) copies straight out of that
-  directory. This package owns the design tokens; nothing else may redefine a
-  value.
-- `packages/cli`: the `@newtui/vue` CLI. Same command surface as `@newtui/react`,
-  different targets (`components/ui/<name>/` directories instead of one file).
-  Logic is deliberately duplicated between the two CLIs rather than shared —
-  they publish independently and must not depend on each other.
+- `packages/newtui`: the `newtui` CLI, which serves React **and** Vue, **and**
+  `registry/html/`, the canonical HTML/CSS/JS source of every component plus
+  `tokens.css`. The legacy `newtui-html` bin (`cli/index.js`) copies straight
+  out of that directory. This package owns the design tokens; nothing else may
+  redefine a value.
+- `packages/newt-ui` (`@newtui/react`) and `packages/cli` (`@newtui/vue`):
+  deprecation wrappers. Each ships one bin that prints a notice and forwards to
+  `newtui`. They hold no CLI logic and are removed in the next major.
 - `packages/module`: `@newtui/nuxt`, auto-imports a consumer's
   `components/ui/**` and injects the tokens. Runtime-only; it never reads the
   registry.
@@ -36,13 +35,14 @@ flows back.
 
 ## Rules
 
-- A component's visual truth is `packages/newt-ui/registry/html/components/`.
+- A component's visual truth is `packages/newtui/registry/html/components/`.
   When the React and Vue versions disagree with it, the HTML is right.
 - Never hardcode a colour, radius, font, shadow, or duration that already
   exists as a `--newt-*` token. If a value is missing, add the token first.
 - `registry-ui.ts`, `registry-examples.ts`, `__registry__/`,
-  `packages/*/registry.json`, and `apps/*/public/r/**` are **generated**. Edit
-  `apps/www/registry/meta/<name>.json` and rerun the generator instead.
+  `packages/newtui/registry.{react,vue}.json`, and `apps/*/public/r/**` are
+  **generated**. Edit `apps/www/registry/meta/<name>.json` and rerun the
+  generator instead.
 - The two docs apps intentionally sit on different Tailwind majors: `apps/www`
   on v3 (JS preset in `tailwind.config.ts`), `apps/vue` on v4 (CSS-first
   `@theme` in `app/assets/css/main.css`). That split is the compatibility test

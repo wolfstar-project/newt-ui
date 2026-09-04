@@ -3,30 +3,57 @@ import path from "node:path"
 import { z } from "zod"
 
 import { pathExists, readFileIfExists } from "./fileSystem.js"
-import { FRAMEWORKS } from "./options.js"
+import { BUNDLERS, FRAMEWORKS } from "./options.js"
 
 const DEFAULT_STYLE = "default"
 export const DEFAULT_COMPONENTS = "@/components"
 export const DEFAULT_UTILS = "@/lib/utils"
 export const DEFAULT_UI = "@/components/ui"
 export const DEFAULT_LIB = "@/lib"
+export const DEFAULT_HOOKS = "@/hooks"
 export const DEFAULT_COMPOSABLES = "@/composables"
-export const DEFAULT_TAILWIND_CSS = "src/assets/css/tailwind.css"
 export const DEFAULT_TAILWIND_CONFIG = "tailwind.config.ts"
 const DEFAULT_TAILWIND_BASE_COLOR = "neutral"
-export const DEFAULT_FRAMEWORK = "nuxt"
+export const DEFAULT_FRAMEWORK = "react"
+/** React Server Components are assumed on when `components.json` omits `rsc`. */
+export const RSC_DEFAULT = true
+export const DEFAULT_BUNDLER = "nuxt"
+
+/** Where `init` writes the tokens when it finds no existing stylesheet. */
+export const DEFAULT_TAILWIND_CSS = {
+  react: "app/globals.css",
+  vue: "src/assets/css/tailwind.css",
+} as const satisfies Record<Framework, string>
 
 export const CONFIG_FILE_NAME = "components.json"
 
 export const frameworkSchema = z.enum(FRAMEWORKS)
 export type Framework = z.infer<typeof frameworkSchema>
 
+export const bundlerSchema = z.enum(BUNDLERS)
+export type Bundler = z.infer<typeof bundlerSchema>
+
 export const rawConfigSchema = z
   .object({
     $schema: z.string().optional(),
     style: z.string().default(DEFAULT_STYLE),
-    typescript: z.boolean().default(true),
     framework: frameworkSchema.default(DEFAULT_FRAMEWORK),
+    /** Vue only — which build tool the project uses. */
+    bundler: bundlerSchema.optional(),
+    typescript: z.boolean().default(true),
+    /**
+     * React only, and left optional so a Vue `components.json` does not grow a
+     * field that means nothing there. Kept separate from `typescript` because
+     * it controls whether `"use client"` survives, which TypeScript alone does
+     * not imply. Absent means enabled — see `RSC_DEFAULT`.
+     */
+    rsc: z.boolean().optional(),
+    /**
+     * Legacy alias of `typescript` written by the React CLI before the two
+     * CLIs merged. Read by `migrateRawConfig` and preserved so an existing
+     * `components.json` keeps validating.
+     */
+    tsx: z.boolean().optional(),
     tailwind: z.object({
       config: z.string().default(DEFAULT_TAILWIND_CONFIG),
       css: z.string(),
@@ -39,6 +66,7 @@ export const rawConfigSchema = z
       utils: z.string().default(DEFAULT_UTILS),
       ui: z.string().optional(),
       lib: z.string().optional(),
+      hooks: z.string().optional(),
       composables: z.string().optional(),
     }),
     iconLibrary: z.string().optional(),
@@ -57,11 +85,60 @@ const configSchema = rawConfigSchema.extend({
     components: z.string(),
     ui: z.string(),
     lib: z.string(),
+    hooks: z.string(),
     composables: z.string(),
   }),
 })
 
 export type Config = z.infer<typeof configSchema>
+
+/**
+ * The wire shape of `components.json`: the fields above plus the ones the two
+ * CLIs wrote before they merged. `framework` used to name the Vue build tool,
+ * and the React CLI spelled "is this project TypeScript" as `tsx`.
+ */
+const componentsFileSchema = z
+  .object({
+    framework: z.enum([...FRAMEWORKS, ...BUNDLERS]).optional(),
+    bundler: bundlerSchema.optional(),
+    typescript: z.boolean().optional(),
+    tsx: z.boolean().optional(),
+    aliases: z
+      .object({ composables: z.string().optional() })
+      .passthrough()
+      .optional(),
+  })
+  .passthrough()
+
+type ComponentsFile = z.infer<typeof componentsFileSchema>
+
+/**
+ * Bring a `components.json` written by either of the old CLIs up to the merged
+ * shape, so an existing project keeps working without being re-initialized.
+ */
+function migrateComponentsFile(file: ComponentsFile): ComponentsFile {
+  const migrated = { ...file }
+
+  // `framework: "nuxt" | "vite"` was the Vue CLI's build tool, not the target
+  // framework — move it to `bundler` and mark the project as Vue.
+  if (file.framework === "nuxt" || file.framework === "vite") {
+    migrated.bundler = file.bundler ?? file.framework
+    migrated.framework = "vue"
+  } else if (file.framework === undefined) {
+    // Neither CLI wrote a target framework; only the Vue one wrote
+    // `typescript` and `aliases.composables`.
+    migrated.framework =
+      file.typescript !== undefined || file.aliases?.composables !== undefined
+        ? "vue"
+        : "react"
+  }
+
+  if (file.typescript === undefined && file.tsx !== undefined) {
+    migrated.typescript = file.tsx
+  }
+
+  return migrated
+}
 
 interface TsConfigLike {
   compilerOptions?: {
@@ -104,7 +181,7 @@ async function readTsConfigPaths(
 /**
  * Resolve an import alias such as `@/components/ui` to an absolute directory.
  * Uses tsconfig `paths` when available, otherwise falls back to `src/` (the
- * Nuxt `srcDir` convention used by the newt/ui templates) or the project root.
+ * layout used by the newt/ui Vite and Nuxt templates) or the project root.
  */
 async function resolveImport(
   alias: string,
@@ -159,6 +236,9 @@ export async function resolveConfigPaths(
   const lib = config.aliases.lib
     ? await resolveImport(config.aliases.lib, cwd, preferSrcDir)
     : path.dirname(utils)
+  const hooks = config.aliases.hooks
+    ? await resolveImport(config.aliases.hooks, cwd, preferSrcDir)
+    : path.resolve(path.dirname(components), "hooks")
   const composables = config.aliases.composables
     ? await resolveImport(config.aliases.composables, cwd, preferSrcDir)
     : path.resolve(path.dirname(components), "composables")
@@ -173,6 +253,7 @@ export async function resolveConfigPaths(
       components,
       ui,
       lib,
+      hooks,
       composables,
     },
   })
@@ -183,7 +264,9 @@ export async function getRawConfig(cwd: string): Promise<RawConfig | null> {
   const raw = await readFileIfExists(configPath)
   if (raw === null) return null
   try {
-    return rawConfigSchema.parse(JSON.parse(raw))
+    return rawConfigSchema.parse(
+      migrateComponentsFile(componentsFileSchema.parse(JSON.parse(raw)))
+    )
   } catch (error) {
     const detail = error instanceof Error ? error.message : String(error)
     throw new Error(

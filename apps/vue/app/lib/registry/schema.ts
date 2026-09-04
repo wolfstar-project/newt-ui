@@ -13,6 +13,13 @@ export const registryItemTypeSchema = z.enum([
   "registry:file",
 ])
 
+/**
+ * Which UI framework an item's files target. Items are served from
+ * per-framework registries, so this is informational for consumers that mix
+ * both (the docs site, external tooling) rather than a routing key.
+ */
+export const registryItemFrameworkSchema = z.enum(["react", "vue"])
+
 export const registryItemFileSchema = z.union([
   z.string(),
   z.object({
@@ -62,6 +69,7 @@ export const registryItemCssSchema = z.record(
 export const registryItemSchema = z.object({
   name: z.string(),
   type: registryItemTypeSchema,
+  framework: registryItemFrameworkSchema.optional(),
   title: z.string().optional(),
   description: z.string().optional(),
   dependencies: z.array(z.string()).optional(),
@@ -77,6 +85,7 @@ export const registryItemSchema = z.object({
 })
 
 export type RegistryItem = z.infer<typeof registryItemSchema>
+export type RegistryItemFramework = z.infer<typeof registryItemFrameworkSchema>
 
 export const registrySchema = z.array(registryItemSchema)
 export type Registry = z.infer<typeof registrySchema>

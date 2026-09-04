@@ -1,17 +1,12 @@
 {
   "name": "@newtui/vue",
   "version": "1.0.0",
-  "description": "CLI for newt/ui — Discord-native UI components for Vue & Nuxt (shadcn-style registry). Part of the WolfStar toolchain.",
+  "description": "Deprecated — merged into the unscoped `newtui` package. This wrapper forwards to it.",
   "keywords": [
-    "component-library",
-    "design-system",
-    "discord",
-    "discord-bot",
+    "deprecated",
+    "newtui",
     "nuxt",
-    "shadcn",
-    "ui",
-    "vue",
-    "wolfstar"
+    "vue"
   ],
   "homepage": "https://newtui.dev",
   "bugs": {
@@ -25,10 +20,12 @@
     "directory": "packages/cli"
   },
   "bin": {
-    "newt-ui-vue": "./dist/index.js"
+    "newt-ui-vue": "./bin/newt-ui-vue.js"
   },
   "files": [
-    "dist"
+    "bin",
+    "README.md",
+    "LICENSE"
   ],
   "type": "module",
   "publishConfig": {
@@ -36,28 +33,11 @@
     "provenance": true
   },
   "scripts": {
-    "build": "tsdown --config-loader unrun",
-    "dev": "tsdown --config-loader unrun --watch",
     "lint": "oxlint -c ../../.oxlintrc.json .",
-    "lint:fix": "oxlint -c ../../.oxlintrc.json --fix .",
-    "prepack": "pnpm run build",
-    "start": "node dist/index.js",
-    "typecheck": "tsc --noEmit"
+    "lint:fix": "oxlint -c ../../.oxlintrc.json --fix ."
   },
   "dependencies": {
-    "@clack/prompts": "^1.7.0",
-    "cross-spawn": "^7.0.6",
-    "mri": "^1.2.0",
-    "package-manager-detector": "^1.8.0",
-    "picocolors": "^1.1.1",
-    "zod": "^3.24.1"
-  },
-  "devDependencies": {
-    "@types/cross-spawn": "^6.0.6",
-    "@types/node": "^22.10.2",
-    "tsdown": "^0.22.14",
-    "typescript": "^5.7.2",
-    "unrun": "^0.3.1"
+    "newtui": "workspace:*"
   },
   "engines": {
     "node": ">=18"

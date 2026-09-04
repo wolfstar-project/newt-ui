@@ -5,5 +5,5 @@ This product includes software originally created by newt-max
 (https://github.com/newt-max) and maintained here with permission.
 
 NOTE: The design tokens, the component set, and the original HTML/CSS
-specification (packages/newt-ui/registry/html/) originate from newt-max's
+specification (packages/newtui/registry/html/) originate from newt-max's
 work. See README.md for details.

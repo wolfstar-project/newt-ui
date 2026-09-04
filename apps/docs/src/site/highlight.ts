@@ -14,7 +14,7 @@ const THEME_NAME = "newt"
 /*
  * A TextMate theme built from the same hex constants every component reads,
  * so a highlighted import line and the button it imports carry the same
- * colours. Source of truth: packages/newt-ui/registry/html/tokens.css.
+ * colours. Source of truth: packages/newtui/registry/html/tokens.css.
  */
 const THEME: ThemeRegistrationRaw = {
   name: THEME_NAME,

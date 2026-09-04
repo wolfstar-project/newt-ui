@@ -230,12 +230,7 @@ function Installation({ meta }: MetaProps) {
             value: "cli",
             label: "CLI",
             content: (
-              <FrameworkBlock
-                shell
-                lang="bash"
-                react={`${SITE.reactCli} ${install}`}
-                vue={`${SITE.vueCli} ${install}`}
-              />
+              <CodeBlock shell lang="bash" code={`${SITE.cli} ${install}`} />
             ),
           },
           {

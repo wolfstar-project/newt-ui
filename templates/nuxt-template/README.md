@@ -26,9 +26,9 @@ Open http://localhost:3000.
 ## Adding components
 
 ```bash
-npx @newtui/vue add button
-npx @newtui/vue list
-npx @newtui/vue diff button
+npx newtui add button
+npx newtui list
+npx newtui diff button
 ```
 
 Each component is a directory in `src/components/ui/` and is yours to edit:

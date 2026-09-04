@@ -15,9 +15,13 @@ import {
   FLAG_ALIASES,
   flagBoolean,
   flagString,
+  isBundlerName,
   isCommandName,
+  isFrameworkName,
   STRING_FLAGS,
+  type BundlerName,
   type Flags,
+  type FrameworkName,
 } from "./tools/options.js"
 
 process.on("SIGINT", () => process.exit(0))
@@ -33,23 +37,21 @@ function getPackageInfo(): PackageJson {
   const here = path.dirname(fileURLToPath(import.meta.url))
   for (const candidate of ["../package.json", "../../package.json"]) {
     try {
-      // SAFETY: this reads the package's own package.json (a file we control,
-      // not external input), not a user-supplied payload. `require` throws on
-      // a missing or malformed file, which the surrounding try/catch handles
-      // by trying the next candidate and eventually falling back to the
-      // hardcoded default below.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- reading our own package.json.
+      // SAFETY: this always resolves to the CLI's own package.json (one of the two
+      // relative candidates above), whose `name`/`version` fields we author and
+      // control ourselves.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
       return require(path.resolve(here, candidate)) as PackageJson
     } catch {
       // try next
     }
   }
-  return { name: "newt-ui", version: "0.0.0" }
+  return { name: "newtui", version: "0.0.0" }
 }
 
 /**
- * `newt-ui --legacy <args>` delegates to the HTML/CSS CLI (cli/index.js),
- * which is also exposed as the `newt-ui-html` bin.
+ * `newtui --legacy <args>` delegates to the HTML/CSS CLI (cli/index.js),
+ * which is also exposed as the `newtui-html` bin.
  */
 function runLegacy(args: string[]): void {
   const here = path.dirname(fileURLToPath(import.meta.url))
@@ -76,11 +78,11 @@ function runLegacy(args: string[]): void {
 function printHelp(): void {
   const { version } = getPackageInfo()
   console.log(`
-  ${highlighter.bold("newt-ui")} ${highlighter.dim(`v${version}`)}
-  Add Discord-inspired newt/ui components to your React project.
+  ${highlighter.bold("newtui")} ${highlighter.dim(`v${version}`)}
+  Add Discord-inspired newt/ui components to your React, Vue or Nuxt project.
 
   ${highlighter.bold("Usage")}
-    $ newt-ui <command> [options]
+    $ newtui <command> [options]
 
   ${highlighter.bold("Commands")}
     init                     initialize your project and install dependencies
@@ -93,6 +95,8 @@ function printHelp(): void {
     -r, --registry <url>     registry base url (overrides NEWT_REGISTRY_URL)
     -y, --yes                skip confirmation prompts
     -d, --defaults           use the default configuration (init)
+    -f, --framework <name>   the framework to use: react or vue (init, list)
+    -b, --bundler <name>     the Vue build tool: nuxt or vite (init)
         --css <path>         path to your global css file (init)
         --skip-install       skip installing dependencies (init, add)
     -o, --overwrite          overwrite existing files (add)
@@ -100,16 +104,54 @@ function printHelp(): void {
     -p, --path <path>        the path to add the component to (add)
     -t, --type <type>        filter by registry item type (list)
         --json               output as JSON (list)
-        --legacy             use the legacy HTML/CSS CLI (same as newt-ui-html)
+        --legacy             use the legacy HTML/CSS CLI (same as newtui-html)
     -h, --help               display this message
     -v, --version            display the version number
 
   ${highlighter.bold("Examples")}
-    $ newt-ui init --defaults
-    $ newt-ui add button avatar
-    $ newt-ui list --type all
-    $ newt-ui diff button
+    $ newtui init --defaults
+    $ newtui add button avatar
+    $ newtui list --framework vue
+    $ newtui diff button
 `)
+}
+
+/** What `--framework` and `--bundler` resolved to for this run. */
+interface FrameworkFlags {
+  framework?: FrameworkName
+  bundler?: BundlerName
+}
+
+/**
+ * `--framework` used to name the Vue build tool (`nuxt`/`vite`). It now names
+ * the UI framework, so those two values are forwarded to `--bundler` instead
+ * of being rejected.
+ */
+function readFrameworkFlags(args: Flags): FrameworkFlags {
+  const rawFramework = flagString(args.framework)
+  const rawBundler = flagString(args.bundler)
+
+  if (rawBundler !== undefined && !isBundlerName(rawBundler)) {
+    throw new Error(
+      `Unknown bundler "${rawBundler}". Expected "nuxt" or "vite".`
+    )
+  }
+
+  if (rawFramework === undefined) {
+    return { bundler: rawBundler }
+  }
+  if (isFrameworkName(rawFramework)) {
+    return { framework: rawFramework, bundler: rawBundler }
+  }
+  if (isBundlerName(rawFramework)) {
+    logger.warn(
+      `--framework ${rawFramework} now means the Vue build tool; use --bundler ${rawFramework} instead.`
+    )
+    return { framework: "vue", bundler: rawBundler ?? rawFramework }
+  }
+  throw new Error(
+    `Unknown framework "${rawFramework}". Expected "react" or "vue".`
+  )
 }
 
 async function main(): Promise<void> {
@@ -147,16 +189,20 @@ async function main(): Promise<void> {
   const skipInstall = flagBoolean(args["skip-install"])
 
   switch (command) {
-    case "init":
+    case "init": {
+      const { framework, bundler } = readFrameworkFlags(args)
       await init({
         cwd,
         yes,
         defaults: flagBoolean(args.defaults),
         skipInstall,
         css: flagString(args.css),
+        framework,
+        bundler,
         registry,
       })
       break
+    }
     case "add":
       await add({
         components: rest,
@@ -169,14 +215,17 @@ async function main(): Promise<void> {
         skipInstall,
       })
       break
-    case "list":
+    case "list": {
+      const { framework } = readFrameworkFlags(args)
       await list({
         cwd,
         registry,
+        framework,
         type: flagString(args.type),
         json: flagBoolean(args.json),
       })
       break
+    }
     case "diff":
       await diff({ component: rest[0], cwd, registry })
       break

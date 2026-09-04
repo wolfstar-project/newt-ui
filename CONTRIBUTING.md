@@ -10,23 +10,24 @@ apps
 ├── www            # React docs site + React registry (Next.js, shadcn-ui layout)
 └── vue            # Vue docs site + Vue registry (Nuxt, shadcn-vue layout)
 packages
-├── newt-ui        # `newt-ui` CLI for React + HTML/CSS registry sources
-├── cli            # `newt-ui-vue` CLI for Vue
+├── newtui         # `newtui` CLI (React + Vue) + HTML/CSS registry sources
+├── newt-ui        # `@newtui/react` deprecation wrapper
+├── cli            # `@newtui/vue` deprecation wrapper
 └── module         # Nuxt module
 templates
 ├── next-template
 └── nuxt-template
 ```
 
-| Path                             | Description                                                                   |
-| -------------------------------- | ----------------------------------------------------------------------------- |
-| `apps/www/registry`              | React components (`registry/<style>/ui`) and examples                         |
-| `apps/www/components/docs`       | Docs chrome (side nav, page header, component section, preview frame)         |
-| `apps/www/styles/docs.css`       | Docs site styling, ported verbatim from the original single-page `index.html` |
-| `apps/www/content/docs`          | React documentation (MDX)                                                     |
-| `apps/vue/src/lib/registry`      | Vue components (`registry/<style>/ui/<name>`) and examples                    |
-| `apps/vue/src/content/docs`      | Vue documentation (Markdown)                                                  |
-| `packages/newt-ui/registry/html` | Original HTML/CSS sources and `tokens.css`                                    |
+| Path                            | Description                                                                   |
+| ------------------------------- | ----------------------------------------------------------------------------- |
+| `apps/www/registry`             | React components (`registry/<style>/ui`) and examples                         |
+| `apps/www/components/docs`      | Docs chrome (side nav, page header, component section, preview frame)         |
+| `apps/www/styles/docs.css`      | Docs site styling, ported verbatim from the original single-page `index.html` |
+| `apps/www/content/docs`         | React documentation (MDX)                                                     |
+| `apps/vue/src/lib/registry`     | Vue components (`registry/<style>/ui/<name>`) and examples                    |
+| `apps/vue/src/content/docs`     | Vue documentation (Markdown)                                                  |
+| `packages/newtui/registry/html` | Original HTML/CSS sources and `tokens.css`                                    |
 
 ## Development
 

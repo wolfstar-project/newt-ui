@@ -1,3 +1,6 @@
+import { z } from "zod"
+
+import type { Framework } from "./config.js"
 import {
   registryIndexSchema,
   registryItemSchema,
@@ -5,37 +8,44 @@ import {
   type RegistryItem,
 } from "./schema.js"
 
-const DEFAULT_REGISTRY_URL = "https://newtui.dev/r"
+/**
+ * React and Vue components are served from their own registry, each item
+ * carrying a `framework` field naming which one it came from. The project's
+ * `components.json` picks the base url; `--registry` and `NEWT_REGISTRY_URL`
+ * override it for custom registries.
+ */
+const DEFAULT_REGISTRY_URLS = {
+  react: "https://newtui.dev/r",
+  vue: "https://newtui.dev/vue/r",
+} as const satisfies Record<Framework, string>
 
-export function getRegistryUrl(override?: string): string {
-  const url = override ?? process.env.NEWT_REGISTRY_URL ?? DEFAULT_REGISTRY_URL
+export function getRegistryUrl(
+  framework: Framework,
+  override?: string
+): string {
+  const url =
+    override ??
+    process.env.NEWT_REGISTRY_URL ??
+    DEFAULT_REGISTRY_URLS[framework]
   return url.replace(/\/+$/, "")
 }
 
-/** The domain shape of a parsed JSON document, before schema validation. */
-type JsonValue =
-  | boolean
-  | number
-  | string
-  | null
-  | JsonValue[]
-  | { [key: string]: JsonValue }
-
-async function fetchJson(url: string): Promise<JsonValue> {
+/** Fetch `url` as JSON and parse it against `schema`, the I/O boundary for all registry reads. */
+async function fetchJson<T>(url: string, schema: z.ZodType<T>): Promise<T> {
   const response = await fetch(url)
   if (!response.ok) {
     throw new Error(
       `Failed to fetch ${url} (${response.status} ${response.statusText}).`
     )
   }
-  return response.json()
+  const data: unknown = await response.json()
+  return schema.parse(data)
 }
 
 export async function getRegistryIndex(
   registryUrl: string
 ): Promise<RegistryIndex> {
-  const data = await fetchJson(`${registryUrl}/index.json`)
-  return registryIndexSchema.parse(data)
+  return fetchJson(`${registryUrl}/index.json`, registryIndexSchema)
 }
 
 export async function getRegistryItem(
@@ -47,20 +57,21 @@ export async function getRegistryItem(
   const url = /^https?:\/\//.test(name)
     ? name
     : `${registryUrl}/styles/${style}/${name}.json`
-  let data: unknown
   try {
-    data = await fetchJson(url)
+    return await fetchJson(url, registryItemSchema)
   } catch (error) {
+    // A schema mismatch means the fetch succeeded but the payload was not a
+    // valid registry item; keep that distinct from a network/HTTP failure.
+    if (error instanceof z.ZodError) {
+      throw new Error(`Invalid registry item "${name}": ${error.message}`, {
+        cause: error,
+      })
+    }
     const detail = error instanceof Error ? error.message : String(error)
     throw new Error(`Component "${name}" not found in registry.\n${detail}`, {
       cause: error,
     })
   }
-  const parsed = registryItemSchema.safeParse(data)
-  if (!parsed.success) {
-    throw new Error(`Invalid registry item "${name}": ${parsed.error.message}`)
-  }
-  return parsed.data
 }
 
 /**
