@@ -7,6 +7,9 @@ import { styles } from "../registry/registry-styles"
 import { registryItemSchema, type Registry } from "../registry/schema"
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r")
+// Every item in this app targets React; the field is stamped here so a
+// consumer reading a single item JSON knows which framework it belongs to.
+const REGISTRY_FRAMEWORK = "react" as const
 
 type RegistryItemFile = NonNullable<Registry[number]["files"]>[number]
 
@@ -22,6 +25,7 @@ async function buildRegistryIndex(allItems: Registry) {
     )
     .map((item) =>
       Object.assign({}, item, {
+        framework: REGISTRY_FRAMEWORK,
         files: item.files?.map((f) => (isFilePathShorthand(f) ? f : f.path)),
       })
     )
@@ -41,7 +45,14 @@ async function buildStyles(allItems: Registry) {
       if (!item.files) {
         await fs.writeFile(
           path.join(target, `${item.name}.json`),
-          JSON.stringify(registryItemSchema.parse(item), null, 2)
+          JSON.stringify(
+            registryItemSchema.parse({
+              ...item,
+              framework: REGISTRY_FRAMEWORK,
+            }),
+            null,
+            2
+          )
         )
         continue
       }
@@ -55,7 +66,11 @@ async function buildStyles(allItems: Registry) {
           return { ...file, content }
         })
       )
-      const payload = registryItemSchema.parse({ ...item, files })
+      const payload = registryItemSchema.parse({
+        ...item,
+        framework: REGISTRY_FRAMEWORK,
+        files,
+      })
       await fs.writeFile(
         path.join(target, `${item.name}.json`),
         JSON.stringify(payload, null, 2)
