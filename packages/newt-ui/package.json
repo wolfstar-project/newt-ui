@@ -1,6 +1,6 @@
 {
   "name": "@newtui/react",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Deprecated — merged into the unscoped `newtui` package. This wrapper forwards to it.",
   "keywords": [
     "deprecated",
