@@ -64,7 +64,7 @@ npx newtui@latest add button embed status-indicator
 ```tsx
 import { Button } from "@/components/ui/button"
 
-;<Button variant="primary">Primary</Button>
+const component = () => <Button variant="primary">Primary</Button>
 ```
 
 ### Vue / Nuxt
