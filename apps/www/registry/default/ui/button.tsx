@@ -37,20 +37,70 @@ const buttonVariants = cva(
   }
 )
 
+/* The "opens elsewhere" glyph Discord puts on link buttons. */
+const LaunchIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+    className="h-4 w-4 shrink-0"
+  >
+    <path
+      fill="currentColor"
+      d="M10 5a1 1 0 0 0 0 2h6.59L4.3 19.3a1 1 0 1 0 1.4 1.4L18 8.42V15a1 1 0 1 0 2 0V6a1 1 0 0 0-1-1h-9Z"
+    />
+  </svg>
+)
+
 export interface ButtonProps
   extends
     React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
+    VariantProps<typeof buttonVariants> {
+  /** Emoji image URL, rendered before the label. */
+  emoji?: string
+  /** Accessible name for `emoji`; empty (the default) hides it from readers. */
+  emojiAlt?: string
+  /** Link-out glyph after the label. Defaults on for `variant="link"`. */
+  launchIcon?: boolean
+}
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, type = "button", ...props }, ref) => (
-    <button
-      ref={ref}
-      type={type}
-      className={cn(buttonVariants({ variant, size }), className)}
-      {...props}
-    />
-  )
+  (
+    {
+      className,
+      variant,
+      size,
+      type = "button",
+      emoji,
+      emojiAlt = "",
+      launchIcon,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const showLaunch = launchIcon ?? variant === "link"
+    return (
+      <button
+        ref={ref}
+        type={type}
+        className={cn(buttonVariants({ variant, size }), className)}
+        {...props}
+      >
+        {emoji ? (
+          <img
+            src={emoji}
+            alt={emojiAlt}
+            aria-hidden={emojiAlt === "" ? true : undefined}
+            draggable={false}
+            className="h-[1.375em] w-[1.375em] shrink-0 object-contain align-bottom"
+          />
+        ) : null}
+        <span className="truncate">{children}</span>
+        {showLaunch ? <LaunchIcon /> : null}
+      </button>
+    )
+  }
 )
 Button.displayName = "Button"
 

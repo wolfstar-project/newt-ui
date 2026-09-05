@@ -1,7 +1,8 @@
 {
   "name": "divider",
   "title": "Divider",
-  "description": "A horizontal rule with an optional centered label, like Discord's date separators.",
+  "description": "A horizontal rule with an optional centered label, spacing steps and a line-less mode.",
+  "dependencies": ["class-variance-authority"],
   "vueFiles": ["Divider.vue", "index.ts"],
   "reactDemo": "divider-demo",
   "vueDemo": "DividerDemo"

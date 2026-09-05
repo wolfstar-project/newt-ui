@@ -11,7 +11,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
     role="listitem"
     :class="
       cn(
-        'flex cursor-pointer items-center gap-2.5 rounded-sm px-2 py-1.5 transition-colors duration-fast ease-newt hover:bg-newt-bg-hover',
+        'flex min-w-0 cursor-pointer items-center gap-2.5 rounded-sm px-2 py-1.5 transition-colors duration-fast ease-newt hover:bg-newt-bg-hover',
         props.class
       )
     "

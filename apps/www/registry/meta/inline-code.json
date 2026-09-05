@@ -1,0 +1,8 @@
+{
+  "name": "inline-code",
+  "title": "Inline Code",
+  "description": "A monospace pill for code inside a line of message text.",
+  "vueFiles": ["InlineCode.vue", "index.ts"],
+  "reactDemo": "inline-code-demo",
+  "vueDemo": "InlineCodeDemo"
+}

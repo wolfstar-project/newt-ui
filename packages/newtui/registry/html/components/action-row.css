@@ -1,0 +1,13 @@
+/* newt-ui · Action Row (the row of components under a message) */
+
+.newt-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Discord allows five components per row; stack rows to go past that. */
+.newt-action-row + .newt-action-row {
+  margin-top: 8px;
+}

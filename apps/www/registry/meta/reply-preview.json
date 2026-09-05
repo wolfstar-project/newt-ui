@@ -1,11 +1,14 @@
 {
   "name": "reply-preview",
   "title": "Reply Preview",
-  "description": "A compact \"replying to\" bar showing the author and a truncated excerpt of the original message.",
+  "description": "A compact \"replying to\" bar showing the author, a truncated excerpt, or the slash command that was used.",
   "vueFiles": [
     "ReplyPreview.vue",
+    "ReplyPreviewAvatar.vue",
     "ReplyPreviewAuthor.vue",
     "ReplyPreviewText.vue",
+    "ReplyPreviewAction.vue",
+    "ReplyPreviewCommand.vue",
     "index.ts"
   ],
   "reactDemo": "reply-preview-demo",

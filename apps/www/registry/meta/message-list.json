@@ -1,0 +1,9 @@
+{
+  "name": "message-list",
+  "title": "Message List",
+  "description": "The polite live region that logs grouped messages in a channel.",
+  "registryDependencies": ["message-group"],
+  "vueFiles": ["MessageList.vue", "index.ts"],
+  "reactDemo": "message-list-demo",
+  "vueDemo": "MessageListDemo"
+}

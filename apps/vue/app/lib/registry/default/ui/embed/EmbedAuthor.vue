@@ -8,7 +8,13 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
 
 <template>
   <div
-    role="separator"
-    :class="cn('mx-1.5 my-1 h-px bg-newt-border', props.class)"
-  />
+    :class="
+      cn(
+        'flex min-w-0 items-center gap-2 text-[14px] font-semibold text-newt-text-primary',
+        props.class
+      )
+    "
+  >
+    <slot />
+  </div>
 </template>

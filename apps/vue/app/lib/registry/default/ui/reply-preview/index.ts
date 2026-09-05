@@ -1,3 +1,6 @@
 export { default as ReplyPreview } from "./ReplyPreview.vue"
+export { default as ReplyPreviewAvatar } from "./ReplyPreviewAvatar.vue"
 export { default as ReplyPreviewAuthor } from "./ReplyPreviewAuthor.vue"
 export { default as ReplyPreviewText } from "./ReplyPreviewText.vue"
+export { default as ReplyPreviewAction } from "./ReplyPreviewAction.vue"
+export { default as ReplyPreviewCommand } from "./ReplyPreviewCommand.vue"

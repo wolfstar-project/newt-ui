@@ -1,39 +1,17 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { ref } from "vue"
 
-import {
-  SelectMenu,
-  SelectMenuLabel,
-  SelectMenuOption,
-  SelectMenuSearch,
-} from "@/lib/registry/default/ui/select-menu"
+import { SelectMenu } from "@/lib/registry/default/ui/select-menu"
 
-const options = ["Option one", "Option two", "Option three"]
-const selected = ref(options[0])
-const query = ref("")
+const OPTIONS = [
+  { value: "one", label: "Option one", description: "What this option does" },
+  { value: "two", label: "Option two" },
+  { value: "three", label: "Option three", disabled: true },
+]
 
-const visible = computed(() =>
-  options.filter((option) =>
-    option.toLowerCase().includes(query.value.trim().toLowerCase())
-  )
-)
+const value = ref<string>()
 </script>
 
 <template>
-  <SelectMenu aria-label="Select an option">
-    <SelectMenuSearch
-      v-model="query"
-      placeholder="Search…"
-      aria-label="Search options"
-    />
-    <SelectMenuLabel>Options</SelectMenuLabel>
-    <SelectMenuOption
-      v-for="option in visible"
-      :key="option"
-      :selected="option === selected"
-      @click="selected = option"
-    >
-      {{ option }}
-    </SelectMenuOption>
-  </SelectMenu>
+  <SelectMenu v-model="value" :options="OPTIONS" label="Select an option" />
 </template>

@@ -23,6 +23,30 @@ interface RegistryIndexEntry {
 // indexable by an arbitrary string without widening away the entry type.
 const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
   [
+    "ActionRowDemo",
+    {
+      name: "ActionRowDemo",
+      type: "registry:example",
+      registryDependencies: ["action-row"],
+      files: ["app/lib/registry/default/example/ActionRowDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ActionRowDemo.vue")
+      ),
+    },
+  ],
+  [
+    "action-row",
+    {
+      name: "action-row",
+      type: "registry:ui",
+      registryDependencies: ["button"],
+      files: [
+        "app/lib/registry/default/ui/action-row/ActionRow.vue",
+        "app/lib/registry/default/ui/action-row/index.ts",
+      ],
+    },
+  ],
+  [
     "AttachmentDemo",
     {
       name: "AttachmentDemo",
@@ -208,6 +232,32 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ChatDemo",
+    {
+      name: "ChatDemo",
+      type: "registry:example",
+      registryDependencies: ["chat"],
+      files: ["app/lib/registry/default/example/ChatDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChatDemo.vue")
+      ),
+    },
+  ],
+  [
+    "chat",
+    {
+      name: "chat",
+      type: "registry:ui",
+      registryDependencies: ["scrollbar", "message-list", "message-composer"],
+      files: [
+        "app/lib/registry/default/ui/chat/Chat.vue",
+        "app/lib/registry/default/ui/chat/ChatBody.vue",
+        "app/lib/registry/default/ui/chat/ChatFooter.vue",
+        "app/lib/registry/default/ui/chat/index.ts",
+      ],
+    },
+  ],
+  [
     "CodeBlockDemo",
     {
       name: "CodeBlockDemo",
@@ -360,6 +410,9 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "app/lib/registry/default/ui/embed/Embed.vue",
+        "app/lib/registry/default/ui/embed/EmbedAuthor.vue",
+        "app/lib/registry/default/ui/embed/EmbedAuthorIcon.vue",
+        "app/lib/registry/default/ui/embed/EmbedAuthorName.vue",
         "app/lib/registry/default/ui/embed/EmbedEyebrow.vue",
         "app/lib/registry/default/ui/embed/EmbedTitle.vue",
         "app/lib/registry/default/ui/embed/EmbedDescription.vue",
@@ -368,6 +421,9 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/embed/EmbedFieldName.vue",
         "app/lib/registry/default/ui/embed/EmbedFieldValue.vue",
         "app/lib/registry/default/ui/embed/EmbedFooter.vue",
+        "app/lib/registry/default/ui/embed/EmbedFooterIcon.vue",
+        "app/lib/registry/default/ui/embed/EmbedFooterSeparator.vue",
+        "app/lib/registry/default/ui/embed/EmbedTimestamp.vue",
         "app/lib/registry/default/ui/embed/index.ts",
       ],
     },
@@ -431,6 +487,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "InlineCodeDemo",
+    {
+      name: "InlineCodeDemo",
+      type: "registry:example",
+      registryDependencies: ["inline-code"],
+      files: ["app/lib/registry/default/example/InlineCodeDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/InlineCodeDemo.vue")
+      ),
+    },
+  ],
+  [
+    "inline-code",
+    {
+      name: "inline-code",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "app/lib/registry/default/ui/inline-code/InlineCode.vue",
+        "app/lib/registry/default/ui/inline-code/index.ts",
+      ],
+    },
+  ],
+  [
     "KbdTagDemo",
     {
       name: "KbdTagDemo",
@@ -474,9 +554,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: ["avatar", "status-indicator", "role-tag"],
       files: [
         "app/lib/registry/default/ui/member-list/MemberList.vue",
+        "app/lib/registry/default/ui/member-list/MemberListSection.vue",
+        "app/lib/registry/default/ui/member-list/MemberListHeading.vue",
         "app/lib/registry/default/ui/member-list/MemberListItem.vue",
         "app/lib/registry/default/ui/member-list/MemberListInfo.vue",
+        "app/lib/registry/default/ui/member-list/MemberListNameRow.vue",
         "app/lib/registry/default/ui/member-list/MemberListName.vue",
+        "app/lib/registry/default/ui/member-list/MemberListAppTag.vue",
         "app/lib/registry/default/ui/member-list/MemberListRole.vue",
         "app/lib/registry/default/ui/member-list/index.ts",
       ],
@@ -507,6 +591,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "MessageComposerDemo",
+    {
+      name: "MessageComposerDemo",
+      type: "registry:example",
+      registryDependencies: ["message-composer"],
+      files: ["app/lib/registry/default/example/MessageComposerDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/MessageComposerDemo.vue")
+      ),
+    },
+  ],
+  [
+    "message-composer",
+    {
+      name: "message-composer",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "app/lib/registry/default/ui/message-composer/MessageComposer.vue",
+        "app/lib/registry/default/ui/message-composer/index.ts",
+      ],
+    },
+  ],
+  [
     "MessageGroupDemo",
     {
       name: "MessageGroupDemo",
@@ -523,9 +631,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "message-group",
       type: "registry:ui",
-      registryDependencies: ["avatar", "status-indicator", "reaction"],
+      registryDependencies: [
+        "avatar",
+        "reaction",
+        "reply-preview",
+        "status-indicator",
+      ],
       files: [
         "app/lib/registry/default/ui/message-group/MessageGroup.vue",
+        "app/lib/registry/default/ui/message-group/MessageGroupAvatar.vue",
+        "app/lib/registry/default/ui/message-group/MessageGroupReply.vue",
         "app/lib/registry/default/ui/message-group/MessageGroupBody.vue",
         "app/lib/registry/default/ui/message-group/MessageGroupHeader.vue",
         "app/lib/registry/default/ui/message-group/MessageGroupAuthor.vue",
@@ -533,7 +648,33 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/message-group/MessageGroupTime.vue",
         "app/lib/registry/default/ui/message-group/MessageGroupContent.vue",
         "app/lib/registry/default/ui/message-group/MessageGroupReactions.vue",
+        "app/lib/registry/default/ui/message-group/MessageGroupEphemeralNotice.vue",
+        "app/lib/registry/default/ui/message-group/MessageGroupEphemeralAction.vue",
         "app/lib/registry/default/ui/message-group/index.ts",
+      ],
+    },
+  ],
+  [
+    "MessageListDemo",
+    {
+      name: "MessageListDemo",
+      type: "registry:example",
+      registryDependencies: ["message-list"],
+      files: ["app/lib/registry/default/example/MessageListDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/MessageListDemo.vue")
+      ),
+    },
+  ],
+  [
+    "message-list",
+    {
+      name: "message-list",
+      type: "registry:ui",
+      registryDependencies: ["message-group"],
+      files: [
+        "app/lib/registry/default/ui/message-list/MessageList.vue",
+        "app/lib/registry/default/ui/message-list/index.ts",
       ],
     },
   ],
@@ -689,6 +830,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "app/lib/registry/default/ui/reaction/Reaction.vue",
+        "app/lib/registry/default/ui/reaction/ReactionGroup.vue",
         "app/lib/registry/default/ui/reaction/index.ts",
       ],
     },
@@ -713,8 +855,11 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "app/lib/registry/default/ui/reply-preview/ReplyPreview.vue",
+        "app/lib/registry/default/ui/reply-preview/ReplyPreviewAvatar.vue",
         "app/lib/registry/default/ui/reply-preview/ReplyPreviewAuthor.vue",
         "app/lib/registry/default/ui/reply-preview/ReplyPreviewText.vue",
+        "app/lib/registry/default/ui/reply-preview/ReplyPreviewAction.vue",
+        "app/lib/registry/default/ui/reply-preview/ReplyPreviewCommand.vue",
         "app/lib/registry/default/ui/reply-preview/index.ts",
       ],
     },
@@ -788,10 +933,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "app/lib/registry/default/ui/select-menu/SelectMenu.vue",
-        "app/lib/registry/default/ui/select-menu/SelectMenuSearch.vue",
-        "app/lib/registry/default/ui/select-menu/SelectMenuLabel.vue",
-        "app/lib/registry/default/ui/select-menu/SelectMenuOption.vue",
-        "app/lib/registry/default/ui/select-menu/SelectMenuDivider.vue",
         "app/lib/registry/default/ui/select-menu/index.ts",
       ],
     },

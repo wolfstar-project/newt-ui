@@ -1,15 +1,18 @@
 import {
   newtTokens,
+  newtTokensLight,
   tailwindV3Theme,
   tailwindV4Theme,
 } from "@/registry/registry-tokens"
 import { Registry } from "@/registry/schema"
 
 /**
- * newt/ui ships a single Discord-inspired dark theme driven by --newt-* vars.
+ * newt/ui ships a Discord-inspired dark theme driven by --newt-* vars, plus
+ * an opt-in light surface set that overrides a subset of them.
  *
  * The item carries the tokens three ways so one registry serves both Tailwind
- * versions: `cssVars.dark` holds the raw variables, `cssVars.theme` the v4
+ * versions: `cssVars.dark` holds the raw variables, `cssVars.light` the light
+ * overrides, `cssVars.theme` the v4
  * `@theme` entries, and `tailwind.config.theme` the v3 `theme.extend`.
  */
 export const themes: Registry = [
@@ -22,6 +25,7 @@ export const themes: Registry = [
     cssVars: {
       theme: tailwindV4Theme,
       dark: newtTokens,
+      light: newtTokensLight,
     },
     tailwind: { config: { theme: { extend: tailwindV3Theme } } },
   },

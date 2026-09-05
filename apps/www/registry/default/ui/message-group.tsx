@@ -2,23 +2,74 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-const MessageGroup = React.forwardRef<
+export interface MessageGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * Lay the row out as a 2x2 grid so a `MessageGroupReply` can hook over the
+   * avatar, the way the client stacks a reply above the message it answers.
+   */
+  withReply?: boolean
+  /** Tint the row as an ephemeral (visible-to-you-only) response. */
+  ephemeral?: boolean
+}
+
+const MessageGroup = React.forwardRef<HTMLDivElement, MessageGroupProps>(
+  ({ className, withReply = false, ephemeral = false, ...props }, ref) => (
+    <div
+      ref={ref}
+      data-slot="message-row"
+      data-ephemeral={ephemeral || undefined}
+      className={cn(
+        "gap-4 py-1",
+        withReply
+          ? "grid grid-cols-[auto_minmax(0,1fr)] grid-rows-[auto_auto] items-start [&>[data-slot=message-avatar]]:col-start-1 [&>[data-slot=message-avatar]]:row-start-2 [&>[data-slot=message-body]]:col-start-2 [&>[data-slot=message-body]]:row-start-2 [&>[data-slot=message-reply]]:col-start-2 [&>[data-slot=message-reply]]:row-start-1"
+          : "flex",
+        ephemeral
+          ? "border-l-2 border-[color-mix(in_srgb,var(--newt-text-link)_40%,transparent)] bg-[color-mix(in_srgb,var(--newt-text-link)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--newt-text-link)_15%,transparent)]"
+          : "hover:bg-black/[0.06]",
+        className
+      )}
+      {...props}
+    />
+  )
+)
+MessageGroup.displayName = "MessageGroup"
+
+const MessageGroupAvatar = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex gap-4 py-1 hover:bg-black/[0.06]", className)}
+    data-slot="message-avatar"
+    className={cn("shrink-0", className)}
     {...props}
   />
 ))
-MessageGroup.displayName = "MessageGroup"
+MessageGroupAvatar.displayName = "MessageGroupAvatar"
+
+const MessageGroupReply = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    data-slot="message-reply"
+    className={cn("min-w-0", className)}
+    {...props}
+  />
+))
+MessageGroupReply.displayName = "MessageGroupReply"
 
 const MessageGroupBody = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("min-w-0 flex-1", className)} {...props} />
+  <div
+    ref={ref}
+    data-slot="message-body"
+    className={cn("min-w-0 flex-1", className)}
+    {...props}
+  />
 ))
 MessageGroupBody.displayName = "MessageGroupBody"
 
@@ -49,28 +100,49 @@ const MessageGroupAuthor = React.forwardRef<
 ))
 MessageGroupAuthor.displayName = "MessageGroupAuthor"
 
+export interface MessageGroupBotTagProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** Add the check Discord puts on verified applications. */
+  verified?: boolean
+}
+
 const MessageGroupBotTag = React.forwardRef<
   HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement>
->(({ className, children = "BOT", ...props }, ref) => (
+  MessageGroupBotTagProps
+>(({ className, verified = false, children = "BOT", ...props }, ref) => (
   <span
     ref={ref}
+    role="img"
+    aria-label={verified ? "Verified application" : "Application"}
     className={cn(
-      "rounded-[3px] bg-newt-brand px-1 py-px text-[10px] font-semibold uppercase tracking-[0.02em] text-white",
+      "inline-flex items-center gap-0.5 rounded-[3px] bg-newt-brand px-1 py-px text-[10px] font-semibold uppercase tracking-[0.02em] text-white",
       className
     )}
     {...props}
   >
+    {verified ? (
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+        className="h-2.5 w-2.5"
+      >
+        <path
+          fill="currentColor"
+          d="M9.55 17.6 4.4 12.45l1.4-1.4 3.75 3.75 8.65-8.65 1.4 1.4z"
+        />
+      </svg>
+    ) : null}
     {children}
   </span>
 ))
 MessageGroupBotTag.displayName = "MessageGroupBotTag"
 
+/* A real `<time>`: the timestamp is machine-readable, not just small text. */
 const MessageGroupTime = React.forwardRef<
-  HTMLSpanElement,
-  React.TimeHTMLAttributes<HTMLSpanElement>
+  HTMLTimeElement,
+  React.ComponentProps<"time">
 >(({ className, ...props }, ref) => (
-  <span
+  <time
     ref={ref}
     className={cn("text-[11px] text-newt-text-muted", className)}
     {...props}
@@ -105,8 +177,46 @@ const MessageGroupReactions = React.forwardRef<
 ))
 MessageGroupReactions.displayName = "MessageGroupReactions"
 
+/*
+ * The "only you can see this" footer Discord shows under an ephemeral reply.
+ * Children replace the default copy; the dismiss control is the caller's.
+ */
+const MessageGroupEphemeralNotice = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="status"
+    className={cn(
+      "mt-1.5 flex items-center gap-1 text-[13px] text-newt-text-muted",
+      className
+    )}
+    {...props}
+  />
+))
+MessageGroupEphemeralNotice.displayName = "MessageGroupEphemeralNotice"
+
+const MessageGroupEphemeralAction = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button">
+>(({ className, type = "button", ...props }, ref) => (
+  <button
+    ref={ref}
+    type={type}
+    className={cn(
+      "cursor-pointer border-0 bg-transparent p-0 font-[inherit] text-newt-text-link hover:underline",
+      className
+    )}
+    {...props}
+  />
+))
+MessageGroupEphemeralAction.displayName = "MessageGroupEphemeralAction"
+
 export {
   MessageGroup,
+  MessageGroupAvatar,
+  MessageGroupReply,
   MessageGroupBody,
   MessageGroupHeader,
   MessageGroupAuthor,
@@ -114,4 +224,6 @@ export {
   MessageGroupTime,
   MessageGroupContent,
   MessageGroupReactions,
+  MessageGroupEphemeralNotice,
+  MessageGroupEphemeralAction,
 }

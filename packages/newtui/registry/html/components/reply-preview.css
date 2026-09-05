@@ -1,35 +1,87 @@
-/* newt-ui · Reply Preview (Discord "replying to" bar) */
+/* newt-ui · Reply Preview (Discord-inspired "replying to" bar) */
 
 .newt-reply {
+  /* Override any of these to reshape the spine without touching the rule. */
+  --newt-reply-spine-width: 2px;
+  --newt-reply-spine-color: var(--newt-border);
+  --newt-reply-spine-size: 12px;
+  --newt-reply-spine-radius: 6px;
+
+  position: relative;
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
-  color: var(--newt-text-muted);
+  min-width: 0;
   margin-bottom: 4px;
-  padding-left: 18px;
-  position: relative;
+  padding-left: calc(var(--newt-reply-spine-size) + 6px);
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--newt-text-muted);
 }
+
+/* The elbow that hooks the preview back up to the message above it. */
 .newt-reply::before {
   content: "";
   position: absolute;
   left: 0;
   top: 50%;
-  width: 12px;
-  height: 12px;
-  border-left: 2px solid var(--newt-border);
-  border-top: 2px solid var(--newt-border);
-  border-radius: 6px 0 0 0;
+  width: var(--newt-reply-spine-size);
+  height: var(--newt-reply-spine-size);
+  border-left: var(--newt-reply-spine-width) solid var(--newt-reply-spine-color);
+  border-top: var(--newt-reply-spine-width) solid var(--newt-reply-spine-color);
+  border-top-left-radius: var(--newt-reply-spine-radius);
   transform: translateY(-100%);
 }
+
+.newt-reply__avatar {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--newt-radius-full);
+  object-fit: cover;
+}
+
 .newt-reply__author {
+  flex-shrink: 0;
   color: var(--newt-text-link);
   font-weight: 500;
 }
+
 .newt-reply__text {
-  color: var(--newt-text-muted);
+  min-width: 0;
+  max-width: 360px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 360px;
+  color: var(--newt-text-muted);
+}
+
+/* "used" — the verb between the author and an interaction chip. */
+.newt-reply__action {
+  flex-shrink: 0;
+}
+
+/* The command chip shown when the reply is a slash-command interaction. */
+.newt-reply__command {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  padding: 0 4px;
+  border-radius: var(--newt-radius-sm);
+  background: color-mix(in srgb, var(--newt-brand) 15%, transparent);
+  color: var(--newt-mention-text);
+  font-weight: 500;
+}
+
+.newt-reply__command-icon {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+}
+
+.newt-reply__command-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

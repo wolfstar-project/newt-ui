@@ -15,7 +15,7 @@ export const timelineDotVariants = cva(
         default: "",
         success: "border-newt-online text-newt-online",
         danger: "border-newt-dnd text-newt-dnd",
-        brand: "border-newt-brand text-[#b3baff]",
+        brand: "border-newt-brand text-newt-mention-text",
       },
     },
     defaultVariants: {

@@ -3,6 +3,17 @@ import type { Registry } from "./schema"
 
 export const examples: Registry = [
   {
+    name: "ActionRowDemo",
+    type: "registry:example",
+    registryDependencies: ["action-row"],
+    files: [
+      {
+        path: "example/ActionRowDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AttachmentDemo",
     type: "registry:example",
     registryDependencies: ["attachment"],
@@ -75,6 +86,17 @@ export const examples: Registry = [
     files: [
       {
         path: "example/ChannelTopicDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ChatDemo",
+    type: "registry:example",
+    registryDependencies: ["chat"],
+    files: [
+      {
+        path: "example/ChatDemo.vue",
         type: "registry:example",
       },
     ],
@@ -168,6 +190,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "InlineCodeDemo",
+    type: "registry:example",
+    registryDependencies: ["inline-code"],
+    files: [
+      {
+        path: "example/InlineCodeDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "KbdTagDemo",
     type: "registry:example",
     registryDependencies: ["kbd-tag"],
@@ -201,12 +234,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "MessageComposerDemo",
+    type: "registry:example",
+    registryDependencies: ["message-composer"],
+    files: [
+      {
+        path: "example/MessageComposerDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "MessageGroupDemo",
     type: "registry:example",
     registryDependencies: ["message-group"],
     files: [
       {
         path: "example/MessageGroupDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "MessageListDemo",
+    type: "registry:example",
+    registryDependencies: ["message-list"],
+    files: [
+      {
+        path: "example/MessageListDemo.vue",
         type: "registry:example",
       },
     ],

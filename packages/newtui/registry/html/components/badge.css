@@ -15,7 +15,7 @@
 
 .newt-badge--brand {
   background: rgba(88, 101, 242, 0.15);
-  color: #b3baff;
+  color: var(--newt-mention-text);
 }
 .newt-badge--success {
   background: rgba(35, 165, 90, 0.15);
@@ -23,7 +23,7 @@
 }
 .newt-badge--warning {
   background: rgba(240, 178, 50, 0.15);
-  color: #f3b95f;
+  color: var(--newt-mention-role);
 }
 .newt-badge--danger {
   background: rgba(242, 63, 66, 0.15);
