@@ -1,0 +1,19 @@
+{
+  "name": "invite",
+  "title": "Invite",
+  "description": "The server invite card a link unfurls into inside a message.",
+  "registryDependencies": ["button"],
+  "vueFiles": [
+    "Invite.vue",
+    "InviteEyebrow.vue",
+    "InviteBody.vue",
+    "InviteIcon.vue",
+    "InviteInfo.vue",
+    "InviteName.vue",
+    "InviteCounts.vue",
+    "InviteCount.vue",
+    "index.ts"
+  ],
+  "reactDemo": "invite-demo",
+  "vueDemo": "InviteDemo"
+}

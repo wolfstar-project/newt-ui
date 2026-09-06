@@ -1,0 +1,6 @@
+export { default as ChannelWelcome } from "./ChannelWelcome.vue"
+export { default as ChannelWelcomeIcon } from "./ChannelWelcomeIcon.vue"
+export { default as ChannelWelcomeTitle } from "./ChannelWelcomeTitle.vue"
+export { default as ChannelWelcomeDescription } from "./ChannelWelcomeDescription.vue"
+export { default as ChannelWelcomeAction } from "./ChannelWelcomeAction.vue"
+export { default as ChannelWelcomeDate } from "./ChannelWelcomeDate.vue"

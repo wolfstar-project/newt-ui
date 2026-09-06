@@ -25,6 +25,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "app-launcher",
+    {
+      name: "app-launcher",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/default/ui/app-launcher.tsx"],
+      component: React.lazy(() => import("@/registry/default/ui/app-launcher")),
+    },
+  ],
+  [
     "attachment",
     {
       name: "attachment",
@@ -87,6 +97,28 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "channel-header",
+    {
+      name: "channel-header",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/default/ui/channel-header.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/ui/channel-header")
+      ),
+    },
+  ],
+  [
+    "channel-info",
+    {
+      name: "channel-info",
+      type: "registry:ui",
+      registryDependencies: ["tabs"],
+      files: ["registry/default/ui/channel-info.tsx"],
+      component: React.lazy(() => import("@/registry/default/ui/channel-info")),
+    },
+  ],
+  [
     "channel-topic",
     {
       name: "channel-topic",
@@ -95,6 +127,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/ui/channel-topic.tsx"],
       component: React.lazy(
         () => import("@/registry/default/ui/channel-topic")
+      ),
+    },
+  ],
+  [
+    "channel-welcome",
+    {
+      name: "channel-welcome",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/default/ui/channel-welcome.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/ui/channel-welcome")
       ),
     },
   ],
@@ -196,6 +240,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: ["registry/default/ui/inline-code.tsx"],
       component: React.lazy(() => import("@/registry/default/ui/inline-code")),
+    },
+  ],
+  [
+    "invite",
+    {
+      name: "invite",
+      type: "registry:ui",
+      registryDependencies: ["button"],
+      files: ["registry/default/ui/invite.tsx"],
+      component: React.lazy(() => import("@/registry/default/ui/invite")),
     },
   ],
   [
@@ -404,6 +458,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "slash-command-suggestions",
+    {
+      name: "slash-command-suggestions",
+      type: "registry:ui",
+      registryDependencies: ["slash-command"],
+      files: ["registry/default/ui/slash-command-suggestions.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/ui/slash-command-suggestions")
+      ),
+    },
+  ],
+  [
     "spoiler",
     {
       name: "spoiler",
@@ -513,6 +579,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "v2-container",
+    {
+      name: "v2-container",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/default/ui/v2-container.tsx"],
+      component: React.lazy(() => import("@/registry/default/ui/v2-container")),
+    },
+  ],
+  [
     "voice-channel",
     {
       name: "voice-channel",
@@ -533,6 +609,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/example/action-row-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/default/example/action-row-demo")
+      ),
+    },
+  ],
+  [
+    "app-launcher-demo",
+    {
+      name: "app-launcher-demo",
+      type: "registry:example",
+      registryDependencies: ["app-launcher"],
+      files: ["registry/default/example/app-launcher-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/app-launcher-demo")
       ),
     },
   ],
@@ -609,6 +697,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "channel-header-demo",
+    {
+      name: "channel-header-demo",
+      type: "registry:example",
+      registryDependencies: ["channel-header"],
+      files: ["registry/default/example/channel-header-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/channel-header-demo")
+      ),
+    },
+  ],
+  [
+    "channel-info-demo",
+    {
+      name: "channel-info-demo",
+      type: "registry:example",
+      registryDependencies: ["channel-info"],
+      files: ["registry/default/example/channel-info-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/channel-info-demo")
+      ),
+    },
+  ],
+  [
     "channel-topic-demo",
     {
       name: "channel-topic-demo",
@@ -617,6 +729,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/example/channel-topic-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/default/example/channel-topic-demo")
+      ),
+    },
+  ],
+  [
+    "channel-welcome-demo",
+    {
+      name: "channel-welcome-demo",
+      type: "registry:example",
+      registryDependencies: ["channel-welcome"],
+      files: ["registry/default/example/channel-welcome-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/channel-welcome-demo")
       ),
     },
   ],
@@ -737,6 +861,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/example/inline-code-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/default/example/inline-code-demo")
+      ),
+    },
+  ],
+  [
+    "invite-demo",
+    {
+      name: "invite-demo",
+      type: "registry:example",
+      registryDependencies: ["invite"],
+      files: ["registry/default/example/invite-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/invite-demo")
       ),
     },
   ],
@@ -969,6 +1105,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "slash-command-suggestions-demo",
+    {
+      name: "slash-command-suggestions-demo",
+      type: "registry:example",
+      registryDependencies: ["slash-command-suggestions"],
+      files: ["registry/default/example/slash-command-suggestions-demo.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/default/example/slash-command-suggestions-demo")
+      ),
+    },
+  ],
+  [
     "spoiler-demo",
     {
       name: "spoiler-demo",
@@ -1085,6 +1234,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/example/user-profile-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/default/example/user-profile-demo")
+      ),
+    },
+  ],
+  [
+    "v2-container-demo",
+    {
+      name: "v2-container-demo",
+      type: "registry:example",
+      registryDependencies: ["v2-container"],
+      files: ["registry/default/example/v2-container-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/v2-container-demo")
       ),
     },
   ],

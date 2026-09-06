@@ -1,0 +1,26 @@
+{
+  "name": "app-launcher",
+  "title": "App Launcher",
+  "description": "The Apps popout, with search, a recents strip and the apps installed in a server.",
+  "vueFiles": [
+    "AppLauncher.vue",
+    "AppLauncherHandle.vue",
+    "AppLauncherHeader.vue",
+    "AppLauncherBack.vue",
+    "AppLauncherSearch.vue",
+    "AppLauncherSearchInput.vue",
+    "AppLauncherBody.vue",
+    "AppLauncherSection.vue",
+    "AppLauncherSectionHeader.vue",
+    "AppLauncherSectionTitle.vue",
+    "AppLauncherViewMore.vue",
+    "AppLauncherList.vue",
+    "AppLauncherItem.vue",
+    "AppLauncherItemIcon.vue",
+    "AppLauncherRecents.vue",
+    "AppLauncherRecent.vue",
+    "index.ts"
+  ],
+  "reactDemo": "app-launcher-demo",
+  "vueDemo": "AppLauncherDemo"
+}

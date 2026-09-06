@@ -18,6 +18,19 @@
       "framework": "react"
     },
     {
+      "name": "app-launcher",
+      "type": "registry:ui",
+      "title": "App Launcher",
+      "description": "The Apps popout, with search, a recents strip and the apps installed in a server.",
+      "files": [
+        {
+          "path": "registry/default/ui/app-launcher.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "attachment",
       "type": "registry:ui",
       "title": "Attachment Card",
@@ -101,6 +114,33 @@
       "framework": "react"
     },
     {
+      "name": "channel-header",
+      "type": "registry:ui",
+      "title": "Channel Header",
+      "description": "The bar above the message list, with the channel name, topic and channel actions.",
+      "files": [
+        {
+          "path": "registry/default/ui/channel-header.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "channel-info",
+      "type": "registry:ui",
+      "title": "Channel Info",
+      "description": "The channel detail panel that covers a channel on narrow screens.",
+      "registryDependencies": ["tabs"],
+      "files": [
+        {
+          "path": "registry/default/ui/channel-info.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "channel-topic",
       "type": "registry:ui",
       "title": "Channel Topic Bar",
@@ -108,6 +148,19 @@
       "files": [
         {
           "path": "registry/default/ui/channel-topic.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "channel-welcome",
+      "type": "registry:ui",
+      "title": "Channel Welcome",
+      "description": "The header that opens a channel, shown above its very first message.",
+      "files": [
+        {
+          "path": "registry/default/ui/channel-welcome.tsx",
           "type": "registry:ui"
         }
       ],
@@ -242,6 +295,20 @@
       "files": [
         {
           "path": "registry/default/ui/inline-code.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "invite",
+      "type": "registry:ui",
+      "title": "Invite",
+      "description": "The server invite card a link unfurls into inside a message.",
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/default/ui/invite.tsx",
           "type": "registry:ui"
         }
       ],
@@ -514,6 +581,21 @@
       "framework": "react"
     },
     {
+      "name": "slash-command-suggestions",
+      "type": "registry:ui",
+      "title": "Slash Command Suggestions",
+      "description": "The command picker that opens above the composer, with an app rail, grouped options and a matched-command preview.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["slash-command"],
+      "files": [
+        {
+          "path": "registry/default/ui/slash-command-suggestions.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "spoiler",
       "type": "registry:ui",
       "title": "Spoiler",
@@ -650,6 +732,19 @@
       "files": [
         {
           "path": "registry/default/ui/user-profile.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "v2-container",
+      "type": "registry:ui",
+      "title": "V2 Container",
+      "description": "The Components V2 block that groups text, separators and action rows behind one accent bar.",
+      "files": [
+        {
+          "path": "registry/default/ui/v2-container.tsx",
           "type": "registry:ui"
         }
       ],

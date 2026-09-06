@@ -1,0 +1,178 @@
+/* newt-ui · Slash Command Suggestions (the `/` picker above the composer) */
+
+.newt-slash-suggestions {
+  display: flex;
+  width: 100%;
+  max-width: 640px;
+  max-height: 320px;
+  overflow: hidden;
+  border-radius: var(--newt-radius-lg);
+  background: var(--newt-bg-floating);
+  box-shadow: var(--newt-shadow-elevation-high);
+  color: var(--newt-text-primary);
+}
+
+/* Vertical strip of app icons that filters the list by app. */
+.newt-slash-suggestions__rail {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  overflow-y: auto;
+  padding: 8px;
+  border-right: 1px solid var(--newt-border);
+  background: var(--newt-bg-base);
+}
+
+.newt-slash-suggestions__rail-item {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-full);
+  background: transparent;
+  color: var(--newt-text-muted);
+  cursor: pointer;
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-slash-suggestions__rail-item:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+.newt-slash-suggestions__rail-item[data-state="active"] {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+}
+.newt-slash-suggestions__rail-item:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.newt-slash-suggestions__list {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+/* Sticky section header, as used by the "Frequently Used" block. */
+.newt-slash-suggestions__header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 6px 8px;
+  background: var(--newt-bg-floating);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.newt-slash-suggestions__group {
+  min-width: 0;
+}
+
+.newt-slash-suggestions__app-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-muted);
+}
+.newt-slash-suggestions__app-icon--header {
+  width: 16px;
+  height: 16px;
+}
+.newt-slash-suggestions__app-icon--rail {
+  width: 32px;
+  height: 32px;
+}
+.newt-slash-suggestions__app-icon > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.newt-slash-suggestions__app-icon > svg {
+  width: 50%;
+  height: 50%;
+}
+
+.newt-slash-suggestions__option {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 6px 8px;
+  border-radius: var(--newt-radius-md);
+  cursor: pointer;
+}
+.newt-slash-suggestions__option:hover {
+  background: var(--newt-bg-hover);
+}
+.newt-slash-suggestions__option[data-state="active"] {
+  background: var(--newt-bg-active);
+}
+.newt-slash-suggestions__option[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: default;
+  background: none;
+}
+
+.newt-slash-suggestions__option-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.newt-slash-suggestions__option-name {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--newt-text-primary);
+}
+
+.newt-slash-suggestions__option-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--newt-text-muted);
+}
+
+.newt-slash-suggestions__option-app {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--newt-text-muted);
+}
+
+/* Row that previews the command already typed. */
+.newt-slash-suggestions__matched {
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: var(--newt-radius-md);
+  cursor: pointer;
+}
+.newt-slash-suggestions__matched:hover {
+  background: var(--newt-bg-hover);
+}
+.newt-slash-suggestions__matched[data-state="active"] {
+  background: var(--newt-bg-active);
+}

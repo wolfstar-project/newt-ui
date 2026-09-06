@@ -16,6 +16,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "app-launcher",
+    type: "registry:ui",
+    title: "App Launcher",
+    description:
+      "The Apps popout, with search, a recents strip and the apps installed in a server.",
+    files: [
+      {
+        path: "ui/app-launcher.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "attachment",
     type: "registry:ui",
     title: "Attachment Card",
@@ -97,6 +110,33 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "channel-header",
+    type: "registry:ui",
+    title: "Channel Header",
+    description:
+      "The bar above the message list, with the channel name, topic and channel actions.",
+    files: [
+      {
+        path: "ui/channel-header.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-info",
+    type: "registry:ui",
+    title: "Channel Info",
+    description:
+      "The channel detail panel that covers a channel on narrow screens.",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "ui/channel-info.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "channel-topic",
     type: "registry:ui",
     title: "Channel Topic Bar",
@@ -105,6 +145,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/channel-topic.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-welcome",
+    type: "registry:ui",
+    title: "Channel Welcome",
+    description:
+      "The header that opens a channel, shown above its very first message.",
+    files: [
+      {
+        path: "ui/channel-welcome.tsx",
         type: "registry:ui",
       },
     ],
@@ -238,6 +291,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/inline-code.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "invite",
+    type: "registry:ui",
+    title: "Invite",
+    description: "The server invite card a link unfurls into inside a message.",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "ui/invite.tsx",
         type: "registry:ui",
       },
     ],
@@ -507,6 +573,21 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "slash-command-suggestions",
+    type: "registry:ui",
+    title: "Slash Command Suggestions",
+    description:
+      "The command picker that opens above the composer, with an app rail, grouped options and a matched-command preview.",
+    dependencies: ["class-variance-authority"],
+    registryDependencies: ["slash-command"],
+    files: [
+      {
+        path: "ui/slash-command-suggestions.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "spoiler",
     type: "registry:ui",
     title: "Spoiler",
@@ -638,6 +719,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/user-profile.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "v2-container",
+    type: "registry:ui",
+    title: "V2 Container",
+    description:
+      "The Components V2 block that groups text, separators and action rows behind one accent bar.",
+    files: [
+      {
+        path: "ui/v2-container.tsx",
         type: "registry:ui",
       },
     ],

@@ -47,6 +47,45 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "AppLauncherDemo",
+    {
+      name: "AppLauncherDemo",
+      type: "registry:example",
+      registryDependencies: ["app-launcher"],
+      files: ["app/lib/registry/default/example/AppLauncherDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/AppLauncherDemo.vue")
+      ),
+    },
+  ],
+  [
+    "app-launcher",
+    {
+      name: "app-launcher",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "app/lib/registry/default/ui/app-launcher/AppLauncher.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherHandle.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherHeader.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherBack.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherSearch.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherSearchInput.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherBody.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherSection.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherSectionHeader.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherSectionTitle.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherViewMore.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherList.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherItem.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherItemIcon.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherRecents.vue",
+        "app/lib/registry/default/ui/app-launcher/AppLauncherRecent.vue",
+        "app/lib/registry/default/ui/app-launcher/index.ts",
+      ],
+    },
+  ],
+  [
     "AttachmentDemo",
     {
       name: "AttachmentDemo",
@@ -204,6 +243,75 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ChannelHeaderDemo",
+    {
+      name: "ChannelHeaderDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-header"],
+      files: ["app/lib/registry/default/example/ChannelHeaderDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChannelHeaderDemo.vue")
+      ),
+    },
+  ],
+  [
+    "channel-header",
+    {
+      name: "channel-header",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "app/lib/registry/default/ui/channel-header/ChannelHeader.vue",
+        "app/lib/registry/default/ui/channel-header/ChannelHeaderInfo.vue",
+        "app/lib/registry/default/ui/channel-header/ChannelHeaderIcon.vue",
+        "app/lib/registry/default/ui/channel-header/ChannelHeaderName.vue",
+        "app/lib/registry/default/ui/channel-header/ChannelHeaderDivider.vue",
+        "app/lib/registry/default/ui/channel-header/ChannelHeaderTopic.vue",
+        "app/lib/registry/default/ui/channel-header/ChannelHeaderToolbar.vue",
+        "app/lib/registry/default/ui/channel-header/ChannelHeaderAction.vue",
+        "app/lib/registry/default/ui/channel-header/ChannelHeaderSearch.vue",
+        "app/lib/registry/default/ui/channel-header/ChannelHeaderOnline.vue",
+        "app/lib/registry/default/ui/channel-header/index.ts",
+      ],
+    },
+  ],
+  [
+    "ChannelInfoDemo",
+    {
+      name: "ChannelInfoDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-info"],
+      files: ["app/lib/registry/default/example/ChannelInfoDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChannelInfoDemo.vue")
+      ),
+    },
+  ],
+  [
+    "channel-info",
+    {
+      name: "channel-info",
+      type: "registry:ui",
+      registryDependencies: ["tabs"],
+      files: [
+        "app/lib/registry/default/ui/channel-info/ChannelInfo.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoToolbar.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoActions.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoAction.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoIdentity.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoIcon.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoName.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoType.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoPanel.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoEmpty.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoEmptyIcon.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoEmptyTitle.vue",
+        "app/lib/registry/default/ui/channel-info/ChannelInfoEmptyBody.vue",
+        "app/lib/registry/default/ui/channel-info/index.ts",
+      ],
+    },
+  ],
+  [
     "ChannelTopicDemo",
     {
       name: "ChannelTopicDemo",
@@ -228,6 +336,35 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/channel-topic/ChannelTopicDivider.vue",
         "app/lib/registry/default/ui/channel-topic/ChannelTopicDescription.vue",
         "app/lib/registry/default/ui/channel-topic/index.ts",
+      ],
+    },
+  ],
+  [
+    "ChannelWelcomeDemo",
+    {
+      name: "ChannelWelcomeDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-welcome"],
+      files: ["app/lib/registry/default/example/ChannelWelcomeDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChannelWelcomeDemo.vue")
+      ),
+    },
+  ],
+  [
+    "channel-welcome",
+    {
+      name: "channel-welcome",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "app/lib/registry/default/ui/channel-welcome/ChannelWelcome.vue",
+        "app/lib/registry/default/ui/channel-welcome/ChannelWelcomeIcon.vue",
+        "app/lib/registry/default/ui/channel-welcome/ChannelWelcomeTitle.vue",
+        "app/lib/registry/default/ui/channel-welcome/ChannelWelcomeDescription.vue",
+        "app/lib/registry/default/ui/channel-welcome/ChannelWelcomeAction.vue",
+        "app/lib/registry/default/ui/channel-welcome/ChannelWelcomeDate.vue",
+        "app/lib/registry/default/ui/channel-welcome/index.ts",
       ],
     },
   ],
@@ -507,6 +644,37 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: [
         "app/lib/registry/default/ui/inline-code/InlineCode.vue",
         "app/lib/registry/default/ui/inline-code/index.ts",
+      ],
+    },
+  ],
+  [
+    "InviteDemo",
+    {
+      name: "InviteDemo",
+      type: "registry:example",
+      registryDependencies: ["invite"],
+      files: ["app/lib/registry/default/example/InviteDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/InviteDemo.vue")
+      ),
+    },
+  ],
+  [
+    "invite",
+    {
+      name: "invite",
+      type: "registry:ui",
+      registryDependencies: ["button"],
+      files: [
+        "app/lib/registry/default/ui/invite/Invite.vue",
+        "app/lib/registry/default/ui/invite/InviteEyebrow.vue",
+        "app/lib/registry/default/ui/invite/InviteBody.vue",
+        "app/lib/registry/default/ui/invite/InviteIcon.vue",
+        "app/lib/registry/default/ui/invite/InviteInfo.vue",
+        "app/lib/registry/default/ui/invite/InviteName.vue",
+        "app/lib/registry/default/ui/invite/InviteCounts.vue",
+        "app/lib/registry/default/ui/invite/InviteCount.vue",
+        "app/lib/registry/default/ui/invite/index.ts",
       ],
     },
   ],
@@ -1015,6 +1183,41 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "SlashCommandSuggestionsDemo",
+    {
+      name: "SlashCommandSuggestionsDemo",
+      type: "registry:example",
+      registryDependencies: ["slash-command-suggestions"],
+      files: [
+        "app/lib/registry/default/example/SlashCommandSuggestionsDemo.vue",
+      ],
+      component: defineAsyncComponent(
+        () =>
+          import("@/lib/registry/default/example/SlashCommandSuggestionsDemo.vue")
+      ),
+    },
+  ],
+  [
+    "slash-command-suggestions",
+    {
+      name: "slash-command-suggestions",
+      type: "registry:ui",
+      registryDependencies: ["slash-command"],
+      files: [
+        "app/lib/registry/default/ui/slash-command-suggestions/SlashCommandSuggestions.vue",
+        "app/lib/registry/default/ui/slash-command-suggestions/SlashCommandSuggestionsRail.vue",
+        "app/lib/registry/default/ui/slash-command-suggestions/SlashCommandSuggestionsRailItem.vue",
+        "app/lib/registry/default/ui/slash-command-suggestions/SlashCommandSuggestionsList.vue",
+        "app/lib/registry/default/ui/slash-command-suggestions/SlashCommandSuggestionsHeader.vue",
+        "app/lib/registry/default/ui/slash-command-suggestions/SlashCommandSuggestionGroup.vue",
+        "app/lib/registry/default/ui/slash-command-suggestions/SlashCommandAppIcon.vue",
+        "app/lib/registry/default/ui/slash-command-suggestions/SlashCommandSuggestion.vue",
+        "app/lib/registry/default/ui/slash-command-suggestions/SlashCommandSuggestionMatched.vue",
+        "app/lib/registry/default/ui/slash-command-suggestions/index.ts",
+      ],
+    },
+  ],
+  [
     "SpoilerDemo",
     {
       name: "SpoilerDemo",
@@ -1286,6 +1489,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/user-profile/UserProfileBio.vue",
         "app/lib/registry/default/ui/user-profile/UserProfileRoles.vue",
         "app/lib/registry/default/ui/user-profile/index.ts",
+      ],
+    },
+  ],
+  [
+    "V2ContainerDemo",
+    {
+      name: "V2ContainerDemo",
+      type: "registry:example",
+      registryDependencies: ["v2-container"],
+      files: ["app/lib/registry/default/example/V2ContainerDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/V2ContainerDemo.vue")
+      ),
+    },
+  ],
+  [
+    "v2-container",
+    {
+      name: "v2-container",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "app/lib/registry/default/ui/v2-container/V2Container.vue",
+        "app/lib/registry/default/ui/v2-container/index.ts",
       ],
     },
   ],

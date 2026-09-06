@@ -2,13 +2,17 @@
 import type * as React from "react"
 
 import ActionRowDemo from "@/registry/default/example/action-row-demo"
+import AppLauncherDemo from "@/registry/default/example/app-launcher-demo"
 import AttachmentDemo from "@/registry/default/example/attachment-demo"
 import AvatarDemo from "@/registry/default/example/avatar-demo"
 import BadgeDemo from "@/registry/default/example/badge-demo"
 import BotCommandCardDemo from "@/registry/default/example/bot-command-card-demo"
 import ButtonDemo from "@/registry/default/example/button-demo"
 import CardDemo from "@/registry/default/example/card-demo"
+import ChannelHeaderDemo from "@/registry/default/example/channel-header-demo"
+import ChannelInfoDemo from "@/registry/default/example/channel-info-demo"
 import ChannelTopicDemo from "@/registry/default/example/channel-topic-demo"
+import ChannelWelcomeDemo from "@/registry/default/example/channel-welcome-demo"
 import ChatDemo from "@/registry/default/example/chat-demo"
 import CodeBlockDemo from "@/registry/default/example/code-block-demo"
 import ContextMenuDemo from "@/registry/default/example/context-menu-demo"
@@ -19,6 +23,7 @@ import EmbedDemo from "@/registry/default/example/embed-demo"
 import EmptyStateDemo from "@/registry/default/example/empty-state-demo"
 import FormFieldsDemo from "@/registry/default/example/form-fields-demo"
 import InlineCodeDemo from "@/registry/default/example/inline-code-demo"
+import InviteDemo from "@/registry/default/example/invite-demo"
 import KbdTagDemo from "@/registry/default/example/kbd-tag-demo"
 import MemberListDemo from "@/registry/default/example/member-list-demo"
 import MentionDemo from "@/registry/default/example/mention-demo"
@@ -38,6 +43,7 @@ import SelectMenuDemo from "@/registry/default/example/select-menu-demo"
 import ServerBannerDemo from "@/registry/default/example/server-banner-demo"
 import SkeletonDemo from "@/registry/default/example/skeleton-demo"
 import SlashCommandDemo from "@/registry/default/example/slash-command-demo"
+import SlashCommandSuggestionsDemo from "@/registry/default/example/slash-command-suggestions-demo"
 import SpoilerDemo from "@/registry/default/example/spoiler-demo"
 import StageBannerDemo from "@/registry/default/example/stage-banner-demo"
 import StatusIndicatorDemo from "@/registry/default/example/status-indicator-demo"
@@ -48,6 +54,7 @@ import TokenFieldDemo from "@/registry/default/example/token-field-demo"
 import TooltipDemo from "@/registry/default/example/tooltip-demo"
 import TypingIndicatorDemo from "@/registry/default/example/typing-indicator-demo"
 import UserProfileDemo from "@/registry/default/example/user-profile-demo"
+import V2ContainerDemo from "@/registry/default/example/v2-container-demo"
 import VoiceChannelDemo from "@/registry/default/example/voice-channel-demo"
 
 // Keys are the registry component names; built via `Object.fromEntries` (instead
@@ -55,13 +62,17 @@ import VoiceChannelDemo from "@/registry/default/example/voice-channel-demo"
 // indexable by an arbitrary string without widening away the entry type.
 const demoEntries: Array<[string, React.ComponentType]> = [
   ["action-row", ActionRowDemo],
+  ["app-launcher", AppLauncherDemo],
   ["attachment", AttachmentDemo],
   ["avatar", AvatarDemo],
   ["badge", BadgeDemo],
   ["bot-command-card", BotCommandCardDemo],
   ["button", ButtonDemo],
   ["card", CardDemo],
+  ["channel-header", ChannelHeaderDemo],
+  ["channel-info", ChannelInfoDemo],
   ["channel-topic", ChannelTopicDemo],
+  ["channel-welcome", ChannelWelcomeDemo],
   ["chat", ChatDemo],
   ["code-block", CodeBlockDemo],
   ["context-menu", ContextMenuDemo],
@@ -72,6 +83,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["empty-state", EmptyStateDemo],
   ["form-fields", FormFieldsDemo],
   ["inline-code", InlineCodeDemo],
+  ["invite", InviteDemo],
   ["kbd-tag", KbdTagDemo],
   ["member-list", MemberListDemo],
   ["mention", MentionDemo],
@@ -91,6 +103,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["server-banner", ServerBannerDemo],
   ["skeleton", SkeletonDemo],
   ["slash-command", SlashCommandDemo],
+  ["slash-command-suggestions", SlashCommandSuggestionsDemo],
   ["spoiler", SpoilerDemo],
   ["stage-banner", StageBannerDemo],
   ["status-indicator", StatusIndicatorDemo],
@@ -101,6 +114,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["tooltip", TooltipDemo],
   ["typing-indicator", TypingIndicatorDemo],
   ["user-profile", UserProfileDemo],
+  ["v2-container", V2ContainerDemo],
   ["voice-channel", VoiceChannelDemo],
 ]
 

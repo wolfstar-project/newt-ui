@@ -1,0 +1,24 @@
+{
+  "name": "channel-info",
+  "title": "Channel Info",
+  "description": "The channel detail panel that covers a channel on narrow screens.",
+  "registryDependencies": ["tabs"],
+  "vueFiles": [
+    "ChannelInfo.vue",
+    "ChannelInfoToolbar.vue",
+    "ChannelInfoActions.vue",
+    "ChannelInfoAction.vue",
+    "ChannelInfoIdentity.vue",
+    "ChannelInfoIcon.vue",
+    "ChannelInfoName.vue",
+    "ChannelInfoType.vue",
+    "ChannelInfoPanel.vue",
+    "ChannelInfoEmpty.vue",
+    "ChannelInfoEmptyIcon.vue",
+    "ChannelInfoEmptyTitle.vue",
+    "ChannelInfoEmptyBody.vue",
+    "index.ts"
+  ],
+  "reactDemo": "channel-info-demo",
+  "vueDemo": "ChannelInfoDemo"
+}

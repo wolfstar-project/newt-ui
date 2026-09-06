@@ -1,0 +1,20 @@
+{
+  "name": "channel-header",
+  "title": "Channel Header",
+  "description": "The bar above the message list, with the channel name, topic and channel actions.",
+  "vueFiles": [
+    "ChannelHeader.vue",
+    "ChannelHeaderInfo.vue",
+    "ChannelHeaderIcon.vue",
+    "ChannelHeaderName.vue",
+    "ChannelHeaderDivider.vue",
+    "ChannelHeaderTopic.vue",
+    "ChannelHeaderToolbar.vue",
+    "ChannelHeaderAction.vue",
+    "ChannelHeaderSearch.vue",
+    "ChannelHeaderOnline.vue",
+    "index.ts"
+  ],
+  "reactDemo": "channel-header-demo",
+  "vueDemo": "ChannelHeaderDemo"
+}

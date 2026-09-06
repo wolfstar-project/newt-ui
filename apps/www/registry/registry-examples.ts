@@ -14,6 +14,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "app-launcher-demo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher"],
+    files: [
+      {
+        path: "example/app-launcher-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "attachment-demo",
     type: "registry:example",
     registryDependencies: ["attachment"],
@@ -80,12 +91,45 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "channel-header-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "example/channel-header-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "channel-info-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-info"],
+    files: [
+      {
+        path: "example/channel-info-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "channel-topic-demo",
     type: "registry:example",
     registryDependencies: ["channel-topic"],
     files: [
       {
         path: "example/channel-topic-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "channel-welcome-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-welcome"],
+    files: [
+      {
+        path: "example/channel-welcome-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -196,6 +240,17 @@ export const examples: Registry = [
     files: [
       {
         path: "example/inline-code-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "invite-demo",
+    type: "registry:example",
+    registryDependencies: ["invite"],
+    files: [
+      {
+        path: "example/invite-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -410,6 +465,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "slash-command-suggestions-demo",
+    type: "registry:example",
+    registryDependencies: ["slash-command-suggestions"],
+    files: [
+      {
+        path: "example/slash-command-suggestions-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "spoiler-demo",
     type: "registry:example",
     registryDependencies: ["spoiler"],
@@ -515,6 +581,17 @@ export const examples: Registry = [
     files: [
       {
         path: "example/user-profile-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "v2-container-demo",
+    type: "registry:example",
+    registryDependencies: ["v2-container"],
+    files: [
+      {
+        path: "example/v2-container-demo.tsx",
         type: "registry:example",
       },
     ],

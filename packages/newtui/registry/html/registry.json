@@ -296,6 +296,55 @@
       "uses": ["button"]
     },
     {
+      "name": "app-launcher",
+      "title": "App Launcher",
+      "rootClass": "newt-app-launcher",
+      "files": ["app-launcher.css", "app-launcher.html"]
+    },
+    {
+      "name": "slash-command-suggestions",
+      "title": "Slash Command Suggestions",
+      "rootClass": "newt-slash-suggestions",
+      "files": [
+        "slash-command-suggestions.css",
+        "slash-command-suggestions.html"
+      ],
+      "uses": ["slash-command"]
+    },
+    {
+      "name": "v2-container",
+      "title": "V2 Container",
+      "rootClass": "newt-v2-container",
+      "files": ["v2-container.css", "v2-container.html"],
+      "uses": ["divider"]
+    },
+    {
+      "name": "channel-header",
+      "title": "Channel Header",
+      "rootClass": "newt-channel-header",
+      "files": ["channel-header.css", "channel-header.html"]
+    },
+    {
+      "name": "channel-welcome",
+      "title": "Channel Welcome",
+      "rootClass": "newt-channel-welcome",
+      "files": ["channel-welcome.css", "channel-welcome.html"]
+    },
+    {
+      "name": "channel-info",
+      "title": "Channel Info",
+      "rootClass": "newt-channel-info",
+      "files": ["channel-info.css", "channel-info.html"],
+      "uses": ["tabs"]
+    },
+    {
+      "name": "invite",
+      "title": "Invite",
+      "rootClass": "newt-invite",
+      "files": ["invite.css", "invite.html"],
+      "uses": ["button"]
+    },
+    {
       "name": "select-menu",
       "title": "Select Menu",
       "rootClass": "newt-select-menu",

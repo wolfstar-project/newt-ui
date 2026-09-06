@@ -18,3 +18,5 @@ Components:
 - `ScrollArea` gains `focusable` and `viewportLabel`.
 - `SlashCommand` now takes the full invocation: subcommand path plus typed options, including the focused one.
 - `SelectMenu` is now a complete combobox: trigger, keyboard-driven listbox, portalled panel that flips when space runs out.
+
+New components: `InlineCode`, `ActionRow`, `MessageList`, `MessageComposer`, `Chat`, `Invite`, `ChannelHeader`, `ChannelWelcome`, `ChannelInfo`, `SlashCommandSuggestions`, `V2Container` and `AppLauncher`, plus a `ReactionGroup` part on `Reaction`.

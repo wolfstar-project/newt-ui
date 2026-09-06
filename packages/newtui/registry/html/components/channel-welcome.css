@@ -1,0 +1,76 @@
+/* newt-ui · Channel Welcome (the header that opens a channel) */
+
+.newt-channel-welcome {
+  padding: 40px 16px 8px;
+}
+
+.newt-channel-welcome__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 16px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--newt-text-primary);
+}
+
+.newt-channel-welcome__title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--newt-text-primary);
+}
+
+.newt-channel-welcome__description {
+  margin: 8px 0 0;
+  font-size: 16px;
+  color: var(--newt-text-muted);
+}
+
+.newt-channel-welcome__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-elevated);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--newt-text-primary);
+  cursor: pointer;
+  transition: background var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-channel-welcome__action:hover {
+  background: var(--newt-bg-hover);
+}
+.newt-channel-welcome__action:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+/* Creation date, centred between two hairlines. */
+.newt-channel-welcome__date {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--newt-text-muted);
+}
+
+.newt-channel-welcome__date > span {
+  height: 1px;
+  background: var(--newt-border);
+}
