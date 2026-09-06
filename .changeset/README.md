@@ -48,8 +48,8 @@ PR.
 
 Repository secrets (**Settings → Secrets and variables → Actions**):
 
-| Secret           | Description                                                                                                                                                          |
-| :--------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Secret           | Description                                                                                                                                                                                                        |
+| :--------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `WOLFSTAR_TOKEN` | A GitHub PAT with `repo` and `workflow` scopes. Used by `changesets/action` to push commits and open PRs (the default `GITHUB_TOKEN` does not trigger other workflows). Also required by the `@next` snapshot job. |
 
 npm publishing does **not** use a secret. `release.yml` publishes via
