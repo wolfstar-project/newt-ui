@@ -52,10 +52,15 @@ Repository secrets (**Settings → Secrets and variables → Actions**):
 | :--------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `WOLFSTAR_TOKEN` | A GitHub PAT with `repo` and `workflow` scopes. Used by `changesets/action` to push commits and open PRs (the default `GITHUB_TOKEN` does not trigger other workflows). Also required by the `@next` snapshot job. |
 
-npm publishing does **not** use a secret. `release.yml` publishes via
-[npm trusted publishing](https://docs.npmjs.com/trusted-publishers/) (OIDC):
-the `id-token: write` permission lets npm verify the workflow's identity
-directly, so there's no long-lived npm token to leak or rotate.
+npm publishing does **not** use a secret. `changeset publish` shells out to
+`pnpm publish` (the repo's `packageManager` is pnpm), which authenticates via
+its own [OIDC trusted-publishing](https://docs.npmjs.com/trusted-publishers/)
+exchange: the `id-token: write` permission lets it verify the workflow's
+identity directly, so there's no long-lived npm token to leak or rotate. This
+requires pnpm >= 11.1.3, which fixed pnpm sending an unresolved
+`${NODE_AUTH_TOKEN}` `.npmrc` placeholder literally instead of falling back to
+OIDC ([pnpm/pnpm#11526](https://github.com/pnpm/pnpm/pull/11526)) — the
+pinned `packageManager` version here is well above that.
 
 For each published package (`newtui`, `@newtui/nuxt`, `@newtui/react`,
 `@newtui/vue`), configure a trusted publisher once at

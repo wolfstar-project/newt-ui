@@ -94,18 +94,18 @@ jobs:
         with:
           registry-url: https://registry.npmjs.org/
 
-      # OIDC trusted publishing requires npm CLI >= 11.5.1; Node's bundled npm lags behind.
-      - name: Upgrade npm for trusted publishing
-        run: npm install -g npm@latest
-
       - name: Publish snapshot
         run: pnpm run publish:snapshot
         env:
           # Changelog generator (@changesets/get-github-info) requires a token
           GITHUB_TOKEN: ${{ secrets.WOLFSTAR_TOKEN }}
-          # No NODE_AUTH_TOKEN/NPM_TOKEN here: npm prefers a configured token over
-          # OIDC, so leaving them unset lets npm publish via trusted publishing
-          # (id-token: write above). Provenance is generated automatically.
+          # `changeset publish` shells out to `pnpm publish` (packageManager is
+          # pnpm), which has its own OIDC trusted-publishing exchange — no
+          # NODE_AUTH_TOKEN/NPM_TOKEN needed as long as pnpm >= 11.1.3, which
+          # fixed pnpm sending an unresolved `${NODE_AUTH_TOKEN}` .npmrc
+          # placeholder literally instead of falling back to OIDC
+          # (pnpm/pnpm#11526); pnpm is pinned well above that here.
+          # Provenance is generated automatically under trusted publishing.
 
   release:
     name: Create Release PR or Publish
@@ -134,10 +134,13 @@ jobs:
         with:
           registry-url: https://registry.npmjs.org/
 
-      # OIDC trusted publishing requires npm CLI >= 11.5.1; Node's bundled npm lags behind.
-      - name: Upgrade npm for trusted publishing
-        run: npm install -g npm@latest
-
+      # `changeset publish` shells out to `pnpm publish` (packageManager is
+      # pnpm), which has its own OIDC trusted-publishing exchange — no
+      # NODE_AUTH_TOKEN/NPM_TOKEN needed as long as pnpm >= 11.1.3, which
+      # fixed pnpm sending an unresolved `${NODE_AUTH_TOKEN}` .npmrc
+      # placeholder literally instead of falling back to OIDC
+      # (pnpm/pnpm#11526); pnpm is pinned well above that here.
+      # Provenance is generated automatically under trusted publishing.
       - name: Process Changesets
         id: changesets
         uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
@@ -147,6 +150,3 @@ jobs:
           commit: "chore: update changelog and release"
         env:
           GITHUB_TOKEN: ${{ secrets.WOLFSTAR_TOKEN }}
-          # No NODE_AUTH_TOKEN/NPM_TOKEN here: npm prefers a configured token over
-          # OIDC, so leaving them unset lets npm publish via trusted publishing
-          # (id-token: write above). Provenance is generated automatically.
