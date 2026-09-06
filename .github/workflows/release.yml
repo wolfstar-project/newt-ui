@@ -99,11 +99,13 @@ jobs:
         env:
           # Changelog generator (@changesets/get-github-info) requires a token
           GITHUB_TOKEN: ${{ secrets.WOLFSTAR_TOKEN }}
-          # setup-node writes .npmrc with ${NODE_AUTH_TOKEN}; npm also checks NPM_TOKEN
-          # before falling back to OIDC trusted publishing (which is not configured here).
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
+          # `changeset publish` shells out to `pnpm publish` (packageManager is
+          # pnpm), which has its own OIDC trusted-publishing exchange — no
+          # NODE_AUTH_TOKEN/NPM_TOKEN needed as long as pnpm >= 11.1.3, which
+          # fixed pnpm sending an unresolved `${NODE_AUTH_TOKEN}` .npmrc
+          # placeholder literally instead of falling back to OIDC
+          # (pnpm/pnpm#11526); pnpm is pinned well above that here.
+          # Provenance is generated automatically under trusted publishing.
 
   release:
     name: Create Release PR or Publish
@@ -132,6 +134,13 @@ jobs:
         with:
           registry-url: https://registry.npmjs.org/
 
+      # `changeset publish` shells out to `pnpm publish` (packageManager is
+      # pnpm), which has its own OIDC trusted-publishing exchange — no
+      # NODE_AUTH_TOKEN/NPM_TOKEN needed as long as pnpm >= 11.1.3, which
+      # fixed pnpm sending an unresolved `${NODE_AUTH_TOKEN}` .npmrc
+      # placeholder literally instead of falling back to OIDC
+      # (pnpm/pnpm#11526); pnpm is pinned well above that here.
+      # Provenance is generated automatically under trusted publishing.
       - name: Process Changesets
         id: changesets
         uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
@@ -141,7 +150,3 @@ jobs:
           commit: "chore: update changelog and release"
         env:
           GITHUB_TOKEN: ${{ secrets.WOLFSTAR_TOKEN }}
-          # Must match the repo secret name documented in .changeset/README.md
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true

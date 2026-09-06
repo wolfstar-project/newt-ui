@@ -48,10 +48,32 @@ PR.
 
 Repository secrets (**Settings → Secrets and variables → Actions**):
 
-| Secret              | Description                                                                                                                                                                                                                                                                                                                                                                         |
-| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `WOLFSTAR_TOKEN`    | A GitHub PAT with `repo` and `workflow` scopes. Used by `changesets/action` to push commits and open PRs (the default `GITHUB_TOKEN` does not trigger other workflows). Also required by the `@next` snapshot job.                                                                                                                                                                  |
-| `NPM_PUBLISH_TOKEN` | An npm **granular access token** with type **Automation** (bypasses 2FA) and publish access to the unscoped `newtui` package and to all `@newtui/*` packages. Wired as both `NODE_AUTH_TOKEN` and `NPM_TOKEN` in `release.yml`. Classic publish tokens will fail with `ERR_PNPM_OTP_NON_INTERACTIVE` in CI. Do not rename this secret to `NPM_TOKEN` without updating the workflow. |
+| Secret           | Description                                                                                                                                                                                                        |
+| :--------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `WOLFSTAR_TOKEN` | A GitHub PAT with `repo` and `workflow` scopes. Used by `changesets/action` to push commits and open PRs (the default `GITHUB_TOKEN` does not trigger other workflows). Also required by the `@next` snapshot job. |
+
+npm publishing does **not** use a secret. `changeset publish` shells out to
+`pnpm publish` (the repo's `packageManager` is pnpm), which authenticates via
+its own [OIDC trusted-publishing](https://docs.npmjs.com/trusted-publishers/)
+exchange: the `id-token: write` permission lets it verify the workflow's
+identity directly, so there's no long-lived npm token to leak or rotate. This
+requires pnpm >= 11.1.3, which fixed pnpm sending an unresolved
+`${NODE_AUTH_TOKEN}` `.npmrc` placeholder literally instead of falling back to
+OIDC ([pnpm/pnpm#11526](https://github.com/pnpm/pnpm/pull/11526)) — the
+pinned `packageManager` version here is well above that.
+
+For each published package (`newtui`, `@newtui/nuxt`, `@newtui/react`,
+`@newtui/vue`), configure a trusted publisher once at
+`https://www.npmjs.com/package/<name>/access` → **Publishing access** →
+**Add GitHub Actions**:
+
+- Owner: `wolfstar-project`
+- Repository: `newt-ui`
+- Workflow file: `release.yml`
+- Environment: _(leave empty — this workflow doesn't use a GitHub Environment)_
+
+An old `NPM_PUBLISH_TOKEN` secret, if still present from before trusted
+publishing was set up, is unused now and can be removed from repo secrets.
 
 ### 3. Install the autofix.ci GitHub App (optional)
 
@@ -88,7 +110,7 @@ Only packages with pending changesets are versioned and published.
 If the automatic publish step in `release.yml` fails after the release PR is
 merged:
 
-1. Fix the underlying issue (npm token, network, build failure, etc.).
+1. Fix the underlying issue (trusted publisher misconfiguration, network, build failure, etc.).
 2. Re-run the failed **Create Release PR or Publish** job from **Actions**, or
    trigger **release** manually via **Run workflow** on `main`.
 3. The job runs `pnpm run publish` (builds only `packages/*`, then
