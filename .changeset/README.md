@@ -83,6 +83,17 @@ GitHub App to push lint/format fixes back to PR branches. Install it at
 
 ---
 
+## Documenting a user-facing change
+
+A changeset is the release note for a package. It is not the changelog a reader
+of the documentation sees: that lives in
+`apps/docs/src/content/changelog/YYYY-MM-<topic>.mdx`, one file per entry, and
+it can embed a live `<ComponentPreview>` of whatever changed.
+
+Write one whenever a change alters what somebody installs — a new component, a
+reworked one, a new token, a new CLI command. A refactor with no visible effect
+needs a changeset and no changelog entry.
+
 ## Release runbook
 
 ### Cutting a stable release

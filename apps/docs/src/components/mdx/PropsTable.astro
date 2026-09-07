@@ -1,0 +1,51 @@
+---
+/*
+ * A component's public surface, stated once per part. The rows are written by
+ * hand in the page rather than derived from the source: the types a reader
+ * needs are the documented ones, not every prop the DOM element also accepts.
+ */
+interface PropRow {
+  readonly name: string
+  readonly type: string
+  readonly default?: string
+  readonly description: string
+}
+
+interface Props {
+  /** The exported part these props belong to, e.g. `Button`. */
+  readonly of?: string
+  readonly rows: readonly PropRow[]
+}
+
+const { of: part, rows } = Astro.props
+---
+
+<div class="props-table">
+  {part && <p class="props-table-part"><code>{part}</code></p>}
+  <table>
+    <thead>
+      <tr>
+        <th>Prop</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr>
+            <td>
+              <code>{row.name}</code>
+            </td>
+            <td>
+              <code class="props-table-type">{row.type}</code>
+            </td>
+            <td>{row.default ? <code>{row.default}</code> : "—"}</td>
+            <td>{row.description}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

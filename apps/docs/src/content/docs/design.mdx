@@ -1,0 +1,102 @@
+---
+title: "Design guide"
+description: "The decisions every newt/ui component follows: naming, the token layer, states, and why there is no motion."
+---
+
+This is the contract a component is written against. It applies whether the
+component is being added to the library or composed in your own project — a page
+built from these rules looks like the rest of the system without anyone having
+to check.
+
+## What newt/ui is \{#what\}
+
+A copy-into-your-project library, not an npm runtime dependency. Components are
+plain HTML and CSS with optional vanilla JavaScript, plus thin framework
+wrappers. Everything is built from one token file, so any component matches the
+surfaces, colours and shapes of the client it is inspired by.
+
+Three forms, one source of truth:
+
+| Form                       | Where it lives                                                  |
+| -------------------------- | --------------------------------------------------------------- |
+| HTML/CSS — the visual spec | `packages/newtui/registry/html/components/<name>.{css,html,js}` |
+| React                      | `apps/www/registry/default/ui/<name>.tsx`                       |
+| Vue                        | `apps/vue/app/lib/registry/default/ui/<name>/`                  |
+
+When the React or Vue version disagrees with the HTML, the HTML is right.
+
+## Naming \{#naming\}
+
+- Classes are prefixed `newt-` and follow BEM-lite: `.newt-block`,
+  `.newt-block__element`, `.newt-block--variant`.
+- File names are kebab-case and match the root class: `status-indicator.css` →
+  `.newt-status`.
+- A variant modifier names a **state or an intent**, never an appearance:
+  `--danger`, `--success`, `--online`. Not `--red`, `--green`.
+
+That last rule is what lets the light palette exist. A `--red` modifier would
+have to change when the palette does; a `--danger` one does not.
+
+## The token layer \{#tokens\}
+
+Never hardcode a colour, radius, font, shadow, easing or duration. If the value
+you need has no token, add the token — see [Theming](/docs/theming).
+
+The palette the dark theme is built from:
+
+| Token                                              | Value                                         | Use for                           |
+| -------------------------------------------------- | --------------------------------------------- | --------------------------------- |
+| `--newt-bg-base`                                   | `#1e1f22`                                     | App background, deepest layer     |
+| `--newt-bg-surface`                                | `#2b2d31`                                     | Sidebars, channel lists           |
+| `--newt-bg-elevated`                               | `#313338`                                     | Cards, main content, modals       |
+| `--newt-border`                                    | `#3f4147`                                     | Hairlines, dividers               |
+| `--newt-text-primary`                              | `#f2f3f5`                                     | Headings, primary text            |
+| `--newt-text-secondary`                            | `#b5bac1`                                     | Body text                         |
+| `--newt-text-muted`                                | `#949ba4`                                     | Captions, placeholders            |
+| `--newt-brand`                                     | `#5865f2`                                     | Primary actions, links-as-buttons |
+| `--newt-online` / `--idle` / `--dnd` / `--offline` | `#23a55a` / `#f0b232` / `#f23f42` / `#80848e` | Presence states                   |
+| `--newt-danger`                                    | `#da373c`                                     | Destructive actions               |
+
+Every token, dark and light, is on [the colours page](/colors).
+
+## Anatomy of a component \{#anatomy\}
+
+In order:
+
+1. **Markup** — semantic HTML, with ARIA roles where the native element does
+   not imply them: `role="status"` for a presence dot, `role="dialog"` plus
+   `aria-modal="true"` for a modal.
+2. **Styles** — scoped under the `.newt-<name>` root class, reading only
+   `--newt-*` tokens.
+3. **Behaviour**, if any — vanilla JavaScript attached through `data-newt-*`
+   attributes, never inline handlers. The framework wrappers are a thin layer
+   over the same behaviour.
+4. **States** — hover, `focus-visible`, active, disabled, and every semantic
+   state the component has, all styled. A state with no resting appearance does
+   not exist.
+
+## No motion \{#motion\}
+
+newt/ui ships with no transitions, animations or keyframes. This is a
+constraint, not an oversight.
+
+- Hover, active and focus are distinguishable by their resting appearance — a
+  filled background, a border, a shape change.
+- State is encoded in shape where it can be. The idle crescent and the
+  do-not-disturb bar on the status dot are the pattern: you can tell them apart
+  in a screenshot.
+- A "live" indicator — typing, streaming, in progress — uses a static marker,
+  not a pulse or a shimmer.
+- If something seems to need motion to be legible, it needs another visual cue
+  instead: an icon, a badge, a label.
+
+## Composition \{#composition\}
+
+Compose the parts that exist rather than writing a new component in the library's
+style. A message row is `MessageGroup` with an `Avatar`, a `RoleTag` and a
+`Reaction`; a settings panel is `Card` with `Field`s. Something genuinely missing
+is worth an issue, not a local reimplementation that shares none of the
+structure.
+
+See [Accessibility](/docs/accessibility) for the checklist every component has to
+pass, and [Trademark](/docs/trademark) for what the copy and the assets may say.

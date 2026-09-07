@@ -1,0 +1,104 @@
+---
+title: "registry-item.json"
+description: "One item, with the source of every file it writes and everything the CLI needs to place them."
+---
+
+A single item, served at `/r/styles/<style>/<name>.json`. Unlike the index, it
+carries the contents of each file, so installing is one fetch per item.
+
+```json title="/r/styles/default/badge.json"
+{
+  "name": "badge",
+  "type": "registry:ui",
+  "framework": "react",
+  "title": "Badge",
+  "description": "A small pill for counts, statuses and labels.",
+  "dependencies": ["class-variance-authority"],
+  "files": [
+    {
+      "path": "registry/default/ui/badge.tsx",
+      "type": "registry:ui",
+      "content": "import { cva } from \"class-variance-authority\"\n…"
+    }
+  ]
+}
+```
+
+## Types \{#types\}
+
+| Type                 | Written to             | For                                            |
+| -------------------- | ---------------------- | ---------------------------------------------- |
+| `registry:ui`        | the `ui` alias         | A component.                                   |
+| `registry:component` | the `components` alias | A composed piece that is not a primitive.      |
+| `registry:block`     | the `components` alias | A multi-file composition — a page section.     |
+| `registry:lib`       | the `lib` alias        | A helper module.                               |
+| `registry:hook`      | the `hooks` alias      | A React hook, or a Vue composable.             |
+| `registry:example`   | not installed          | A demo. The docs site renders these.           |
+| `registry:theme`     | the global stylesheet  | Tokens; see `cssVars` below.                   |
+| `registry:style`     | —                      | The style definition itself.                   |
+| `registry:page`      | a target path          | A whole route. Requires `target` on each file. |
+| `registry:file`      | a target path          | Anything else; requires `target`.              |
+
+## files \{#files\}
+
+Either a bare path, or an object:
+
+```json
+{
+  "path": "registry/default/ui/modal.tsx",
+  "type": "registry:ui",
+  "target": "components/ui/modal.tsx",
+  "content": "…"
+}
+```
+
+`target` is only needed for `registry:page` and `registry:file`, where the alias
+does not decide the destination. For every other type the CLI derives the path
+from the type's alias and rewrites the imports inside `content` to match.
+
+## cssVars and tailwind \{#theme\}
+
+A theme item carries its values three ways, so one registry serves Tailwind v3
+and v4:
+
+```json title="/r/styles/default/theme-newt.json"
+{
+  "name": "theme-newt",
+  "type": "registry:theme",
+  "cssVars": {
+    "theme": { "--color-newt-brand": "var(--newt-brand)" },
+    "dark": { "newt-brand": "#5865f2" },
+    "light": { "newt-brand": "#5865f2" }
+  },
+  "tailwind": { "config": { "theme": { "extend": { "colors": {} } } } }
+}
+```
+
+- `cssVars.dark` and `cssVars.light` are the raw custom properties, written into
+  the matching selector.
+- `cssVars.theme` holds Tailwind v4 `@theme` entries.
+- `tailwind.config.theme` holds the v3 `theme.extend` object.
+
+## css \{#css\}
+
+Raw CSS keyed by at-rule or selector, for the rules a component needs that are
+not utilities:
+
+```json
+{
+  "css": {
+    "@layer components": {
+      ".newt-scrollbar::-webkit-scrollbar": { "width": "8px" }
+    }
+  }
+}
+```
+
+Tailwind v4 consumers get these appended to their stylesheet; v3 consumers get
+the same rules wrapped by the CLI.
+
+## Everything else \{#rest\}
+
+`devDependencies` for packages only needed at build time, `docs` for a note the
+CLI prints after installing, and `meta` for anything your own tooling wants to
+carry along — the CLI passes it through untouched.

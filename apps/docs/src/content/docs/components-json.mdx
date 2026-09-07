@@ -1,0 +1,109 @@
+---
+title: "components.json"
+description: "The config newtui init writes: where your aliases point, which stylesheet holds the tokens, and which registry to read."
+---
+
+`components.json` sits at the root of your project. It is the same file
+shadcn/ui reads, so a project using both CLIs keeps one config rather than two.
+`newtui init` writes it; every later `add` and `diff` reads it.
+
+You never have to write it by hand, but every field is documented here because
+the CLI's behaviour follows from it.
+
+```json title="components.json"
+{
+  "$schema": "https://newtui.dev/schema.json",
+  "style": "default",
+  "typescript": true,
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "ui": "@/components/ui",
+    "utils": "@/lib/utils",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "iconLibrary": "lucide",
+  "registry": "https://newtui.dev/r"
+}
+```
+
+## style \{#style\}
+
+The registry style to read from. There is one, `default`, and the field exists
+so a second one can be added without breaking installed projects.
+
+## typescript, tsx and rsc \{#language\}
+
+`typescript: false` makes the CLI strip types as it writes, so a JavaScript
+project gets JavaScript files. See [JavaScript](/docs/javascript).
+
+<div data-framework="react">
+
+`tsx` decides the extension of the files written. `rsc` decides whether the
+`"use client"` directive at the top of an interactive component is kept: answer
+yes at `init` on the App Router, no on a client-rendered app, and `add` strips
+the directive as it writes.
+
+</div>
+
+<div data-framework="vue">
+
+`tsx` and `rsc` are React-only and absent from a Vue config. What a Vue project
+carries instead is the bundler it was detected as — Nuxt or Vite — which decides
+where the global stylesheet lives.
+
+</div>
+
+## tailwind \{#tailwind\}
+
+| Field          | What it does                                                                                      |
+| -------------- | ------------------------------------------------------------------------------------------------- |
+| `config`       | Path to `tailwind.config.ts`. Unused on Tailwind v4, which has no JS config.                      |
+| `css`          | The global stylesheet `init` appended the `--newt-*` tokens to. `add` never touches it again.     |
+| `baseColor`    | The neutral ramp the shadcn tokens use, kept for compatibility. newt/ui reads `--newt-*` instead. |
+| `cssVariables` | Whether components reference variables (`bg-newt-brand`) or literal values. Leave it `true`.      |
+| `prefix`       | A Tailwind class prefix, if your project uses one.                                                |
+
+## aliases \{#aliases\}
+
+Where files land. The CLI resolves each alias through your `tsconfig.json` or
+`jsconfig.json` `paths` — it reads them, it never writes them — and falls back
+to a `src` directory when one exists.
+
+<div data-framework="react">
+
+`components`, `ui`, `utils`, `lib` and `hooks`. A component is written to `ui`,
+and its imports are rewritten on the way in: `@/registry/default/ui/button`
+becomes your `ui` alias, `@/lib/utils` becomes your `utils` alias.
+
+</div>
+
+<div data-framework="vue">
+
+`components`, `ui`, `utils`, `lib` and `composables`. A component is written as
+a directory under `ui`, and its imports are rewritten on the way in:
+`@/lib/registry/default/ui/button` becomes your `ui` alias, `@/lib/utils`
+becomes your `utils` alias.
+
+</div>
+
+## registry \{#registry\}
+
+The base URL items are fetched from. It defaults to `https://newtui.dev/r` for
+React and `https://newtui.dev/vue/r` for Vue. `--registry` on any command and
+the `NEWT_REGISTRY_URL` environment variable both override it, which is how you
+point the CLI at [a registry of your own](/docs/registry).
+
+<Callout>
+  Deleting `components.json` costs you the next `add`, not the components you
+  already have. The files are yours from the moment they are written.
+</Callout>

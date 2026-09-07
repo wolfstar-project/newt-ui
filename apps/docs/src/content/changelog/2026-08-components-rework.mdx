@@ -1,0 +1,50 @@
+---
+title: "August 2026 — Components rework"
+description: "Twelve new components, an opt-in light palette, and a pass over every existing component against the original specs."
+date: 2026-08-21
+---
+
+**The registry grew from 43 components to 55, gained a light surface set, and
+every component that already existed was reworked against its original spec.**
+
+## New components
+
+`InlineCode`, `ActionRow`, `MessageList`, `MessageComposer`, `Chat`, `Invite`,
+`ChannelHeader`, `ChannelWelcome`, `ChannelInfo`, `SlashCommandSuggestions`,
+`V2Container` and `AppLauncher`, plus a `ReactionGroup` part on `Reaction`.
+
+<ComponentPreview name="chat" />
+
+## An opt-in light palette
+
+`.newt-light` and `[data-newt-theme="light"]` override the surface, text, status
+and shadow tokens for light backgrounds. Nothing changes for anyone who never
+asks for it: the dark values stay the default in `:root`.
+
+Four tokens are new — `--newt-bg-input-elevated`, `--newt-mention-text`,
+`--newt-mention-role` and `--newt-embed-max-width` — and the hex values that
+had been duplicated across the mention, badge, timeline, reaction and
+slash-command components now read those tokens instead.
+
+## Reworked components
+
+- `Mention` renders a real button with focus styles, and gains an optional
+  avatar, an `app` variant and a `color` prop for role mentions.
+- `Button` gains `emoji` and the link-out glyph, on by default for
+  `variant="link"`.
+- `Embed` gains an accent colour, an author row, a footer icon, a middle-dot
+  separator and a `<time>` timestamp.
+- `MemberList` gains role sections with headings, an offline state, coloured
+  names and the APP tag with its verified check.
+- `ReplyPreview` gains an avatar, a "used" action and a slash-command chip; the
+  spine is driven by custom properties.
+- `MessageGroup` gains a reply grid layout, an ephemeral state with its notice,
+  the verified bot tag, and renders its timestamp as `<time>`.
+- `Divider` gains `spacing` and `line`; `ScrollArea` gains `focusable` and
+  `viewportLabel`.
+- `SlashCommand` now takes the full invocation: the subcommand path plus typed
+  options, including the focused one.
+- `SelectMenu` is a complete combobox: a trigger, a keyboard-driven listbox and
+  a portalled panel that flips when it runs out of space.
+
+<ComponentPreview name="select-menu" />

@@ -31,6 +31,17 @@ const REQUIRED = [
   "docs/components/button/index.html",
   "docs/components/button.md",
   "docs/index.md",
+  "docs/theming/index.html",
+  "docs/dark-mode/index.html",
+  "docs/cli/index.html",
+  "docs/components-json/index.html",
+  "docs/registry/index.html",
+  "docs/registry/registry-item-json/index.html",
+  "docs/installation/nuxt/index.html",
+  "docs/changelog/index.html",
+  "docs/design/index.html",
+  "docs/trademark/index.html",
+  "colors/index.html",
 ]
 
 const missing = REQUIRED.filter((file) => !existsSync(resolve(dist, file)))

@@ -1,0 +1,112 @@
+---
+title: "Registry examples"
+description: "Four items, whole: a component, one with dependencies, a theme, and a demo."
+---
+
+## A component \{#ui\}
+
+The common case. One file, one npm dependency, no siblings.
+
+```json
+{
+  "name": "kbd-tag",
+  "type": "registry:ui",
+  "framework": "react",
+  "title": "Keyboard shortcut tag",
+  "description": "A key-cap style tag for keyboard shortcuts.",
+  "files": [
+    {
+      "path": "registry/default/ui/kbd-tag.tsx",
+      "type": "registry:ui",
+      "content": "export function KbdTag(…) { … }"
+    }
+  ]
+}
+```
+
+## A component built on others \{#deps\}
+
+`registryDependencies` are resolved before anything is written, so asking for
+this one writes three files.
+
+```json
+{
+  "name": "modal",
+  "type": "registry:ui",
+  "title": "Modal",
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["button", "scrollbar"],
+  "files": [
+    {
+      "path": "registry/default/ui/modal.tsx",
+      "type": "registry:ui",
+      "content": "…"
+    }
+  ]
+}
+```
+
+## A Vue item \{#vue\}
+
+Vue components are a directory: one file per part, plus the barrel that exports
+them and the variants.
+
+```json
+{
+  "name": "badge",
+  "type": "registry:ui",
+  "framework": "vue",
+  "files": [
+    {
+      "path": "registry/default/ui/badge/Badge.vue",
+      "type": "registry:ui",
+      "content": "…"
+    },
+    {
+      "path": "registry/default/ui/badge/index.ts",
+      "type": "registry:ui",
+      "content": "…"
+    }
+  ]
+}
+```
+
+## A theme \{#theme\}
+
+Installed by `init` rather than `add`. It has no files: it writes variables into
+the stylesheet the config names.
+
+```json
+{
+  "name": "theme-newt",
+  "type": "registry:theme",
+  "title": "newt/ui theme",
+  "description": "The Discord-inspired --newt-* design tokens, for Tailwind v3 and v4.",
+  "cssVars": {
+    "theme": { "--color-newt-brand": "var(--newt-brand)" },
+    "dark": { "newt-brand": "#5865f2", "newt-bg-base": "#1e1f22" },
+    "light": { "newt-bg-base": "#e3e5e8" }
+  },
+  "tailwind": { "config": { "theme": { "extend": {} } } }
+}
+```
+
+## A demo \{#example\}
+
+An `registry:example` is never installed into a project. It exists so the docs
+site — and an agent reading the registry — can see the component in use.
+
+```json
+{
+  "name": "badge-demo",
+  "type": "registry:example",
+  "registryDependencies": ["badge"],
+  "files": [
+    {
+      "path": "registry/default/example/badge-demo.tsx",
+      "type": "registry:example",
+      "content": "…"
+    }
+  ]
+}
+```

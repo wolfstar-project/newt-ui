@@ -1,0 +1,55 @@
+---
+title: "Accessibility"
+description: "The checklist every newt/ui component passes, and what you still have to do in the markup you write around it."
+---
+
+Every component in the registry is written against the list below. It is worth
+reading even if you never add one, because half of these are decisions you make
+again in your own markup.
+
+## The checklist \{#checklist\}
+
+- **Contrast.** Text meets WCAG AA against its own background: 4.5:1 for body
+  copy, 3:1 for large text. `--newt-text-muted` on `--newt-bg-elevated` is the
+  darkest body copy in the system — do not go past it.
+- **Keyboard.** Every interactive element is reachable with <kbd>Tab</kbd> and
+  has a visible `:focus-visible` style: a 2px `--newt-text-link` outline at 2px
+  offset. A hover-only affordance is not an affordance.
+- **Names.** An icon-only control carries an `aria-label` or visually hidden
+  text. "Button" is not a name; "Mute channel" is.
+- **State is never colour alone.** A presence dot exposes its state through
+  `role="status"` and an `aria-label`, and through its shape — the idle crescent
+  and the do-not-disturb bar are distinguishable in greyscale.
+- **Reduced motion.** There is no motion to reduce by default; anything you add
+  respects `prefers-reduced-motion: reduce`.
+- **Dialogs.** A modal traps focus, returns it on close, and closes on
+  <kbd>Esc</kbd>. A toast is `role="status"` with `aria-live="polite"` and never
+  traps focus.
+
+## What the components give you \{#given\}
+
+The interactive components carry their own semantics: the modal manages focus,
+the tabs implement the arrow-key pattern with `role="tablist"`, the select menu
+is a combobox with a keyboard-driven listbox, the reaction pill is a button with
+`aria-pressed`.
+
+Each component page documents the keyboard behaviour it implements under its own
+Accessibility heading.
+
+## What is still yours \{#yours\}
+
+- **Landmarks and headings.** The components are parts, not pages. A page still
+  needs one `<h1>`, a `<main>`, and a heading order that does not skip levels.
+- **Labels for fields.** `Field` renders a `<label>` and wires it to the control
+  it wraps, but only if you give it text. A placeholder is not a label.
+- **Live regions for your data.** A message list that grows while the reader is
+  looking at it needs an `aria-live` region you own; the component does not know
+  which of its updates matter.
+- **Language and direction.** `lang` and `dir` on `<html>` are yours to set.
+
+## Checking it \{#checking\}
+
+Tab through the page first — it is the fastest way to find an unreachable
+control or a missing focus ring. Then run an automated pass (axe, Lighthouse)
+for contrast and names. The two together catch most of what this list covers;
+neither catches a heading order that reads as nonsense.

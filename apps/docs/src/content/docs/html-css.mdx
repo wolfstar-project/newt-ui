@@ -1,0 +1,97 @@
+---
+title: "HTML & CSS"
+description: "The canonical flavour: BEM class names and one token file, with no framework, no bundler and no build step."
+---
+
+Every component exists three times over, and the plain HTML and CSS version is
+the one the other two are written against. When React and Vue disagree with it,
+it is right.
+
+That makes this the flavour to reach for in a server-rendered template, an email
+preview, a Rails or Django view, or anywhere a bundler would be the only reason
+to have a bundler.
+
+## Install \{#install\}
+
+The build ships inside the CLI package and is reached through `--legacy`, or
+through the `newtui-html` binary, which is the same program.
+
+```bash frame="terminal"
+npx newtui@latest --legacy init
+npx newtui@latest --legacy add button embed member-list
+npx newtui@latest --legacy list
+```
+
+`init` writes `newt-ui.json` and copies the tokens to
+`styles/newt-tokens.css`. The two paths in that config decide where everything
+afterwards goes.
+
+```json title="newt-ui.json"
+{
+  "componentDir": "components/ui",
+  "stylesDir": "styles"
+}
+```
+
+`add` copies a `.css` and an `.html` file per component, plus a `.js` file for
+the three that need behaviour (tabs, toast, modal). It follows the same
+dependency links the framework registries do, so asking for one component brings
+what it is built on.
+
+## Use it \{#use\}
+
+Load the tokens first — every component reads `var(--newt-*)` — then the
+components you copied, then put `.newt-root` on the element that wraps your
+page.
+
+```html
+<link rel="stylesheet" href="styles/newt-tokens.css" />
+<link rel="stylesheet" href="components/ui/button.css" />
+
+<body class="newt-root">
+  <button class="newt-btn newt-btn--primary">Primary</button>
+  <button class="newt-btn newt-btn--secondary">Secondary</button>
+</body>
+```
+
+The `.html` file that came with the component is the markup to copy: it shows
+every element and every modifier the CSS styles.
+
+## Class names \{#naming\}
+
+BEM-lite, prefixed `newt-`:
+
+- `.newt-block` — the component root, and the name of its file.
+- `.newt-block__element` — a part of it.
+- `.newt-block--variant` — a state or an intent, never an appearance:
+  `--danger`, `--success`, `--online`, not `--red`.
+
+Each component page on this site prints its root class next to the preview.
+
+## The registry file \{#registry\}
+
+`registry/html/registry.json` inside the package lists everything, and is what
+`--legacy list` reads:
+
+```json
+{
+  "$schema": "https://newtui.dev/registry-schema.json",
+  "name": "newt-ui",
+  "tokens": "tokens.css",
+  "components": [
+    {
+      "name": "status-indicator",
+      "title": "Status Indicator",
+      "rootClass": "newt-status",
+      "files": ["status-indicator.css", "status-indicator.html"],
+      "uses": ["avatar"]
+    }
+  ]
+}
+```
+
+<Callout>
+  These are local files served by your own site. There is no CDN to point at,
+  which is the point: nothing is fetched at runtime and nothing can change under
+  you.
+</Callout>

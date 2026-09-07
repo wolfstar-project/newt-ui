@@ -4,6 +4,8 @@ description: "A presence dot anchored to an avatar, with online, idle, do-not-di
 component: true
 ---
 
+Presence, encoded in shape as well as colour: idle is a crescent, do-not-disturb is a bar, offline is a hollow ring. That is deliberate — the states stay distinguishable in greyscale, in a screenshot, and to a reader who cannot tell green from red.
+
 <ComponentPreview name="status-indicator" />
 
 ## Installation
@@ -13,6 +15,44 @@ component: true
 ## Usage
 
 <Usage name="status-indicator" />
+
+## API reference
+
+<PropsTable
+  of="StatusDot"
+  rows={[
+    {
+      name: "status",
+      type: '"online" | "idle" | "dnd" | "offline" | "streaming"',
+      description: "The presence state.",
+      default: '"offline"',
+    },
+  ]}
+/>
+
+<PropsTable
+  of="StatusIndicator"
+  rows={[
+    {
+      name: "status",
+      type: '"online" | "idle" | "dnd" | "offline" | "streaming"',
+      description: "Passed through to the dot.",
+      default: '"offline"',
+    },
+    {
+      name: "label",
+      type: "string",
+      description:
+        "Text beside the dot. Also the accessible name when present.",
+    },
+  ]}
+/>
+
+Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+
+## Accessibility
+
+The dot carries `role="status"` and an `aria-label` naming the state, so it is never colour alone. The online state has a soft pulse, which is the one animation in the library; it is behind `prefers-reduced-motion` and the state is legible without it.
 
 ## Tokens
 

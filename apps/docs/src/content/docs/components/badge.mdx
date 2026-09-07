@@ -4,6 +4,8 @@ description: "A small pill used to label status, counts or categories."
 component: true
 ---
 
+A small pill for a count, a state or a label. The `dot` variant puts a filled circle before the text, which is how a status reads at a glance without relying on the pill's colour alone.
+
 <ComponentPreview name="badge" />
 
 ## Installation
@@ -13,6 +15,32 @@ component: true
 ## Usage
 
 <Usage name="badge" />
+
+## API reference
+
+<PropsTable
+  of="Badge"
+  rows={[
+    {
+      name: "variant",
+      type: '"default" | "brand" | "success" | "warning" | "danger"',
+      description: "What the badge is reporting.",
+      default: '"default"',
+    },
+    {
+      name: "dot",
+      type: "boolean",
+      description: "Renders a leading dot in the current text colour.",
+      default: "false",
+    },
+  ]}
+/>
+
+Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+
+## Accessibility
+
+A badge is text, not a control. If it reports something that changes — an unread count, a build status — put it in a container with `aria-live="polite"` so the change is announced. Never let the colour be the only difference between two states: the words in the badge should differ too.
 
 ## Tokens
 

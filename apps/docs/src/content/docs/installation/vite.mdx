@@ -1,0 +1,79 @@
+---
+title: "Vite"
+description: "Install newt/ui in a React or Vue project built with Vite."
+---
+
+<PmTabs cmd="newtui@latest init" />
+
+`init` detects React or Vue from your dependencies; `--framework react|vue`
+settles it if your project has both. Everything else is the shared flow in
+[Installation](/docs/installation).
+
+## Aliases \{#aliases\}
+
+The CLI reads your aliases, it does not write them. Declare them once in
+`tsconfig.json`, and in the Vite config so the bundler agrees:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": { "@/*": ["./src/*"] }
+  }
+}
+```
+
+```ts title="vite.config.ts"
+import { fileURLToPath } from "node:url"
+
+import { defineConfig } from "vite"
+
+export default defineConfig({
+  resolve: {
+    alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
+  },
+})
+```
+
+## The stylesheet \{#css\}
+
+`init` appends the token block to the global stylesheet it found, and your entry
+has to import it:
+
+```ts title="src/main.ts"
+import "./assets/index.css"
+```
+
+Then put `.newt-root` on the element that wraps the application — the `<body>`
+in `index.html` is the usual place.
+
+## Add a component \{#add\}
+
+<PmTabs cmd="newtui@latest add button" />
+
+<div data-framework="react">
+
+```tsx title="src/App.tsx"
+import { Button } from "@/components/ui/button"
+
+export function App() {
+  return <Button variant="primary">Send</Button>
+}
+```
+
+</div>
+
+<div data-framework="vue">
+
+```vue title="src/App.vue"
+<script setup lang="ts">
+import { Button } from "@/components/ui/button"
+</script>
+
+<template>
+  <Button variant="primary">Send</Button>
+</template>
+```
+
+</div>
+
+See [Dark mode](/docs/dark-mode#vite) for the theme toggle.

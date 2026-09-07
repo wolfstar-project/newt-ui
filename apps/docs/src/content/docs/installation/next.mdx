@@ -1,0 +1,56 @@
+---
+title: "Next.js"
+description: "Install newt/ui in a Next.js project: where the tokens go, and which components need the client boundary."
+---
+
+<PmTabs cmd="newtui@latest init" />
+
+`init` looks for `app/globals.css` first, so on a standard App Router project
+the tokens land in the stylesheet your layout already imports. Everything else
+is the shared flow described in [Installation](/docs/installation).
+
+## The root layout \{#layout\}
+
+`.newt-root` sets the font family, the base text colour and font smoothing. Put
+it on the element that wraps the application:
+
+```tsx title="app/layout.tsx"
+import "./globals.css"
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className="newt-root">{children}</body>
+    </html>
+  )
+}
+```
+
+## Server components \{#rsc\}
+
+Nine components ship with a `"use client"` directive — the interactive ones:
+modal, tabs, toast, reaction, spoiler, form-fields, permission, stage-banner and
+token-field. The rest render on the server.
+
+Answering yes to the React Server Components question at `init` keeps those
+directives. Answering no sets `rsc: false` in
+[`components.json`](/docs/components-json), and `add` strips them as it writes —
+which is what a pages-router or client-rendered app wants.
+
+## Add a component \{#add\}
+
+<PmTabs cmd="newtui@latest add button" />
+
+```tsx title="app/page.tsx"
+import { Button } from "@/components/ui/button"
+
+export default function Page() {
+  return <Button variant="primary">Send</Button>
+}
+```
+
+See [Dark mode](/docs/dark-mode#next) for the theme toggle.

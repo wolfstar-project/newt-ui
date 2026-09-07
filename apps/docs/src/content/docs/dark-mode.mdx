@@ -1,0 +1,138 @@
+---
+title: "Dark mode"
+description: "newt/ui is dark by default and ships an opt-in light surface set. Wiring a toggle is three lines of CSS and one attribute."
+---
+
+The library's default palette is dark, which is the whole point of a
+Discord-inspired system. The light palette is an override on the same token
+names, selected by `data-newt-theme="light"` or the `.newt-light` class, so no
+component has to know which one is active.
+
+## The attribute \{#attribute\}
+
+```html
+<!-- dark: the default, nothing to set -->
+<html>
+  <!-- light -->
+  <html data-newt-theme="light"></html>
+</html>
+```
+
+Set `color-scheme` alongside it so form controls, scrollbars and the caret
+follow:
+
+```ts
+document.documentElement.dataset.newtTheme = theme
+document.documentElement.style.colorScheme = theme
+```
+
+## Avoid the flash \{#flash\}
+
+A theme read from storage after hydration paints the wrong palette first. Read
+it in a blocking inline script in `<head>`, before the first paint:
+
+```html
+<script>
+  try {
+    const theme = localStorage.getItem("newt-ui:theme")
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.dataset.newtTheme = theme
+      document.documentElement.style.colorScheme = theme
+    }
+  } catch {}
+</script>
+```
+
+This site does exactly that; the source is in `apps/docs/src/layouts/Base.astro`.
+
+## Next.js \{#next\}
+
+`next-themes` handles the storage, the system preference and the inline script.
+Point it at the attribute the palette uses:
+
+```tsx title="app/providers.tsx"
+"use client"
+
+import { ThemeProvider } from "next-themes"
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider
+      attribute="data-newt-theme"
+      defaultTheme="dark"
+      enableSystem={false}
+    >
+      {children}
+    </ThemeProvider>
+  )
+}
+```
+
+```tsx title="app/theme-toggle.tsx"
+"use client"
+
+import { useTheme } from "next-themes"
+
+import { Button } from "@/components/ui/button"
+
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme()
+  return (
+    <Button
+      variant="secondary"
+      aria-label={theme === "dark" ? "Switch to light" : "Switch to dark"}
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+    >
+      {theme === "dark" ? "Light" : "Dark"}
+    </Button>
+  )
+}
+```
+
+## Vite \{#vite\}
+
+No library needed — the whole toggle is the attribute plus storage:
+
+```ts title="src/theme.ts"
+const KEY = "newt-ui:theme"
+
+export type Theme = "dark" | "light"
+
+export function applyTheme(theme: Theme): void {
+  document.documentElement.dataset.newtTheme = theme
+  document.documentElement.style.colorScheme = theme
+  localStorage.setItem(KEY, theme)
+}
+
+export function readTheme(): Theme {
+  return localStorage.getItem(KEY) === "light" ? "light" : "dark"
+}
+```
+
+Call `applyTheme(readTheme())` from the inline script in `index.html`, and again
+from your toggle.
+
+## Nuxt \{#nuxt\}
+
+`@nuxtjs/color-mode` writes the attribute for you and injects the inline script:
+
+```ts title="nuxt.config.ts"
+export default defineNuxtConfig({
+  modules: ["@newtui/nuxt", "@nuxtjs/color-mode"],
+  colorMode: {
+    preference: "dark",
+    fallback: "dark",
+    classSuffix: "",
+    dataValue: "newt-theme",
+  },
+})
+```
+
+`dataValue` is what produces `data-newt-theme` on `<html>`; without it the module
+writes a class and the palette never matches.
+
+<Callout>
+  Whichever route you take, the tokens are the contract. If a component looks
+  wrong in light mode, a value was hardcoded somewhere rather than read from a
+  token — see [Theming](/docs/theming).
+</Callout>

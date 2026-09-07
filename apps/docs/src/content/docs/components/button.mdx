@@ -4,6 +4,8 @@ description: "Displays a Discord-styled button with brand, secondary, success, d
 component: true
 ---
 
+The button carries six intents and four sizes. Which one you reach for is a statement about what the action does, not about how it should look — `danger` is destructive, `success` is confirming, `link` is navigation that happens to sit in a row of buttons.
+
 <ComponentPreview name="button" />
 
 ## Installation
@@ -13,6 +15,50 @@ component: true
 ## Usage
 
 <Usage name="button" />
+
+## API reference
+
+<PropsTable
+  of="Button"
+  rows={[
+    {
+      name: "variant",
+      type: '"primary" | "secondary" | "success" | "danger" | "link" | "icon"',
+      description: "What the action does. Never picked for its colour.",
+      default: '"primary"',
+    },
+    {
+      name: "size",
+      type: '"default" | "sm" | "lg" | "icon"',
+      description: "Padding and text size. `icon` makes it a circle.",
+      default: '"default"',
+    },
+    {
+      name: "emoji",
+      type: "string",
+      description: "Image URL rendered before the label.",
+    },
+    {
+      name: "emojiAlt",
+      type: "string",
+      description:
+        "Accessible name for the emoji. Empty hides it from readers, which is right when the label already says it.",
+      default: '""',
+    },
+    {
+      name: "launchIcon",
+      type: "boolean",
+      description: "Link-out glyph after the label.",
+      default: 'variant === "link"',
+    },
+  ]}
+/>
+
+Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+
+## Accessibility
+
+It renders a real `<button>`, so `Enter` and `Space` activate it and `disabled` is honoured by the browser rather than emulated. `variant="icon"` has no visible text: give it an `aria-label`. The focus ring is a 2px `--newt-text-link` outline at 2px offset, and it is not removed on `:focus-visible`.
 
 ## Tokens
 
