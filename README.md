@@ -155,6 +155,16 @@ from it. See [`NOTICE`](./NOTICE).
 [Apache-2.0](./LICENSE) — see [`NOTICE`](./NOTICE) for the original
 authorship.
 
+## Using it with an agent
+
+`npx skills add wolfstar-project/newt-ui` installs the skill in
+[`skills/newt-ui`](./skills/newt-ui), which teaches an agent the registry, the
+`--newt-*` token rules and the review checklist. `npx newtui@latest mcp init
+--client claude` wires up the MCP server, which serves the registry to the same
+agent as tools. Both are documented at
+[newtui.dev/docs/skills](https://newtui.dev/docs/skills) and
+[/docs/mcp](https://newtui.dev/docs/mcp).
+
 ## Documentation site
 
 `apps/docs` is an Astro site that runs React and Vue side by side: pages are

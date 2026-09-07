@@ -1,0 +1,61 @@
+---
+title: "Skills"
+description: "Install the newt/ui skill and your coding agent knows the registry, the token system and the review checklist without being told."
+---
+
+A skill is a folder of instructions an agent loads when it recognises the task.
+The newt/ui one teaches the things a model otherwise guesses at: which
+components exist, that every value comes from a token, what not to reimplement,
+and what the copy may say.
+
+Five prompts it makes work:
+
+- "Build a channel view with a member list and a composer."
+- "Why does this look wrong in light mode?"
+- "Add presence indicators to this dashboard."
+- "Review this diff against the newt/ui rules."
+- "What should I use instead of writing my own message row?"
+
+## Install \{#install\}
+
+```bash frame="terminal"
+npx skills add wolfstar-project/newt-ui
+```
+
+That installs it for whichever agents it finds. `-a claude-code` (or
+`cursor`, `codex`, …) picks one.
+
+## What is included \{#included\}
+
+**Project context.** The skill runs `newtui info --json` before anything else,
+so the agent starts from your framework, your Tailwind major, your aliases and
+the components you already have — not from a guess at your file tree.
+
+**The CLI.** Every command and flag, and which of them are destructive enough to
+ask about first.
+
+**Theming.** Override a token rather than editing a component; the light palette
+works by overriding the same names, which is why a literal breaks it.
+
+**The MCP server.** When [the server](/docs/mcp) is configured, the skill
+prefers its tools over shelling out, and says which tool answers which question.
+
+**Four rules, with incorrect and correct pairs:** tokens, composition,
+accessibility, and the [trademark terms](/docs/trademark) that apply to every
+example.
+
+## How it works \{#how\}
+
+The skill is markdown. `SKILL.md` carries the principles and the dynamic
+context line; the rest are reference files it points at, so a long rule costs
+nothing until it is relevant.
+
+It ends where it should: before reporting work finished, the agent re-runs
+`newtui info --json` to confirm the components it claimed to use are actually
+installed, and walks the same checklist the MCP server returns from
+`get_audit_checklist`.
+
+## Without the skill \{#without\}
+
+[Using with AI](/docs/using-with-ai) has the same rules as a prompt you can
+paste into a system message, for an agent with no skill support.

@@ -39,6 +39,7 @@ const GUIDES: readonly NavGroup[] = [
       { href: "/docs/html-css", label: "HTML & CSS" },
       { href: "/docs/using-with-ai", label: "Using with AI" },
       { href: "/docs/mcp", label: "MCP server", badge: "new" },
+      { href: "/docs/skills", label: "Skills", badge: "new" },
       { href: "/docs/changelog", label: "Changelog" },
       { href: "/llms.txt", label: "llms.txt", external: true },
     ],

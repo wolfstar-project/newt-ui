@@ -30,6 +30,10 @@ flows back.
   `app/lib/registry/`, markdown under `content/`.
 - `templates/*`: starter apps. They copy configuration from the docs apps;
   nothing imports them.
+- `skills/newt-ui`: the skill published to consumers. It documents the CLI, the
+  token rules and the trademark terms for somebody else's agent; the `.skills/*`
+  set is for agents working inside this repository. Keep the two in step when a
+  command or a rule changes.
 - `tooling/oxc`: the shared oxlint/oxfmt configuration. `scripts/`: cross-
   workspace generation.
 

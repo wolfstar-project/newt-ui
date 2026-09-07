@@ -79,6 +79,10 @@ runs all three plus `typecheck`, `build`, and `zizmor`.
 - **Releases**: Changesets v3 (`@changesets/cli`). Requires Node
   `^22.11 || ^24 || >=26`. Run `pnpm changeset` when a change should ship in
   the next release.
+- **Consumer skill**: `skills/newt-ui/` is published for
+  `npx skills add wolfstar-project/newt-ui` — it teaches a user's agent the
+  registry, the token rules and the review checklist. It is not one of the
+  contributor skills below and is not managed by skilld.
 - **Skills**: project-specific skills are hand-written in `.skills/<name>/SKILL.md`
   and symlinked into `.claude/skills/` (same split as `wolfstar-project/agent-zero`):
   `newt-ui-architecture`, `newt-ui-registry`, `newt-ui-cli`,
