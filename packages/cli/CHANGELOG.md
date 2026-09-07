@@ -1,5 +1,12 @@
 # @newtui/vue
 
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [06f4a30]
+  - newtui@2.1.0
+
 ## 2.0.0
 
 ### Major Changes
