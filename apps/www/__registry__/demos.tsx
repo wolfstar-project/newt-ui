@@ -17,6 +17,7 @@ import ChatDemo from "@/registry/default/example/chat-demo"
 import CodeBlockDemo from "@/registry/default/example/code-block-demo"
 import ContextMenuDemo from "@/registry/default/example/context-menu-demo"
 import CooldownBarDemo from "@/registry/default/example/cooldown-bar-demo"
+import DirectionDemo from "@/registry/default/example/direction-demo"
 import DividerDemo from "@/registry/default/example/divider-demo"
 import DropdownDemo from "@/registry/default/example/dropdown-demo"
 import EmbedDemo from "@/registry/default/example/embed-demo"
@@ -77,6 +78,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["code-block", CodeBlockDemo],
   ["context-menu", ContextMenuDemo],
   ["cooldown-bar", CooldownBarDemo],
+  ["direction", DirectionDemo],
   ["divider", DividerDemo],
   ["dropdown", DropdownDemo],
   ["embed", EmbedDemo],

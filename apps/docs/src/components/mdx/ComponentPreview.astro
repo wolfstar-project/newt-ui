@@ -49,7 +49,17 @@ const rootClass = rootClasses[name]
     <figure
       class:list={["demo-frame", size === "full" && "demo-frame-full"]}
       dir={dir}
+      data-demo-frame
     >
+      <button
+        type="button"
+        class="demo-dir-toggle"
+        data-demo-dir-toggle
+        aria-pressed={dir === "rtl" ? "true" : "false"}
+      >
+        <span class="sr-only">Render this example right to left</span>
+        <span aria-hidden="true">RTL</span>
+      </button>
       <div class="newt-root">
         <ReactDemo client:only="react" demo={reactDemo} />
         <VueDemo client:only="vue" demo={vueDemo} />
@@ -84,3 +94,22 @@ const rootClass = rootClasses[name]
     </div>
   </Fragment>
 </Tabs>
+
+<script>
+  /*
+   * Direction is a property of one example, not of the page: a reader checking
+   * whether a component survives RTL should not have to flip the documentation
+   * around it.
+   */
+  for (const button of document.querySelectorAll<HTMLButtonElement>(
+    "[data-demo-dir-toggle]"
+  )) {
+    button.addEventListener("click", () => {
+      const frame = button.closest<HTMLElement>("[data-demo-frame]")
+      if (!frame) return
+      const rtl = frame.getAttribute("dir") === "rtl"
+      frame.setAttribute("dir", rtl ? "ltr" : "rtl")
+      button.setAttribute("aria-pressed", String(!rtl))
+    })
+  }
+</script>

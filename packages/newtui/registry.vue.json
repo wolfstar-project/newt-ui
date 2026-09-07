@@ -554,6 +554,27 @@
       "framework": "vue"
     },
     {
+      "name": "direction",
+      "type": "registry:ui",
+      "title": "Direction",
+      "description": "Sets the writing direction for a subtree and exposes it to the components that need to know which way is forward.",
+      "files": [
+        {
+          "path": "registry/default/ui/direction/DirectionProvider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/direction/useDirection.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/ui/direction/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "divider",
       "type": "registry:ui",
       "title": "Divider",

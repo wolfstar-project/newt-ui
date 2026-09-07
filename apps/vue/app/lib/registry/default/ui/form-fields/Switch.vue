@@ -36,8 +36,8 @@ function toggle() {
       aria-hidden="true"
       :class="
         cn(
-          'absolute left-0.5 top-0.5 h-[18px] w-[18px] rounded-full bg-newt-text-muted transition-[transform,background-color] duration-base ease-newt',
-          checked && 'translate-x-4 bg-white'
+          'absolute start-0.5 top-0.5 h-[18px] w-[18px] rounded-full bg-newt-text-muted transition-[transform,background-color] duration-base ease-newt',
+          checked && 'translate-x-[calc(var(--newt-dir)*1rem)] bg-white'
         )
       "
     />

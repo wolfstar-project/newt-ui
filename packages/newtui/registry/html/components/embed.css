@@ -7,7 +7,7 @@
   display: flex;
   max-width: var(--newt-embed-max-width);
   border-radius: var(--newt-radius-md);
-  border-left: 4px solid var(--newt-embed-color);
+  border-inline-start: 4px solid var(--newt-embed-color);
   background: var(--newt-bg-elevated);
   overflow: hidden;
 }

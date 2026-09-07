@@ -13,7 +13,7 @@
   gap: 6px;
   min-width: 0;
   margin-bottom: 4px;
-  padding-left: calc(var(--newt-reply-spine-size) + 6px);
+  padding-inline-start: calc(var(--newt-reply-spine-size) + 6px);
   font-size: 13px;
   line-height: 16px;
   color: var(--newt-text-muted);
@@ -23,13 +23,14 @@
 .newt-reply::before {
   content: "";
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 50%;
   width: var(--newt-reply-spine-size);
   height: var(--newt-reply-spine-size);
-  border-left: var(--newt-reply-spine-width) solid var(--newt-reply-spine-color);
+  border-inline-start: var(--newt-reply-spine-width) solid
+    var(--newt-reply-spine-color);
   border-top: var(--newt-reply-spine-width) solid var(--newt-reply-spine-color);
-  border-top-left-radius: var(--newt-reply-spine-radius);
+  border-start-start-radius: var(--newt-reply-spine-radius);
   transform: translateY(-100%);
 }
 

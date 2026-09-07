@@ -550,6 +550,27 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "direction",
+    type: "registry:ui",
+    title: "Direction",
+    description:
+      "Sets the writing direction for a subtree and exposes it to the components that need to know which way is forward.",
+    files: [
+      {
+        path: "ui/direction/DirectionProvider.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/direction/useDirection.ts",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/direction/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "divider",
     type: "registry:ui",
     title: "Divider",

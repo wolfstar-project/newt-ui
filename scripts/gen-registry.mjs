@@ -70,11 +70,11 @@ const reactExamples = metas.map((m) => ({
 }))
 writeFileSync(
   join(WWW, "registry/registry-ui.ts"),
-  `${header}import { Registry } from "@/registry/schema"\n\nexport const ui: Registry = ${j(reactUi)}\n`
+  `${header}import type { Registry } from "@/registry/schema"\n\nexport const ui: Registry = ${j(reactUi)}\n`
 )
 writeFileSync(
   join(WWW, "registry/registry-examples.ts"),
-  `${header}import { Registry } from "@/registry/schema"\n\nexport const examples: Registry = ${j(reactExamples)}\n`
+  `${header}import type { Registry } from "@/registry/schema"\n\nexport const examples: Registry = ${j(reactExamples)}\n`
 )
 
 const reactIndex = [...reactUi, ...reactExamples]

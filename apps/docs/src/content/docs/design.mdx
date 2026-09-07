@@ -75,6 +75,24 @@ In order:
    state the component has, all styled. A state with no resting appearance does
    not exist.
 
+## Logical properties only \{#logical\}
+
+No component contains `margin-left`, `left:`, `ml-2` or `text-left`. Every
+inline direction is logical — `margin-inline-start`, `inset-inline-start`,
+`ms-2`, `text-start` — so a right-to-left tree needs a `dir` attribute and
+nothing else.
+
+The one thing CSS cannot express logically is the sign of a sideways transform,
+so `tokens.css` carries `--newt-dir`, which is `1` normally and `-1` under
+`[dir="rtl"]`:
+
+```css
+transform: translateX(calc(var(--newt-dir) * 16px));
+```
+
+Directional glyphs — a reply arrow, a chevron, a send icon — mirror with
+`rtl:-scale-x-100`. A clock or a checkmark does not. See [RTL](/docs/rtl).
+
 ## No motion \{#motion\}
 
 newt/ui ships with no transitions, animations or keyframes. This is a

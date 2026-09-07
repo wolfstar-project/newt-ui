@@ -59,7 +59,7 @@ const SlashCommand = React.forwardRef<HTMLSpanElement, SlashCommandProps>(
         role="group"
         aria-label={describe(path, options)}
         className={cn(
-          "inline-flex flex-wrap items-center gap-1 rounded-sm bg-[color-mix(in_srgb,var(--newt-brand)_15%,transparent)] py-[2px] pl-[6px] pr-2 font-mono text-[13px] text-newt-mention-text",
+          "inline-flex flex-wrap items-center gap-1 rounded-sm bg-[color-mix(in_srgb,var(--newt-brand)_15%,transparent)] py-[2px] ps-[6px] pe-2 font-mono text-[13px] text-newt-mention-text",
           className
         )}
         {...props}

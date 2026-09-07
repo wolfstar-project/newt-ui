@@ -57,6 +57,14 @@
 
   /* Motion */
   --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
+
+  /*
+   * Writing direction, as a multiplier. A component that has to move something
+   * sideways multiplies its offset by this rather than branching on `dir`, so
+   * one declaration serves both directions:
+   *   transform: translateX(calc(var(--newt-dir) * 16px));
+   */
+  --newt-dir: 1;
   --newt-duration-fast: 100ms;
   --newt-duration-base: 150ms;
 }
@@ -117,4 +125,13 @@
   font-family: var(--newt-font-sans);
   color: var(--newt-text-primary);
   -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Every component is written with logical properties, so a right-to-left
+ * subtree needs no component-level override — only the sign of the sideways
+ * transforms, which physical `translateX` cannot express logically.
+ */
+[dir="rtl"] {
+  --newt-dir: -1;
 }

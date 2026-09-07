@@ -35,7 +35,7 @@
 
 /* Ephemeral replies are only visible to their recipient; Discord tints them. */
 .newt-message-group--ephemeral {
-  border-left: 2px solid
+  border-inline-start: 2px solid
     color-mix(in srgb, var(--newt-text-link) 40%, transparent);
   background: color-mix(in srgb, var(--newt-text-link) 10%, transparent);
 }

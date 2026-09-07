@@ -66,7 +66,7 @@
 .newt-switch__thumb {
   position: absolute;
   top: 2px;
-  left: 2px;
+  inset-inline-start: 2px;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -80,6 +80,6 @@
   border-color: var(--newt-online);
 }
 .newt-switch--on .newt-switch__thumb {
-  transform: translateX(16px);
+  transform: translateX(calc(var(--newt-dir) * 16px));
   background: #fff;
 }

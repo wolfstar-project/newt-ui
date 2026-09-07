@@ -109,6 +109,35 @@ Every component file/section includes, in order:
 - [ ] Modals trap focus and close on `Escape`; toasts are `role="status"` /
       `aria-live="polite"` and never trap focus.
 
+## 5b. Direction (RTL)
+
+Every component is written with CSS logical properties, so a right-to-left tree
+needs only a `dir` attribute. Physical spellings — `margin-left`, `left:`,
+`ml-2`, `text-left` — must not appear in a component.
+
+| Physical                   | Logical                         |
+| -------------------------- | ------------------------------- |
+| `margin-left` / `-right`   | `margin-inline-start` / `-end`  |
+| `padding-left` / `-right`  | `padding-inline-start` / `-end` |
+| `border-left` / `-right`   | `border-inline-start` / `-end`  |
+| `left:` / `right:`         | `inset-inline-start` / `-end`   |
+| `border-top-left-radius`   | `border-start-start-radius`     |
+| `text-align: left`         | `text-align: start`             |
+| `ml/mr/pl/pr-*`            | `ms/me/ps/pe-*`                 |
+| `left-*` / `right-*`       | `start-*` / `end-*`             |
+| `rounded-l                 | r                               | tl  | tr  | bl  | br-*` | `rounded-s | e   | ss  | se  | es  | ee-*` |
+| `text-left` / `text-right` | `text-start` / `text-end`       |
+
+The sign of a sideways transform is the one thing CSS cannot express logically,
+so `tokens.css` carries `--newt-dir` (`1`, and `-1` under `[dir="rtl"]`):
+
+```css
+transform: translateX(calc(var(--newt-dir) * 16px));
+```
+
+Directional glyphs mirror with `rtl:-scale-x-100`; a clock or a checkmark does
+not. `newtui migrate rtl` converts components installed before this change.
+
 ## 6. Motion rules
 
 newt/ui ships with **no CSS animations or transitions** — all states (hover,

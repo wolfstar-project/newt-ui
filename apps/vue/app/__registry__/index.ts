@@ -474,6 +474,31 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "DirectionDemo",
+    {
+      name: "DirectionDemo",
+      type: "registry:example",
+      registryDependencies: ["direction"],
+      files: ["app/lib/registry/default/example/DirectionDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/DirectionDemo.vue")
+      ),
+    },
+  ],
+  [
+    "direction",
+    {
+      name: "direction",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "app/lib/registry/default/ui/direction/DirectionProvider.vue",
+        "app/lib/registry/default/ui/direction/useDirection.ts",
+        "app/lib/registry/default/ui/direction/index.ts",
+      ],
+    },
+  ],
+  [
     "DividerDemo",
     {
       name: "DividerDemo",

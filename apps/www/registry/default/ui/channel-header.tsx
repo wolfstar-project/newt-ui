@@ -10,7 +10,7 @@ const ChannelHeader = React.forwardRef<
   <header
     ref={ref}
     className={cn(
-      "flex h-12 items-center justify-between gap-3 border-b border-newt-border bg-newt-bg-surface pl-4 pr-3 text-newt-text-primary",
+      "flex h-12 items-center justify-between gap-3 border-b border-newt-border bg-newt-bg-surface ps-4 pe-3 text-newt-text-primary",
       className
     )}
     {...props}
@@ -177,7 +177,7 @@ const ChannelHeaderSearch = React.forwardRef<
       )}
       {...props}
     >
-      <span className="min-w-0 flex-1 truncate text-left text-sm font-medium leading-none">
+      <span className="min-w-0 flex-1 truncate text-start text-sm font-medium leading-none">
         {children ?? placeholder}
       </span>
       <SearchIcon />

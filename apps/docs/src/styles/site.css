@@ -140,6 +140,11 @@
 
     /* Motion */
     --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
+    /*
+   * Writing direction, as a multiplier. A component that moves something
+   * sideways multiplies its offset by this rather than branching on `dir`.
+   */
+    --newt-dir: 1;
     --newt-duration-fast: 100ms;
     --newt-duration-base: 150ms;
   }
@@ -1700,6 +1705,41 @@
   .props-table-type {
     color: var(--newt-mention-text);
     white-space: nowrap;
+  }
+
+  /* --- demo direction toggle -------------------------------------------- */
+
+  [data-demo-frame] {
+    position: relative;
+  }
+
+  .demo-dir-toggle {
+    position: absolute;
+    inset-block-start: 0.5rem;
+    inset-inline-end: 0.5rem;
+    z-index: 1;
+    padding: 0.1rem 0.4rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-muted);
+    font-family: var(--newt-font-mono);
+    font-size: 0.65rem;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity var(--newt-duration-fast) var(--newt-ease);
+  }
+
+  /* Present for keyboard users always; visible on hover for everyone else. */
+  [data-demo-frame]:hover .demo-dir-toggle,
+  .demo-dir-toggle:focus-visible,
+  .demo-dir-toggle[aria-pressed="true"] {
+    opacity: 1;
+  }
+
+  .demo-dir-toggle[aria-pressed="true"] {
+    border-color: var(--newt-brand);
+    color: var(--newt-text-primary);
   }
 
   /* --- responsive ------------------------------------------------------- */

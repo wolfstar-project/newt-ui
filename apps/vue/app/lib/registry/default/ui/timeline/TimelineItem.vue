@@ -11,7 +11,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
     :class="
       cn(
         'relative flex gap-3 pb-5 last:pb-0',
-        'before:absolute before:bottom-0 before:left-[11px] before:top-6 before:w-0.5 before:bg-newt-border before:content-[\'\'] last:before:hidden',
+        'before:absolute before:bottom-0 before:start-[11px] before:top-6 before:w-0.5 before:bg-newt-border before:content-[\'\'] last:before:hidden',
         props.class
       )
     "

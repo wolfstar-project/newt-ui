@@ -55,6 +55,9 @@ export const newtTokens = {
     "0 1px 0 rgba(0,0,0,0.2), 0 1.5px 0 rgba(0,0,0,0.05), 0 2px 0 rgba(0,0,0,0.05)",
   "newt-shadow-elevation-high": "0 8px 16px rgba(0,0,0,0.24)",
   "newt-ease": "cubic-bezier(0.3, 0.7, 0.4, 1)",
+  // Writing direction as a multiplier: 1 in LTR, -1 under [dir="rtl"]. A
+  // sideways transform multiplies its offset by it instead of branching.
+  "newt-dir": "1",
   "newt-duration-fast": "100ms",
   "newt-duration-base": "150ms",
 } satisfies Record<string, string>

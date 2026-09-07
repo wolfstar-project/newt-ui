@@ -35,7 +35,7 @@ const style = computed<CSSProperties | undefined>(() =>
     :class="
       cn(
         mentionVariants({ variant: props.variant }),
-        props.avatar && 'pl-0.5',
+        props.avatar && 'ps-0.5',
         props.class
       )
     "

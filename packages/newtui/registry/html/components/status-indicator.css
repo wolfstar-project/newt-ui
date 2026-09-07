@@ -8,7 +8,7 @@
 .newt-status__dot {
   position: absolute;
   bottom: -2px;
-  right: -2px;
+  inset-inline-end: -2px;
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -38,7 +38,7 @@
   content: "";
   position: absolute;
   top: 50%;
-  left: 50%;
+  inset-inline-start: 50%;
   transform: translate(-50%, -50%);
   width: 65%;
   height: 22%;

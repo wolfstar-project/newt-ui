@@ -16,7 +16,7 @@ const V2Container = React.forwardRef<HTMLDivElement, V2ContainerProps>(
     <div
       ref={ref}
       className={cn(
-        "mt-1 flex max-w-[520px] flex-col gap-2 rounded-sm border-l-4 border-[var(--newt-v2-accent)] bg-newt-bg-surface p-3 text-sm leading-relaxed text-newt-text-primary",
+        "mt-1 flex max-w-[520px] flex-col gap-2 rounded-sm border-s-4 border-[var(--newt-v2-accent)] bg-newt-bg-surface p-3 text-sm leading-relaxed text-newt-text-primary",
         className
       )}
       /*

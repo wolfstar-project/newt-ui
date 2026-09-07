@@ -105,7 +105,7 @@ const StageBannerAction = React.forwardRef<
     ref={ref}
     type={type}
     className={cn(
-      "ml-auto shrink-0 cursor-pointer rounded-sm border-0 bg-black/20 px-2.5 py-1 text-xs font-semibold text-white transition-colors duration-fast ease-newt hover:bg-black/[0.32]",
+      "ms-auto shrink-0 cursor-pointer rounded-sm border-0 bg-black/20 px-2.5 py-1 text-xs font-semibold text-white transition-colors duration-fast ease-newt hover:bg-black/[0.32]",
       className
     )}
     {...props}
@@ -124,7 +124,7 @@ const StageBannerClose = React.forwardRef<
       type={type}
       aria-label="Dismiss"
       className={cn(
-        "ml-auto shrink-0 cursor-pointer border-0 bg-transparent p-0 text-base leading-none text-white/80 transition-colors duration-fast ease-newt hover:text-white",
+        "ms-auto shrink-0 cursor-pointer border-0 bg-transparent p-0 text-base leading-none text-white/80 transition-colors duration-fast ease-newt hover:text-white",
         "group-data-[variant=neutral]:text-newt-text-muted group-data-[variant=neutral]:hover:text-newt-text-primary",
         className
       )}

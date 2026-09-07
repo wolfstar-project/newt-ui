@@ -14,6 +14,7 @@ export const COMMANDS = [
   "diff",
   "info",
   "mcp",
+  "migrate",
 ] as const
 export type CommandName = (typeof COMMANDS)[number]
 
@@ -36,6 +37,7 @@ export type BundlerName = (typeof BUNDLERS)[number]
 export const BOOLEAN_FLAGS = [
   "all",
   "defaults",
+  "dry-run",
   "help",
   "json",
   "legacy",

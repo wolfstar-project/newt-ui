@@ -27,7 +27,7 @@ const style = computed<CSSProperties | undefined>(() =>
     :style="style"
     :class="
       cn(
-        'flex max-w-[var(--newt-embed-max-width)] overflow-hidden rounded-md border-l-4 border-[var(--newt-embed-color,var(--newt-brand))] bg-newt-bg-elevated',
+        'flex max-w-[var(--newt-embed-max-width)] overflow-hidden rounded-md border-s-4 border-[var(--newt-embed-color,var(--newt-brand))] bg-newt-bg-elevated',
         props.class
       )
     "

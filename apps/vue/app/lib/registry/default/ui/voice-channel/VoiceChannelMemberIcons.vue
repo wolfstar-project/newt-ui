@@ -15,7 +15,7 @@ const props = defineProps<{
     :data-muted="props.muted ? '' : undefined"
     :class="
       cn(
-        'ml-auto flex items-center gap-1 text-xs text-newt-text-muted',
+        'ms-auto flex items-center gap-1 text-xs text-newt-text-muted',
         props.muted && 'text-newt-dnd',
         props.class
       )

@@ -61,3 +61,32 @@ The library ships no transitions: state is carried by colour, border and shape.
 
 If a value you need genuinely has no token, say so and propose the token. Do not
 inline the value.
+
+## Sides are logical, never physical
+
+## Incorrect
+
+```tsx
+<div className="ml-2 border-l-2 pl-4 text-left">
+```
+
+Four physical utilities. The same interface under `dir="rtl"` puts the border on
+the wrong side and the text against the wrong margin.
+
+## Correct
+
+```tsx
+<div className="ms-2 border-s-2 ps-4 text-start">
+```
+
+The mapping is `ml→ms`, `mr→me`, `pl→ps`, `pr→pe`, `left-→start-`,
+`right-→end-`, `border-l→border-s`, `rounded-l|tl|bl→rounded-s|ss|es`,
+`text-left→text-start`. Anything already installed can be converted with
+`npx newtui@latest migrate rtl`.
+
+A transform that moves something sideways multiplies by `var(--newt-dir)`,
+which is `1` normally and `-1` under `[dir="rtl"]`:
+
+```tsx
+<span className="translate-x-[calc(var(--newt-dir)*1rem)]" />
+```

@@ -10,7 +10,7 @@
   max-width: 520px;
   margin-top: 4px;
   padding: 12px;
-  border-left: 4px solid var(--newt-v2-accent);
+  border-inline-start: 4px solid var(--newt-v2-accent);
   border-radius: var(--newt-radius-sm);
   background: var(--newt-bg-surface);
   font-size: 14px;

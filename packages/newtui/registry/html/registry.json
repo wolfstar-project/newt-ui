@@ -231,6 +231,12 @@
       "files": ["stage-banner.css", "stage-banner.html"]
     },
     {
+      "name": "direction",
+      "title": "Direction",
+      "rootClass": "newt-root",
+      "files": ["direction.css", "direction.html"]
+    },
+    {
       "name": "scrollbar",
       "title": "Scrollbar Utility",
       "rootClass": "newt-scrollbar",

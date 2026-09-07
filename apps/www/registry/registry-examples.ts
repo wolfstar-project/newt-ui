@@ -179,6 +179,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "direction-demo",
+    type: "registry:example",
+    registryDependencies: ["direction"],
+    files: [
+      {
+        path: "example/direction-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "divider-demo",
     type: "registry:example",
     registryDependencies: ["divider"],

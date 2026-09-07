@@ -48,7 +48,7 @@ const VoiceChannelMembers = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col gap-0.5 pl-6", className)}
+    className={cn("flex flex-col gap-0.5 ps-6", className)}
     {...props}
   />
 ))
@@ -82,7 +82,7 @@ const VoiceChannelMemberIcons = React.forwardRef<
     ref={ref}
     data-muted={muted ? "" : undefined}
     className={cn(
-      "ml-auto flex items-center gap-1 text-xs text-newt-text-muted",
+      "ms-auto flex items-center gap-1 text-xs text-newt-text-muted",
       muted && "text-newt-dnd",
       className
     )}

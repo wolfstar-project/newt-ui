@@ -222,6 +222,19 @@
       "framework": "react"
     },
     {
+      "name": "direction",
+      "type": "registry:ui",
+      "title": "Direction",
+      "description": "Sets the writing direction for a subtree and exposes it to the components that need to know which way is forward.",
+      "files": [
+        {
+          "path": "registry/default/ui/direction.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "divider",
       "type": "registry:ui",
       "title": "Divider",

@@ -261,7 +261,7 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
                     !option.disabled &&
                     "bg-newt-brand text-white",
                   option.value === selected &&
-                    "text-newt-text-primary after:ml-auto after:font-bold after:text-newt-brand after:content-['\\2713']",
+                    "text-newt-text-primary after:ms-auto after:font-bold after:text-newt-brand after:content-['\\2713']",
                   option.value === selected &&
                     index === active &&
                     "after:text-white",

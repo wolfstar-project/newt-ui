@@ -10,6 +10,7 @@ import { diff } from "./commands/diff.js"
 import { info } from "./commands/info.js"
 import { init } from "./commands/init.js"
 import { list } from "./commands/list.js"
+import { migrate } from "./commands/migrate.js"
 import { search } from "./commands/search.js"
 import { view } from "./commands/view.js"
 import { MCP_CLIENTS, mcpInit } from "./mcp/init.js"
@@ -98,6 +99,7 @@ function printHelp(): void {
     info                     print what this project is and what it has installed
     mcp                      run the MCP server over stdio
     mcp init                 write the MCP config for an editor (--client)
+    migrate rtl              rewrite installed components to logical properties
 
   ${highlighter.bold("Options")}
     -c, --cwd <dir>          working directory (default: current directory)
@@ -113,6 +115,7 @@ function printHelp(): void {
     -p, --path <path>        the path to add the component to (add)
     -t, --type <type>        filter by registry item type (list, search)
         --json               output as JSON (list, search, view, info)
+        --dry-run            report what would change, write nothing (migrate)
         --client <name>      the editor to configure (mcp init):
                              ${MCP_CLIENTS.join(", ")}
         --legacy             use the legacy HTML/CSS CLI (same as newtui-html)
@@ -127,6 +130,7 @@ function printHelp(): void {
     $ newtui search presence --json
     $ newtui info --json
     $ newtui mcp init --client claude
+    $ newtui migrate rtl --dry-run
 `)
 }
 
@@ -268,6 +272,13 @@ async function main(): Promise<void> {
       break
     case "info":
       await info({ cwd, registry, json: flagBoolean(args.json) })
+      break
+    case "migrate":
+      await migrate({
+        migration: rest[0] ?? "",
+        cwd,
+        dryRun: flagBoolean(args["dry-run"]),
+      })
       break
     case "mcp": {
       if (rest[0] === "init") {

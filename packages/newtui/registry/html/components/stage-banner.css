@@ -18,7 +18,7 @@
   flex-shrink: 0;
 }
 .newt-stage-banner__action {
-  margin-left: auto;
+  margin-inline-start: auto;
   background: rgba(0, 0, 0, 0.2);
   color: #fff;
   border: none;

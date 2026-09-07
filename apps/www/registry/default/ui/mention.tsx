@@ -55,7 +55,7 @@ const Mention = React.forwardRef<HTMLButtonElement, MentionProps>(
       }
       className={cn(
         mentionVariants({ variant }),
-        avatar && "pl-0.5",
+        avatar && "ps-0.5",
         className
       )}
       {...props}

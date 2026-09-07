@@ -10,7 +10,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <div
     :class="
       cn(
-        'absolute -top-6 left-4 rounded-full border-4 border-newt-bg-base',
+        'absolute -top-6 start-4 rounded-full border-4 border-newt-bg-base',
         props.class
       )
     "

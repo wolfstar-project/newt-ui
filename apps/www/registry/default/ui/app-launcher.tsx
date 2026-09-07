@@ -78,7 +78,7 @@ const SearchIcon = () => (
     strokeWidth="2"
     strokeLinecap="round"
     aria-hidden="true"
-    className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-newt-text-muted"
+    className="pointer-events-none absolute start-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-newt-text-muted"
   >
     <circle cx="9" cy="9" r="5.5" />
     <path d="M13 13l4 4" />
@@ -113,7 +113,7 @@ const AppLauncherSearchInput = React.forwardRef<
     autoComplete="off"
     spellCheck={false}
     className={cn(
-      "h-11 w-full appearance-none rounded-md border-2 border-transparent bg-newt-bg-input py-0 pl-11 pr-3 text-base text-newt-text-primary outline-none",
+      "h-11 w-full appearance-none rounded-md border-2 border-transparent bg-newt-bg-input py-0 ps-11 pe-3 text-base text-newt-text-primary outline-none",
       "placeholder:text-newt-text-muted focus:border-newt-brand",
       className
     )}
@@ -242,7 +242,7 @@ const AppLauncherItem = React.forwardRef<
       ref={ref}
       type={type}
       className={cn(
-        "flex w-full cursor-pointer items-center gap-3 border-0 bg-transparent px-3 py-3 text-left transition-colors duration-fast ease-newt",
+        "flex w-full cursor-pointer items-center gap-3 border-0 bg-transparent px-3 py-3 text-start transition-colors duration-fast ease-newt",
         "hover:bg-newt-bg-hover",
         "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link",
         className

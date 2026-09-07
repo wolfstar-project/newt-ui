@@ -10,7 +10,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <header
     :class="
       cn(
-        'flex h-12 items-center justify-between gap-3 border-b border-newt-border bg-newt-bg-surface pl-4 pr-3 text-newt-text-primary',
+        'flex h-12 items-center justify-between gap-3 border-b border-newt-border bg-newt-bg-surface ps-4 pe-3 text-newt-text-primary',
         props.class
       )
     "

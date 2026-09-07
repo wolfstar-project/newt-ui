@@ -1,0 +1,15 @@
+<!--
+  There is no direction component in the plain HTML build: every stylesheet is
+  written with logical properties, so the attribute is the whole feature.
+  Put it on <html> for the page, or on any element for a subtree.
+-->
+<html lang="ar" dir="rtl">
+  <body class="newt-root">
+    <button class="newt-btn newt-btn--primary">إرسال</button>
+  </body>
+</html>
+
+<!-- one subtree, inside an otherwise left-to-right page -->
+<section dir="rtl" class="newt-root">
+  <div class="newt-message-group">…</div>
+</section>

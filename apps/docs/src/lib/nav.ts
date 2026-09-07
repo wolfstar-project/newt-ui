@@ -34,6 +34,7 @@ const GUIDES: readonly NavGroup[] = [
       { href: "/docs/components-json", label: "components.json" },
       { href: "/docs/theming", label: "Theming" },
       { href: "/docs/dark-mode", label: "Dark mode" },
+      { href: "/docs/rtl", label: "RTL", badge: "new" },
       { href: "/docs/cli", label: "CLI" },
       { href: "/docs/javascript", label: "JavaScript" },
       { href: "/docs/html-css", label: "HTML & CSS" },

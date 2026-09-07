@@ -80,6 +80,6 @@
     display: block;
   }
   .newt-mention--with-avatar {
-    padding-left: 2px;
+    padding-inline-start: 2px;
   }
 }

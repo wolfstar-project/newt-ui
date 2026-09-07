@@ -179,6 +179,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "DirectionDemo",
+    type: "registry:example",
+    registryDependencies: ["direction"],
+    files: [
+      {
+        path: "example/DirectionDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "DividerDemo",
     type: "registry:example",
     registryDependencies: ["divider"],

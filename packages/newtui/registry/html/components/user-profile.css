@@ -19,7 +19,7 @@
 .newt-profile__avatar-wrap {
   position: absolute;
   top: -24px;
-  left: 16px;
+  inset-inline-start: 16px;
   border: 4px solid var(--newt-bg-base);
   border-radius: 50%;
 }

@@ -183,6 +183,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "direction",
+    {
+      name: "direction",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/default/ui/direction.tsx"],
+      component: React.lazy(() => import("@/registry/default/ui/direction")),
+    },
+  ],
+  [
     "divider",
     {
       name: "divider",
@@ -789,6 +799,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/example/cooldown-bar-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/default/example/cooldown-bar-demo")
+      ),
+    },
+  ],
+  [
+    "direction-demo",
+    {
+      name: "direction-demo",
+      type: "registry:example",
+      registryDependencies: ["direction"],
+      files: ["registry/default/example/direction-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/direction-demo")
       ),
     },
   ],

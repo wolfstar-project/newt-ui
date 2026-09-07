@@ -56,7 +56,7 @@ const UserProfileAvatar = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "absolute -top-6 left-4 rounded-full border-4 border-newt-bg-base",
+      "absolute -top-6 start-4 rounded-full border-4 border-newt-bg-base",
       className
     )}
     {...props}

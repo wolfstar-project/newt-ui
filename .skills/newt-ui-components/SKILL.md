@@ -30,6 +30,11 @@ entry in `registry-categories.ts` (both copies).
 
 - Variant modifiers describe **state or intent**, never appearance:
   `--danger`, `--success`, `--online`. Not `--red`, `--green`.
+- Logical properties only. `margin-inline-start`, `inset-inline-start`,
+  `ms-*`, `ps-*`, `start-*`, `end-*`, `rounded-s|e|ss|se|es|ee-*`,
+  `text-start|end` — never their physical spellings. A sideways transform
+  multiplies by `var(--newt-dir)`, and a directional glyph carries
+  `rtl:-scale-x-100`.
 - Tokens only. Every colour, radius, font, shadow, easing, and duration comes
   from a `--newt-*` variable, reached through the Tailwind utility
   (`bg-newt-bg-elevated`, `text-newt-text-muted`, `rounded-md`,

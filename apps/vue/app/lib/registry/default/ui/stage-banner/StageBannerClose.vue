@@ -15,7 +15,7 @@ const ctx = inject(STAGE_BANNER_INJECTION_KEY, null)
     aria-label="Dismiss"
     :class="
       cn(
-        'ml-auto shrink-0 cursor-pointer border-0 bg-transparent p-0 text-base leading-none text-white/80 transition-colors duration-fast ease-newt hover:text-white group-data-[variant=neutral]:text-newt-text-muted group-data-[variant=neutral]:hover:text-newt-text-primary',
+        'ms-auto shrink-0 cursor-pointer border-0 bg-transparent p-0 text-base leading-none text-white/80 transition-colors duration-fast ease-newt hover:text-white group-data-[variant=neutral]:text-newt-text-muted group-data-[variant=neutral]:hover:text-newt-text-primary',
         props.class
       )
     "

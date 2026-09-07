@@ -16,7 +16,7 @@
 .newt-timeline__item:not(:last-child)::before {
   content: "";
   position: absolute;
-  left: 11px;
+  inset-inline-start: 11px;
   top: 24px;
   bottom: 0;
   width: 2px;

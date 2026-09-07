@@ -117,7 +117,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: left;
+  text-align: start;
   font-size: 14px;
   font-weight: 500;
   line-height: 1;

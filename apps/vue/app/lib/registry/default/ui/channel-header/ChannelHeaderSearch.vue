@@ -23,7 +23,7 @@ const props = withDefaults(
     "
   >
     <span
-      class="min-w-0 flex-1 truncate text-left text-sm font-medium leading-none"
+      class="min-w-0 flex-1 truncate text-start text-sm font-medium leading-none"
     >
       <slot>{{ props.placeholder }}</slot>
     </span>

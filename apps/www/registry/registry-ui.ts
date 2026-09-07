@@ -218,6 +218,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "direction",
+    type: "registry:ui",
+    title: "Direction",
+    description:
+      "Sets the writing direction for a subtree and exposes it to the components that need to know which way is forward.",
+    files: [
+      {
+        path: "ui/direction.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "divider",
     type: "registry:ui",
     title: "Divider",

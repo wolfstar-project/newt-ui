@@ -76,7 +76,7 @@
 .newt-app-launcher__search-icon {
   position: absolute;
   top: 50%;
-  left: 14px;
+  inset-inline-start: 14px;
   transform: translateY(-50%);
   pointer-events: none;
   color: var(--newt-text-muted);
@@ -171,7 +171,7 @@
   padding: 12px;
   border: 0;
   background: transparent;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   transition: background var(--newt-duration-fast) var(--newt-ease);
 }

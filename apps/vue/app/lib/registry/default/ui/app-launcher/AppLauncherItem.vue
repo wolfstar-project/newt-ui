@@ -20,7 +20,7 @@ const props = withDefaults(
     type="button"
     :class="
       cn(
-        'flex w-full cursor-pointer items-center gap-3 border-0 bg-transparent px-3 py-3 text-left transition-colors duration-fast ease-newt',
+        'flex w-full cursor-pointer items-center gap-3 border-0 bg-transparent px-3 py-3 text-start transition-colors duration-fast ease-newt',
         'hover:bg-newt-bg-hover',
         'focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link',
         props.class

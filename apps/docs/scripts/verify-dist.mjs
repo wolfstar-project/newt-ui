@@ -52,7 +52,7 @@ if (missing.length > 0) {
 
 const llms = readFileSync(resolve(dist, "llms.txt"), "utf8")
 const listed = (llms.match(/\/docs\/components\/[a-z0-9-]+\.md/g) ?? []).length
-const expected = Number(process.env.NEWT_EXPECTED_COMPONENTS ?? 55)
+const expected = Number(process.env.NEWT_EXPECTED_COMPONENTS ?? 56)
 if (listed < expected) {
   console.error(
     `llms.txt lists ${listed} components, expected at least ${expected}`
