@@ -61,17 +61,31 @@ const reactUi = metas.map((m) => {
   }))
   return entry
 })
-const reactExamples = metas.map((m) => ({
-  name: m.reactDemo ?? `${m.name}-demo`,
-  type: "registry:example",
-  registryDependencies: [m.name],
-  files: [
-    {
-      path: `example/${m.reactDemo ?? `${m.name}-demo`}.tsx`,
-      type: "registry:example",
-    },
-  ],
-}))
+/** The default demo plus one entry per declared variant. */
+function reactDemoNames(m) {
+  return [
+    m.reactDemo ?? `${m.name}-demo`,
+    ...(m.examples ?? []).map((example) => `${m.name}-${example}-demo`),
+  ]
+}
+
+function vueDemoNames(m) {
+  return [
+    m.vueDemo ?? `${pascal(m.name)}Demo`,
+    ...(m.examples ?? []).map(
+      (example) => `${pascal(m.name)}${pascal(example)}Demo`
+    ),
+  ]
+}
+
+const reactExamples = metas.flatMap((m) =>
+  reactDemoNames(m).map((name) => ({
+    name,
+    type: "registry:example",
+    registryDependencies: [m.name],
+    files: [{ path: `example/${name}.tsx`, type: "registry:example" }],
+  }))
+)
 writeFileSync(
   join(WWW, "registry/registry-ui.ts"),
   `${header}import type { Registry } from "@/registry/schema"\n\nexport const ui: Registry = ${j(reactUi)}\n`
@@ -137,17 +151,14 @@ const vueUi = metas.map((m) => {
   )
   return entry
 })
-const vueExamples = metas.map((m) => ({
-  name: m.vueDemo ?? `${pascal(m.name)}Demo`,
-  type: "registry:example",
-  registryDependencies: [m.name],
-  files: [
-    {
-      path: `example/${m.vueDemo ?? `${pascal(m.name)}Demo`}.vue`,
-      type: "registry:example",
-    },
-  ],
-}))
+const vueExamples = metas.flatMap((m) =>
+  vueDemoNames(m).map((name) => ({
+    name,
+    type: "registry:example",
+    registryDependencies: [m.name],
+    files: [{ path: `example/${name}.vue`, type: "registry:example" }],
+  }))
+)
 writeFileSync(
   join(VUE, "app/lib/registry/registry-ui.ts"),
   `${header}import type { Registry } from "./schema"\n\nexport const ui: Registry = ${j(vueUi)}\n`
@@ -254,13 +265,11 @@ for (const m of metas) {
     ...(m.reactFiles ?? [`ui/${m.name}.tsx`]).map((f) =>
       join(WWW, `registry/default/${f}`)
     ),
-    join(
-      WWW,
-      `registry/default/example/${m.reactDemo ?? `${m.name}-demo`}.tsx`
+    ...reactDemoNames(m).map((name) =>
+      join(WWW, `registry/default/example/${name}.tsx`)
     ),
-    join(
-      VUE,
-      `app/lib/registry/default/example/${m.vueDemo ?? `${pascal(m.name)}Demo`}.vue`
+    ...vueDemoNames(m).map((name) =>
+      join(VUE, `app/lib/registry/default/example/${name}.vue`)
     ),
     ...(m.vueFiles ?? [`${pascal(m.name)}.vue`, "index.ts"]).map((f) =>
       join(VUE, `app/lib/registry/default/${dir}/${m.name}/${f}`)
