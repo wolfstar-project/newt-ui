@@ -9,13 +9,13 @@ import {
   type ComponentMeta,
 } from "../content/components"
 import { SITE } from "../content/site"
-import { Breadcrumb } from "../site/Breadcrumb"
 import { CodeBlock, FrameworkBlock } from "../site/CodeBlock"
 import { Demo } from "../site/Demo"
 import { DemoBoundary } from "../site/DemoBoundary"
-import { InlineCode, Lede, List, P, PageTitle, Section } from "../site/Prose"
+import { InlineCode, List, P, PageHead, Section } from "../site/Prose"
 import { Link } from "../site/router"
 import { useSettings } from "../site/settings"
+import { Content } from "../site/Shell"
 import { reactSource, vueSource } from "../site/source"
 import { Tabs } from "../site/Tabs"
 import { VueIsland } from "../site/VueIsland"
@@ -37,10 +37,7 @@ const VUE_EXTENSION = ".vue"
 const INLINE_IMPORT_LIMIT = 4
 
 const LINK =
-  "text-link underline underline-offset-4 transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-weft"
-
-const EYEBROW =
-  "font-data text-[11px] tracking-[0.13em] text-weft-faint uppercase"
+  "text-newt-text-link underline underline-offset-4 transition-colors duration-(--dur-instant) ease-(--ease-beat) hover:text-newt-text-primary"
 
 interface MetaProps {
   readonly meta: ComponentMeta
@@ -158,14 +155,9 @@ function PreviewCode({ meta }: MetaProps) {
  * lookup is keyed by an arbitrary slug, hence the widened annotation: a
  * component the map has not been updated for reads as absent, not as `""`.
  */
-function RootClass({ meta }: MetaProps) {
-  const rootClass: string | undefined = rootClasses[meta.name]
-  if (rootClass === undefined) return null
-  return (
-    <p className={EYEBROW}>
-      root class <InlineCode>.{rootClass}</InlineCode>
-    </p>
-  )
+function rootClassOf(name: string): string | undefined {
+  const rootClass: string | undefined = rootClasses[name]
+  return rootClass === undefined ? undefined : `.${rootClass}`
 }
 
 /*
@@ -176,7 +168,7 @@ function RootClass({ meta }: MetaProps) {
 function Dependencies({ meta }: MetaProps) {
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="font-ui text-[15px] font-semibold text-weft">
+      <h3 className="text-[15px] font-semibold text-newt-text-primary">
         Dependencies
       </h3>
       {meta.dependencies.length > 0 && (
@@ -223,7 +215,11 @@ function Installation({ meta }: MetaProps) {
     meta.dependencies.length > 0 || meta.registryDependencies.length > 0
 
   return (
-    <Section id="installation" title="Installation">
+    <Section
+      id="installation"
+      title="Installation"
+      description="Let the CLI write the files, or copy them in by hand. Either way the source ends up in your project and stops being ours."
+    >
       <Tabs
         tabs={[
           {
@@ -263,7 +259,11 @@ function Installation({ meta }: MetaProps) {
 function Usage({ meta }: MetaProps) {
   const directory = `${UI_ALIAS}/${meta.name}`
   return (
-    <Section id="usage" title="Usage">
+    <Section
+      id="usage"
+      title="Usage"
+      description="What to import, from the path your ui alias names."
+    >
       <FrameworkBlock
         lang="typescript"
         react={importLine([pascalCase(meta.name)], directory)}
@@ -274,47 +274,50 @@ function Usage({ meta }: MetaProps) {
 }
 
 function Article({ meta }: MetaProps) {
+  const rootClass = rootClassOf(meta.name)
+
   return (
-    <article className="flex flex-col gap-14">
-      <Breadcrumb
-        trail={[
-          { label: "Docs", href: "/docs/installation" },
-          { label: "Components", href: "/docs/components/button" },
-          { label: meta.title },
-        ]}
+    <>
+      <PageHead
+        eyebrow={[SITE.name, `v${SITE.version}`, "component"]}
+        overline={`${meta.category.toLowerCase()} —`}
+        title={meta.title}
+        lead={meta.description}
       />
 
-      <header className="flex flex-col gap-5">
-        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-          <p className={EYEBROW}>{meta.category}</p>
-          <RootClass meta={meta} />
-        </div>
-        <PageTitle>{meta.title}</PageTitle>
-        <Lede>{meta.description}</Lede>
-      </header>
+      <Content>
+        <Section
+          id="preview"
+          title="Preview"
+          meta={rootClass}
+          description="The example that ships with the component, rendered live and shown as source."
+        >
+          <PreviewCode meta={meta} />
+        </Section>
 
-      <Section id="preview" title="Preview">
-        <PreviewCode meta={meta} />
-      </Section>
+        <Installation meta={meta} />
 
-      <Installation meta={meta} />
+        <Usage meta={meta} />
 
-      <Usage meta={meta} />
-
-      <Section id="tokens" title="Tokens">
-        <P>
-          Every colour, radius, shadow and duration in this component resolves
-          through the <InlineCode>--newt-*</InlineCode> layer, so restyling it
-          is a matter of overriding those variables rather than editing the
-          classes in the file. The full list, and where to put the override, are
-          on the{" "}
-          <Link href="/docs/installation#tokens" className={LINK}>
-            installation page
-          </Link>
-          .
-        </P>
-      </Section>
-    </article>
+        <Section
+          id="tokens"
+          title="Tokens"
+          description="Nothing in the file holds a colour of its own."
+        >
+          <P>
+            Every colour, radius, shadow and duration in this component resolves
+            through the <InlineCode>--newt-*</InlineCode> layer, so restyling it
+            is a matter of overriding those variables rather than editing the
+            classes in the file. The full list, and where to put the override,
+            are on the{" "}
+            <Link href="/docs/installation#tokens" className={LINK}>
+              installation page
+            </Link>
+            .
+          </P>
+        </Section>
+      </Content>
+    </>
   )
 }
 

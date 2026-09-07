@@ -1,0 +1,33 @@
+/* newt-ui · Chat (channel shell: scrolling log + composer) */
+
+.newt-chat {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--newt-bg-elevated);
+}
+
+.newt-chat__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/*
+ * Pins a short conversation to the bottom of the scrollport, the way a channel
+ * with three messages still reads from the composer upwards.
+ */
+.newt-chat__body-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  justify-content: flex-end;
+}
+
+.newt-chat__footer {
+  flex-shrink: 0;
+  padding: 0 16px 16px;
+}

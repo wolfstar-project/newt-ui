@@ -16,16 +16,37 @@ const scrollbarClassName = [
   "[&::-webkit-scrollbar-corner]:bg-transparent",
 ].join(" ")
 
-const ScrollArea = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"div">
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("overflow-auto", scrollbarClassName, className)}
-    {...props}
-  />
-))
+export interface ScrollAreaProps extends React.ComponentProps<"div"> {
+  /**
+   * Put the viewport in the tab order so it can be scrolled from the keyboard
+   * (WCAG 2.1.1). Off by default: a focusable region only helps when the area
+   * actually scrolls and holds no other focusable content.
+   */
+  focusable?: boolean
+  /** Accessible name of the focusable viewport. */
+  viewportLabel?: string
+}
+
+const ScrollArea = React.forwardRef<HTMLDivElement, ScrollAreaProps>(
+  (
+    {
+      className,
+      focusable = false,
+      viewportLabel = "Scrollable region",
+      ...props
+    },
+    ref
+  ) => (
+    <div
+      ref={ref}
+      tabIndex={focusable ? 0 : undefined}
+      role={focusable ? "group" : undefined}
+      aria-label={focusable ? viewportLabel : undefined}
+      className={cn("overflow-auto", scrollbarClassName, className)}
+      {...props}
+    />
+  )
+)
 ScrollArea.displayName = "ScrollArea"
 
 export { ScrollArea, ScrollArea as Scrollbar, scrollbarClassName }

@@ -17,6 +17,7 @@ export const newtPreset: Omit<Config, "content"> = {
           "bg-elevated": "var(--newt-bg-elevated)",
           "bg-floating": "var(--newt-bg-floating)",
           "bg-input": "var(--newt-bg-input)",
+          "bg-input-elevated": "var(--newt-bg-input-elevated)",
           "bg-hover": "var(--newt-bg-hover)",
           "bg-active": "var(--newt-bg-active)",
           border: "var(--newt-border)",
@@ -33,6 +34,8 @@ export const newtPreset: Omit<Config, "content"> = {
           offline: "var(--newt-offline)",
           danger: "var(--newt-danger)",
           "danger-hover": "var(--newt-danger-hover)",
+          "mention-text": "var(--newt-mention-text)",
+          "mention-role": "var(--newt-mention-role)",
         },
       },
       fontFamily: {

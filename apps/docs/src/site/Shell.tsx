@@ -1,18 +1,17 @@
 import { useEffect, useState, type ReactNode } from "react"
 
 import { neighbours } from "../content/nav"
+import { cn } from "../lib/utils"
 import { Footer } from "./Footer"
-import { Header } from "./Header"
 import { Link, usePath } from "./router"
-import { Sidebar } from "./Sidebar"
-import { Toc } from "./Toc"
+import { Sidenav } from "./Sidenav"
 
 const EYEBROW =
-  "font-data text-[11px] tracking-[0.13em] text-weft-faint uppercase"
+  "font-mono text-[11px] tracking-[0.13em] text-newt-text-muted uppercase"
 const PAGER_LABEL =
-  "text-weft-dim transition-colors duration-(--dur-instant) ease-(--ease-beat) group-hover:text-weft"
+  "text-newt-text-secondary transition-colors duration-(--dur-instant) ease-(--ease-beat) group-hover:text-newt-text-primary"
 
-/** The two pages either side of this one, in the order the sidebar lists them. */
+/** The two pages either side of this one, in the order the sidenav lists them. */
 export function Pager() {
   const path = usePath()
   const { previous, next } = neighbours(path)
@@ -21,7 +20,7 @@ export function Pager() {
   return (
     <nav
       aria-label="Pages"
-      className="mt-16 flex items-stretch justify-between gap-4 border-t border-reed pt-6"
+      className="mt-12 flex items-stretch justify-between gap-4 border-t border-newt-border pt-6"
     >
       {previous ? (
         <Link href={previous.href} className="group flex flex-col gap-1">
@@ -41,91 +40,70 @@ export function Pager() {
   )
 }
 
-interface NavDrawerProps {
-  readonly open: boolean
-  readonly onClose: () => void
-}
-
 /*
- * The narrow width has no room for a column, so the same sidebar arrives over
- * the page instead. Escape closes it, and so does the ground behind it.
+ * The reading column under the header. It is the page rather than the shell
+ * that opens it, because the header above it runs edge to edge and only the
+ * page knows what belongs in it.
  */
-function NavDrawer({ open, onClose }: NavDrawerProps) {
-  useEffect(() => {
-    if (!open) return undefined
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose()
-    }
-    window.addEventListener("keydown", onKeyDown)
-    return () => window.removeEventListener("keydown", onKeyDown)
-  }, [open, onClose])
-
-  if (!open) return null
-
+export function Content({ children }: { readonly children: ReactNode }) {
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="Documentation navigation"
-      className="fixed inset-0 z-(--z-panel) lg:hidden"
-    >
-      <button
-        type="button"
-        aria-label="Close navigation"
-        onClick={onClose}
-        className="absolute inset-0 h-full w-full cursor-default bg-ground/80"
-      />
-      <div className="relative h-full w-72 overflow-y-auto border-r border-reed bg-raised">
-        <Sidebar className="p-4" onNavigate={onClose} />
-      </div>
+    <div className="content">
+      {children}
+      <Pager />
     </div>
   )
 }
 
 interface ShellProps {
   readonly children: ReactNode
-  /** the home page runs the full width; a docs page keeps a reading column */
-  readonly wide?: boolean
 }
 
-export function Shell({ children, wide = false }: ShellProps) {
+export function Shell({ children }: ShellProps) {
   const [navOpen, setNavOpen] = useState(false)
+  const path = usePath()
+
+  /* the drawer belongs to the page it was opened on, and closes with it */
+  useEffect(() => setNavOpen(false), [path])
+
+  useEffect(() => {
+    if (!navOpen) return undefined
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setNavOpen(false)
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [navOpen])
 
   return (
-    <div className="min-h-dvh">
-      <Header onOpenNav={() => setNavOpen(true)} />
+    <>
+      <button
+        type="button"
+        className="menu-toggle"
+        aria-label="Toggle navigation"
+        aria-expanded={navOpen}
+        onClick={() => setNavOpen((open) => !open)}
+      >
+        ☰
+      </button>
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-hidden="true"
+        className={cn("sidenav-overlay", navOpen && "is-open")}
+        onClick={() => setNavOpen(false)}
+      />
 
-      {wide ? (
-        <main>{children}</main>
-      ) : (
-        /*
-         * Three columns: the navigation, the page, and the index of the page.
-         * The outer two are sticky and scroll on their own, so only the middle
-         * one moves with the document.
-         */
-        <div className="mx-auto flex max-w-320 items-start gap-10 px-4 sm:px-6">
-          <div className="sticky top-15 hidden w-64 shrink-0 lg:block">
-            <div className="max-h-[calc(100dvh-3.75rem)] overflow-y-auto py-10 pr-2">
-              <Sidebar />
-            </div>
-          </div>
+      <div className="layout">
+        <Sidenav
+          className={cn(navOpen && "is-open")}
+          onNavigate={() => setNavOpen(false)}
+        />
 
-          <main className="min-w-0 flex-1 py-12 xl:max-w-[46rem]">
-            {children}
-            <Pager />
-          </main>
-
-          <div className="sticky top-15 hidden w-60 shrink-0 xl:block">
-            <div className="max-h-[calc(100dvh-3.75rem)] overflow-y-auto py-12 pl-2">
-              <Toc />
-            </div>
-          </div>
+        <div className="main">
+          <main>{children}</main>
+          <Footer />
         </div>
-      )}
-
-      <Footer />
-
-      <NavDrawer open={navOpen} onClose={() => setNavOpen(false)} />
-    </div>
+      </div>
+    </>
   )
 }

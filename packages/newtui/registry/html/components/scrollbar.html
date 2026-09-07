@@ -1,7 +1,17 @@
 <!--
   Apply the .newt-scrollbar class to any scrollable container to get
   Discord-styled scrollbars (thin, rounded thumb, transparent track).
+
+  Add tabindex="0" + role="group" + aria-label when the region scrolls and
+  holds no other focusable content, so it can be scrolled from the keyboard
+  (WCAG 2.1.1).
 -->
-<div class="newt-scrollbar" style="max-height: 240px; overflow-y: auto">
+<div
+  class="newt-scrollbar"
+  style="max-height: 240px; overflow-y: auto"
+  tabindex="0"
+  role="group"
+  aria-label="Scrollable region"
+>
   <!-- scrollable content -->
 </div>

@@ -1,0 +1,72 @@
+/* newt-ui · Message Composer (the channel input bar) */
+
+.newt-composer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 0;
+  padding: 0 16px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-input-elevated);
+  color: var(--newt-text-muted);
+}
+
+.newt-composer__field {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.newt-composer__input {
+  width: 100%;
+  border: 0;
+  background: none;
+  outline: none;
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+  font-size: 15px;
+}
+.newt-composer__input::placeholder {
+  color: var(--newt-text-muted);
+}
+
+.newt-composer__button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.newt-composer__button:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+.newt-composer__button:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-composer__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* The send control only lights up once there is something to send. */
+.newt-composer__send:not(:disabled) {
+  color: var(--newt-brand);
+}
+
+.newt-composer__icon {
+  width: 20px;
+  height: 20px;
+}

@@ -2,6 +2,7 @@ import { buttonVariants } from "@/registry/default/ui/button"
 
 import { Lede, PageTitle } from "../site/Prose"
 import { Link } from "../site/router"
+import { Content } from "../site/Shell"
 
 /* the same pair of controls the overview ends on, so the way back is familiar */
 const CTA = buttonVariants({ variant: "secondary" })
@@ -13,21 +14,23 @@ const CTA = buttonVariants({ variant: "secondary" })
  */
 export function NotFound() {
   return (
-    <article className="flex flex-col gap-6">
-      <PageTitle>Page not found</PageTitle>
-      <Lede>
-        The address in the bar does not match a page on this site. A component
-        may have been renamed since the link was written, or the path may have
-        picked up a stray character on the way here.
-      </Lede>
-      <div className="flex flex-wrap gap-3">
-        <Link href="/" className={CTA}>
-          Overview
-        </Link>
-        <Link href="/docs/installation" className={CTA}>
-          Installation
-        </Link>
-      </div>
-    </article>
+    <Content>
+      <article className="flex flex-col gap-6 pt-12">
+        <PageTitle>Page not found</PageTitle>
+        <Lede>
+          The address in the bar does not match a page on this site. A component
+          may have been renamed since the link was written, or the path may have
+          picked up a stray character on the way here.
+        </Lede>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/" className={CTA}>
+            Overview
+          </Link>
+          <Link href="/docs/installation" className={CTA}>
+            Installation
+          </Link>
+        </div>
+      </article>
+    </Content>
   )
 }

@@ -1,0 +1,16 @@
+{
+  "name": "channel-welcome",
+  "title": "Channel Welcome",
+  "description": "The header that opens a channel, shown above its very first message.",
+  "vueFiles": [
+    "ChannelWelcome.vue",
+    "ChannelWelcomeIcon.vue",
+    "ChannelWelcomeTitle.vue",
+    "ChannelWelcomeDescription.vue",
+    "ChannelWelcomeAction.vue",
+    "ChannelWelcomeDate.vue",
+    "index.ts"
+  ],
+  "reactDemo": "channel-welcome-demo",
+  "vueDemo": "ChannelWelcomeDemo"
+}

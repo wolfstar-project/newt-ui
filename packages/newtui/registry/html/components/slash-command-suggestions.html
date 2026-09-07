@@ -1,0 +1,104 @@
+<div class="newt-slash-suggestions">
+  <nav class="newt-slash-suggestions__rail" aria-label="Filter commands by app">
+    <button
+      type="button"
+      class="newt-slash-suggestions__rail-item"
+      data-state="active"
+      aria-pressed="true"
+      aria-label="Frequently used"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M12 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7v4l5-4-5-4v2Z" />
+        <path d="M11 7h2v5l4 2-1 1.7L11 13V7Z" />
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="newt-slash-suggestions__rail-item"
+      aria-pressed="false"
+      aria-label="Moderation bot commands"
+    >
+      <span
+        class="newt-slash-suggestions__app-icon newt-slash-suggestions__app-icon--rail"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z" />
+        </svg>
+      </span>
+    </button>
+  </nav>
+
+  <div
+    class="newt-slash-suggestions__list"
+    role="listbox"
+    aria-label="Slash commands"
+  >
+    <p class="newt-slash-suggestions__header" role="presentation">
+      Frequently Used
+    </p>
+
+    <div
+      class="newt-slash-suggestions__option"
+      role="option"
+      data-state="active"
+      aria-selected="true"
+    >
+      <span class="newt-slash-suggestions__app-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z" />
+        </svg>
+      </span>
+      <span class="newt-slash-suggestions__option-body">
+        <span class="newt-slash-suggestions__option-name">/&nbsp;ban</span>
+        <span class="newt-slash-suggestions__option-description">
+          Ban a member from the server.
+        </span>
+      </span>
+      <span class="newt-slash-suggestions__option-app">Moderation</span>
+    </div>
+
+    <div
+      class="newt-slash-suggestions__option"
+      role="option"
+      aria-selected="false"
+    >
+      <span class="newt-slash-suggestions__app-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z" />
+        </svg>
+      </span>
+      <span class="newt-slash-suggestions__option-body">
+        <span class="newt-slash-suggestions__option-name">/&nbsp;timeout</span>
+        <span class="newt-slash-suggestions__option-description">
+          Mute a member for a set amount of time.
+        </span>
+      </span>
+      <span class="newt-slash-suggestions__option-app">Moderation</span>
+    </div>
+
+    <div
+      class="newt-slash-suggestions__matched"
+      role="option"
+      aria-selected="false"
+    >
+      <span
+        class="newt-command"
+        role="group"
+        aria-label="Slash command /ban member"
+      >
+        <span class="newt-command__icon" aria-hidden="true">/</span>
+        <span class="newt-command__name">ban</span>
+        <span class="newt-command__option">
+          <span class="newt-command__option-name">user</span>
+          <span class="newt-command__option-value">@username</span>
+        </span>
+      </span>
+    </div>
+  </div>
+</div>

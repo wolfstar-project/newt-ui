@@ -1,0 +1,13 @@
+/* newt-ui · Inline Code */
+
+.newt-inline-code {
+  padding: 0 4px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-base);
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-mono);
+  font-size: 0.85em;
+  /* Keeps wrapped code readable without collapsing the author's spacing. */
+  white-space: pre-wrap;
+}

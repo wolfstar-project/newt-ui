@@ -1,9 +1,39 @@
-/* newt-ui · Member List Item */
+/* newt-ui · Member List */
+
+.newt-member-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Discord groups members under a hoisted role, then Online, then Offline. */
+.newt-member-list__section + .newt-member-list__section {
+  margin-top: 12px;
+}
+
+.newt-member-list__heading {
+  margin: 0;
+  padding: 0 8px 2px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--newt-text-muted);
+}
+
+/* Offline members stay listed but recede. */
+.newt-member-list__section--offline .newt-member {
+  opacity: 0.45;
+}
+.newt-member-list__section--offline .newt-member__name {
+  color: var(--newt-text-muted);
+}
 
 .newt-member {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
   padding: 6px 8px;
   border-radius: var(--newt-radius-sm);
   cursor: pointer;
@@ -18,15 +48,44 @@
   line-height: 1.2;
   min-width: 0;
 }
+.newt-member__name-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
 .newt-member__name {
+  /* Set `--newt-member-name-color` on the row to carry a role colour. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 14px;
   font-weight: 500;
-  color: var(--newt-text-primary);
+  color: var(--newt-member-name-color, var(--newt-text-primary));
 }
 .newt-member__role {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 12px;
   color: var(--newt-text-muted);
 }
-.newt-member__name--colored {
-  color: var(--newt-brand);
+
+/* The APP tag bots carry next to their name. */
+.newt-member__app {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 2px;
+  padding: 1px 4px;
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-brand);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+}
+.newt-member__app-check {
+  width: 10px;
+  height: 10px;
 }

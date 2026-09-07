@@ -1,13 +1,17 @@
 {
   "name": "member-list",
-  "title": "Member List Row",
-  "description": "A hoverable row showing a member's avatar, presence, name and role.",
+  "title": "Member List",
+  "description": "A server member sidebar: role sections, presence, coloured names and APP tags.",
   "registryDependencies": ["avatar", "status-indicator", "role-tag"],
   "vueFiles": [
     "MemberList.vue",
+    "MemberListSection.vue",
+    "MemberListHeading.vue",
     "MemberListItem.vue",
     "MemberListInfo.vue",
+    "MemberListNameRow.vue",
     "MemberListName.vue",
+    "MemberListAppTag.vue",
     "MemberListRole.vue",
     "index.ts"
   ],

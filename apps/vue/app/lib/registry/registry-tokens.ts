@@ -28,6 +28,7 @@ export const newtTokens: NewtTokenMap = {
   "newt-bg-elevated": "#313338",
   "newt-bg-floating": "#1e1f22",
   "newt-bg-input": "#1e1f22",
+  "newt-bg-input-elevated": "#383a40",
   "newt-bg-hover": "rgba(78, 80, 88, 0.4)",
   "newt-bg-active": "rgba(78, 80, 88, 0.6)",
   "newt-border": "#3f4147",
@@ -44,6 +45,8 @@ export const newtTokens: NewtTokenMap = {
   "newt-offline": "#80848e",
   "newt-danger": "#da373c",
   "newt-danger-hover": "#a12828",
+  "newt-mention-text": "#b3baff",
+  "newt-mention-role": "#f3b95f",
   "newt-font-sans":
     '"Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   "newt-font-mono":
@@ -53,12 +56,43 @@ export const newtTokens: NewtTokenMap = {
   "newt-radius-md": "8px",
   "newt-radius-lg": "12px",
   "newt-radius-full": "9999px",
+  "newt-embed-max-width": "520px",
   "newt-shadow-elevation-low":
     "0 1px 0 rgba(0,0,0,0.2), 0 1.5px 0 rgba(0,0,0,0.05), 0 2px 0 rgba(0,0,0,0.05)",
   "newt-shadow-elevation-high": "0 8px 16px rgba(0,0,0,0.24)",
   "newt-ease": "cubic-bezier(0.3, 0.7, 0.4, 1)",
   "newt-duration-fast": "100ms",
   "newt-duration-base": "150ms",
+}
+
+/**
+ * Light-surface overrides. Only the tokens that differ from `newtTokens` are
+ * listed; consumers opt in by scoping them to `.newt-light` /
+ * `[data-newt-theme="light"]`, so the dark set stays the default.
+ */
+export const newtTokensLight: NewtTokenMap = {
+  "newt-bg-base": "#e3e5e8",
+  "newt-bg-surface": "#f2f3f5",
+  "newt-bg-elevated": "#ffffff",
+  "newt-bg-floating": "#ffffff",
+  "newt-bg-input": "#ebedef",
+  "newt-bg-input-elevated": "#ffffff",
+  "newt-bg-hover": "rgba(6, 6, 7, 0.08)",
+  "newt-bg-active": "rgba(6, 6, 7, 0.12)",
+  "newt-border": "#d3d5d9",
+  "newt-text-primary": "#060607",
+  "newt-text-secondary": "#4e5058",
+  "newt-text-muted": "#5c5e66",
+  "newt-text-link": "#006ce7",
+  "newt-online": "#248046",
+  "newt-idle": "#b58500",
+  "newt-dnd": "#d83a3e",
+  "newt-danger": "#d83a3e",
+  "newt-mention-text": "#505cdc",
+  "newt-mention-role": "#a06a00",
+  "newt-shadow-elevation-low":
+    "0 1px 0 rgba(6,6,7,0.1), 0 1.5px 0 rgba(6,6,7,0.025), 0 2px 0 rgba(6,6,7,0.025)",
+  "newt-shadow-elevation-high": "0 8px 16px rgba(6,6,7,0.16)",
 }
 
 /** Colour tokens, in the order the docs sidebar and the token table use. */
@@ -68,6 +102,7 @@ const COLORS = [
   "bg-elevated",
   "bg-floating",
   "bg-input",
+  "bg-input-elevated",
   "bg-hover",
   "bg-active",
   "border",
@@ -84,6 +119,8 @@ const COLORS = [
   "offline",
   "danger",
   "danger-hover",
+  "mention-text",
+  "mention-role",
 ] as const
 
 const RADII = ["sm", "md", "lg", "full"] as const

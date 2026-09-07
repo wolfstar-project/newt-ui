@@ -21,7 +21,7 @@
 .newt-reaction--active {
   background: rgba(88, 101, 242, 0.15);
   border-color: var(--newt-brand);
-  color: #b3baff;
+  color: var(--newt-mention-text);
 }
 .newt-reaction:focus-visible {
   outline: 2px solid var(--newt-text-link);
@@ -30,4 +30,13 @@
 .newt-reaction__count {
   font-weight: 600;
   font-size: 12px;
+}
+
+/* The row of reactions under a message. */
+.newt-reaction-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
 }

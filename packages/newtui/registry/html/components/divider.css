@@ -1,4 +1,4 @@
-/* newt-ui · Divider with label (Discord date separators) */
+/* newt-ui · Divider (Discord-inspired date separator) */
 
 .newt-divider {
   display: flex;
@@ -15,4 +15,18 @@
   flex: 1;
   height: 1px;
   background: var(--newt-border);
+}
+
+/* Spacing steps, for stacking dividers inside dense component containers. */
+.newt-divider--sm {
+  margin: 4px 0;
+}
+.newt-divider--lg {
+  margin: 24px 0;
+}
+
+/* Pure spacing: keeps the gap, drops the rules on either side of the label. */
+.newt-divider--no-line::before,
+.newt-divider--no-line::after {
+  display: none;
 }

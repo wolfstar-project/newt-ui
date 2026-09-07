@@ -1,9 +1,12 @@
 {
   "name": "embed",
   "title": "Embed",
-  "description": "A Discord-style rich message embed with title, description, fields and footer.",
+  "description": "A Discord-inspired rich message embed with an accent bar, author, title, description, fields, footer and timestamp.",
   "vueFiles": [
     "Embed.vue",
+    "EmbedAuthor.vue",
+    "EmbedAuthorIcon.vue",
+    "EmbedAuthorName.vue",
     "EmbedEyebrow.vue",
     "EmbedTitle.vue",
     "EmbedDescription.vue",
@@ -12,6 +15,9 @@
     "EmbedFieldName.vue",
     "EmbedFieldValue.vue",
     "EmbedFooter.vue",
+    "EmbedFooterIcon.vue",
+    "EmbedFooterSeparator.vue",
+    "EmbedTimestamp.vue",
     "index.ts"
   ],
   "reactDemo": "embed-demo",

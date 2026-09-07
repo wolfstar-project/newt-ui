@@ -1,0 +1,131 @@
+/* newt-ui · Channel Info (channel detail panel for narrow screens) */
+
+.newt-channel-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 384px;
+  height: 100%;
+  overflow: hidden;
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-primary);
+}
+
+.newt-channel-info__toolbar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 56px;
+  padding: 0 8px;
+}
+
+.newt-channel-info__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.newt-channel-info__action {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-full);
+  background: transparent;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-channel-info__action:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+.newt-channel-info__action:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.newt-channel-info__identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 0 16px 12px;
+}
+
+.newt-channel-info__icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--newt-text-muted);
+}
+
+.newt-channel-info__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--newt-text-primary);
+}
+
+.newt-channel-info__type {
+  font-size: 13px;
+  color: var(--newt-text-muted);
+}
+
+/* Scrolling area under the tab strip. */
+.newt-channel-info__panel {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 8px 16px;
+}
+
+.newt-channel-info__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.newt-channel-info__empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-muted);
+}
+
+.newt-channel-info__empty-title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.newt-channel-info__empty-body {
+  margin: 0;
+  max-width: 36ch;
+  font-size: 14px;
+  color: var(--newt-text-muted);
+}

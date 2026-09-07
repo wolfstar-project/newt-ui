@@ -1,0 +1,9 @@
+{
+  "name": "chat",
+  "title": "Chat",
+  "description": "The channel shell: a scrolling message log with the composer pinned below it.",
+  "registryDependencies": ["scrollbar", "message-list", "message-composer"],
+  "vueFiles": ["Chat.vue", "ChatBody.vue", "ChatFooter.vue", "index.ts"],
+  "reactDemo": "chat-demo",
+  "vueDemo": "ChatDemo"
+}

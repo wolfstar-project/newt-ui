@@ -1,0 +1,126 @@
+<div class="newt-app-launcher" role="dialog" aria-label="Apps">
+  <div class="newt-app-launcher__handle" aria-hidden="true"></div>
+
+  <div class="newt-app-launcher__search">
+    <div class="newt-app-launcher__search-field">
+      <svg
+        class="newt-app-launcher__search-icon"
+        viewBox="0 0 20 20"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="9" cy="9" r="5.5" />
+        <path d="M13 13l4 4" />
+      </svg>
+      <input
+        class="newt-app-launcher__search-input"
+        type="search"
+        placeholder="Search Apps &amp; Commands"
+        aria-label="Search apps and commands"
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </div>
+  </div>
+
+  <div class="newt-app-launcher__body">
+    <section
+      class="newt-app-launcher__section"
+      aria-labelledby="newt-app-launcher-recents"
+    >
+      <div class="newt-app-launcher__section-header">
+        <h2
+          class="newt-app-launcher__section-title"
+          id="newt-app-launcher-recents"
+        >
+          Recents
+        </h2>
+        <button type="button" class="newt-app-launcher__view-more">
+          View More
+        </button>
+      </div>
+      <div class="newt-app-launcher__recents">
+        <button
+          type="button"
+          class="newt-app-launcher__recent"
+          aria-label="Moderation bot"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="newt-app-launcher__recent"
+          aria-label="Music bot"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path
+              d="M9 18V6l10-2v12M9 18a3 3 0 1 1-2-2.83M19 16a3 3 0 1 1-2-2.83"
+            />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <section
+      class="newt-app-launcher__section"
+      aria-labelledby="newt-app-launcher-server"
+    >
+      <div class="newt-app-launcher__section-header">
+        <h2
+          class="newt-app-launcher__section-title"
+          id="newt-app-launcher-server"
+        >
+          Apps in this Server
+        </h2>
+        <button type="button" class="newt-app-launcher__view-more">
+          View More
+        </button>
+      </div>
+
+      <div class="newt-app-launcher__list">
+        <button type="button" class="newt-app-launcher__item">
+          <span
+            class="newt-app-launcher__item-icon newt-app-launcher__item-icon--round"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z" />
+            </svg>
+          </span>
+          <span class="newt-app-launcher__item-body">
+            <span class="newt-app-launcher__item-title">
+              <span class="newt-app-launcher__item-name">Moderation</span>
+            </span>
+            <span class="newt-app-launcher__item-description">
+              Bans, timeouts and audit logs.
+            </span>
+          </span>
+        </button>
+
+        <button type="button" class="newt-app-launcher__item">
+          <span class="newt-app-launcher__item-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4 4h16v12H8l-4 4V4Z" />
+            </svg>
+          </span>
+          <span class="newt-app-launcher__item-body">
+            <span class="newt-app-launcher__item-title">
+              <span class="newt-app-launcher__item-name">Poll Night</span>
+              <span class="newt-app-launcher__item-promoted">Promoted</span>
+            </span>
+            <span class="newt-app-launcher__item-description">
+              Run a quick poll in any channel.
+            </span>
+          </span>
+        </button>
+      </div>
+    </section>
+  </div>
+</div>

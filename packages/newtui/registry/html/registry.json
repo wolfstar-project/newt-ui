@@ -263,10 +263,93 @@
       "uses": ["avatar", "status-indicator", "reaction"]
     },
     {
+      "name": "message-list",
+      "title": "Message List",
+      "rootClass": "newt-message-list",
+      "files": ["message-list.css", "message-list.html"],
+      "uses": ["message-group"]
+    },
+    {
+      "name": "message-composer",
+      "title": "Message Composer",
+      "rootClass": "newt-composer",
+      "files": ["message-composer.css", "message-composer.html"]
+    },
+    {
+      "name": "chat",
+      "title": "Chat",
+      "rootClass": "newt-chat",
+      "files": ["chat.css", "chat.html"],
+      "uses": ["message-list", "message-composer", "scrollbar"]
+    },
+    {
+      "name": "inline-code",
+      "title": "Inline Code",
+      "rootClass": "newt-inline-code",
+      "files": ["inline-code.css", "inline-code.html"]
+    },
+    {
+      "name": "action-row",
+      "title": "Action Row",
+      "rootClass": "newt-action-row",
+      "files": ["action-row.css", "action-row.html"],
+      "uses": ["button"]
+    },
+    {
+      "name": "app-launcher",
+      "title": "App Launcher",
+      "rootClass": "newt-app-launcher",
+      "files": ["app-launcher.css", "app-launcher.html"]
+    },
+    {
+      "name": "slash-command-suggestions",
+      "title": "Slash Command Suggestions",
+      "rootClass": "newt-slash-suggestions",
+      "files": [
+        "slash-command-suggestions.css",
+        "slash-command-suggestions.html"
+      ],
+      "uses": ["slash-command"]
+    },
+    {
+      "name": "v2-container",
+      "title": "V2 Container",
+      "rootClass": "newt-v2-container",
+      "files": ["v2-container.css", "v2-container.html"],
+      "uses": ["divider"]
+    },
+    {
+      "name": "channel-header",
+      "title": "Channel Header",
+      "rootClass": "newt-channel-header",
+      "files": ["channel-header.css", "channel-header.html"]
+    },
+    {
+      "name": "channel-welcome",
+      "title": "Channel Welcome",
+      "rootClass": "newt-channel-welcome",
+      "files": ["channel-welcome.css", "channel-welcome.html"]
+    },
+    {
+      "name": "channel-info",
+      "title": "Channel Info",
+      "rootClass": "newt-channel-info",
+      "files": ["channel-info.css", "channel-info.html"],
+      "uses": ["tabs"]
+    },
+    {
+      "name": "invite",
+      "title": "Invite",
+      "rootClass": "newt-invite",
+      "files": ["invite.css", "invite.html"],
+      "uses": ["button"]
+    },
+    {
       "name": "select-menu",
       "title": "Select Menu",
       "rootClass": "newt-select-menu",
-      "files": ["select-menu.css", "select-menu.html"]
+      "files": ["select-menu.css", "select-menu.html"],
+      "js": "select-menu.js"
     },
     {
       "name": "bot-command-card",

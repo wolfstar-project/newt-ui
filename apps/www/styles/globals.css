@@ -11,6 +11,7 @@
     --newt-bg-elevated: #313338;
     --newt-bg-floating: #1e1f22;
     --newt-bg-input: #1e1f22;
+    --newt-bg-input-elevated: #383a40;
     --newt-bg-hover: rgba(78, 80, 88, 0.4);
     --newt-bg-active: rgba(78, 80, 88, 0.6);
     --newt-border: #3f4147;
@@ -34,6 +35,10 @@
     --newt-danger: #da373c;
     --newt-danger-hover: #a12828;
 
+    /* Accents */
+    --newt-mention-text: #b3baff;
+    --newt-mention-role: #f3b95f;
+
     /* Type */
     --newt-font-sans:
       "Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -48,6 +53,9 @@
     --newt-radius-lg: 12px;
     --newt-radius-full: 9999px;
 
+    /* Sizing */
+    --newt-embed-max-width: 520px;
+
     /* Shadows */
     --newt-shadow-elevation-low:
       0 1px 0 rgba(0, 0, 0, 0.2), 0 1.5px 0 rgba(0, 0, 0, 0.05),
@@ -58,6 +66,54 @@
     --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
     --newt-duration-fast: 100ms;
     --newt-duration-base: 150ms;
+  }
+
+  /*
+   * Optional light surface set. Opt-in only: add `.newt-light` (or
+   * `data-newt-theme="light"`) to a wrapper — the dark values in `:root` stay the
+   * default, so nothing changes for consumers who never ask for it.
+   */
+  .newt-light,
+  [data-newt-theme="light"] {
+    /* Surfaces */
+    --newt-bg-base: #e3e5e8;
+    --newt-bg-surface: #f2f3f5;
+    --newt-bg-elevated: #ffffff;
+    --newt-bg-floating: #ffffff;
+    --newt-bg-input: #ebedef;
+    --newt-bg-input-elevated: #ffffff;
+    --newt-bg-hover: rgba(6, 6, 7, 0.08);
+    --newt-bg-active: rgba(6, 6, 7, 0.12);
+    --newt-border: #d3d5d9;
+
+    /* Text */
+    --newt-text-primary: #060607;
+    --newt-text-secondary: #4e5058;
+    --newt-text-muted: #5c5e66;
+    --newt-text-link: #006ce7;
+
+    /* Brand */
+    --newt-brand: #5865f2;
+    --newt-brand-hover: #4752c4;
+    --newt-brand-active: #3c45a5;
+
+    /* Status */
+    --newt-online: #248046;
+    --newt-idle: #b58500;
+    --newt-dnd: #d83a3e;
+    --newt-offline: #80848e;
+    --newt-danger: #d83a3e;
+    --newt-danger-hover: #a12828;
+
+    /* Accents */
+    --newt-mention-text: #505cdc;
+    --newt-mention-role: #a06a00;
+
+    /* Shadows */
+    --newt-shadow-elevation-low:
+      0 1px 0 rgba(6, 6, 7, 0.1), 0 1.5px 0 rgba(6, 6, 7, 0.025),
+      0 2px 0 rgba(6, 6, 7, 0.025);
+    --newt-shadow-elevation-high: 0 8px 16px rgba(6, 6, 7, 0.16);
   }
 
   * {

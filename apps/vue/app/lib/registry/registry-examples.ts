@@ -3,6 +3,28 @@ import type { Registry } from "./schema"
 
 export const examples: Registry = [
   {
+    name: "ActionRowDemo",
+    type: "registry:example",
+    registryDependencies: ["action-row"],
+    files: [
+      {
+        path: "example/ActionRowDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AppLauncherDemo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher"],
+    files: [
+      {
+        path: "example/AppLauncherDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AttachmentDemo",
     type: "registry:example",
     registryDependencies: ["attachment"],
@@ -69,12 +91,56 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ChannelHeaderDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "example/ChannelHeaderDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ChannelInfoDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-info"],
+    files: [
+      {
+        path: "example/ChannelInfoDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ChannelTopicDemo",
     type: "registry:example",
     registryDependencies: ["channel-topic"],
     files: [
       {
         path: "example/ChannelTopicDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ChannelWelcomeDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-welcome"],
+    files: [
+      {
+        path: "example/ChannelWelcomeDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ChatDemo",
+    type: "registry:example",
+    registryDependencies: ["chat"],
+    files: [
+      {
+        path: "example/ChatDemo.vue",
         type: "registry:example",
       },
     ],
@@ -168,6 +234,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "InlineCodeDemo",
+    type: "registry:example",
+    registryDependencies: ["inline-code"],
+    files: [
+      {
+        path: "example/InlineCodeDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "InviteDemo",
+    type: "registry:example",
+    registryDependencies: ["invite"],
+    files: [
+      {
+        path: "example/InviteDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "KbdTagDemo",
     type: "registry:example",
     registryDependencies: ["kbd-tag"],
@@ -201,12 +289,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "MessageComposerDemo",
+    type: "registry:example",
+    registryDependencies: ["message-composer"],
+    files: [
+      {
+        path: "example/MessageComposerDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "MessageGroupDemo",
     type: "registry:example",
     registryDependencies: ["message-group"],
     files: [
       {
         path: "example/MessageGroupDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "MessageListDemo",
+    type: "registry:example",
+    registryDependencies: ["message-list"],
+    files: [
+      {
+        path: "example/MessageListDemo.vue",
         type: "registry:example",
       },
     ],
@@ -355,6 +465,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "SlashCommandSuggestionsDemo",
+    type: "registry:example",
+    registryDependencies: ["slash-command-suggestions"],
+    files: [
+      {
+        path: "example/SlashCommandSuggestionsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SpoilerDemo",
     type: "registry:example",
     registryDependencies: ["spoiler"],
@@ -460,6 +581,17 @@ export const examples: Registry = [
     files: [
       {
         path: "example/UserProfileDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "V2ContainerDemo",
+    type: "registry:example",
+    registryDependencies: ["v2-container"],
+    files: [
+      {
+        path: "example/V2ContainerDemo.vue",
         type: "registry:example",
       },
     ],

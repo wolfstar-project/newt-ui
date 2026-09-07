@@ -1,3 +1,23 @@
-<span class="newt-mention newt-mention--user">@username</span>
-<span class="newt-mention newt-mention--channel">#channel</span>
-<span class="newt-mention newt-mention--role">@RoleName</span>
+<button class="newt-mention newt-mention--user" type="button">@username</button>
+<button class="newt-mention newt-mention--channel" type="button">
+  #channel
+</button>
+<button
+  class="newt-mention newt-mention--role"
+  type="button"
+  style="--newt-mention-color: #f0b232"
+>
+  @Moderator
+</button>
+<button
+  class="newt-mention newt-mention--user newt-mention--with-avatar"
+  type="button"
+>
+  <img
+    class="newt-mention__avatar"
+    src="/avatar.png"
+    alt=""
+    aria-hidden="true"
+  />
+  @username
+</button>

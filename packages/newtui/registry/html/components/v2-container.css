@@ -1,0 +1,19 @@
+/* newt-ui · V2 Container (Components V2 accent-barred block) */
+
+.newt-v2-container {
+  /* Overridden inline to tint the accent bar per message. */
+  --newt-v2-accent: var(--newt-border);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 520px;
+  margin-top: 4px;
+  padding: 12px;
+  border-left: 4px solid var(--newt-v2-accent);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-surface);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--newt-text-primary);
+}

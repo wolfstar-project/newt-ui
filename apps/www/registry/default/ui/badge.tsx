@@ -9,9 +9,9 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default: "bg-newt-bg-elevated text-newt-text-secondary",
-        brand: "bg-[rgba(88,101,242,0.15)] text-[#b3baff]",
+        brand: "bg-[rgba(88,101,242,0.15)] text-newt-mention-text",
         success: "bg-[rgba(35,165,90,0.15)] text-[#45c178]",
-        warning: "bg-[rgba(240,178,50,0.15)] text-[#f3b95f]",
+        warning: "bg-[rgba(240,178,50,0.15)] text-newt-mention-role",
         danger: "bg-[rgba(242,63,66,0.15)] text-[#f4878a]",
       },
       dot: {

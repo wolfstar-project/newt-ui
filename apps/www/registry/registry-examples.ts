@@ -3,6 +3,28 @@ import { Registry } from "@/registry/schema"
 
 export const examples: Registry = [
   {
+    name: "action-row-demo",
+    type: "registry:example",
+    registryDependencies: ["action-row"],
+    files: [
+      {
+        path: "example/action-row-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "app-launcher-demo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher"],
+    files: [
+      {
+        path: "example/app-launcher-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "attachment-demo",
     type: "registry:example",
     registryDependencies: ["attachment"],
@@ -69,12 +91,56 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "channel-header-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "example/channel-header-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "channel-info-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-info"],
+    files: [
+      {
+        path: "example/channel-info-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "channel-topic-demo",
     type: "registry:example",
     registryDependencies: ["channel-topic"],
     files: [
       {
         path: "example/channel-topic-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "channel-welcome-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-welcome"],
+    files: [
+      {
+        path: "example/channel-welcome-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "chat-demo",
+    type: "registry:example",
+    registryDependencies: ["chat"],
+    files: [
+      {
+        path: "example/chat-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -168,6 +234,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "inline-code-demo",
+    type: "registry:example",
+    registryDependencies: ["inline-code"],
+    files: [
+      {
+        path: "example/inline-code-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "invite-demo",
+    type: "registry:example",
+    registryDependencies: ["invite"],
+    files: [
+      {
+        path: "example/invite-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "kbd-tag-demo",
     type: "registry:example",
     registryDependencies: ["kbd-tag"],
@@ -201,12 +289,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "message-composer-demo",
+    type: "registry:example",
+    registryDependencies: ["message-composer"],
+    files: [
+      {
+        path: "example/message-composer-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "message-group-demo",
     type: "registry:example",
     registryDependencies: ["message-group"],
     files: [
       {
         path: "example/message-group-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "message-list-demo",
+    type: "registry:example",
+    registryDependencies: ["message-list"],
+    files: [
+      {
+        path: "example/message-list-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -355,6 +465,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "slash-command-suggestions-demo",
+    type: "registry:example",
+    registryDependencies: ["slash-command-suggestions"],
+    files: [
+      {
+        path: "example/slash-command-suggestions-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "spoiler-demo",
     type: "registry:example",
     registryDependencies: ["spoiler"],
@@ -460,6 +581,17 @@ export const examples: Registry = [
     files: [
       {
         path: "example/user-profile-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "v2-container-demo",
+    type: "registry:example",
+    registryDependencies: ["v2-container"],
+    files: [
+      {
+        path: "example/v2-container-demo.tsx",
         type: "registry:example",
       },
     ],

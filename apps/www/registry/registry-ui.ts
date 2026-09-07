@@ -3,6 +3,32 @@ import { Registry } from "@/registry/schema"
 
 export const ui: Registry = [
   {
+    name: "action-row",
+    type: "registry:ui",
+    title: "Action Row",
+    description: "The row of buttons and selects attached under a message.",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "ui/action-row.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "app-launcher",
+    type: "registry:ui",
+    title: "App Launcher",
+    description:
+      "The Apps popout, with search, a recents strip and the apps installed in a server.",
+    files: [
+      {
+        path: "ui/app-launcher.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "attachment",
     type: "registry:ui",
     title: "Attachment Card",
@@ -84,6 +110,33 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "channel-header",
+    type: "registry:ui",
+    title: "Channel Header",
+    description:
+      "The bar above the message list, with the channel name, topic and channel actions.",
+    files: [
+      {
+        path: "ui/channel-header.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-info",
+    type: "registry:ui",
+    title: "Channel Info",
+    description:
+      "The channel detail panel that covers a channel on narrow screens.",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "ui/channel-info.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "channel-topic",
     type: "registry:ui",
     title: "Channel Topic Bar",
@@ -92,6 +145,33 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/channel-topic.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-welcome",
+    type: "registry:ui",
+    title: "Channel Welcome",
+    description:
+      "The header that opens a channel, shown above its very first message.",
+    files: [
+      {
+        path: "ui/channel-welcome.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "chat",
+    type: "registry:ui",
+    title: "Chat",
+    description:
+      "The channel shell: a scrolling message log with the composer pinned below it.",
+    registryDependencies: ["scrollbar", "message-list", "message-composer"],
+    files: [
+      {
+        path: "ui/chat.tsx",
         type: "registry:ui",
       },
     ],
@@ -142,7 +222,8 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Divider",
     description:
-      "A horizontal rule with an optional centered label, like Discord's date separators.",
+      "A horizontal rule with an optional centered label, spacing steps and a line-less mode.",
+    dependencies: ["class-variance-authority"],
     files: [
       {
         path: "ui/divider.tsx",
@@ -168,7 +249,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Embed",
     description:
-      "A Discord-style rich message embed with title, description, fields and footer.",
+      "A Discord-inspired rich message embed with an accent bar, author, title, description, fields, footer and timestamp.",
     files: [
       {
         path: "ui/embed.tsx",
@@ -203,6 +284,31 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "inline-code",
+    type: "registry:ui",
+    title: "Inline Code",
+    description: "A monospace pill for code inside a line of message text.",
+    files: [
+      {
+        path: "ui/inline-code.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "invite",
+    type: "registry:ui",
+    title: "Invite",
+    description: "The server invite card a link unfurls into inside a message.",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "ui/invite.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "kbd-tag",
     type: "registry:ui",
     title: "Keyboard Shortcut Tag",
@@ -217,9 +323,9 @@ export const ui: Registry = [
   {
     name: "member-list",
     type: "registry:ui",
-    title: "Member List Row",
+    title: "Member List",
     description:
-      "A hoverable row showing a member's avatar, presence, name and role.",
+      "A server member sidebar: role sections, presence, coloured names and APP tags.",
     registryDependencies: ["avatar", "status-indicator", "role-tag"],
     files: [
       {
@@ -232,7 +338,8 @@ export const ui: Registry = [
     name: "mention",
     type: "registry:ui",
     title: "Mention Chip",
-    description: "An inline chip for user, channel and role mentions.",
+    description:
+      "An inline chip for user, channel, role and app mentions, with an optional avatar.",
     dependencies: ["class-variance-authority"],
     files: [
       {
@@ -242,15 +349,47 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "message-composer",
+    type: "registry:ui",
+    title: "Message Composer",
+    description:
+      "The channel input bar: attachment control, text field with combobox hooks, and send.",
+    files: [
+      {
+        path: "ui/message-composer.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "message-group",
     type: "registry:ui",
     title: "Message Group",
     description:
-      "A chat message row with avatar, author header, content and reactions.",
-    registryDependencies: ["avatar", "status-indicator", "reaction"],
+      "A grouped chat message with author, timestamp, reply preview, reactions and an ephemeral state.",
+    registryDependencies: [
+      "avatar",
+      "reaction",
+      "reply-preview",
+      "status-indicator",
+    ],
     files: [
       {
         path: "ui/message-group.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "message-list",
+    type: "registry:ui",
+    title: "Message List",
+    description:
+      "The polite live region that logs grouped messages in a channel.",
+    registryDependencies: ["message-group"],
+    files: [
+      {
+        path: "ui/message-list.tsx",
         type: "registry:ui",
       },
     ],
@@ -331,7 +470,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Reaction Pill",
     description:
-      "A toggleable emoji reaction pill with a count, as seen under chat messages.",
+      "A toggleable emoji reaction pill, plus the group that rows them under a message.",
     dependencies: ["class-variance-authority"],
     files: [
       {
@@ -345,7 +484,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Reply Preview",
     description:
-      'A compact "replying to" bar showing the author and a truncated excerpt of the original message.',
+      'A compact "replying to" bar showing the author, a truncated excerpt, or the slash command that was used.',
     files: [
       {
         path: "ui/reply-preview.tsx",
@@ -371,7 +510,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Scrollbar Utility",
     description:
-      "Discord-styled thin, rounded scrollbars for any scrollable container.",
+      "Discord-styled scrollbars for any scrollable container, with an optional keyboard-focusable viewport.",
     files: [
       {
         path: "ui/scrollbar.tsx",
@@ -384,7 +523,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Select Menu",
     description:
-      "A floating listbox with optional search, section labels, dividers and selected options.",
+      "A Discord-inspired string select: combobox trigger, keyboard-driven listbox and a portalled panel.",
     files: [
       {
         path: "ui/select-menu.tsx",
@@ -423,12 +562,27 @@ export const ui: Registry = [
   {
     name: "slash-command",
     type: "registry:ui",
-    title: "Slash Command Tag",
+    title: "Slash Command",
     description:
-      "Inline monospace tag for referencing a /slash command in text.",
+      "An inline /command with its subcommand path and typed options, including the focused one.",
     files: [
       {
         path: "ui/slash-command.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "slash-command-suggestions",
+    type: "registry:ui",
+    title: "Slash Command Suggestions",
+    description:
+      "The command picker that opens above the composer, with an app rail, grouped options and a matched-command preview.",
+    dependencies: ["class-variance-authority"],
+    registryDependencies: ["slash-command"],
+    files: [
+      {
+        path: "ui/slash-command-suggestions.tsx",
         type: "registry:ui",
       },
     ],
@@ -565,6 +719,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/user-profile.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "v2-container",
+    type: "registry:ui",
+    title: "V2 Container",
+    description:
+      "The Components V2 block that groups text, separators and action rows behind one accent bar.",
+    files: [
+      {
+        path: "ui/v2-container.tsx",
         type: "registry:ui",
       },
     ],

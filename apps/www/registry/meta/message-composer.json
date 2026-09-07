@@ -1,0 +1,8 @@
+{
+  "name": "message-composer",
+  "title": "Message Composer",
+  "description": "The channel input bar: attachment control, text field with combobox hooks, and send.",
+  "vueFiles": ["MessageComposer.vue", "index.ts"],
+  "reactDemo": "message-composer-demo",
+  "vueDemo": "MessageComposerDemo"
+}

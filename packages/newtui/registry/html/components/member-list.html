@@ -1,13 +1,37 @@
-<div class="newt-member">
-  <div class="newt-status">
-    <div class="newt-avatar newt-avatar--sm">A</div>
-    <div class="newt-status__dot newt-status__dot--online"></div>
-  </div>
-  <div class="newt-member__info">
-    <span class="newt-member__name">username</span>
-    <span class="newt-member__role">Role</span>
-  </div>
-  <span class="newt-role-tag" style="margin-left: auto"
-    ><span class="newt-role-tag__dot"></span>TAG</span
-  >
+<div class="newt-member-list">
+  <section class="newt-member-list__section">
+    <h3 class="newt-member-list__heading">Moderators — 1</h3>
+    <div class="newt-member" style="--newt-member-name-color: #f0b232">
+      <div class="newt-status">
+        <div class="newt-avatar newt-avatar--sm">A</div>
+        <div class="newt-status__dot newt-status__dot--online"></div>
+      </div>
+      <div class="newt-member__info">
+        <div class="newt-member__name-row">
+          <span class="newt-member__name">username</span>
+          <span class="newt-member__app" role="img" aria-label="Application">
+            APP
+          </span>
+        </div>
+        <span class="newt-member__role">Role</span>
+      </div>
+      <span class="newt-role-tag" style="margin-left: auto"
+        ><span class="newt-role-tag__dot"></span>TAG</span
+      >
+    </div>
+  </section>
+  <section class="newt-member-list__section newt-member-list__section--offline">
+    <h3 class="newt-member-list__heading">Offline — 1</h3>
+    <div class="newt-member">
+      <div class="newt-status">
+        <div class="newt-avatar newt-avatar--sm">B</div>
+        <div class="newt-status__dot newt-status__dot--offline"></div>
+      </div>
+      <div class="newt-member__info">
+        <div class="newt-member__name-row">
+          <span class="newt-member__name">someone</span>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

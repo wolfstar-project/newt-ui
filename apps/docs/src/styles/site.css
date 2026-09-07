@@ -29,6 +29,7 @@
   --color-newt-bg-elevated: var(--newt-bg-elevated);
   --color-newt-bg-floating: var(--newt-bg-floating);
   --color-newt-bg-input: var(--newt-bg-input);
+  --color-newt-bg-input-elevated: var(--newt-bg-input-elevated);
   --color-newt-bg-hover: var(--newt-bg-hover);
   --color-newt-bg-active: var(--newt-bg-active);
   --color-newt-border: var(--newt-border);
@@ -51,6 +52,10 @@
   --color-newt-offline: var(--newt-offline);
   --color-newt-danger: var(--newt-danger);
   --color-newt-danger-hover: var(--newt-danger-hover);
+
+  /* Accents */
+  --color-newt-mention-text: var(--newt-mention-text);
+  --color-newt-mention-role: var(--newt-mention-role);
 
   /* Type */
   --font-sans: var(--newt-font-sans);
@@ -82,6 +87,7 @@
     --newt-bg-elevated: #313338;
     --newt-bg-floating: #1e1f22;
     --newt-bg-input: #1e1f22;
+    --newt-bg-input-elevated: #383a40;
     --newt-bg-hover: rgba(78, 80, 88, 0.4);
     --newt-bg-active: rgba(78, 80, 88, 0.6);
     --newt-border: #3f4147;
@@ -105,6 +111,10 @@
     --newt-danger: #da373c;
     --newt-danger-hover: #a12828;
 
+    /* Accents */
+    --newt-mention-text: #b3baff;
+    --newt-mention-role: #f3b95f;
+
     /* Type */
     --newt-font-sans:
       "Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -119,6 +129,9 @@
     --newt-radius-lg: 12px;
     --newt-radius-full: 9999px;
 
+    /* Sizing */
+    --newt-embed-max-width: 520px;
+
     /* Shadows */
     --newt-shadow-elevation-low:
       0 1px 0 rgba(0, 0, 0, 0.2), 0 1.5px 0 rgba(0, 0, 0, 0.05),
@@ -129,6 +142,54 @@
     --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
     --newt-duration-fast: 100ms;
     --newt-duration-base: 150ms;
+  }
+
+  /*
+   * Optional light surface set. Opt-in only: add `.newt-light` (or
+   * `data-newt-theme="light"`) to a wrapper — the dark values in `:root` stay the
+   * default, so nothing changes for consumers who never ask for it.
+   */
+  .newt-light,
+  [data-newt-theme="light"] {
+    /* Surfaces */
+    --newt-bg-base: #e3e5e8;
+    --newt-bg-surface: #f2f3f5;
+    --newt-bg-elevated: #ffffff;
+    --newt-bg-floating: #ffffff;
+    --newt-bg-input: #ebedef;
+    --newt-bg-input-elevated: #ffffff;
+    --newt-bg-hover: rgba(6, 6, 7, 0.08);
+    --newt-bg-active: rgba(6, 6, 7, 0.12);
+    --newt-border: #d3d5d9;
+
+    /* Text */
+    --newt-text-primary: #060607;
+    --newt-text-secondary: #4e5058;
+    --newt-text-muted: #5c5e66;
+    --newt-text-link: #006ce7;
+
+    /* Brand */
+    --newt-brand: #5865f2;
+    --newt-brand-hover: #4752c4;
+    --newt-brand-active: #3c45a5;
+
+    /* Status */
+    --newt-online: #248046;
+    --newt-idle: #b58500;
+    --newt-dnd: #d83a3e;
+    --newt-offline: #80848e;
+    --newt-danger: #d83a3e;
+    --newt-danger-hover: #a12828;
+
+    /* Accents */
+    --newt-mention-text: #505cdc;
+    --newt-mention-role: #a06a00;
+
+    /* Shadows */
+    --newt-shadow-elevation-low:
+      0 1px 0 rgba(6, 6, 7, 0.1), 0 1.5px 0 rgba(6, 6, 7, 0.025),
+      0 2px 0 rgba(6, 6, 7, 0.025);
+    --newt-shadow-elevation-high: 0 8px 16px rgba(6, 6, 7, 0.16);
   }
 
   * {
@@ -291,7 +352,8 @@
 
 @layer base {
   html {
-    scroll-padding-top: 7rem;
+    /* no bar overhangs the page now: an anchor only clears its own edge */
+    scroll-padding-top: 1.5rem;
   }
 
   body {
@@ -445,7 +507,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 1rem;
-    padding: 1.75rem 1.5rem 1.5rem;
+    padding: 2.5rem 1.75rem 1.75rem;
   }
 
   .demo-caption {
@@ -454,5 +516,478 @@
     font-family: var(--font-data);
     font-size: 12px;
     color: var(--color-weft-faint);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * (d) the spec chrome
+ *
+ * The layout of the original single-file documentation, kept as plain
+ * CSS because every rule in it is site chrome rather than a utility a
+ * page composes: a fixed navigation column, a manifest beside the
+ * title, and numbered sections whose heading stays put while their body
+ * scrolls. Every colour resolves to a `--newt-*` token.
+ * ------------------------------------------------------------------ */
+@layer components {
+  .layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidenav {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--z-panel);
+    display: flex;
+    width: 264px;
+    flex-direction: column;
+    border-right: 1px solid var(--newt-border);
+    background: var(--newt-bg-surface);
+  }
+
+  .sidenav__brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--newt-border);
+  }
+
+  .sidenav__brand-ver {
+    font-family: var(--newt-font-mono);
+    font-size: 11px;
+    color: var(--newt-text-muted);
+  }
+
+  .sidenav__scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 0 24px;
+    scrollbar-color: var(--newt-bg-elevated) transparent;
+  }
+
+  .sidenav__scroll::-webkit-scrollbar-thumb {
+    background-color: var(--newt-bg-elevated);
+    background-clip: padding-box;
+  }
+
+  .sidenav__scroll::-webkit-scrollbar-thumb:hover {
+    background-color: var(--newt-bg-active);
+    background-clip: padding-box;
+  }
+
+  .sidenav__group {
+    padding: 18px 20px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--newt-text-muted);
+  }
+
+  .sidenav__group:first-child {
+    padding-top: 4px;
+  }
+
+  .sidenav__link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 20px;
+    border-left: 2px solid transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--newt-text-muted);
+    text-decoration: none;
+    transition: color var(--dur-instant) var(--ease-beat);
+  }
+
+  .sidenav__link:hover {
+    color: var(--newt-text-secondary);
+  }
+
+  .sidenav__link[aria-current] {
+    border-left-color: var(--newt-brand);
+    background: var(--newt-bg-hover);
+    color: var(--newt-text-primary);
+  }
+
+  /* the hash a channel carries in the client, borrowed for a component */
+  .sidenav__hash {
+    font-family: var(--newt-font-mono);
+    font-weight: 600;
+    color: var(--newt-text-muted);
+  }
+
+  .sidenav__footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  .sidenav__footer-meta {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+
+  .sidenav__footer-name {
+    font-family: var(--newt-font-mono);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .sidenav__footer-sub {
+    font-size: 11px;
+    color: var(--newt-text-muted);
+  }
+
+  .menu-toggle {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: var(--z-modal);
+    display: none;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--newt-border);
+    background: var(--newt-bg-elevated);
+    font-size: 18px;
+    color: var(--newt-text-primary);
+  }
+
+  .sidenav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-panel) - 1);
+    display: none;
+    background: rgb(0 0 0 / 0.5);
+  }
+
+  .main {
+    flex: 1;
+    min-width: 0;
+    margin-left: 264px;
+  }
+
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    border-bottom: 1px solid var(--newt-border);
+  }
+
+  .page-header__main {
+    padding: 64px 48px;
+    border-right: 1px solid var(--newt-border);
+  }
+
+  .page-header__eyebrow {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--newt-border);
+    font-family: var(--newt-font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--newt-text-muted);
+  }
+
+  /* the parts read as one line, so the separator is drawn rather than typed */
+  .page-header__eyebrow > span:not(:first-child)::before {
+    content: "·";
+    margin-right: 12px;
+  }
+
+  .page-header--solo {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header--solo .page-header__main {
+    border-right: none;
+  }
+
+  .spec-section__num::before {
+    counter-increment: spec;
+    content: counter(spec, decimal-leading-zero);
+  }
+
+  .page-header h1 {
+    max-width: 620px;
+    margin-bottom: 22px;
+    font-size: 46px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  /* the mono line above the title: what the page is, before what it says */
+  .page-header h1 em {
+    display: block;
+    margin-bottom: 10px;
+    font-family: var(--newt-font-mono);
+    font-size: 0.62em;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--newt-text-muted);
+  }
+
+  .page-header .lead {
+    max-width: 520px;
+    margin-bottom: 32px;
+    padding-left: 16px;
+    border-left: 2px solid var(--newt-brand);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--newt-text-secondary);
+  }
+
+  /* nothing follows the lead on a page with no call to action */
+  .page-header__main > .lead:last-child {
+    margin-bottom: 0;
+  }
+
+  .page-header__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .page-header__manifest {
+    display: flex;
+    flex-direction: column;
+    padding: 64px 32px;
+  }
+
+  .manifest__heading {
+    margin-bottom: 16px;
+    font-family: var(--newt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--newt-text-muted);
+  }
+
+  .manifest__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--newt-border);
+    font-size: 13px;
+  }
+
+  .manifest__row:last-child {
+    border-bottom: none;
+  }
+
+  .manifest__key {
+    color: var(--newt-text-muted);
+  }
+
+  .manifest__val {
+    font-family: var(--newt-font-mono);
+    text-align: right;
+    color: var(--newt-text-primary);
+  }
+
+  .manifest__val--brand {
+    color: var(--newt-brand);
+  }
+
+  .content {
+    max-width: 1100px;
+    padding: 0 48px 96px;
+    counter-reset: spec;
+  }
+
+  /* a numbered entry in the spec: heading column, then the body */
+  .spec-section {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 32px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--newt-border);
+    scroll-margin-top: 24px;
+  }
+
+  .spec-section:first-child {
+    padding-top: 48px;
+  }
+
+  .spec-section:last-child {
+    border-bottom: none;
+  }
+
+  .spec-section__head {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+  }
+
+  .spec-section__num {
+    margin-bottom: 8px;
+    font-family: var(--newt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--newt-text-muted);
+  }
+
+  .spec-section__title {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .spec-section__class {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--newt-font-mono);
+    font-size: 12px;
+    color: var(--newt-text-muted);
+  }
+
+  .spec-section__desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--newt-text-secondary);
+  }
+
+  /* the parts of a body stack, and the gap is the same one the original used */
+  .spec-section__body {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .category-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 56px 0 8px;
+    font-family: var(--newt-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--newt-brand);
+  }
+
+  .category-heading::before {
+    content: "§";
+    color: var(--newt-text-muted);
+  }
+
+  .page-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px 48px;
+    border-top: 1px solid var(--newt-border);
+    font-family: var(--newt-font-mono);
+    font-size: 12px;
+    color: var(--newt-text-muted);
+  }
+
+  .page-footer__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .page-footer a {
+    color: var(--newt-text-secondary);
+    text-decoration: none;
+  }
+
+  .page-footer a:hover {
+    color: var(--newt-text-primary);
+  }
+
+  .page-footer__disclaimer {
+    max-width: 760px;
+    padding-top: 16px;
+    border-top: 1px solid var(--newt-border);
+    font-size: 11px;
+    line-height: 1.7;
+  }
+}
+
+/*
+ * Below the breakpoint the navigation column has nowhere to go, so it
+ * leaves the flow and arrives over the page from the toggle instead.
+ */
+@media (width < 61.25rem) {
+  .sidenav {
+    transform: translateX(-100%);
+    box-shadow: var(--newt-shadow-elevation-high);
+    transition: transform var(--dur-overlay) var(--ease-glide);
+  }
+
+  .sidenav.is-open {
+    transform: translateX(0);
+  }
+
+  .sidenav-overlay.is-open {
+    display: block;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .main {
+    margin-left: 0;
+  }
+
+  .page-header {
+    grid-template-columns: 1fr;
+    padding-top: 56px;
+  }
+
+  .page-header__main {
+    padding: 32px 24px;
+    border-right: none;
+    border-bottom: 1px solid var(--newt-border);
+  }
+
+  .page-header__manifest {
+    padding: 32px 24px;
+  }
+
+  .page-header h1 {
+    font-size: 30px;
+  }
+
+  .content {
+    padding: 0 24px 64px;
+  }
+
+  .page-footer {
+    padding: 24px;
+  }
+
+  .spec-section {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .spec-section__head {
+    position: static;
   }
 }

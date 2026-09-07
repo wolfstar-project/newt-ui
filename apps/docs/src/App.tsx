@@ -2,6 +2,7 @@ import { ComponentPage } from "./pages/ComponentPage"
 import { Home } from "./pages/Home"
 import { Installation } from "./pages/Installation"
 import { NotFound } from "./pages/NotFound"
+import { UsingWithAI } from "./pages/UsingWithAI"
 import { usePath } from "./site/router"
 import { SettingsProvider } from "./site/settings"
 import { Shell } from "./site/Shell"
@@ -15,7 +16,7 @@ function Route() {
 
   if (path === "/") {
     return (
-      <Shell wide>
+      <Shell>
         <Home />
       </Shell>
     )
@@ -25,6 +26,14 @@ function Route() {
     return (
       <Shell>
         <Installation />
+      </Shell>
+    )
+  }
+
+  if (path === "/docs/using-with-ai") {
+    return (
+      <Shell>
+        <UsingWithAI />
       </Shell>
     )
   }

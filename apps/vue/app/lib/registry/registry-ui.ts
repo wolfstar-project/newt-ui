@@ -3,6 +3,100 @@ import type { Registry } from "./schema"
 
 export const ui: Registry = [
   {
+    name: "action-row",
+    type: "registry:ui",
+    title: "Action Row",
+    description: "The row of buttons and selects attached under a message.",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "ui/action-row/ActionRow.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/action-row/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "app-launcher",
+    type: "registry:ui",
+    title: "App Launcher",
+    description:
+      "The Apps popout, with search, a recents strip and the apps installed in a server.",
+    files: [
+      {
+        path: "ui/app-launcher/AppLauncher.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherHandle.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherBack.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherSearch.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherSearchInput.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherBody.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherSection.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherSectionHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherSectionTitle.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherViewMore.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherList.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherItemIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherRecents.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherRecent.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "attachment",
     type: "registry:ui",
     title: "Attachment Card",
@@ -160,6 +254,125 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "channel-header",
+    type: "registry:ui",
+    title: "Channel Header",
+    description:
+      "The bar above the message list, with the channel name, topic and channel actions.",
+    files: [
+      {
+        path: "ui/channel-header/ChannelHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderInfo.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderName.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderDivider.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderTopic.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderToolbar.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderAction.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderSearch.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderOnline.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-info",
+    type: "registry:ui",
+    title: "Channel Info",
+    description:
+      "The channel detail panel that covers a channel on narrow screens.",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "ui/channel-info/ChannelInfo.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoToolbar.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoActions.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoAction.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoIdentity.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoName.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoType.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoPanel.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoEmpty.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoEmptyIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoEmptyTitle.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/ChannelInfoEmptyBody.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-info/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "channel-topic",
     type: "registry:ui",
     title: "Channel Topic Bar",
@@ -188,6 +401,69 @@ export const ui: Registry = [
       },
       {
         path: "ui/channel-topic/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-welcome",
+    type: "registry:ui",
+    title: "Channel Welcome",
+    description:
+      "The header that opens a channel, shown above its very first message.",
+    files: [
+      {
+        path: "ui/channel-welcome/ChannelWelcome.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-welcome/ChannelWelcomeIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-welcome/ChannelWelcomeTitle.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-welcome/ChannelWelcomeDescription.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-welcome/ChannelWelcomeAction.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-welcome/ChannelWelcomeDate.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-welcome/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "chat",
+    type: "registry:ui",
+    title: "Chat",
+    description:
+      "The channel shell: a scrolling message log with the composer pinned below it.",
+    registryDependencies: ["scrollbar", "message-list", "message-composer"],
+    files: [
+      {
+        path: "ui/chat/Chat.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/chat/ChatBody.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/chat/ChatFooter.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/chat/index.ts",
         type: "registry:ui",
       },
     ],
@@ -278,7 +554,8 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Divider",
     description:
-      "A horizontal rule with an optional centered label, like Discord's date separators.",
+      "A horizontal rule with an optional centered label, spacing steps and a line-less mode.",
+    dependencies: ["class-variance-authority"],
     files: [
       {
         path: "ui/divider/Divider.vue",
@@ -336,10 +613,22 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Embed",
     description:
-      "A Discord-style rich message embed with title, description, fields and footer.",
+      "A Discord-inspired rich message embed with an accent bar, author, title, description, fields, footer and timestamp.",
     files: [
       {
         path: "ui/embed/Embed.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/embed/EmbedAuthor.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/embed/EmbedAuthorIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/embed/EmbedAuthorName.vue",
         type: "registry:ui",
       },
       {
@@ -372,6 +661,18 @@ export const ui: Registry = [
       },
       {
         path: "ui/embed/EmbedFooter.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/embed/EmbedFooterIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/embed/EmbedFooterSeparator.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/embed/EmbedTimestamp.vue",
         type: "registry:ui",
       },
       {
@@ -455,6 +756,67 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "inline-code",
+    type: "registry:ui",
+    title: "Inline Code",
+    description: "A monospace pill for code inside a line of message text.",
+    files: [
+      {
+        path: "ui/inline-code/InlineCode.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/inline-code/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "invite",
+    type: "registry:ui",
+    title: "Invite",
+    description: "The server invite card a link unfurls into inside a message.",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "ui/invite/Invite.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/invite/InviteEyebrow.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/invite/InviteBody.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/invite/InviteIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/invite/InviteInfo.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/invite/InviteName.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/invite/InviteCounts.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/invite/InviteCount.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/invite/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "kbd-tag",
     type: "registry:ui",
     title: "Keyboard Shortcut Tag",
@@ -473,13 +835,21 @@ export const ui: Registry = [
   {
     name: "member-list",
     type: "registry:ui",
-    title: "Member List Row",
+    title: "Member List",
     description:
-      "A hoverable row showing a member's avatar, presence, name and role.",
+      "A server member sidebar: role sections, presence, coloured names and APP tags.",
     registryDependencies: ["avatar", "status-indicator", "role-tag"],
     files: [
       {
         path: "ui/member-list/MemberList.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/member-list/MemberListSection.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/member-list/MemberListHeading.vue",
         type: "registry:ui",
       },
       {
@@ -491,7 +861,15 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
+        path: "ui/member-list/MemberListNameRow.vue",
+        type: "registry:ui",
+      },
+      {
         path: "ui/member-list/MemberListName.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/member-list/MemberListAppTag.vue",
         type: "registry:ui",
       },
       {
@@ -508,7 +886,8 @@ export const ui: Registry = [
     name: "mention",
     type: "registry:ui",
     title: "Mention Chip",
-    description: "An inline chip for user, channel and role mentions.",
+    description:
+      "An inline chip for user, channel, role and app mentions, with an optional avatar.",
     dependencies: ["class-variance-authority"],
     files: [
       {
@@ -522,15 +901,45 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "message-composer",
+    type: "registry:ui",
+    title: "Message Composer",
+    description:
+      "The channel input bar: attachment control, text field with combobox hooks, and send.",
+    files: [
+      {
+        path: "ui/message-composer/MessageComposer.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/message-composer/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "message-group",
     type: "registry:ui",
     title: "Message Group",
     description:
-      "A chat message row with avatar, author header, content and reactions.",
-    registryDependencies: ["avatar", "status-indicator", "reaction"],
+      "A grouped chat message with author, timestamp, reply preview, reactions and an ephemeral state.",
+    registryDependencies: [
+      "avatar",
+      "reaction",
+      "reply-preview",
+      "status-indicator",
+    ],
     files: [
       {
         path: "ui/message-group/MessageGroup.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/message-group/MessageGroupAvatar.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/message-group/MessageGroupReply.vue",
         type: "registry:ui",
       },
       {
@@ -562,7 +971,33 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
+        path: "ui/message-group/MessageGroupEphemeralNotice.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/message-group/MessageGroupEphemeralAction.vue",
+        type: "registry:ui",
+      },
+      {
         path: "ui/message-group/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "message-list",
+    type: "registry:ui",
+    title: "Message List",
+    description:
+      "The polite live region that logs grouped messages in a channel.",
+    registryDependencies: ["message-group"],
+    files: [
+      {
+        path: "ui/message-list/MessageList.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/message-list/index.ts",
         type: "registry:ui",
       },
     ],
@@ -711,11 +1146,15 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Reaction Pill",
     description:
-      "A toggleable emoji reaction pill with a count, as seen under chat messages.",
+      "A toggleable emoji reaction pill, plus the group that rows them under a message.",
     dependencies: ["class-variance-authority"],
     files: [
       {
         path: "ui/reaction/Reaction.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/reaction/ReactionGroup.vue",
         type: "registry:ui",
       },
       {
@@ -729,10 +1168,14 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Reply Preview",
     description:
-      'A compact "replying to" bar showing the author and a truncated excerpt of the original message.',
+      'A compact "replying to" bar showing the author, a truncated excerpt, or the slash command that was used.',
     files: [
       {
         path: "ui/reply-preview/ReplyPreview.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/reply-preview/ReplyPreviewAvatar.vue",
         type: "registry:ui",
       },
       {
@@ -741,6 +1184,14 @@ export const ui: Registry = [
       },
       {
         path: "ui/reply-preview/ReplyPreviewText.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/reply-preview/ReplyPreviewAction.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/reply-preview/ReplyPreviewCommand.vue",
         type: "registry:ui",
       },
       {
@@ -775,7 +1226,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Scrollbar Utility",
     description:
-      "Discord-styled thin, rounded scrollbars for any scrollable container.",
+      "Discord-styled scrollbars for any scrollable container, with an optional keyboard-focusable viewport.",
     files: [
       {
         path: "ui/scrollbar/ScrollArea.vue",
@@ -792,26 +1243,10 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Select Menu",
     description:
-      "A floating listbox with optional search, section labels, dividers and selected options.",
+      "A Discord-inspired string select: combobox trigger, keyboard-driven listbox and a portalled panel.",
     files: [
       {
         path: "ui/select-menu/SelectMenu.vue",
-        type: "registry:ui",
-      },
-      {
-        path: "ui/select-menu/SelectMenuSearch.vue",
-        type: "registry:ui",
-      },
-      {
-        path: "ui/select-menu/SelectMenuLabel.vue",
-        type: "registry:ui",
-      },
-      {
-        path: "ui/select-menu/SelectMenuOption.vue",
-        type: "registry:ui",
-      },
-      {
-        path: "ui/select-menu/SelectMenuDivider.vue",
         type: "registry:ui",
       },
       {
@@ -879,9 +1314,9 @@ export const ui: Registry = [
   {
     name: "slash-command",
     type: "registry:ui",
-    title: "Slash Command Tag",
+    title: "Slash Command",
     description:
-      "Inline monospace tag for referencing a /slash command in text.",
+      "An inline /command with its subcommand path and typed options, including the focused one.",
     files: [
       {
         path: "ui/slash-command/SlashCommand.vue",
@@ -889,6 +1324,57 @@ export const ui: Registry = [
       },
       {
         path: "ui/slash-command/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "slash-command-suggestions",
+    type: "registry:ui",
+    title: "Slash Command Suggestions",
+    description:
+      "The command picker that opens above the composer, with an app rail, grouped options and a matched-command preview.",
+    dependencies: ["class-variance-authority"],
+    registryDependencies: ["slash-command"],
+    files: [
+      {
+        path: "ui/slash-command-suggestions/SlashCommandSuggestions.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/slash-command-suggestions/SlashCommandSuggestionsRail.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/slash-command-suggestions/SlashCommandSuggestionsRailItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/slash-command-suggestions/SlashCommandSuggestionsList.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/slash-command-suggestions/SlashCommandSuggestionsHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/slash-command-suggestions/SlashCommandSuggestionGroup.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/slash-command-suggestions/SlashCommandAppIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/slash-command-suggestions/SlashCommandSuggestion.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/slash-command-suggestions/SlashCommandSuggestionMatched.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/slash-command-suggestions/index.ts",
         type: "registry:ui",
       },
     ],
@@ -1185,6 +1671,23 @@ export const ui: Registry = [
       },
       {
         path: "ui/user-profile/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "v2-container",
+    type: "registry:ui",
+    title: "V2 Container",
+    description:
+      "The Components V2 block that groups text, separators and action rows behind one accent bar.",
+    files: [
+      {
+        path: "ui/v2-container/V2Container.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/v2-container/index.ts",
         type: "registry:ui",
       },
     ],

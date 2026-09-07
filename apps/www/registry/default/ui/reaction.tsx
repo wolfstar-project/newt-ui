@@ -12,7 +12,7 @@ const reactionVariants = cva(
       active: {
         false:
           "border-newt-border bg-newt-bg-surface text-newt-text-secondary hover:bg-newt-bg-hover",
-        true: "border-newt-brand bg-[color-mix(in_srgb,var(--newt-brand)_15%,transparent)] text-[#b3baff]",
+        true: "border-newt-brand bg-[color-mix(in_srgb,var(--newt-brand)_15%,transparent)] text-newt-mention-text",
       },
     },
     defaultVariants: {
@@ -93,4 +93,17 @@ const Reaction = React.forwardRef<HTMLButtonElement, ReactionProps>(
 )
 Reaction.displayName = "Reaction"
 
-export { Reaction, reactionVariants }
+/* The row of reactions under a message. */
+const ReactionGroup = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("mt-1 flex flex-wrap items-center gap-1", className)}
+    {...props}
+  />
+))
+ReactionGroup.displayName = "ReactionGroup"
+
+export { Reaction, ReactionGroup, reactionVariants }

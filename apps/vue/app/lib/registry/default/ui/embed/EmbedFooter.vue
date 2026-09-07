@@ -10,7 +10,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <div
     :class="
       cn(
-        'mt-1 flex items-center gap-2 text-[12px] text-newt-text-muted',
+        'mt-1 flex min-w-0 items-center gap-2 text-[12px] text-newt-text-muted',
         props.class
       )
     "
