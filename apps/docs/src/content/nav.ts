@@ -42,6 +42,10 @@ export const NAV: readonly NavGroup[] = [
     label: category.label,
     items: itemsFor(category.slug),
   })),
+  {
+    label: "Using with AI",
+    items: [{ href: "/docs/using-with-ai", label: "Implementation guide" }],
+  },
 ]
 
 const FLAT: readonly NavItem[] = NAV.flatMap((group) => group.items)
