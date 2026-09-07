@@ -1,0 +1,132 @@
+---
+import ComponentPreview from "../components/mdx/ComponentPreview.astro"
+import Base from "../layouts/Base.astro"
+
+/*
+ * A brand hue is three tokens, not a theme file. This page changes those three
+ * live and hands back the CSS to paste — everything else in the palette is
+ * shared, which is what makes the change one declaration rather than twenty.
+ */
+const PRESETS = [
+  { name: "Blurple", base: "#5865f2", hover: "#4752c4", active: "#3c45a5" },
+  { name: "Violet", base: "#7a5af8", hover: "#6b4ce0", active: "#5a3fc0" },
+  { name: "Teal", base: "#1abc9c", hover: "#15a086", active: "#118872" },
+  { name: "Amber", base: "#f0b232", hover: "#d69a22", active: "#b8821a" },
+  { name: "Rose", base: "#eb459e", hover: "#c9327f", active: "#a72668" },
+] as const
+---
+
+<Base
+  title="Themes"
+  description="Change the brand hue and watch every component follow — the whole theme is three custom properties."
+>
+  <main class="themes" id="main">
+    <header class="themes-header">
+      <h1>Themes</h1>
+      <p>
+        newt/ui has one palette and an opt-in light surface set. What most projects
+        actually want to change is the brand hue, which is three tokens —
+        <code>--newt-brand</code>, <code>--newt-brand-hover</code> and
+        <code>--newt-brand-active</code>. Pick one below and the whole page follows,
+        including the live examples.
+      </p>
+    </header>
+
+    <div class="theme-controls" data-theme-controls>
+      <fieldset class="theme-presets">
+        <legend>Brand</legend>
+        {
+          PRESETS.map((preset, index) => (
+            <button
+              type="button"
+              class="theme-preset"
+              aria-pressed={index === 0 ? "true" : "false"}
+              data-preset
+              data-base={preset.base}
+              data-hover={preset.hover}
+              data-active={preset.active}
+            >
+              <span class="theme-swatch" style={`background:${preset.base}`} aria-hidden="true" />
+              {preset.name}
+            </button>
+          ))
+        }
+      </fieldset>
+
+      <label class="theme-custom">
+        <span>Custom</span>
+        <input type="color" value="#5865f2" data-theme-custom />
+      </label>
+
+      <button type="button" class="button-secondary" data-theme-reset>Reset</button>
+    </div>
+
+    <pre class="theme-output"><code data-theme-output></code></pre>
+
+    <section class="theme-preview">
+      <h2>How it lands</h2>
+      <ComponentPreview name="button" />
+      <ComponentPreview name="chat-window" size="full" />
+    </section>
+  </main>
+</Base>
+
+<script>
+  const root = document.documentElement
+  const output = document.querySelector<HTMLElement>("[data-theme-output]")
+  const presets = [...document.querySelectorAll<HTMLButtonElement>("[data-preset]")]
+  const custom = document.querySelector<HTMLInputElement>("[data-theme-custom]")
+  const reset = document.querySelector<HTMLButtonElement>("[data-theme-reset]")
+
+  const DEFAULTS = { base: "#5865f2", hover: "#4752c4", active: "#3c45a5" }
+
+  /*
+   * The hover and active steps are the base darkened: a picker that only offers
+   * one colour still has to produce the three the components read.
+   */
+  function darken(hex: string, amount: number): string {
+    const value = Number.parseInt(hex.slice(1), 16)
+    const channels = [value >> 16, (value >> 8) & 0xff, value & 0xff]
+    const scaled = channels.map((channel) => Math.round(channel * (1 - amount)))
+    return `#${scaled.map((c) => c.toString(16).padStart(2, "0")).join("")}`
+  }
+
+  function apply(base: string, hover: string, active: string) {
+    root.style.setProperty("--newt-brand", base)
+    root.style.setProperty("--newt-brand-hover", hover)
+    root.style.setProperty("--newt-brand-active", active)
+    if (output) {
+      output.textContent = `:root {\n  --newt-brand: ${base};\n  --newt-brand-hover: ${hover};\n  --newt-brand-active: ${active};\n}`
+    }
+  }
+
+  function press(target: HTMLButtonElement | null) {
+    for (const preset of presets) {
+      preset.setAttribute("aria-pressed", String(preset === target))
+    }
+  }
+
+  for (const preset of presets) {
+    preset.addEventListener("click", () => {
+      const { base, hover, active } = preset.dataset
+      if (!base || !hover || !active) return
+      apply(base, hover, active)
+      press(preset)
+    })
+  }
+
+  custom?.addEventListener("input", () => {
+    const base = custom.value
+    apply(base, darken(base, 0.15), darken(base, 0.3))
+    press(null)
+  })
+
+  reset?.addEventListener("click", () => {
+    root.style.removeProperty("--newt-brand")
+    root.style.removeProperty("--newt-brand-hover")
+    root.style.removeProperty("--newt-brand-active")
+    if (custom) custom.value = DEFAULTS.base
+    if (output) output.textContent = ""
+    press(presets[0] ?? null)
+  })
+</script>

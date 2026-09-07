@@ -54,7 +54,11 @@ const reactUi = metas.map((m) => {
     },
     m
   )
-  entry.files = [{ path: `ui/${m.name}.tsx`, type: "registry:ui" }]
+  entry.type = m.type ?? "registry:ui"
+  entry.files = (m.reactFiles ?? [`ui/${m.name}.tsx`]).map((path) => ({
+    path,
+    type: entry.type,
+  }))
   return entry
 })
 const reactExamples = metas.map((m) => ({
@@ -123,10 +127,12 @@ const vueUi = metas.map((m) => {
     },
     m
   )
+  entry.type = m.type ?? "registry:ui"
+  const dir = entry.type === "registry:block" ? "block" : "ui"
   entry.files = (m.vueFiles ?? [`${pascal(m.name)}.vue`, "index.ts"]).map(
     (f) => ({
-      path: `ui/${m.name}/${f}`,
-      type: "registry:ui",
+      path: `${dir}/${m.name}/${f}`,
+      type: entry.type,
     })
   )
   return entry
@@ -241,8 +247,13 @@ writeFileSync(
 // warn about missing files
 let missing = 0
 for (const m of metas) {
+  // A block lives under `block/` and declares its own file list; a component
+  // lives under `ui/` and is named after itself.
+  const dir = m.type === "registry:block" ? "block" : "ui"
   const checks = [
-    join(WWW, `registry/default/ui/${m.name}.tsx`),
+    ...(m.reactFiles ?? [`ui/${m.name}.tsx`]).map((f) =>
+      join(WWW, `registry/default/${f}`)
+    ),
     join(
       WWW,
       `registry/default/example/${m.reactDemo ?? `${m.name}-demo`}.tsx`
@@ -252,7 +263,7 @@ for (const m of metas) {
       `app/lib/registry/default/example/${m.vueDemo ?? `${pascal(m.name)}Demo`}.vue`
     ),
     ...(m.vueFiles ?? [`${pascal(m.name)}.vue`, "index.ts"]).map((f) =>
-      join(VUE, `app/lib/registry/default/ui/${m.name}/${f}`)
+      join(VUE, `app/lib/registry/default/${dir}/${m.name}/${f}`)
     ),
   ]
   for (const c of checks)

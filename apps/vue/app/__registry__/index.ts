@@ -395,6 +395,38 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ChatWindowDemo",
+    {
+      name: "ChatWindowDemo",
+      type: "registry:example",
+      registryDependencies: ["chat-window"],
+      files: ["app/lib/registry/default/example/ChatWindowDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChatWindowDemo.vue")
+      ),
+    },
+  ],
+  [
+    "chat-window",
+    {
+      name: "chat-window",
+      type: "registry:ui",
+      registryDependencies: [
+        "channel-header",
+        "chat",
+        "message-list",
+        "message-group",
+        "message-composer",
+        "avatar",
+      ],
+      files: [
+        "app/lib/registry/default/block/chat-window/ChatWindow.vue",
+        "app/lib/registry/default/block/chat-window/types.ts",
+        "app/lib/registry/default/block/chat-window/index.ts",
+      ],
+    },
+  ],
+  [
     "CodeBlockDemo",
     {
       name: "CodeBlockDemo",
@@ -1156,6 +1188,37 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/server-banner/ServerBannerMeta.vue",
         "app/lib/registry/default/ui/server-banner/ServerBannerMetaItem.vue",
         "app/lib/registry/default/ui/server-banner/index.ts",
+      ],
+    },
+  ],
+  [
+    "ServerSidebarDemo",
+    {
+      name: "ServerSidebarDemo",
+      type: "registry:example",
+      registryDependencies: ["server-sidebar"],
+      files: ["app/lib/registry/default/example/ServerSidebarDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ServerSidebarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "server-sidebar",
+    {
+      name: "server-sidebar",
+      type: "registry:ui",
+      registryDependencies: [
+        "server-banner",
+        "voice-channel",
+        "member-list",
+        "status-indicator",
+        "avatar",
+      ],
+      files: [
+        "app/lib/registry/default/block/server-sidebar/ServerSidebar.vue",
+        "app/lib/registry/default/block/server-sidebar/types.ts",
+        "app/lib/registry/default/block/server-sidebar/index.ts",
       ],
     },
   ],

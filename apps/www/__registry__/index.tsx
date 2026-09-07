@@ -153,6 +153,25 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "chat-window",
+    {
+      name: "chat-window",
+      type: "registry:block",
+      registryDependencies: [
+        "channel-header",
+        "chat",
+        "message-list",
+        "message-group",
+        "message-composer",
+        "avatar",
+      ],
+      files: ["registry/default/block/chat-window/chat-window.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/block/chat-window/chat-window")
+      ),
+    },
+  ],
+  [
     "code-block",
     {
       name: "code-block",
@@ -442,6 +461,24 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/ui/server-banner.tsx"],
       component: React.lazy(
         () => import("@/registry/default/ui/server-banner")
+      ),
+    },
+  ],
+  [
+    "server-sidebar",
+    {
+      name: "server-sidebar",
+      type: "registry:block",
+      registryDependencies: [
+        "server-banner",
+        "voice-channel",
+        "member-list",
+        "status-indicator",
+        "avatar",
+      ],
+      files: ["registry/default/block/server-sidebar/server-sidebar.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/block/server-sidebar/server-sidebar")
       ),
     },
   ],
@@ -763,6 +800,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/example/chat-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/default/example/chat-demo")
+      ),
+    },
+  ],
+  [
+    "chat-window-demo",
+    {
+      name: "chat-window-demo",
+      type: "registry:example",
+      registryDependencies: ["chat-window"],
+      files: ["registry/default/example/chat-window-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/chat-window-demo")
       ),
     },
   ],
@@ -1099,6 +1148,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/example/server-banner-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/default/example/server-banner-demo")
+      ),
+    },
+  ],
+  [
+    "server-sidebar-demo",
+    {
+      name: "server-sidebar-demo",
+      type: "registry:example",
+      registryDependencies: ["server-sidebar"],
+      files: ["registry/default/example/server-sidebar-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/server-sidebar-demo")
       ),
     },
   ],

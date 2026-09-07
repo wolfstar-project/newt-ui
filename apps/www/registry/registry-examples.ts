@@ -146,6 +146,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "chat-window-demo",
+    type: "registry:example",
+    registryDependencies: ["chat-window"],
+    files: [
+      {
+        path: "example/chat-window-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "code-block-demo",
     type: "registry:example",
     registryDependencies: ["code-block"],
@@ -449,6 +460,17 @@ export const examples: Registry = [
     files: [
       {
         path: "example/server-banner-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "server-sidebar-demo",
+    type: "registry:example",
+    registryDependencies: ["server-sidebar"],
+    files: [
+      {
+        path: "example/server-sidebar-demo.tsx",
         type: "registry:example",
       },
     ],

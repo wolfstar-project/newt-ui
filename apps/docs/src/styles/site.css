@@ -1742,6 +1742,144 @@
     color: var(--newt-text-primary);
   }
 
+  /* --- blocks and themes ------------------------------------------------ */
+
+  .blocks,
+  .themes {
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 3rem 1rem 5rem;
+  }
+
+  .blocks-header h1,
+  .themes-header h1 {
+    margin: 0 0 0.75rem;
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  .blocks-header p,
+  .themes-header p {
+    max-width: 46rem;
+    margin: 0;
+    color: var(--newt-text-secondary);
+    line-height: 1.7;
+  }
+
+  .block-entry {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  .block-entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .block-entry h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+
+  .block-entry p {
+    max-width: 42rem;
+    margin: 0;
+    color: var(--newt-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .theme-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0 1rem;
+  }
+
+  .theme-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.35rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-surface);
+  }
+
+  .theme-presets legend {
+    padding: 0 0.35rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--newt-text-muted);
+  }
+
+  .theme-preset {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid transparent;
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    color: var(--newt-text-secondary);
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+
+  .theme-preset[aria-pressed="true"] {
+    border-color: var(--newt-brand);
+    background: var(--newt-bg-elevated);
+    color: var(--newt-text-primary);
+  }
+
+  .theme-swatch {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: var(--newt-radius-full);
+  }
+
+  .theme-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--newt-text-secondary);
+  }
+
+  .theme-custom input {
+    width: 2.25rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .theme-output {
+    min-height: 1rem;
+    margin: 0 0 2rem;
+    padding: 0;
+    font-family: var(--newt-font-mono);
+    font-size: 0.78rem;
+    color: var(--newt-text-muted);
+    white-space: pre;
+  }
+
+  .theme-preview h2 {
+    margin: 2.5rem 0 1rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+
   /* --- responsive ------------------------------------------------------- */
 
   @media (min-width: 48rem) {

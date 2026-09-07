@@ -1,0 +1,151 @@
+---
+title: "vee-validate"
+description: "Wire newt/ui's form controls to vee-validate, with zod for validation."
+links:
+  doc: "https://vee-validate.logaretm.com/v4/"
+---
+
+<Callout>
+  Vue only. For a form that has to work in both frameworks, see [TanStack
+  Form](/docs/forms/tanstack-form).
+</Callout>
+
+## Install \{#install\}
+
+<PmTabs cmd="--yes vee-validate @vee-validate/zod zod" />
+
+<PmTabs cmd="newtui@latest add form-fields button" />
+
+## The schema \{#schema\}
+
+```ts title="lib/channel-schema.ts"
+import { z } from "zod"
+
+export const channelSchema = z.object({
+  name: z
+    .string()
+    .min(2, "At least two characters.")
+    .max(32, "At most 32 characters.")
+    .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers and dashes only."),
+  topic: z.string().max(120, "At most 120 characters.").optional(),
+  category: z.enum(["text", "voice", "announcement"]),
+  nsfw: z.boolean(),
+})
+```
+
+## The form \{#form\}
+
+`useField` gives each control its value, its handlers and its error. The
+controls are ordinary inputs, so `v-model` binds straight to it.
+
+```vue title="components/CreateChannelForm.vue"
+<script setup lang="ts">
+import { toTypedSchema } from "@vee-validate/zod"
+import { useField, useForm } from "vee-validate"
+
+import { Button } from "@/components/ui/button"
+import {
+  Checkbox,
+  Field,
+  FieldHelp,
+  Input,
+  Label,
+  Select,
+  Textarea,
+} from "@/components/ui/form-fields"
+import { channelSchema } from "@/lib/channel-schema"
+
+const { handleSubmit, isSubmitting, resetForm } = useForm({
+  validationSchema: toTypedSchema(channelSchema),
+  initialValues: { name: "", topic: "", category: "text", nsfw: false },
+})
+
+const { value: name, errorMessage: nameError } = useField<string>("name")
+const { value: topic, errorMessage: topicError } = useField<string>("topic")
+const { value: category } = useField<string>("category")
+const { value: nsfw } = useField<boolean>("nsfw")
+
+const onSubmit = handleSubmit(async (values) => {
+  await createChannel(values)
+  resetForm()
+})
+</script>
+
+<template>
+  <form class="flex flex-col gap-4" @submit="onSubmit">
+    <Field :invalid="Boolean(nameError)">
+      <Label for="name">Channel name</Label>
+      <Input
+        id="name"
+        v-model="name"
+        :aria-invalid="Boolean(nameError)"
+        :aria-describedby="nameError ? 'name-error' : undefined"
+      />
+      <FieldHelp v-if="nameError" id="name-error" variant="error">
+        {{ nameError }}
+      </FieldHelp>
+      <FieldHelp v-else>Lowercase letters, numbers and dashes.</FieldHelp>
+    </Field>
+
+    <Field :invalid="Boolean(topicError)">
+      <Label for="topic">Topic</Label>
+      <Textarea id="topic" v-model="topic" />
+      <FieldHelp v-if="topicError" variant="error">{{ topicError }}</FieldHelp>
+    </Field>
+
+    <Field>
+      <Label for="category">Category</Label>
+      <Select id="category" v-model="category">
+        <option value="text">Text</option>
+        <option value="voice">Voice</option>
+        <option value="announcement">Announcement</option>
+      </Select>
+    </Field>
+
+    <Field>
+      <Checkbox id="nsfw" v-model="nsfw" />
+      <Label for="nsfw">Age-restricted channel</Label>
+    </Field>
+
+    <Button type="submit" variant="primary" :disabled="isSubmitting">
+      {{ isSubmitting ? "Creating…" : "Create channel" }}
+    </Button>
+  </form>
+</template>
+```
+
+## Validation timing \{#timing\}
+
+vee-validate validates on change once a field has been touched, which is
+usually right. `validateOnValueUpdate: false` on a `useField` turns it into
+submit-only for a field that is expensive to check.
+
+## Array fields \{#arrays\}
+
+```vue
+<script setup lang="ts">
+import { FieldArray } from "vee-validate"
+</script>
+
+<template>
+  <FieldArray v-slot="{ fields, push, remove }" name="tags">
+    <Field v-for="(entry, index) in fields" :key="entry.key">
+      <Label>Tag {{ index + 1 }}</Label>
+      <Input v-model="entry.value" />
+      <Button type="button" variant="secondary" @click="remove(index)">
+        Remove
+      </Button>
+    </Field>
+    <Button type="button" variant="secondary" @click="push('')">Add tag</Button>
+  </FieldArray>
+</template>
+```
+
+`entry.key` is the key, not the index: removing the first row otherwise
+remounts every row after it and loses focus.
+
+<Callout>
+  vee-validate also ships a `<Form>` component. It works with these controls,
+  but composition-API `useField` is the pattern that reads the same as the
+  other two guides here.
+</Callout>

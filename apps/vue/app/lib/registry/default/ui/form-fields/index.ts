@@ -7,5 +7,10 @@ export { default as FieldHelp } from "./FieldHelp.vue"
 export { default as Switch } from "./Switch.vue"
 export { default as Checkbox } from "./Checkbox.vue"
 
+/*
+ * The invalid border is driven by the field wrapper rather than by a prop on
+ * each control, so a form library that only knows "this field is in error"
+ * needs to say it once.
+ */
 export const controlClassName =
-  "w-full rounded-sm border border-newt-border bg-newt-bg-input px-3 py-2.5 font-sans text-sm text-newt-text-primary transition-colors duration-fast ease-newt placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none"
+  "w-full rounded-sm border border-newt-border bg-newt-bg-input px-3 py-2.5 font-sans text-sm text-newt-text-primary transition-colors duration-fast ease-newt placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none group-data-[invalid]/field:border-newt-danger aria-[invalid=true]:border-newt-danger"

@@ -64,6 +64,15 @@ const GUIDES: readonly NavGroup[] = [
     ],
   },
   {
+    label: "Forms",
+    items: [
+      { href: "/docs/forms", label: "Overview", badge: "new" },
+      { href: "/docs/forms/react-hook-form", label: "react-hook-form" },
+      { href: "/docs/forms/tanstack-form", label: "TanStack Form" },
+      { href: "/docs/forms/vee-validate", label: "vee-validate" },
+    ],
+  },
+  {
     label: "Registry",
     items: [
       { href: "/docs/registry", label: "Introduction" },

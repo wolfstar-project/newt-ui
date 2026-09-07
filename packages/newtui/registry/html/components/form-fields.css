@@ -83,3 +83,20 @@
   transform: translateX(calc(var(--newt-dir) * 16px));
   background: #fff;
 }
+
+/*
+ * Validation state lives on the field, not on each control: a form library
+ * that knows only "this field failed" sets one attribute.
+ */
+.newt-field[data-invalid] .newt-input,
+.newt-field[data-invalid] .newt-textarea,
+.newt-field[data-invalid] .newt-select,
+.newt-input[aria-invalid="true"],
+.newt-textarea[aria-invalid="true"],
+.newt-select[aria-invalid="true"] {
+  border-color: var(--newt-danger);
+}
+
+.newt-field__help--error {
+  color: var(--newt-danger);
+}

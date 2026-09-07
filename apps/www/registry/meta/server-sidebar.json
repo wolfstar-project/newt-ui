@@ -1,0 +1,17 @@
+{
+  "name": "server-sidebar",
+  "type": "registry:block",
+  "title": "Server sidebar",
+  "description": "The column beside a channel: the server banner, the voice channel and the grouped member list.",
+  "registryDependencies": [
+    "server-banner",
+    "voice-channel",
+    "member-list",
+    "status-indicator",
+    "avatar"
+  ],
+  "reactFiles": ["block/server-sidebar/server-sidebar.tsx"],
+  "vueFiles": ["ServerSidebar.vue", "types.ts", "index.ts"],
+  "reactDemo": "server-sidebar-demo",
+  "vueDemo": "ServerSidebarDemo"
+}

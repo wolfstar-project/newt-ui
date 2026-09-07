@@ -14,6 +14,7 @@ import ChannelInfoDemo from "@/registry/default/example/channel-info-demo"
 import ChannelTopicDemo from "@/registry/default/example/channel-topic-demo"
 import ChannelWelcomeDemo from "@/registry/default/example/channel-welcome-demo"
 import ChatDemo from "@/registry/default/example/chat-demo"
+import ChatWindowDemo from "@/registry/default/example/chat-window-demo"
 import CodeBlockDemo from "@/registry/default/example/code-block-demo"
 import ContextMenuDemo from "@/registry/default/example/context-menu-demo"
 import CooldownBarDemo from "@/registry/default/example/cooldown-bar-demo"
@@ -42,6 +43,7 @@ import RoleTagDemo from "@/registry/default/example/role-tag-demo"
 import ScrollbarDemo from "@/registry/default/example/scrollbar-demo"
 import SelectMenuDemo from "@/registry/default/example/select-menu-demo"
 import ServerBannerDemo from "@/registry/default/example/server-banner-demo"
+import ServerSidebarDemo from "@/registry/default/example/server-sidebar-demo"
 import SkeletonDemo from "@/registry/default/example/skeleton-demo"
 import SlashCommandDemo from "@/registry/default/example/slash-command-demo"
 import SlashCommandSuggestionsDemo from "@/registry/default/example/slash-command-suggestions-demo"
@@ -75,6 +77,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["channel-topic", ChannelTopicDemo],
   ["channel-welcome", ChannelWelcomeDemo],
   ["chat", ChatDemo],
+  ["chat-window", ChatWindowDemo],
   ["code-block", CodeBlockDemo],
   ["context-menu", ContextMenuDemo],
   ["cooldown-bar", CooldownBarDemo],
@@ -103,6 +106,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["scrollbar", ScrollbarDemo],
   ["select-menu", SelectMenuDemo],
   ["server-banner", ServerBannerDemo],
+  ["server-sidebar", ServerSidebarDemo],
   ["skeleton", SkeletonDemo],
   ["slash-command", SlashCommandDemo],
   ["slash-command-suggestions", SlashCommandSuggestionsDemo],

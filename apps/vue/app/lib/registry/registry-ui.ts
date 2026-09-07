@@ -469,6 +469,35 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "chat-window",
+    type: "registry:block",
+    title: "Chat window",
+    description:
+      "A whole channel view: header, scrolling message list and composer, composed from the registry.",
+    registryDependencies: [
+      "channel-header",
+      "chat",
+      "message-list",
+      "message-group",
+      "message-composer",
+      "avatar",
+    ],
+    files: [
+      {
+        path: "block/chat-window/ChatWindow.vue",
+        type: "registry:block",
+      },
+      {
+        path: "block/chat-window/types.ts",
+        type: "registry:block",
+      },
+      {
+        path: "block/chat-window/index.ts",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
     name: "code-block",
     type: "registry:ui",
     title: "Code Block",
@@ -1312,6 +1341,34 @@ export const ui: Registry = [
       {
         path: "ui/server-banner/index.ts",
         type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "server-sidebar",
+    type: "registry:block",
+    title: "Server sidebar",
+    description:
+      "The column beside a channel: the server banner, the voice channel and the grouped member list.",
+    registryDependencies: [
+      "server-banner",
+      "voice-channel",
+      "member-list",
+      "status-indicator",
+      "avatar",
+    ],
+    files: [
+      {
+        path: "block/server-sidebar/ServerSidebar.vue",
+        type: "registry:block",
+      },
+      {
+        path: "block/server-sidebar/types.ts",
+        type: "registry:block",
+      },
+      {
+        path: "block/server-sidebar/index.ts",
+        type: "registry:block",
       },
     ],
   },

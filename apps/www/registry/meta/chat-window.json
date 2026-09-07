@@ -1,0 +1,18 @@
+{
+  "name": "chat-window",
+  "type": "registry:block",
+  "title": "Chat window",
+  "description": "A whole channel view: header, scrolling message list and composer, composed from the registry.",
+  "registryDependencies": [
+    "channel-header",
+    "chat",
+    "message-list",
+    "message-group",
+    "message-composer",
+    "avatar"
+  ],
+  "reactFiles": ["block/chat-window/chat-window.tsx"],
+  "vueFiles": ["ChatWindow.vue", "types.ts", "index.ts"],
+  "reactDemo": "chat-window-demo",
+  "vueDemo": "ChatWindowDemo"
+}

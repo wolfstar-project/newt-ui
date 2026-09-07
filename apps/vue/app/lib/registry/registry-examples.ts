@@ -146,6 +146,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ChatWindowDemo",
+    type: "registry:example",
+    registryDependencies: ["chat-window"],
+    files: [
+      {
+        path: "example/ChatWindowDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "CodeBlockDemo",
     type: "registry:example",
     registryDependencies: ["code-block"],
@@ -449,6 +460,17 @@ export const examples: Registry = [
     files: [
       {
         path: "example/ServerBannerDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ServerSidebarDemo",
+    type: "registry:example",
+    registryDependencies: ["server-sidebar"],
+    files: [
+      {
+        path: "example/ServerSidebarDemo.vue",
         type: "registry:example",
       },
     ],

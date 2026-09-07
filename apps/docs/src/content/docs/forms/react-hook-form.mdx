@@ -1,0 +1,184 @@
+---
+title: "react-hook-form"
+description: "Wire newt/ui's form controls to react-hook-form, with zod for validation."
+links:
+  doc: "https://react-hook-form.com/get-started"
+---
+
+<Callout>
+  React only. For a form that has to work in both frameworks, see [TanStack
+  Form](/docs/forms/tanstack-form).
+</Callout>
+
+## Install \{#install\}
+
+<PmTabs cmd="--yes react-hook-form @hookform/resolvers zod" />
+
+<PmTabs cmd="newtui@latest add form-fields button" />
+
+## The schema \{#schema\}
+
+The schema is the contract. Nothing below restates a rule that is written here.
+
+```ts title="lib/channel-schema.ts"
+import { z } from "zod"
+
+export const channelSchema = z.object({
+  name: z
+    .string()
+    .min(2, "At least two characters.")
+    .max(32, "At most 32 characters.")
+    .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers and dashes only."),
+  topic: z.string().max(120, "At most 120 characters.").optional(),
+  category: z.enum(["text", "voice", "announcement"]),
+  nsfw: z.boolean(),
+})
+
+export type ChannelValues = z.infer<typeof channelSchema>
+```
+
+## The form \{#form\}
+
+`register` returns the props a native control needs, which is exactly what
+these controls are — so it goes straight on.
+
+```tsx title="components/create-channel-form.tsx"
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+
+import { Button } from "@/components/ui/button"
+import {
+  Checkbox,
+  Field,
+  FieldHelp,
+  Input,
+  Label,
+  Select,
+  Textarea,
+} from "@/components/ui/form-fields"
+import { channelSchema, type ChannelValues } from "@/lib/channel-schema"
+
+export function CreateChannelForm() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ChannelValues>({
+    resolver: zodResolver(channelSchema),
+    defaultValues: { name: "", topic: "", category: "text", nsfw: false },
+  })
+
+  return (
+    <form
+      className="flex flex-col gap-4"
+      onSubmit={handleSubmit(async (values) => {
+        await createChannel(values)
+        reset()
+      })}
+    >
+      <Field invalid={Boolean(errors.name)}>
+        <Label htmlFor="name">Channel name</Label>
+        <Input
+          id="name"
+          aria-invalid={Boolean(errors.name)}
+          aria-describedby={errors.name ? "name-error" : undefined}
+          {...register("name")}
+        />
+        {errors.name ? (
+          <FieldHelp id="name-error" variant="error">
+            {errors.name.message}
+          </FieldHelp>
+        ) : (
+          <FieldHelp>Lowercase letters, numbers and dashes.</FieldHelp>
+        )}
+      </Field>
+
+      <Field invalid={Boolean(errors.topic)}>
+        <Label htmlFor="topic">Topic</Label>
+        <Textarea id="topic" {...register("topic")} />
+        {errors.topic && (
+          <FieldHelp variant="error">{errors.topic.message}</FieldHelp>
+        )}
+      </Field>
+
+      <Field>
+        <Label htmlFor="category">Category</Label>
+        <Select id="category" {...register("category")}>
+          <option value="text">Text</option>
+          <option value="voice">Voice</option>
+          <option value="announcement">Announcement</option>
+        </Select>
+      </Field>
+
+      <Field>
+        <Checkbox id="nsfw" {...register("nsfw")} />
+        <Label htmlFor="nsfw">Age-restricted channel</Label>
+      </Field>
+
+      <Button type="submit" variant="primary" disabled={isSubmitting}>
+        {isSubmitting ? "Creating…" : "Create channel"}
+      </Button>
+    </form>
+  )
+}
+```
+
+## Validation timing \{#timing\}
+
+The default is `onSubmit`, which is the right one: validating a field the
+reader has not finished typing in is noise. `mode: "onBlur"` is a reasonable
+second choice; `mode: "onChange"` is rarely worth it.
+
+```ts
+useForm({ resolver: zodResolver(channelSchema), mode: "onBlur" })
+```
+
+## Switch and other controlled parts \{#controlled\}
+
+`Switch` is a button with `aria-checked`, not an `<input>`, so it goes through
+`Controller`:
+
+```tsx
+import { Controller } from "react-hook-form"
+
+import { Switch } from "@/components/ui/form-fields"
+
+;<Controller
+  name="nsfw"
+  control={control}
+  render={({ field }) => (
+    <Switch checked={field.value} onCheckedChange={field.onChange} />
+  )}
+/>
+```
+
+## Array fields \{#arrays\}
+
+```tsx
+const { fields, append, remove } = useFieldArray({ control, name: "tags" })
+
+;<>
+  {fields.map((entry, index) => (
+    <Field key={entry.id} invalid={Boolean(errors.tags?.[index])}>
+      <Label>Tag {index + 1}</Label>
+      <Input {...register(`tags.${index}.value`)} />
+      <Button type="button" variant="secondary" onClick={() => remove(index)}>
+        Remove
+      </Button>
+    </Field>
+  ))}
+  <Button
+    type="button"
+    variant="secondary"
+    onClick={() => append({ value: "" })}
+  >
+    Add tag
+  </Button>
+</>
+```
+
+`entry.id` is the key, not the index: removing the first row otherwise remounts
+every row after it and loses focus.

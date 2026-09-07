@@ -1,0 +1,48 @@
+---
+import ComponentPreview from "../../components/mdx/ComponentPreview.astro"
+import PmTabs from "../../components/mdx/PmTabs.astro"
+import Base from "../../layouts/Base.astro"
+import { COMPONENTS } from "../../lib/registry"
+
+/*
+ * Blocks are registry items like any other — `newtui add chat-window` writes
+ * them — so this gallery reads the same meta the component pages do rather
+ * than keeping a list of its own.
+ */
+const blocks = COMPONENTS.filter((component) => component.categorySlug === "blocks")
+---
+
+<Base
+  title="Blocks"
+  description="Whole sections, composed from the registry and installed the same way a component is."
+>
+  <main class="blocks" id="main">
+    <header class="blocks-header">
+      <h1>Blocks</h1>
+      <p>
+        A block is an arrangement of components, not new markup: the parts are the
+        ones documented under Components, and restyling one is still a matter of
+        overriding a token. Install a block and you get every component it is built
+        from.
+      </p>
+    </header>
+
+    {
+      blocks.map((block) => (
+        <section class="block-entry" id={block.name}>
+          <div class="block-entry-head">
+            <div>
+              <h2>{block.title}</h2>
+              <p>{block.description}</p>
+            </div>
+            <a class="button-secondary" href={`/docs/components/${block.name}`}>
+              Read the docs
+            </a>
+          </div>
+          <PmTabs cmd={`newtui@latest add ${block.name}`} />
+          <ComponentPreview name={block.name} size="full" />
+        </section>
+      ))
+    }
+  </main>
+</Base>

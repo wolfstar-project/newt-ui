@@ -3,11 +3,22 @@ import type { HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-const props = defineProps<{ class?: HTMLAttributes["class"] }>()
+/*
+ * `invalid` marks the whole field. The controls inside read `data-invalid`
+ * from this wrapper, so a form library that only knows "this field is in
+ * error" says it once rather than per control.
+ */
+const props = defineProps<{
+  class?: HTMLAttributes["class"]
+  invalid?: boolean
+}>()
 </script>
 
 <template>
-  <div :class="cn('flex flex-col gap-2', props.class)">
+  <div
+    :data-invalid="props.invalid || undefined"
+    :class="cn('group/field flex flex-col gap-2', props.class)"
+  >
     <slot />
   </div>
 </template>

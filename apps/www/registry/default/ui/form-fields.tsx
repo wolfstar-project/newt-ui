@@ -4,11 +4,21 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-const Field = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
-  ({ className, ...props }, ref) => (
+export interface FieldProps extends React.ComponentProps<"div"> {
+  /**
+   * Marks the whole field as failing validation. The controls inside it read
+   * `data-invalid` from this wrapper, so one prop restyles the group rather
+   * than each control being told separately.
+   */
+  invalid?: boolean
+}
+
+const Field = React.forwardRef<HTMLDivElement, FieldProps>(
+  ({ className, invalid = false, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("flex flex-col gap-2", className)}
+      data-invalid={invalid || undefined}
+      className={cn("group/field flex flex-col gap-2", className)}
       {...props}
     />
   )
@@ -29,8 +39,13 @@ const Label = React.forwardRef<HTMLLabelElement, React.ComponentProps<"label">>(
 )
 Label.displayName = "Label"
 
+/*
+ * The invalid border is driven by the field wrapper rather than by a prop on
+ * each control, so a form library that only knows "this field is in error"
+ * needs to say it once.
+ */
 const controlClassName =
-  "w-full rounded-sm border border-newt-border bg-newt-bg-input px-3 py-2.5 font-sans text-sm text-newt-text-primary transition-colors duration-fast ease-newt placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none"
+  "w-full rounded-sm border border-newt-border bg-newt-bg-input px-3 py-2.5 font-sans text-sm text-newt-text-primary transition-colors duration-fast ease-newt placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none group-data-[invalid]/field:border-newt-danger aria-[invalid=true]:border-newt-danger"
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   ({ className, type = "text", ...props }, ref) => (
@@ -64,16 +79,28 @@ const Select = React.forwardRef<
 ))
 Select.displayName = "Select"
 
-const FieldHelp = React.forwardRef<
-  HTMLSpanElement,
-  React.ComponentProps<"span">
->(({ className, ...props }, ref) => (
-  <span
-    ref={ref}
-    className={cn("text-xs text-newt-text-muted", className)}
-    {...props}
-  />
-))
+export interface FieldHelpProps extends React.ComponentProps<"span"> {
+  /**
+   * `error` colours the text and announces it: a validation message that
+   * appears after a submit is useless to a reader who never sees it.
+   */
+  variant?: "help" | "error"
+}
+
+const FieldHelp = React.forwardRef<HTMLSpanElement, FieldHelpProps>(
+  ({ className, variant = "help", ...props }, ref) => (
+    <span
+      ref={ref}
+      role={variant === "error" ? "alert" : undefined}
+      className={cn(
+        "text-xs",
+        variant === "error" ? "text-newt-danger" : "text-newt-text-muted",
+        className
+      )}
+      {...props}
+    />
+  )
+)
 FieldHelp.displayName = "FieldHelp"
 
 export interface SwitchProps extends Omit<
