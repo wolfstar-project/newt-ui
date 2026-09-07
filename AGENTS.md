@@ -14,11 +14,11 @@ source into the user's project, there is no runtime package dependency.
 
 ```
 apps/
-  docs/   THE documentation site (Vite + React + Vue). One site for both
-          frameworks: a React/Vue switcher picks which registry renders each
-          demo. It reads `apps/www/registry` and `apps/vue/app/lib/registry`
-          directly through path aliases and bundles both built registries
-          into its own `dist/`.
+  docs/   THE documentation site (Astro + MDX, React and Vue islands). One
+          site for both frameworks: a React/Vue switcher picks which registry
+          renders each demo. Content is `src/content/docs/**/*.mdx`; it reads
+          `apps/www/registry` and `apps/vue/app/lib/registry` directly through
+          path aliases and bundles both built registries into its own `dist/`.
   www/    React registry source + builder (Next.js) — shadcn-ui layout:
           registry/default/{ui,example}. No longer ships docs pages.
   vue/    Vue registry source + builder (Nuxt 4 + Tailwind 4) — shadcn-vue
@@ -114,17 +114,18 @@ version:
    `packages/newtui/registry/html/components/<name>.{css,html,js}`.
 2. React: `apps/www/registry/default/ui/<name>.tsx` (cva + `cn` + Tailwind),
    `apps/www/registry/default/example/<name>-demo.tsx`,
-   `apps/www/content/docs/components/<name>.mdx`.
+   and the docs page at `apps/docs/src/content/docs/components/<name>.mdx`
+   (`pnpm --filter docs docs:gen` writes the stub).
 3. Vue: `apps/vue/app/lib/registry/default/ui/<name>/{Pascal.vue,index.ts}`,
-   `apps/vue/app/lib/registry/default/example/PascalDemo.vue`,
-   `apps/vue/content/docs/components/<name>.md`.
+   `apps/vue/app/lib/registry/default/example/PascalDemo.vue`.
 4. Add `apps/www/registry/meta/<name>.json` (title, description,
    dependencies, registryDependencies, vueFiles) — this drives the
    generated registry indexes.
 5. Add the component to a category in
    `apps/www/registry/registry-categories.ts` — the single taxonomy the
    docs site reads for both frameworks — so it appears in the side nav.
-6. Run `node scripts/gen-registry.mjs`, then `pnpm typecheck && pnpm build`.
+6. Run `node scripts/gen-registry.mjs` and `pnpm --filter docs docs:gen`, then
+   `pnpm typecheck && pnpm build`.
 
 ## Trademark note
 

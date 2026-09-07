@@ -1,4 +1,4 @@
-import { copyFile, cp } from "node:fs/promises"
+import { cp } from "node:fs/promises"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -36,15 +36,3 @@ for (const { from, to } of bundles) {
   }
   console.log(`copied ${from} -> ${to}`)
 }
-
-/*
- * The router reads `location.pathname`, so a reader who loads or refreshes
- * `/docs/installation` asks static hosting for a file that was never emitted.
- * A host that answers an unknown path with `404.html` — GitHub Pages,
- * Cloudflare Pages, `vite preview` — boots the same application from this
- * copy of the entry document, and the assets resolve from any depth because
- * they are addressed from the domain root. A host configured with its own
- * rewrite to `index.html` never reaches this file, and is unaffected by it.
- */
-await copyFile(join(dist, "index.html"), join(dist, "404.html"))
-console.log("wrote dist/404.html (deep-link fallback)")

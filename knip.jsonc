@@ -14,10 +14,27 @@
       "project": ["scripts/**/*.{mjs,ts}"],
     },
     "apps/docs": {
-      "entry": ["src/main.tsx", "scripts/*.mjs", "vite.config.ts"],
+      // Astro's own plugin finds the pages, the layouts and the integrations;
+      // these are the entry points it cannot see: the build scripts, the remark
+      // plugin the Astro config loads, and the islands MDX mounts by name.
+      "entry": [
+        "astro.config.ts",
+        "ec.config.mjs",
+        "scripts/*.mjs",
+        "src/content.config.ts",
+        "src/components/**/*.{ts,tsx,vue,astro}",
+        // Registry demos are copied in with their imports intact, so this file
+        // is reached from outside the workspace knip walks.
+        "src/lib/utils.ts",
+        "src/pages/**/*.{ts,astro}",
+      ],
       // `.css` is in `project` so knip follows `src/styles/site.css`, which is
       // where `tailwindcss` and `tw-animate-css` are imported from.
-      "project": ["src/**/*.{ts,tsx,css}", "scripts/**/*.mjs"],
+      "project": [
+        "src/**/*.{ts,tsx,vue,astro,css}",
+        "scripts/**/*.mjs",
+        "*.{ts,mjs}",
+      ],
     },
     "apps/www": {
       "entry": [

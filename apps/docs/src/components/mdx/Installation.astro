@@ -1,0 +1,109 @@
+---
+import { Code } from "astro-expressive-code/components"
+
+import { findComponent, targetPaths, uiSource } from "../../lib/registry"
+import { SITE } from "../../lib/site"
+import PmTabs from "./PmTabs.astro"
+import Steps from "./Steps.astro"
+import Tabs from "./Tabs.astro"
+
+/*
+ * Two ways in: the CLI, which is what almost everyone wants, and the manual
+ * route, which spells out every file the CLI would have written. Both are
+ * derived from the component's meta file, so neither can drift from what
+ * `newtui add` actually does.
+ */
+interface Props {
+  readonly name: string
+}
+
+const { name } = Astro.props
+
+const meta = findComponent(name)
+if (meta === undefined) {
+  throw new Error(`<Installation name="${name}"> — no registry meta.`)
+}
+
+/*
+ * A long file is collapsed past its first ten lines: the reader is here to
+ * copy it, not to scroll it, and the frame keeps the page readable.
+ */
+function codeProps(path: string, source: string | undefined, lang: string) {
+  const code = source ?? `// missing source for ${path}`
+  const collapse = code.split("\n").length > 40 ? { collapse: "10-9999" } : {}
+  return { code, lang, title: path, ...collapse }
+}
+
+const reactFiles = targetPaths("react", meta).map((path) =>
+  codeProps(path, uiSource("react", meta.name), "tsx")
+)
+
+const vueFiles = meta.vueFiles.map((file) => {
+  const path = `components/ui/${meta.name}/${file}`
+  return codeProps(
+    path,
+    uiSource("vue", meta.name, file),
+    file.endsWith(".vue") ? "vue" : "ts"
+  )
+})
+
+const npmDependencies = meta.dependencies.join(" ")
+---
+
+<Tabs labels={["CLI", "Manual"]} persistKey="install">
+  <Fragment slot="tab-0">
+    <PmTabs cmd={`newtui@latest add ${meta.name}`} />
+  </Fragment>
+
+  <Fragment slot="tab-1">
+    <Steps>
+      {
+        npmDependencies !== "" && (
+          <section>
+            <h4>Install the dependencies</h4>
+            <PmTabs cmd={`--yes ${npmDependencies}`} />
+          </section>
+        )
+      }
+
+      {
+        meta.registryDependencies.length > 0 && (
+          <section>
+            <h4>Add the components it builds on</h4>
+            <p>
+              {meta.registryDependencies.map((dependency, index) => (
+                <>
+                  {index > 0 && ", "}
+                  <a href={`/docs/components/${dependency}`}>{dependency}</a>
+                </>
+              ))}
+            </p>
+          </section>
+        )
+      }
+
+      <section>
+        <h4>Copy the source into your project</h4>
+        <div data-framework="react">
+          {reactFiles.map((file) => (
+            <Code {...file} />
+          ))}
+        </div>
+        <div data-framework="vue">
+          {vueFiles.map((file) => (
+            <Code {...file} />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h4>Update the import paths</h4>
+        <p>
+          The files import <code>{SITE.utilsAlias}</code> and sibling components
+          through the aliases in your <code>components.json</code>. Point them at
+          wherever those live in your project.
+        </p>
+      </section>
+    </Steps>
+  </Fragment>
+</Tabs>

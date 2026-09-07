@@ -1,0 +1,16 @@
+---
+import Base from "../layouts/Base.astro"
+import { COMPONENTS } from "../lib/registry"
+---
+
+<Base title="Not found" description="That page does not exist.">
+  <main class="not-found" id="main">
+    <p class="not-found-code">404</p>
+    <h1>That page does not exist.</h1>
+    <p>
+      The registry has {COMPONENTS.length} components, and every one of them has a page.
+      Try <a href="/docs/components">the component index</a>, or start from
+      <a href="/docs/installation">the installation guide</a>.
+    </p>
+  </main>
+</Base>

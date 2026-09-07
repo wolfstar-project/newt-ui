@@ -1,0 +1,90 @@
+---
+import { SITE } from "../../lib/site"
+
+/*
+ * Every docs page is also served as markdown at the same path plus `.md`.
+ * This menu is the handle on that: copy it, read it, or hand the URL to an
+ * assistant that will fetch it.
+ */
+interface Props {
+  /** The `.md` twin of the current page. */
+  readonly markdownPath: string
+}
+
+const { markdownPath } = Astro.props
+const absolute = new URL(markdownPath, SITE.url).href
+const prompt = `Read ${absolute} — it is the ${SITE.name} documentation for this component — and help me use it.`
+---
+
+<div class="copy-page" data-copy-page data-markdown={markdownPath}>
+  <button type="button" class="copy-page-trigger" aria-expanded="false" aria-haspopup="menu">
+    Copy page
+    <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-caret">
+      <path
+        d="m6 9 6 6 6-6"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"></path>
+    </svg>
+  </button>
+  <div class="copy-page-menu" role="menu" hidden>
+    <button type="button" role="menuitem" data-copy-markdown>Copy as Markdown</button>
+    <a role="menuitem" href={markdownPath}>View as Markdown</a>
+    <a
+      role="menuitem"
+      href={`https://claude.ai/new?q=${encodeURIComponent(prompt)}`}
+      target="_blank"
+      rel="noreferrer">Open in Claude</a
+    >
+    <a
+      role="menuitem"
+      href={`https://chatgpt.com/?q=${encodeURIComponent(prompt)}`}
+      target="_blank"
+      rel="noreferrer">Open in ChatGPT</a
+    >
+  </div>
+</div>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>("[data-copy-page]")) {
+    const trigger = root.querySelector<HTMLButtonElement>(".copy-page-trigger")
+    const menu = root.querySelector<HTMLElement>(".copy-page-menu")
+    const copy = root.querySelector<HTMLButtonElement>("[data-copy-markdown]")
+    if (!trigger || !menu || !copy) continue
+
+    const setOpen = (open: boolean) => {
+      menu.hidden = !open
+      trigger.setAttribute("aria-expanded", String(open))
+    }
+
+    trigger.addEventListener("click", () => setOpen(menu.hidden !== false))
+
+    document.addEventListener("click", (event) => {
+      // SAFETY: a click event's target is always a Node in the document.
+      const target = event.target as Node
+      if (!root.contains(target)) setOpen(false)
+    })
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setOpen(false)
+    })
+
+    copy.addEventListener("click", async () => {
+      const path = root.dataset.markdown
+      if (!path) return
+      const label = copy.textContent
+      try {
+        const response = await fetch(path)
+        await navigator.clipboard.writeText(await response.text())
+        copy.textContent = "Copied"
+      } catch {
+        copy.textContent = "Copy failed"
+      }
+      setTimeout(() => {
+        copy.textContent = label
+        setOpen(false)
+      }, 1200)
+    })
+  }
+</script>

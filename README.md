@@ -157,15 +157,22 @@ authorship.
 
 ## Documentation site
 
-`apps/docs` is a Vite app that runs React and Vue side by side: React renders
-the site, and each Vue demo is mounted as an island in a React node. The
-framework switcher in the sidebar decides which registry a page reads from —
-every install command, import line and live demo follows it — and the choice
-survives a reload through `localStorage`.
+`apps/docs` is an Astro site that runs React and Vue side by side: pages are
+static HTML built from MDX, and each preview mounts a React island and a Vue
+island together. The framework switcher in the header decides which one paints
+and which install command, import line and code block is shown — the choice
+survives a reload through `localStorage`, and the markup for both is rendered
+at build time, so switching costs nothing.
 
-The two registries are consumed in place through Vite path aliases
-(`@/registry` → `apps/www/registry`, `@/lib/registry` →
-`apps/vue/app/lib/registry`), so a component only ever exists once. At build
-time the site copies both `public/r` outputs into its own `dist/`, which is why
-`apps/www` and `apps/vue` remain in the repository as registry builders even
-though they no longer ship pages.
+Content lives in `src/content/docs/**/*.mdx`, one file per page including one
+per component; `pnpm --filter docs docs:gen` writes a stub for any component
+that does not have one yet. Every page is also served as markdown at the same
+path plus `.md`, and `/llms.txt` indexes them.
+
+The two registries are consumed in place through path aliases (`@/registry` →
+`apps/www/registry`, `@/lib/registry` → `apps/vue/app/lib/registry`), so a
+component only ever exists once. At build time the site copies both `public/r`
+outputs into its own `dist/`, which is why `apps/www` and `apps/vue` remain in
+the repository as registry builders even though they no longer ship pages.
+`scripts/verify-dist.mjs` then asserts that those files, the markdown twins and
+the search index all landed: the site and the registry CDN are one deployment.

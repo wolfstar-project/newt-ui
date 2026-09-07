@@ -5,6 +5,7 @@
 **/coverage/**
 **/node_modules/**
 **/.turbo/**
+**/.astro/**
 pnpm-lock.yaml
 apps/*/public/r/**
 apps/www/public/legacy/**

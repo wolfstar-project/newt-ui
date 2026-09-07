@@ -1,0 +1,63 @@
+import { fileURLToPath } from "node:url"
+
+import mdx from "@astrojs/mdx"
+import react from "@astrojs/react"
+import sitemap from "@astrojs/sitemap"
+import vue from "@astrojs/vue"
+import tailwindcss from "@tailwindcss/vite"
+import expressiveCode from "astro-expressive-code"
+import pagefind from "astro-pagefind"
+import { defineConfig } from "astro/config"
+
+import { remarkHeadingId } from "./src/lib/remark-heading-id"
+
+const here = (relative: string) =>
+  fileURLToPath(new URL(relative, import.meta.url))
+
+export default defineConfig({
+  site: "https://newtui.dev",
+  output: "static",
+  trailingSlash: "never",
+  build: { format: "directory" },
+  integrations: [
+    /*
+     * Expressive Code must run before MDX so fenced blocks in content are
+     * rendered with frames, titles and a copy button rather than plain shiki.
+     * Its options live in `ec.config.mjs`, which is where the `<Code>`
+     * component looks for them.
+     */
+    expressiveCode(),
+    mdx(),
+    react(),
+    vue(),
+    pagefind(),
+    sitemap(),
+  ],
+  markdown: {
+    // `## Heading {#id}` keeps the explicit id, so published anchors survive a
+    // reworded heading. Astro slugs everything else as usual.
+    remarkPlugins: [remarkHeadingId],
+  },
+  vite: {
+    plugins: [tailwindcss()],
+    resolve: {
+      /*
+       * Longest prefix first: `@/lib/registry` must win over `@/lib/utils`,
+       * and both over `@/lib`. Vite matches these in order.
+       */
+      alias: [
+        {
+          find: "@/lib/registry",
+          replacement: here("../vue/app/lib/registry"),
+        },
+        { find: "@/lib/utils", replacement: here("./src/lib/utils.ts") },
+        { find: "@/registry", replacement: here("../www/registry") },
+        { find: "@/components", replacement: here("./src/components") },
+        { find: "@/layouts", replacement: here("./src/layouts") },
+        { find: "@/stores", replacement: here("./src/stores") },
+        { find: "@/styles", replacement: here("./src/styles") },
+        { find: "@/lib", replacement: here("./src/lib") },
+      ],
+    },
+  },
+})

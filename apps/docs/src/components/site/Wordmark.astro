@@ -1,0 +1,33 @@
+---
+import { SITE } from "../../lib/site"
+
+/*
+ * Four strokes at four heights with one bar struck through them: a level meter
+ * caught mid signal, which is what a chat client is. Drawn here rather than
+ * fetched, so it inherits the text colour and needs no network.
+ */
+interface Props {
+  readonly class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<a href="/" class:list={["wordmark", className]} aria-label={`${SITE.name} home`}>
+  <svg
+    class="wordmark-mark"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <g stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <line x1="4" y1="7" x2="4" y2="20"></line>
+      <line x1="9.3" y1="11" x2="9.3" y2="20"></line>
+      <line x1="14.7" y1="4" x2="14.7" y2="20"></line>
+      <line x1="20" y1="9" x2="20" y2="20"></line>
+      <line x1="2.4" y1="15.4" x2="21.6" y2="15.4"></line>
+    </g>
+  </svg>
+  <span class="wordmark-text">{SITE.name}</span>
+</a>

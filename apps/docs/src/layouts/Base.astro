@@ -1,0 +1,61 @@
+---
+import "@/styles/site.css"
+
+import Footer from "../components/site/Footer.astro"
+import Header from "../components/site/Header.astro"
+import { SITE } from "../lib/site"
+
+interface Props {
+  readonly title: string
+  readonly description?: string
+  /** The docs shell manages its own width; landing pages do not. */
+  readonly wide?: boolean
+}
+
+const { title, description = SITE.tagline } = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site)
+const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`
+---
+
+<!doctype html>
+<html lang="en" data-framework="react" data-newt-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <script is:inline>
+      /*
+       * Before first paint: apply the stored theme and framework so a reader
+       * who chose light does not see a dark flash, and the code blocks for the
+       * framework they did not choose are never briefly visible.
+       */
+      try {
+        const theme = localStorage.getItem("newt-ui:theme")
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.newtTheme = theme
+          document.documentElement.style.colorScheme = theme
+        }
+        const framework = localStorage.getItem("newt-ui:framework")
+        if (framework === "react" || framework === "vue") {
+          document.documentElement.dataset.framework = framework
+        }
+      } catch {
+        /* private mode with storage disabled: the defaults are fine */
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>

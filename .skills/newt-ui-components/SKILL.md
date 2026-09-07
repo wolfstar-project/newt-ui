@@ -21,8 +21,9 @@ A component is done when it exists in all three forms and they look identical.
    them and defining the `cva` variants and `VariantProps` types.
 
 Plus, every time: a demo (`example/<name>-demo.tsx` /
-`example/<Pascal>Demo.vue`), docs (`content/docs/components/<name>.mdx` /
-`content/docs/components/<name>.md`), `registry/meta/<name>.json`, and an
+`example/<Pascal>Demo.vue`), one docs page for both frameworks
+(`apps/docs/src/content/docs/components/<name>.mdx`, whose stub
+`pnpm --filter docs docs:gen` writes), `registry/meta/<name>.json`, and an
 entry in `registry-categories.ts` (both copies).
 
 ## Rules

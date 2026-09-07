@@ -1,0 +1,67 @@
+---
+import { COMPONENTS } from "../../lib/registry"
+import { NAV } from "../../lib/nav"
+
+const pathname = Astro.url.pathname
+---
+
+<aside id="docs-sidebar" class="sidebar" data-sidebar>
+  <nav class="sidebar-nav" aria-label="Documentation">
+    {
+      NAV.map((group) => (
+        <div class="sidebar-group">
+          <p class="sidebar-group-label">{group.label}</p>
+          <ul>
+            {group.items.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={item.href === pathname ? "page" : undefined}
+                >
+                  {item.label}
+                  {item.badge && <span class="sidebar-badge" data-badge={item.badge} />}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </nav>
+  <p class="sidebar-footer">{COMPONENTS.length} components</p>
+</aside>
+
+<div class="sidebar-scrim" data-sidebar-scrim hidden></div>
+
+<script>
+  const sidebar = document.querySelector<HTMLElement>("[data-sidebar]")
+  const scrim = document.querySelector<HTMLElement>("[data-sidebar-scrim]")
+  const toggle = document.querySelector<HTMLButtonElement>("[data-sidebar-toggle]")
+
+  function setOpen(open: boolean) {
+    if (!sidebar || !toggle) return
+    sidebar.dataset.open = String(open)
+    toggle.setAttribute("aria-expanded", String(open))
+    if (scrim) scrim.hidden = !open
+    document.body.classList.toggle("sidebar-open", open)
+  }
+
+  toggle?.addEventListener("click", () => {
+    setOpen(sidebar?.dataset.open !== "true")
+  })
+
+  scrim?.addEventListener("click", () => setOpen(false))
+
+  // Escape closes the drawer; on wide screens the sidebar is always visible
+  // and the class is inert, so this is harmless there.
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setOpen(false)
+  })
+
+  // Following a link inside the drawer should not leave it open behind the page.
+  sidebar?.addEventListener("click", (event) => {
+    // SAFETY: the listener is on an element, so its click targets are elements.
+    const target = event.target as HTMLElement
+    if (target.closest("a")) setOpen(false)
+  })
+</script>

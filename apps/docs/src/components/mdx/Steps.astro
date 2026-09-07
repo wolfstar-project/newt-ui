@@ -1,0 +1,16 @@
+---
+/*
+ * Numbered procedure. The counter is CSS, not markup, so a step can be added
+ * or removed without renumbering anything, and each direct child section is
+ * one step.
+ */
+interface Props {
+  readonly class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<div class:list={["steps", className]}>
+  <slot />
+</div>

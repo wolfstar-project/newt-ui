@@ -23,7 +23,7 @@ flows back.
 - `packages/module`: `@newtui/nuxt`, auto-imports a consumer's
   `components/ui/**` and injects the tokens. Runtime-only; it never reads the
   registry.
-- `apps/www`: React docs site (Next.js), shadcn-ui layout. Owns
+- `apps/www`: React registry builder (Next.js), shadcn-ui layout. Owns
   `registry/meta/*.json`, which is the single input the generator reads for
   **both** frameworks.
 - `apps/vue`: Vue docs site (Nuxt 4 + Tailwind 4), shadcn-vue layout under

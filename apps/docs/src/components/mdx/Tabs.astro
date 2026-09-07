@@ -1,0 +1,137 @@
+---
+/*
+ * A tab list whose panels come in as `tab-0`, `tab-1`, … slots. The behaviour
+ * script is emitted once for the page however many tab groups it holds, and
+ * every group keeps its own state, so a component page can have a preview
+ * switcher and an installation switcher without them interfering.
+ */
+interface Props {
+  readonly labels: readonly string[]
+  /** Groups sharing a key persist the reader's choice together. */
+  readonly persistKey?: string
+  readonly class?: string
+}
+
+const { labels, persistKey, class: className } = Astro.props
+const uid = Math.random().toString(36).slice(2, 9)
+
+/*
+ * A slot's name has to be static in the template, so the panels are rendered
+ * here by name instead. `labels` decides how many there are, which keeps the
+ * two lists in step by construction.
+ */
+const panels = await Promise.all(
+  labels.map((_, index) =>
+    Astro.slots.has(`tab-${index}`) ? Astro.slots.render(`tab-${index}`) : ""
+  )
+)
+---
+
+<div
+  class:list={["tabs", className]}
+  data-tabs
+  data-persist-key={persistKey}
+>
+  <div class="tabs-list" role="tablist">
+    {
+      labels.map((label, index) => (
+        <button
+          type="button"
+          role="tab"
+          id={`tab-${uid}-${index}`}
+          aria-controls={`panel-${uid}-${index}`}
+          aria-selected={index === 0 ? "true" : "false"}
+          tabindex={index === 0 ? 0 : -1}
+          data-tab-value={label}
+          class="tabs-trigger"
+        >
+          {label}
+        </button>
+      ))
+    }
+  </div>
+  {
+    labels.map((label, index) => (
+      <div
+        role="tabpanel"
+        id={`panel-${uid}-${index}`}
+        aria-labelledby={`tab-${uid}-${index}`}
+        class="tabs-panel"
+        hidden={index !== 0}
+        tabindex={0}
+        set:html={panels[index]}
+      />
+    ))
+  }
+</div>
+
+<script>
+  const STORAGE_PREFIX = "newt-ui:tabs:"
+
+  function select(group: HTMLElement, index: number, focus: boolean) {
+    const triggers = [...group.querySelectorAll<HTMLElement>('[role="tab"]')]
+    const panels = [...group.querySelectorAll<HTMLElement>('[role="tabpanel"]')]
+    triggers.forEach((trigger, i) => {
+      const active = i === index
+      trigger.setAttribute("aria-selected", String(active))
+      trigger.tabIndex = active ? 0 : -1
+      if (active && focus) trigger.focus()
+    })
+    panels.forEach((panel, i) => {
+      panel.hidden = i !== index
+    })
+
+    const key = group.dataset.persistKey
+    const label = triggers[index]?.dataset.tabValue
+    if (key && label) {
+      localStorage.setItem(`${STORAGE_PREFIX}${key}`, label)
+      // Sibling groups with the same key follow along.
+      for (const other of document.querySelectorAll<HTMLElement>(
+        `[data-tabs][data-persist-key="${key}"]`
+      )) {
+        if (other === group) continue
+        const match = [...other.querySelectorAll<HTMLElement>('[role="tab"]')].findIndex(
+          (trigger) => trigger.dataset.tabValue === label
+        )
+        if (match !== -1) select(other, match, false)
+      }
+    }
+  }
+
+  function setup(group: HTMLElement) {
+    if (group.dataset.tabsReady === "true") return
+    group.dataset.tabsReady = "true"
+
+    const triggers = [...group.querySelectorAll<HTMLElement>('[role="tab"]')]
+
+    const key = group.dataset.persistKey
+    if (key) {
+      const stored = localStorage.getItem(`${STORAGE_PREFIX}${key}`)
+      const index = triggers.findIndex((trigger) => trigger.dataset.tabValue === stored)
+      if (index > 0) select(group, index, false)
+    }
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener("click", () => select(group, index, false))
+      trigger.addEventListener("keydown", (event) => {
+        const next =
+          event.key === "ArrowRight"
+            ? index + 1
+            : event.key === "ArrowLeft"
+              ? index - 1
+              : event.key === "Home"
+                ? 0
+                : event.key === "End"
+                  ? triggers.length - 1
+                  : undefined
+        if (next === undefined) return
+        event.preventDefault()
+        select(group, (next + triggers.length) % triggers.length, true)
+      })
+    })
+  }
+
+  for (const group of document.querySelectorAll<HTMLElement>("[data-tabs]")) {
+    setup(group)
+  }
+</script>

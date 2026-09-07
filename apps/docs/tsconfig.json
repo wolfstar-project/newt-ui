@@ -1,25 +1,30 @@
 {
-  // No `baseUrl`: the `typescript-native-bridge` fork removed it. `paths`
-  // alone resolves relative to this file, which is what the aliases in
-  // `vite.config.ts` mirror.
+  // No `baseUrl`: the repo overrides `typescript` with `typescript-native-bridge`,
+  // whose checker removed it. `paths` alone resolves relative to this file.
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "strict": true,
-    "noEmit": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true,
-    "allowImportingTsExtensions": false,
-    "types": ["vite/client"],
+    "jsxImportSource": "react",
     "paths": {
+      "@/lib/registry": ["../vue/app/lib/registry"],
       "@/lib/registry/*": ["../vue/app/lib/registry/*"],
       "@/lib/utils": ["./src/lib/utils.ts"],
-      "@/registry/*": ["../www/registry/*"]
+      "@/registry/*": ["../www/registry/*"],
+      "@/components": ["./src/components"],
+      "@/components/*": ["./src/components/*"],
+      "@/layouts/*": ["./src/layouts/*"],
+      "@/stores/*": ["./src/stores/*"],
+      "@/styles/*": ["./src/styles/*"],
+      "@/lib/*": ["./src/lib/*"]
     }
   },
-  "include": ["src", "scripts", "vite.config.ts"]
+  "include": [
+    ".astro/types.d.ts",
+    "src/**/*",
+    "scripts/**/*",
+    "astro.config.ts",
+    "../www/registry/**/*",
+    "../vue/app/lib/registry/**/*"
+  ],
+  "exclude": ["dist", "node_modules"]
 }

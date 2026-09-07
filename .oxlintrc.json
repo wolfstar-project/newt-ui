@@ -3,6 +3,7 @@
   "extends": ["./tooling/oxc/base.oxlintrc.json"],
   "ignorePatterns": [
     "**/next-env.d.ts",
+    "**/.astro/**",
     ".claude/**",
     ".skills/**",
     "apps/*/public/legacy/**",

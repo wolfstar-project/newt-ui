@@ -1,0 +1,49 @@
+---
+import { Code } from "astro-expressive-code/components"
+
+import { findComponent } from "../../lib/registry"
+import { SITE } from "../../lib/site"
+import { pascalCase } from "../../lib/strings"
+
+/*
+ * The import line a reader needs after installing. React exports one
+ * PascalCase component per file; Vue re-exports every part from the
+ * directory's `index.ts`, so the named list comes straight from `vueFiles`.
+ */
+interface Props {
+  readonly name: string
+}
+
+const { name } = Astro.props
+
+const meta = findComponent(name)
+if (meta === undefined) {
+  throw new Error(`<Usage name="${name}"> — no registry meta.`)
+}
+
+const reactExport = pascalCase(meta.name)
+const vueExports = meta.vueFiles
+  .filter((file) => file.endsWith(".vue"))
+  .map((file) => file.slice(0, file.length - ".vue".length))
+
+const reactCode = `import { ${reactExport} } from "${SITE.uiAlias}/${meta.name}"
+
+export function Example() {
+  return <${reactExport} />
+}`
+
+const vueCode = `<script setup lang="ts">
+import { ${vueExports.join(", ")} } from "${SITE.uiAlias}/${meta.name}"
+</script>
+
+<template>
+  <${vueExports[0] ?? reactExport} />
+</template>`
+---
+
+<div data-framework="react">
+  <Code code={reactCode} lang="tsx" />
+</div>
+<div data-framework="vue">
+  <Code code={vueCode} lang="vue" />
+</div>

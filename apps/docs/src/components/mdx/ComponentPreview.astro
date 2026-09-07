@@ -1,0 +1,86 @@
+---
+import { Code } from "astro-expressive-code/components"
+
+import ReactDemo from "../demo/ReactDemo"
+import VueDemo from "../demo/VueDemo.vue"
+import { demoSource, findComponent, rootClasses } from "../../lib/registry"
+import { pascalCase } from "../../lib/strings"
+import Tabs from "./Tabs.astro"
+
+/*
+ * The live example plus its source. Both framework islands mount; the store
+ * decides which paints, and the two code blocks are both rendered here and
+ * shown or hidden by the `data-framework` attribute, so switching framework
+ * costs nothing at runtime.
+ */
+interface Props {
+  readonly name: string
+  /**
+   * A variant demo — `<name>-<variant>-demo.tsx` and `<Pascal><Variant>Demo.vue`.
+   * Omitted means the component's default demo from its meta file.
+   */
+  readonly variant?: string
+  /** Blocks and full-width examples opt out of the padded frame. */
+  readonly size?: "default" | "full"
+  readonly dir?: "ltr" | "rtl"
+}
+
+const { name, variant, size = "default", dir } = Astro.props
+
+const meta = findComponent(name)
+if (meta === undefined) {
+  throw new Error(
+    `<ComponentPreview name="${name}"> — no registry meta for that component.`
+  )
+}
+
+const reactDemo = variant ? `${name}-${variant}-demo` : meta.reactDemo
+const vueDemo = variant
+  ? `${pascalCase(name)}${pascalCase(variant)}Demo`
+  : meta.vueDemo
+
+const reactCode = demoSource("react", reactDemo)
+const vueCode = demoSource("vue", vueDemo)
+const rootClass = rootClasses[name]
+---
+
+<Tabs labels={["Preview", "Code"]} persistKey="preview" class="component-preview">
+  <Fragment slot="tab-0">
+    <figure
+      class:list={["demo-frame", size === "full" && "demo-frame-full"]}
+      dir={dir}
+    >
+      <div class="newt-root">
+        <ReactDemo client:only="react" demo={reactDemo} />
+        <VueDemo client:only="vue" demo={vueDemo} />
+      </div>
+      {
+        rootClass && (
+          <figcaption class="demo-caption">
+            Root class <code>{rootClass}</code>
+          </figcaption>
+        )
+      }
+    </figure>
+  </Fragment>
+  <Fragment slot="tab-1">
+    <div data-framework="react">
+      {
+        reactCode === undefined ? (
+          <p class="demo-error">No React demo named {reactDemo}.</p>
+        ) : (
+          <Code code={reactCode} lang="tsx" title={`${reactDemo}.tsx`} />
+        )
+      }
+    </div>
+    <div data-framework="vue">
+      {
+        vueCode === undefined ? (
+          <p class="demo-error">No Vue demo named {vueDemo}.</p>
+        ) : (
+          <Code code={vueCode} lang="vue" title={`${vueDemo}.vue`} />
+        )
+      }
+    </div>
+  </Fragment>
+</Tabs>
