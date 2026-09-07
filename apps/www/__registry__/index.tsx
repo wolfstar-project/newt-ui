@@ -182,6 +182,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "command-panel",
+    {
+      name: "command-panel",
+      type: "registry:block",
+      registryDependencies: ["slash-command-suggestions", "bot-command-card"],
+      files: ["registry/default/block/command-panel/command-panel.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/block/command-panel/command-panel")
+      ),
+    },
+  ],
+  [
     "context-menu",
     {
       name: "context-menu",
@@ -824,6 +836,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/default/example/code-block-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/default/example/code-block-demo")
+      ),
+    },
+  ],
+  [
+    "command-panel-demo",
+    {
+      name: "command-panel-demo",
+      type: "registry:example",
+      registryDependencies: ["command-panel"],
+      files: ["registry/default/example/command-panel-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/default/example/command-panel-demo")
       ),
     },
   ],

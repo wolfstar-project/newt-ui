@@ -22,8 +22,9 @@ A component is done when it exists in all three forms and they look identical.
 
 Plus, every time: a demo (`example/<name>-demo.tsx` /
 `example/<Pascal>Demo.vue`), one docs page for both frameworks
-(`apps/docs/src/content/docs/components/<name>.mdx`, whose stub
-`pnpm --filter docs docs:gen` writes), `registry/meta/<name>.json`, and an
+(`apps/docs/src/content/docs/components/<name>.mdx`, whose source-derived
+starter `pnpm --filter docs docs:gen` writes with API tables),
+`registry/meta/<name>.json`, and an
 entry in `registry-categories.ts` (both copies).
 
 ## Rules
@@ -55,6 +56,10 @@ entry in `registry-categories.ts` (both copies).
 - Class names in the React/Vue sources are Tailwind utilities only — the
   `newt-` BEM names belong to the HTML distribution, not to the framework
   ports (`data-*` attributes for state are fine).
+- A finished MDX page has explanatory prose, at least one working preview,
+  an API reference for every custom props interface, accessibility guidance,
+  and its token list. Add paired React/Vue variant demos when another state
+  teaches something the default preview cannot.
 
 ## Workflow
 

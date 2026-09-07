@@ -11,7 +11,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <nav
     :class="
       cn(
-        'flex shrink-0 flex-col items-center gap-2 overflow-y-auto border-r border-newt-border bg-newt-bg-base p-2',
+        'flex shrink-0 flex-col items-center gap-2 overflow-y-auto border-e border-newt-border bg-newt-bg-base p-2',
         props.class
       )
     "

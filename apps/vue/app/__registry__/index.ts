@@ -23,18 +23,6 @@ interface RegistryIndexEntry {
 // indexable by an arbitrary string without widening away the entry type.
 const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
   [
-    "ActionRowDemo",
-    {
-      name: "ActionRowDemo",
-      type: "registry:example",
-      registryDependencies: ["action-row"],
-      files: ["app/lib/registry/default/example/ActionRowDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ActionRowDemo.vue")
-      ),
-    },
-  ],
-  [
     "action-row",
     {
       name: "action-row",
@@ -44,18 +32,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/action-row/ActionRow.vue",
         "app/lib/registry/default/ui/action-row/index.ts",
       ],
-    },
-  ],
-  [
-    "AppLauncherDemo",
-    {
-      name: "AppLauncherDemo",
-      type: "registry:example",
-      registryDependencies: ["app-launcher"],
-      files: ["app/lib/registry/default/example/AppLauncherDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/AppLauncherDemo.vue")
-      ),
     },
   ],
   [
@@ -86,18 +62,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "AttachmentDemo",
-    {
-      name: "AttachmentDemo",
-      type: "registry:example",
-      registryDependencies: ["attachment"],
-      files: ["app/lib/registry/default/example/AttachmentDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/AttachmentDemo.vue")
-      ),
-    },
-  ],
-  [
     "attachment",
     {
       name: "attachment",
@@ -111,18 +75,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/attachment/AttachmentSize.vue",
         "app/lib/registry/default/ui/attachment/index.ts",
       ],
-    },
-  ],
-  [
-    "AvatarDemo",
-    {
-      name: "AvatarDemo",
-      type: "registry:example",
-      registryDependencies: ["avatar"],
-      files: ["app/lib/registry/default/example/AvatarDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/AvatarDemo.vue")
-      ),
     },
   ],
   [
@@ -140,18 +92,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "BadgeDemo",
-    {
-      name: "BadgeDemo",
-      type: "registry:example",
-      registryDependencies: ["badge"],
-      files: ["app/lib/registry/default/example/BadgeDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/BadgeDemo.vue")
-      ),
-    },
-  ],
-  [
     "badge",
     {
       name: "badge",
@@ -161,18 +101,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/badge/Badge.vue",
         "app/lib/registry/default/ui/badge/index.ts",
       ],
-    },
-  ],
-  [
-    "BotCommandCardDemo",
-    {
-      name: "BotCommandCardDemo",
-      type: "registry:example",
-      registryDependencies: ["bot-command-card"],
-      files: ["app/lib/registry/default/example/BotCommandCardDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/BotCommandCardDemo.vue")
-      ),
     },
   ],
   [
@@ -193,18 +121,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "ButtonDemo",
-    {
-      name: "ButtonDemo",
-      type: "registry:example",
-      registryDependencies: ["button"],
-      files: ["app/lib/registry/default/example/ButtonDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ButtonDemo.vue")
-      ),
-    },
-  ],
-  [
     "button",
     {
       name: "button",
@@ -214,18 +130,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/button/Button.vue",
         "app/lib/registry/default/ui/button/index.ts",
       ],
-    },
-  ],
-  [
-    "CardDemo",
-    {
-      name: "CardDemo",
-      type: "registry:example",
-      registryDependencies: ["card"],
-      files: ["app/lib/registry/default/example/CardDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/CardDemo.vue")
-      ),
     },
   ],
   [
@@ -240,18 +144,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/card/CardDescription.vue",
         "app/lib/registry/default/ui/card/index.ts",
       ],
-    },
-  ],
-  [
-    "ChannelHeaderDemo",
-    {
-      name: "ChannelHeaderDemo",
-      type: "registry:example",
-      registryDependencies: ["channel-header"],
-      files: ["app/lib/registry/default/example/ChannelHeaderDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ChannelHeaderDemo.vue")
-      ),
     },
   ],
   [
@@ -273,18 +165,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/channel-header/ChannelHeaderOnline.vue",
         "app/lib/registry/default/ui/channel-header/index.ts",
       ],
-    },
-  ],
-  [
-    "ChannelInfoDemo",
-    {
-      name: "ChannelInfoDemo",
-      type: "registry:example",
-      registryDependencies: ["channel-info"],
-      files: ["app/lib/registry/default/example/ChannelInfoDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ChannelInfoDemo.vue")
-      ),
     },
   ],
   [
@@ -312,18 +192,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "ChannelTopicDemo",
-    {
-      name: "ChannelTopicDemo",
-      type: "registry:example",
-      registryDependencies: ["channel-topic"],
-      files: ["app/lib/registry/default/example/ChannelTopicDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ChannelTopicDemo.vue")
-      ),
-    },
-  ],
-  [
     "channel-topic",
     {
       name: "channel-topic",
@@ -337,18 +205,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/channel-topic/ChannelTopicDescription.vue",
         "app/lib/registry/default/ui/channel-topic/index.ts",
       ],
-    },
-  ],
-  [
-    "ChannelWelcomeDemo",
-    {
-      name: "ChannelWelcomeDemo",
-      type: "registry:example",
-      registryDependencies: ["channel-welcome"],
-      files: ["app/lib/registry/default/example/ChannelWelcomeDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ChannelWelcomeDemo.vue")
-      ),
     },
   ],
   [
@@ -369,18 +225,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "ChatDemo",
-    {
-      name: "ChatDemo",
-      type: "registry:example",
-      registryDependencies: ["chat"],
-      files: ["app/lib/registry/default/example/ChatDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ChatDemo.vue")
-      ),
-    },
-  ],
-  [
     "chat",
     {
       name: "chat",
@@ -395,22 +239,10 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "ChatWindowDemo",
-    {
-      name: "ChatWindowDemo",
-      type: "registry:example",
-      registryDependencies: ["chat-window"],
-      files: ["app/lib/registry/default/example/ChatWindowDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ChatWindowDemo.vue")
-      ),
-    },
-  ],
-  [
     "chat-window",
     {
       name: "chat-window",
-      type: "registry:ui",
+      type: "registry:block",
       registryDependencies: [
         "channel-header",
         "chat",
@@ -427,18 +259,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "CodeBlockDemo",
-    {
-      name: "CodeBlockDemo",
-      type: "registry:example",
-      registryDependencies: ["code-block"],
-      files: ["app/lib/registry/default/example/CodeBlockDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/CodeBlockDemo.vue")
-      ),
-    },
-  ],
-  [
     "code-block",
     {
       name: "code-block",
@@ -452,15 +272,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "ContextMenuDemo",
+    "command-panel",
     {
-      name: "ContextMenuDemo",
-      type: "registry:example",
-      registryDependencies: ["context-menu"],
-      files: ["app/lib/registry/default/example/ContextMenuDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ContextMenuDemo.vue")
-      ),
+      name: "command-panel",
+      type: "registry:block",
+      registryDependencies: ["slash-command-suggestions", "bot-command-card"],
+      files: [
+        "app/lib/registry/default/block/command-panel/CommandPanel.vue",
+        "app/lib/registry/default/block/command-panel/types.ts",
+        "app/lib/registry/default/block/command-panel/index.ts",
+      ],
     },
   ],
   [
@@ -479,18 +300,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "CooldownBarDemo",
-    {
-      name: "CooldownBarDemo",
-      type: "registry:example",
-      registryDependencies: ["cooldown-bar"],
-      files: ["app/lib/registry/default/example/CooldownBarDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/CooldownBarDemo.vue")
-      ),
-    },
-  ],
-  [
     "cooldown-bar",
     {
       name: "cooldown-bar",
@@ -503,18 +312,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/cooldown-bar/CooldownBarTrack.vue",
         "app/lib/registry/default/ui/cooldown-bar/index.ts",
       ],
-    },
-  ],
-  [
-    "DirectionDemo",
-    {
-      name: "DirectionDemo",
-      type: "registry:example",
-      registryDependencies: ["direction"],
-      files: ["app/lib/registry/default/example/DirectionDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/DirectionDemo.vue")
-      ),
     },
   ],
   [
@@ -531,18 +328,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "DividerDemo",
-    {
-      name: "DividerDemo",
-      type: "registry:example",
-      registryDependencies: ["divider"],
-      files: ["app/lib/registry/default/example/DividerDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/DividerDemo.vue")
-      ),
-    },
-  ],
-  [
     "divider",
     {
       name: "divider",
@@ -552,18 +337,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/divider/Divider.vue",
         "app/lib/registry/default/ui/divider/index.ts",
       ],
-    },
-  ],
-  [
-    "DropdownDemo",
-    {
-      name: "DropdownDemo",
-      type: "registry:example",
-      registryDependencies: ["dropdown"],
-      files: ["app/lib/registry/default/example/DropdownDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/DropdownDemo.vue")
-      ),
     },
   ],
   [
@@ -582,18 +355,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/dropdown/DropdownDivider.vue",
         "app/lib/registry/default/ui/dropdown/index.ts",
       ],
-    },
-  ],
-  [
-    "EmbedDemo",
-    {
-      name: "EmbedDemo",
-      type: "registry:example",
-      registryDependencies: ["embed"],
-      files: ["app/lib/registry/default/example/EmbedDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/EmbedDemo.vue")
-      ),
     },
   ],
   [
@@ -623,18 +384,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "EmptyStateDemo",
-    {
-      name: "EmptyStateDemo",
-      type: "registry:example",
-      registryDependencies: ["empty-state"],
-      files: ["app/lib/registry/default/example/EmptyStateDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/EmptyStateDemo.vue")
-      ),
-    },
-  ],
-  [
     "empty-state",
     {
       name: "empty-state",
@@ -647,18 +396,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/empty-state/EmptyStateDescription.vue",
         "app/lib/registry/default/ui/empty-state/index.ts",
       ],
-    },
-  ],
-  [
-    "FormFieldsDemo",
-    {
-      name: "FormFieldsDemo",
-      type: "registry:example",
-      registryDependencies: ["form-fields"],
-      files: ["app/lib/registry/default/example/FormFieldsDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/FormFieldsDemo.vue")
-      ),
     },
   ],
   [
@@ -681,18 +418,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "InlineCodeDemo",
-    {
-      name: "InlineCodeDemo",
-      type: "registry:example",
-      registryDependencies: ["inline-code"],
-      files: ["app/lib/registry/default/example/InlineCodeDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/InlineCodeDemo.vue")
-      ),
-    },
-  ],
-  [
     "inline-code",
     {
       name: "inline-code",
@@ -702,18 +427,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/inline-code/InlineCode.vue",
         "app/lib/registry/default/ui/inline-code/index.ts",
       ],
-    },
-  ],
-  [
-    "InviteDemo",
-    {
-      name: "InviteDemo",
-      type: "registry:example",
-      registryDependencies: ["invite"],
-      files: ["app/lib/registry/default/example/InviteDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/InviteDemo.vue")
-      ),
     },
   ],
   [
@@ -736,18 +449,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "KbdTagDemo",
-    {
-      name: "KbdTagDemo",
-      type: "registry:example",
-      registryDependencies: ["kbd-tag"],
-      files: ["app/lib/registry/default/example/KbdTagDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/KbdTagDemo.vue")
-      ),
-    },
-  ],
-  [
     "kbd-tag",
     {
       name: "kbd-tag",
@@ -757,18 +458,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/kbd-tag/KbdTag.vue",
         "app/lib/registry/default/ui/kbd-tag/index.ts",
       ],
-    },
-  ],
-  [
-    "MemberListDemo",
-    {
-      name: "MemberListDemo",
-      type: "registry:example",
-      registryDependencies: ["member-list"],
-      files: ["app/lib/registry/default/example/MemberListDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/MemberListDemo.vue")
-      ),
     },
   ],
   [
@@ -792,18 +481,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "MentionDemo",
-    {
-      name: "MentionDemo",
-      type: "registry:example",
-      registryDependencies: ["mention"],
-      files: ["app/lib/registry/default/example/MentionDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/MentionDemo.vue")
-      ),
-    },
-  ],
-  [
     "mention",
     {
       name: "mention",
@@ -816,18 +493,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "MessageComposerDemo",
-    {
-      name: "MessageComposerDemo",
-      type: "registry:example",
-      registryDependencies: ["message-composer"],
-      files: ["app/lib/registry/default/example/MessageComposerDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/MessageComposerDemo.vue")
-      ),
-    },
-  ],
-  [
     "message-composer",
     {
       name: "message-composer",
@@ -837,18 +502,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/message-composer/MessageComposer.vue",
         "app/lib/registry/default/ui/message-composer/index.ts",
       ],
-    },
-  ],
-  [
-    "MessageGroupDemo",
-    {
-      name: "MessageGroupDemo",
-      type: "registry:example",
-      registryDependencies: ["message-group"],
-      files: ["app/lib/registry/default/example/MessageGroupDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/MessageGroupDemo.vue")
-      ),
     },
   ],
   [
@@ -880,18 +533,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "MessageListDemo",
-    {
-      name: "MessageListDemo",
-      type: "registry:example",
-      registryDependencies: ["message-list"],
-      files: ["app/lib/registry/default/example/MessageListDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/MessageListDemo.vue")
-      ),
-    },
-  ],
-  [
     "message-list",
     {
       name: "message-list",
@@ -901,18 +542,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/message-list/MessageList.vue",
         "app/lib/registry/default/ui/message-list/index.ts",
       ],
-    },
-  ],
-  [
-    "ModalDemo",
-    {
-      name: "ModalDemo",
-      type: "registry:example",
-      registryDependencies: ["modal"],
-      files: ["app/lib/registry/default/example/ModalDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ModalDemo.vue")
-      ),
     },
   ],
   [
@@ -932,18 +561,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "NotifBadgeDemo",
-    {
-      name: "NotifBadgeDemo",
-      type: "registry:example",
-      registryDependencies: ["notif-badge"],
-      files: ["app/lib/registry/default/example/NotifBadgeDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/NotifBadgeDemo.vue")
-      ),
-    },
-  ],
-  [
     "notif-badge",
     {
       name: "notif-badge",
@@ -953,18 +570,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/notif-badge/NotifBadge.vue",
         "app/lib/registry/default/ui/notif-badge/index.ts",
       ],
-    },
-  ],
-  [
-    "PaginationDemo",
-    {
-      name: "PaginationDemo",
-      type: "registry:example",
-      registryDependencies: ["pagination"],
-      files: ["app/lib/registry/default/example/PaginationDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/PaginationDemo.vue")
-      ),
     },
   ],
   [
@@ -980,18 +585,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/pagination/LoadMore.vue",
         "app/lib/registry/default/ui/pagination/index.ts",
       ],
-    },
-  ],
-  [
-    "PermissionDemo",
-    {
-      name: "PermissionDemo",
-      type: "registry:example",
-      registryDependencies: ["permission"],
-      files: ["app/lib/registry/default/example/PermissionDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/PermissionDemo.vue")
-      ),
     },
   ],
   [
@@ -1011,18 +604,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "ProgressDemo",
-    {
-      name: "ProgressDemo",
-      type: "registry:example",
-      registryDependencies: ["progress"],
-      files: ["app/lib/registry/default/example/ProgressDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ProgressDemo.vue")
-      ),
-    },
-  ],
-  [
     "progress",
     {
       name: "progress",
@@ -1036,18 +617,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "ReactionDemo",
-    {
-      name: "ReactionDemo",
-      type: "registry:example",
-      registryDependencies: ["reaction"],
-      files: ["app/lib/registry/default/example/ReactionDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ReactionDemo.vue")
-      ),
-    },
-  ],
-  [
     "reaction",
     {
       name: "reaction",
@@ -1058,18 +627,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/reaction/ReactionGroup.vue",
         "app/lib/registry/default/ui/reaction/index.ts",
       ],
-    },
-  ],
-  [
-    "ReplyPreviewDemo",
-    {
-      name: "ReplyPreviewDemo",
-      type: "registry:example",
-      registryDependencies: ["reply-preview"],
-      files: ["app/lib/registry/default/example/ReplyPreviewDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ReplyPreviewDemo.vue")
-      ),
     },
   ],
   [
@@ -1090,18 +647,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "RoleTagDemo",
-    {
-      name: "RoleTagDemo",
-      type: "registry:example",
-      registryDependencies: ["role-tag"],
-      files: ["app/lib/registry/default/example/RoleTagDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/RoleTagDemo.vue")
-      ),
-    },
-  ],
-  [
     "role-tag",
     {
       name: "role-tag",
@@ -1112,18 +657,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/role-tag/RoleTagDot.vue",
         "app/lib/registry/default/ui/role-tag/index.ts",
       ],
-    },
-  ],
-  [
-    "ScrollbarDemo",
-    {
-      name: "ScrollbarDemo",
-      type: "registry:example",
-      registryDependencies: ["scrollbar"],
-      files: ["app/lib/registry/default/example/ScrollbarDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ScrollbarDemo.vue")
-      ),
     },
   ],
   [
@@ -1139,18 +672,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "SelectMenuDemo",
-    {
-      name: "SelectMenuDemo",
-      type: "registry:example",
-      registryDependencies: ["select-menu"],
-      files: ["app/lib/registry/default/example/SelectMenuDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/SelectMenuDemo.vue")
-      ),
-    },
-  ],
-  [
     "select-menu",
     {
       name: "select-menu",
@@ -1160,18 +681,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/select-menu/SelectMenu.vue",
         "app/lib/registry/default/ui/select-menu/index.ts",
       ],
-    },
-  ],
-  [
-    "ServerBannerDemo",
-    {
-      name: "ServerBannerDemo",
-      type: "registry:example",
-      registryDependencies: ["server-banner"],
-      files: ["app/lib/registry/default/example/ServerBannerDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ServerBannerDemo.vue")
-      ),
     },
   ],
   [
@@ -1192,22 +701,10 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "ServerSidebarDemo",
-    {
-      name: "ServerSidebarDemo",
-      type: "registry:example",
-      registryDependencies: ["server-sidebar"],
-      files: ["app/lib/registry/default/example/ServerSidebarDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ServerSidebarDemo.vue")
-      ),
-    },
-  ],
-  [
     "server-sidebar",
     {
       name: "server-sidebar",
-      type: "registry:ui",
+      type: "registry:block",
       registryDependencies: [
         "server-banner",
         "voice-channel",
@@ -1223,18 +720,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "SkeletonDemo",
-    {
-      name: "SkeletonDemo",
-      type: "registry:example",
-      registryDependencies: ["skeleton"],
-      files: ["app/lib/registry/default/example/SkeletonDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/SkeletonDemo.vue")
-      ),
-    },
-  ],
-  [
     "skeleton",
     {
       name: "skeleton",
@@ -1247,18 +732,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "SlashCommandDemo",
-    {
-      name: "SlashCommandDemo",
-      type: "registry:example",
-      registryDependencies: ["slash-command"],
-      files: ["app/lib/registry/default/example/SlashCommandDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/SlashCommandDemo.vue")
-      ),
-    },
-  ],
-  [
     "slash-command",
     {
       name: "slash-command",
@@ -1268,21 +741,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/slash-command/SlashCommand.vue",
         "app/lib/registry/default/ui/slash-command/index.ts",
       ],
-    },
-  ],
-  [
-    "SlashCommandSuggestionsDemo",
-    {
-      name: "SlashCommandSuggestionsDemo",
-      type: "registry:example",
-      registryDependencies: ["slash-command-suggestions"],
-      files: [
-        "app/lib/registry/default/example/SlashCommandSuggestionsDemo.vue",
-      ],
-      component: defineAsyncComponent(
-        () =>
-          import("@/lib/registry/default/example/SlashCommandSuggestionsDemo.vue")
-      ),
     },
   ],
   [
@@ -1306,18 +764,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "SpoilerDemo",
-    {
-      name: "SpoilerDemo",
-      type: "registry:example",
-      registryDependencies: ["spoiler"],
-      files: ["app/lib/registry/default/example/SpoilerDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/SpoilerDemo.vue")
-      ),
-    },
-  ],
-  [
     "spoiler",
     {
       name: "spoiler",
@@ -1327,18 +773,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/spoiler/Spoiler.vue",
         "app/lib/registry/default/ui/spoiler/index.ts",
       ],
-    },
-  ],
-  [
-    "StageBannerDemo",
-    {
-      name: "StageBannerDemo",
-      type: "registry:example",
-      registryDependencies: ["stage-banner"],
-      files: ["app/lib/registry/default/example/StageBannerDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/StageBannerDemo.vue")
-      ),
     },
   ],
   [
@@ -1357,18 +791,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "StatusIndicatorDemo",
-    {
-      name: "StatusIndicatorDemo",
-      type: "registry:example",
-      registryDependencies: ["status-indicator"],
-      files: ["app/lib/registry/default/example/StatusIndicatorDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/StatusIndicatorDemo.vue")
-      ),
-    },
-  ],
-  [
     "status-indicator",
     {
       name: "status-indicator",
@@ -1379,18 +801,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/status-indicator/StatusDot.vue",
         "app/lib/registry/default/ui/status-indicator/index.ts",
       ],
-    },
-  ],
-  [
-    "TabsDemo",
-    {
-      name: "TabsDemo",
-      type: "registry:example",
-      registryDependencies: ["tabs"],
-      files: ["app/lib/registry/default/example/TabsDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/TabsDemo.vue")
-      ),
     },
   ],
   [
@@ -1405,18 +815,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/tabs/TabsContent.vue",
         "app/lib/registry/default/ui/tabs/index.ts",
       ],
-    },
-  ],
-  [
-    "TimelineDemo",
-    {
-      name: "TimelineDemo",
-      type: "registry:example",
-      registryDependencies: ["timeline"],
-      files: ["app/lib/registry/default/example/TimelineDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/TimelineDemo.vue")
-      ),
     },
   ],
   [
@@ -1437,18 +835,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "ToastDemo",
-    {
-      name: "ToastDemo",
-      type: "registry:example",
-      registryDependencies: ["toast"],
-      files: ["app/lib/registry/default/example/ToastDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/ToastDemo.vue")
-      ),
-    },
-  ],
-  [
     "toast",
     {
       name: "toast",
@@ -1466,18 +852,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "TokenFieldDemo",
-    {
-      name: "TokenFieldDemo",
-      type: "registry:example",
-      registryDependencies: ["token-field"],
-      files: ["app/lib/registry/default/example/TokenFieldDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/TokenFieldDemo.vue")
-      ),
-    },
-  ],
-  [
     "token-field",
     {
       name: "token-field",
@@ -1487,18 +861,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/token-field/TokenField.vue",
         "app/lib/registry/default/ui/token-field/index.ts",
       ],
-    },
-  ],
-  [
-    "TooltipDemo",
-    {
-      name: "TooltipDemo",
-      type: "registry:example",
-      registryDependencies: ["tooltip"],
-      files: ["app/lib/registry/default/example/TooltipDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/TooltipDemo.vue")
-      ),
     },
   ],
   [
@@ -1516,18 +878,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "TypingIndicatorDemo",
-    {
-      name: "TypingIndicatorDemo",
-      type: "registry:example",
-      registryDependencies: ["typing-indicator"],
-      files: ["app/lib/registry/default/example/TypingIndicatorDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/TypingIndicatorDemo.vue")
-      ),
-    },
-  ],
-  [
     "typing-indicator",
     {
       name: "typing-indicator",
@@ -1538,18 +888,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/typing-indicator/TypingIndicatorDots.vue",
         "app/lib/registry/default/ui/typing-indicator/index.ts",
       ],
-    },
-  ],
-  [
-    "UserProfileDemo",
-    {
-      name: "UserProfileDemo",
-      type: "registry:example",
-      registryDependencies: ["user-profile"],
-      files: ["app/lib/registry/default/example/UserProfileDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/UserProfileDemo.vue")
-      ),
     },
   ],
   [
@@ -1581,18 +919,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
-    "V2ContainerDemo",
-    {
-      name: "V2ContainerDemo",
-      type: "registry:example",
-      registryDependencies: ["v2-container"],
-      files: ["app/lib/registry/default/example/V2ContainerDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/V2ContainerDemo.vue")
-      ),
-    },
-  ],
-  [
     "v2-container",
     {
       name: "v2-container",
@@ -1602,18 +928,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/v2-container/V2Container.vue",
         "app/lib/registry/default/ui/v2-container/index.ts",
       ],
-    },
-  ],
-  [
-    "VoiceChannelDemo",
-    {
-      name: "VoiceChannelDemo",
-      type: "registry:example",
-      registryDependencies: ["voice-channel"],
-      files: ["app/lib/registry/default/example/VoiceChannelDemo.vue"],
-      component: defineAsyncComponent(
-        () => import("@/lib/registry/default/example/VoiceChannelDemo.vue")
-      ),
     },
   ],
   [
@@ -1631,6 +945,717 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "app/lib/registry/default/ui/voice-channel/VoiceChannelMemberIcons.vue",
         "app/lib/registry/default/ui/voice-channel/index.ts",
       ],
+    },
+  ],
+  [
+    "ActionRowDemo",
+    {
+      name: "ActionRowDemo",
+      type: "registry:example",
+      registryDependencies: ["action-row"],
+      files: ["app/lib/registry/default/example/ActionRowDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ActionRowDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AppLauncherDemo",
+    {
+      name: "AppLauncherDemo",
+      type: "registry:example",
+      registryDependencies: ["app-launcher"],
+      files: ["app/lib/registry/default/example/AppLauncherDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/AppLauncherDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AttachmentDemo",
+    {
+      name: "AttachmentDemo",
+      type: "registry:example",
+      registryDependencies: ["attachment"],
+      files: ["app/lib/registry/default/example/AttachmentDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/AttachmentDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AvatarDemo",
+    {
+      name: "AvatarDemo",
+      type: "registry:example",
+      registryDependencies: ["avatar"],
+      files: ["app/lib/registry/default/example/AvatarDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/AvatarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "BadgeDemo",
+    {
+      name: "BadgeDemo",
+      type: "registry:example",
+      registryDependencies: ["badge"],
+      files: ["app/lib/registry/default/example/BadgeDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/BadgeDemo.vue")
+      ),
+    },
+  ],
+  [
+    "BotCommandCardDemo",
+    {
+      name: "BotCommandCardDemo",
+      type: "registry:example",
+      registryDependencies: ["bot-command-card"],
+      files: ["app/lib/registry/default/example/BotCommandCardDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/BotCommandCardDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ButtonDemo",
+    {
+      name: "ButtonDemo",
+      type: "registry:example",
+      registryDependencies: ["button"],
+      files: ["app/lib/registry/default/example/ButtonDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ButtonDemo.vue")
+      ),
+    },
+  ],
+  [
+    "CardDemo",
+    {
+      name: "CardDemo",
+      type: "registry:example",
+      registryDependencies: ["card"],
+      files: ["app/lib/registry/default/example/CardDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/CardDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChannelHeaderDemo",
+    {
+      name: "ChannelHeaderDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-header"],
+      files: ["app/lib/registry/default/example/ChannelHeaderDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChannelHeaderDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChannelInfoDemo",
+    {
+      name: "ChannelInfoDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-info"],
+      files: ["app/lib/registry/default/example/ChannelInfoDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChannelInfoDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChannelTopicDemo",
+    {
+      name: "ChannelTopicDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-topic"],
+      files: ["app/lib/registry/default/example/ChannelTopicDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChannelTopicDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChannelWelcomeDemo",
+    {
+      name: "ChannelWelcomeDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-welcome"],
+      files: ["app/lib/registry/default/example/ChannelWelcomeDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChannelWelcomeDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChatDemo",
+    {
+      name: "ChatDemo",
+      type: "registry:example",
+      registryDependencies: ["chat"],
+      files: ["app/lib/registry/default/example/ChatDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChatDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChatWindowDemo",
+    {
+      name: "ChatWindowDemo",
+      type: "registry:example",
+      registryDependencies: ["chat-window"],
+      files: ["app/lib/registry/default/example/ChatWindowDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ChatWindowDemo.vue")
+      ),
+    },
+  ],
+  [
+    "CodeBlockDemo",
+    {
+      name: "CodeBlockDemo",
+      type: "registry:example",
+      registryDependencies: ["code-block"],
+      files: ["app/lib/registry/default/example/CodeBlockDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/CodeBlockDemo.vue")
+      ),
+    },
+  ],
+  [
+    "CommandPanelDemo",
+    {
+      name: "CommandPanelDemo",
+      type: "registry:example",
+      registryDependencies: ["command-panel"],
+      files: ["app/lib/registry/default/example/CommandPanelDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/CommandPanelDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ContextMenuDemo",
+    {
+      name: "ContextMenuDemo",
+      type: "registry:example",
+      registryDependencies: ["context-menu"],
+      files: ["app/lib/registry/default/example/ContextMenuDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ContextMenuDemo.vue")
+      ),
+    },
+  ],
+  [
+    "CooldownBarDemo",
+    {
+      name: "CooldownBarDemo",
+      type: "registry:example",
+      registryDependencies: ["cooldown-bar"],
+      files: ["app/lib/registry/default/example/CooldownBarDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/CooldownBarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "DirectionDemo",
+    {
+      name: "DirectionDemo",
+      type: "registry:example",
+      registryDependencies: ["direction"],
+      files: ["app/lib/registry/default/example/DirectionDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/DirectionDemo.vue")
+      ),
+    },
+  ],
+  [
+    "DividerDemo",
+    {
+      name: "DividerDemo",
+      type: "registry:example",
+      registryDependencies: ["divider"],
+      files: ["app/lib/registry/default/example/DividerDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/DividerDemo.vue")
+      ),
+    },
+  ],
+  [
+    "DropdownDemo",
+    {
+      name: "DropdownDemo",
+      type: "registry:example",
+      registryDependencies: ["dropdown"],
+      files: ["app/lib/registry/default/example/DropdownDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/DropdownDemo.vue")
+      ),
+    },
+  ],
+  [
+    "EmbedDemo",
+    {
+      name: "EmbedDemo",
+      type: "registry:example",
+      registryDependencies: ["embed"],
+      files: ["app/lib/registry/default/example/EmbedDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/EmbedDemo.vue")
+      ),
+    },
+  ],
+  [
+    "EmptyStateDemo",
+    {
+      name: "EmptyStateDemo",
+      type: "registry:example",
+      registryDependencies: ["empty-state"],
+      files: ["app/lib/registry/default/example/EmptyStateDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/EmptyStateDemo.vue")
+      ),
+    },
+  ],
+  [
+    "FormFieldsDemo",
+    {
+      name: "FormFieldsDemo",
+      type: "registry:example",
+      registryDependencies: ["form-fields"],
+      files: ["app/lib/registry/default/example/FormFieldsDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/FormFieldsDemo.vue")
+      ),
+    },
+  ],
+  [
+    "InlineCodeDemo",
+    {
+      name: "InlineCodeDemo",
+      type: "registry:example",
+      registryDependencies: ["inline-code"],
+      files: ["app/lib/registry/default/example/InlineCodeDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/InlineCodeDemo.vue")
+      ),
+    },
+  ],
+  [
+    "InviteDemo",
+    {
+      name: "InviteDemo",
+      type: "registry:example",
+      registryDependencies: ["invite"],
+      files: ["app/lib/registry/default/example/InviteDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/InviteDemo.vue")
+      ),
+    },
+  ],
+  [
+    "KbdTagDemo",
+    {
+      name: "KbdTagDemo",
+      type: "registry:example",
+      registryDependencies: ["kbd-tag"],
+      files: ["app/lib/registry/default/example/KbdTagDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/KbdTagDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MemberListDemo",
+    {
+      name: "MemberListDemo",
+      type: "registry:example",
+      registryDependencies: ["member-list"],
+      files: ["app/lib/registry/default/example/MemberListDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/MemberListDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MentionDemo",
+    {
+      name: "MentionDemo",
+      type: "registry:example",
+      registryDependencies: ["mention"],
+      files: ["app/lib/registry/default/example/MentionDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/MentionDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MessageComposerDemo",
+    {
+      name: "MessageComposerDemo",
+      type: "registry:example",
+      registryDependencies: ["message-composer"],
+      files: ["app/lib/registry/default/example/MessageComposerDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/MessageComposerDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MessageGroupDemo",
+    {
+      name: "MessageGroupDemo",
+      type: "registry:example",
+      registryDependencies: ["message-group"],
+      files: ["app/lib/registry/default/example/MessageGroupDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/MessageGroupDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MessageListDemo",
+    {
+      name: "MessageListDemo",
+      type: "registry:example",
+      registryDependencies: ["message-list"],
+      files: ["app/lib/registry/default/example/MessageListDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/MessageListDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ModalDemo",
+    {
+      name: "ModalDemo",
+      type: "registry:example",
+      registryDependencies: ["modal"],
+      files: ["app/lib/registry/default/example/ModalDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ModalDemo.vue")
+      ),
+    },
+  ],
+  [
+    "NotifBadgeDemo",
+    {
+      name: "NotifBadgeDemo",
+      type: "registry:example",
+      registryDependencies: ["notif-badge"],
+      files: ["app/lib/registry/default/example/NotifBadgeDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/NotifBadgeDemo.vue")
+      ),
+    },
+  ],
+  [
+    "PaginationDemo",
+    {
+      name: "PaginationDemo",
+      type: "registry:example",
+      registryDependencies: ["pagination"],
+      files: ["app/lib/registry/default/example/PaginationDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/PaginationDemo.vue")
+      ),
+    },
+  ],
+  [
+    "PermissionDemo",
+    {
+      name: "PermissionDemo",
+      type: "registry:example",
+      registryDependencies: ["permission"],
+      files: ["app/lib/registry/default/example/PermissionDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/PermissionDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ProgressDemo",
+    {
+      name: "ProgressDemo",
+      type: "registry:example",
+      registryDependencies: ["progress"],
+      files: ["app/lib/registry/default/example/ProgressDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ProgressDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ReactionDemo",
+    {
+      name: "ReactionDemo",
+      type: "registry:example",
+      registryDependencies: ["reaction"],
+      files: ["app/lib/registry/default/example/ReactionDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ReactionDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ReplyPreviewDemo",
+    {
+      name: "ReplyPreviewDemo",
+      type: "registry:example",
+      registryDependencies: ["reply-preview"],
+      files: ["app/lib/registry/default/example/ReplyPreviewDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ReplyPreviewDemo.vue")
+      ),
+    },
+  ],
+  [
+    "RoleTagDemo",
+    {
+      name: "RoleTagDemo",
+      type: "registry:example",
+      registryDependencies: ["role-tag"],
+      files: ["app/lib/registry/default/example/RoleTagDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/RoleTagDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ScrollbarDemo",
+    {
+      name: "ScrollbarDemo",
+      type: "registry:example",
+      registryDependencies: ["scrollbar"],
+      files: ["app/lib/registry/default/example/ScrollbarDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ScrollbarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SelectMenuDemo",
+    {
+      name: "SelectMenuDemo",
+      type: "registry:example",
+      registryDependencies: ["select-menu"],
+      files: ["app/lib/registry/default/example/SelectMenuDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/SelectMenuDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ServerBannerDemo",
+    {
+      name: "ServerBannerDemo",
+      type: "registry:example",
+      registryDependencies: ["server-banner"],
+      files: ["app/lib/registry/default/example/ServerBannerDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ServerBannerDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ServerSidebarDemo",
+    {
+      name: "ServerSidebarDemo",
+      type: "registry:example",
+      registryDependencies: ["server-sidebar"],
+      files: ["app/lib/registry/default/example/ServerSidebarDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ServerSidebarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SkeletonDemo",
+    {
+      name: "SkeletonDemo",
+      type: "registry:example",
+      registryDependencies: ["skeleton"],
+      files: ["app/lib/registry/default/example/SkeletonDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/SkeletonDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SlashCommandDemo",
+    {
+      name: "SlashCommandDemo",
+      type: "registry:example",
+      registryDependencies: ["slash-command"],
+      files: ["app/lib/registry/default/example/SlashCommandDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/SlashCommandDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SlashCommandSuggestionsDemo",
+    {
+      name: "SlashCommandSuggestionsDemo",
+      type: "registry:example",
+      registryDependencies: ["slash-command-suggestions"],
+      files: [
+        "app/lib/registry/default/example/SlashCommandSuggestionsDemo.vue",
+      ],
+      component: defineAsyncComponent(
+        () =>
+          import("@/lib/registry/default/example/SlashCommandSuggestionsDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SpoilerDemo",
+    {
+      name: "SpoilerDemo",
+      type: "registry:example",
+      registryDependencies: ["spoiler"],
+      files: ["app/lib/registry/default/example/SpoilerDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/SpoilerDemo.vue")
+      ),
+    },
+  ],
+  [
+    "StageBannerDemo",
+    {
+      name: "StageBannerDemo",
+      type: "registry:example",
+      registryDependencies: ["stage-banner"],
+      files: ["app/lib/registry/default/example/StageBannerDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/StageBannerDemo.vue")
+      ),
+    },
+  ],
+  [
+    "StatusIndicatorDemo",
+    {
+      name: "StatusIndicatorDemo",
+      type: "registry:example",
+      registryDependencies: ["status-indicator"],
+      files: ["app/lib/registry/default/example/StatusIndicatorDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/StatusIndicatorDemo.vue")
+      ),
+    },
+  ],
+  [
+    "TabsDemo",
+    {
+      name: "TabsDemo",
+      type: "registry:example",
+      registryDependencies: ["tabs"],
+      files: ["app/lib/registry/default/example/TabsDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/TabsDemo.vue")
+      ),
+    },
+  ],
+  [
+    "TimelineDemo",
+    {
+      name: "TimelineDemo",
+      type: "registry:example",
+      registryDependencies: ["timeline"],
+      files: ["app/lib/registry/default/example/TimelineDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/TimelineDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ToastDemo",
+    {
+      name: "ToastDemo",
+      type: "registry:example",
+      registryDependencies: ["toast"],
+      files: ["app/lib/registry/default/example/ToastDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/ToastDemo.vue")
+      ),
+    },
+  ],
+  [
+    "TokenFieldDemo",
+    {
+      name: "TokenFieldDemo",
+      type: "registry:example",
+      registryDependencies: ["token-field"],
+      files: ["app/lib/registry/default/example/TokenFieldDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/TokenFieldDemo.vue")
+      ),
+    },
+  ],
+  [
+    "TooltipDemo",
+    {
+      name: "TooltipDemo",
+      type: "registry:example",
+      registryDependencies: ["tooltip"],
+      files: ["app/lib/registry/default/example/TooltipDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/TooltipDemo.vue")
+      ),
+    },
+  ],
+  [
+    "TypingIndicatorDemo",
+    {
+      name: "TypingIndicatorDemo",
+      type: "registry:example",
+      registryDependencies: ["typing-indicator"],
+      files: ["app/lib/registry/default/example/TypingIndicatorDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/TypingIndicatorDemo.vue")
+      ),
+    },
+  ],
+  [
+    "UserProfileDemo",
+    {
+      name: "UserProfileDemo",
+      type: "registry:example",
+      registryDependencies: ["user-profile"],
+      files: ["app/lib/registry/default/example/UserProfileDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/UserProfileDemo.vue")
+      ),
+    },
+  ],
+  [
+    "V2ContainerDemo",
+    {
+      name: "V2ContainerDemo",
+      type: "registry:example",
+      registryDependencies: ["v2-container"],
+      files: ["app/lib/registry/default/example/V2ContainerDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/V2ContainerDemo.vue")
+      ),
+    },
+  ],
+  [
+    "VoiceChannelDemo",
+    {
+      name: "VoiceChannelDemo",
+      type: "registry:example",
+      registryDependencies: ["voice-channel"],
+      files: ["app/lib/registry/default/example/VoiceChannelDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("@/lib/registry/default/example/VoiceChannelDemo.vue")
+      ),
     },
   ],
 ]

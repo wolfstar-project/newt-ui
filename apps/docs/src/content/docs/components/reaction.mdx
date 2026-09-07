@@ -4,6 +4,8 @@ description: "A toggleable emoji reaction pill, plus the group that rows them un
 component: true
 ---
 
+A toggleable emoji reaction pill, plus the group that rows them under a message. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="reaction" />
 
 ## Installation
@@ -13,6 +15,45 @@ component: true
 ## Usage
 
 <Usage name="reaction" />
+
+## API reference
+
+<PropsTable
+  of="Reaction"
+  rows={[
+    {
+      name: "emoji",
+      type: "React.ReactNode",
+      description: "Emoji or icon rendered on the left.",
+    },
+    {
+      name: "count",
+      type: "number",
+      description: "Number of users who reacted.",
+    },
+    {
+      name: "active",
+      type: "boolean | undefined",
+      description: "Controlled active state.",
+    },
+    {
+      name: "defaultActive",
+      type: "boolean | undefined",
+      description: "Initial active state when uncontrolled.",
+    },
+    {
+      name: "onActiveChange",
+      type: "(active: boolean) => void | undefined",
+      description: "Called with the next active state when toggled.",
+    },
+  ]}
+/>
+
+The registry exports `Reaction`, `ReactionGroup`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+The reaction is a real button and publishes its toggled state through `aria-pressed`. Keep the emoji name and count understandable to screen readers.
 
 ## Tokens
 

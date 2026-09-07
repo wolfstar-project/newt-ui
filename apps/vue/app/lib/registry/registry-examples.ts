@@ -168,6 +168,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "CommandPanelDemo",
+    type: "registry:example",
+    registryDependencies: ["command-panel"],
+    files: [
+      {
+        path: "example/CommandPanelDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ContextMenuDemo",
     type: "registry:example",
     registryDependencies: ["context-menu"],

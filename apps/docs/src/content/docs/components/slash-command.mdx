@@ -4,6 +4,8 @@ description: "An inline /command with its subcommand path and typed options, inc
 component: true
 ---
 
+An inline /command with its subcommand path and typed options, including the focused one. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="slash-command" />
 
 ## Installation
@@ -13,6 +15,40 @@ component: true
 ## Usage
 
 <Usage name="slash-command" />
+
+## API reference
+
+<PropsTable
+  of="SlashCommand"
+  rows={[
+    {
+      name: "name",
+      type: "string",
+      description: "Command name rendered after the leading slash.",
+    },
+    {
+      name: "subcommand",
+      type: "string | undefined",
+      description: "Subcommand segment, e.g. `/ban member`.",
+    },
+    {
+      name: "subcommandGroup",
+      type: "string | undefined",
+      description: "Subcommand group segment, e.g. `/settings roles add`.",
+    },
+    {
+      name: "options",
+      type: "readonly SlashCommandOption[] | undefined",
+      description: "Optional options value.",
+    },
+  ]}
+/>
+
+The registry exports `SlashCommandOption`, `SlashCommand`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
 
 ## Tokens
 

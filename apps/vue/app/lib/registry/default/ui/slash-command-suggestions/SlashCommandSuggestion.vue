@@ -45,14 +45,14 @@ const props = withDefaults(
       </span>
       <span
         v-if="props.description"
-        class="truncate text-[13px] leading-snug text-newt-text-muted"
+        class="truncate text-[13px] leading-snug text-newt-text-secondary"
       >
         {{ props.description }}
       </span>
     </div>
     <span
       v-if="props.appLabel"
-      class="shrink-0 text-[13px] text-newt-text-muted"
+      class="shrink-0 text-[13px] text-newt-text-secondary"
     >
       {{ props.appLabel }}
     </span>

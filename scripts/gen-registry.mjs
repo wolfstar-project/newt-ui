@@ -167,29 +167,34 @@ writeFileSync(
   join(VUE, "app/lib/registry/registry-examples.ts"),
   `${header}import type { Registry } from "./schema"\n\nexport const examples: Registry = ${j(vueExamples)}\n`
 )
-const vueIndex = vueExamples
-  .map(
-    (ex, i) => `  [
-    "${ex.name}",
+// UI items and examples are independent lists. Keeping them separate matters
+// as soon as one item declares multiple examples: zipping by array index would
+// duplicate or drop UI entries after the first additional demo.
+const vueIndex = [
+  ...vueUi.map(
+    (item) => `  [
+    "${item.name}",
     {
-      name: "${ex.name}",
-      type: "registry:example",
-      registryDependencies: ${j(ex.registryDependencies)},
-      files: ${j(ex.files.map((f) => `app/lib/registry/default/${f.path}`))},
-      component: defineAsyncComponent(() => import("@/lib/registry/default/${ex.files[0].path}")),
-    },
-  ],
-  [
-    "${vueUi[i].name}",
-    {
-      name: "${vueUi[i].name}",
-      type: "registry:ui",
-      registryDependencies: ${j(vueUi[i].registryDependencies ?? [])},
-      files: ${j(vueUi[i].files.map((f) => `app/lib/registry/default/${f.path}`))},
+      name: "${item.name}",
+      type: "${item.type}",
+      registryDependencies: ${j(item.registryDependencies ?? [])},
+      files: ${j(item.files.map((f) => `app/lib/registry/default/${f.path}`))},
     },
   ],`
-  )
-  .join("\n")
+  ),
+  ...vueExamples.map(
+    (example) => `  [
+    "${example.name}",
+    {
+      name: "${example.name}",
+      type: "registry:example",
+      registryDependencies: ${j(example.registryDependencies)},
+      files: ${j(example.files.map((f) => `app/lib/registry/default/${f.path}`))},
+      component: defineAsyncComponent(() => import("@/lib/registry/default/${example.files[0].path}")),
+    },
+  ],`
+  ),
+].join("\n")
 mkdirSync(join(VUE, "app/__registry__"), { recursive: true })
 writeFileSync(
   join(VUE, "app/__registry__/index.ts"),

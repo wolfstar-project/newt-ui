@@ -4,6 +4,8 @@ description: "A small monospace tag for displaying keyboard shortcuts."
 component: true
 ---
 
+A small monospace tag for displaying keyboard shortcuts. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="kbd-tag" />
 
 ## Installation
@@ -13,6 +15,30 @@ component: true
 ## Usage
 
 <Usage name="kbd-tag" />
+
+## API reference
+
+<PropsTable
+  of="Kbd"
+  rows={[
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "Content rendered inside the component.",
+    },
+    {
+      name: "className / class",
+      type: "string",
+      description: "Additional classes merged with the component defaults.",
+    },
+  ]}
+/>
+
+The registry exports `Kbd`, `KbdTag`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
 
 ## Tokens
 

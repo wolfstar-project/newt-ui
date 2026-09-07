@@ -4,6 +4,8 @@ description: "An inline chip for user, channel, role and app mentions, with an o
 component: true
 ---
 
+An inline chip for user, channel, role and app mentions, with an optional avatar. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="mention" />
 
 ## Installation
@@ -13,6 +15,31 @@ component: true
 ## Usage
 
 <Usage name="mention" />
+
+## API reference
+
+<PropsTable
+  of="Mention"
+  rows={[
+    {
+      name: "avatar",
+      type: "string | undefined",
+      description:
+        "Avatar URL. Rendered from 48rem up; below that the chip stays text-only.",
+    },
+    {
+      name: "color",
+      type: "string | undefined",
+      description: 'Role colour, for `variant="role"`. Any CSS colour.',
+    },
+  ]}
+/>
+
+The registry exports `Mention`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
 
 ## Tokens
 

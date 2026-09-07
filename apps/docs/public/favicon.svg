@@ -1,0 +1,11 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  style="color-scheme: light dark"
+>
+  <rect width="64" height="64" rx="16" fill="CanvasText" />
+  <path
+    d="M17 45V19h8l14 15V19h8v26h-8L25 30v15Z"
+    fill="Canvas"
+  />
+</svg>

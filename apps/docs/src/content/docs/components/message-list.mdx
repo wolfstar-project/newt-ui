@@ -4,6 +4,8 @@ description: "The polite live region that logs grouped messages in a channel."
 component: true
 ---
 
+The polite live region that logs grouped messages in a channel. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="message-list" />
 
 ## Installation
@@ -13,6 +15,25 @@ component: true
 ## Usage
 
 <Usage name="message-list" />
+
+## API reference
+
+<PropsTable
+  of="MessageList"
+  rows={[
+    {
+      name: "label",
+      type: "string | undefined",
+      description: "Accessible name, e.g. `Messages in #general`.",
+    },
+  ]}
+/>
+
+The registry exports `MessageList`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
 
 ## Tokens
 

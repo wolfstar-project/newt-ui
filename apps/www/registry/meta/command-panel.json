@@ -1,0 +1,11 @@
+{
+  "name": "command-panel",
+  "type": "registry:block",
+  "title": "Command panel",
+  "description": "A command browser with a selectable suggestion list and a detailed option card.",
+  "registryDependencies": ["slash-command-suggestions", "bot-command-card"],
+  "reactFiles": ["block/command-panel/command-panel.tsx"],
+  "vueFiles": ["CommandPanel.vue", "types.ts", "index.ts"],
+  "reactDemo": "command-panel-demo",
+  "vueDemo": "CommandPanelDemo"
+}

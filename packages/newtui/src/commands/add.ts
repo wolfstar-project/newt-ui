@@ -192,7 +192,9 @@ async function runAdd(
   logger.log(
     tree
       .map((item) =>
-        highlighter.dim(`import { ... } from "${uiAlias}/${item.name}"`)
+        highlighter.dim(
+          `import { ... } from "${item.type === "registry:block" ? config.aliases.components : uiAlias}/${item.name}"`
+        )
       )
       .join("\n")
   )

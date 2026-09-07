@@ -4,6 +4,8 @@ description: "The Apps popout, with search, a recents strip and the apps install
 component: true
 ---
 
+The Apps popout, with search, a recents strip and the apps installed in a server. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="app-launcher" />
 
 ## Installation
@@ -13,6 +15,53 @@ component: true
 ## Usage
 
 <Usage name="app-launcher" />
+
+## API reference
+
+<PropsTable
+  of="AppLauncherItem"
+  rows={[
+    {
+      name: "name",
+      type: "string",
+      description: "Required name value.",
+    },
+    {
+      name: "description",
+      type: "string | undefined",
+      description: "Optional description value.",
+    },
+    {
+      name: "icon",
+      type: "React.ReactNode | undefined",
+      description: "Icon for the app; pair with `<AppLauncherItemIcon>`.",
+    },
+    {
+      name: "promoted",
+      type: "boolean | undefined",
+      description:
+        "Marks a paid placement, as the client does for promoted apps.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="AppLauncherItemIcon"
+  rows={[
+    {
+      name: "round",
+      type: "boolean | undefined",
+      description:
+        "Bots use circular avatars; games and activities keep the squircle.",
+    },
+  ]}
+/>
+
+The registry exports `AppLauncher`, `AppLauncherHandle`, `AppLauncherHeader`, `AppLauncherBack`, `AppLauncherSearch`, `AppLauncherSearchInput`, `AppLauncherBody`, `AppLauncherSection`, `AppLauncherSectionHeader`, `AppLauncherSectionTitle`, `AppLauncherViewMore`, `AppLauncherList`, `AppLauncherItem`, `AppLauncherItemIcon`, `AppLauncherRecents`, `AppLauncherRecent`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Give the launcher an accessible heading, keep search labelled, and expose the active item while keyboard focus moves through the results.
 
 ## Tokens
 

@@ -38,8 +38,9 @@ const reactFiles = targetPaths("react", meta).map((path) =>
   codeProps(path, uiSource("react", meta.name), "tsx")
 )
 
-const vueFiles = meta.vueFiles.map((file) => {
-  const path = `components/ui/${meta.name}/${file}`
+const vuePaths = targetPaths("vue", meta)
+const vueFiles = meta.vueFiles.map((file, index) => {
+  const path = vuePaths[index]
   return codeProps(
     path,
     uiSource("vue", meta.name, file),

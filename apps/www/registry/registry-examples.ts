@@ -168,6 +168,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "command-panel-demo",
+    type: "registry:example",
+    registryDependencies: ["command-panel"],
+    files: [
+      {
+        path: "example/command-panel-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "context-menu-demo",
     type: "registry:example",
     registryDependencies: ["context-menu"],

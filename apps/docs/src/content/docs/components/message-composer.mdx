@@ -4,6 +4,8 @@ description: "The channel input bar: attachment control, text field with combobo
 component: true
 ---
 
+The channel input bar: attachment control, text field with combobox hooks, and send. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="message-composer" />
 
 ## Installation
@@ -13,6 +15,94 @@ component: true
 ## Usage
 
 <Usage name="message-composer" />
+
+## API reference
+
+<PropsTable
+  of="MessageComposer"
+  rows={[
+    {
+      name: "channelName",
+      type: "string",
+      description:
+        "Channel the message goes to; drives the default placeholder and labels.",
+    },
+    {
+      name: "value",
+      type: "string | undefined",
+      description: "Optional value value.",
+    },
+    {
+      name: "defaultValue",
+      type: "string | undefined",
+      description: "Optional defaultValue value.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string) => void | undefined",
+      description: "Optional onValueChange value.",
+    },
+    {
+      name: "placeholder",
+      type: "string | undefined",
+      description: "Optional placeholder value.",
+    },
+    {
+      name: "onSubmit",
+      type: "(value: string) => void | undefined",
+      description: "Sent on Enter and on the send control.",
+    },
+    {
+      name: "onEscape",
+      type: "() => void | undefined",
+      description: "Optional onEscape value.",
+    },
+    {
+      name: "onNavigate",
+      type: '(direction: "up" | "down") => void | undefined',
+      description:
+        "Arrow keys, for driving a suggestion list above the composer.",
+    },
+    {
+      name: "autocomplete",
+      type: "boolean | undefined",
+      description:
+        "Wire the input up as a combobox for slash-command autocomplete.",
+    },
+    {
+      name: "ariaControls",
+      type: "string | undefined",
+      description: "Optional ariaControls value.",
+    },
+    {
+      name: "ariaExpanded",
+      type: "boolean | undefined",
+      description: "Optional ariaExpanded value.",
+    },
+    {
+      name: "ariaActiveDescendant",
+      type: "string | undefined",
+      description: "Optional ariaActiveDescendant value.",
+    },
+    {
+      name: "actions",
+      type: "React.ReactNode | undefined",
+      description:
+        "Extra controls rendered between the field and the send button.",
+    },
+    {
+      name: "onAdd",
+      type: "() => void | undefined",
+      description: "Optional onAdd value.",
+    },
+  ]}
+/>
+
+The registry exports `MessageComposer`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Keep the textarea labelled with the channel context, let `Enter` and `Shift+Enter` retain their documented meanings, and give every icon-only action an accessible name.
 
 ## Tokens
 

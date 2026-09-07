@@ -163,6 +163,16 @@ export function resolveTargetPath(
             transformFileName(path.basename(file.path), config)
           )
     case "registry:block":
+      return config.framework === "vue"
+        ? path.resolve(
+            config.resolvedPaths.components,
+            item.name,
+            transformFileName(path.basename(file.path), config)
+          )
+        : path.resolve(
+            config.resolvedPaths.components,
+            transformFileName(path.basename(file.path), config)
+          )
     case "registry:component":
     case "registry:example":
       return path.resolve(

@@ -212,6 +212,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "command-panel",
+    type: "registry:block",
+    title: "Command panel",
+    description:
+      "A command browser with a selectable suggestion list and a detailed option card.",
+    registryDependencies: ["slash-command-suggestions", "bot-command-card"],
+    files: [
+      {
+        path: "block/command-panel/command-panel.tsx",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
     name: "context-menu",
     type: "registry:ui",
     title: "Context Menu",

@@ -175,8 +175,9 @@ survives a reload through `localStorage`, and the markup for both is rendered
 at build time, so switching costs nothing.
 
 Content lives in `src/content/docs/**/*.mdx`, one file per page including one
-per component; `pnpm --filter docs docs:gen` writes a stub for any component
-that does not have one yet. Every page is also served as markdown at the same
+per registry item; `pnpm --filter docs docs:gen` writes a source-derived starter
+with prose, API tables and accessibility guidance for any item that does not
+have one yet. Every page is also served as markdown at the same
 path plus `.md`, and `/llms.txt` indexes them.
 
 The two registries are consumed in place through path aliases (`@/registry` →

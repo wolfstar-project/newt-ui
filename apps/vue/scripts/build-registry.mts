@@ -14,7 +14,9 @@ const REGISTRY_FRAMEWORK = "vue" as const
 
 async function buildIndex(allItems: Registry) {
   const items = allItems
-    .filter((i) => ["registry:ui", "registry:lib"].includes(i.type))
+    .filter((i) =>
+      ["registry:ui", "registry:block", "registry:lib"].includes(i.type)
+    )
     .map((i) =>
       Object.assign({}, i, {
         framework: REGISTRY_FRAMEWORK,

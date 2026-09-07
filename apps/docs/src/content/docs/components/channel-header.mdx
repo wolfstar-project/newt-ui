@@ -4,6 +4,8 @@ description: "The bar above the message list, with the channel name, topic and c
 component: true
 ---
 
+The bar above the message list, with the channel name, topic and channel actions. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="channel-header" />
 
 ## Installation
@@ -13,6 +15,36 @@ component: true
 ## Usage
 
 <Usage name="channel-header" />
+
+## API reference
+
+<PropsTable
+  of="ChannelHeaderAction"
+  rows={[
+    {
+      name: "active",
+      type: "boolean | undefined",
+      description: "Keeps a toggled action (such as the member list) lit up.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="ChannelHeaderSearch"
+  rows={[
+    {
+      name: "placeholder",
+      type: "string | undefined",
+      description: "Optional placeholder value.",
+    },
+  ]}
+/>
+
+The registry exports `ChannelHeader`, `ChannelHeaderInfo`, `ChannelHeaderIcon`, `ChannelHeaderName`, `ChannelHeaderDivider`, `ChannelHeaderTopic`, `ChannelHeaderToolbar`, `ChannelHeaderAction`, `ChannelHeaderSearch`, `ChannelHeaderOnline`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Every icon-only toolbar action needs an `aria-label`. Preserve the visible focus ring and keep the channel name in the accessible heading hierarchy.
 
 ## Tokens
 

@@ -119,7 +119,8 @@ version:
 2. React: `apps/www/registry/default/ui/<name>.tsx` (cva + `cn` + Tailwind),
    `apps/www/registry/default/example/<name>-demo.tsx`,
    and the docs page at `apps/docs/src/content/docs/components/<name>.mdx`
-   (`pnpm --filter docs docs:gen` writes the stub).
+   (`pnpm --filter docs docs:gen` writes a source-derived starter with API and
+   accessibility sections).
 3. Vue: `apps/vue/app/lib/registry/default/ui/<name>/{Pascal.vue,index.ts}`,
    `apps/vue/app/lib/registry/default/example/PascalDemo.vue`.
 4. Add `apps/www/registry/meta/<name>.json` (title, description,

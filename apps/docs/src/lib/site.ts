@@ -29,6 +29,7 @@ export const SITE = {
   // what an installed file imports.
   utilsAlias: "@/lib/utils",
   uiAlias: "@/components/ui",
+  componentsAlias: "@/components",
   /*
    * Header links. A route lands here once it exists, so `main` never links to
    * a page a later phase still owes.

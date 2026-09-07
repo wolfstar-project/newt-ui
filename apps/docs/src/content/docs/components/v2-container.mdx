@@ -4,6 +4,8 @@ description: "The Components V2 block that groups text, separators and action ro
 component: true
 ---
 
+The Components V2 block that groups text, separators and action rows behind one accent bar. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="v2-container" />
 
 ## Installation
@@ -13,6 +15,26 @@ component: true
 ## Usage
 
 <Usage name="v2-container" />
+
+## API reference
+
+<PropsTable
+  of="V2Container"
+  rows={[
+    {
+      name: "accentColor",
+      type: "string | undefined",
+      description:
+        "Accent colour of the left bar; defaults to the surface border.",
+    },
+  ]}
+/>
+
+The registry exports `V2Container`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
 
 ## Tokens
 

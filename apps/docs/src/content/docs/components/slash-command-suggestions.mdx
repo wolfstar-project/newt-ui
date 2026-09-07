@@ -4,6 +4,8 @@ description: "The command picker that opens above the composer, with an app rail
 component: true
 ---
 
+The command picker that opens above the composer, with an app rail, grouped options and a matched-command preview. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="slash-command-suggestions" />
 
 ## Installation
@@ -13,6 +15,75 @@ component: true
 ## Usage
 
 <Usage name="slash-command-suggestions" />
+
+## API reference
+
+<PropsTable
+  of="SlashCommandSuggestionsRailItem"
+  rows={[
+    {
+      name: "active",
+      type: "boolean | undefined",
+      description: "Optional active value.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="SlashCommandSuggestion"
+  rows={[
+    {
+      name: "name",
+      type: "string",
+      description:
+        "Command path without the leading slash, e.g. `moderation ban`.",
+    },
+    {
+      name: "description",
+      type: "string | undefined",
+      description: "Optional description value.",
+    },
+    {
+      name: "appLabel",
+      type: "string | undefined",
+      description:
+        "Name of the app the command belongs to, shown on the right.",
+    },
+    {
+      name: "icon",
+      type: "React.ReactNode | undefined",
+      description:
+        "Icon for the owning app; pair with `<SlashCommandAppIcon>`.",
+    },
+    {
+      name: "active",
+      type: "boolean | undefined",
+      description: "Optional active value.",
+    },
+    {
+      name: "disabled",
+      type: "boolean | undefined",
+      description: "Optional disabled value.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="SlashCommandSuggestionMatched"
+  rows={[
+    {
+      name: "active",
+      type: "boolean | undefined",
+      description: "Optional active value.",
+    },
+  ]}
+/>
+
+The registry exports `SlashCommandSuggestions`, `SlashCommandSuggestionsRail`, `SlashCommandSuggestionsRailItem`, `SlashCommandSuggestionsList`, `SlashCommandSuggestionsHeader`, `SlashCommandSuggestionGroup`, `SlashCommandAppIcon`, `SlashCommandSuggestion`, `SlashCommandSuggestionMatched`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Keep focus in the composer and point `aria-activedescendant` at the active option. Announce disabled options and label both the app rail and command list.
 
 ## Tokens
 

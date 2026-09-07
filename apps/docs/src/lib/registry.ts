@@ -15,6 +15,7 @@ import type { Framework } from "../stores/framework"
 /** The literal contents of `apps/www/registry/meta/<name>.json`. */
 interface RawMeta {
   readonly name: string
+  readonly type?: "registry:ui" | "registry:block"
   readonly title: string
   readonly description: string
   /* npm packages; absent on the components that need none */
@@ -22,6 +23,7 @@ interface RawMeta {
   /* sibling registry items; absent on the components that stand alone */
   readonly registryDependencies?: readonly string[]
   readonly vueFiles: readonly string[]
+  readonly reactFiles?: readonly string[]
   readonly reactDemo: string
   readonly vueDemo: string
 }
@@ -29,11 +31,13 @@ interface RawMeta {
 /** A meta file joined to the category that lists it. */
 export interface ComponentMeta {
   readonly name: string
+  readonly type: "registry:ui" | "registry:block"
   readonly title: string
   readonly description: string
   readonly dependencies: readonly string[]
   readonly registryDependencies: readonly string[]
   readonly vueFiles: readonly string[]
+  readonly reactFiles: readonly string[]
   readonly reactDemo: string
   readonly vueDemo: string
   readonly category: string
@@ -65,11 +69,13 @@ function buildComponents(): readonly ComponentMeta[] {
       if (raw === undefined) continue
       components.push({
         name: raw.name,
+        type: raw.type ?? "registry:ui",
         title: raw.title,
         description: raw.description,
         dependencies: raw.dependencies ?? [],
         registryDependencies: raw.registryDependencies ?? [],
         vueFiles: raw.vueFiles,
+        reactFiles: raw.reactFiles ?? [`ui/${raw.name}.tsx`],
         reactDemo: raw.reactDemo,
         vueDemo: raw.vueDemo,
         category: category.label,
@@ -116,8 +122,22 @@ const reactUiSources = import.meta.glob<string>(
   }
 )
 
+const reactBlockSources = import.meta.glob<string>(
+  "../../../www/registry/default/block/**/*.tsx",
+  {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }
+)
+
 const vueUiSources = import.meta.glob<string>(
   "../../../vue/app/lib/registry/default/ui/*/*.{vue,ts}",
+  { query: "?raw", import: "default", eager: true }
+)
+
+const vueBlockSources = import.meta.glob<string>(
+  "../../../vue/app/lib/registry/default/block/**/*.{vue,ts}",
   { query: "?raw", import: "default", eager: true }
 )
 
@@ -151,9 +171,19 @@ export function uiSource(
   name: string,
   file?: string
 ): string | undefined {
-  return framework === "react"
-    ? findSource(reactUiSources, `/${name}.tsx`)
-    : findSource(vueUiSources, `/${name}/${file}`)
+  const meta = findComponent(name)
+  if (framework === "react") {
+    const sources =
+      meta?.type === "registry:block" ? reactBlockSources : reactUiSources
+    const sourceFile = meta?.reactFiles[0]?.split("/").at(-1) ?? `${name}.tsx`
+    return (
+      findSource(sources, `/${name}/${sourceFile}`) ??
+      findSource(sources, `/${sourceFile}`)
+    )
+  }
+  const sources =
+    meta?.type === "registry:block" ? vueBlockSources : vueUiSources
+  return findSource(sources, `/${name}/${file}`)
 }
 
 /** Where `newtui add` writes each of a component's files, per framework. */
@@ -161,6 +191,11 @@ export function targetPaths(
   framework: Framework,
   meta: ComponentMeta
 ): readonly string[] {
+  if (meta.type === "registry:block") {
+    return framework === "react"
+      ? meta.reactFiles.map((file) => `components/${file.split("/").at(-1)}`)
+      : meta.vueFiles.map((file) => `components/${meta.name}/${file}`)
+  }
   return framework === "react"
     ? [`components/ui/${meta.name}.tsx`]
     : meta.vueFiles.map((file) => `components/ui/${meta.name}/${file}`)

@@ -51,6 +51,9 @@ const REQUIRED = [
   "docs/skills/index.html",
   "r/styles/default/chat-window.json",
   "vue/r/styles/default/chat-window.json",
+  "r/styles/default/command-panel.json",
+  "vue/r/styles/default/command-panel.json",
+  "docs/components/command-panel/index.html",
 ]
 
 const missing = REQUIRED.filter((file) => !existsSync(resolve(dist, file)))
@@ -61,7 +64,7 @@ if (missing.length > 0) {
 
 const llms = readFileSync(resolve(dist, "llms.txt"), "utf8")
 const listed = (llms.match(/\/docs\/components\/[a-z0-9-]+\.md/g) ?? []).length
-const expected = Number(process.env.NEWT_EXPECTED_COMPONENTS ?? 58)
+const expected = Number(process.env.NEWT_EXPECTED_COMPONENTS ?? 59)
 if (listed < expected) {
   console.error(
     `llms.txt lists ${listed} components, expected at least ${expected}`

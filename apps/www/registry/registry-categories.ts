@@ -91,6 +91,6 @@ export const categories: DocsCategory[] = [
   {
     slug: "blocks",
     label: "Blocks",
-    components: ["chat-window", "server-sidebar"],
+    components: ["chat-window", "server-sidebar", "command-panel"],
   },
 ]

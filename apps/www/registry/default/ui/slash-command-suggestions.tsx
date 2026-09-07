@@ -31,7 +31,7 @@ const SlashCommandSuggestionsRail = React.forwardRef<
   <nav
     ref={ref}
     className={cn(
-      "flex shrink-0 flex-col items-center gap-2 overflow-y-auto border-r border-newt-border bg-newt-bg-base p-2",
+      "flex shrink-0 flex-col items-center gap-2 overflow-y-auto border-e border-newt-border bg-newt-bg-base p-2",
       className
     )}
     {...props}
@@ -192,13 +192,13 @@ const SlashCommandSuggestion = React.forwardRef<
           /&nbsp;{name}
         </span>
         {description ? (
-          <span className="truncate text-[13px] leading-snug text-newt-text-muted">
+          <span className="truncate text-[13px] leading-snug text-newt-text-secondary">
             {description}
           </span>
         ) : null}
       </div>
       {appLabel ? (
-        <span className="shrink-0 text-[13px] text-newt-text-muted">
+        <span className="shrink-0 text-[13px] text-newt-text-secondary">
           {appLabel}
         </span>
       ) : null}

@@ -41,12 +41,14 @@ const BotCommandCardName = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "inline-flex items-center gap-1 font-mono text-sm font-semibold text-newt-brand",
+      "inline-flex items-center gap-1 font-mono text-sm font-semibold text-newt-text-link",
       className
     )}
     {...props}
   >
-    {slash ? <span className="font-normal text-newt-text-muted">/</span> : null}
+    {slash ? (
+      <span className="font-normal text-newt-text-secondary">/</span>
+    ) : null}
     {children}
   </span>
 ))
@@ -120,17 +122,17 @@ const BotCommandCardOption = React.forwardRef<
         {name}
       </span>
       {type ? (
-        <span className="shrink-0 font-mono text-[11px] text-newt-text-muted">
+        <span className="shrink-0 font-mono text-[11px] text-newt-text-secondary">
           {type}
         </span>
       ) : null}
       {required ? (
-        <span className="shrink-0 text-[11px] font-bold text-newt-dnd">
+        <span className="shrink-0 text-[11px] font-bold text-newt-text-secondary">
           {requiredLabel}
         </span>
       ) : null}
       {description ? (
-        <span className="text-newt-text-muted">{description}</span>
+        <span className="text-newt-text-secondary">{description}</span>
       ) : null}
     </div>
   )

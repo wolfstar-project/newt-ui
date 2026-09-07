@@ -13,12 +13,21 @@ import { describe, expect, it } from "vitest"
 const COMPONENTS = fileURLToPath(
   new URL("../registry/html/components", import.meta.url)
 )
+const REACT_COMPONENTS = fileURLToPath(
+  new URL("../../../apps/www/registry/default/ui", import.meta.url)
+)
+const VUE_COMPONENTS = fileURLToPath(
+  new URL("../../../apps/vue/app/lib/registry/default/ui", import.meta.url)
+)
 
 const PHYSICAL =
   /(?<![\w-])(margin|padding|border)-(left|right)\b|(?<![\w-])border-(top|bottom)-(left|right)-radius\b|^\s*(left|right)\s*:|text-align\s*:\s*(left|right)\b/gm
 
 /** A sideways transform must carry the direction multiplier, not a raw sign. */
 const RAW_TRANSLATE_X = /translateX\(\s*-?[\d.]/g
+
+const PHYSICAL_TAILWIND =
+  /(?<![\w-])(?:-?(?:ml|mr|pl|pr|left|right|border-l|border-r|rounded-(?:l|r|tl|tr|bl|br)|space-x)-[^\s"'`]+|border-[lr](?![\w-])|text-(?:left|right)(?![\w-]))/g
 
 const files = readdirSync(COMPONENTS)
   .filter((file) => file.endsWith(".css"))
@@ -52,5 +61,28 @@ describe("tokens.css", () => {
 
   it("flips it for right-to-left subtrees", () => {
     expect(tokens).toMatch(/\[dir="rtl"\]\s*\{\s*--newt-dir:\s*-1;/)
+  })
+})
+
+const frameworkFiles = [
+  ...readdirSync(REACT_COMPONENTS, { recursive: true, encoding: "utf8" })
+    .filter((file) => file.endsWith(".tsx"))
+    .map((file) => ({ root: REACT_COMPONENTS, file })),
+  ...readdirSync(VUE_COMPONENTS, { recursive: true, encoding: "utf8" })
+    .filter((file) => file.endsWith(".ts") || file.endsWith(".vue"))
+    .map((file) => ({ root: VUE_COMPONENTS, file })),
+]
+
+describe("the React and Vue registries use logical Tailwind utilities", () => {
+  it("has framework sources to check", () => {
+    expect(frameworkFiles.length).toBeGreaterThan(100)
+  })
+
+  it.each(frameworkFiles)("$file has no physical utility", ({ root, file }) => {
+    const source = readFileSync(path.join(root, file), "utf8")
+    const matches = (source.match(PHYSICAL_TAILWIND) ?? []).filter(
+      (match) => match !== "right-to-left" && match !== "left-to-right"
+    )
+    expect(matches).toEqual([])
   })
 })

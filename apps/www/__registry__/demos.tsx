@@ -16,6 +16,7 @@ import ChannelWelcomeDemo from "@/registry/default/example/channel-welcome-demo"
 import ChatDemo from "@/registry/default/example/chat-demo"
 import ChatWindowDemo from "@/registry/default/example/chat-window-demo"
 import CodeBlockDemo from "@/registry/default/example/code-block-demo"
+import CommandPanelDemo from "@/registry/default/example/command-panel-demo"
 import ContextMenuDemo from "@/registry/default/example/context-menu-demo"
 import CooldownBarDemo from "@/registry/default/example/cooldown-bar-demo"
 import DirectionDemo from "@/registry/default/example/direction-demo"
@@ -79,6 +80,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["chat", ChatDemo],
   ["chat-window", ChatWindowDemo],
   ["code-block", CodeBlockDemo],
+  ["command-panel", CommandPanelDemo],
   ["context-menu", ContextMenuDemo],
   ["cooldown-bar", CooldownBarDemo],
   ["direction", DirectionDemo],

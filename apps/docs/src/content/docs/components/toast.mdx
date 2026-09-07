@@ -4,6 +4,8 @@ description: "A transient notification with a status icon that auto-dismisses af
 component: true
 ---
 
+A transient notification with a status icon that auto-dismisses after a timeout or when closed. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
 <ComponentPreview name="toast" />
 
 ## Installation
@@ -13,6 +15,37 @@ component: true
 ## Usage
 
 <Usage name="toast" />
+
+## API reference
+
+<PropsTable
+  of="Toast"
+  rows={[
+    {
+      name: "duration",
+      type: "number | undefined",
+      description:
+        "Auto-dismiss after this many ms. Defaults to 5000. Pass 0 to disable.",
+    },
+    {
+      name: "open",
+      type: "boolean | undefined",
+      description: "Controlled open state.",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void | undefined",
+      description:
+        "Called when the toast closes, either by timeout or the close button.",
+    },
+  ]}
+/>
+
+The registry exports `Toast`, `ToastIcon`, `ToastContent`, `ToastTitle`, `ToastDescription`, `ToastClose`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Use `role="status"` for routine updates and `role="alert"` only for urgent failures. Do not move focus into a toast, and give its close button an accessible name.
 
 ## Tokens
 

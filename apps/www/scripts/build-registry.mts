@@ -21,7 +21,12 @@ function isFilePathShorthand(f: RegistryItemFile): f is string {
 async function buildRegistryIndex(allItems: Registry) {
   const items = allItems
     .filter((item) =>
-      ["registry:ui", "registry:lib", "registry:theme"].includes(item.type)
+      [
+        "registry:ui",
+        "registry:block",
+        "registry:lib",
+        "registry:theme",
+      ].includes(item.type)
     )
     .map((item) =>
       Object.assign({}, item, {

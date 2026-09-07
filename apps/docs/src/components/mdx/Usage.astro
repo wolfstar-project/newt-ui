@@ -22,18 +22,20 @@ if (meta === undefined) {
 }
 
 const reactExport = pascalCase(meta.name)
+const importAlias =
+  meta.type === "registry:block" ? SITE.componentsAlias : SITE.uiAlias
 const vueExports = meta.vueFiles
   .filter((file) => file.endsWith(".vue"))
   .map((file) => file.slice(0, file.length - ".vue".length))
 
-const reactCode = `import { ${reactExport} } from "${SITE.uiAlias}/${meta.name}"
+const reactCode = `import { ${reactExport} } from "${importAlias}/${meta.name}"
 
 export function Example() {
   return <${reactExport} />
 }`
 
 const vueCode = `<script setup lang="ts">
-import { ${vueExports.join(", ")} } from "${SITE.uiAlias}/${meta.name}"
+import { ${vueExports.join(", ")} } from "${importAlias}/${meta.name}"
 </script>
 
 <template>

@@ -17,12 +17,14 @@ const props = withDefaults(
   <span
     :class="
       cn(
-        'inline-flex items-center gap-1 font-mono text-sm font-semibold text-newt-brand',
+        'inline-flex items-center gap-1 font-mono text-sm font-semibold text-newt-text-link',
         props.class
       )
     "
   >
-    <span v-if="props.slash" class="font-normal text-newt-text-muted">/</span>
+    <span v-if="props.slash" class="font-normal text-newt-text-secondary"
+      >/</span
+    >
     <slot />
   </span>
 </template>

@@ -28,19 +28,19 @@ const props = withDefaults(
     </span>
     <span
       v-if="props.type"
-      class="shrink-0 font-mono text-[11px] text-newt-text-muted"
+      class="shrink-0 font-mono text-[11px] text-newt-text-secondary"
     >
       {{ props.type }}
     </span>
     <span
       v-if="props.required"
-      class="shrink-0 text-[11px] font-bold text-newt-dnd"
+      class="shrink-0 text-[11px] font-bold text-newt-text-secondary"
     >
       {{ props.requiredLabel }}
     </span>
     <span
       v-if="props.description || $slots.default"
-      class="text-newt-text-muted"
+      class="text-newt-text-secondary"
     >
       <slot>{{ props.description }}</slot>
     </span>

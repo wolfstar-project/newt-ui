@@ -19,7 +19,7 @@ const StatusIndicator = React.forwardRef<
 StatusIndicator.displayName = "StatusIndicator"
 
 const statusDotVariants = cva(
-  "absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-[3px] border-newt-bg-base",
+  "absolute -bottom-0.5 -end-0.5 h-3.5 w-3.5 rounded-full border-[3px] border-newt-bg-base",
   {
     variants: {
       status: {

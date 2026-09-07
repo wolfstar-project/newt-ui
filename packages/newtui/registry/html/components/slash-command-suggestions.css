@@ -154,13 +154,13 @@
   white-space: nowrap;
   font-size: 13px;
   line-height: 1.35;
-  color: var(--newt-text-muted);
+  color: var(--newt-text-secondary);
 }
 
 .newt-slash-suggestions__option-app {
   flex-shrink: 0;
   font-size: 13px;
-  color: var(--newt-text-muted);
+  color: var(--newt-text-secondary);
 }
 
 /* Row that previews the command already typed. */
