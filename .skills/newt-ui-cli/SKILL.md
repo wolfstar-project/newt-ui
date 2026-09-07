@@ -29,7 +29,17 @@ compatibility shim belongs there, not spread across the commands.
 ## Layout
 
 - `src/index.ts` — argv parsing, `printHelp()`, command dispatch, `main()`.
-- `src/commands/{init,add,list,diff}.ts` — one file per command.
+- `src/commands/{init,add,list,search,view,diff,info}.ts` — one file per
+  command. `info` also exports `readProjectInfo()`, the in-process reader the
+  MCP server uses instead of shelling out.
+- `src/mcp/server.ts` — the MCP server (`newtui mcp`). Tool names mirror
+  shadcn's on purpose; renaming one strands every prompt written against it.
+  Every tool is read-only: installing is a command the human runs.
+- `src/mcp/init.ts` — `newtui mcp init --client <name>`. Each client's config
+  is parsed and merged, never overwritten: those files hold other people's
+  servers.
+- `test/*.test.ts` — vitest. The registry is not reached in tests; the MCP
+  surface is exercised through `InMemoryTransport.createLinkedPair()`.
 - `src/tools/*.ts` — focused helpers: `options.ts` (every flag table declared
   `as const`, with the derived union types), `config.ts`, `registry.ts`,
   `transformers.ts`, `tokens.ts`, `packageManager.ts`, `fileSystem.ts`,

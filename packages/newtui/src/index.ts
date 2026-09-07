@@ -7,8 +7,12 @@ import mri from "mri"
 
 import { add } from "./commands/add.js"
 import { diff } from "./commands/diff.js"
+import { info } from "./commands/info.js"
 import { init } from "./commands/init.js"
 import { list } from "./commands/list.js"
+import { search } from "./commands/search.js"
+import { view } from "./commands/view.js"
+import { MCP_CLIENTS, mcpInit } from "./mcp/init.js"
 import { handleError, highlighter, logger } from "./tools/logger.js"
 import {
   BOOLEAN_FLAGS,
@@ -88,7 +92,12 @@ function printHelp(): void {
     init                     initialize your project and install dependencies
     add [components...]      add components to your project
     list                     list available components in the registry
+    search [query]           search the registry by name or description
+    view <components...>     print a component's source without installing it
     diff <component>         check an installed component against the registry
+    info                     print what this project is and what it has installed
+    mcp                      run the MCP server over stdio
+    mcp init                 write the MCP config for an editor (--client)
 
   ${highlighter.bold("Options")}
     -c, --cwd <dir>          working directory (default: current directory)
@@ -102,8 +111,10 @@ function printHelp(): void {
     -o, --overwrite          overwrite existing files (add)
     -a, --all                add every available component (add)
     -p, --path <path>        the path to add the component to (add)
-    -t, --type <type>        filter by registry item type (list)
-        --json               output as JSON (list)
+    -t, --type <type>        filter by registry item type (list, search)
+        --json               output as JSON (list, search, view, info)
+        --client <name>      the editor to configure (mcp init):
+                             ${MCP_CLIENTS.join(", ")}
         --legacy             use the legacy HTML/CSS CLI (same as newtui-html)
     -h, --help               display this message
     -v, --version            display the version number
@@ -113,6 +124,9 @@ function printHelp(): void {
     $ newtui add button avatar
     $ newtui list --framework vue
     $ newtui diff button
+    $ newtui search presence --json
+    $ newtui info --json
+    $ newtui mcp init --client claude
 `)
 }
 
@@ -226,9 +240,51 @@ async function main(): Promise<void> {
       })
       break
     }
+    case "search": {
+      const { framework } = readFrameworkFlags(args)
+      await search({
+        query: rest[0],
+        cwd,
+        registry,
+        framework,
+        type: flagString(args.type),
+        json: flagBoolean(args.json),
+      })
+      break
+    }
+    case "view": {
+      const { framework } = readFrameworkFlags(args)
+      await view({
+        components: rest,
+        cwd,
+        registry,
+        framework,
+        json: flagBoolean(args.json),
+      })
+      break
+    }
     case "diff":
       await diff({ component: rest[0], cwd, registry })
       break
+    case "info":
+      await info({ cwd, registry, json: flagBoolean(args.json) })
+      break
+    case "mcp": {
+      if (rest[0] === "init") {
+        await mcpInit({ client: flagString(args.client) ?? "", cwd })
+        break
+      }
+      if (rest.length > 0) {
+        logger.error(
+          `Unknown \`mcp\` subcommand "${rest[0]}". Expected \`init\`, or no subcommand to run the server.`
+        )
+        process.exit(1)
+      }
+      // The server owns stdout from here: it is the transport.
+      const { startServer } = await import("./mcp/server.js")
+      await startServer(cwd)
+      break
+    }
   }
 }
 

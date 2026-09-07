@@ -38,6 +38,7 @@ const GUIDES: readonly NavGroup[] = [
       { href: "/docs/javascript", label: "JavaScript" },
       { href: "/docs/html-css", label: "HTML & CSS" },
       { href: "/docs/using-with-ai", label: "Using with AI" },
+      { href: "/docs/mcp", label: "MCP server", badge: "new" },
       { href: "/docs/changelog", label: "Changelog" },
       { href: "/llms.txt", label: "llms.txt", external: true },
     ],
@@ -71,6 +72,7 @@ const GUIDES: readonly NavGroup[] = [
         label: "registry-item.json",
       },
       { href: "/docs/registry/examples", label: "Examples" },
+      { href: "/docs/registry/mcp", label: "MCP" },
     ],
   },
 ]

@@ -72,6 +72,53 @@ npx newtui@latest list --framework vue --type registry:ui
 `--json` is the cheapest grounding you can hand an agent — see
 [Using with AI](/docs/using-with-ai).
 
+## search \{#search\}
+
+`list` with a filter. Matches case-insensitively across name, title and
+description, so a half-remembered word is enough.
+
+```bash frame="terminal"
+npx newtui@latest search presence
+npx newtui@latest search chat --json
+```
+
+## view \{#view\}
+
+Prints a component's source without installing it — the read-only half of
+`add`, for deciding whether you want it.
+
+```bash frame="terminal"
+npx newtui@latest view button
+npx newtui@latest view modal badge --json
+```
+
+## info \{#info\}
+
+What this project is: framework, bundler, Tailwind major, where the aliases
+point, which registry it reads, and which components it already has.
+
+```bash frame="terminal"
+npx newtui@latest info
+npx newtui@latest info --json
+```
+
+`--json` is what the [skill](/docs/skills) and the
+[MCP server](/docs/mcp) read, so an agent starts from facts rather than from a
+guess about your layout.
+
+## mcp \{#mcp\}
+
+Runs the MCP server over stdio, or writes the configuration an editor needs to
+launch it.
+
+```bash frame="terminal"
+npx newtui@latest mcp
+npx newtui@latest mcp init --client claude
+```
+
+See [MCP server](/docs/mcp) for what it exposes and which clients are
+supported.
+
 ## diff \{#diff\}
 
 Compares a component you have installed against the one the registry currently

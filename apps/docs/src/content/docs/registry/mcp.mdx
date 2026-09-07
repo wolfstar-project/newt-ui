@@ -1,0 +1,54 @@
+---
+title: "Registry: MCP"
+description: "What a registry has to serve for the newtui MCP server to browse, search and install from it."
+---
+
+The [MCP server](/docs/mcp) answers from whichever registry the project's
+`components.json` names. Point that at your own registry and every tool follows
+— there is nothing extra to configure.
+
+```json title="components.json"
+{
+  "registry": "https://acme.dev/r"
+}
+```
+
+## What the tools need \{#requirements\}
+
+| Tool                                | Reads                                                          |
+| ----------------------------------- | -------------------------------------------------------------- |
+| `list_items_in_registries`          | `/index.json`                                                  |
+| `search_items_in_registries`        | `/index.json` — matched against `name`, `title`, `description` |
+| `view_items_in_registries`          | `/styles/<style>/<name>.json`, with `files[].content`          |
+| `get_item_examples_from_registries` | index entries of type `registry:example`                       |
+| `get_design_tokens`                 | `/styles/<style>/theme-newt.json`, with `cssVars`              |
+
+Two of those are worth stating plainly, because a registry that omits them
+still installs fine from the CLI and reads as empty to an agent:
+
+- **Give every item a `title` and a `description`.** They are what search
+  matches on and what an agent uses to choose between two components. An item
+  with neither can only be found by knowing its name already.
+- **Ship your examples.** An item of type `registry:example` named
+  `<component>-demo` is what `get_item_examples_from_registries` returns. It is
+  the shortest correct usage of the component, and it is what stops a model
+  inventing a prop.
+
+## Tokens \{#tokens\}
+
+`get_design_tokens` reads the `registry:theme` item named `theme-newt` and
+returns its `cssVars`. A registry that extends newt/ui usually re-serves that
+item unchanged; one that replaces the palette serves its own values under the
+same item name, and every answer the agent gives follows the new palette.
+
+See [registry-item.json](/docs/registry/registry-item-json#theme) for the shape.
+
+## Checking it \{#checking\}
+
+```bash frame="terminal"
+curl -s https://acme.dev/r/index.json | head -40
+npx newtui@latest search --registry https://acme.dev/r
+npx newtui@latest view button --registry https://acme.dev/r
+```
+
+If those three answer, the MCP tools will too — they read the same two files.

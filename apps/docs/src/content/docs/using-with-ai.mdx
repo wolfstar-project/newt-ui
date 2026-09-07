@@ -49,6 +49,19 @@ Rules:
   text, not by colour alone.
 ```
 
+## Give it the registry over MCP \{#mcp\}
+
+The shortest path is not a prompt at all: run
+[the MCP server](/docs/mcp) and the agent can list, search and read the registry
+itself, and ask for the install command rather than inventing one.
+
+```bash frame="terminal"
+npx newtui@latest mcp init --client claude
+```
+
+Everything below still applies — the house rules are what keep it inside the
+token system once it knows what exists.
+
 ## Let the agent drive the CLI \{#cli\}
 
 The registry is discoverable from the terminal, which is the one place an agent

@@ -5,7 +5,16 @@
  * sync with the values the argv parser and the commands actually accept.
  */
 
-export const COMMANDS = ["init", "add", "list", "diff"] as const
+export const COMMANDS = [
+  "init",
+  "add",
+  "list",
+  "search",
+  "view",
+  "diff",
+  "info",
+  "mcp",
+] as const
 export type CommandName = (typeof COMMANDS)[number]
 
 export const PACKAGE_MANAGERS = ["npm", "yarn", "pnpm", "bun"] as const
@@ -39,6 +48,7 @@ export type BooleanFlag = (typeof BOOLEAN_FLAGS)[number]
 
 export const STRING_FLAGS = [
   "bundler",
+  "client",
   "css",
   "cwd",
   "framework",
