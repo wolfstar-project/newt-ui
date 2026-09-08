@@ -10,9 +10,14 @@ interface Props {
   readonly description?: string
   /** The docs shell manages its own width; landing pages do not. */
   readonly wide?: boolean
+  /**
+   * The page's markdown twin, when it has one. Advertised to anything that
+   * would rather read the source than the rendered page.
+   */
+  readonly markdownPath?: string
 }
 
-const { title, description = SITE.tagline } = Astro.props
+const { title, description = SITE.tagline, markdownPath } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`
 ---
@@ -32,6 +37,11 @@ const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    {
+      markdownPath && (
+        <link rel="alternate" type="text/markdown" href={markdownPath} />
+      )
+    }
     <script is:inline>
       /*
        * Before first paint: apply the stored theme and framework so a reader

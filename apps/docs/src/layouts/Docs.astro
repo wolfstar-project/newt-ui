@@ -37,7 +37,7 @@ const {
 const showToc = toc && headings.length > 0
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} markdownPath={markdownPath}>
   <div class="docs-layout" data-toc={showToc ? "true" : "false"}>
     <Sidebar />
 
