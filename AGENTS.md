@@ -83,14 +83,15 @@ runs all three plus `typecheck`, `build`, and `zizmor`.
   `npx skills add wolfstar-project/newt-ui` — it teaches a user's agent the
   registry, the token rules and the review checklist. It is not one of the
   contributor skills below and is not managed by skilld.
-- **Skills**: project-specific skills are hand-written in `.skills/<name>/SKILL.md`
-  and symlinked into `.claude/skills/` (same split as `wolfstar-project/agent-zero`):
+- **Skills**: `.skills/<name>/` is the canonical shared location for every
+  skill. Each directory is symlinked into both `.claude/skills/` and
+  `.agents/skills/` so Claude Code and Codex read the same files. The
+  project-specific skills are hand-written:
   `newt-ui-architecture`, `newt-ui-registry`, `newt-ui-cli`,
   `newt-ui-components`, `newt-ui-trademark`. Read the one that matches what you
   are touching before you start. Third-party skills are managed by
-  [skilld](https://skilld.dev); they live in `.claude/skills/` too and are
-  pinned by `.claude/skills/skilld-lock.yaml` (the local ones are deliberately
-  not in that lockfile, and `skilld prepare` leaves them alone).
+  [skilld](https://skilld.dev) and pinned by `.skills/skilld-lock.yaml`; the
+  hand-written skills are deliberately not in that lockfile.
   `pnpm skills:install` restores them from the lock file, `pnpm skills:list`
   shows what's installed, and `pnpm skills:add <owner/repo> --skill <names>`
   adds more. The `prepare` script runs `skilld prepare --agent claude-code`

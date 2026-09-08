@@ -195,3 +195,17 @@ skills:
     generator: external
     path: skills/git-commit
     ref: main
+  vercel-composition-patterns:
+    repo: vercel-labs/agent-skills
+    source: github
+    syncedAt: 2026-09-08
+    generator: external
+    path: skills/composition-patterns
+    ref: main
+  vercel-react-best-practices:
+    repo: vercel-labs/agent-skills
+    source: github
+    syncedAt: 2026-09-08
+    generator: external
+    path: skills/react-best-practices
+    ref: main
