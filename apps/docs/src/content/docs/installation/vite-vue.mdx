@@ -1,9 +1,9 @@
 ---
-title: "Vite (React)"
-description: "Install newt/ui in a React project built with Vite, from the template or into an app you already have."
+title: "Vite (Vue)"
+description: "Install newt/ui in a Vue 3 project built with Vite, from the template or into an app you already have."
 ---
 
-<PathTabs framework="vite-react">
+<PathTabs framework="vite-vue">
 
 <Steps>
 
@@ -12,7 +12,7 @@ description: "Install newt/ui in a React project built with Vite, from the templ
 #### Create the app
 
 ```bash frame="terminal"
-npm create vite@latest my-app -- --template react-ts
+npm create vite@latest my-app -- --template vue-ts
 ```
 
 </section>
@@ -25,7 +25,7 @@ npm create vite@latest my-app -- --template react-ts
 npm install tailwindcss @tailwindcss/vite
 ```
 
-```css title="src/index.css"
+```css title="src/assets/index.css"
 @import "tailwindcss";
 ```
 
@@ -50,11 +50,11 @@ your build needs the second:
 import { fileURLToPath } from "node:url"
 
 import tailwindcss from "@tailwindcss/vite"
-import react from "@vitejs/plugin-react"
+import vue from "@vitejs/plugin-vue"
 import { defineConfig } from "vite"
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [vue(), tailwindcss()],
   resolve: {
     alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
   },
@@ -67,10 +67,11 @@ export default defineConfig({
 
 #### Run init
 
-<PmTabs cmd="newtui@latest init" />
+<PmTabs cmd="newtui@latest init --framework vue --bundler vite" />
 
-It detects React from your dependencies; `--framework react` settles it if the
-project carries both.
+Both flags are guesses it usually makes on its own: the framework comes from
+your dependencies, the bundler from the presence of a `vite.config`. Pass them
+when it guesses wrong.
 
 </section>
 
@@ -78,8 +79,8 @@ project carries both.
 
 #### Load the stylesheet, then add a component
 
-```ts title="src/main.tsx"
-import "./index.css"
+```ts title="src/main.ts"
+import "./assets/index.css"
 ```
 
 `.newt-root` goes on the element that wraps the application — the `<body>` in
@@ -87,12 +88,14 @@ import "./index.css"
 
 <PmTabs cmd="newtui@latest add button" />
 
-```tsx title="src/App.tsx"
+```vue title="src/App.vue"
+<script setup lang="ts">
 import { Button } from "@/components/ui/button"
+</script>
 
-export function App() {
-  return <Button variant="primary">Send</Button>
-}
+<template>
+  <Button variant="primary">Send</Button>
+</template>
 ```
 
 </section>
@@ -104,11 +107,15 @@ export function App() {
 ## What init writes \{#written\}
 
 ```text
-components.json                 the config, shared with shadcn
-src/index.css                   the --newt-* token block
-src/lib/utils.ts                cn()
-src/components/ui/button.tsx    add button
+components.json                          the config, shared with shadcn
+src/assets/index.css                     the --newt-* token block
+src/lib/utils.ts                         cn()
+src/components/ui/button/Button.vue      add button
+src/components/ui/button/index.ts
 ```
+
+A folder per component: the single-file components, and an `index.ts` barrel
+that re-exports them with their `class-variance-authority` variants.
 
 See [Dark mode](/docs/dark-mode#vite) for the theme toggle, and [RTL](/docs/rtl)
 if the app has to run right to left.

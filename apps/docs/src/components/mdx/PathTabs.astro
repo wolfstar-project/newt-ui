@@ -1,0 +1,111 @@
+---
+import {
+  findInstallTarget,
+  type FrameworkId,
+} from "../../lib/install-targets"
+import PmTabs from "./PmTabs.astro"
+import Tabs from "./Tabs.astro"
+
+/*
+ * The three ways in, in the order they cost the reader effort: pick the
+ * options in the builder, run the CLI with a template, or wire it into a
+ * project that already exists. The first two are the same two commands on
+ * every page, so they are generated from the target rather than retyped ten
+ * times; only the third differs by framework, and that one is the slot.
+ *
+ * The choice is shared under one persist key, so a reader who picked
+ * "Existing project" on the picker sees it again on every framework page.
+ */
+interface Props {
+  /** Omitted on the picker itself, where no framework has been chosen yet. */
+  readonly framework?: FrameworkId
+}
+
+const { framework } = Astro.props
+const target = framework === undefined ? undefined : findInstallTarget(framework)
+const template = target?.template
+const scaffold = target?.scaffold
+const name = target?.title ?? "your framework"
+
+/* Manual and HTML have neither a template nor a scaffold: no CLI path at all. */
+const cliLess = target !== undefined && template === undefined && scaffold === undefined
+---
+
+<Tabs
+  labels={["newt/create", "CLI", "Existing project"]}
+  persistKey="install-path"
+  class="path-tabs"
+>
+  <Fragment slot="tab-0">
+    {
+      cliLess ? (
+        <p>
+          <a href="/create">newt/create</a> writes a preset into a project the
+          CLI set up. This flavour has no config file for it to write to — the
+          tokens are yours to edit directly.
+        </p>
+      ) : (
+        <Fragment>
+          <p>
+            Choose the brand hue, the radius and the font in{" "}
+            <a href="/create">newt/create</a>, and it prints a preset code.
+            Pass that code to <code>init</code> and the project comes out
+            already wearing it.
+          </p>
+          {scaffold && <PmTabs cmd={scaffold} />}
+          <PmTabs
+            cmd={
+              template === undefined
+                ? "newtui@latest init --preset <code>"
+                : `newtui@latest init --preset <code> --template ${template}`
+            }
+          />
+          <PmTabs cmd="newtui@latest add button" />
+        </Fragment>
+      )
+    }
+  </Fragment>
+
+  <Fragment slot="tab-1">
+    {
+      cliLess ? (
+        <p>
+          There is nothing to initialise here: the files are copied by hand.
+          The tab beside this one is the whole procedure.
+        </p>
+      ) : template === undefined ? (
+        <Fragment>
+          <p>
+            {name} has no scaffold template, so the project is created by its own
+            tool first and <code>init</code> runs inside the result. It detects
+            the framework, the bundler and the stylesheet on its own.
+          </p>
+          {scaffold && <PmTabs cmd={scaffold} />}
+          <PmTabs cmd="newtui@latest init" />
+          <PmTabs cmd="newtui@latest add button" />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <p>
+            One command creates the project and wires the tokens into it.
+            <code>--template</code> exists for Next.js, both Vite flavours and
+            Nuxt; everywhere else <code>init</code> runs inside a project you
+            already made.
+          </p>
+          <PmTabs cmd={`newtui@latest init --template ${template}`} />
+          <PmTabs cmd="newtui@latest add button" />
+        </Fragment>
+      )
+    }
+  </Fragment>
+
+  <Fragment slot="tab-2">
+    <slot>
+      <p>
+        Pick your framework below. Each guide walks the same four steps: the
+        Tailwind setup, the path aliases, <code>init</code>, and the first
+        component.
+      </p>
+    </slot>
+  </Fragment>
+</Tabs>

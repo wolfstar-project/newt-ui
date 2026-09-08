@@ -3,11 +3,77 @@ title: "Nuxt"
 description: "Install newt/ui in a Nuxt 4 project, with the module that auto-imports the components and injects the tokens."
 ---
 
+<PathTabs framework="nuxt">
+
+<Steps>
+
+<section>
+
+#### Create the app
+
+```bash frame="terminal"
+npm create nuxt@latest my-app
+```
+
+</section>
+
+<section>
+
+#### Add Tailwind
+
+```bash frame="terminal"
+npm install tailwindcss @tailwindcss/vite
+```
+
+```ts title="nuxt.config.ts"
+import tailwindcss from "@tailwindcss/vite"
+
+export default defineNuxtConfig({
+  css: ["~/assets/css/tailwind.css"],
+  vite: { plugins: [tailwindcss()] },
+})
+```
+
+```css title="app/assets/css/tailwind.css"
+@import "tailwindcss";
+```
+
+</section>
+
+<section>
+
+#### Run init
+
 <PmTabs cmd="newtui@latest init --framework vue --bundler nuxt" />
 
-`init` guesses the bundler from a `nuxt.config`, so the flags above are only
-needed when it guesses wrong. Everything else is the shared flow in
-[Installation](/docs/installation).
+`init` guesses the bundler from a `nuxt.config`, so the flags are only needed
+when it guesses wrong.
+
+</section>
+
+<section>
+
+#### Add a component
+
+<PmTabs cmd="newtui@latest add button" />
+
+```vue title="app/pages/index.vue"
+<script setup lang="ts">
+import { Button } from "@/components/ui/button"
+</script>
+
+<template>
+  <Button variant="primary">Send</Button>
+</template>
+```
+
+Put `.newt-root` on the wrapper in `app.vue`.
+
+</section>
+
+</Steps>
+
+</PathTabs>
 
 ## The module \{#module\}
 
@@ -35,28 +101,15 @@ bare `<Button />` would collide with something you already have,
 directory, and `css: false` turns the injected tokens off when your own CSS
 entry already carries them.
 
-## Without the module \{#manual\}
+## What init writes \{#written\}
 
-The components work as ordinary imports too:
-
-```vue title="app/pages/index.vue"
-<script setup lang="ts">
-import { Button } from "@/components/ui/button"
-</script>
-
-<template>
-  <Button variant="primary">Send</Button>
-</template>
+```text
+components.json                          the config, shared with shadcn
+app/assets/css/tailwind.css              the --newt-* token block
+app/lib/utils.ts                         cn()
+app/components/ui/button/Button.vue      add button
+app/components/ui/button/index.ts
 ```
 
-and the tokens are loaded the usual way:
-
-```ts title="nuxt.config.ts"
-export default defineNuxtConfig({
-  css: ["~/assets/css/tailwind.css"],
-})
-```
-
-Put `.newt-root` on the wrapper in `app.vue`.
-
-See [Dark mode](/docs/dark-mode#nuxt) for the theme toggle.
+See [Dark mode](/docs/dark-mode#nuxt) for the theme toggle, and [RTL](/docs/rtl)
+if the app has to run right to left.

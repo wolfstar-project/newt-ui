@@ -1,0 +1,153 @@
+---
+title: "Laravel"
+description: "Install newt/ui in a Laravel app running Inertia, with either the React or the Vue starter kit."
+---
+
+<PathTabs framework="laravel">
+
+<Steps>
+
+<section>
+
+#### Create the app
+
+<div data-framework="react">
+
+```bash frame="terminal"
+laravel new my-app --react
+```
+
+</div>
+
+<div data-framework="vue">
+
+```bash frame="terminal"
+laravel new my-app --vue
+```
+
+</div>
+
+The Inertia starter kits ship Vite and Tailwind v4 already wired, which is the
+part `init` cannot do for you.
+
+</section>
+
+<section>
+
+#### Declare the alias twice
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": { "@/*": ["./resources/js/*"] }
+  }
+}
+```
+
+```js title="vite.config.js"
+import { fileURLToPath } from "node:url"
+
+import laravel from "laravel-vite-plugin"
+import { defineConfig } from "vite"
+
+export default defineConfig({
+  plugins: [
+    laravel({ input: ["resources/css/app.css", "resources/js/app.tsx"] }),
+  ],
+  resolve: {
+    alias: { "@": fileURLToPath(new URL("./resources/js", import.meta.url)) },
+  },
+})
+```
+
+</section>
+
+<section>
+
+#### Run init
+
+<div data-framework="react">
+
+<PmTabs cmd="newtui@latest init --framework react --css resources/css/app.css" />
+
+</div>
+
+<div data-framework="vue">
+
+<PmTabs cmd="newtui@latest init --framework vue --bundler vite --css resources/css/app.css" />
+
+</div>
+
+There is no `--template` for Laravel: the app comes from `laravel new`, and
+`init` runs inside it. `--css` points at the stylesheet the Blade layout
+already loads.
+
+</section>
+
+<section>
+
+#### Mark the root layout
+
+```blade title="resources/views/app.blade.php"
+<body class="newt-root font-sans antialiased">
+    @inertia
+</body>
+```
+
+</section>
+
+<section>
+
+#### Add a component
+
+<PmTabs cmd="newtui@latest add button" />
+
+<div data-framework="react">
+
+```tsx title="resources/js/pages/welcome.tsx"
+import { Button } from "@/components/ui/button"
+
+export default function Welcome() {
+  return <Button variant="primary">Send</Button>
+}
+```
+
+</div>
+
+<div data-framework="vue">
+
+```vue title="resources/js/pages/Welcome.vue"
+<script setup lang="ts">
+import { Button } from "@/components/ui/button"
+</script>
+
+<template>
+  <Button variant="primary">Send</Button>
+</template>
+```
+
+</div>
+
+</section>
+
+</Steps>
+
+</PathTabs>
+
+## Blade without Inertia \{#blade\}
+
+An app that renders Blade templates and no JavaScript framework wants the plain
+CSS flavour instead: two stylesheets, BEM class names, no build step beyond the
+one Vite already runs. That is [HTML & CSS](/docs/html-css).
+
+## What init writes \{#written\}
+
+```text
+components.json                          the config, shared with shadcn
+resources/css/app.css                    the --newt-* token block
+resources/js/lib/utils.ts                cn()
+resources/js/components/ui/button.tsx    add button (React)
+```
+
+See [Dark mode](/docs/dark-mode) for the theme toggle, and [RTL](/docs/rtl) if
+the app has to run right to left.
