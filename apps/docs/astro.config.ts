@@ -1,5 +1,6 @@
 import { fileURLToPath } from "node:url"
 
+import { satteri } from "@astrojs/markdown-satteri"
 import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
@@ -9,7 +10,7 @@ import expressiveCode from "astro-expressive-code"
 import pagefind from "astro-pagefind"
 import { defineConfig } from "astro/config"
 
-import { remarkHeadingId } from "./src/lib/remark-heading-id"
+import { hastHeadingId } from "./src/lib/hast-heading-id"
 
 const here = (relative: string) =>
   fileURLToPath(new URL(relative, import.meta.url))
@@ -36,7 +37,7 @@ export default defineConfig({
   markdown: {
     // `## Heading {#id}` keeps the explicit id, so published anchors survive a
     // reworded heading. Astro slugs everything else as usual.
-    remarkPlugins: [remarkHeadingId],
+    processor: satteri({ hastPlugins: [hastHeadingId] }),
   },
   vite: {
     plugins: [tailwindcss()],
