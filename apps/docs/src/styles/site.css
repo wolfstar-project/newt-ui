@@ -754,6 +754,14 @@
   }
 
   .search-dialog {
+    /*
+     * An open modal `<dialog>` is centred by the UA stylesheet with `inset: 0`
+     * and `margin: auto`. Tailwind's preflight resets `margin` on every
+     * element — `*, ::before, ::after, ::backdrop` — which drops the auto
+     * margins and pins the dialog to the top-left corner, so the centring is
+     * restated here.
+     */
+    margin: auto;
     width: min(36rem, calc(100vw - 2rem));
     padding: 0;
     border: 1px solid var(--newt-border);

@@ -31,7 +31,23 @@ export default defineConfig({
     mdx(),
     react(),
     vue(),
-    pagefind(),
+    /*
+     * The article is the indexed body, and these are the parts of it that are
+     * not prose: rendered component source, the live demos' own UI text, the
+     * tab labels and the copy-page menu. Left in, a search for "avatar" answers
+     * with `className={cn(...)}` from a code block rather than with the
+     * sentence describing the component.
+     */
+    pagefind({
+      indexConfig: {
+        excludeSelectors: [
+          ".expressive-code",
+          ".demo-frame",
+          ".tabs-list",
+          ".copy-page",
+        ],
+      },
+    }),
     sitemap(),
   ],
   markdown: {
