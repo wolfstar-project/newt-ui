@@ -1,0 +1,77 @@
+<script setup lang="ts">
+import { Avatar } from "~~/registry/bases/newt/ui/avatar"
+import {
+  MessageGroup,
+  MessageGroupAuthor,
+  MessageGroupAvatar,
+  MessageGroupBody,
+  MessageGroupBotTag,
+  MessageGroupContent,
+  MessageGroupEphemeralAction,
+  MessageGroupEphemeralNotice,
+  MessageGroupHeader,
+  MessageGroupReactions,
+  MessageGroupReply,
+  MessageGroupTime,
+} from "~~/registry/bases/newt/ui/message-group"
+import { Reaction } from "~~/registry/bases/newt/ui/reaction"
+import {
+  ReplyPreview,
+  ReplyPreviewAuthor,
+  ReplyPreviewText,
+} from "~~/registry/bases/newt/ui/reply-preview"
+import {
+  StatusDot,
+  StatusIndicator,
+} from "~~/registry/bases/newt/ui/status-indicator"
+</script>
+
+<template>
+  <div class="flex w-full max-w-md flex-col gap-2">
+    <MessageGroup with-reply>
+      <MessageGroupReply>
+        <ReplyPreview>
+          <ReplyPreviewAuthor>@someone</ReplyPreviewAuthor>
+          <ReplyPreviewText>original message text</ReplyPreviewText>
+        </ReplyPreview>
+      </MessageGroupReply>
+      <MessageGroupAvatar>
+        <StatusIndicator>
+          <Avatar>U</Avatar>
+          <StatusDot status="online" />
+        </StatusIndicator>
+      </MessageGroupAvatar>
+      <MessageGroupBody>
+        <MessageGroupHeader>
+          <MessageGroupAuthor>username</MessageGroupAuthor>
+          <MessageGroupBotTag verified />
+          <MessageGroupTime datetime="2026-09-04T14:23:00.000Z">
+            Today at 14:23
+          </MessageGroupTime>
+        </MessageGroupHeader>
+        <MessageGroupContent>Message content goes here.</MessageGroupContent>
+        <MessageGroupReactions>
+          <Reaction emoji="👍" :count="1" />
+        </MessageGroupReactions>
+      </MessageGroupBody>
+    </MessageGroup>
+    <MessageGroup ephemeral>
+      <MessageGroupAvatar>
+        <Avatar>B</Avatar>
+      </MessageGroupAvatar>
+      <MessageGroupBody>
+        <MessageGroupHeader>
+          <MessageGroupAuthor>botname</MessageGroupAuthor>
+          <MessageGroupBotTag>APP</MessageGroupBotTag>
+        </MessageGroupHeader>
+        <MessageGroupContent>Command ran successfully.</MessageGroupContent>
+        <MessageGroupEphemeralNotice>
+          Only you can see this •
+          <MessageGroupEphemeralAction>
+            Dismiss message
+          </MessageGroupEphemeralAction>
+        </MessageGroupEphemeralNotice>
+      </MessageGroupBody>
+    </MessageGroup>
+  </div>
+</template>

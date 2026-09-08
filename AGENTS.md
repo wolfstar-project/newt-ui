@@ -17,18 +17,19 @@ apps/
   docs/   THE documentation site (Astro + MDX, React and Vue islands). One
           site for both frameworks: a React/Vue switcher picks which registry
           renders each demo. Content is `src/content/docs/**/*.mdx`; it reads
-          `apps/www/registry` and `apps/vue/app/lib/registry` directly through
+          `apps/www/registry` and `apps/vue/registry` directly through
           path aliases and bundles both built registries into its own `dist/`.
   www/    React registry source + builder (Next.js) — shadcn-ui layout:
-          registry/default/{ui,example}. No longer ships docs pages.
+          registry/bases/newt/{ui,blocks,examples}. No longer ships docs pages.
   vue/    Vue registry source + builder (Nuxt 4 + Tailwind 4) — shadcn-vue
-          layout: app/lib/registry/default/ui/<name>/. No longer ships docs
+          layout: registry/bases/newt/{ui,blocks,examples}. No longer ships docs
           pages.
 packages/
-  newtui/    `newtui` CLI (React + Vue) + registry/html (original HTML/CSS + tokens.css)
-  newt-ui/   `@newtui/react` deprecation wrapper forwarding to `newtui`
-  cli/       `@newtui/vue` deprecation wrapper forwarding to `newtui`
+  cli/       `newtui` CLI (React + Vue) + registry/html (original HTML/CSS + tokens.css)
   module/    `@newtui/nuxt` Nuxt module
+deprecated/
+  react-cli/ `@newtui/react` deprecation wrapper forwarding to `newtui`
+  vue-cli/   `@newtui/vue` deprecation wrapper forwarding to `newtui`
 templates/
   next-template/, nuxt-template/   Starter apps preconfigured with newt/ui
 tooling/oxc/   Shared oxlint + oxfmt configuration
@@ -100,7 +101,7 @@ runs all three plus `typecheck`, `build`, and `zizmor`.
 
 ## Design tokens
 
-`packages/newtui/registry/html/tokens.css` is the single source of truth
+`packages/cli/registry/html/tokens.css` is the single source of truth
 for every `--newt-*` CSS variable. Both docs apps mirror it into their own
 global stylesheet and map every token to a Tailwind utility (`bg-newt-brand`,
 `text-newt-text-muted`, `rounded-md`, `shadow-elevation-high`, …) — `apps/www`
@@ -116,14 +117,14 @@ system, accessibility requirements, and a full worked example. Short
 version:
 
 1. Original HTML/CSS (if authoring the canonical spec) goes in
-   `packages/newtui/registry/html/components/<name>.{css,html,js}`.
-2. React: `apps/www/registry/default/ui/<name>.tsx` (cva + `cn` + Tailwind),
-   `apps/www/registry/default/example/<name>-demo.tsx`,
+   `packages/cli/registry/html/components/<name>.{css,html,js}`.
+2. React: `apps/www/registry/bases/newt/ui/<name>.tsx` (cva + `cn` + Tailwind),
+   `apps/www/registry/bases/newt/examples/<name>-demo.tsx`,
    and the docs page at `apps/docs/src/content/docs/components/<name>.mdx`
    (`pnpm --filter docs docs:gen` writes a source-derived starter with API and
    accessibility sections).
-3. Vue: `apps/vue/app/lib/registry/default/ui/<name>/{Pascal.vue,index.ts}`,
-   `apps/vue/app/lib/registry/default/example/PascalDemo.vue`.
+3. Vue: `apps/vue/registry/bases/newt/ui/<name>/{Pascal.vue,index.ts}`,
+   `apps/vue/registry/bases/newt/examples/PascalDemo.vue`.
 4. Add `apps/www/registry/meta/<name>.json` (title, description,
    dependencies, registryDependencies, vueFiles) — this drives the
    generated registry indexes.

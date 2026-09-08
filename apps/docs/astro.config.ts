@@ -59,13 +59,18 @@ export default defineConfig({
     plugins: [tailwindcss()],
     resolve: {
       /*
-       * Longest prefix first: `@/lib/registry` must win over `@/lib/utils`,
-       * and both over `@/lib`. Vite matches these in order.
+       * Registry source sits outside this app. Vue registry components use
+       * Nuxt's root alias (`~~`), while docs modules retain the local
+       * `@/lib/registry` compatibility alias.
        */
       alias: [
         {
+          find: "~~/registry",
+          replacement: here("../vue/registry"),
+        },
+        {
           find: "@/lib/registry",
-          replacement: here("../vue/app/lib/registry"),
+          replacement: here("../vue/registry"),
         },
         { find: "@/lib/utils", replacement: here("./src/lib/utils.ts") },
         { find: "@/registry", replacement: here("../www/registry") },

@@ -1,6 +1,7 @@
 packages:
   - "apps/*"
   - "packages/*"
+  - "deprecated/*"
   - "templates/*"
 
 autoInstallPeers: true

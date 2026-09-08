@@ -1,0 +1,48 @@
+<script setup lang="ts">
+import { Avatar } from "~~/registry/bases/newt/ui/avatar"
+import { Button } from "~~/registry/bases/newt/ui/button"
+import { RoleTag } from "~~/registry/bases/newt/ui/role-tag"
+import { StatusIndicator } from "~~/registry/bases/newt/ui/status-indicator"
+import {
+  UserProfile,
+  UserProfileActions,
+  UserProfileAvatar,
+  UserProfileBanner,
+  UserProfileBio,
+  UserProfileBody,
+  UserProfileDivider,
+  UserProfileHandle,
+  UserProfileHead,
+  UserProfileName,
+  UserProfileRoles,
+  UserProfileSectionLabel,
+} from "~~/registry/bases/newt/ui/user-profile"
+</script>
+
+<template>
+  <UserProfile>
+    <UserProfileBanner />
+    <UserProfileHead>
+      <UserProfileActions>
+        <Button variant="icon" aria-label="Send message">✉</Button>
+      </UserProfileActions>
+      <UserProfileAvatar>
+        <StatusIndicator status="online">
+          <Avatar size="lg">U</Avatar>
+        </StatusIndicator>
+      </UserProfileAvatar>
+      <UserProfileName>username</UserProfileName>
+      <UserProfileHandle>username#0000</UserProfileHandle>
+      <UserProfileDivider />
+    </UserProfileHead>
+    <UserProfileBody>
+      <UserProfileSectionLabel>About me</UserProfileSectionLabel>
+      <UserProfileBio>Bio text goes here.</UserProfileBio>
+      <UserProfileDivider />
+      <UserProfileSectionLabel>Roles</UserProfileSectionLabel>
+      <UserProfileRoles>
+        <RoleTag>Role</RoleTag>
+      </UserProfileRoles>
+    </UserProfileBody>
+  </UserProfile>
+</template>

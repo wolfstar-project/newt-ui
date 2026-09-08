@@ -50,7 +50,7 @@ utilities are the same — `bg-newt-brand`, `text-newt-text-muted`,
 ## Adding a token
 
 If a value has no token, add the token rather than the value. In this
-repository that means editing `packages/newtui/registry/html/tokens.css` first
+repository that means editing `packages/cli/registry/html/tokens.css` first
 and rerunning `node scripts/gen-registry.mjs`. In a consumer project it means
 declaring your own custom property alongside the `--newt-*` block, not a literal
 in a component.

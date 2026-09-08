@@ -1,13 +1,14 @@
-// Builds public/r/<style>/<name>.json (registry-item format) from app/lib/registry
+// Builds public/r/<style>/<name>.json (registry-item format) from registry/
 import { promises as fs } from "node:fs"
 import path from "node:path"
 
-import { registry } from "../app/lib/registry/index"
-import { styles } from "../app/lib/registry/registry-styles"
-import { registryItemSchema, type Registry } from "../app/lib/registry/schema"
+import { registry } from "../registry/index"
+import { styles } from "../registry/registry-styles"
+import { registryItemSchema, type Registry } from "../registry/schema"
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r")
-const SRC = path.join(process.cwd(), "app/lib")
+const APP_LIB = path.join(process.cwd(), "app/lib")
+const REGISTRY_SOURCE = path.join(process.cwd(), "registry/bases/newt")
 // Every item in this app targets Vue; the field is stamped here so a
 // consumer reading a single item JSON knows which framework it belongs to.
 const REGISTRY_FRAMEWORK = "vue" as const
@@ -54,8 +55,8 @@ async function buildStyles(allItems: Registry) {
         item.files.map(async (f) => {
           const file = f instanceof Object ? f : { path: f, type: item.type }
           const abs = file.path.startsWith("lib/")
-            ? path.join(SRC, file.path.replace(/^lib\//, ""))
-            : path.join(SRC, "registry", style.name, file.path)
+            ? path.join(APP_LIB, file.path.replace(/^lib\//, ""))
+            : path.join(REGISTRY_SOURCE, file.path)
           return { ...file, content: await fs.readFile(abs, "utf8") }
         })
       )

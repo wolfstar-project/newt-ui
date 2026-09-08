@@ -20,7 +20,7 @@
  * `duration-fast`, …). The registry components read both.
  *
  * Source of truth for the token values:
- * packages/newtui/registry/html/tokens.css
+ * packages/cli/registry/html/tokens.css
  * ------------------------------------------------------------------ */
 @theme {
   /* Surfaces */
@@ -78,7 +78,7 @@
   --transition-duration-base: var(--newt-duration-base);
 }
 
-/* newt/ui design tokens — source of truth: packages/newtui/registry/html/tokens.css */
+/* newt/ui design tokens — source of truth: packages/cli/registry/html/tokens.css */
 @layer base {
   :root {
     /* Surfaces */

@@ -100,7 +100,7 @@ components/ui/badge.tsx
 ```
 
 One file per component, and the imports inside it are rewritten on the way in:
-`@/registry/default/ui/button` becomes your ui alias, and `@/lib/utils` becomes
+`@/registry/bases/newt/ui/button` becomes your ui alias, and `@/lib/utils` becomes
 your utils alias. The variants are `class-variance-authority`, so a component
 you want to change is a file you edit.
 
@@ -128,7 +128,7 @@ components/ui/badge/index.ts
 
 A folder per component: the single-file components, and an `index.ts` barrel
 that re-exports them along with the `class-variance-authority` variants. The
-imports are rewritten on the way in, so `@/lib/registry/default/ui/button`
+imports are rewritten on the way in, so `~~/registry/bases/newt/ui/button`
 becomes your ui alias and `@/lib/utils` becomes your utils alias.
 
 </div>
@@ -143,7 +143,7 @@ becomes your ui alias and `@/lib/utils` becomes your utils alias.
 
 Every colour, radius, shadow, font and duration in the library is a `--newt-*`
 custom property. The source of truth is one file in the repository,
-`packages/newtui/registry/html/tokens.css`, and all three flavours read from it:
+`packages/cli/registry/html/tokens.css`, and all three flavours read from it:
 the Tailwind theme maps its namespaces onto those variables, and the plain CSS
 components use `var(--newt-brand)` directly.
 

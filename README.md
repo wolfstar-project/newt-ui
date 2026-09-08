@@ -2,7 +2,7 @@
 
 A Discord-styled component library for **React**, **Vue** and plain
 **HTML/CSS**, built on a shared `--newt-*` design-token system. Copy-paste
-components you own (shadcn-style), a CLI for each framework, and one
+components you own (shadcn-style), one multi-framework CLI, and one
 documentation site that switches between the React and Vue sources.
 
 > **Not affiliated with Discord Inc.** newt/ui is an independent project,
@@ -16,19 +16,19 @@ This is a pnpm + turborepo monorepo laid out like
 
 ```
 apps/
-  docs/                     The documentation site (Vite + React + Vue)
-    src/site/               Chrome: shell, header, sidebar, code blocks, demo frames
-    src/content/            Site config, nav tree, component model (from registry/meta)
-    src/pages/              Home, Installation, component pages, 404
-    src/vue/demos.ts        Vue demo loaders, mounted as islands inside React
-    src/styles/site.css     Tailwind v4: site palette + the --newt-* token bridge
+  docs/                     Shared Astro docs (MDX + React/Vue islands)
+    src/content/docs/       Guides and one page per component
+    src/components/         Site chrome, code blocks, and preview frames
+    src/lib/                Registry metadata and paired demo loaders
+    src/styles/site.css     Tailwind v4 + the --newt-* token bridge
   www/                      React registry source + builder (Next.js)
     registry/
-      default/ui/*.tsx      React components (cva + cn + Tailwind, tokens via --newt-*)
-      default/example/*.tsx Demos
+      bases/newt/ui/*.tsx   React components (cva + cn + Tailwind)
+      bases/newt/blocks/    Composed React blocks
+      bases/newt/examples/  React demos
       registry-ui.ts        Generated index of components
       registry-examples.ts  Generated index of demos
-      registry-categories.ts  Sidebar taxonomy (6 groups, all 43 components)
+      registry-categories.ts  Shared sidebar taxonomy
       schema.ts             registry-item zod schema
       meta/*.json           Per-component metadata (source for generated files)
     lib/utils.ts            cn()
@@ -36,17 +36,19 @@ apps/
     scripts/build-registry.mts  Emits public/r for the React CLI
     components.json
   vue/                      Vue registry source + builder (Nuxt 4)
-    app/lib/registry/
-      default/ui/<name>/    {Component.vue, index.ts} per component
-      default/example/*.vue Demos
+    registry/
+      bases/newt/ui/<name>/ {Component.vue, index.ts} per component
+      bases/newt/blocks/    Composed Vue blocks
+      bases/newt/examples/  Vue demos
       schema.ts, registry-ui.ts, registry-examples.ts
     app/assets/css/main.css Tailwind v4 (`@theme`) + --newt-* tokens
     scripts/build-registry.mts  Emits public/r for the Vue CLI
 packages/
-  newtui/                   `newtui` CLI (React + Vue) + registry/html (original HTML/CSS sources, tokens.css)
-  newt-ui/                  `@newtui/react` deprecation wrapper around `newtui`
-  cli/                      `@newtui/vue` deprecation wrapper around `newtui`
+  cli/                      `newtui` CLI (React + Vue) + registry/html
   module/                   `@newtui/nuxt` Nuxt module
+deprecated/
+  react-cli/                `@newtui/react` forwarding wrapper
+  vue-cli/                  `@newtui/vue` forwarding wrapper
 templates/
   next-template/            Next.js starter preconfigured with newt/ui
   nuxt-template/            Nuxt starter preconfigured with newt/ui
@@ -114,7 +116,7 @@ same installation page for React and Vue behind a framework switcher — see
 
 ## Design tokens
 
-`packages/newtui/registry/html/tokens.css` is the single source of truth.
+`packages/cli/registry/html/tokens.css` is the single source of truth.
 Every app maps the tokens to Tailwind utilities (`bg-newt-brand`,
 `text-newt-text-muted`, `rounded-md`, `shadow-elevation-high`, …) — `apps/www`
 through the `newtPreset` in `tailwind.config.ts` (Tailwind v3), `apps/vue` and
@@ -181,7 +183,7 @@ have one yet. Every page is also served as markdown at the same
 path plus `.md`, and `/llms.txt` indexes them.
 
 The two registries are consumed in place through path aliases (`@/registry` →
-`apps/www/registry`, `@/lib/registry` → `apps/vue/app/lib/registry`), so a
+`apps/www/registry`, `@/lib/registry` → `apps/vue/registry`), so a
 component only ever exists once. At build time the site copies both `public/r`
 outputs into its own `dist/`, which is why `apps/www` and `apps/vue` remain in
 the repository as registry builders even though they no longer ship pages.

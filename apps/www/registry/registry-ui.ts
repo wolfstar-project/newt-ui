@@ -192,7 +192,7 @@ export const ui: Registry = [
     ],
     files: [
       {
-        path: "block/chat-window/chat-window.tsx",
+        path: "blocks/chat-window/chat-window.tsx",
         type: "registry:block",
       },
     ],
@@ -220,7 +220,7 @@ export const ui: Registry = [
     registryDependencies: ["slash-command-suggestions", "bot-command-card"],
     files: [
       {
-        path: "block/command-panel/command-panel.tsx",
+        path: "blocks/command-panel/command-panel.tsx",
         type: "registry:block",
       },
     ],
@@ -609,7 +609,7 @@ export const ui: Registry = [
     ],
     files: [
       {
-        path: "block/server-sidebar/server-sidebar.tsx",
+        path: "blocks/server-sidebar/server-sidebar.tsx",
         type: "registry:block",
       },
     ],

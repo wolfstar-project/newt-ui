@@ -12,12 +12,13 @@ flows back.
 
 ## Package ownership
 
-- `packages/newtui`: the `newtui` CLI, which serves React **and** Vue, **and**
+- `packages/cli`: the `newtui` CLI, which serves React **and** Vue, **and**
   `registry/html/`, the canonical HTML/CSS/JS source of every component plus
   `tokens.css`. The legacy `newtui-html` bin (`cli/index.js`) copies straight
   out of that directory. This package owns the design tokens; nothing else may
   redefine a value.
-- `packages/newt-ui` (`@newtui/react`) and `packages/cli` (`@newtui/vue`):
+- `deprecated/react-cli` (`@newtui/react`) and `deprecated/vue-cli`
+  (`@newtui/vue`):
   deprecation wrappers. Each ships one bin that prints a notice and forwards to
   `newtui`. They hold no CLI logic and are removed in the next major.
 - `packages/module`: `@newtui/nuxt`, auto-imports a consumer's
@@ -26,8 +27,9 @@ flows back.
 - `apps/www`: React registry builder (Next.js), shadcn-ui layout. Owns
   `registry/meta/*.json`, which is the single input the generator reads for
   **both** frameworks.
-- `apps/vue`: Vue docs site (Nuxt 4 + Tailwind 4), shadcn-vue layout under
-  `app/lib/registry/`, markdown under `content/`.
+- `apps/vue`: Vue registry builder (Nuxt 4 + Tailwind 4), shadcn-vue layout
+  under root-level `registry/bases/newt/`. The Nuxt application shell remains
+  under `app/`.
 - `templates/*`: starter apps. They copy configuration from the docs apps;
   nothing imports them.
 - `skills/newt-ui`: the skill published to consumers. It documents the CLI, the
@@ -39,15 +41,15 @@ flows back.
 
 ## Rules
 
-- A component's visual truth is `packages/newtui/registry/html/components/`.
+- A component's visual truth is `packages/cli/registry/html/components/`.
   When the React and Vue versions disagree with it, the HTML is right.
 - Never hardcode a colour, radius, font, shadow, or duration that already
   exists as a `--newt-*` token. If a value is missing, add the token first.
 - `registry-ui.ts`, `registry-examples.ts`, `__registry__/`,
-  `packages/newtui/registry.{react,vue}.json`, and `apps/*/public/r/**` are
+  `apps/*/registry.json`, and `apps/*/public/r/**` are
   **generated**. Edit `apps/www/registry/meta/<name>.json` and rerun the
   generator instead.
-- The two docs apps intentionally sit on different Tailwind majors: `apps/www`
+- The two registry apps intentionally sit on different Tailwind majors: `apps/www`
   on v3 (JS preset in `tailwind.config.ts`), `apps/vue` on v4 (CSS-first
   `@theme` in `app/assets/css/main.css`). That split is the compatibility test
   for the registry — do not "fix" it by aligning them. Everything Nuxt

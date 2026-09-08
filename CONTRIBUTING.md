@@ -7,27 +7,28 @@ opening a pull request.
 
 ```
 apps
-├── www            # React docs site + React registry (Next.js, shadcn-ui layout)
-└── vue            # Vue docs site + Vue registry (Nuxt, shadcn-vue layout)
+├── docs           # Shared Astro documentation site
+├── www            # React registry builder (Next.js, shadcn-ui layout)
+└── vue            # Vue registry builder (Nuxt, shadcn-vue layout)
 packages
-├── newtui         # `newtui` CLI (React + Vue) + HTML/CSS registry sources
-├── newt-ui        # `@newtui/react` deprecation wrapper
-├── cli            # `@newtui/vue` deprecation wrapper
+├── cli            # `newtui` CLI (React + Vue) + HTML/CSS registry sources
 └── module         # Nuxt module
+deprecated
+├── react-cli      # `@newtui/react` forwarding wrapper
+└── vue-cli        # `@newtui/vue` forwarding wrapper
 templates
 ├── next-template
 └── nuxt-template
 ```
 
-| Path                            | Description                                                                   |
-| ------------------------------- | ----------------------------------------------------------------------------- |
-| `apps/www/registry`             | React components (`registry/<style>/ui`) and examples                         |
-| `apps/www/components/docs`      | Docs chrome (side nav, page header, component section, preview frame)         |
-| `apps/www/styles/docs.css`      | Docs site styling, ported verbatim from the original single-page `index.html` |
-| `apps/www/content/docs`         | React documentation (MDX)                                                     |
-| `apps/vue/src/lib/registry`     | Vue components (`registry/<style>/ui/<name>`) and examples                    |
-| `apps/vue/src/content/docs`     | Vue documentation (Markdown)                                                  |
-| `packages/newtui/registry/html` | Original HTML/CSS sources and `tokens.css`                                    |
+| Path                           | Description                                          |
+| ------------------------------ | ---------------------------------------------------- |
+| `apps/docs/src/content/docs`   | Shared React/Vue documentation (MDX)                 |
+| `apps/www/registry/bases/newt` | React components, blocks, and examples               |
+| `apps/www/registry/meta`       | Metadata driving both generated framework registries |
+| `apps/vue/registry/bases/newt` | Vue components, blocks, and examples                 |
+| `packages/cli/src`             | Published multi-framework CLI implementation         |
+| `packages/cli/registry/html`   | Original HTML/CSS sources and `tokens.css`           |
 
 ## Development
 
@@ -40,14 +41,13 @@ pnpm --filter vue-www dev
 
 ## Adding a component
 
-1. Add the React component to `apps/www/registry/default/ui/<name>.tsx` and
-   register it in `apps/www/registry/registry-ui.ts`.
-2. Add an example to `apps/www/registry/default/example/<name>-demo.tsx` and
-   register it in `apps/www/registry/registry-examples.ts`.
-3. Add docs in `apps/www/content/docs/components/<name>.mdx`.
-4. Repeat for Vue in `apps/vue/src/lib/registry/default/ui/<name>/` and
-   `apps/vue/src/content/docs/components/<name>.md`.
-5. Run `pnpm registry:build`.
+1. Add the React component to `apps/www/registry/bases/newt/ui/<name>.tsx` and
+   add its metadata in `apps/www/registry/meta/<name>.json`.
+2. Add an example to `apps/www/registry/bases/newt/examples/<name>-demo.tsx`.
+3. Repeat for Vue in `apps/vue/registry/bases/newt/ui/<name>/` and
+   `apps/vue/registry/bases/newt/examples/<Pascal>Demo.vue`.
+4. Add the shared docs page in `apps/docs/src/content/docs/components/<name>.mdx`.
+5. Run `node scripts/gen-registry.mjs && pnpm registry:build`.
 6. Add a changeset: `pnpm changeset`.
 
 Read `AGENT_GUIDE.md` for design-token and naming conventions.

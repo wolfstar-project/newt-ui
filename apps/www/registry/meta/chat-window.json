@@ -11,7 +11,7 @@
     "message-composer",
     "avatar"
   ],
-  "reactFiles": ["block/chat-window/chat-window.tsx"],
+  "reactFiles": ["blocks/chat-window/chat-window.tsx"],
   "vueFiles": ["ChatWindow.vue", "types.ts", "index.ts"],
   "reactDemo": "chat-window-demo",
   "vueDemo": "ChatWindowDemo"

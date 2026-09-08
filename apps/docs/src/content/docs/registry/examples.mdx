@@ -16,7 +16,7 @@ The common case. One file, one npm dependency, no siblings.
   "description": "A key-cap style tag for keyboard shortcuts.",
   "files": [
     {
-      "path": "registry/default/ui/kbd-tag.tsx",
+      "path": "registry/bases/newt/ui/kbd-tag.tsx",
       "type": "registry:ui",
       "content": "export function KbdTag(…) { … }"
     }
@@ -38,7 +38,7 @@ this one writes three files.
   "registryDependencies": ["button", "scrollbar"],
   "files": [
     {
-      "path": "registry/default/ui/modal.tsx",
+      "path": "registry/bases/newt/ui/modal.tsx",
       "type": "registry:ui",
       "content": "…"
     }
@@ -58,12 +58,12 @@ them and the variants.
   "framework": "vue",
   "files": [
     {
-      "path": "registry/default/ui/badge/Badge.vue",
+      "path": "registry/bases/newt/ui/badge/Badge.vue",
       "type": "registry:ui",
       "content": "…"
     },
     {
-      "path": "registry/default/ui/badge/index.ts",
+      "path": "registry/bases/newt/ui/badge/index.ts",
       "type": "registry:ui",
       "content": "…"
     }
@@ -103,7 +103,7 @@ site — and an agent reading the registry — can see the component in use.
   "registryDependencies": ["badge"],
   "files": [
     {
-      "path": "registry/default/example/badge-demo.tsx",
+      "path": "registry/bases/newt/examples/badge-demo.tsx",
       "type": "registry:example",
       "content": "…"
     }

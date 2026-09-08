@@ -9,23 +9,23 @@ A component is done when it exists in all three forms and they look identical.
 
 ## The three forms
 
-1. **HTML/CSS** — `packages/newtui/registry/html/components/<name>.{css,html,js}`.
+1. **HTML/CSS** — `packages/cli/registry/html/components/<name>.{css,html,js}`.
    BEM-lite classes prefixed `newt-`: `.newt-block`, `.newt-block__element`,
    `.newt-block--variant`. This is the visual spec.
-2. **React** — `apps/www/registry/default/ui/<name>.tsx`. `cva` for variants,
+2. **React** — `apps/www/registry/bases/newt/ui/<name>.tsx`. `cva` for variants,
    `cn` for merging, `React.forwardRef` + `displayName`, compound exports for
    sub-elements (`Embed`, `EmbedTitle`, `EmbedField`, …), and the `*Variants`
    object exported alongside. `"use client"` only when it uses hooks or events.
-3. **Vue** — `apps/vue/app/lib/registry/default/ui/<name>/`: one `.vue` per
+3. **Vue** — `apps/vue/registry/bases/newt/ui/<name>/`: one `.vue` per
    sub-component (`<script setup lang="ts">`), plus `index.ts` re-exporting
    them and defining the `cva` variants and `VariantProps` types.
 
-Plus, every time: a demo (`example/<name>-demo.tsx` /
-`example/<Pascal>Demo.vue`), one docs page for both frameworks
+Plus, every time: a demo (`examples/<name>-demo.tsx` /
+`examples/<Pascal>Demo.vue`), one docs page for both frameworks
 (`apps/docs/src/content/docs/components/<name>.mdx`, whose source-derived
 starter `pnpm --filter docs docs:gen` writes with API tables),
 `registry/meta/<name>.json`, and an
-entry in `registry-categories.ts` (both copies).
+entry in the shared `apps/www/registry/registry-categories.ts` taxonomy.
 
 ## Rules
 

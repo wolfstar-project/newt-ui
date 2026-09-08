@@ -7,7 +7,7 @@
     ".claude/**",
     ".skills/**",
     "apps/*/public/legacy/**",
-    "packages/newtui/registry/html/**",
+    "packages/cli/registry/html/**",
     "tooling/oxc/anti-slop/"
   ],
   "jsPlugins": [

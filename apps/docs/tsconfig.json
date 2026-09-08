@@ -6,8 +6,10 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "paths": {
-      "@/lib/registry": ["../vue/app/lib/registry"],
-      "@/lib/registry/*": ["../vue/app/lib/registry/*"],
+      "@/lib/registry": ["../vue/registry"],
+      "@/lib/registry/*": ["../vue/registry/*"],
+      "~~/registry": ["../vue/registry"],
+      "~~/registry/*": ["../vue/registry/*"],
       "@/lib/utils": ["./src/lib/utils.ts"],
       "@/registry/*": ["../www/registry/*"],
       "@/components": ["./src/components"],
@@ -24,7 +26,7 @@
     "scripts/**/*",
     "astro.config.ts",
     "../www/registry/**/*",
-    "../vue/app/lib/registry/**/*"
+    "../vue/registry/**/*"
   ],
   "exclude": ["dist", "node_modules"]
 }

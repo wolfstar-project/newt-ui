@@ -10,7 +10,7 @@
     "status-indicator",
     "avatar"
   ],
-  "reactFiles": ["block/server-sidebar/server-sidebar.tsx"],
+  "reactFiles": ["blocks/server-sidebar/server-sidebar.tsx"],
   "vueFiles": ["ServerSidebar.vue", "types.ts", "index.ts"],
   "reactDemo": "server-sidebar-demo",
   "vueDemo": "ServerSidebarDemo"

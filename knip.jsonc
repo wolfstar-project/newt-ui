@@ -40,7 +40,7 @@
       "entry": [
         "app/**/*.{ts,tsx}",
         "registry/index.ts",
-        "registry/default/**/*.{ts,tsx}",
+        "registry/bases/newt/**/*.{ts,tsx}",
         "scripts/build-registry.mts",
       ],
       "project": ["**/*.{ts,tsx}"],
@@ -49,27 +49,31 @@
     "apps/vue": {
       "entry": [
         "app/app.vue",
-        "app/lib/registry/index.ts",
-        "app/lib/registry/default/**/*.{ts,vue}",
+        "registry/index.ts",
+        "registry/bases/newt/**/*.{ts,vue}",
         // Nuxt auto-imports this directory; nothing imports it explicitly.
         "app/utils/**/*.ts",
         "scripts/build-registry.mts",
       ],
-      "project": ["app/**/*.{ts,vue}", "nuxt.config.ts"],
-      "ignore": ["app/__registry__/**"],
+      "project": [
+        "app/**/*.{ts,vue}",
+        "registry/**/*.{ts,vue}",
+        "nuxt.config.ts",
+      ],
+      "ignore": ["__registry__/**"],
       "ignoreDependencies": ["vue-router"],
     },
-    "packages/newtui": {
+    "packages/cli": {
       "entry": ["src/index.ts", "cli/index.js"],
       "project": ["src/**/*.ts"],
     },
     // The two scoped packages are deprecation wrappers around `newtui`; their
     // only source is the bin that forwards to it.
-    "packages/newt-ui": {
+    "deprecated/react-cli": {
       "entry": ["bin/*.js"],
       "project": ["bin/*.js"],
     },
-    "packages/cli": {
+    "deprecated/vue-cli": {
       "entry": ["bin/*.js"],
       "project": ["bin/*.js"],
     },

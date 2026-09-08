@@ -104,17 +104,17 @@ export { categories, rootClasses }
  * text is inlined into the HTML rather than fetched by the reader.
  */
 const reactDemoSources = import.meta.glob<string>(
-  "../../../www/registry/default/example/*-demo.tsx",
+  "../../../www/registry/bases/newt/examples/*-demo.tsx",
   { query: "?raw", import: "default", eager: true }
 )
 
 const vueDemoSources = import.meta.glob<string>(
-  "../../../vue/app/lib/registry/default/example/*Demo.vue",
+  "../../../vue/registry/bases/newt/examples/*Demo.vue",
   { query: "?raw", import: "default", eager: true }
 )
 
 const reactUiSources = import.meta.glob<string>(
-  "../../../www/registry/default/ui/*.tsx",
+  "../../../www/registry/bases/newt/ui/*.tsx",
   {
     query: "?raw",
     import: "default",
@@ -123,7 +123,7 @@ const reactUiSources = import.meta.glob<string>(
 )
 
 const reactBlockSources = import.meta.glob<string>(
-  "../../../www/registry/default/block/**/*.tsx",
+  "../../../www/registry/bases/newt/blocks/**/*.tsx",
   {
     query: "?raw",
     import: "default",
@@ -132,12 +132,12 @@ const reactBlockSources = import.meta.glob<string>(
 )
 
 const vueUiSources = import.meta.glob<string>(
-  "../../../vue/app/lib/registry/default/ui/*/*.{vue,ts}",
+  "../../../vue/registry/bases/newt/ui/*/*.{vue,ts}",
   { query: "?raw", import: "default", eager: true }
 )
 
 const vueBlockSources = import.meta.glob<string>(
-  "../../../vue/app/lib/registry/default/block/**/*.{vue,ts}",
+  "../../../vue/registry/bases/newt/blocks/**/*.{vue,ts}",
   { query: "?raw", import: "default", eager: true }
 )
 

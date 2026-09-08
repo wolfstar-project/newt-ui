@@ -20,11 +20,11 @@ export type ReactDemoLoader = () => Promise<{
 export type VueDemoLoader = () => Promise<{ readonly default: Component }>
 
 const reactModules = import.meta.glob<{ readonly default: ComponentType }>(
-  "../../../www/registry/default/example/*-demo.tsx"
+  "../../../www/registry/bases/newt/examples/*-demo.tsx"
 )
 
 const vueModules = import.meta.glob<{ readonly default: Component }>(
-  "../../../vue/app/lib/registry/default/example/*Demo.vue"
+  "../../../vue/registry/bases/newt/examples/*Demo.vue"
 )
 
 function byBasename<T>(

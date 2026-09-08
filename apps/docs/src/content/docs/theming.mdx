@@ -8,7 +8,7 @@ property. There is no theme object, no provider and no build step involved in
 changing one: the components read variables, so the variables are the theme.
 
 The values live in one file,
-`packages/newtui/registry/html/tokens.css`, and everything else reads from it —
+`packages/cli/registry/html/tokens.css`, and everything else reads from it —
 the Tailwind theme maps its namespaces onto the same variables, and the plain
 CSS components use `var(--newt-brand)` directly.
 
