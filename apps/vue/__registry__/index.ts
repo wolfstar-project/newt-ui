@@ -617,6 +617,20 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "radio",
+    {
+      name: "radio",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/radio/Radio.vue",
+        "registry/bases/newt/ui/radio/RadioGroup.vue",
+        "registry/bases/newt/ui/radio/useRadioGroup.ts",
+        "registry/bases/newt/ui/radio/index.ts",
+      ],
+    },
+  ],
+  [
     "reaction",
     {
       name: "reaction",
@@ -1388,6 +1402,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ProgressDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ProgressDemo.vue")
+      ),
+    },
+  ],
+  [
+    "RadioDemo",
+    {
+      name: "RadioDemo",
+      type: "registry:example",
+      registryDependencies: ["radio"],
+      files: ["registry/bases/newt/examples/RadioDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/RadioDemo.vue")
       ),
     },
   ],

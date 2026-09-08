@@ -1,0 +1,101 @@
+/*
+ * A radio group: one choice out of a short, visible list. Where a select menu
+ * hides its options until asked, this shows them all — which is what the
+ * client's settings panels use when there are two or three of them and the
+ * difference between them matters.
+ *
+ * State is encoded in the ring and the dot, not in motion: the selected row
+ * reads as selected in a screenshot, and in greyscale.
+ */
+.newt-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.newt-radio {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 4px;
+  border: 0;
+  background: transparent;
+  color: var(--newt-text-secondary);
+  font-family: var(--newt-font-sans);
+  font-size: 15px;
+  line-height: 20px;
+  text-align: start;
+  cursor: pointer;
+}
+
+.newt-radio:hover {
+  color: var(--newt-text-primary);
+}
+
+.newt-radio:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+  border-radius: var(--newt-radius-sm);
+}
+
+/* The ring. Its border carries the state; the dot inside confirms it. */
+.newt-radio__control {
+  position: relative;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--newt-text-muted);
+  border-radius: var(--newt-radius-full);
+  background: transparent;
+  transition:
+    border-color var(--newt-duration-fast) var(--newt-ease),
+    background var(--newt-duration-fast) var(--newt-ease);
+}
+
+.newt-radio:hover .newt-radio__control {
+  border-color: var(--newt-text-secondary);
+}
+
+.newt-radio__control::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--newt-radius-full);
+  background: #fff;
+  transform: translate(calc(var(--newt-dir) * -50%), -50%) scale(0);
+}
+
+.newt-radio[aria-checked="true"] {
+  color: var(--newt-text-primary);
+}
+
+.newt-radio[aria-checked="true"] .newt-radio__control {
+  border-color: var(--newt-brand);
+  background: var(--newt-brand);
+}
+
+.newt-radio[aria-checked="true"] .newt-radio__control::after {
+  transform: translate(calc(var(--newt-dir) * -50%), -50%) scale(1);
+}
+
+.newt-radio[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* An optional second line, for a choice that needs a sentence to explain it. */
+.newt-radio__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.newt-radio__description {
+  color: var(--newt-text-muted);
+  font-size: 13px;
+  line-height: 17px;
+}

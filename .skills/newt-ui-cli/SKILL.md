@@ -22,7 +22,7 @@ versus `lang="ts"` stripping — branches on that one field, never on a guess at
 the call site.
 
 A `components.json` written by either old CLI is migrated on read
-(`migrateRawConfig` in `config.ts`): the old Vue `framework: "nuxt" | "vite"`
+(`migrateComponentsFile` in `utils/get-config.ts`): the old Vue `framework: "nuxt" | "vite"`
 becomes `bundler`, and the old React `tsx` becomes `typescript`. Any new
 compatibility shim belongs there, not spread across the commands.
 
@@ -38,13 +38,16 @@ compatibility shim belongs there, not spread across the commands.
 - `src/mcp/init.ts` — `newtui mcp init --client <name>`. Each client's config
   is parsed and merged, never overwritten: those files hold other people's
   servers.
-- `src/**/*.test.ts` — colocated Vitest tests. The registry is not reached in tests; the MCP
-  surface is exercised through `InMemoryTransport.createLinkedPair()`.
-- `src/schema/` — `components.json` and registry wire contracts.
-- `src/registry/` — fetching and dependency-tree resolution.
+- `src/**/*.test.ts` — colocated Vitest tests. Installation tests serve a local
+  HTTP registry; they never reach the published registry. The MCP surface is
+  exercised through `InMemoryTransport.createLinkedPair()`.
+- `src/schema/index.ts` — re-exports the registry wire contracts.
+- `src/registry/` — wire schemas, fetching and dependency-tree resolution.
+- `src/utils/get-config.ts` — `components.json` schemas, migration and path resolution.
 - `src/utils/` — focused helpers; import rewriting lives in
-  `utils/transformers/`, while future file mutations belong in
-  `utils/updaters/`. `src/preflights/` owns command precondition checks.
+  `utils/transformers/`. `utils/updaters/` writes component files and styles
+  and installs dependencies. `src/preflights/` validates the target project
+  before `add` fetches or writes registry items.
 
 ## Rules
 
@@ -57,7 +60,7 @@ compatibility shim belongs there, not spread across the commands.
   `BOOLEAN_FLAGS`/`STRING_FLAGS` (and `FLAG_ALIASES` if it gets a short form),
   never reaching into `argv` ad hoc.
 - Validate everything that comes from the network with the zod schemas in
-  `src/schema/registry.ts` before writing a file.
+  `src/registry/schema.ts` before writing a file.
 - The registry URL resolves as `--registry` > `NEWT_REGISTRY_URL` > the
   package default. Never hardcode a URL at a call site.
 - Resolve write targets through the user's `components.json` aliases, not by

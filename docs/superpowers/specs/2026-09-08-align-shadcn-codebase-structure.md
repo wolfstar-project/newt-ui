@@ -33,10 +33,12 @@ packages/
     src/
       commands/
       mcp/
-      preflights/
+      preflights/preflight-add.ts
       registry/{api,schema}.ts
       schema/
-      utils/{get-config,transformers,updaters}/
+      utils/get-config.ts
+      utils/transformers/imports.ts
+      utils/updaters/{update-files,update-css,update-dependencies}.ts
 deprecated/
   react-cli/                    # `@newtui/react` forwarding wrapper
   vue-cli/                      # `@newtui/vue` forwarding wrapper

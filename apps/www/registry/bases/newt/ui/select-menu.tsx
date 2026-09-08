@@ -10,6 +10,17 @@ export interface SelectMenuOption {
   label: string
   /** Secondary line under the label. */
   description?: string
+  /**
+   * Rendered before the label, in the row and on the trigger once chosen —
+   * what the client's device pickers use to tell a microphone from a monitor
+   * at a glance. Sized by the menu, so pass the glyph and nothing else.
+   */
+  icon?: React.ReactNode
+  /**
+   * A muted aside after the label on the trigger, for what the option resolves
+   * to. It is the first thing allowed to truncate.
+   */
+  note?: string
   disabled?: boolean
 }
 
@@ -260,15 +271,22 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
                   index === active &&
                     !option.disabled &&
                     "bg-newt-brand text-white",
-                  option.value === selected &&
-                    "text-newt-text-primary after:ms-auto after:font-bold after:text-newt-brand after:content-['\\2713']",
-                  option.value === selected &&
-                    index === active &&
-                    "after:text-white",
+                  option.value === selected && "text-newt-text-primary",
                   option.disabled &&
                     "cursor-not-allowed bg-transparent text-newt-text-muted opacity-50"
                 )}
               >
+                {option.icon ? (
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary",
+                      index === active && !option.disabled && "text-white"
+                    )}
+                  >
+                    {option.icon}
+                  </span>
+                ) : null}
                 <span className="flex min-w-0 flex-col">
                   <span className="truncate">{option.label}</span>
                   {option.description ? (
@@ -282,6 +300,30 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
                     </span>
                   ) : null}
                 </span>
+                {option.value === selected ? (
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "ms-auto flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full",
+                      // On the highlighted row the disc would dissolve into the
+                      // background, so it swaps with the tick.
+                      index === active && !option.disabled
+                        ? "bg-white text-newt-brand"
+                        : "bg-newt-brand text-white"
+                    )}
+                  >
+                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5">
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m6 12.5 4 4 8-9"
+                      />
+                    </svg>
+                  </span>
+                ) : null}
               </li>
             ))}
           </ul>
@@ -310,13 +352,28 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
           onKeyDown={onKeyDown}
           className="flex min-h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-sm border border-newt-border bg-newt-bg-input px-2 font-sans text-sm font-medium text-newt-text-primary hover:border-newt-bg-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <span
-            className={cn(
-              "truncate",
-              !selectedOption && "text-newt-text-muted"
-            )}
-          >
-            {selectedOption?.label ?? placeholder}
+          <span className="flex min-w-0 flex-1 items-center gap-2">
+            {selectedOption?.icon ? (
+              <span
+                aria-hidden="true"
+                className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary"
+              >
+                {selectedOption.icon}
+              </span>
+            ) : null}
+            <span
+              className={cn(
+                "truncate",
+                !selectedOption && "text-newt-text-muted"
+              )}
+            >
+              {selectedOption?.label ?? placeholder}
+            </span>
+            {selectedOption?.note ? (
+              <span className="truncate font-normal text-newt-text-muted">
+                {selectedOption.note}
+              </span>
+            ) : null}
           </span>
           {/* Points down when closed, flips when the listbox opens. */}
           <svg

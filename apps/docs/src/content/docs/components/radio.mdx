@@ -1,0 +1,137 @@
+---
+title: "Radio"
+description: "One choice out of a short, visible list, with the ring and dot the client's settings panels use."
+component: true
+---
+
+A radio group is for a choice that is short enough to show in full. Where a
+[select menu](/docs/components/select-menu) hides its options until asked, this
+shows all of them at once — which is what the client's settings panels do when
+there are two or three and the difference between them matters.
+
+The state is in the ring and the dot, not in motion: the selected row reads as
+selected in a screenshot, and in greyscale.
+
+<ComponentPreview name="radio" />
+
+## Installation
+
+<Installation name="radio" />
+
+## Usage
+
+<Usage name="radio" />
+
+The group owns the value; each `Radio` only names the value it stands for. Leave
+`value` off the group and it manages its own selection from `defaultValue`.
+
+<div data-framework="react">
+
+```tsx
+<RadioGroup label="Input mode" value={mode} onValueChange={setMode}>
+  <Radio value="voice-activity">Voice Activity</Radio>
+  <Radio value="push-to-talk">Push to Talk</Radio>
+</RadioGroup>
+```
+
+</div>
+
+<div data-framework="vue">
+
+```vue
+<RadioGroup v-model="mode" label="Input mode">
+  <Radio value="voice-activity">Voice Activity</Radio>
+  <Radio value="push-to-talk">Push to Talk</Radio>
+</RadioGroup>
+```
+
+</div>
+
+## Second lines
+
+A choice that needs a sentence to explain it takes a `description`, which sits
+under the label in muted text. Use it when the label alone would make somebody
+guess; leave it off when it would only restate the label.
+
+## API reference
+
+<PropsTable
+  of="RadioGroup"
+  rows={[
+    {
+      name: "value",
+      type: "string",
+      description:
+        "The selected value, when you control it. Leave it off to let the group manage its own.",
+    },
+    {
+      name: "defaultValue",
+      type: "string",
+      description:
+        "The value selected on first render, for an uncontrolled group.",
+    },
+    {
+      name: "onValueChange / v-model",
+      type: "(value: string) => void",
+      description: "Called with the value that was chosen.",
+    },
+    {
+      name: "label",
+      type: "string",
+      description:
+        "Accessible name for the group. A radio group without one is announced as an unlabelled set.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="Radio"
+  rows={[
+    {
+      name: "value",
+      type: "string",
+      description:
+        "Which value this row stands for. Required, and unique within the group.",
+    },
+    {
+      name: "description",
+      type: "ReactNode / string",
+      description:
+        "A second line under the label, for a choice that needs explaining.",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      default: "false",
+      description: "Skipped by the arrow keys and not selectable.",
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "The label.",
+    },
+  ]}
+/>
+
+Both parts also accept the native attributes of the element they render, and a
+`className` / `class` that is merged rather than replaced.
+
+## Accessibility
+
+The group is `role="radiogroup"` with an accessible name; each row is
+`role="radio"` with `aria-checked`. That is the contract a screen reader
+announces, and it is why the rows are buttons rather than styled `<input>`
+elements — the ring and dot stay stylable without losing the semantics.
+
+The group is **one tab stop**, not one per option: <kbd>Tab</kbd> reaches the
+selected row, and <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> move the
+selection within it, wrapping at the ends. <kbd>Home</kbd> and <kbd>End</kbd>
+jump to the first and last enabled row. Disabled rows are skipped rather than
+focused and refused.
+
+Give the group a `label`. Without one the set is announced with no indication of
+what is being chosen, which is the most common way this pattern fails.
+
+## Tokens
+
+<TokensNote name="radio" />

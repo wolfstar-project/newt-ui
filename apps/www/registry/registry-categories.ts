@@ -74,6 +74,7 @@ export const categories: DocsCategory[] = [
     label: "Forms & data",
     components: [
       "form-fields",
+      "radio",
       "token-field",
       "select-menu",
       "card",

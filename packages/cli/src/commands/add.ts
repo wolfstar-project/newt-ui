@@ -1,30 +1,18 @@
-import path from "node:path"
-
 import { intro, outro, spinner } from "@clack/prompts"
 
+import { preflightAdd } from "../preflights/preflight-add.js"
 import {
   getRegistryIndex,
   getRegistryUrl,
   resolveTree,
 } from "../registry/api.js"
 import type { RegistryItem } from "../schema/index.js"
-import {
-  pathExists,
-  readFileIfExists,
-  relativePath,
-  resolveCwd,
-  writeFileAt,
-} from "../utils/fileSystem.js"
-import { getConfig, type Config } from "../utils/get-config.js"
+import type { Config } from "../utils/get-config.js"
 import { highlighter, logger } from "../utils/logger.js"
-import { installDependencies } from "../utils/packageManager.js"
 import { promptConfirm, promptMultiselect } from "../utils/prompts.js"
-import { detectTailwindMajor, renderItemCss } from "../utils/tailwind.js"
-import {
-  normalizeFile,
-  resolveTargetPath,
-  transformContent,
-} from "../utils/transformers/imports.js"
+import { updateCss } from "../utils/updaters/update-css.js"
+import { updateDependencies } from "../utils/updaters/update-dependencies.js"
+import { updateFiles } from "../utils/updaters/update-files.js"
 
 export interface AddOptions {
   components: string[]
@@ -38,14 +26,7 @@ export interface AddOptions {
 }
 
 export async function add(options: AddOptions): Promise<void> {
-  const cwd = resolveCwd(options.cwd)
-
-  const config = await getConfig(cwd)
-  if (!config) {
-    throw new Error(
-      `Configuration is missing. Please run ${highlighter.info("npx newtui init")} to create a components.json file.`
-    )
-  }
+  const config = await preflightAdd(options)
 
   intro(highlighter.bold("newt/ui — add"))
 
@@ -108,85 +89,14 @@ async function runAdd(
     if (!proceed) process.exit(0)
   }
 
-  const dependencies = new Set<string>()
-  const devDependencies = new Set<string>()
-  const written: string[] = []
-  const skipped: string[] = []
-
-  for (const item of tree) {
-    for (const dep of item.dependencies ?? []) dependencies.add(dep)
-    for (const dep of item.devDependencies ?? []) devDependencies.add(dep)
-
-    for (const rawFile of item.files ?? []) {
-      const file = normalizeFile(rawFile, item.type)
-      if (!file) continue
-
-      // Vue components are directories (`ui/button/Button.vue`), so `--path`
-      // keeps the component directory instead of flattening to a file name.
-      // React items are single files, where this resolves to the base name.
-      let target = resolveTargetPath(file, item, config)
-      if (options.path && !file.target) {
-        const relative = relativePath(config.resolvedPaths.ui, target)
-        const inUiDir = !relative.startsWith("..") && !path.isAbsolute(relative)
-        target = path.resolve(
-          config.resolvedPaths.cwd,
-          options.path,
-          inUiDir ? relative : path.basename(target)
-        )
-      }
-
-      if (pathExists(target) && !options.overwrite) {
-        const relative = relativePath(config.resolvedPaths.cwd, target)
-        if (options.yes) {
-          skipped.push(relative)
-          continue
-        }
-        const overwrite = await promptConfirm(
-          `File ${highlighter.info(relative)} already exists. Overwrite?`,
-          false
-        )
-        if (!overwrite) {
-          skipped.push(relative)
-          continue
-        }
-      }
-
-      await writeFileAt(target, transformContent(file.content, config))
-      written.push(relativePath(config.resolvedPaths.cwd, target))
-    }
-  }
-
-  await applyItemStyles(tree, config)
+  const { written, skipped } = await updateFiles(tree, config, options)
+  await updateCss(tree, config)
 
   for (const file of written) logger.success(`+ ${file}`)
   for (const file of skipped)
     logger.warn(`~ ${file} (skipped, use --overwrite to replace)`)
 
-  if (!options.skipInstall) {
-    if (dependencies.size > 0) {
-      logger.info(
-        `Installing dependencies: ${Array.from(dependencies).join(", ")}`
-      )
-      await installDependencies(
-        config.resolvedPaths.cwd,
-        Array.from(dependencies)
-      )
-    }
-    if (devDependencies.size > 0) {
-      logger.info(
-        `Installing devDependencies: ${Array.from(devDependencies).join(", ")}`
-      )
-      await installDependencies(
-        config.resolvedPaths.cwd,
-        Array.from(devDependencies),
-        { dev: true }
-      )
-    }
-  } else if (dependencies.size > 0 || devDependencies.size > 0) {
-    logger.warn(
-      `Skipped install. Dependencies: ${[...dependencies, ...devDependencies].join(", ")}`
-    )
-  }
+  await updateDependencies(tree, config, options)
 
   const uiAlias = config.aliases.ui ?? `${config.aliases.components}/ui`
   logger.log(
@@ -199,38 +109,4 @@ async function runAdd(
       .join("\n")
   )
   outro("Done.")
-}
-
-/**
- * Append any `cssVars` / `css` an item carries to the project stylesheet,
- * rendered for whichever Tailwind major the project is on. Most components
- * need nothing here — they are styled by the tokens `init` wrote.
- */
-async function applyItemStyles(
-  items: RegistryItem[],
-  config: Config
-): Promise<void> {
-  const styled = items.filter((item) => item.cssVars ?? item.css)
-  if (styled.length === 0) return
-
-  const cssPath = config.resolvedPaths.tailwindCss
-  const existing = (await readFileIfExists(cssPath)) ?? ""
-  const major = await detectTailwindMajor(config.resolvedPaths.cwd, cssPath)
-
-  const additions: string[] = []
-  for (const item of styled) {
-    const rendered = renderItemCss(item, major)
-    if (rendered.length === 0) continue
-    if (existing.includes(rendered.trim())) continue
-    additions.push(`/* newt/ui — ${item.name} */\n${rendered}`)
-  }
-  if (additions.length === 0) return
-
-  await writeFileAt(
-    cssPath,
-    `${existing.replace(/\s*$/, "\n")}\n${additions.join("\n")}`
-  )
-  logger.success(
-    `+ ${relativePath(config.resolvedPaths.cwd, cssPath)} (styles)`
-  )
 }

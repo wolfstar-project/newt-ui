@@ -223,8 +223,25 @@ onBeforeUnmount(() => {
       @click="open ? closeMenu() : openMenu()"
       @keydown="onKeydown"
     >
-      <span :class="cn('truncate', !selectedOption && 'text-newt-text-muted')">
-        {{ selectedOption?.label ?? props.placeholder }}
+      <span class="flex min-w-0 flex-1 items-center gap-2">
+        <span
+          v-if="selectedOption?.icon"
+          aria-hidden="true"
+          class="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary"
+        >
+          <component :is="selectedOption.icon" />
+        </span>
+        <span
+          :class="cn('truncate', !selectedOption && 'text-newt-text-muted')"
+        >
+          {{ selectedOption?.label ?? props.placeholder }}
+        </span>
+        <span
+          v-if="selectedOption?.note"
+          class="truncate font-normal text-newt-text-muted"
+        >
+          {{ selectedOption.note }}
+        </span>
       </span>
       <!-- Points down when closed, flips when the listbox opens. -->
       <svg
@@ -267,11 +284,7 @@ onBeforeUnmount(() => {
                 index === active &&
                   !option.disabled &&
                   'bg-newt-brand text-white',
-                option.value === selected &&
-                  `text-newt-text-primary after:ms-auto after:font-bold after:text-newt-brand after:content-['\\2713']`,
-                option.value === selected &&
-                  index === active &&
-                  'after:text-white',
+                option.value === selected && 'text-newt-text-primary',
                 option.disabled &&
                   'cursor-not-allowed bg-transparent text-newt-text-muted opacity-50'
               )
@@ -279,6 +292,18 @@ onBeforeUnmount(() => {
             @mouseenter="!option.disabled && (active = index)"
             @click="select(index)"
           >
+            <span
+              v-if="option.icon"
+              aria-hidden="true"
+              :class="
+                cn(
+                  'flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary',
+                  index === active && !option.disabled && 'text-white'
+                )
+              "
+            >
+              <component :is="option.icon" />
+            </span>
             <span class="flex min-w-0 flex-col">
               <span class="truncate">{{ option.label }}</span>
               <span
@@ -292,6 +317,29 @@ onBeforeUnmount(() => {
               >
                 {{ option.description }}
               </span>
+            </span>
+            <span
+              v-if="option.value === selected"
+              aria-hidden="true"
+              :class="
+                cn(
+                  'ms-auto flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full',
+                  index === active && !option.disabled
+                    ? 'bg-white text-newt-brand'
+                    : 'bg-newt-brand text-white'
+                )
+              "
+            >
+              <svg viewBox="0 0 24 24" class="h-3.5 w-3.5">
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m6 12.5 4 4 8-9"
+                />
+              </svg>
             </span>
           </li>
         </ul>

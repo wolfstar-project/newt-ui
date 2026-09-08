@@ -443,6 +443,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "radio",
+    {
+      name: "radio",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/radio.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/radio")),
+    },
+  ],
+  [
     "reaction",
     {
       name: "reaction",
@@ -1141,6 +1151,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/progress-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/progress-demo")
+      ),
+    },
+  ],
+  [
+    "radio-demo",
+    {
+      name: "radio-demo",
+      type: "registry:example",
+      registryDependencies: ["radio"],
+      files: ["registry/bases/newt/examples/radio-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/radio-demo")
       ),
     },
   ],

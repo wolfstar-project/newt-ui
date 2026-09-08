@@ -26,7 +26,7 @@ export default function UserProfileDemo() {
       <UserProfileBanner />
       <UserProfileHead>
         <UserProfileActions>
-          <Button variant="icon" aria-label="Send message">
+          <Button variant="secondary" size="icon" aria-label="Send message">
             ✉
           </Button>
         </UserProfileActions>

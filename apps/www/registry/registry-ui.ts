@@ -514,6 +514,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "radio",
+    type: "registry:ui",
+    title: "Radio",
+    description:
+      "One choice out of a short, visible list, with the ring and dot the client's settings panels use.",
+    files: [
+      {
+        path: "ui/radio.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "reaction",
     type: "registry:ui",
     title: "Reaction Pill",

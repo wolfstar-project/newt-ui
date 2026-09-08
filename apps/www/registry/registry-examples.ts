@@ -410,6 +410,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "radio-demo",
+    type: "registry:example",
+    registryDependencies: ["radio"],
+    files: [
+      {
+        path: "examples/radio-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "reaction-demo",
     type: "registry:example",
     registryDependencies: ["reaction"],

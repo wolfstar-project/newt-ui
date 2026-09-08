@@ -38,6 +38,7 @@ import NotifBadgeDemo from "@/registry/bases/newt/examples/notif-badge-demo"
 import PaginationDemo from "@/registry/bases/newt/examples/pagination-demo"
 import PermissionDemo from "@/registry/bases/newt/examples/permission-demo"
 import ProgressDemo from "@/registry/bases/newt/examples/progress-demo"
+import RadioDemo from "@/registry/bases/newt/examples/radio-demo"
 import ReactionDemo from "@/registry/bases/newt/examples/reaction-demo"
 import ReplyPreviewDemo from "@/registry/bases/newt/examples/reply-preview-demo"
 import RoleTagDemo from "@/registry/bases/newt/examples/role-tag-demo"
@@ -102,6 +103,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["pagination", PaginationDemo],
   ["permission", PermissionDemo],
   ["progress", ProgressDemo],
+  ["radio", RadioDemo],
   ["reaction", ReactionDemo],
   ["reply-preview", ReplyPreviewDemo],
   ["role-tag", RoleTagDemo],

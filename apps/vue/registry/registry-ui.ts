@@ -1214,6 +1214,31 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "radio",
+    type: "registry:ui",
+    title: "Radio",
+    description:
+      "One choice out of a short, visible list, with the ring and dot the client's settings panels use.",
+    files: [
+      {
+        path: "ui/radio/Radio.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/radio/RadioGroup.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/radio/useRadioGroup.ts",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/radio/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "reaction",
     type: "registry:ui",
     title: "Reaction Pill",

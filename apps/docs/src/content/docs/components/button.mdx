@@ -1,6 +1,6 @@
 ---
 title: "Button"
-description: "Displays a Discord-styled button with brand, secondary, success, danger, link and icon variants."
+description: "Displays a Discord-styled button with brand, secondary, success, danger and link variants."
 component: true
 ---
 
@@ -23,7 +23,7 @@ The button carries six intents and four sizes. Which one you reach for is a stat
   rows={[
     {
       name: "variant",
-      type: '"primary" | "secondary" | "success" | "danger" | "link" | "icon"',
+      type: '"primary" | "secondary" | "success" | "danger" | "link"',
       description: "What the action does. Never picked for its colour.",
       default: '"primary"',
     },
@@ -58,7 +58,7 @@ Every part also accepts the native attributes of the element it renders, and a `
 
 ## Accessibility
 
-It renders a real `<button>`, so `Enter` and `Space` activate it and `disabled` is honoured by the browser rather than emulated. `variant="icon"` has no visible text: give it an `aria-label`. The focus ring is a 2px `--newt-text-link` outline at 2px offset, and it is not removed on `:focus-visible`.
+It renders a real `<button>`, so `Enter` and `Space` activate it and `disabled` is honoured by the browser rather than emulated. An icon-only button (`size="icon"` with no text) has no visible text: give it an `aria-label`. The focus ring is a 2px `--newt-text-link` outline at 2px offset, and it is not removed on `:focus-visible`.
 
 ## Tokens
 

@@ -86,15 +86,15 @@
   cursor: not-allowed;
 }
 
+/*
+ * Shape only, not colour: compose it with a colour modifier, the way a size
+ * modifier already does — `newt-btn newt-btn--secondary newt-btn--icon`. A
+ * fixed "icon-coloured" button would be a second palette to keep in sync with
+ * the rest.
+ */
 .newt-btn--icon {
   padding: 8px;
   border-radius: var(--newt-radius-full);
-  background: var(--newt-bg-elevated);
-  color: var(--newt-text-secondary);
-}
-.newt-btn--icon:hover {
-  background: var(--newt-bg-hover);
-  color: var(--newt-text-primary);
 }
 
 /*

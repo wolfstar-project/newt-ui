@@ -36,14 +36,15 @@ not a note.
 
 - Add a component by writing `meta/<name>.json` (`title`, `description`,
   `dependencies`, `registryDependencies`, `vueFiles`, `reactDemo`, `vueDemo`)
-  and putting it in a category in `registry-categories.ts` (both copies).
+  and putting it in a category in `apps/www/registry/registry-categories.ts`
+  (the shared taxonomy).
 - `registryDependencies` names other newt/ui components and must be resolvable
   recursively by the CLI. `dependencies` names npm packages only.
 - Every published item carries `framework: "react" | "vue"`, stamped by the
   app's `build-registry.mts` (React items come from `apps/www`, Vue items from
   `apps/vue`). The field is part of `registryItemSchema`, so adding a field
   means editing all three copies of that schema — `apps/www/registry`,
-  `apps/vue/registry`, and `packages/cli/src/schema` — or the
+  `apps/vue/registry`, and `packages/cli/src/registry/schema.ts` — or the
   build-time `parse` strips it before the CLI ever sees it.
 - Never hand-edit a generated file. Regenerate.
 - Token values live once, in `apps/www/registry/registry-tokens.ts`, mirroring

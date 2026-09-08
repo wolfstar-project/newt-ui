@@ -1221,6 +1221,31 @@
       "framework": "vue"
     },
     {
+      "name": "radio",
+      "type": "registry:ui",
+      "title": "Radio",
+      "description": "One choice out of a short, visible list, with the ring and dot the client's settings panels use.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/radio/Radio.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/radio/RadioGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/radio/useRadioGroup.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/radio/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "reaction",
       "type": "registry:ui",
       "title": "Reaction Pill",

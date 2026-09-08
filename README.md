@@ -22,6 +22,8 @@ apps/
     src/lib/                Registry metadata and paired demo loaders
     src/styles/site.css     Tailwind v4 + the --newt-* token bridge
   www/                      React registry source + builder (Next.js)
+    __registry__/           Generated React loaders
+    registry.json           Generated public registry manifest
     registry/
       bases/newt/ui/*.tsx   React components (cva + cn + Tailwind)
       bases/newt/blocks/    Composed React blocks
@@ -36,6 +38,8 @@ apps/
     scripts/build-registry.mts  Emits public/r for the React CLI
     components.json
   vue/                      Vue registry source + builder (Nuxt 4)
+    __registry__/           Generated Vue loaders
+    registry.json           Generated public registry manifest
     registry/
       bases/newt/ui/<name>/ {Component.vue, index.ts} per component
       bases/newt/blocks/    Composed Vue blocks
@@ -45,6 +49,11 @@ apps/
     scripts/build-registry.mts  Emits public/r for the Vue CLI
 packages/
   cli/                      `newtui` CLI (React + Vue) + registry/html
+    src/commands/           Command orchestration
+    src/preflights/         Target-project validation
+    src/registry/           Wire schemas, fetching, dependency resolution
+    src/utils/transformers/ Consumer source/import transforms
+    src/utils/updaters/     File, CSS, and dependency updates
   module/                   `@newtui/nuxt` Nuxt module
 deprecated/
   react-cli/                `@newtui/react` forwarding wrapper
@@ -112,7 +121,7 @@ back. Pass `--framework react|vue` to override it.
 
 Detailed guides live on the documentation site (`apps/docs`), which serves the
 same installation page for React and Vue behind a framework switcher — see
-[`apps/docs/src/pages/Installation.tsx`](./apps/docs/src/pages/Installation.tsx).
+[`apps/docs/src/content/docs/installation.mdx`](./apps/docs/src/content/docs/installation.mdx).
 
 ## Design tokens
 

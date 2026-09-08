@@ -410,6 +410,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "RadioDemo",
+    type: "registry:example",
+    registryDependencies: ["radio"],
+    files: [
+      {
+        path: "examples/RadioDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ReactionDemo",
     type: "registry:example",
     registryDependencies: ["reaction"],

@@ -24,7 +24,9 @@ import {
     <UserProfileBanner />
     <UserProfileHead>
       <UserProfileActions>
-        <Button variant="icon" aria-label="Send message">✉</Button>
+        <Button variant="secondary" size="icon" aria-label="Send message"
+          >✉</Button
+        >
       </UserProfileActions>
       <UserProfileAvatar>
         <StatusIndicator status="online">

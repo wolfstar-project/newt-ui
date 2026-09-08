@@ -14,7 +14,6 @@ export const buttonVariants = cva(
         danger: "bg-newt-danger text-white hover:bg-newt-danger-hover",
         success: "bg-newt-online text-white hover:brightness-90",
         link: "bg-transparent text-newt-text-link hover:underline",
-        icon: "bg-newt-bg-elevated text-newt-text-secondary hover:bg-newt-bg-hover hover:text-newt-text-primary",
       },
       size: {
         default: "rounded-sm px-4 py-2.5 text-sm",
@@ -27,7 +26,6 @@ export const buttonVariants = cva(
       { variant: "link", size: "default", class: "px-0 py-1" },
       { variant: "link", size: "sm", class: "px-0 py-1" },
       { variant: "link", size: "lg", class: "px-0 py-1" },
-      { variant: "icon", size: "default", class: "rounded-full p-2" },
     ],
     defaultVariants: {
       variant: "primary",

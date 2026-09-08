@@ -15,7 +15,7 @@ export default function AttachmentDemo() {
         <AttachmentName>filename.ext</AttachmentName>
         <AttachmentSize>1.2 MB</AttachmentSize>
       </AttachmentMeta>
-      <Button variant="icon" aria-label="Download file">
+      <Button variant="secondary" size="icon" aria-label="Download file">
         ⬇
       </Button>
     </Attachment>

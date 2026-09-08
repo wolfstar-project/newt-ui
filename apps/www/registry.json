@@ -521,6 +521,19 @@
       "framework": "react"
     },
     {
+      "name": "radio",
+      "type": "registry:ui",
+      "title": "Radio",
+      "description": "One choice out of a short, visible list, with the ring and dot the client's settings panels use.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/radio.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "reaction",
       "type": "registry:ui",
       "title": "Reaction Pill",
