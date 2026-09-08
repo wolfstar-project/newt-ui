@@ -3,16 +3,51 @@ title: "Next.js"
 description: "Install newt/ui in a Next.js project: where the tokens go, and which components need the client boundary."
 ---
 
+<PathTabs framework="next">
+
+<Steps>
+
+<section>
+
+#### Create the app
+
+```bash frame="terminal"
+npx create-next-app@latest my-app --typescript --tailwind --app
+```
+
+</section>
+
+<section>
+
+#### Check the aliases
+
+`init` reads your aliases, it never writes them. `create-next-app` declares the
+one that matters:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": { "@/*": ["./src/*"] }
+  }
+}
+```
+
+</section>
+
+<section>
+
+#### Run init
+
 <PmTabs cmd="newtui@latest init" />
 
-`init` looks for `app/globals.css` first, so on a standard App Router project
-the tokens land in the stylesheet your layout already imports. Everything else
-is the shared flow described in [Installation](/docs/installation).
+It finds `app/globals.css` first, so the tokens land in the stylesheet your
+layout already imports.
 
-## The root layout \{#layout\}
+</section>
 
-`.newt-root` sets the font family, the base text colour and font smoothing. Put
-it on the element that wraps the application:
+<section>
+
+#### Put the root class on the body
 
 ```tsx title="app/layout.tsx"
 import "./globals.css"
@@ -30,18 +65,11 @@ export default function RootLayout({
 }
 ```
 
-## Server components \{#rsc\}
+</section>
 
-Nine components ship with a `"use client"` directive — the interactive ones:
-modal, tabs, toast, reaction, spoiler, form-fields, permission, stage-banner and
-token-field. The rest render on the server.
+<section>
 
-Answering yes to the React Server Components question at `init` keeps those
-directives. Answering no sets `rsc: false` in
-[`components.json`](/docs/components-json), and `add` strips them as it writes —
-which is what a pages-router or client-rendered app wants.
-
-## Add a component \{#add\}
+#### Add a component
 
 <PmTabs cmd="newtui@latest add button" />
 
@@ -53,4 +81,31 @@ export default function Page() {
 }
 ```
 
-See [Dark mode](/docs/dark-mode#next) for the theme toggle.
+</section>
+
+</Steps>
+
+</PathTabs>
+
+## Server components \{#rsc\}
+
+Nine components ship with a `"use client"` directive — the interactive ones:
+modal, tabs, toast, reaction, spoiler, form-fields, permission, stage-banner and
+token-field. The rest render on the server.
+
+Answering yes to the React Server Components question at `init` keeps those
+directives. Answering no sets `rsc: false` in
+[`components.json`](/docs/components-json), and `add` strips them as it writes —
+which is what a pages-router or client-rendered app wants.
+
+## What init writes \{#written\}
+
+```text
+components.json                 the config, shared with shadcn
+app/globals.css                 the --newt-* token block
+lib/utils.ts                    cn()
+components/ui/button.tsx        add button
+```
+
+See [Dark mode](/docs/dark-mode#next) for the theme toggle, and [RTL](/docs/rtl)
+if the app has to run right to left.

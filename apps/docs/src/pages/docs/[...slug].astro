@@ -3,7 +3,9 @@ import { getCollection, render, type CollectionEntry } from "astro:content"
 
 import Callout from "../../components/mdx/Callout.astro"
 import ComponentPreview from "../../components/mdx/ComponentPreview.astro"
+import FrameworkGrid from "../../components/mdx/FrameworkGrid.astro"
 import Installation from "../../components/mdx/Installation.astro"
+import PathTabs from "../../components/mdx/PathTabs.astro"
 import PmTabs from "../../components/mdx/PmTabs.astro"
 import PropsTable from "../../components/mdx/PropsTable.astro"
 import Steps from "../../components/mdx/Steps.astro"
@@ -36,7 +38,9 @@ const { Content, headings } = await render(entry)
 const components = {
   Callout,
   ComponentPreview,
+  FrameworkGrid,
   Installation,
+  PathTabs,
   PmTabs,
   PropsTable,
   Steps,

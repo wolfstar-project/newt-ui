@@ -1,0 +1,172 @@
+---
+title: "Astro"
+description: "Install newt/ui in an Astro site, where React and Vue components can live side by side as islands."
+---
+
+<PathTabs framework="astro">
+
+<Steps>
+
+<section>
+
+#### Create the site and add a framework
+
+```bash frame="terminal"
+npm create astro@latest my-site
+```
+
+<div data-framework="react">
+
+```bash frame="terminal"
+npx astro add react
+```
+
+</div>
+
+<div data-framework="vue">
+
+```bash frame="terminal"
+npx astro add vue
+```
+
+</div>
+
+Both integrations can be installed at once. This site runs them together: the
+switcher at the top of the page decides which island paints, and the other one's
+markup is hidden rather than unmounted.
+
+</section>
+
+<section>
+
+#### Add Tailwind
+
+```bash frame="terminal"
+npx astro add tailwind
+```
+
+```css title="src/styles/global.css"
+@import "tailwindcss";
+```
+
+</section>
+
+<section>
+
+#### Declare the alias
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": { "@/*": ["./src/*"] }
+  }
+}
+```
+
+Astro resolves `tsconfig` paths on its own, so there is no second copy to keep
+in the Vite config.
+
+</section>
+
+<section>
+
+#### Run init
+
+<div data-framework="react">
+
+<PmTabs cmd="newtui@latest init --framework react" />
+
+</div>
+
+<div data-framework="vue">
+
+<PmTabs cmd="newtui@latest init --framework vue --bundler vite" />
+
+</div>
+
+A site with both integrations has both frameworks in its dependencies, so name
+the one you want the components written for. Running `init` twice with different
+`--framework` values is fine: the tokens are written once and skipped after
+that.
+
+</section>
+
+<section>
+
+#### Load the stylesheet and mark the root
+
+```astro title="src/layouts/Base.astro"
+---
+import "../styles/global.css"
+---
+
+<html lang="en">
+  <body class="newt-root">
+    <slot />
+  </body>
+</html>
+```
+
+</section>
+
+<section>
+
+#### Add a component
+
+<PmTabs cmd="newtui@latest add button" />
+
+An interactive component is an island, so it needs a `client:` directive. A
+static one does not.
+
+<div data-framework="react">
+
+```astro title="src/pages/index.astro"
+---
+import { Button } from "@/components/ui/button"
+---
+
+<Button client:load variant="primary">Send</Button>
+```
+
+</div>
+
+<div data-framework="vue">
+
+```astro title="src/pages/index.astro"
+---
+import { Button } from "@/components/ui/button"
+---
+
+<Button client:load variant="primary">Send</Button>
+```
+
+</div>
+
+</section>
+
+</Steps>
+
+</PathTabs>
+
+## What init writes \{#written\}
+
+```text
+components.json                 the config, shared with shadcn
+src/styles/global.css           the --newt-* token block
+src/lib/utils.ts                cn()
+src/components/ui/button.tsx    add button (React)
+```
+
+The Vue flavour writes a folder per component instead — `Button.vue` plus an
+`index.ts` barrel.
+
+## Two frameworks in one site \{#both\}
+
+Nothing stops a site from carrying both registries: they share the same
+`--newt-*` tokens, so a React island and a Vue island rendered next to each
+other are indistinguishable. Keep them in separate directories —
+`components/ui` for one and `components/ui-vue` for the other — and point
+`components.json` at whichever you are adding to at the time.
+
+See [Dark mode](/docs/dark-mode) for the theme toggle, and [RTL](/docs/rtl) if
+the site has to run right to left.

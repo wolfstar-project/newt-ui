@@ -1,0 +1,124 @@
+---
+title: "React Router"
+description: "Install newt/ui in a React Router framework-mode app: the root layout, the alias, and the two commands."
+---
+
+<PathTabs framework="react-router">
+
+<Steps>
+
+<section>
+
+#### Create the app
+
+```bash frame="terminal"
+npx create-react-router@latest my-app
+```
+
+The default template ships Tailwind v4 and Vite. An app without it needs
+`tailwindcss` and `@tailwindcss/vite` installed and the plugin added to
+`vite.config.ts`.
+
+</section>
+
+<section>
+
+#### Declare the alias twice
+
+The template already declares `~/*`; `@/*` is the alias `init` looks for first,
+and either one works as long as both files agree:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": { "@/*": ["./app/*"] }
+  }
+}
+```
+
+```ts title="vite.config.ts"
+import { fileURLToPath } from "node:url"
+
+import { defineConfig } from "vite"
+
+export default defineConfig({
+  resolve: {
+    alias: { "@": fileURLToPath(new URL("./app", import.meta.url)) },
+  },
+})
+```
+
+</section>
+
+<section>
+
+#### Run init
+
+<PmTabs cmd="newtui@latest init --css app/app.css" />
+
+There is no `--template` for React Router. `--css` points `init` at the
+stylesheet the root route already links, which is where the tokens belong.
+
+</section>
+
+<section>
+
+#### Mark the root layout
+
+```tsx title="app/root.tsx"
+export function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <Meta />
+        <Links />
+      </head>
+      <body className="newt-root">
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  )
+}
+```
+
+</section>
+
+<section>
+
+#### Add a component
+
+<PmTabs cmd="newtui@latest add button" />
+
+```tsx title="app/routes/home.tsx"
+import { Button } from "@/components/ui/button"
+
+export default function Home() {
+  return <Button variant="primary">Send</Button>
+}
+```
+
+</section>
+
+</Steps>
+
+</PathTabs>
+
+## Server rendering \{#ssr\}
+
+Framework mode renders on the server, so the nine interactive components keep
+their `"use client"` directive. Answering no to the React Server Components
+question at `init` has `add` strip them — which is what an app running in SPA
+mode wants.
+
+## What init writes \{#written\}
+
+```text
+components.json                 the config, shared with shadcn
+app/app.css                     the --newt-* token block
+app/lib/utils.ts                cn()
+app/components/ui/button.tsx    add button
+```
+
+See [Dark mode](/docs/dark-mode) for the theme toggle, and [RTL](/docs/rtl) if
+the app has to run right to left.

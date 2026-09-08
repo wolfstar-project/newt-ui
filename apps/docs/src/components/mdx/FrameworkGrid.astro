@@ -1,0 +1,35 @@
+---
+import { INSTALL_TARGETS } from "../../lib/install-targets"
+import FrameworkMark from "../site/FrameworkMark.astro"
+
+/*
+ * The picker. Every card is one link and nothing else, so the whole tile is
+ * the hit area and a keyboard reader gets one stop per framework rather than
+ * three. The list is `INSTALL_TARGETS`, which the sidebar reads too — the grid
+ * and the nav cannot drift apart.
+ */
+interface Props {
+  /** Narrow the grid to a few ids; omitted means every target. */
+  readonly only?: readonly string[]
+}
+
+const { only } = Astro.props
+const targets =
+  only === undefined
+    ? INSTALL_TARGETS
+    : INSTALL_TARGETS.filter((target) => only.includes(target.id))
+---
+
+<ul class="framework-grid">
+  {
+    targets.map((target) => (
+      <li>
+        <a href={target.href} class="framework-card">
+          <FrameworkMark id={target.id} class="framework-card-mark" />
+          <span class="framework-card-title">{target.title}</span>
+          <span class="framework-card-note">{target.note}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

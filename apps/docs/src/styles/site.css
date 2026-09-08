@@ -714,12 +714,97 @@
     height: 0.85rem;
   }
 
-  .framework-mark-react {
+  .framework-mark-react,
+  .framework-glyph[data-tint="react"] {
     color: #61dafb;
   }
 
-  .framework-mark-vue {
+  .framework-mark-vue,
+  .framework-glyph[data-tint="vue"] {
     color: #42b883;
+  }
+
+  /* --- installation picker ------------------------------------------ */
+
+  .framework-grid {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+    grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
+  }
+
+  .framework-card {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    align-items: center;
+    gap: 0.15rem 0.7rem;
+    height: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-lg);
+    background: var(--newt-bg-surface);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .framework-card:hover {
+    border-color: var(--newt-brand);
+    background: var(--newt-bg-elevated);
+  }
+
+  .framework-card:focus-visible {
+    outline: 2px solid var(--newt-brand);
+    outline-offset: 2px;
+  }
+
+  .framework-card-mark {
+    grid-row: span 2;
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--newt-text-secondary);
+  }
+
+  .framework-card:hover .framework-card-mark {
+    color: var(--newt-text-primary);
+  }
+
+  .framework-card-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--newt-text-primary);
+  }
+
+  .framework-card-note {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--newt-text-muted);
+  }
+
+  /*
+   * The three install paths. Their panels are mostly command blocks, which
+   * already carry their own margin, so the prose above them is the only thing
+   * that needs spacing of its own.
+   */
+  .path-tabs > [role="tabpanel"] > p {
+    margin: 0 0 0.75rem;
+    color: var(--newt-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .path-tabs code {
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+    background: var(--newt-bg-surface);
+    font-family: var(--newt-font-mono);
+    font-size: 0.85em;
+    color: var(--newt-text-primary);
+  }
+
+  .path-tabs a {
+    color: var(--newt-text-link);
   }
 
   /* --- search ------------------------------------------------------ */

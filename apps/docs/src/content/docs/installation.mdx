@@ -1,7 +1,18 @@
 ---
 title: "Installation"
-description: "Two commands. The first reads your project and writes the tokens, the second writes a component and everything it imports."
+description: "Three ways in: a preset from the builder, one CLI command, or the wiring for a project you already have."
 ---
+
+<PathTabs />
+
+## Pick your framework \{#frameworks\}
+
+<FrameworkGrid />
+
+The first four can be created from nothing: `init --template <name>` writes the
+project and the tokens in one pass. The rest already have a creator of their
+own, so their guides start with that command and let `init` run inside the
+result. Manual and HTML & CSS skip the CLI entirely.
 
 ## What you need first \{#requirements\}
 
@@ -19,7 +30,7 @@ description: "Two commands. The first reads your project and writes the tokens, 
 <Callout>
   None of this applies to the plain HTML and CSS flavour. That one is two
   stylesheets and a class name, with no build step, no framework and no package
-  manager — it is the last section on this page.
+  manager — it has [a guide of its own](/docs/html-css).
 </Callout>
 
 ## Run init once \{#init\}
@@ -182,96 +193,16 @@ import "./assets/index.css"
 
 ## Per-framework guides \{#guides\}
 
-The rest of this page is the shared flow. The setup that differs by project is
-in its own guide: [Next.js](/docs/installation/next),
-[Vite](/docs/installation/vite), [Nuxt](/docs/installation/nuxt), or
-[by hand](/docs/installation/manual).
+The rest of this page is the flow every project shares. The parts that differ —
+the Tailwind setup, the path aliases, where `.newt-root` goes and which
+components need a client boundary — are in the guide for
 
-## On Nuxt \{#nuxt\}
-
-`@newtui/nuxt` saves you the imports. It registers your `components/ui`
-directory with Nuxt so `Button.vue` is available as `<Button />` anywhere,
-without the directory name in front of it, and it prepends the token stylesheet
-to your CSS so the variables are there before your own styles run. It needs
-Nuxt 4.
-
-```ts title="nuxt.config.ts"
-export default defineNuxtConfig({
-  modules: ["@newtui/nuxt"],
-  newt: {
-    prefix: "", // "Newt" gives you <NewtButton />
-    componentDir: "components",
-    css: true, // false if you already ship the tokens
-  },
-})
-```
-
-The three options are all optional. `prefix` namespaces the auto-imported names
-if a bare `<Button />` would collide with something you already have,
-`componentDir` points at your components directory relative to the Nuxt source
-directory, and `css: false` turns the injected tokens off when your own CSS
-entry already carries them.
-
-## On Next and the App Router \{#next\}
-
-`init` looks for `app/globals.css` first, so on a standard App Router project
-the tokens land in the stylesheet your layout already imports. The class goes on
-the body:
-
-```tsx title="app/layout.tsx"
-import "./globals.css"
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body className="newt-root">{children}</body>
-    </html>
-  )
-}
-```
-
-Nine of the components ship with a `"use client"` directive — the interactive
-ones: modal, tabs, toast, reaction, spoiler, form-fields, permission,
-stage-banner and token-field. The rest render on the server. Answering yes to
-the React Server Components question at `init` keeps those directives; answering
-no sets `rsc: false` in your config and `add` strips them as it writes.
-
-## Without a bundler \{#html\}
-
-The same components exist as plain CSS with BEM class names, with no Tailwind,
-no framework and no build step. That flavour ships inside the CLI package, and
-is reached through `--legacy` — the same program is also exposed as the
-`newtui-html` binary.
-
-```bash frame="terminal"
-npx newtui@latest --legacy init
-npx newtui@latest --legacy add button
-```
-
-`init` writes `newt-ui.json` and copies `tokens.css` to
-`styles/newt-tokens.css`; the two paths in that config are where everything
-afterwards goes. `add` copies a `.css` and a `.html` file per component into
-`components/ui`, following the same dependency links as the registry. The HTML
-file is the markup to copy:
-
-```html
-<!-- tokens first: every component reads var(--newt-*) -->
-<link rel="stylesheet" href="styles/newt-tokens.css" />
-<link rel="stylesheet" href="components/ui/button.css" />
-
-<body class="newt-root">
-  <button class="newt-btn newt-btn--primary">Primary</button>
-  <button class="newt-btn newt-btn--secondary">Secondary</button>
-</body>
-```
-
-These are local files served by your own site. There is no CDN to point at,
-which is the point: nothing is fetched at runtime and nothing can change under
-you. `--legacy list` prints what is available.
+<span id="next">[your framework](#frameworks)</span>, and the two flavours that
+never touch a bundler have guides of their own:
+<span id="nuxt">[Nuxt](/docs/installation/nuxt)</span> for the module that
+auto-imports the components, and
+<span id="html">[HTML & CSS](/docs/html-css)</span> for the copy-paste
+stylesheets.
 
 ## Options \{#options\}
 

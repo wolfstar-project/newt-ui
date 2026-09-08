@@ -1,5 +1,6 @@
 import { categories } from "@/registry/registry-categories"
 
+import { INSTALL_TARGETS } from "./install-targets"
 import { COMPONENTS } from "./registry"
 
 export interface NavItem {
@@ -47,12 +48,14 @@ const GUIDES: readonly NavGroup[] = [
   },
   {
     label: "Installation",
-    items: [
-      { href: "/docs/installation/next", label: "Next.js" },
-      { href: "/docs/installation/vite", label: "Vite" },
-      { href: "/docs/installation/nuxt", label: "Nuxt" },
-      { href: "/docs/installation/manual", label: "Manual" },
-    ],
+    /*
+     * The same list the picker grid renders, minus the HTML flavour: its guide
+     * is `/docs/html-css`, which already sits in Get Started, and one href in
+     * two groups would give the previous/next walk two answers.
+     */
+    items: INSTALL_TARGETS.filter((target) => target.id !== "html").map(
+      (target) => ({ href: target.href, label: target.title })
+    ),
   },
   {
     label: "Design",
