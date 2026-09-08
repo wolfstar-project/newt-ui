@@ -60,7 +60,11 @@ const rootClass = rootClasses[name]
         <span class="sr-only">Render this example right to left</span>
         <span aria-hidden="true">RTL</span>
       </button>
-      <div class="newt-root">
+      <div
+        class:list={["newt-root", size === "default" && "demo-body"]}
+        data-demo={name}
+        data-demo-variant={variant}
+      >
         <ReactDemo client:only="react" demo={reactDemo} />
         <VueDemo client:only="vue" demo={vueDemo} />
       </div>

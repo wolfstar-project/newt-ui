@@ -8,7 +8,7 @@
  */
 @source "../";
 @source "../../../www/registry";
-@source "../../../vue/app/lib/registry";
+@source "../../../vue/registry";
 
 /* ------------------------------------------------------------------ *
  * (a) newt token bridge
@@ -509,8 +509,11 @@
 
   .demo-body {
     display: flex;
+    min-width: 0;
+    min-height: 10rem;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
     padding: 2.5rem 1.75rem 1.75rem;
   }
@@ -1162,7 +1165,7 @@
     color: var(--newt-text-secondary);
   }
 
-  .prose h2 {
+  .prose h2:not(:where(.newt-root *)) {
     margin: 2.5rem 0 0.75rem;
     padding-top: 1.25rem;
     border-top: 1px solid var(--newt-border);
@@ -1172,41 +1175,41 @@
     color: var(--newt-text-primary);
   }
 
-  .prose h3 {
+  .prose h3:not(:where(.newt-root *)) {
     margin: 2rem 0 0.5rem;
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--newt-text-primary);
   }
 
-  .prose h4 {
+  .prose h4:not(:where(.newt-root *)) {
     margin: 1.25rem 0 0.4rem;
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--newt-text-primary);
   }
 
-  .prose p {
+  .prose p:not(:where(.newt-root *)) {
     margin: 0 0 1rem;
   }
 
-  .prose ul,
-  .prose ol {
+  .prose ul:not(:where(.newt-root *)),
+  .prose ol:not(:where(.newt-root *)) {
     margin: 0 0 1rem;
     padding-inline-start: 1.25rem;
   }
 
-  .prose li {
+  .prose li:not(:where(.newt-root *)) {
     margin-bottom: 0.35rem;
   }
 
-  .prose a {
+  .prose a:not(:where(.newt-root *)) {
     color: var(--newt-text-link);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
-  .prose code:not(pre code) {
+  .prose code:not(pre code):not(:where(.newt-root *)) {
     padding: 0.1rem 0.3rem;
     border-radius: 0.25rem;
     background: var(--newt-bg-surface);
@@ -1215,7 +1218,7 @@
     color: var(--newt-text-primary);
   }
 
-  .prose kbd {
+  .prose kbd:not(:where(.newt-root *)) {
     padding: 0.1rem 0.35rem;
     border: 1px solid var(--newt-border);
     border-radius: 0.25rem;
@@ -1223,21 +1226,21 @@
     font-size: 0.8em;
   }
 
-  .prose table {
+  .prose table:not(:where(.newt-root *)) {
     width: 100%;
     margin: 0 0 1.25rem;
     border-collapse: collapse;
     font-size: 0.875rem;
   }
 
-  .prose th,
-  .prose td {
+  .prose th:not(:where(.newt-root *)),
+  .prose td:not(:where(.newt-root *)) {
     padding: 0.5rem 0.6rem;
     border-bottom: 1px solid var(--newt-border);
     text-align: start;
   }
 
-  .prose th {
+  .prose th:not(:where(.newt-root *)) {
     color: var(--newt-text-primary);
     font-weight: 600;
   }

@@ -62,7 +62,9 @@ const LABELS = { react: "React", vue: "Vue" } satisfies Record<
 >
 
 export default function FrameworkSwitcher() {
-  const active = useStore($framework)
+  // Other islands may restore Vue from storage before this island hydrates.
+  // Match the server's initial React snapshot, then apply the current store.
+  const active = useStore($framework, { ssr: "initial" })
 
   return (
     <fieldset className="segmented">

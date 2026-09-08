@@ -68,9 +68,25 @@ const panels = await Promise.all(
 <script>
   const STORAGE_PREFIX = "newt-ui:tabs:"
 
+  /*
+   * Scoped to `:scope >`, not a bare descendant match: a panel is free to
+   * nest another `Tabs` (the Manual step of Installation nests a package
+   * manager switcher), and an unscoped `querySelectorAll` would pull that
+   * nested group's triggers and panels into this one's index space —
+   * selecting "Manual" would then also flip the nested group's tabs, and the
+   * counts would stop lining up with `hidden`.
+   */
+  function directTriggers(group: HTMLElement): HTMLElement[] {
+    return [...group.querySelectorAll<HTMLElement>(':scope > .tabs-list > [role="tab"]')]
+  }
+
+  function directPanels(group: HTMLElement): HTMLElement[] {
+    return [...group.querySelectorAll<HTMLElement>(':scope > [role="tabpanel"]')]
+  }
+
   function select(group: HTMLElement, index: number, focus: boolean) {
-    const triggers = [...group.querySelectorAll<HTMLElement>('[role="tab"]')]
-    const panels = [...group.querySelectorAll<HTMLElement>('[role="tabpanel"]')]
+    const triggers = directTriggers(group)
+    const panels = directPanels(group)
     triggers.forEach((trigger, i) => {
       const active = i === index
       trigger.setAttribute("aria-selected", String(active))
@@ -85,15 +101,21 @@ const panels = await Promise.all(
     const label = triggers[index]?.dataset.tabValue
     if (key && label) {
       localStorage.setItem(`${STORAGE_PREFIX}${key}`, label)
-      // Sibling groups with the same key follow along.
+      // Sibling groups with the same key follow along. Two synced groups
+      // would otherwise call back into each other forever: A's sync reaches
+      // B, B's own sync reaches back to A, and neither call changes anything
+      // that would stop it. Skipping a sibling already at the target index
+      // breaks that cycle instead of relying on it not to occur.
       for (const other of document.querySelectorAll<HTMLElement>(
         `[data-tabs][data-persist-key="${key}"]`
       )) {
         if (other === group) continue
-        const match = [...other.querySelectorAll<HTMLElement>('[role="tab"]')].findIndex(
+        const otherTriggers = directTriggers(other)
+        const match = otherTriggers.findIndex(
           (trigger) => trigger.dataset.tabValue === label
         )
-        if (match !== -1) select(other, match, false)
+        const alreadyThere = otherTriggers[match]?.getAttribute("aria-selected") === "true"
+        if (match !== -1 && !alreadyThere) select(other, match, false)
       }
     }
   }
@@ -102,7 +124,7 @@ const panels = await Promise.all(
     if (group.dataset.tabsReady === "true") return
     group.dataset.tabsReady = "true"
 
-    const triggers = [...group.querySelectorAll<HTMLElement>('[role="tab"]')]
+    const triggers = directTriggers(group)
 
     const key = group.dataset.persistKey
     if (key) {

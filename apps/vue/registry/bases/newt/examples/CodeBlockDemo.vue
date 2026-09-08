@@ -4,9 +4,9 @@ import { CodeBlock, CodeToken } from "~~/registry/bases/newt/ui/code-block"
 
 <template>
   <CodeBlock
-    ><CodeToken kind="comment">// example</CodeToken>
-    <CodeToken kind="keyword">const</CodeToken>
-    <CodeToken kind="function">greet</CodeToken> = () =>
-    <CodeToken kind="string">"hello"</CodeToken>;</CodeBlock
+    ><CodeToken kind="comment">// example</CodeToken>{{ "\n"
+    }}<CodeToken kind="keyword">const</CodeToken>{{ " "
+    }}<CodeToken kind="function">greet</CodeToken>{{ " = () => "
+    }}<CodeToken kind="string">"hello"</CodeToken>;</CodeBlock
   >
 </template>

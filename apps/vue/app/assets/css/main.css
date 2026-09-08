@@ -6,6 +6,7 @@
  * never walks out of `apps/vue` into the rest of the monorepo).
  */
 @source "../../../app";
+@source "../../../registry";
 
 /*
  * newt/ui Tailwind theme.
