@@ -32,12 +32,18 @@
  * One rule owns the rhythm: every block child carries the same trailing space
  * and nothing carries a leading one, so a block's spacing never depends on
  * what happens to precede it.
+ *
+ * Quotes and list items hold blocks of their own — a multi-line quote is
+ * several paragraphs, not one — so they keep the same rhythm inside rather
+ * than falling back to the browser's margins.
  */
-.typeset > :where(*) {
+.typeset > :where(*),
+.typeset :where(blockquote, li) > :where(*) {
   margin-block: 0 var(--typeset-flow);
 }
 
-.typeset > :where(*:last-child) {
+.typeset > :where(*:last-child),
+.typeset :where(blockquote, li) > :where(*:last-child) {
   margin-block-end: 0;
 }
 

@@ -29,19 +29,21 @@ left column is the syntax a chat client accepts, the middle is the element that
 reaches the wrapper, and everything in it is styled by the stylesheet without a
 class of its own.
 
-| Markdown                 | Element              | Notes                                                   |
-| ------------------------ | -------------------- | ------------------------------------------------------- |
-| `# H1` `## H2` `### H3`  | `<h1>` `<h2>` `<h3>` | `h4`–`h6` are styled too, for renderers that go deeper. |
-| `**bold**`               | `<strong>`           | Weight 600 and the primary text colour.                 |
-| `*italic*`               | `<em>`               |                                                         |
-| `__underline__`          | `<u>`                | Same underline offset as a link, so the two agree.      |
-| `~~strikethrough~~`      | `<s>`                | Falls back to the muted colour.                         |
-| `` `inline code` ``      | `<code>`             | Monospace on the surface colour.                        |
-| ` ```lang ` fenced block | `<pre><code>`        | Scrolls sideways rather than widening the column.       |
-| `[label](url)`           | `<a>`                | Link colour, underlined.                                |
-| `> quote`                | `<blockquote>`       | Rule on the inline start edge.                          |
-| `- item` / `1. item`     | `<ul>` / `<ol>`      | Nested lists keep their own counter and a tighter gap.  |
-| `-# subtext`             | `<small>`            | Smaller and quieter, on the same rhythm.                |
+| Markdown                 | Element              | Notes                                                    |
+| ------------------------ | -------------------- | -------------------------------------------------------- |
+| `# H1` `## H2` `### H3`  | `<h1>` `<h2>` `<h3>` | `h4`–`h6` are styled too, for renderers that go deeper.  |
+| `**bold**`               | `<strong>`           | Weight 600 and the primary text colour.                  |
+| `*italic*`               | `<em>`               |                                                          |
+| `__underline__`          | `<u>`                | Same underline offset as a link, so the two agree.       |
+| `~~strikethrough~~`      | `<s>`                | Falls back to the muted colour.                          |
+| `***bold italics***`     | `<strong><em>`       | The marks nest, and so do the elements they produce.     |
+| `__**underline bold**__` | `<u><strong>`        | Any combination of the four, in any order.               |
+| `` `inline code` ``      | `<code>`             | Monospace on the surface colour.                         |
+| ` ```lang ` fenced block | `<pre><code>`        | Scrolls sideways rather than widening the column.        |
+| `[label](url)`           | `<a>`                | Link colour, underlined.                                 |
+| `> quote` / `>>> quote`  | `<blockquote>`       | Rule on the inline start edge. Holds several paragraphs. |
+| `- item` / `1. item`     | `<ul>` / `<ol>`      | Nested lists keep their own counter and a tighter gap.   |
+| `-# subtext`             | `<small>`            | Smaller and quieter, on the same rhythm.                 |
 
 <Callout>
   Spoilers, mentions and timestamps are not text styling — they are interface,

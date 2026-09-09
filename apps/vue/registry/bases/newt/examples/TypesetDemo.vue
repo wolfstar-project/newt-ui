@@ -18,8 +18,20 @@ import { Typeset } from "~~/registry/bases/newt/ui/typeset"
       <code>inline code</code>. Links are
       <a href="#typeset-demo">written with a label</a> or pasted bare.
     </p>
+    <p>
+      The marks nest, so <strong><em>bold italics</em></strong
+      >, <u><strong>underlined bold</strong></u> and
+      <u
+        ><strong><em>all three at once</em></strong></u
+      >
+      each arrive as elements inside elements.
+    </p>
     <blockquote>
-      A quote opens a line and holds until an empty one closes it.
+      <p>One chevron quotes a single line.</p>
+      <p>
+        Three of them quote everything after, to the end of the message — so a
+        quote is a block of paragraphs, not one long line.
+      </p>
     </blockquote>
     <ul>
       <li>A dash, an asterisk or a plus opens a bullet.</li>
