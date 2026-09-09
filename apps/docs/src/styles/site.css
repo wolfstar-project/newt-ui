@@ -742,6 +742,12 @@
     grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
   }
 
+  /*
+   * The card is a link, but it is a tile: the prose rule that underlines links
+   * and paints them blue would turn the grid into a wall of hyperlinks. The
+   * class is spelled with the element so it outranks that rule.
+   */
+  .prose a.framework-card,
   .framework-card {
     display: grid;
     grid-template-columns: 1.6rem 1fr;
