@@ -3,11 +3,12 @@
  * A tab list whose panels come in as `tab-0`, `tab-1`, … slots. The behaviour
  * script is emitted once for the page however many tab groups it holds, and
  * every group keeps its own state, so a component page can have a preview
- * switcher and an installation switcher without them interfering.
+ * switcher and an installation switcher without them interfering. Groups that
+ * share a `persistKey` share a remembered default, nothing more.
  */
 interface Props {
   readonly labels: readonly string[]
-  /** Groups sharing a key persist the reader's choice together. */
+  /** Groups sharing a key start from the reader's last choice on later loads. */
   readonly persistKey?: string
   readonly class?: string
 }
@@ -97,26 +98,18 @@ const panels = await Promise.all(
       panel.hidden = i !== index
     })
 
+    /*
+     * The choice is remembered for the next page, not pushed onto the other
+     * groups on this one. A click on one package-manager switcher used to flip
+     * every code block on the page, and "Code" on one preview flipped every
+     * preview — the reader had asked about one block and lost their place in
+     * the rest. Each group answers only its own clicks; the stored value is
+     * what the next page load starts from.
+     */
     const key = group.dataset.persistKey
     const label = triggers[index]?.dataset.tabValue
     if (key && label) {
       localStorage.setItem(`${STORAGE_PREFIX}${key}`, label)
-      // Sibling groups with the same key follow along. Two synced groups
-      // would otherwise call back into each other forever: A's sync reaches
-      // B, B's own sync reaches back to A, and neither call changes anything
-      // that would stop it. Skipping a sibling already at the target index
-      // breaks that cycle instead of relying on it not to occur.
-      for (const other of document.querySelectorAll<HTMLElement>(
-        `[data-tabs][data-persist-key="${key}"]`
-      )) {
-        if (other === group) continue
-        const otherTriggers = directTriggers(other)
-        const match = otherTriggers.findIndex(
-          (trigger) => trigger.dataset.tabValue === label
-        )
-        const alreadyThere = otherTriggers[match]?.getAttribute("aria-selected") === "true"
-        if (match !== -1 && !alreadyThere) select(other, match, false)
-      }
     }
   }
 
