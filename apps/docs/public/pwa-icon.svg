@@ -1,0 +1,10 @@
+<!--
+  The installed app's icon. The favicon next to it uses the `Canvas`/`CanvasText`
+  system colours so it follows the reader's theme, which a rasteriser cannot
+  resolve — an installed icon sits on somebody else's home screen and has to
+  carry its own colours, so this one states them.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="newt/ui">
+  <rect width="64" height="64" rx="16" fill="#5865f2" />
+  <path d="M17 45V19h8l14 15V19h8v26h-8L25 30v15Z" fill="#ffffff" />
+</svg>

@@ -27,6 +27,9 @@
         // is reached from outside the workspace knip walks.
         "src/lib/utils.ts",
         "src/pages/**/*.{ts,astro}",
+        // The layout loads this one through `<script src="/src/pwa.ts">`,
+        // which is a string as far as any static walk is concerned.
+        "src/pwa.ts",
       ],
       // `.css` is in `project` so knip follows `src/styles/site.css`, which is
       // where `tailwindcss` and `tw-animate-css` are imported from.
@@ -35,6 +38,11 @@
         "scripts/**/*.mjs",
         "*.{ts,mjs}",
       ],
+      // Two indirections nothing static can follow: the Open Graph renderer
+      // asks for a font file by name through `require.resolve`, and the PWA
+      // virtual modules are typed by a triple-slash reference to a package
+      // `@vite-pwa/astro` brings in itself.
+      "ignoreDependencies": ["@fontsource/inter", "vite-plugin-pwa"],
     },
     "apps/www": {
       "entry": [

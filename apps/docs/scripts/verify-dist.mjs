@@ -60,6 +60,17 @@ const REQUIRED = [
   "docs/components/typeset/index.html",
   "r/styles/default/typeset.json",
   "vue/r/styles/default/typeset.json",
+  /* Installable: the manifest, the worker, and the icons they name. */
+  "manifest.webmanifest",
+  "sw.js",
+  "favicon.ico",
+  "apple-touch-icon-180x180.png",
+  "pwa-192x192.png",
+  "pwa-512x512.png",
+  "maskable-icon-512x512.png",
+  /* One card per page, rendered at build time. */
+  "index.webp",
+  "docs/components/button/index.webp",
 ]
 
 const missing = REQUIRED.filter((file) => !existsSync(resolve(dist, file)))

@@ -1,8 +1,13 @@
 ---
 import "@/styles/site.css"
 
+import { SEO } from "astro-seo"
+import { pwaAssetsHead } from "virtual:pwa-assets/head"
+import { pwaInfo } from "virtual:pwa-info"
+
 import Footer from "../components/site/Footer.astro"
 import Header from "../components/site/Header.astro"
+import { ogImageUrl } from "../lib/og-card"
 import { SITE } from "../lib/site"
 
 interface Props {
@@ -20,28 +25,76 @@ interface Props {
 const { title, description = SITE.tagline, markdownPath } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`
+
+/*
+ * The card this page unfurls into. Takumi renders it at build time from the
+ * `og:` tags below and writes it beside the page's own HTML, so the path is
+ * derived rather than chosen — and if the two disagree the build fails, which
+ * is the point: a link with a 404 for an image is worse than a link with none.
+ */
+const ogImage = ogImageUrl(Astro.url.pathname, Astro.site)
+
+const alternates = markdownPath
+  ? [{ rel: "alternate", type: "text/markdown", href: markdownPath }]
+  : []
 ---
 
 <!doctype html>
 <html lang="en" data-framework="react" data-newt-theme="dark">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{fullTitle}</title>
-    <meta name="description" content={description} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="canonical" href={canonical} />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    <SEO
+      charset="utf-8"
+      title={fullTitle}
+      description={description}
+      canonical={canonical.href}
+      openGraph={{
+        basic: {
+          title: fullTitle,
+          type: "website",
+          image: ogImage,
+          url: canonical.href,
+        },
+        optional: {
+          description,
+          siteName: SITE.name,
+          locale: "en",
+        },
+        image: { alt: `${fullTitle} — ${SITE.tagline}` },
+      }}
+      twitter={{
+        card: "summary_large_image",
+        title: fullTitle,
+        description,
+        image: ogImage,
+        imageAlt: `${fullTitle} — ${SITE.tagline}`,
+      }}
+      extend={{
+        meta: [
+          { name: "viewport", content: "width=device-width, initial-scale=1" },
+        ],
+        /*
+         * No icon link here: the assets generator emits the whole set —
+         * `favicon.ico`, the SVG and the apple touch icon — from one source,
+         * and a second hand-written `rel="icon"` would be one more place to
+         * forget when that source changes.
+         */
+        link: [
+          { rel: "sitemap", href: "/sitemap-index.xml" },
+          ...alternates,
+        ],
+      }}
+    />
+
+    {/* The icons the assets generator rasterised, and the manifest that names them. */}
     {
-      markdownPath && (
-        <link rel="alternate" type="text/markdown" href={markdownPath} />
+      pwaAssetsHead.themeColor && (
+        <meta name="theme-color" content={pwaAssetsHead.themeColor.content} />
       )
     }
+    {pwaAssetsHead.links.map((link) => <link {...link} />)}
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+    <script src="/src/pwa.ts"></script>
+
     <script is:inline>
       /*
        * Before first paint: apply the stored theme and framework so a reader

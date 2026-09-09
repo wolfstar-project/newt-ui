@@ -25,3 +25,6 @@ allowBuilds:
   protobufjs: true
   sharp: true
   vue-demi: true
+
+patchedDependencies:
+  astro-takumi@2.0.1: patches/astro-takumi@2.0.1.patch

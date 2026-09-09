@@ -1,0 +1,16 @@
+diff --git a/dist/util.js b/dist/util.js
+index 2b3733cf97dd56dd6e90e33fb2de14b6ac5596eb..08b4d004985321eb4993d40a2f3a763349d5f4b7 100644
+--- a/dist/util.js
++++ b/dist/util.js
+@@ -6,7 +6,10 @@ import path from "path";
+ export function getFilePath({ dir, page }) {
+     let target = path.join(dir, page, "index.html");
+     if (!fs.existsSync(target)) {
+-        target = path.join(dir, page.slice(0, -1) + ".html");
++        // A site with `trailingSlash: "never"` reports pathnames without one,
++        // so trimming the last character removes a digit rather than a slash:
++        // "404" became "40.html". Strip a trailing slash only if it is there.
++        target = path.join(dir, page.replace(/\/$/, "") + ".html");
+     }
+     return target;
+ }
