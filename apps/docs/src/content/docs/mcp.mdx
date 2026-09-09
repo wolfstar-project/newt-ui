@@ -15,27 +15,47 @@ to shop in one registry needs no new vocabulary for this one.
 
 <Tabs labels={["Claude Code", "Cursor", "VS Code", "Codex", "OpenCode"]}>
   <Fragment slot="tab-0">
-    ```bash frame="terminal" npx newtui@latest mcp init --client claude ```
+    ```bash frame="terminal"
+    npx newtui@latest mcp init --client claude
+    ```
+
     Writes `.mcp.json` in the project root. Restart Claude Code and run `/mcp`
     to confirm `newtui` is connected.
+
   </Fragment>
   <Fragment slot="tab-1">
-    ```bash frame="terminal" npx newtui@latest mcp init --client cursor ```
+    ```bash frame="terminal"
+    npx newtui@latest mcp init --client cursor
+    ```
+
     Writes `.cursor/mcp.json`. Enable the server in Cursor's MCP settings.
+
   </Fragment>
   <Fragment slot="tab-2">
-    ```bash frame="terminal" npx newtui@latest mcp init --client vscode ```
+    ```bash frame="terminal"
+    npx newtui@latest mcp init --client vscode
+    ```
+
     Writes `.vscode/mcp.json` under the `servers` key, which is where VS Code
     looks.
+
   </Fragment>
   <Fragment slot="tab-3">
-    ```bash frame="terminal" npx newtui@latest mcp init --client codex ```
+    ```bash frame="terminal"
+    npx newtui@latest mcp init --client codex
+    ```
+
     Appends an `[mcp_servers.newtui]` block to `~/.codex/config.toml`. Codex
     keeps one global config rather than a file per project.
+
   </Fragment>
   <Fragment slot="tab-4">
-    ```bash frame="terminal" npx newtui@latest mcp init --client opencode ```
+    ```bash frame="terminal"
+    npx newtui@latest mcp init --client opencode
+    ```
+
     Writes `opencode.json` in the project root.
+
   </Fragment>
 </Tabs>
 
