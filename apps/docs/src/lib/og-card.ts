@@ -69,6 +69,60 @@ function crumbs(pathname: string): string {
   return parts.length === 0 ? "home" : parts.join("  /  ")
 }
 
+/*
+ * The mark, as the header and `pwa-icon.svg` draw it: four strokes at four
+ * heights struck through by one bar. The renderer has no SVG, so the strokes
+ * are positioned boxes — the numbers are the header's 24-unit coordinates
+ * scaled into the 64px tile, which is why they are not round.
+ */
+const STROKES = [
+  { left: 15, top: 23 },
+  { left: 25, top: 30 },
+  { left: 35, top: 17 },
+  { left: 45, top: 26 },
+] as const
+
+function brandMark(): ReactNode {
+  return createElement(
+    "div",
+    {
+      style: {
+        position: "relative",
+        display: "flex",
+        width: "64px",
+        height: "64px",
+        borderRadius: "16px",
+        backgroundColor: BRAND,
+      },
+    },
+    ...STROKES.map((stroke) =>
+      createElement("div", {
+        key: `stroke-${stroke.left}`,
+        style: {
+          position: "absolute",
+          left: `${stroke.left}px`,
+          top: `${stroke.top}px`,
+          width: "4px",
+          height: `${48 - stroke.top}px`,
+          borderRadius: "2px",
+          backgroundColor: "#ffffff",
+        },
+      })
+    ),
+    createElement("div", {
+      style: {
+        position: "absolute",
+        left: "14px",
+        top: "36px",
+        width: "36px",
+        height: "4px",
+        borderRadius: "2px",
+        backgroundColor: "#ffffff",
+      },
+    })
+  )
+}
+
 export function renderOgCard(input: OgCardInput): ReactNode {
   /* The wordmark sits in the footer of the card, so the title drops it. */
   const heading = input.title.replace(new RegExp(`\\s*·\\s*${SITE.name}$`), "")
@@ -155,25 +209,7 @@ export function renderOgCard(input: OgCardInput): ReactNode {
           borderTop: `2px solid ${BORDER}`,
         },
       },
-      /* The mark, as `pwa-icon.svg` draws it: a blurple tile with a white N. */
-      createElement(
-        "div",
-        {
-          style: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "64px",
-            height: "64px",
-            borderRadius: "16px",
-            backgroundColor: BRAND,
-            color: "#ffffff",
-            fontSize: "40px",
-            fontWeight: 700,
-          },
-        },
-        "N"
-      ),
+      brandMark(),
       createElement(
         "div",
         {
