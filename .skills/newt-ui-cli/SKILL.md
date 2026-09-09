@@ -29,9 +29,11 @@ compatibility shim belongs there, not spread across the commands.
 ## Layout
 
 - `src/index.ts` — argv parsing, `printHelp()`, command dispatch, `main()`.
-- `src/commands/{init,add,list,search,view,diff,info}.ts` — one file per
-  command. `info` also exports `readProjectInfo()`, the in-process reader the
-  MCP server uses instead of shelling out.
+- `src/commands/{init,add,list,search,view,diff,info,apply,preset}.ts` — one
+  file per command. `info` also exports `readProjectInfo()`, the in-process
+  reader the MCP server uses instead of shelling out. `apply` and `preset`
+  are the two halves of newt/create: one writes a preset into a project, the
+  other reads a code without touching anything.
 - `src/mcp/server.ts` — the MCP server (`newtui mcp`). Tool names mirror
   shadcn's on purpose; renaming one strands every prompt written against it.
   Every tool is read-only: installing is a command the human runs.
@@ -44,6 +46,13 @@ compatibility shim belongs there, not spread across the commands.
 - `src/schema/index.ts` — re-exports the registry wire contracts.
 - `src/registry/` — wire schemas, fetching and dependency-tree resolution.
 - `src/utils/get-config.ts` — `components.json` schemas, migration and path resolution.
+- `src/utils/preset.ts` — the newt/create codec (`nt1.…`), the token overrides
+  it renders, and `templateFor()`. It is duplicated in `apps/docs/src/lib/preset.ts`
+  because the docs may not import CLI source; the two are pinned to each other
+  by the golden fixture in `src/utils/__fixtures__/presets.json`, and a test on
+  each side asserts the copies are byte-identical. Change one, copy the file.
+- `src/utils/templates.ts` — `init --template` runs the framework's own creator
+  rather than vendoring a starter, so there is no second copy to keep current.
 - `src/utils/` — focused helpers; import rewriting lives in
   `utils/transformers/`. `utils/updaters/` writes component files and styles
   and installs dependencies. `src/preflights/` validates the target project

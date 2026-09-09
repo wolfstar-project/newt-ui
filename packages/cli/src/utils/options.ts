@@ -15,6 +15,8 @@ export const COMMANDS = [
   "info",
   "mcp",
   "migrate",
+  "apply",
+  "preset",
 ] as const
 export type CommandName = (typeof COMMANDS)[number]
 
@@ -55,7 +57,9 @@ export const STRING_FLAGS = [
   "cwd",
   "framework",
   "path",
+  "preset",
   "registry",
+  "template",
   "type",
 ] as const
 export type StringFlag = (typeof STRING_FLAGS)[number]
@@ -177,4 +181,20 @@ export function flagString(
 /** Read a boolean flag, tolerating `--flag=true` style input. */
 export function flagBoolean(value: string | boolean | undefined): boolean {
   return value === true || value === "true"
+}
+
+/**
+ * `--template` names one of the four frameworks whose creator `init` knows how
+ * to run. It is deliberately narrower than the preset's framework axis: every
+ * other target is created by its own tool first.
+ */
+export function isPresetTemplateFlag(
+  value: string
+): value is "next" | "vite-react" | "vite-vue" | "nuxt" {
+  return (
+    value === "next" ||
+    value === "vite-react" ||
+    value === "vite-vue" ||
+    value === "nuxt"
+  )
 }

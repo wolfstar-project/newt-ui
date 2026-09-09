@@ -6,11 +6,13 @@ import { fileURLToPath } from "node:url"
 import mri from "mri"
 
 import { add } from "./commands/add.js"
+import { apply } from "./commands/apply.js"
 import { diff } from "./commands/diff.js"
 import { info } from "./commands/info.js"
 import { init } from "./commands/init.js"
 import { list } from "./commands/list.js"
 import { migrate } from "./commands/migrate.js"
+import { preset } from "./commands/preset.js"
 import { search } from "./commands/search.js"
 import { view } from "./commands/view.js"
 import { MCP_CLIENTS, mcpInit } from "./mcp/init.js"
@@ -23,6 +25,7 @@ import {
   isBundlerName,
   isCommandName,
   isFrameworkName,
+  isPresetTemplateFlag,
   STRING_FLAGS,
   type BundlerName,
   type Flags,
@@ -100,6 +103,8 @@ function printHelp(): void {
     mcp                      run the MCP server over stdio
     mcp init                 write the MCP config for an editor (--client)
     migrate rtl              rewrite installed components to logical properties
+    apply                    apply a newt/create preset to this project
+    preset decode <code>     read a preset code; also encode and css
 
   ${highlighter.bold("Options")}
     -c, --cwd <dir>          working directory (default: current directory)
@@ -108,6 +113,9 @@ function printHelp(): void {
     -d, --defaults           use the default configuration (init)
     -f, --framework <name>   the framework to use: react or vue (init, list)
     -b, --bundler <name>     the Vue build tool: nuxt or vite (init)
+        --template <name>    create the project first (init): next,
+                             vite-react, vite-vue, nuxt
+        --preset <code>      a newt/create code, nt1.… (init, apply)
         --css <path>         path to your global css file (init)
         --skip-install       skip installing dependencies (init, add)
     -o, --overwrite          overwrite existing files (add)
@@ -131,6 +139,8 @@ function printHelp(): void {
     $ newtui info --json
     $ newtui mcp init --client claude
     $ newtui migrate rtl --dry-run
+    $ newtui init --template next --preset nt1.eyJ2IjoxLCJ0Ijoi…
+    $ newtui apply --preset nt1.eyJ2IjoxLCJ0Ijoi…
 `)
 }
 
@@ -209,6 +219,13 @@ async function main(): Promise<void> {
   switch (command) {
     case "init": {
       const { framework, bundler } = readFrameworkFlags(args)
+      const template = flagString(args.template)
+      if (template !== undefined && !isPresetTemplateFlag(template)) {
+        logger.error(
+          `Unknown template "${template}". Expected next, vite-react, vite-vue or nuxt — every other framework is created with its own tool, and init runs inside the result.`
+        )
+        process.exit(1)
+      }
       await init({
         cwd,
         yes,
@@ -218,9 +235,25 @@ async function main(): Promise<void> {
         framework,
         bundler,
         registry,
+        template,
+        preset: flagString(args.preset),
       })
       break
     }
+    case "apply":
+      await apply({
+        cwd,
+        preset: flagString(args.preset),
+        dryRun: flagBoolean(args["dry-run"]),
+      })
+      break
+    case "preset":
+      await preset({
+        action: rest[0],
+        value: rest[1],
+        json: flagBoolean(args.json),
+      })
+      break
     case "add":
       await add({
         components: rest,

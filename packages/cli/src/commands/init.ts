@@ -43,6 +43,12 @@ import {
   VITE_CONFIG_CANDIDATES,
 } from "../utils/options.js"
 import { installDependencies } from "../utils/packageManager.js"
+import {
+  decodePreset,
+  templateFor,
+  type Preset,
+  type PresetTemplate,
+} from "../utils/preset.js"
 import { promptConfirm, promptSelect, promptText } from "../utils/prompts.js"
 import {
   detectTailwindMajor,
@@ -50,7 +56,9 @@ import {
   tailwindPreamble,
   type TailwindMajor,
 } from "../utils/tailwind.js"
+import { scaffoldTemplate, templateDefaults } from "../utils/templates.js"
 import { getTokensCssBlock, TOKENS_MARKER } from "../utils/tokens.js"
+import { updatePresetCss } from "../utils/updaters/update-preset.js"
 
 /** The registry item that carries the design tokens. */
 const THEME_ITEM = "theme-newt"
@@ -64,6 +72,10 @@ export interface InitOptions {
   framework?: Framework
   bundler?: Bundler
   registry?: string
+  /** Scaffold the project with that framework's own creator first. */
+  template?: PresetTemplate
+  /** A `nt1.…` code from newt/create, applied after the tokens. */
+  preset?: string
 }
 
 /*
@@ -86,8 +98,31 @@ export function cn(...inputs: ClassValue[]) {
 export async function init(options: InitOptions): Promise<void> {
   const cwd = resolveCwd(options.cwd)
   intro(highlighter.bold("newt/ui — init"))
-  const config = await promptForConfig(cwd, options)
-  await runInit(cwd, config, options)
+
+  /*
+   * The preset is decoded before anything runs: a typo in a code pasted from
+   * newt/create should fail on the first line, not after a creator has already
+   * written a project into the directory.
+   */
+  const preset = options.preset ? decodePreset(options.preset) : undefined
+
+  let resolved = options
+  if (options.template) {
+    await scaffoldTemplate(options.template, cwd)
+    const detected = templateDefaults(options.template)
+    resolved = {
+      ...options,
+      framework: options.framework ?? detected.framework,
+      bundler: options.bundler ?? detected.bundler,
+    }
+  } else if (preset !== undefined && templateFor(preset) !== undefined) {
+    logger.info(
+      `This preset targets ${preset.t}. Pass --template ${preset.t} to have init create the project too.`
+    )
+  }
+
+  const config = await promptForConfig(cwd, resolved)
+  await runInit(cwd, config, { ...resolved, preset })
   outro(
     `Success! Project initialization completed. You may now add components: ${highlighter.info("npx newtui add button")}`
   )
@@ -288,7 +323,7 @@ async function promptForConfig(
 async function runInit(
   cwd: string,
   rawConfig: RawConfig,
-  options: { skipInstall: boolean; registry?: string }
+  options: { skipInstall: boolean; registry?: string; preset?: Preset }
 ): Promise<void> {
   const configSpinner = spinner()
   configSpinner.start("Writing components.json...")
@@ -349,6 +384,14 @@ async function runInit(
     )
     cssSpinner.stop(
       `Added tokens to ${highlighter.info(relativePath(cwd, cssPath))} (Tailwind v${major}).`
+    )
+  }
+
+  // preset overrides, after the tokens they override
+  if (options.preset) {
+    const kind = await updatePresetCss(cssPath, options.preset)
+    logger.success(
+      `${kind === "replaced" ? "Replaced" : "Added"} the preset block in ${relativePath(cwd, cssPath)}.`
     )
   }
 

@@ -1,0 +1,122 @@
+{
+  "note": "Golden preset codes. This file is duplicated verbatim in apps/docs/src/lib/__fixtures__/presets.json; both copies are asserted identical, which is what keeps the two codecs interchangeable.",
+  "cases": [
+    {
+      "name": "defaults",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIn0",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr"
+      }
+    },
+    {
+      "name": "framework-vite-vue",
+      "code": "nt1.eyJ2IjoxLCJ0Ijoidml0ZS12dWUiLCJiIjoiIzU4NjVmMiIsInIiOiJtZCIsImYiOiJpbnRlciIsIm0iOiJkYXJrIiwiZCI6Imx0ciJ9",
+      "preset": {
+        "v": 1,
+        "t": "vite-vue",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr"
+      }
+    },
+    {
+      "name": "brand-rose",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjZWI0NTllIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIn0",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#eb459e",
+        "r": "md",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr"
+      }
+    },
+    {
+      "name": "radius-lg",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6ImxnIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIn0",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "lg",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr"
+      }
+    },
+    {
+      "name": "font-system",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6InN5c3RlbSIsIm0iOiJkYXJrIiwiZCI6Imx0ciJ9",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "system",
+        "m": "dark",
+        "d": "ltr"
+      }
+    },
+    {
+      "name": "mode-light",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImxpZ2h0IiwiZCI6Imx0ciJ9",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "inter",
+        "m": "light",
+        "d": "ltr"
+      }
+    },
+    {
+      "name": "direction-rtl",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoicnRsIn0",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "inter",
+        "m": "dark",
+        "d": "rtl"
+      }
+    },
+    {
+      "name": "every-axis",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibnV4dCIsImIiOiIjMWFiYzljIiwiciI6InNtIiwiZiI6Im1vbm8tZmlyc3QiLCJtIjoibGlnaHQiLCJkIjoicnRsIn0",
+      "preset": {
+        "v": 1,
+        "t": "nuxt",
+        "b": "#1abc9c",
+        "r": "sm",
+        "f": "mono-first",
+        "m": "light",
+        "d": "rtl"
+      }
+    },
+    {
+      "name": "no-template",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibGFyYXZlbCIsImIiOiIjZjBiMjMyIiwiciI6InNtIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIn0",
+      "preset": {
+        "v": 1,
+        "t": "laravel",
+        "b": "#f0b232",
+        "r": "sm",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr"
+      }
+    }
+  ]
+}

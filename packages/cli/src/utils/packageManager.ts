@@ -21,7 +21,12 @@ export async function detectPackageManager(
   return toPackageManager(detected?.name)
 }
 
-function run(command: string, args: string[], cwd: string): Promise<void> {
+/** Run a command in `cwd`, inheriting stdio so creators can prompt. */
+export function runCommand(
+  command: string,
+  args: string[],
+  cwd: string
+): Promise<void> {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, { cwd, stdio: "inherit" })
     child.on("error", reject)
@@ -53,5 +58,5 @@ export async function installDependencies(
       `Could not resolve an install command for ${packageManager}.`
     )
   }
-  await run(command.command, command.args, cwd)
+  await runCommand(command.command, command.args, cwd)
 }

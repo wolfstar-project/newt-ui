@@ -7,6 +7,10 @@ npx newtui init          # writes components.json, lib/utils.ts, appends --newt-
 npx newtui add button    # copies components + resolves registryDependencies + installs npm deps
 npx newtui list          # lists registry items
 npx newtui diff button   # compares local files with the registry
+
+npx newtui init --template next --preset nt1.…   # create the project, then wear the preset
+npx newtui apply --preset nt1.…                  # restyle a project that already ran init
+npx newtui preset decode nt1.…                   # read what a preset code carries
 ```
 
 ## Framework
