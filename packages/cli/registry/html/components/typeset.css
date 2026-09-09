@@ -85,6 +85,35 @@
   color: var(--newt-text-primary);
 }
 
+/*
+ * The rest of the inline set a chat markdown parser emits. Emphasis and
+ * strikethrough would inherit the browser's defaults, but they are stated here
+ * so the offset under an underline is the one the links use rather than the
+ * one the font happens to suggest.
+ */
+.typeset :where(em) {
+  font-style: italic;
+}
+
+.typeset :where(u) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.typeset :where(s, del) {
+  text-decoration: line-through;
+  color: var(--newt-text-muted);
+}
+
+/*
+ * Subtext: the aside under a message. Smaller and quieter, and `em` so it
+ * shrinks against whatever it sits in rather than against the root.
+ */
+.typeset :where(small) {
+  font-size: 0.8125em;
+  color: var(--newt-text-muted);
+}
+
 .typeset :where(a) {
   color: var(--newt-text-link);
   text-decoration: underline;

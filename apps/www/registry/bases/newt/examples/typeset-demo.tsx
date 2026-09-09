@@ -1,26 +1,43 @@
 import { Typeset } from "@/registry/bases/newt/ui/typeset"
 
+/*
+ * One of every element a chat markdown parser emits, because that is what the
+ * component has to survive: Typeset never sees the source, only the markup a
+ * renderer produced from it.
+ */
 export default function TypesetDemo() {
   return (
     <Typeset as="article" preset="docs" measure>
-      <h2>Threads</h2>
+      <h1>Heading one</h1>
+      <h2>Heading two</h2>
+      <h3>Heading three</h3>
       <p>
-        A thread keeps a side conversation out of the channel it started in, and
-        drops off the list once it goes quiet. Anyone who can read the parent
-        channel can read the thread.
+        A message body is <strong>bold</strong>, <em>italic</em>,{" "}
+        <u>underlined</u>, <s>struck through</s>, and carries{" "}
+        <code>inline code</code>. Links are{" "}
+        <a href="#typeset-demo">written with a label</a> or pasted bare.
       </p>
-      <ul>
-        <li>Public threads inherit the channel&apos;s permissions.</li>
-        <li>Private threads are invite-only.</li>
-        <li>An archived thread reopens the moment somebody posts in it.</li>
-      </ul>
       <blockquote>
-        Archived is not deleted: the history stays searchable, and the first new
-        message brings it back.
+        A quote opens a line and holds until an empty one closes it.
       </blockquote>
-      <p>
-        The <code>type</code> field is what tells the two apart.
-      </p>
+      <ul>
+        <li>A dash, an asterisk or a plus opens a bullet.</li>
+        <li>
+          A number and a dot open an ordered list:
+          <ol>
+            <li>which nests</li>
+            <li>and keeps its own counter</li>
+          </ol>
+        </li>
+      </ul>
+      <pre>
+        <code>{`const thread = await message.startThread({
+  name: "release-notes",
+})`}</code>
+      </pre>
+      <small>
+        Subtext is the aside under a message: smaller, quieter, same rhythm.
+      </small>
     </Typeset>
   )
 }
