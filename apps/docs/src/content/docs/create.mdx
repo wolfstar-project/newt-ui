@@ -1,0 +1,112 @@
+---
+title: "Presets"
+description: "One code carries the five things a project actually varies, and the CLI knows how to read it."
+---
+
+[newt/create](/create) is the builder. This page is what it hands you.
+
+## What a preset is \{#what\}
+
+A preset is not a theme file. It is a short list of overrides for tokens that
+already exist, which is why a project without one looks exactly like a project
+whose preset is the defaults. Five axes, plus the framework you chose them for:
+
+| Key | Axis             | Values                                                               |
+| --- | ---------------- | -------------------------------------------------------------------- |
+| `t` | Target framework | any of the ten on [Installation](/docs/installation)                 |
+| `b` | Brand hue        | `#rrggbb` — it becomes `--newt-brand` and its hover and active steps |
+| `r` | Radius scale     | `sm`, `md`, `lg`                                                     |
+| `f` | Font stack       | `inter`, `system`, `mono-first`                                      |
+| `m` | Surfaces         | `dark`, `light`                                                      |
+| `d` | Direction        | `ltr`, `rtl`                                                         |
+
+The code is `nt1.` followed by that payload as base64url. The version is in the
+prefix and in the payload, so a link shared today cannot quietly decode into
+something else after a new axis is added.
+
+## Use it when you create the project \{#init\}
+
+<PmTabs cmd="newtui@latest init --template next --preset nt1.…" />
+
+`--template` creates the project first, by running the creator that framework
+maintains, and then `init` continues inside the result. It accepts `next`,
+`vite-react`, `vite-vue` and `nuxt`. Every other target is created with its own
+tool — `laravel new`, `create-react-router`, `npm create astro` — and `init`
+runs afterwards:
+
+<PmTabs cmd="newtui@latest init --preset nt1.…" />
+
+The preset that names one of those frameworks still records the choice. It just
+does not imply a template, and the CLI says so rather than inventing one.
+
+## Or afterwards \{#apply\}
+
+<PmTabs cmd="newtui@latest apply --preset nt1.…" />
+
+`apply` is the second half of `init --preset` on its own: it writes the block
+into the stylesheet `components.json` points at, and nothing else. A stylesheet
+that already carries a preset has that one replaced, not a second one appended
+— two blocks would both apply and the winner would be whichever came last
+rather than whichever was chosen.
+
+`--dry-run` prints the block and writes nothing.
+
+## What it writes \{#written\}
+
+After the token block, fenced by two comments so it can be found again and
+deleted in one selection:
+
+```css title="app/globals.css"
+/* newt/ui preset nt1.… — newt/create */
+:root {
+  --newt-brand: #eb459e;
+  --newt-brand-hover: #c83a86;
+  --newt-brand-active: #a5306e;
+
+  --newt-radius-sm: 4px;
+  --newt-radius-md: 8px;
+  --newt-radius-lg: 12px;
+
+  --newt-font-sans: "Inter", "gg sans", -apple-system, sans-serif;
+  --newt-font-display: "Inter", sans-serif;
+}
+
+/* end newt/ui preset */
+```
+
+Light surfaces and right-to-left add a line each — `color-scheme` and
+`--newt-dir` — because the rest of those two features is an attribute on
+`<html>`, which is yours to set. See [Dark mode](/docs/dark-mode) and
+[RTL](/docs/rtl).
+
+## Reading a code \{#decode\}
+
+```bash frame="terminal"
+npx newtui@latest preset decode nt1.…
+```
+
+```text
+framework  next
+template   next
+brand      #5865f2
+radius     md
+font       inter
+mode       dark
+direction  ltr
+```
+
+`preset encode '{"t":"nuxt"}'` goes the other way, starting from the defaults,
+and `preset css <code>` prints the block without touching a project.
+
+## Sharing one \{#share\}
+
+The builder keeps its state in the URL and nowhere else: `/create?p=nt1.…`
+restores every control. A preset worth keeping is a preset worth sending to
+someone, and browser storage cannot be sent.
+
+<Callout>
+  The codec exists twice — once in the CLI, once in this site — because the
+  documentation may not import CLI source. A golden fixture is committed to both
+  sides and a test asserts the two files are identical, so a code that works
+  here works there.
+</Callout>

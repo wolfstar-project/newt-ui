@@ -1838,17 +1838,17 @@
     color: var(--newt-text-primary);
   }
 
-  /* --- blocks and themes ------------------------------------------------ */
+  /* --- blocks ----------------------------------------------------------- */
 
   .blocks,
-  .themes {
+  .create {
     max-width: 68rem;
     margin: 0 auto;
     padding: 3rem 1rem 5rem;
   }
 
   .blocks-header h1,
-  .themes-header h1 {
+  .create-header h1 {
     margin: 0 0 0.75rem;
     font-size: 2.25rem;
     font-weight: 700;
@@ -1856,7 +1856,7 @@
   }
 
   .blocks-header p,
-  .themes-header p {
+  .create-header p {
     max-width: 46rem;
     margin: 0;
     color: var(--newt-text-secondary);
@@ -1891,33 +1891,78 @@
     line-height: 1.6;
   }
 
-  .theme-controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
-    margin: 2rem 0 1rem;
+  /* --- newt/create ------------------------------------------------------ */
+
+  .create-layout {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
   }
 
-  .theme-presets {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    padding: 0.35rem;
-    border: 1px solid var(--newt-border);
-    border-radius: var(--newt-radius-md);
-    background: var(--newt-bg-surface);
+  .create-field {
+    margin: 0 0 1.5rem;
+    padding: 0;
+    border: 0;
   }
 
-  .theme-presets legend {
-    padding: 0 0.35rem;
+  .create-field legend {
+    margin-bottom: 0.5rem;
+    padding: 0;
     font-size: 0.7rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--newt-text-muted);
   }
 
-  .theme-preset {
+  .create-field .segmented {
+    display: flex;
+  }
+
+  .create-frameworks {
+    display: grid;
+    gap: 0.4rem;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  }
+
+  .create-framework {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-secondary);
+    font-size: 0.82rem;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .create-framework:hover {
+    color: var(--newt-text-primary);
+  }
+
+  .create-framework[aria-pressed="true"] {
+    border-color: var(--newt-brand);
+    background: var(--newt-bg-elevated);
+    color: var(--newt-text-primary);
+  }
+
+  .create-framework .framework-glyph {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .create-hues {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .create-hue {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -1930,7 +1975,7 @@
     cursor: pointer;
   }
 
-  .theme-preset[aria-pressed="true"] {
+  .create-hue[aria-pressed="true"] {
     border-color: var(--newt-brand);
     background: var(--newt-bg-elevated);
     color: var(--newt-text-primary);
@@ -1960,18 +2005,134 @@
     cursor: pointer;
   }
 
-  .theme-output {
-    min-height: 1rem;
-    margin: 0 0 2rem;
-    padding: 0;
-    font-family: var(--newt-font-mono);
-    font-size: 0.78rem;
-    color: var(--newt-text-muted);
-    white-space: pre;
+  .create-reset {
+    display: inline-block;
+    margin-bottom: 2rem;
+    border: 1px solid var(--newt-border);
+    background: transparent;
+    cursor: pointer;
   }
 
-  .theme-preview h2 {
-    margin: 2.5rem 0 1rem;
+  .create-output {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  .create-output-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .create-output h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  .create-output h3 {
+    margin: 2rem 0 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .create-copy {
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-secondary);
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+
+  .create-copy:hover {
+    color: var(--newt-text-primary);
+  }
+
+  .create-code {
+    margin: 0 0 1rem;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    color: var(--newt-text-primary);
+  }
+
+  .create-pm {
+    margin-bottom: 0.75rem;
+    display: flex;
+  }
+
+  .create-commands {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .create-commands li,
+  .create-command-single {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: 0 0 0.4rem;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+  }
+
+  .create-commands code,
+  .create-command-single code {
+    font-family: var(--newt-font-mono);
+    font-size: 0.78rem;
+    overflow-wrap: anywhere;
+    color: var(--newt-text-primary);
+  }
+
+  .create-note {
+    margin: 0.5rem 0 1rem;
+    color: var(--newt-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .create-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .create-actions button {
+    border: 1px solid var(--newt-border);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .create-css {
+    margin: 0.75rem 0;
+    padding: 0.75rem 0.9rem;
+    max-height: 22rem;
+    overflow: auto;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-surface);
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--newt-text-secondary);
+  }
+
+  .create-preview h2 {
+    margin: 0 0 1rem;
     font-size: 1.35rem;
     font-weight: 700;
   }
@@ -2028,6 +2189,19 @@
   @media (min-width: 40rem) {
     .principles {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .create-layout {
+      grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+      align-items: start;
+      gap: 3rem;
+    }
+
+    .create-preview {
+      position: sticky;
+      top: 5rem;
     }
   }
 }

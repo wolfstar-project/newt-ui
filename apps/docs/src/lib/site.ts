@@ -39,7 +39,7 @@ export const SITE = {
     { href: "/docs/components", label: "Components" },
     { href: "/blocks", label: "Blocks" },
     { href: "/colors", label: "Colours" },
-    { href: "/themes", label: "Themes" },
+    { href: "/create", label: "Create" },
     { href: "/docs/changelog", label: "Changelog" },
   ],
 } as const
