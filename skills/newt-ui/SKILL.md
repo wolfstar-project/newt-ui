@@ -46,7 +46,8 @@ npx newtui@latest add status-indicator   # write it, with what it depends on
 
 `add` resolves registry dependencies first, so asking for `chat` also writes
 `message-list`, `message-group` and `scrollbar`. Never hand-write a component
-that the registry ships.
+that the registry ships — and for rendered markdown, which has no components to
+reach for, `add typeset` is the answer rather than a stylesheet of your own.
 
 If the editor has the MCP server configured (`npx newtui@latest mcp init
 --client claude`), prefer its tools over the shell: they answer the same

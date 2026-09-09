@@ -232,7 +232,7 @@ export default function TypesetApp() {
           </button>
           <a
             className="button-secondary"
-            href={`/typeset/preview?${typesetSearch(params)}`}
+            href={`/typeset/preview/?${typesetSearch(params)}`}
             target="_blank"
             rel="noreferrer"
           >

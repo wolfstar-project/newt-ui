@@ -47,6 +47,23 @@ utilities are the same — `bg-newt-brand`, `text-newt-text-muted`,
 `border-newt-border`, `rounded-md`, `shadow-elevation-high`, `duration-fast`,
 `ease-newt`.
 
+## A preset is the short way to the same place
+
+`newtui apply --preset nt1.…` writes the brand hue, radius scale, font stack,
+surface mode and direction as one block of `--newt-*` overrides after the
+tokens. It is the same override you would write by hand — the builder at
+<https://newtui.dev/create> just spares you the arithmetic on the hover and
+active steps. Editing that block afterwards is fine; it is your file.
+
+## Rendered markdown is Typeset, not a component
+
+Markdown a renderer produced has no classes you chose, so styling it with
+components is not on offer. `newtui add typeset` adds a stylesheet and a
+wrapper: put `typeset` plus one of `typeset-docs`, `typeset-chat` or
+`typeset-article` on the container and the markup inside follows the library's
+rhythm. Three variables tune it — `--typeset-size`, `--typeset-leading`,
+`--typeset-flow` — and `not-typeset` takes an island of interface back out.
+
 ## Adding a token
 
 If a value has no token, add the token rather than the value. In this

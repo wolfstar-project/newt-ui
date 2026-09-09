@@ -65,6 +65,14 @@ templates/
 
 ## Quick start
 
+Starting from nothing, `--template` creates the project too, and a preset from
+[newt/create](https://newtui.dev/create) means it comes out already wearing
+your brand hue, radius scale and font:
+
+```bash
+npx newtui@latest init --template next --preset nt1.…
+```
+
 ### React
 
 ```bash
