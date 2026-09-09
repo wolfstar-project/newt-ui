@@ -20,6 +20,39 @@
 - Gates before each commit: `pnpm format:check`, `pnpm lint`, `pnpm knip`, `pnpm typecheck`, `pnpm --filter cli test`, `pnpm build`, `node apps/docs/scripts/verify-dist.mjs`.
 - One commit per task group, English conventional-commit message, no mixed unrelated changes. The working tree currently holds other people's uncommitted files — stage by path, never `git add -A`.
 
+## Status: shipped, 2026-09-09
+
+All three phases are on `feat/docs-astro-foundation`. Where the build differs
+from the plan, it is because the plan proposed a second copy of something the
+repository already had:
+
+- **One `FrameworkMark.astro`, not eleven files.** The shapes live in
+  `apps/docs/src/lib/framework-marks.ts` and are drawn by an Astro component and
+  a React one, because newt/create needs the same set. A `.ts` index importing
+  eleven `.astro` files would not have typechecked anyway.
+- **`FrameworkCard` folded into `FrameworkGrid`.** A card is four lines and is
+  only ever rendered by the grid.
+- **`PathTabs` generates the two CLI paths** from `INSTALL_TARGETS` instead of
+  taking three slots, so the ten pages carry only the step list that differs.
+- **No `installation/html.mdx`.** `/docs/html-css` already documents that
+  flavour in full; the card links there rather than duplicating it.
+- **`init --template` runs each framework's own creator** rather than copying
+  `templates/*` into the published package — four fewer starters to keep
+  current, and it is what shadcn does.
+- **Typeset ships as an ordinary registry item**, not `registry:file`: its meta
+  declares `cssFile`, and `gen-registry.mjs` carries the canonical HTML-flavour
+  stylesheet into the item's `css`, which `add` already knows how to append.
+- **The docs gained `zod` and `vitest`.** The anti-slop rules want payloads
+  parsed at the boundary rather than inspected, so the docs codec declares the
+  same schema the CLI does.
+- **The fixture pins the CSS too.** It carries a `css` field produced by
+  `newtui preset css`, so the docs renderer is checked against the CLI's output
+  rather than against itself.
+
+One bug surfaced during the work and was fixed on its own commit: groups
+sharing a `persistKey` were pushing their selection onto every sibling on the
+page, so picking npm under one command rewrote every other code block.
+
 ## Decisions (confirmed by the user, 2026-09-08)
 
 1. **`/themes` is deleted, not redirected.** `/create` takes its place; the page only ever existed on this unmerged branch, so no redirect is added.
@@ -40,10 +73,10 @@
 - Modify: `apps/docs/src/components/site/FrameworkSwitcher.tsx` (keep its two inline SVGs; they are React elements and the marks folder is Astro — do not cross-import, just keep the paths identical)
 - Modify: `apps/docs/src/styles/site.css` (`.framework-mark` size + hue classes already exist; add `.framework-card-mark`)
 
-- [ ] Draw each mark as a 24×24 `viewBox` with `fill="none" stroke="currentColor"` or a single `currentColor` fill. Keep every path under ~6 commands; these are glyphs, not logos.
-- [ ] `index.ts` exports `FRAMEWORK_IDS = ["next","vite-react","vite-vue","nuxt","astro","tanstack-start","react-router","laravel","manual","html"] as const` and `MARKS`.
-- [ ] Render all eleven on a scratch page, screenshot with Playwright in both themes, check contrast on `--newt-bg-primary` and the light palette.
-- [ ] Laravel's mark is the two nested angular strokes of its shape language, not its wordmark; TanStack's is the stacked chevrons; React Router's is the split path. Glyphs, never logo files.
+- [x] Draw each mark as a 24×24 `viewBox` with `fill="none" stroke="currentColor"` or a single `currentColor` fill. Keep every path under ~6 commands; these are glyphs, not logos.
+- [x] `index.ts` exports `FRAMEWORK_IDS = ["next","vite-react","vite-vue","nuxt","astro","tanstack-start","react-router","laravel","manual","html"] as const` and `MARKS`.
+- [x] Render all eleven on a scratch page, screenshot with Playwright in both themes, check contrast on `--newt-bg-primary` and the light palette.
+- [x] Laravel's mark is the two nested angular strokes of its shape language, not its wordmark; TanStack's is the stacked chevrons; React Router's is the split path. Glyphs, never logo files.
 
 ### Task A2: `FrameworkCard` and `FrameworkGrid`
 
@@ -54,9 +87,9 @@
 - Modify: `apps/docs/src/styles/site.css` — `.framework-grid`, `.framework-card` (border `--newt-border`, radius `--newt-radius-lg`, hover lifts background to `--newt-bg-secondary`, focus ring `--newt-brand`, `:where([dir="rtl"])` needs nothing because the layout is grid).
 - Modify: `apps/docs/src/lib/mdx-components.ts` (or wherever MDX components are registered) to expose both.
 
-- [ ] Card is the whole link (no nested interactive), `aria-describedby` on the note.
-- [ ] Grid reads its data from a single `INSTALL_TARGETS` constant in `apps/docs/src/lib/install-targets.ts` (`{ id, title, note, href, template?: TemplateId }`) so nav, grid and the CLI-path copy stay in step.
-- [ ] Ten cards land as 3-up on desktop with the last row of one centred left, not stretched.
+- [x] Card is the whole link (no nested interactive), `aria-describedby` on the note.
+- [x] Grid reads its data from a single `INSTALL_TARGETS` constant in `apps/docs/src/lib/install-targets.ts` (`{ id, title, note, href, template?: TemplateId }`) so nav, grid and the CLI-path copy stay in step.
+- [x] Ten cards land as 3-up on desktop with the last row of one centred left, not stretched.
 
 ### Task A3: `PathTabs`
 
@@ -65,7 +98,7 @@
 - Create: `apps/docs/src/components/mdx/PathTabs.astro` — wraps `Tabs` with fixed `labels={["newt/create","CLI","Existing project"]}` and `persistKey="install-path"`; slots `create`, `cli`, `existing` mapped to `tab-0..2`.
 - Modify: `apps/docs/src/components/mdx/Tabs.astro` — nothing functional; add a comment noting `PathTabs` relies on the `:scope >` fix from commit pending.
 
-- [ ] Verify nesting: `PathTabs` → `Steps` → `PmTabs` renders and switching the outer tab does not disturb `pm` persistence (regression for the Manual→CLI bug).
+- [x] Verify nesting: `PathTabs` → `Steps` → `PmTabs` renders and switching the outer tab does not disturb `pm` persistence (regression for the Manual→CLI bug).
 
 ### Task A4: Installation index rewrite
 
@@ -73,9 +106,9 @@
 
 - Modify: `apps/docs/src/content/docs/installation.mdx`
 
-- [ ] New shape: intro line → `<PathTabs>` (create: "Open newt/create, pick a framework, copy the command" + link; cli: `PmTabs cmd="newtui@latest init --template <framework>"` + note that `--template` exists for Next, Vite (React), Vite (Vue) and Nuxt only, and that `init` alone is the command everywhere else; existing: `PmTabs cmd="newtui@latest init"` + `add button`) → `## Pick your framework` + `<FrameworkGrid>` → `## What init writes` (moved from `#written`, framework-agnostic parts only) → `## Options` (kept, trimmed to a table).
-- [ ] Move `#nuxt`, `#next`, `#html` sections into their sub-pages (Task A5). Keep the old anchors as `<a id>` stubs with one-line pointers so inbound links do not 404.
-- [ ] Keep `\{#id\}` escaped heading ids.
+- [x] New shape: intro line → `<PathTabs>` (create: "Open newt/create, pick a framework, copy the command" + link; cli: `PmTabs cmd="newtui@latest init --template <framework>"` + note that `--template` exists for Next, Vite (React), Vite (Vue) and Nuxt only, and that `init` alone is the command everywhere else; existing: `PmTabs cmd="newtui@latest init"` + `add button`) → `## Pick your framework` + `<FrameworkGrid>` → `## What init writes` (moved from `#written`, framework-agnostic parts only) → `## Options` (kept, trimmed to a table).
+- [x] Move `#nuxt`, `#next`, `#html` sections into their sub-pages (Task A5). Keep the old anchors as `<a id>` stubs with one-line pointers so inbound links do not 404.
+- [x] Keep `\{#id\}` escaped heading ids.
 
 ### Task A5: Ten sub-pages
 
@@ -86,17 +119,17 @@
 
 Each page follows the template in the spec §5: `<PathTabs>` with three paths → `## What init writes` for that framework → one-liners linking dark mode and RTL guides.
 
-- [ ] `next.mdx`: create path shows `init --preset <code> --template next`; cli `init --template next`; existing: `create-next-app` → App Router `layout.tsx` import → `init` → `add`. Pull the App Router prose from the old `#next` section.
-- [ ] `vite.mdx` becomes React-only (title "Vite (React)"). Existing path: `create-vite --template react-ts` → Tailwind v4 (`@tailwindcss/vite`) → `tsconfig` paths + `vite.config.ts` alias → `init` → `add`.
-- [ ] `vite-vue.mdx` mirrors it with `--template vue-ts`, `App.vue` snippet, Tailwind via `@tailwindcss/vite`.
-- [ ] `nuxt.mdx`: pull the old `#nuxt` section; `--template nuxt`; existing path notes `@newtui/nuxt` module.
-- [ ] `astro.mdx`: React and Vue integrations, `client:*` islands, `.newt-root` on `<body>` in the layout, import order of `global.css`. Both `data-framework` blocks.
-- [ ] `tanstack-start.mdx`: `create-tsrouter-app` (or `npm create @tanstack/start`), Tailwind v4, `tsconfig` paths, `init`, `add`. The create and CLI tabs say plainly there is no `--template` and show `init --preset <code>` after the scaffold command.
-- [ ] `react-router.mdx`: `create-react-router`, Tailwind v4, `app/app.css` import, `.newt-root` on the root layout, `init`, `add`. Same no-template note.
-- [ ] `laravel.mdx`: `laravel new` with Inertia; two `data-framework` blocks for the React and Vue starter kits; Vite alias in `vite.config.js`, `resources/css/app.css`, `.newt-root` on the Blade layout, `init --framework react|vue`, `add`. Same no-template note.
-- [ ] `manual.mdx`: keep; add `PathTabs` with the create/cli tabs pointing back to the picker ("Manual has no CLI step").
-- [ ] `html.mdx`: pull the old `#html` section; `<link>` to `tokens.css` + per-component CSS; copy-paste of `packages/cli/registry/html/components/*`.
-- [ ] Every page has `title`, `description`, and a `.md` twin generated (check `dist/docs/installation/<slug>.md` exists after build).
+- [x] `next.mdx`: create path shows `init --preset <code> --template next`; cli `init --template next`; existing: `create-next-app` → App Router `layout.tsx` import → `init` → `add`. Pull the App Router prose from the old `#next` section.
+- [x] `vite.mdx` becomes React-only (title "Vite (React)"). Existing path: `create-vite --template react-ts` → Tailwind v4 (`@tailwindcss/vite`) → `tsconfig` paths + `vite.config.ts` alias → `init` → `add`.
+- [x] `vite-vue.mdx` mirrors it with `--template vue-ts`, `App.vue` snippet, Tailwind via `@tailwindcss/vite`.
+- [x] `nuxt.mdx`: pull the old `#nuxt` section; `--template nuxt`; existing path notes `@newtui/nuxt` module.
+- [x] `astro.mdx`: React and Vue integrations, `client:*` islands, `.newt-root` on `<body>` in the layout, import order of `global.css`. Both `data-framework` blocks.
+- [x] `tanstack-start.mdx`: `create-tsrouter-app` (or `npm create @tanstack/start`), Tailwind v4, `tsconfig` paths, `init`, `add`. The create and CLI tabs say plainly there is no `--template` and show `init --preset <code>` after the scaffold command.
+- [x] `react-router.mdx`: `create-react-router`, Tailwind v4, `app/app.css` import, `.newt-root` on the root layout, `init`, `add`. Same no-template note.
+- [x] `laravel.mdx`: `laravel new` with Inertia; two `data-framework` blocks for the React and Vue starter kits; Vite alias in `vite.config.js`, `resources/css/app.css`, `.newt-root` on the Blade layout, `init --framework react|vue`, `add`. Same no-template note.
+- [x] `manual.mdx`: keep; add `PathTabs` with the create/cli tabs pointing back to the picker ("Manual has no CLI step").
+- [x] `html.mdx`: pull the old `#html` section; `<link>` to `tokens.css` + per-component CSS; copy-paste of `packages/cli/registry/html/components/*`.
+- [x] Every page has `title`, `description`, and a `.md` twin generated (check `dist/docs/installation/<slug>.md` exists after build).
 
 ### Task A6: Navigation
 
@@ -105,13 +138,13 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 - Modify: `apps/docs/src/lib/nav.ts` — Installation group lists the ten pages in the spec order.
 - Modify: `apps/docs/src/lib/install-targets.ts` — nav reads from it.
 
-- [ ] Sidebar renders ten entries; active state works on each.
+- [x] Sidebar renders ten entries; active state works on each.
 
 ### Task A7: Verify and commit
 
-- [ ] Playwright crawl of the eleven installation pages: no console errors, `PathTabs` persistence survives navigation, every card link resolves 200.
-- [ ] `verify-dist.mjs` REQUIRED gains `docs/installation/{vite-vue,astro,tanstack-start,react-router,laravel,html}/index.html`.
-- [ ] All gates. Commit `feat(docs): rebuild installation as a framework picker with three entry paths`.
+- [x] Playwright crawl of the eleven installation pages: no console errors, `PathTabs` persistence survives navigation, every card link resolves 200.
+- [x] `verify-dist.mjs` REQUIRED gains `docs/installation/{vite-vue,astro,tanstack-start,react-router,laravel,html}/index.html`.
+- [x] All gates. Commit `feat(docs): rebuild installation as a framework picker with three entry paths`.
 
 ---
 
@@ -125,11 +158,11 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 - Create: `packages/cli/src/utils/preset.test.ts`
 - Create: `packages/cli/src/utils/__fixtures__/presets.json`
 
-- [ ] zod schema `presetSchema`: `{ v: literal(1), t: enum(…the ten `FRAMEWORK_IDS`…), b: /^#[0-9a-f]{6}$/i, r: enum(sm, md, lg), f: enum(inter, system, mono-first), m: enum(dark, light), d: enum(ltr, rtl) }`. Export `type Preset = z.infer<…>`.
-- [ ] `encodePreset(p): string` → `nt1.` + base64url(JSON with keys in schema order). `decodePreset(code): Preset` → strip prefix, parse, `presetSchema.parse`. Throw a typed `PresetError` with a one-line message on bad prefix / bad JSON / schema failure.
-- [ ] `presetToCss(p): string` → a second `:root` block after `TOKENS_MARKER`: `--newt-brand`, `--newt-brand-hover`, `--newt-brand-active` derived from `b` (reuse the hue-shift maths in `apps/docs/src/pages/themes.astro:~60-90`, ported to TS), radius trio from `r`, `--newt-font-sans`/`--newt-font-display` from `f`, and, for `m: light`, an `html { color-scheme: light }` + `data-newt-theme="light"` note in a comment. `d: rtl` emits `html { direction: rtl }`.
-- [ ] `templateFor(p): TemplateId | undefined` — `next`, `vite-react`, `vite-vue`, `nuxt` map to themselves, every other `t` returns `undefined`. The CLI errors if `--template` is passed a non-scaffoldable id, listing the four that work.
-- [ ] Fixture: nine presets (defaults, each axis flipped once, one all-flipped, one with a non-scaffoldable `t`) with `code` and `preset` fields. Tests: encode(fixture.preset) === fixture.code, decode(fixture.code) deep-equals fixture.preset, round trip, three failure cases.
+- [x] zod schema `presetSchema`: `{ v: literal(1), t: enum(…the ten `FRAMEWORK_IDS`…), b: /^#[0-9a-f]{6}$/i, r: enum(sm, md, lg), f: enum(inter, system, mono-first), m: enum(dark, light), d: enum(ltr, rtl) }`. Export `type Preset = z.infer<…>`.
+- [x] `encodePreset(p): string` → `nt1.` + base64url(JSON with keys in schema order). `decodePreset(code): Preset` → strip prefix, parse, `presetSchema.parse`. Throw a typed `PresetError` with a one-line message on bad prefix / bad JSON / schema failure.
+- [x] `presetToCss(p): string` → a second `:root` block after `TOKENS_MARKER`: `--newt-brand`, `--newt-brand-hover`, `--newt-brand-active` derived from `b` (reuse the hue-shift maths in `apps/docs/src/pages/themes.astro:~60-90`, ported to TS), radius trio from `r`, `--newt-font-sans`/`--newt-font-display` from `f`, and, for `m: light`, an `html { color-scheme: light }` + `data-newt-theme="light"` note in a comment. `d: rtl` emits `html { direction: rtl }`.
+- [x] `templateFor(p): TemplateId | undefined` — `next`, `vite-react`, `vite-vue`, `nuxt` map to themselves, every other `t` returns `undefined`. The CLI errors if `--template` is passed a non-scaffoldable id, listing the four that work.
+- [x] Fixture: nine presets (defaults, each axis flipped once, one all-flipped, one with a non-scaffoldable `t`) with `code` and `preset` fields. Tests: encode(fixture.preset) === fixture.code, decode(fixture.code) deep-equals fixture.preset, round trip, three failure cases.
 
 ### Task B2: `init --template` and `--preset`
 
@@ -141,8 +174,8 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 - Modify: `packages/cli/src/commands/init.test.ts` — cases for template scaffolding (mock the spawn) and preset writing order.
 - Modify: `packages/cli/src/utils/updaters/update-css.ts` — accept an optional trailing block appended after the token block.
 
-- [ ] `init --preset <code>` in a fresh directory without `--template` fails fast: "`--preset` needs `--template` in an empty directory, or run it inside an existing project". A preset whose `t` has no template does not imply `--template`; there it is only metadata.
-- [ ] Order in the stylesheet: Tailwind preamble → `TOKENS_MARKER` block → `/* newt preset nt1.… */` block. The marker comment carries the code so `apply` can replace rather than duplicate.
+- [x] `init --preset <code>` in a fresh directory without `--template` fails fast: "`--preset` needs `--template` in an empty directory, or run it inside an existing project". A preset whose `t` has no template does not imply `--template`; there it is only metadata.
+- [x] Order in the stylesheet: Tailwind preamble → `TOKENS_MARKER` block → `/* newt preset nt1.… */` block. The marker comment carries the code so `apply` can replace rather than duplicate.
 
 ### Task B3: `apply --preset` and `preset decode`
 
@@ -153,8 +186,8 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 - Modify: `packages/cli/src/index.ts` (command router), `packages/cli/README.md`, `skills/newt-ui/cli.md`, `.skills/newt-ui-cli/SKILL.md`.
 - Create: `.changeset/newtui-presets.md` (minor).
 
-- [ ] Tests for replace-vs-append and for `preset decode` output on the fixture codes.
-- [ ] Commit `feat(newtui): add presets — init --template/--preset, apply, preset decode`.
+- [x] Tests for replace-vs-append and for `preset decode` output on the fixture codes.
+- [x] Commit `feat(newtui): add presets — init --template/--preset, apply, preset decode`.
 
 ### Task B4: Preset codec in the docs
 
@@ -165,7 +198,7 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 - Create: `apps/docs/src/lib/preset.test.ts` — same assertions plus `readFileSync` of both fixtures and `expect(a).toBe(b)`.
 - Modify: `apps/docs/package.json` — `"test": "vitest run"`, devDependency `vitest`; `turbo.json` already runs `test` per package.
 
-- [ ] `pnpm --filter docs test` green.
+- [x] `pnpm --filter docs test` green.
 
 ### Task B5: `/create` island
 
@@ -175,13 +208,13 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 - Create: `apps/docs/src/components/create/CreateApp.tsx` and `{FrameworkPicker,HuePicker,RadiusPicker,FontPicker,ThemePicker,DirectionPicker,PresetOutput,PreviewPane}.tsx`
 - Modify: `apps/docs/src/styles/site.css` — `.create-*` layout: controls column start, preview end, output drawer bottom on mobile.
 
-- [ ] State: `useReducer` over `Preset`; `useEffect` syncs `?p=<code>` with `history.replaceState`; initial state from URL else defaults (`next`, `#5865f2`, `md`, `inter`, `dark`, `ltr`).
-- [ ] `HuePicker`: the five presets from `themes.astro` (Blurple, Violet, Teal, Amber, Rose) as swatches + a native `<input type="color">`. Labels via `aria-label`.
-- [ ] `PreviewPane`: renders real registry components through `ReactDemo`/`VueDemo` islands (`button`, `message`, `select-menu`, `toggle`, `radio`) inside a `.newt-root` whose style attribute carries the preset overrides. Follows `$framework` so the Vue reader sees Vue.
-- [ ] `FrameworkPicker` shows the same ten marks as the installation grid, reusing `INSTALL_TARGETS`; picking one without a template flips the output to "scaffold, then init".
-- [ ] `PresetOutput`: code (copy button), `PmTabs`-style install command for `init --preset` and `apply --preset`, share button that copies `location.href`.
-- [ ] Header nav: replace `/themes` "Themes" with `/create` "Create" in `apps/docs/src/lib/site.ts`.
-- [ ] Delete `apps/docs/src/pages/themes.astro` outright — no redirect. Grep the site for any remaining `/themes` link (today only `apps/docs/src/lib/site.ts:42`).
+- [x] State: `useReducer` over `Preset`; `useEffect` syncs `?p=<code>` with `history.replaceState`; initial state from URL else defaults (`next`, `#5865f2`, `md`, `inter`, `dark`, `ltr`).
+- [x] `HuePicker`: the five presets from `themes.astro` (Blurple, Violet, Teal, Amber, Rose) as swatches + a native `<input type="color">`. Labels via `aria-label`.
+- [x] `PreviewPane`: renders real registry components through `ReactDemo`/`VueDemo` islands (`button`, `message`, `select-menu`, `toggle`, `radio`) inside a `.newt-root` whose style attribute carries the preset overrides. Follows `$framework` so the Vue reader sees Vue.
+- [x] `FrameworkPicker` shows the same ten marks as the installation grid, reusing `INSTALL_TARGETS`; picking one without a template flips the output to "scaffold, then init".
+- [x] `PresetOutput`: code (copy button), `PmTabs`-style install command for `init --preset` and `apply --preset`, share button that copies `location.href`.
+- [x] Header nav: replace `/themes` "Themes" with `/create` "Create" in `apps/docs/src/lib/site.ts`.
+- [x] Delete `apps/docs/src/pages/themes.astro` outright — no redirect. Grep the site for any remaining `/themes` link (today only `apps/docs/src/lib/site.ts:42`).
 
 ### Task B6: `/docs/create` page
 
@@ -192,10 +225,10 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 
 ### Task B7: Verify and commit
 
-- [ ] Playwright: open `/create`, change each control, read the emitted code, `newtui preset decode` it in Bash, compare; reload `/create?p=<code>` and assert every control's value.
-- [ ] `rg -n "/themes" apps/docs/src` returns nothing; `dist/themes` does not exist.
-- [ ] `verify-dist.mjs` REQUIRED gains `create/index.html` and `docs/create/index.html`, and drops `themes/index.html` (line 46 today).
-- [ ] All gates. Commit `feat(docs): add newt/create preset builder, retire /themes`.
+- [x] Playwright: open `/create`, change each control, read the emitted code, `newtui preset decode` it in Bash, compare; reload `/create?p=<code>` and assert every control's value.
+- [x] `rg -n "/themes" apps/docs/src` returns nothing; `dist/themes` does not exist.
+- [x] `verify-dist.mjs` REQUIRED gains `create/index.html` and `docs/create/index.html`, and drops `themes/index.html` (line 46 today).
+- [x] All gates. Commit `feat(docs): add newt/create preset builder, retire /themes`.
 
 ---
 
@@ -208,13 +241,13 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 - Create: `packages/cli/registry/html/components/typeset.css`
 - Create: `packages/cli/registry/html/components/typeset.html` (a demo wrapper with headings, paragraphs, lists, table, blockquote, code, hr)
 
-- [ ] `.typeset { --typeset-size: 1em; --typeset-leading: 1.75; --typeset-flow: 1.25em; --typeset-font-body: var(--newt-font-sans); --typeset-font-heading: var(--newt-font-display); --typeset-font-mono: var(--newt-font-mono); font-size: var(--typeset-size); line-height: var(--typeset-leading); color: var(--newt-text-normal) }`.
-- [ ] Every block child gets `margin-block: 0 var(--typeset-flow)` via `:where(.typeset > *)`; headings scale off `--typeset-size` with `em` (h1 2em … h4 1.125em); `:where(.typeset :is(h1,h2,h3,h4) + *)` collapses the top gap.
-- [ ] Links `--newt-text-link`, `hr`/table borders `--newt-border`, inline code background `--newt-bg-secondary` radius `--newt-radius-sm`, `pre` matches `code-block`, blockquote border-inline-start (logical) 4px `--newt-border`.
-- [ ] Presets: `.typeset-docs` (defaults), `.typeset-chat` (`--typeset-size: .9375em; --typeset-leading: 1.375; --typeset-flow: .5em`), `.typeset-article` (`1.0625em / 1.8 / 1.5em`). Measure: `.typeset-measure { max-inline-size: 65ch }`.
-- [ ] Responsive table: `.typeset table` wrapped rules `display:block; overflow-x:auto` under `--newt-bp-sm`, mirroring shadcn-vue's approach.
-- [ ] Opt-out: `.typeset :where(.not-typeset, .not-typeset *)` resets margins and fonts.
-- [ ] RTL: only logical properties. Run `newtui migrate rtl --check` (or the `rewriteRtl` unit) on the file to confirm nothing physical slipped in.
+- [x] `.typeset { --typeset-size: 1em; --typeset-leading: 1.75; --typeset-flow: 1.25em; --typeset-font-body: var(--newt-font-sans); --typeset-font-heading: var(--newt-font-display); --typeset-font-mono: var(--newt-font-mono); font-size: var(--typeset-size); line-height: var(--typeset-leading); color: var(--newt-text-normal) }`.
+- [x] Every block child gets `margin-block: 0 var(--typeset-flow)` via `:where(.typeset > *)`; headings scale off `--typeset-size` with `em` (h1 2em … h4 1.125em); `:where(.typeset :is(h1,h2,h3,h4) + *)` collapses the top gap.
+- [x] Links `--newt-text-link`, `hr`/table borders `--newt-border`, inline code background `--newt-bg-secondary` radius `--newt-radius-sm`, `pre` matches `code-block`, blockquote border-inline-start (logical) 4px `--newt-border`.
+- [x] Presets: `.typeset-docs` (defaults), `.typeset-chat` (`--typeset-size: .9375em; --typeset-leading: 1.375; --typeset-flow: .5em`), `.typeset-article` (`1.0625em / 1.8 / 1.5em`). Measure: `.typeset-measure { max-inline-size: 65ch }`.
+- [x] Responsive table: `.typeset table` wrapped rules `display:block; overflow-x:auto` under `--newt-bp-sm`, mirroring shadcn-vue's approach.
+- [x] Opt-out: `.typeset :where(.not-typeset, .not-typeset *)` resets margins and fonts.
+- [x] RTL: only logical properties. Run `newtui migrate rtl --check` (or the `rewriteRtl` unit) on the file to confirm nothing physical slipped in.
 
 ### Task C2: Wrappers and registry item
 
@@ -229,7 +262,7 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 - Modify: `apps/docs/scripts/verify-dist.mjs` — `NEWT_EXPECTED_COMPONENTS` 60 → 61; REQUIRED gains `r/styles/default/typeset.json` and the Vue twin.
 - Create: `.changeset/newtui-typeset.md` (minor, registry).
 
-- [ ] `node scripts/gen-registry.mjs && pnpm --filter docs docs:gen` produce `components/typeset.mdx` starter; `pnpm registry:build` emits the item; `newtui add typeset` in a scratch Vite app writes `typeset.css` and the wrapper and imports the CSS after Tailwind.
+- [x] `node scripts/gen-registry.mjs && pnpm --filter docs docs:gen` produce `components/typeset.mdx` starter; `pnpm registry:build` emits the item; `newtui add typeset` in a scratch Vite app writes `typeset.css` and the wrapper and imports the CSS after Tailwind.
 
 ### Task C3: `lib/typeset.ts`
 
@@ -237,9 +270,9 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 
 - Create: `apps/docs/src/lib/typeset.ts`, `apps/docs/src/lib/typeset.test.ts`
 
-- [ ] Params schema (zod): `body`, `heading`, `mono` from a fixed font list (`inter`, `system`, `serif`, `mono-first`, `newt-display`), `size` 0.875–1.25 step .0625, `leading` 1.25–2 step .05, `flow` 0.5em–2em step .125, `measure` off|55ch|65ch|75ch, `locks` bitmask, `preset` docs|chat|article.
-- [ ] `parseParams(search)`, `toSearch(params)`, `shuffle(params, locks, rng)`, `toCss(params)` (emits a `.typeset-custom { --typeset-… }` block), `toWrapper(framework, params)` (React/Vue/HTML snippet).
-- [ ] Tests: URL round trip, shuffle respects locks, `toCss` emits only `--typeset-*` and `--newt-*` references.
+- [x] Params schema (zod): `body`, `heading`, `mono` from a fixed font list (`inter`, `system`, `serif`, `mono-first`, `newt-display`), `size` 0.875–1.25 step .0625, `leading` 1.25–2 step .05, `flow` 0.5em–2em step .125, `measure` off|55ch|65ch|75ch, `locks` bitmask, `preset` docs|chat|article.
+- [x] `parseParams(search)`, `toSearch(params)`, `shuffle(params, locks, rng)`, `toCss(params)` (emits a `.typeset-custom { --typeset-… }` block), `toWrapper(framework, params)` (React/Vue/HTML snippet).
+- [x] Tests: URL round trip, shuffle respects locks, `toCss` emits only `--typeset-*` and `--newt-*` references.
 
 ### Task C4: `/typeset` island
 
@@ -248,11 +281,11 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 - Create: `apps/docs/src/pages/typeset.astro`, `apps/docs/src/components/typeset/TypesetApp.tsx`, `{FontControl,RhythmControl,LockButton,ShuffleButton,PreviewSurface,GetCodeDrawer}.tsx`
 - Modify: `apps/docs/src/styles/site.css` — `.typeset-app-*`
 
-- [ ] Controls column: Body / Heading / Mono `<select>`s with a lock each; Size / Leading / Flow `<input type="range">` with a lock each and the current value read out; Measure segmented; Preset segmented; Shuffle; Reset.
-- [ ] Preview tabs: **Message** (a `message` block with markdown-rich content), **Embed**, **Channel welcome**, **Docs article** — each rendered as static HTML inside `.typeset` with the live custom properties on the wrapper. Dark/light follows `$theme`; RTL toggle reuses the `demo-dir-toggle` pattern.
-- [ ] "Get Code" drawer: `typeset.css` install command (`PmTabs`-style), the `.typeset-custom` block if any control differs from the preset, the wrapper snippet for the active framework. "Open in new tab" opens `/typeset/preview?…` (a minimal page with just the preview surface).
-- [ ] Every control has a visible label; range inputs expose `aria-valuetext`.
-- [ ] Header nav gains "Typeset" after "Create".
+- [x] Controls column: Body / Heading / Mono `<select>`s with a lock each; Size / Leading / Flow `<input type="range">` with a lock each and the current value read out; Measure segmented; Preset segmented; Shuffle; Reset.
+- [x] Preview tabs: **Message** (a `message` block with markdown-rich content), **Embed**, **Channel welcome**, **Docs article** — each rendered as static HTML inside `.typeset` with the live custom properties on the wrapper. Dark/light follows `$theme`; RTL toggle reuses the `demo-dir-toggle` pattern.
+- [x] "Get Code" drawer: `typeset.css` install command (`PmTabs`-style), the `.typeset-custom` block if any control differs from the preset, the wrapper snippet for the active framework. "Open in new tab" opens `/typeset/preview?…` (a minimal page with just the preview surface).
+- [x] Every control has a visible label; range inputs expose `aria-valuetext`.
+- [x] Header nav gains "Typeset" after "Create".
 
 ### Task C5: `/docs/typeset` page
 
@@ -263,22 +296,22 @@ Each page follows the template in the spec §5: `<PathTabs>` with three paths �
 
 Sections, adapted from shadcn-vue's outline: Principles (three controls, tokens underneath) · Features · Installation (`add typeset`, import order) · Building your typeset (link to `/typeset`) · Presets (`docs`, `chat`, `article`) · Custom typesets · Themes and dark mode (everything resolves to `--newt-*`, so a light palette needs no extra rule) · RTL · Responsive table · Overrides · Opting out (`.not-typeset`) · Streaming (note on `--typeset-flow` keeping rhythm as content arrives; static demo) · Prior art (shadcn Typeset, Tailwind Typography, Every Layout's "Stack").
 
-- [ ] Prose in the project's voice; every section a `\{#id\}` anchor; a `<ComponentPreview name="typeset" />` up top.
+- [x] Prose in the project's voice; every section a `\{#id\}` anchor; a `<ComponentPreview name="typeset" />` up top.
 
 ### Task C6: Verify and commit
 
-- [ ] Playwright: `/typeset` round-trips URL params; shuffle changes only unlocked controls; Get Code contains `typeset.css` and a wrapper for React, Vue and HTML in turn.
-- [ ] `verify-dist.mjs` REQUIRED gains `typeset/index.html`, `docs/typeset/index.html`, `docs/components/typeset/index.html`.
-- [ ] All gates. Commit `feat(newtui): add Typeset — token-based rhythm styles for rendered markdown`, then `feat(docs): add /typeset builder and docs`.
+- [x] Playwright: `/typeset` round-trips URL params; shuffle changes only unlocked controls; Get Code contains `typeset.css` and a wrapper for React, Vue and HTML in turn.
+- [x] `verify-dist.mjs` REQUIRED gains `typeset/index.html`, `docs/typeset/index.html`, `docs/components/typeset/index.html`.
+- [x] All gates. Commit `feat(newtui): add Typeset — token-based rhythm styles for rendered markdown`, then `feat(docs): add /typeset builder and docs`.
 
 ---
 
 ## Phase D — Wrap-up
 
-- [ ] Update `skills/newt-ui/{SKILL.md,cli.md,customization.md}` and `.skills/newt-ui-{cli,registry,architecture}/SKILL.md` for presets, `--template`, Typeset.
-- [ ] `README.md` quick-start mentions `init --template` and links `/create`.
-- [ ] Update PR #16 body (English) with the three new capabilities.
-- [ ] Final full-site Playwright crawl (the existing 97-page script + the new pages), zero console errors.
+- [x] Update `skills/newt-ui/{SKILL.md,cli.md,customization.md}` and `.skills/newt-ui-{cli,registry,architecture}/SKILL.md` for presets, `--template`, Typeset.
+- [x] `README.md` quick-start mentions `init --template` and links `/create`.
+- [x] Update PR #16 body (English) with the three new capabilities.
+- [x] Final full-site Playwright crawl (the existing 97-page script + the new pages), zero console errors.
 
 ## Verification checklist (whole plan)
 
