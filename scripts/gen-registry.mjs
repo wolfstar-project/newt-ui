@@ -20,6 +20,7 @@ import { format } from "oxfmt"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const META_DIR = join(ROOT, "apps/www/registry/meta")
+const HTML_COMPONENTS = join(ROOT, "packages/cli/registry/html/components")
 const WWW = join(ROOT, "apps/www")
 const VUE = join(ROOT, "apps/vue")
 const REGISTRY_BASE = "registry/bases/newt"
@@ -65,6 +66,19 @@ function withOptionalDependencies(entry, m) {
   return entry
 }
 
+/*
+ * A component whose behaviour is CSS rather than markup — Typeset is the one —
+ * declares `cssFile`, and the canonical stylesheet in the HTML flavour is
+ * carried into the item so `add` appends it to the consumer's global CSS. The
+ * file stays the single source: nothing is retyped into the meta.
+ */
+function withCss(entry, m) {
+  if (!m.cssFile) return entry
+  const source = readFileSync(join(HTML_COMPONENTS, m.cssFile), "utf8")
+  entry.css = { "@layer components": source.trimEnd() }
+  return entry
+}
+
 // ---------- React ----------
 const reactUi = metas.map((m) => {
   const entry = withOptionalDependencies(
@@ -77,6 +91,7 @@ const reactUi = metas.map((m) => {
     m
   )
   entry.type = m.type ?? "registry:ui"
+  withCss(entry, m)
   entry.files = (m.reactFiles ?? [`ui/${m.name}.tsx`]).map((path) => ({
     path,
     type: entry.type,
@@ -164,6 +179,7 @@ const vueUi = metas.map((m) => {
     m
   )
   entry.type = m.type ?? "registry:ui"
+  withCss(entry, m)
   const dir = entry.type === "registry:block" ? "blocks" : "ui"
   entry.files = (m.vueFiles ?? [`${pascal(m.name)}.vue`, "index.ts"]).map(
     (f) => ({

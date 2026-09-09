@@ -87,7 +87,7 @@ export const categories: DocsCategory[] = [
   {
     slug: "utilities",
     label: "Utilities",
-    components: ["scrollbar", "app-launcher", "direction"],
+    components: ["scrollbar", "app-launcher", "direction", "typeset"],
   },
   {
     slug: "blocks",

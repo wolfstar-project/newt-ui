@@ -71,7 +71,12 @@ entirely by these), and it is published to
   The schema marks `tailwind` deprecated upstream; we keep emitting it
   precisely because v3 consumers are still supported.
 - `css` — additional `@layer`/`@utility`/`@keyframes` rules when a component
-  needs them.
+  needs them. A component whose behaviour *is* CSS declares `"cssFile":
+  "<name>.css"` in its meta instead of restating anything: `gen-registry.mjs`
+  reads that file from `packages/cli/registry/html/components/` and carries it
+  into the item as `css["@layer components"]`, so the HTML flavour stays the
+  single source and `add` appends the same rules to a React or Vue project.
+  `typeset` is the one that uses it.
 
 When you add or rename a token, update `newtTokens`, `tailwindV3Theme`, and
 `tailwindV4Theme` together, or v3 and v4 consumers silently diverge.

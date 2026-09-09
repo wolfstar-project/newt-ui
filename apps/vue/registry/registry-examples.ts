@@ -619,6 +619,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "TypesetDemo",
+    type: "registry:example",
+    registryDependencies: ["typeset"],
+    files: [
+      {
+        path: "examples/TypesetDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "TypingIndicatorDemo",
     type: "registry:example",
     registryDependencies: ["typing-indicator"],

@@ -2,6 +2,13 @@
 @import "tw-animate-css";
 
 /*
+ * The Typeset stylesheet, from the registry rather than restated here: this
+ * site previews the item, so it has to be styled by the same file `add
+ * typeset` copies into a consumer's project.
+ */
+@import "../../../../packages/cli/registry/html/components/typeset.css";
+
+/*
  * Auto-detection is off above, so every directory the scanner may walk is named
  * here. The two registries live outside this app and both are scanned: a demo
  * renders React or Vue depending on the framework switch.
@@ -2137,6 +2144,97 @@
     font-weight: 700;
   }
 
+  /* --- typeset builder --------------------------------------------------- */
+
+  .typeset-app {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .typeset-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .typeset-row legend {
+    inline-size: 100%;
+  }
+
+  .typeset-row select {
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-primary);
+    font-size: 0.82rem;
+  }
+
+  .typeset-row input[type="range"] {
+    flex: 1;
+    min-inline-size: 8rem;
+    accent-color: var(--newt-brand);
+  }
+
+  .typeset-value {
+    font-family: var(--newt-font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--newt-text-secondary);
+  }
+
+  .typeset-lock {
+    padding: 0.15rem 0.4rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+
+  .typeset-lock[aria-pressed="true"] {
+    border-color: var(--newt-brand);
+    background: var(--newt-bg-elevated);
+  }
+
+  .typeset-code {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  .typeset-surface {
+    padding: 1.75rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-lg);
+    background: var(--newt-bg-surface);
+  }
+
+  .typeset-standalone {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 3rem 1rem 5rem;
+  }
+
+  .typeset-standalone-section + .typeset-standalone-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  .typeset-standalone-label {
+    margin: 0 0 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--newt-text-muted);
+  }
+
   /* --- responsive ------------------------------------------------------- */
 
   @media (min-width: 48rem) {
@@ -2193,13 +2291,15 @@
   }
 
   @media (min-width: 64rem) {
-    .create-layout {
+    .create-layout,
+    .typeset-app {
       grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
       align-items: start;
       gap: 3rem;
     }
 
-    .create-preview {
+    .create-preview,
+    .typeset-stage {
       position: sticky;
       top: 5rem;
     }

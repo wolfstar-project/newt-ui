@@ -33,6 +33,7 @@ const GUIDES: readonly NavGroup[] = [
       { href: "/docs", label: "Introduction" },
       { href: "/docs/installation", label: "Installation" },
       { href: "/docs/create", label: "Presets", badge: "new" },
+      { href: "/docs/typeset", label: "Typeset", badge: "new" },
       { href: "/docs/components-json", label: "components.json" },
       { href: "/docs/theming", label: "Theming" },
       { href: "/docs/dark-mode", label: "Dark mode" },

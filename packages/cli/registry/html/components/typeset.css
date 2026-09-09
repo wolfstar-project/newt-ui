@@ -1,0 +1,242 @@
+/* newt-ui · Typeset */
+
+/*
+ * Typeset styles rendered markdown — a message body, an embed description, a
+ * changelog entry, a documentation page — with three variables rather than a
+ * rule per element:
+ *
+ *   --typeset-size     the base font size everything else is an `em` of
+ *   --typeset-leading  the line height
+ *   --typeset-flow     the space between block children
+ *
+ * Everything else resolves to a --newt-* token, so a typeset block follows the
+ * palette, the light surfaces and a preset without knowing they exist.
+ */
+
+.typeset {
+  --typeset-size: 1em;
+  --typeset-leading: 1.75;
+  --typeset-flow: 1.25em;
+  --typeset-font-body: var(--newt-font-sans);
+  --typeset-font-heading: var(--newt-font-display);
+  --typeset-font-mono: var(--newt-font-mono);
+
+  font-family: var(--typeset-font-body);
+  font-size: var(--typeset-size);
+  line-height: var(--typeset-leading);
+  color: var(--newt-text-secondary);
+  text-wrap: pretty;
+}
+
+/*
+ * One rule owns the rhythm: every block child carries the same trailing space
+ * and nothing carries a leading one, so a block's spacing never depends on
+ * what happens to precede it.
+ */
+.typeset > :where(*) {
+  margin-block: 0 var(--typeset-flow);
+}
+
+.typeset > :where(*:last-child) {
+  margin-block-end: 0;
+}
+
+.typeset :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--typeset-font-heading);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--newt-text-primary);
+  text-wrap: balance;
+}
+
+.typeset > :where(h1, h2, h3, h4, h5, h6) {
+  margin-block-start: calc(var(--typeset-flow) * 1.6);
+}
+
+.typeset > :where(:first-child) {
+  margin-block-start: 0;
+}
+
+/* A heading and the paragraph under it are one unit, not two. */
+.typeset :where(h1, h2, h3, h4, h5, h6) + :where(*) {
+  margin-block-start: 0;
+}
+
+.typeset :where(h1) {
+  font-size: 2em;
+  letter-spacing: -0.02em;
+}
+.typeset :where(h2) {
+  font-size: 1.5em;
+  letter-spacing: -0.015em;
+}
+.typeset :where(h3) {
+  font-size: 1.25em;
+}
+.typeset :where(h4) {
+  font-size: 1.125em;
+}
+.typeset :where(h5, h6) {
+  font-size: 1em;
+}
+
+.typeset :where(strong) {
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.typeset :where(a) {
+  color: var(--newt-text-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.typeset :where(a:hover) {
+  text-decoration-thickness: 2px;
+}
+
+.typeset :where(ul, ol) {
+  padding-inline-start: 1.5em;
+}
+
+.typeset :where(ul) {
+  list-style: disc;
+}
+
+.typeset :where(ol) {
+  list-style: decimal;
+}
+
+.typeset :where(li) {
+  margin-block-end: calc(var(--typeset-flow) * 0.35);
+}
+
+/* A nested list belongs to its item, so it does not restate the block gap. */
+.typeset :where(li > ul, li > ol) {
+  margin-block: calc(var(--typeset-flow) * 0.35);
+}
+
+.typeset :where(blockquote) {
+  padding-inline-start: 1em;
+  border-inline-start: 4px solid var(--newt-border);
+  color: var(--newt-text-muted);
+}
+
+.typeset :where(hr) {
+  border: 0;
+  border-block-start: 1px solid var(--newt-border);
+}
+
+.typeset :where(code) {
+  padding: 0.15em 0.35em;
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-surface);
+  font-family: var(--typeset-font-mono);
+  font-size: 0.875em;
+  color: var(--newt-text-primary);
+}
+
+.typeset :where(pre) {
+  padding: 1em 1.15em;
+  overflow-x: auto;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-base);
+  font-family: var(--typeset-font-mono);
+  font-size: 0.875em;
+  line-height: 1.6;
+}
+
+.typeset :where(pre code) {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  font-size: inherit;
+}
+
+.typeset :where(kbd) {
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  font-family: var(--typeset-font-mono);
+  font-size: 0.8em;
+}
+
+.typeset :where(img, video) {
+  max-inline-size: 100%;
+  height: auto;
+  border-radius: var(--newt-radius-md);
+}
+
+.typeset :where(table) {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375em;
+}
+
+.typeset :where(th, td) {
+  padding: 0.5em 0.7em;
+  border-block-end: 1px solid var(--newt-border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.typeset :where(th) {
+  color: var(--newt-text-primary);
+  font-weight: 600;
+}
+
+/*
+ * A table is the one element that cannot reflow: below the narrow breakpoint
+ * it scrolls sideways inside its own box rather than widening the page.
+ */
+@media (max-width: 40rem) {
+  .typeset > :where(table) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* --- presets ------------------------------------------------------------ */
+
+/* Long-form reading: the defaults, stated so a preset is always explicit. */
+.typeset-docs {
+  --typeset-size: 1em;
+  --typeset-leading: 1.75;
+  --typeset-flow: 1.25em;
+}
+
+/* Conversation: tighter, because the turn is the unit and it is short. */
+.typeset-chat {
+  --typeset-size: 0.9375em;
+  --typeset-leading: 1.375;
+  --typeset-flow: 0.5em;
+}
+
+/* Editorial: larger and airier, for text somebody sat down to read. */
+.typeset-article {
+  --typeset-size: 1.0625em;
+  --typeset-leading: 1.8;
+  --typeset-flow: 1.5em;
+}
+
+/* Line length is a property of the column, not of the type. */
+.typeset-measure {
+  max-inline-size: 68ch;
+}
+
+/* --- opting out --------------------------------------------------------- */
+
+/*
+ * An island of interface inside a body of prose — a component, an embed, a
+ * table of controls — should not inherit the rhythm. Marking it takes it back
+ * out, including everything inside it.
+ */
+.typeset :where(.not-typeset, .not-typeset *) {
+  margin-block: revert;
+  font-family: revert;
+  font-size: revert;
+  line-height: revert;
+  color: revert;
+}

@@ -619,6 +619,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "typeset-demo",
+    type: "registry:example",
+    registryDependencies: ["typeset"],
+    files: [
+      {
+        path: "examples/typeset-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "typing-indicator-demo",
     type: "registry:example",
     registryDependencies: ["typing-indicator"],

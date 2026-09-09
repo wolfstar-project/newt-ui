@@ -1,0 +1,68 @@
+<!--
+  Typeset is two class names on a wrapper: the system, and the preset. What is
+  inside is ordinary rendered markup — whatever your markdown pipeline emits —
+  and none of it carries a class of its own.
+-->
+<article class="typeset typeset-docs typeset-measure">
+  <h2>Threads</h2>
+
+  <p>
+    A thread keeps a side conversation out of the channel it started in, and
+    disappears from the list once it goes quiet. Anyone who can read the parent
+    channel can read the thread.
+  </p>
+
+  <h3>Starting one</h3>
+
+  <p>
+    Hover a message and choose <kbd>Create Thread</kbd>, or use the composer's
+    thread button to start one that is not attached to anything.
+  </p>
+
+  <ul>
+    <li>Public threads inherit the channel's permissions.</li>
+    <li>Private threads are invite-only, and do not appear in the list.</li>
+    <li>An archived thread reopens the moment somebody posts in it.</li>
+  </ul>
+
+  <blockquote>
+    A thread archived after inactivity is not deleted. Its history stays
+    searchable, and the first new message brings it back.
+  </blockquote>
+
+  <h3>In code</h3>
+
+  <p>The <code>type</code> field is what tells the two apart:</p>
+
+  <pre><code>await channel.threads.create({
+  name: "release-notes",
+  type: ChannelType.PublicThread,
+})</code></pre>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Visible to</th>
+        <th>Archives after</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Public</td>
+        <td>Everyone in the channel</td>
+        <td>24 hours</td>
+      </tr>
+      <tr>
+        <td>Private</td>
+        <td>Invited members</td>
+        <td>72 hours</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Threads are covered in full in the
+    <a href="#">channel documentation</a>.
+  </p>
+</article>

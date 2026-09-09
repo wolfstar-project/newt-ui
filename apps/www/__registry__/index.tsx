@@ -658,6 +658,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "typeset",
+    {
+      name: "typeset",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/typeset.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/typeset")),
+    },
+  ],
+  [
     "typing-indicator",
     {
       name: "typing-indicator",
@@ -1382,6 +1392,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/tooltip-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/tooltip-demo")
+      ),
+    },
+  ],
+  [
+    "typeset-demo",
+    {
+      name: "typeset-demo",
+      type: "registry:example",
+      registryDependencies: ["typeset"],
+      files: ["registry/bases/newt/examples/typeset-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/typeset-demo")
       ),
     },
   ],

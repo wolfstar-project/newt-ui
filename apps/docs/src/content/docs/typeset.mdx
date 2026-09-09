@@ -1,0 +1,167 @@
+---
+title: "Typeset"
+description: "Three controls — size, leading and flow — for every place the library renders markdown."
+---
+
+Rendered markdown is the one thing a component library cannot style with
+components. What arrives is whatever the renderer emitted: a heading, three
+paragraphs, a list, a table, sometimes a code block, none of them carrying a
+class you chose. Typeset styles that markup from the outside.
+
+<ComponentPreview name="typeset" />
+
+## Principles \{#principles\}
+
+**Three controls, not thirty.** Size, leading and flow decide almost everything
+about how a block of prose reads. `--typeset-size` is the base every other size
+is an `em` of, `--typeset-leading` is the line height, and `--typeset-flow` is
+the space between block children. Change one and the whole block stays
+proportional.
+
+**One rule owns the rhythm.** Every block child carries the same trailing space
+and none carries a leading one, so a paragraph's spacing never depends on what
+happens to sit above it. Headings are the exception, and they take their extra
+space from `--typeset-flow` too.
+
+**Everything else is a token.** Colours, borders, radii and the code surface
+resolve to `--newt-*`, which is why a typeset block follows the palette, the
+light surfaces and a [preset](/docs/create) without knowing they exist.
+
+**Nothing inside is styled by name.** No `.typeset-heading`, no `.typeset-list`.
+The selectors match elements, wrapped in `:where()` so their specificity is
+zero — any class you add wins without `!important`.
+
+## Installation \{#installation\}
+
+<Installation name="typeset" />
+
+The stylesheet lands next to your global CSS and is imported after Tailwind, so
+the `:where()` rules sit at the end of the cascade where they can be overridden
+by anything.
+
+## The three controls \{#controls\}
+
+| Variable            | Default  | What it decides                                                    |
+| ------------------- | -------- | ------------------------------------------------------------------ |
+| `--typeset-size`    | `1em`    | The base font size. Headings and code are `em` of it.              |
+| `--typeset-leading` | `1.75`   | Line height for body text. Headings stay at `1.25`.                |
+| `--typeset-flow`    | `1.25em` | The gap between block children, and the basis for the heading gap. |
+
+Three more name the fonts, and each resolves to a token by default:
+`--typeset-font-body`, `--typeset-font-heading`, `--typeset-font-mono`.
+
+[The builder](/typeset) moves all six live and prints what you land on.
+
+## Presets \{#presets\}
+
+Three combinations cover the surfaces this library renders into:
+
+| Class             | Size       | Leading | Flow     | For                                      |
+| ----------------- | ---------- | ------- | -------- | ---------------------------------------- |
+| `typeset-docs`    | `1em`      | `1.75`  | `1.25em` | Long-form reading — guides, changelogs   |
+| `typeset-chat`    | `0.9375em` | `1.375` | `0.5em`  | Conversation, where the turn is the unit |
+| `typeset-article` | `1.0625em` | `1.8`   | `1.5em`  | Editorial text somebody sat down to read |
+
+```html
+<article class="typeset typeset-chat">
+  <!-- whatever your markdown renderer emitted -->
+</article>
+```
+
+## Building your own \{#custom\}
+
+A project with its own rhythm names it once and puts that name beside
+`typeset`:
+
+```css title="app/globals.css"
+.typeset-brief {
+  --typeset-size: 0.9375em;
+  --typeset-leading: 1.5;
+  --typeset-flow: 0.75em;
+  --typeset-font-body: var(--newt-font-sans);
+}
+```
+
+```tsx
+<Typeset preset="chat" className="typeset-brief">
+  {rendered}
+</Typeset>
+```
+
+The preset still supplies the base; the class after it overrides the parts you
+named. That is the whole extension mechanism.
+
+## Measure \{#measure\}
+
+Line length belongs to the column, not to the type, so it is a separate class:
+`typeset-measure` caps the block at `68ch`. It is on by default in the React
+and Vue wrappers through the `measure` prop, and off in the bare class list
+until you add it.
+
+A block inside a fixed-width column — a sidebar, an embed — usually wants it
+off, because the column already decided.
+
+## Themes and dark mode \{#themes\}
+
+Nothing to do. Every colour is a token, so the light surfaces
+([Dark mode](/docs/dark-mode)) and a brand hue from
+[newt/create](/docs/create) both reach a typeset block without a second rule.
+
+## RTL \{#rtl\}
+
+Also nothing to do: the stylesheet is written in logical properties throughout
+— `padding-inline-start` for lists and quotes, `border-inline-start` for the
+quote rule, `text-align: start` in tables. A `dir="rtl"` anywhere above the
+wrapper is the whole feature. See [RTL](/docs/rtl).
+
+## The responsive table \{#tables\}
+
+A table is the one element that cannot reflow. Below `40rem` a direct child
+table scrolls sideways inside its own box rather than widening the page, which
+keeps the surrounding prose readable at the cost of a horizontal scroll on the
+one element that needs it.
+
+## Overrides \{#overrides\}
+
+Every selector is wrapped in `:where()`, so its specificity is zero. A utility
+class, a component class or a plain element rule all win:
+
+```html
+<article class="typeset typeset-docs">
+  <p class="text-newt-text-muted">This paragraph is muted, no !important.</p>
+</article>
+```
+
+## Opting out \{#opt-out\}
+
+An island of interface inside a body of prose — a component, an embed, a table
+of controls — should not inherit the rhythm:
+
+```html
+<article class="typeset typeset-docs">
+  <p>Prose.</p>
+
+  <div class="not-typeset">
+    <!-- components in here keep their own spacing and type -->
+  </div>
+</article>
+```
+
+`not-typeset` reverts margin, font, size, line height and colour for the
+element and everything under it.
+
+## Streaming \{#streaming\}
+
+Text that arrives a token at a time reflows constantly, and the rhythm is what
+keeps that from looking like a fault. Because the spacing is a single trailing
+margin per block, a paragraph that is still being written has the same geometry
+as one that is finished — nothing shifts when the last word lands. Applying
+`typeset-chat` to a streaming assistant reply is the usual case.
+
+## Prior art \{#prior-art\}
+
+The three-variable model is [shadcn's Typeset](https://www.shadcn-vue.com/typeset),
+and it is the right abstraction — this implementation keeps it and resolves
+everything else to `--newt-*`. Tailwind Typography's `prose` solves the same
+problem with a much larger surface, and Every Layout's Stack is where the
+"one trailing margin per child" rule comes from.

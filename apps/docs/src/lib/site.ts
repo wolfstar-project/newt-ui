@@ -40,6 +40,7 @@ export const SITE = {
     { href: "/blocks", label: "Blocks" },
     { href: "/colors", label: "Colours" },
     { href: "/create", label: "Create" },
+    { href: "/typeset", label: "Typeset" },
     { href: "/docs/changelog", label: "Changelog" },
   ],
 } as const

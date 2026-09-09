@@ -1,0 +1,31 @@
+---
+import TypesetApp from "../components/typeset/TypesetApp"
+import Base from "../layouts/Base.astro"
+
+/*
+ * The Typeset builder. The stylesheet it configures is the one the registry
+ * ships, so what the page previews is what `add typeset` writes — the controls
+ * only move the three variables it reads.
+ */
+---
+
+<Base
+  title="Typeset"
+  description="Three controls — size, leading and flow — for every place this library renders markdown."
+>
+  <main class="create typeset-page" id="main">
+    <header class="create-header">
+      <h1>Typeset</h1>
+      <p>
+        Rendered markdown is the one thing a component library cannot style with
+        components: what arrives is whatever the renderer emitted. Typeset takes
+        that markup and gives it the library's rhythm through three variables —
+        size, leading and flow — with every colour, radius and font resolved to
+        a <code>--newt-*</code> token. Read
+        <a href="/docs/typeset">the guide</a> for what each one does.
+      </p>
+    </header>
+
+    <TypesetApp client:load />
+  </main>
+</Base>

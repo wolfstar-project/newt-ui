@@ -892,6 +892,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "typeset",
+    {
+      name: "typeset",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/typeset/Typeset.vue",
+        "registry/bases/newt/ui/typeset/index.ts",
+      ],
+    },
+  ],
+  [
     "typing-indicator",
     {
       name: "typing-indicator",
@@ -1631,6 +1643,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/TooltipDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TooltipDemo.vue")
+      ),
+    },
+  ],
+  [
+    "TypesetDemo",
+    {
+      name: "TypesetDemo",
+      type: "registry:example",
+      registryDependencies: ["typeset"],
+      files: ["registry/bases/newt/examples/TypesetDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TypesetDemo.vue")
       ),
     },
   ],

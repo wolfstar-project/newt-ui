@@ -57,6 +57,7 @@ import TimelineDemo from "@/registry/bases/newt/examples/timeline-demo"
 import ToastDemo from "@/registry/bases/newt/examples/toast-demo"
 import TokenFieldDemo from "@/registry/bases/newt/examples/token-field-demo"
 import TooltipDemo from "@/registry/bases/newt/examples/tooltip-demo"
+import TypesetDemo from "@/registry/bases/newt/examples/typeset-demo"
 import TypingIndicatorDemo from "@/registry/bases/newt/examples/typing-indicator-demo"
 import UserProfileDemo from "@/registry/bases/newt/examples/user-profile-demo"
 import V2ContainerDemo from "@/registry/bases/newt/examples/v2-container-demo"
@@ -122,6 +123,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["toast", ToastDemo],
   ["token-field", TokenFieldDemo],
   ["tooltip", TooltipDemo],
+  ["typeset", TypesetDemo],
   ["typing-indicator", TypingIndicatorDemo],
   ["user-profile", UserProfileDemo],
   ["v2-container", V2ContainerDemo],

@@ -1,0 +1,77 @@
+---
+title: "Typeset"
+description: "Styles rendered markdown with three variables — size, leading and flow — over the --newt-* tokens."
+component: true
+---
+
+Rendered markdown is the one thing a component library cannot style with
+components: what arrives is whatever the renderer emitted. Typeset is a wrapper
+and two class names — the rules are the stylesheet `add typeset` appends, and
+nothing inside needs a class of its own.
+
+The [builder](/typeset) tunes the three variables live; [the guide](/docs/typeset)
+explains what each one does.
+
+<ComponentPreview name="typeset" />
+
+## Installation
+
+<Installation name="typeset" />
+
+## Usage
+
+<Usage name="typeset" />
+
+## API reference
+
+<PropsTable
+  of="Typeset"
+  rows={[
+    {
+      name: "preset",
+      type: '"docs" | "chat" | "article"',
+      default: '"docs"',
+      description:
+        "Which of the three rhythms to start from. Each sets size, leading and flow.",
+    },
+    {
+      name: "measure",
+      type: "boolean",
+      default: "false",
+      description:
+        "Caps the line length at 68ch. Line length belongs to the column, not to the type.",
+    },
+    {
+      name: "as",
+      type: '"div" | "article" | "section"',
+      default: '"div"',
+      description:
+        "The element to render. Long-form content usually wants article.",
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "The rendered markup. It needs no classes of its own.",
+    },
+    {
+      name: "className / class",
+      type: "string",
+      description: "Additional classes merged with the component defaults.",
+    },
+  ]}
+/>
+
+## Accessibility
+
+The wrapper adds no semantics of its own, which is the point: the headings,
+lists and tables a renderer emitted keep theirs. Two things the styles do carry
+are accessibility decisions rather than taste — the measure exists so a line
+does not outrun the eye returning to the next one, and the sizes are `em` so a
+reader who has enlarged their default text enlarges all of it.
+
+Mark an island of interface inside the prose with `not-typeset` and it keeps
+its own spacing and type.
+
+## Tokens
+
+<TokensNote name="typeset" />
