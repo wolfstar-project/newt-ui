@@ -1,11 +1,7 @@
-import {
-  FRAMEWORK_MARKS,
-  markTint,
-  type GlyphPart,
-} from "@/lib/framework-marks"
+import { FRAMEWORK_MARKS, markTint, type MarkPath } from "@/lib/framework-marks"
 import type { FrameworkId } from "@/lib/install-targets"
 
-/** The React half of the glyphs; the shapes live in `lib/framework-marks.ts`. */
+/** The React half of the marks; the paths live in `lib/framework-marks.ts`. */
 export default function FrameworkGlyph({
   id,
   className,
@@ -25,25 +21,14 @@ export default function FrameworkGlyph({
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      {FRAMEWORK_MARKS[id].map((part: GlyphPart, index) =>
-        part.kind === "path" ? (
-          <path
-            key={index}
-            d={part.d}
-            fill={part.filled ? "currentColor" : undefined}
-            stroke={part.filled ? "none" : undefined}
-          />
-        ) : (
-          <circle
-            key={index}
-            cx={part.cx}
-            cy={part.cy}
-            r={part.r}
-            fill={part.filled ? "currentColor" : undefined}
-            stroke={part.filled ? "none" : undefined}
-          />
-        )
-      )}
+      {FRAMEWORK_MARKS[id].map((path: MarkPath) => (
+        <path
+          key={path.d}
+          d={path.d}
+          fill={path.filled ? "currentColor" : undefined}
+          stroke={path.filled ? "none" : undefined}
+        />
+      ))}
     </svg>
   )
 }

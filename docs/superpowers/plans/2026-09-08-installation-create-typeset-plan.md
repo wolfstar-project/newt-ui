@@ -14,7 +14,7 @@
 
 - Docs never import CLI source. Shared behaviour is duplicated and pinned by fixtures, not by a workspace dependency.
 - Every colour, radius and font the builders emit must be a `--newt-*` token override. No hex literal that already exists as a token.
-- Framework marks are drawn by hand as `currentColor` paths. No Discord assets, no third-party logo files copied from the frameworks' brand kits.
+- Framework marks are the official logos from Simple Icons (CC0), rendered in `currentColor`. No Discord assets. `manual` keeps a drawn glyph because it is not a framework.
 - Copy says "Discord-inspired". Preview content uses placeholder names.
 - `oxlint` anti-slop rules apply: no `as` without a `// SAFETY:` comment, no `Record<string, unknown>`, parse with zod instead of casting, `toSorted` over `sort`.
 - Gates before each commit: `pnpm format:check`, `pnpm lint`, `pnpm knip`, `pnpm typecheck`, `pnpm --filter cli test`, `pnpm build`, `node apps/docs/scripts/verify-dist.mjs`.
@@ -26,10 +26,13 @@ All three phases are on `feat/docs-astro-foundation`. Where the build differs
 from the plan, it is because the plan proposed a second copy of something the
 repository already had:
 
-- **One `FrameworkMark.astro`, not eleven files.** The shapes live in
-  `apps/docs/src/lib/framework-marks.ts` and are drawn by an Astro component and
-  a React one, because newt/create needs the same set. A `.ts` index importing
-  eleven `.astro` files would not have typechecked anyway.
+- **One `FrameworkMark.astro`, not eleven files.** The paths live in
+  `apps/docs/src/lib/framework-marks.ts` and are rendered by an Astro component
+  and a React one, because newt/create needs the same set. A `.ts` index
+  importing eleven `.astro` files would not have typechecked anyway.
+- **The marks are the real logos, not hand-drawn glyphs.** The first pass drew
+  them; the reader could not tell TanStack from a stack of pancakes. They now
+  come from Simple Icons, which is CC0, and only `manual` is still drawn.
 - **`FrameworkCard` folded into `FrameworkGrid`.** A card is four lines and is
   only ever rendered by the grid.
 - **`PathTabs` generates the two CLI paths** from `INSTALL_TARGETS` instead of
