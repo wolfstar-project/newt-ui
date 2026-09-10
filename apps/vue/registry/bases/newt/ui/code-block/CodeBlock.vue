@@ -3,7 +3,20 @@ import type { HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-const props = defineProps<{ class?: HTMLAttributes["class"] }>()
+import type { CodeTokenSpec } from "."
+import CodeToken from "./CodeToken.vue"
+
+/*
+ * `tokens` is the syntax most callers want: a flat list of runs, including
+ * the line breaks as `{ text: "\n" }`. A highlighter (or a hand-written
+ * token list) produces one array, with no whitespace-sensitive template
+ * markup to get exactly right — the default slot still renders as-is for
+ * anything composed by hand.
+ */
+const props = defineProps<{
+  class?: HTMLAttributes["class"]
+  tokens?: readonly CodeTokenSpec[]
+}>()
 </script>
 
 <template>
@@ -14,5 +27,5 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
         props.class
       )
     "
-  ><slot /></pre>
+  ><template v-if="props.tokens"><template v-for="(token, index) in props.tokens" :key="index"><CodeToken v-if="token.kind" :kind="token.kind">{{ token.text }}</CodeToken><template v-else>{{ token.text }}</template></template></template><slot v-else /></pre>
 </template>

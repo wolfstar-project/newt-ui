@@ -15,3 +15,9 @@ export const codeTokenVariants = cva("", {
 })
 
 export type CodeTokenVariants = VariantProps<typeof codeTokenVariants>
+
+/** A run of text, coloured by `kind` when given, plain when not. */
+export interface CodeTokenSpec {
+  readonly text: string
+  readonly kind?: CodeTokenVariants["kind"]
+}
