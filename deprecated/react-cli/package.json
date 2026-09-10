@@ -32,10 +32,6 @@
     "access": "public",
     "provenance": true
   },
-  "scripts": {
-    "lint": "oxlint -c ../../.oxlintrc.json .",
-    "lint:fix": "oxlint -c ../../.oxlintrc.json --fix ."
-  },
   "dependencies": {
     "newtui": "workspace:*"
   },

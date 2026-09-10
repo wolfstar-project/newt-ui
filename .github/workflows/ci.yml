@@ -35,11 +35,10 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-toolchain
 
-      - name: 🔠 Check formatting
-        run: pnpm run format:check
-
-      - name: 🔠 Lint project
-        run: pnpm run lint
+      # One turbo run for both, so each is cached on its own inputs: a commit
+      # that only touches markdown re-runs the formatter and replays the lint.
+      - name: 🔠 Lint and check formatting
+        run: pnpm run quality
 
       - name: 🧹 Check for unused code
         run: pnpm run knip

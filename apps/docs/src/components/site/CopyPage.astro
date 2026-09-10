@@ -319,6 +319,9 @@ const vscodeMcpUrl = `vscode:mcp/install?${encodeURIComponent(
     })
 
     menu.addEventListener("keydown", (event) => {
+      // SAFETY: the handler is on the menu, so the focused element is one of
+      // its rows; `indexOf` returns -1 for anything else, which the arrows
+      // then treat as "start from the top".
       const current = items.indexOf(document.activeElement as HTMLElement)
       if (event.key === "ArrowDown") {
         event.preventDefault()

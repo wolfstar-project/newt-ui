@@ -48,10 +48,12 @@ pnpm install              # install everything (pnpm 11, Node >=22.11)
 pnpm dev                  # run every app in watch mode
 pnpm build                # turbo: build all apps/packages
 pnpm typecheck             # turbo: tsc --noEmit everywhere
-pnpm lint                  # turbo: oxlint everywhere
-pnpm lint:fix               # oxlint --fix everywhere
+pnpm lint                  # oxlint over the whole repo, in one process
+pnpm lint:fix               # the same, with --fix
 pnpm format                 # oxfmt --write everywhere
-pnpm format:check            # oxfmt --check (what CI runs)
+pnpm format:check            # oxfmt --check
+pnpm quality                # turbo: lint + format:check, both cached
+pnpm quality:fix             # turbo: lint:fix + format
 pnpm knip                   # unused files/exports/dependencies
 pnpm test                   # turbo: unit tests (per package)
 pnpm registry:build          # rebuild apps/*/public/r from registry sources
@@ -59,8 +61,8 @@ node scripts/gen-registry.mjs  # regenerate registry-ui.ts / registry-examples.t
 pnpm changeset               # record a changeset for a release
 ```
 
-Before opening a PR, run `format:check`, `lint`, and `knip` locally — CI
-runs all three plus `typecheck`, `build`, and `zizmor`.
+Before opening a PR, run `quality` and `knip` locally — CI runs both plus
+`typecheck`, `build`, and `zizmor`.
 
 ## Toolchain specifics
 
@@ -77,6 +79,13 @@ runs all three plus `typecheck`, `build`, and `zizmor`.
   `typeAware`/`typeCheck` on and `maxWarnings: 0` — fix warnings, don't
   suppress them, unless there's a genuine reason (use a scoped
   `// oxlint-disable-next-line <rule> -- <reason>` comment in that case).
+  Both are **root tasks**, not per-package scripts: oxlint reads the whole
+  repo in about three seconds, so fanning it out across nine workspaces cost
+  more than it saved and left each package unable to see the others. No
+  workspace declares a `lint` script. `pnpm lint` runs `astro sync` first —
+  the docs app's generated types are what the type-aware rules resolve
+  `astro:content` and `import.meta.glob` through, and without them the docs
+  app reports about twenty errors that are not there.
 - **Releases**: Changesets v3 (`@changesets/cli`). Requires Node
   `^22.11 || ^24 || >=26`. Run `pnpm changeset` when a change should ship in
   the next release.

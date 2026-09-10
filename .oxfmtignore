@@ -10,6 +10,7 @@ pnpm-lock.yaml
 apps/*/public/r/**
 apps/www/public/legacy/**
 /index.html
+.agents/**
 .claude/**
 .skills/**
 

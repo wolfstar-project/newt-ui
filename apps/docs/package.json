@@ -7,8 +7,6 @@
     "build": "astro build && node scripts/bundle-registry.mjs && node scripts/verify-dist.mjs",
     "dev": "astro dev",
     "docs:gen": "node scripts/gen-component-docs.mjs",
-    "lint": "astro sync && oxlint -c ../../.oxlintrc.json .",
-    "lint:fix": "astro sync && oxlint -c ../../.oxlintrc.json --fix .",
     "preview": "astro preview",
     "test": "vitest run",
     "typecheck": "astro check"

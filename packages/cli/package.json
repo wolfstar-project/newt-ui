@@ -44,8 +44,6 @@
   "scripts": {
     "build": "tsdown --config-loader unrun",
     "dev": "tsdown --config-loader unrun --watch",
-    "lint": "oxlint -c ../../.oxlintrc.json .",
-    "lint:fix": "oxlint -c ../../.oxlintrc.json --fix .",
     "prepack": "pnpm run build",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit",

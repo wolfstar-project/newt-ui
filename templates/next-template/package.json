@@ -7,8 +7,6 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "oxlint -c ../../.oxlintrc.json .",
-    "lint:fix": "oxlint -c ../../.oxlintrc.json --fix .",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },
