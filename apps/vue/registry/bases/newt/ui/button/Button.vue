@@ -20,7 +20,14 @@ const props = withDefaults(
     /** Link-out glyph after the label. Defaults on for `variant="link"`. */
     launchIcon?: boolean
   }>(),
-  { type: "button", emojiAlt: "" }
+  /*
+   * `launchIcon` needs `undefined` to mean "let the variant decide" — but Vue
+   * casts an absent prop typed `boolean` to `false` unless it has a `default`
+   * key at all, present or not. Listing it here with the value `undefined` is
+   * what keeps that cast from firing, so the `??` below ever sees anything
+   * but `false`.
+   */
+  { type: "button", emojiAlt: "", launchIcon: undefined }
 )
 
 const showLaunch = computed(() => props.launchIcon ?? props.variant === "link")
