@@ -1,0 +1,156 @@
+---
+title: "CLI"
+description: "newtui — every command and flag, for React, Vue and the plain HTML/CSS build."
+---
+
+One CLI serves both frameworks. It detects React or Vue during `init` and
+records the answer in [`components.json`](/docs/components-json); every later
+command reads it from there.
+
+<PmTabs cmd="newtui@latest init" />
+
+## init \{#init\}
+
+Reads your project and writes three things: `components.json`, a `cn` helper at
+your utils alias, and the `--newt-*` token block appended to the global
+stylesheet it found.
+
+```bash frame="terminal"
+npx newtui@latest init
+npx newtui@latest init --defaults
+npx newtui@latest init --framework vue --bundler nuxt --css src/assets/css/tailwind.css
+```
+
+| Flag              | Effect                                              |
+| ----------------- | --------------------------------------------------- |
+| `-d, --defaults`  | Take every default instead of asking.               |
+| `-f, --framework` | `react` or `vue`, when detection would guess wrong. |
+| `-b, --bundler`   | `nuxt` or `vite`, for Vue projects.                 |
+| `--css <path>`    | The stylesheet to write the tokens into.            |
+| `--skip-install`  | Write the files, leave the package manager alone.   |
+| `-y, --yes`       | Skip confirmations.                                 |
+
+Running it twice does not write the tokens twice: it looks for them in your
+stylesheet first and skips.
+
+## add \{#add\}
+
+Writes a component and everything it is built out of.
+
+```bash frame="terminal"
+npx newtui@latest add button
+npx newtui@latest add modal badge embed
+npx newtui@latest add                 # pick from a list
+npx newtui@latest add --all
+```
+
+Registry dependencies are resolved before anything is written, so `add modal`
+writes the button it is built on too. npm packages are collected across the
+whole tree and installed in one pass.
+
+| Flag              | Effect                                                    |
+| ----------------- | --------------------------------------------------------- |
+| `-o, --overwrite` | Replace files that already exist instead of keeping them. |
+| `-a, --all`       | Add every component in the registry.                      |
+| `-p, --path`      | Write to this directory rather than the `ui` alias.       |
+| `--skip-install`  | Write the files, leave the package manager alone.         |
+| `-y, --yes`       | Do not ask before skipping a file that exists.            |
+
+A file already on disk is kept, not replaced: you are asked, and with `--yes` it
+is skipped and reported.
+
+## list \{#list\}
+
+Prints the registry.
+
+```bash frame="terminal"
+npx newtui@latest list
+npx newtui@latest list --json
+npx newtui@latest list --framework vue --type registry:ui
+```
+
+`--json` is the cheapest grounding you can hand an agent — see
+[Using with AI](/docs/using-with-ai).
+
+## search \{#search\}
+
+`list` with a filter. Matches case-insensitively across name, title and
+description, so a half-remembered word is enough.
+
+```bash frame="terminal"
+npx newtui@latest search presence
+npx newtui@latest search chat --json
+```
+
+## view \{#view\}
+
+Prints a component's source without installing it — the read-only half of
+`add`, for deciding whether you want it.
+
+```bash frame="terminal"
+npx newtui@latest view button
+npx newtui@latest view modal badge --json
+```
+
+## info \{#info\}
+
+What this project is: framework, bundler, Tailwind major, where the aliases
+point, which registry it reads, and which components it already has.
+
+```bash frame="terminal"
+npx newtui@latest info
+npx newtui@latest info --json
+```
+
+`--json` is what the [skill](/docs/skills) and the
+[MCP server](/docs/mcp) read, so an agent starts from facts rather than from a
+guess about your layout.
+
+## mcp \{#mcp\}
+
+Runs the MCP server over stdio, or writes the configuration an editor needs to
+launch it.
+
+```bash frame="terminal"
+npx newtui@latest mcp
+npx newtui@latest mcp init --client claude
+```
+
+See [MCP server](/docs/mcp) for what it exposes and which clients are
+supported.
+
+## diff \{#diff\}
+
+Compares a component you have installed against the one the registry currently
+ships, so an upgrade is a decision rather than a surprise.
+
+```bash frame="terminal"
+npx newtui@latest diff button
+```
+
+## Global flags \{#flags\}
+
+| Flag                   | Effect                                                               |
+| ---------------------- | -------------------------------------------------------------------- |
+| `-c, --cwd <dir>`      | Run against another directory.                                       |
+| `-r, --registry <url>` | Read items from another registry. `NEWT_REGISTRY_URL` does the same. |
+| `--legacy`             | Use the plain HTML/CSS CLI instead — see below.                      |
+| `-h, --help`           | Print the help.                                                      |
+| `-v, --version`        | Print the version.                                                   |
+
+## The HTML/CSS CLI \{#legacy\}
+
+The same components exist as plain CSS with BEM class names, with no Tailwind,
+no framework and no build step. That flavour ships inside the same package and
+is reached through `--legacy`, or through the `newtui-html` binary.
+
+```bash frame="terminal"
+npx newtui@latest --legacy init
+npx newtui@latest --legacy add button
+npx newtui@latest --legacy list
+```
+
+`init` writes `newt-ui.json` and copies `tokens.css` to
+`styles/newt-tokens.css`; `add` copies a `.css` and an `.html` file per
+component into `components/ui`, following the same dependency links as the
+registry. See [HTML &amp; CSS](/docs/html-css).

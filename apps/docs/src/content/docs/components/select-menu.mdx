@@ -1,0 +1,73 @@
+---
+title: "Select Menu"
+description: "A Discord-inspired string select: combobox trigger, keyboard-driven listbox and a portalled panel."
+component: true
+---
+
+A complete combobox: a trigger, a search field, a keyboard-driven listbox and a panel that flips when it runs out of room below. This is the option picker from the client, not a styled `<select>`.
+
+<ComponentPreview name="select-menu" />
+
+## Installation
+
+<Installation name="select-menu" />
+
+## Usage
+
+<Usage name="select-menu" />
+
+## API reference
+
+<PropsTable
+  of="SelectMenu"
+  rows={[
+    {
+      name: "options",
+      type: "SelectOption[]",
+      description:
+        "The choices: `{ value, label, description?, icon?, disabled? }`.",
+    },
+    {
+      name: "value",
+      type: "string",
+      description: "The selected value, when you control it.",
+    },
+    {
+      name: "defaultValue",
+      type: "string",
+      description: "The value selected on first render.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string) => void",
+      description: "Called with the chosen value.",
+    },
+    {
+      name: "placeholder",
+      type: "string",
+      description: "Shown on the trigger while nothing is selected.",
+    },
+    {
+      name: "searchable",
+      type: "boolean",
+      description: "Adds the filter field above the list.",
+      default: "false",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Makes the trigger inert.",
+      default: "false",
+    },
+  ]}
+/>
+
+Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+
+## Accessibility
+
+The trigger is a `combobox` with `aria-expanded` and `aria-controls`; the panel is a `listbox` whose options carry `aria-selected`. `Up` and `Down` move the active option, `Home` and `End` jump to the ends, `Enter` selects, `Escape` closes and returns focus to the trigger. The active option is tracked with `aria-activedescendant`, so focus never leaves the trigger.
+
+## Tokens
+
+<TokensNote name="select-menu" />

@@ -1,0 +1,84 @@
+---
+title: "Registry: getting started"
+description: "Build a registry of your own, serve it as static JSON, and install from it with the same CLI."
+---
+
+## Requirements \{#requirements\}
+
+A registry is files on a static host. Anything that can serve JSON over HTTPS
+with CORS will do: a CDN, an S3 bucket, GitHub Pages, or the `public/`
+directory of the app you already deploy.
+
+## Write the items \{#items\}
+
+Keep your components where you develop them and generate the registry from
+there — that way the source you edit and the source you publish cannot drift.
+The builder in this repository, `apps/www/scripts/build-registry.mts`, is small
+enough to copy: it reads a list of items, inlines each file's contents, and
+writes `public/r/index.json` plus `public/r/styles/default/<name>.json`.
+
+```ts title="scripts/build-registry.mts"
+import { promises as fs } from "node:fs"
+import path from "node:path"
+
+const OUT = path.join(process.cwd(), "public/r")
+
+for (const item of items) {
+  const files = await Promise.all(
+    item.files.map(async (file) => ({
+      ...file,
+      content: await fs.readFile(file.path, "utf8"),
+    }))
+  )
+  await fs.writeFile(
+    path.join(OUT, "styles/default", `${item.name}.json`),
+    JSON.stringify({ ...item, files }, null, 2)
+  )
+}
+```
+
+## Serve it \{#serve\}
+
+Deploy the directory. If it lands at `https://acme.dev/r`, then
+`https://acme.dev/r/index.json` and
+`https://acme.dev/r/styles/default/button.json` both have to answer.
+
+<Callout type="warning">
+  The CLI runs in a terminal, but the JSON is also read by browsers and agents.
+  Serve it with `Access-Control-Allow-Origin: *` unless you are authenticating
+  requests.
+</Callout>
+
+## Install from it \{#install\}
+
+Point one command at it:
+
+```bash frame="terminal"
+npx newtui@latest add button --registry https://acme.dev/r
+```
+
+Or set it once, for every command in the project:
+
+```json title="components.json"
+{
+  "registry": "https://acme.dev/r"
+}
+```
+
+`NEWT_REGISTRY_URL` does the same thing for a shell session, which is the
+convenient form in CI.
+
+A full URL also works in place of a name, which is the quickest way to test a
+single item before you publish an index:
+
+```bash frame="terminal"
+npx newtui@latest add https://acme.dev/r/styles/default/button.json
+```
+
+## Depend on newt/ui \{#depend\}
+
+An item's `registryDependencies` may name items in your own registry. To build on
+top of newt/ui rather than beside it, vendor the components you extend into your
+registry with `newtui add`, then list them as dependencies of your own items —
+that keeps a single resolution pass and one copy of each file in the consumer's
+project.

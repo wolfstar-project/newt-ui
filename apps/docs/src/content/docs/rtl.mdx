@@ -1,0 +1,166 @@
+---
+title: "RTL"
+description: "Every component is written with logical properties, so a right-to-left interface is one attribute rather than a second stylesheet."
+---
+
+newt/ui has no left-to-right assumptions to undo. Every component in all three
+flavours uses CSS logical properties — `margin-inline-start` rather than
+`margin-left`, `inset-inline-start` rather than `left`, `ms-2` rather than
+`ml-2` — so a right-to-left tree restyles itself.
+
+## Get started \{#start\}
+
+Set the direction on the document:
+
+```html
+<html lang="ar" dir="rtl"></html>
+```
+
+That is the whole feature for a page that is entirely right-to-left. For a
+subtree — a preview, a quoted message, a settings panel in another language —
+add the `direction` component:
+
+<PmTabs cmd="newtui@latest add direction" />
+
+<div data-framework="react">
+
+```tsx
+import { DirectionProvider } from "@/components/ui/direction"
+
+;<DirectionProvider dir="rtl">
+  <MessageGroup author="ليلى">كل شيء يعمل من اليمين إلى اليسار.</MessageGroup>
+</DirectionProvider>
+```
+
+</div>
+
+<div data-framework="vue">
+
+```vue
+<script setup lang="ts">
+import { DirectionProvider } from "@/components/ui/direction"
+</script>
+
+<template>
+  <DirectionProvider dir="rtl">
+    <MessageGroup author="ليلى">كل شيء يعمل من اليمين إلى اليسار.</MessageGroup>
+  </DirectionProvider>
+</template>
+```
+
+</div>
+
+The provider sets `dir` on its wrapper and exposes the direction through
+context, for the few components that have to make a decision the CSS cannot —
+which side a panel flips to, which arrow key advances a list.
+
+<ComponentPreview name="direction" />
+
+## How it works \{#how\}
+
+Two mechanisms, and only two.
+
+**Logical properties.** The physical ones do not appear anywhere in the
+registry. The mapping, if you are converting code of your own:
+
+| Physical                       | Logical                         |
+| ------------------------------ | ------------------------------- | --------- | ----- | --- | ------ | ---------- | --- | --- | --- | --- | ------ |
+| `margin-left` / `-right`       | `margin-inline-start` / `-end`  |
+| `padding-left` / `-right`      | `padding-inline-start` / `-end` |
+| `border-left` / `-right`       | `border-inline-start` / `-end`  |
+| `left:` / `right:`             | `inset-inline-start` / `-end`   |
+| `border-top-left-radius`       | `border-start-start-radius`     |
+| `text-align: left` / `right`   | `text-align: start` / `end`     |
+| `ml-*`, `mr-*`, `pl-*`, `pr-*` | `ms-*`, `me-*`, `ps-*`, `pe-*`  |
+| `left-*`, `right-*`            | `start-*`, `end-*`              |
+| `rounded-l                     | r                               | tl        | tr    | bl  | br-\*` | `rounded-s | e   | ss  | se  | es  | ee-\*` |
+| `border-l                      | r-\*`                           | `border-s | e-\*` |
+| `text-left` / `text-right`     | `text-start` / `text-end`       |
+
+**A direction multiplier**, for the one thing CSS cannot express logically: the
+sign of a sideways transform. `tokens.css` carries it:
+
+```css
+:root {
+  --newt-dir: 1;
+}
+
+[dir="rtl"] {
+  --newt-dir: -1;
+}
+```
+
+A component that moves something sideways multiplies by it rather than
+branching:
+
+```css
+transform: translateX(calc(var(--newt-dir) * 16px));
+```
+
+The switch thumb in `form-fields` is the worked example.
+
+## Fonts \{#fonts\}
+
+The token stack is `--newt-font-sans`, which starts at Inter. Inter covers Latin
+and Cyrillic but not Arabic or Hebrew, so add a face that does and let the stack
+fall through:
+
+```css
+:root {
+  --newt-font-sans:
+    "Inter", "Noto Sans Arabic", "Noto Sans Hebrew", system-ui, sans-serif;
+}
+```
+
+Arabic and Hebrew have taller ascenders than Latin at the same size; if the
+lines look cramped, raise `line-height` on the container rather than changing a
+component.
+
+## Icons \{#icons\}
+
+Most glyphs in the registry are symmetric and need nothing. The ones that point
+— a reply arrow, a chevron, a send glyph — should mirror:
+
+```css
+[dir="rtl"] .my-chevron {
+  transform: scaleX(-1);
+}
+```
+
+In Tailwind that is `rtl:-scale-x-100`. A clock, a checkmark or a logo must
+**not** mirror: they are not directional, and a reversed checkmark reads as
+broken.
+
+## Migrating \{#migrating\}
+
+Components installed before the registry moved to logical properties still carry
+the physical ones. The CLI rewrites them in place:
+
+```bash frame="terminal"
+npx newtui@latest migrate rtl --dry-run
+npx newtui@latest migrate rtl
+```
+
+It walks the `ui` directory, applies the mapping above, prints every
+substitution per file, and writes only without `--dry-run`. It is idempotent:
+running it on already-converted files reports nothing.
+
+One case it flags rather than fixes silently: `space-x-*` is not
+direction-safe on Tailwind v3, so it becomes `gap-*` — which applies to the
+container rather than between children, and is worth looking at.
+
+Afterwards, take a pass through your own markup for the two things the CLI
+cannot see: physical properties in your stylesheets, and directional icons.
+
+<Callout type="warning">
+  `migrate rtl` edits files you own. Commit first, then run it, then read the
+  diff.
+</Callout>
+
+## Checking it \{#checking\}
+
+Every preview on this site has an LTR/RTL toggle in its corner — flipping it
+renders the same component in the other direction, which is the fastest check
+there is. In your own project, set `dir="rtl"` on `<html>` and walk the pages:
+what breaks is almost always a physical property in code that is not from the
+registry.

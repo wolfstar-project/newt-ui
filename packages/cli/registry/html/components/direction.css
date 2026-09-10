@@ -1,0 +1,13 @@
+/*
+ * Nothing to load. `dir` is a document attribute, and every newt/ui stylesheet
+ * is written with logical properties, so a right-to-left subtree restyles
+ * itself.
+ *
+ * The one thing CSS cannot express logically is the sign of a sideways
+ * transform, so `tokens.css` carries a multiplier for it:
+ *
+ *   [dir="rtl"] { --newt-dir: -1; }
+ *   transform: translateX(calc(var(--newt-dir) * 16px));
+ *
+ * A component of your own that moves something sideways should do the same.
+ */

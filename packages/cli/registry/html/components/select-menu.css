@@ -1,0 +1,259 @@
+/* newt-ui · Select Menu (Discord-inspired string select) */
+
+.newt-select-menu {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.newt-select-menu__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 8px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-input);
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.newt-select-menu__trigger:hover {
+  border-color: var(--newt-bg-base);
+}
+.newt-select-menu__trigger:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-select-menu__trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/*
+ * The trigger reads left to right: what the option is, then what it resolves
+ * to. The icon is optional and never squashes; the note is the first thing
+ * allowed to truncate, because the name matters more than the detail.
+ */
+.newt-select-menu__leading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.newt-select-menu__icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--newt-text-secondary);
+}
+
+.newt-select-menu__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.newt-select-menu__value--placeholder {
+  color: var(--newt-text-muted);
+}
+
+.newt-select-menu__note {
+  overflow: hidden;
+  color: var(--newt-text-muted);
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.newt-select-menu__chevron {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+/* Points down when closed, flips when the listbox opens. */
+.newt-select-menu__trigger[aria-expanded="true"] .newt-select-menu__chevron {
+  transform: rotate(180deg);
+}
+
+.newt-select-menu__panel {
+  position: absolute;
+  z-index: 1002;
+  inset-inline-start: 0;
+  top: calc(100% + 4px);
+  width: 100%;
+  padding: 6px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-floating);
+  box-shadow: var(--newt-shadow-elevation-high);
+}
+/* Flipped above the trigger when there is no room below it. */
+.newt-select-menu__panel[data-placement="above"] {
+  top: auto;
+  bottom: calc(100% + 4px);
+}
+.newt-select-menu__panel[hidden] {
+  display: none;
+}
+
+.newt-select-menu__listbox {
+  max-height: 320px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+/*
+ * A select attached to a message is not the same control as one in a settings
+ * panel. It carries at most 25 options — the platform rejects a payload with
+ * more — it shows the scrollbar rather than hiding it, because with a capped
+ * list the bar is what says there is more below the fold, and it marks no row
+ * as chosen: the choice is submitted rather than kept.
+ */
+.newt-select-menu--message .newt-select-menu__listbox {
+  max-height: 300px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--newt-bg-active) transparent;
+}
+.newt-select-menu--message .newt-select-menu__listbox::-webkit-scrollbar {
+  width: 8px;
+}
+.newt-select-menu--message .newt-select-menu__listbox::-webkit-scrollbar-track {
+  background: transparent;
+}
+.newt-select-menu--message .newt-select-menu__listbox::-webkit-scrollbar-thumb {
+  background-color: var(--newt-bg-active);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+.newt-select-menu--message
+  .newt-select-menu__listbox::-webkit-scrollbar-thumb:hover {
+  background-color: var(--newt-text-muted);
+  background-clip: padding-box;
+}
+.newt-select-menu--message .newt-select-menu__option--selected::after {
+  content: none;
+}
+
+.newt-select-menu__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--newt-bg-base);
+  border-radius: var(--newt-radius-sm);
+  margin-bottom: 4px;
+}
+.newt-select-menu__search input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+  font-size: 14px;
+  width: 100%;
+}
+.newt-select-menu__search input::placeholder {
+  color: var(--newt-text-muted);
+}
+
+.newt-select-menu__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--newt-text-muted);
+  padding: 4px 10px 2px;
+}
+
+.newt-select-menu__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+}
+/*
+ * Focus stays on the trigger while the listbox is open, so the "active" row is
+ * pointed at with aria-activedescendant and highlighted through this class.
+ */
+.newt-select-menu__option:hover,
+.newt-select-menu__option--active {
+  background: var(--newt-brand);
+  color: #fff;
+}
+.newt-select-menu__option--selected {
+  color: var(--newt-text-primary);
+}
+.newt-select-menu__option--selected::after {
+  content: "";
+  flex-shrink: 0;
+  margin-inline-start: auto;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-brand);
+  /* The tick is drawn rather than typed, so it never picks up the row's font. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px 14px;
+}
+/*
+ * On the highlighted row the disc would dissolve into the background, so it
+ * swaps with the tick.
+ */
+.newt-select-menu__option--selected:hover::after,
+.newt-select-menu__option--selected.newt-select-menu__option--active::after {
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%235865f2' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E");
+}
+.newt-select-menu__option[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: none;
+  color: var(--newt-text-muted);
+}
+
+.newt-select-menu__option-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--newt-text-secondary);
+}
+.newt-select-menu__option--active .newt-select-menu__option-icon,
+.newt-select-menu__option:hover .newt-select-menu__option-icon {
+  color: currentColor;
+}
+
+.newt-select-menu__option-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.newt-select-menu__option-description {
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+.newt-select-menu__option--active .newt-select-menu__option-description,
+.newt-select-menu__option:hover .newt-select-menu__option-description {
+  color: #fff;
+}
+
+.newt-select-menu__divider {
+  height: 1px;
+  background: var(--newt-border);
+  margin: 4px 6px;
+}

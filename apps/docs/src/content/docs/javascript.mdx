@@ -1,0 +1,63 @@
+---
+title: "JavaScript"
+description: "newt/ui is written in TypeScript, but the CLI can write plain JavaScript into a project that does not use it."
+---
+
+The registry is TypeScript. If your project is not, set `typescript` to `false`
+in [`components.json`](/docs/components-json) — `newtui init` asks, and answering
+no sets it for you — and every file the CLI writes afterwards is JavaScript.
+
+```json title="components.json"
+{
+  "typescript": false,
+  "aliases": {
+    "components": "@/components",
+    "ui": "@/components/ui",
+    "utils": "@/lib/utils"
+  }
+}
+```
+
+## What the CLI strips \{#strips\}
+
+The transform is textual and deliberately small, because the components are
+written so that it can be. It removes:
+
+- type annotations on parameters, variables and return values;
+- `interface` and `type` declarations;
+- `import type` statements and the type-only specifiers inside a mixed import;
+- `satisfies` and `as` expressions;
+- generic parameter lists on functions and components.
+
+Runtime code is untouched. The `cva` variant definitions, the `cn` calls and the
+class strings are the same in both languages — the types they carried were
+inferred from the same objects.
+
+<div data-framework="react">
+
+The extension follows `tsx`: with `typescript: false` the CLI writes
+`components/ui/button.jsx`.
+
+</div>
+
+<div data-framework="vue">
+
+The single file components keep the `.vue` extension and lose
+`lang="ts"` from their `<script setup>` block. The `index.ts` barrel becomes
+`index.js`.
+
+</div>
+
+## What you give up \{#tradeoffs\}
+
+`VariantProps` is how a React or Vue component states which variants exist. In
+JavaScript that contract is gone: passing `variant="brand"` to a button that has
+no such variant is a silent no-op rather than a type error.
+
+The component pages on this site list every variant for exactly that reason —
+they are the reference a JavaScript project reads instead of the types.
+
+<Callout>
+  The plain HTML and CSS build has no language question at all: it is class
+  names on markup. See [HTML &amp; CSS](/docs/html-css).
+</Callout>

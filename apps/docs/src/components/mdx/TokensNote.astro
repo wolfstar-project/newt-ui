@@ -1,0 +1,37 @@
+---
+import { findComponent, rootClasses } from "../../lib/registry"
+
+/*
+ * Every component draws its colours, radii, shadows and timings from the
+ * `--newt-*` layer rather than from values of its own, which is what makes
+ * restyling one variable restyle the whole library.
+ */
+interface Props {
+  readonly name: string
+}
+
+const { name } = Astro.props
+
+const meta = findComponent(name)
+if (meta === undefined) {
+  throw new Error(`<TokensNote name="${name}"> — no registry meta.`)
+}
+
+const rootClass = rootClasses[meta.name]
+---
+
+<p>
+  {meta.title} reads its colours, radii and motion from the <code>--newt-*</code>
+  tokens installed with the library. Override a token and every component that
+  reads it follows, including this one — see{" "}
+  <a href="/docs/installation#tokens">the token layer</a>.
+  {
+    rootClass && (
+      <>
+        {" "}
+        In the plain HTML and CSS distribution the same component is{" "}
+        <code>{rootClass}</code>.
+      </>
+    )
+  }
+</p>

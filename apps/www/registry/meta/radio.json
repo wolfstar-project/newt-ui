@@ -1,0 +1,8 @@
+{
+  "name": "radio",
+  "title": "Radio",
+  "description": "One choice out of a short, visible list, with the ring and dot the client's settings panels use.",
+  "vueFiles": ["Radio.vue", "RadioGroup.vue", "useRadioGroup.ts", "index.ts"],
+  "reactDemo": "radio-demo",
+  "vueDemo": "RadioDemo"
+}

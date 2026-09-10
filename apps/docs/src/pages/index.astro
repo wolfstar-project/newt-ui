@@ -1,0 +1,117 @@
+---
+import ComponentPreview from "../components/mdx/ComponentPreview.astro"
+import PmTabs from "../components/mdx/PmTabs.astro"
+import Base from "../layouts/Base.astro"
+import { COMPONENTS } from "../lib/registry"
+import { SITE } from "../lib/site"
+
+/*
+ * Three components running, not screenshots of three components: the same
+ * demos the component pages carry, in whichever framework the header switch
+ * has chosen.
+ */
+const SHOWCASE = ["message-group", "member-list", "select-menu"] as const
+
+const MANIFEST = [
+  { key: "components", value: String(COMPONENTS.length) },
+  { key: "runtime deps", value: "0" },
+  { key: "license", value: SITE.license },
+  { key: "install", value: "npx newtui" },
+  { key: "tokens", value: "CSS vars" },
+  { key: "frameworks", value: "React · Vue · HTML" },
+] as const
+
+const PRINCIPLES = [
+  {
+    title: "One token system, three targets",
+    body: "The tokens are declared once and every surface reads them: the plain HTML and CSS build, the React wrappers, and the Vue single file components. Change a token and all three move together.",
+  },
+  {
+    title: "You own the code",
+    body: `The CLI writes component source into your project and stops there. A component you need to bend is a file you already have, under ${SITE.license}.`,
+  },
+  {
+    title: "No motion by default",
+    body: "Hover, focus, online, do-not-disturb and loading are carried by colour, border and shape — the status dot states its mode by its outline, not by a pulse.",
+  },
+  {
+    title: "Accessible by construction",
+    body: "Body text meets WCAG AA contrast, every control is reachable by Tab with a visible focus ring, and presence is announced rather than left to colour alone.",
+  },
+] as const
+---
+
+<Base title={SITE.name} description={SITE.tagline}>
+  <main class="home" id="main">
+    <section class="hero">
+      <p class="hero-eyebrow">
+        <span>{SITE.name}</span>
+        <span>v{SITE.version}</span>
+        <span>{SITE.channel}</span>
+      </p>
+      <h1>Discord-inspired UI, copy-pasted into your project.</h1>
+      <p class="hero-lead">
+        A component library, a design token system and an agent guide for building
+        Discord-inspired interfaces — bots, dashboards and docs that look like they belong
+        in the client. Every component ships as plain HTML and CSS, as a React file, and as
+        a Vue single file component, all reading one set of tokens.
+      </p>
+      <div class="hero-actions">
+        <a class="button-primary" href="/docs/installation">Get started</a>
+        <a class="button-secondary" href="/docs/components">Browse components</a>
+      </div>
+      <dl class="hero-manifest">
+        {
+          MANIFEST.map((entry) => (
+            <div>
+              <dt>{entry.key}</dt>
+              <dd>{entry.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="home-section" id="install">
+      <h2>Install</h2>
+      <p>
+        One CLI for both frameworks. It reads your project during <code>init</code>, then
+        writes component source into it — there is no package between you and the markup.
+      </p>
+      <PmTabs cmd="newtui@latest init" />
+    </section>
+
+    <section class="home-section" id="showcase">
+      <h2>Three of them, running</h2>
+      <p>
+        The same examples every component page carries, rendered from the registry source in
+        the framework the header has chosen.
+      </p>
+      {SHOWCASE.map((name) => <ComponentPreview name={name} />)}
+    </section>
+
+    <section class="home-section" id="principles">
+      <h2>What it is</h2>
+      <div class="principles">
+        {
+          PRINCIPLES.map((principle) => (
+            <div class="principle">
+              <h3>{principle.title}</h3>
+              <p>{principle.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="home-section" id="next">
+      <h2>Where to go next</h2>
+      <p>
+        Start with the <a href="/docs/installation">installation guide</a>, browse the
+        <a href="/docs/components">components</a>, or read how to drive the registry from an
+        agent in <a href="/docs/using-with-ai">Using with AI</a>. Issues and the registry
+        source are on <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>.
+      </p>
+    </section>
+  </main>
+</Base>

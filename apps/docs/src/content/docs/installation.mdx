@@ -1,0 +1,238 @@
+---
+title: "Installation"
+description: "Three ways in: a preset from the builder, one CLI command, or the wiring for a project you already have."
+---
+
+<PathTabs />
+
+## Pick your framework \{#frameworks\}
+
+<FrameworkGrid />
+
+The first four can be created from nothing: `init --template <name>` writes the
+project and the tokens in one pass. The rest already have a creator of their
+own, so their guides start with that command and let `init` run inside the
+result. Manual and HTML & CSS skip the CLI entirely.
+
+## What you need first \{#requirements\}
+
+- Node 18 or newer, which is what both CLIs declare. The Nuxt module asks for
+  Node 20, and this repository itself is built on Node 22.
+- <span data-framework="react">React 19 and a Next or Vite project.</span>
+  <span data-framework="vue">Vue 3.5 and a Vite or Nuxt project.</span> The
+  components are copied into your source tree, so there is no runtime package to
+  depend on afterwards.
+- A Tailwind project. <span data-framework="react">The React registry is developed against Tailwind v3, where `init` prints a preset to paste into your `tailwind.config.ts`.</span> <span data-framework="vue">The Vue registry is developed against Tailwind v4, where the theme is read straight out of the `@theme` block `init` writes.</span> It detects the major of whatever project it runs in and writes the other form instead when it has to.
+- The npm packages `init` installs for you: `class-variance-authority`,
+  `tailwindcss-animate`, and the class merger that matches your Tailwind major —
+  `cn` on v4, `clsx` with `tailwind-merge` on v3.
+
+<Callout>
+  None of this applies to the plain HTML and CSS flavour. That one is two
+  stylesheets and a class name, with no build step, no framework and no package
+  manager — it has [a guide of its own](/docs/html-css).
+</Callout>
+
+## Run init once \{#init\}
+
+<PmTabs cmd="newtui@latest init" />
+
+It asks a handful of questions and then writes three things. `components.json`
+at the root of your project, which is the same file shadcn reads, so a project
+using both CLIs keeps one config and not two. A `cn` helper at the path your
+utils alias names — a re-export of the `cn` package on Tailwind v4, and `clsx`
+passed through `tailwind-merge` on v3, whose tables still understand v3 class
+names. And the `--newt-*` token block, appended to the global stylesheet it
+found.
+
+<div data-framework="react">
+
+The config records your aliases, the stylesheet and the config path it detected,
+and two switches: `tsx`, and `rsc` for React Server Components. Both change what
+`add` writes later. The default aliases are `@/components`, `@/components/ui`,
+`@/lib`, `@/lib/utils` and `@/hooks`.
+
+</div>
+
+<div data-framework="vue">
+
+The config records your aliases, the stylesheet and the config path it detected,
+whether you are on TypeScript, and whether the project is Nuxt or Vite — it
+guesses that from a `nuxt.config` or a `vite.config`, and `--framework`
+overrides it. The default aliases are `@/components`, `@/components/ui`, `@/lib`,
+`@/lib/utils` and `@/composables`.
+
+</div>
+
+It does not edit your aliases. It reads them out of `tsconfig.json` or
+`jsconfig.json` and resolves them to real directories, falling back to `src`
+when that directory exists. A project whose alias is already declared needs
+nothing here.
+
+<Callout>
+  The token values come from the registry theme item, so they are defined once
+  and not restated by the CLI. If the registry cannot be reached, the copy of
+  the tokens bundled with the CLI is written instead, and it tells you what that
+  costs you. Running `init` twice does not write them twice: it looks for the
+  tokens already in your stylesheet and skips.
+</Callout>
+
+## Then add what you need \{#add\}
+
+<PmTabs cmd="newtui@latest add button" />
+
+Registry dependencies are resolved before anything is written, so you name what
+you want and get what it is built out of. The modal names the button, which
+means `add modal` on its own writes both. The npm packages the components import
+are collected across the whole tree and installed in one pass; pass
+`--skip-install` and the files still land and your package manager is left
+alone.
+
+A file already on disk is kept, not replaced: you are asked, and with `--yes` it
+is skipped and reported. `--overwrite` is how you take the registry version
+back. Run `add` with no names and it lists the registry and lets you pick.
+
+## What lands in your project \{#written\}
+
+Every path below the blank line is relative to whatever your aliases resolve to,
+so a project with a `src` directory gets them under `src`. The two paths above
+it are the ones `init` detected and recorded.
+
+<div data-framework="react">
+
+```text
+components.json                 init — the config file
+app/globals.css                 init — the --newt-* token block
+lib/utils.ts                    init — cn(), from the cn package
+
+components/ui/button.tsx        add button
+components/ui/modal.tsx         add modal badge
+components/ui/badge.tsx
+```
+
+One file per component, and the imports inside it are rewritten on the way in:
+`@/registry/bases/newt/ui/button` becomes your ui alias, and `@/lib/utils` becomes
+your utils alias. The variants are `class-variance-authority`, so a component
+you want to change is a file you edit.
+
+</div>
+
+<div data-framework="vue">
+
+```text
+components.json                     init — the config file
+src/assets/css/tailwind.css         init — the --newt-* token block
+lib/utils.ts                        init — cn(), from the cn package
+
+components/ui/button/Button.vue     add button
+components/ui/button/index.ts
+
+components/ui/modal/Modal.vue       add modal badge
+components/ui/modal/ModalHeader.vue
+components/ui/modal/ModalBody.vue
+components/ui/modal/ModalFooter.vue
+components/ui/modal/ModalClose.vue
+components/ui/modal/index.ts
+components/ui/badge/Badge.vue
+components/ui/badge/index.ts
+```
+
+A folder per component: the single-file components, and an `index.ts` barrel
+that re-exports them along with the `class-variance-authority` variants. The
+imports are rewritten on the way in, so `~~/registry/bases/newt/ui/button`
+becomes your ui alias and `@/lib/utils` becomes your utils alias.
+
+</div>
+
+<Callout>
+  Nothing here is a dependency on newt/ui. The files are yours from the moment
+  they are written, and deleting `components.json` costs you the next `add`, not
+  the components you already have.
+</Callout>
+
+## The token layer \{#tokens\}
+
+Every colour, radius, shadow, font and duration in the library is a `--newt-*`
+custom property. The source of truth is one file in the repository,
+`packages/cli/registry/html/tokens.css`, and all three flavours read from it:
+the Tailwind theme maps its namespaces onto those variables, and the plain CSS
+components use `var(--newt-brand)` directly.
+
+The same file carries one class, `.newt-root`, which sets the font family, the
+base text colour and font smoothing. Put it on the element that wraps your
+application. Then make sure the stylesheet `init` wrote into is actually loaded:
+
+<div data-framework="react">
+
+```ts title="app/layout.tsx"
+// the stylesheet init wrote the tokens into
+import "./globals.css"
+```
+
+</div>
+
+<div data-framework="vue">
+
+```ts title="nuxt.config.ts"
+export default defineNuxtConfig({
+  css: ["~/assets/css/tailwind.css"],
+})
+
+// on Vite, from your entry instead — src/main.ts
+import "./assets/index.css"
+```
+
+</div>
+
+<Callout type="warning">
+  Overriding a token is a one-line change in your own stylesheet, and it reaches
+  every component at once. Hardcoding a hex that already exists as a token is
+  the one thing worth avoiding: it is the only way to end up with a component
+  that no longer follows the rest.
+</Callout>
+
+## Per-framework guides \{#guides\}
+
+The rest of this page is the flow every project shares. The parts that differ —
+the Tailwind setup, the path aliases, where `.newt-root` goes and which
+components need a client boundary — are in the guide for
+
+<span id="next">[your framework](#frameworks)</span>, and the two flavours that
+never touch a bundler have guides of their own:
+<span id="nuxt">[Nuxt](/docs/installation/nuxt)</span> for the module that
+auto-imports the components, and
+<span id="html">[HTML & CSS](/docs/html-css)</span> for the copy-paste
+stylesheets.
+
+## Options \{#options\}
+
+```text
+-c, --cwd <dir>        working directory
+-r, --registry <url>   registry base url (or NEWT_REGISTRY_URL)
+-y, --yes              skip confirmation prompts
+-d, --defaults         use the default configuration (init)
+-f, --framework <name> react or vue (init, list)
+-b, --bundler <name>   the Vue build tool: nuxt or vite (init)
+    --css <path>       path to your global css file (init)
+    --skip-install     skip installing dependencies (init, add)
+-o, --overwrite        overwrite existing files (add)
+-a, --all              add every available component (add)
+-p, --path <path>      the path to add the component to (add)
+-t, --type <type>      filter by registry item type (list)
+    --json             output as JSON (list)
+    --legacy           use the HTML/CSS CLI (same as newtui-html)
+-h, --help             display the help
+-v, --version          display the version number
+```
+
+`--registry` overrides where items are fetched from, and so does the
+`NEWT_REGISTRY_URL` environment variable. The defaults are
+`https://newtui.dev/r` for React and `https://newtui.dev/vue/r` for Vue. Beyond
+`init` and `add` there are two more commands: `list`, which prints the registry,
+and `diff`, which compares a component you have against the one the registry
+currently ships.
+
+[The button page](/docs/components/button) is the shortest way to see what one
+of these files looks like once it is in your project. The registry, both CLIs
+and the Nuxt module all live in
+[the repository](https://github.com/wolfstar-project/newt-ui), under Apache-2.0.

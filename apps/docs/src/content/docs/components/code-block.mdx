@@ -1,0 +1,72 @@
+---
+title: "Code Block"
+description: "A monospace preformatted block that colours its own source from a language name."
+component: true
+---
+
+A monospace preformatted block for code inside a message. Hand it a `language` and the source, and the built-in scanner colours it — no highlighter, no grammar, no build step behind the component.
+
+<ComponentPreview name="code-block" />
+
+## What it colours \{#languages\}
+
+Four colours means four answers, not a parse tree: **comment**, **string**, **keyword** and **call**. A scanner that small fits inside the component, which is the point — six lines of code in a chat message should not drag a highlighter in behind them.
+
+`language` accepts `ts`, `tsx`, `js`, `jsx`, `json`, `bash` and `sh`. Anything it reads badly stays plain rather than wrong.
+
+For a diff, a language not on that list, or semantic colours, produce the runs elsewhere and pass them as `tokens` — an array of `{ text, kind? }`, where a run without a `kind` is plain. `CodeToken` is still exported for markup placed by hand.
+
+## Installation
+
+<Installation name="code-block" />
+
+## Usage
+
+<Usage name="code-block" />
+
+## API reference
+
+<PropsTable
+  of="CodeBlock"
+  rows={[
+    {
+      name: "language",
+      type: '"ts" | "tsx" | "js" | "jsx" | "json" | "bash" | "sh"',
+      description:
+        "Colours the source with the built-in scanner. Omit it and nothing is coloured.",
+    },
+    {
+      name: "code",
+      type: "string",
+      description:
+        "The source to colour. In React the same string can be passed as the only child; in Vue this prop is the way, since a template collapses the newlines out of slot text.",
+    },
+    {
+      name: "tokens",
+      type: "{ text: string; kind?: CodeTokenKind }[]",
+      description:
+        "Runs from a real highlighter, for what the scanner cannot read. A run without a kind is plain.",
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description:
+        "With a language, the source itself (React). Without one, CodeToken children placed by hand.",
+    },
+    {
+      name: "className / class",
+      type: "string",
+      description: "Additional classes merged with the component defaults.",
+    },
+  ]}
+/>
+
+The registry exports `CodeBlock`, `CodeToken` and `tokenizeCode`, the scanner itself, for anything that wants the runs without the markup. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+## Tokens
+
+<TokensNote name="code-block" />

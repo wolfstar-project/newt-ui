@@ -1,0 +1,46 @@
+---
+title: "Tooltip"
+description: "A small floating label that appears above an element on hover or focus."
+component: true
+---
+
+A hover bubble. It is a hint, never the only place information lives — a control whose meaning is only in its tooltip is a control with no accessible name.
+
+<ComponentPreview name="tooltip" />
+
+## Installation
+
+<Installation name="tooltip" />
+
+## Usage
+
+<Usage name="tooltip" />
+
+## API reference
+
+<PropsTable
+  of="Tooltip"
+  rows={[
+    {
+      name: "content",
+      type: "ReactNode",
+      description: "What the bubble says.",
+    },
+    {
+      name: "side",
+      type: '"top" | "right" | "bottom" | "left"',
+      description: "Preferred side. Flips when there is no room.",
+      default: '"top"',
+    },
+  ]}
+/>
+
+Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+
+## Accessibility
+
+The bubble is linked to its trigger with `aria-describedby`, so it is read as a description rather than as the name. It opens on focus as well as hover, and `Escape` dismisses it. Do not put a control inside a tooltip: it cannot be reached by keyboard.
+
+## Tokens
+
+<TokensNote name="tooltip" />

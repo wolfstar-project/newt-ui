@@ -1,0 +1,43 @@
+---
+import {
+  FRAMEWORK_MARKS,
+  markTint,
+  type MarkPath,
+} from "../../lib/framework-marks"
+import type { FrameworkId } from "../../lib/install-targets"
+
+/*
+ * The Astro half of the marks. The paths live in `lib/framework-marks.ts`
+ * because newt/create draws the same set from React.
+ */
+interface Props {
+  readonly id: FrameworkId
+  readonly class?: string
+}
+
+const { id, class: className } = Astro.props
+const paths: readonly MarkPath[] = FRAMEWORK_MARKS[id]
+const tint = markTint(id)
+---
+
+<svg
+  viewBox="0 0 24 24"
+  class:list={["framework-glyph", className]}
+  data-tint={tint}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {
+    paths.map((path) => (
+      <path
+        d={path.d}
+        fill={path.filled ? "currentColor" : undefined}
+        stroke={path.filled ? "none" : undefined}
+      />
+    ))
+  }
+</svg>

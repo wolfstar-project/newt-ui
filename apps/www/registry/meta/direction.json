@@ -1,0 +1,8 @@
+{
+  "name": "direction",
+  "title": "Direction",
+  "description": "Sets the writing direction for a subtree and exposes it to the components that need to know which way is forward.",
+  "vueFiles": ["DirectionProvider.vue", "useDirection.ts", "index.ts"],
+  "reactDemo": "direction-demo",
+  "vueDemo": "DirectionDemo"
+}

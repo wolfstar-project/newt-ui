@@ -1,0 +1,45 @@
+---
+title: "Forms"
+description: "newt/ui ships form controls, not a form library. Pick the one you already use and wire it to them."
+---
+
+`form-fields` is presentational on purpose: `Field`, `Label`, `Input`,
+`Textarea`, `Select`, `Switch`, `Checkbox` and `FieldHelp`, styled like the
+client's settings panels and reading the same tokens as everything else. There
+is no `<Form>` wrapper, no resolver and no schema of its own.
+
+That is a deliberate omission. Form state, validation and submission are a
+solved problem with three good answers, and a fourth wrapper around one of them
+is a dependency you would have to unpick the first time you needed something it
+did not do.
+
+<ComponentPreview name="form-fields" />
+
+## What the components give you \{#given\}
+
+**A validation state that is set once.** `Field` takes `invalid`; the controls
+inside read it from the wrapper, so a library that only knows "this field
+failed" says it in one place:
+
+```tsx
+<Field invalid={Boolean(errors.name)}>
+  <Label>Channel name</Label>
+  <Input aria-invalid={Boolean(errors.name)} />
+  {errors.name && <FieldHelp variant="error">{errors.name}</FieldHelp>}
+</Field>
+```
+
+**An error that is announced.** `FieldHelp variant="error"` carries
+`role="alert"`, so a message that appears after a failed submit reaches a
+reader who is not looking at that part of the page.
+
+## Pick a library \{#pick\}
+
+| Library                                           | Frameworks  | Guide                                |
+| ------------------------------------------------- | ----------- | ------------------------------------ |
+| [react-hook-form](https://react-hook-form.com)    | React       | [Guide](/docs/forms/react-hook-form) |
+| [TanStack Form](https://tanstack.com/form)        | React + Vue | [Guide](/docs/forms/tanstack-form)   |
+| [vee-validate](https://vee-validate.logaretm.com) | Vue         | [Guide](/docs/forms/vee-validate)    |
+
+All three examples validate with [zod](https://zod.dev) and build the same
+form — creating a channel — so they can be read side by side.

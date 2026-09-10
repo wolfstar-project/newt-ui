@@ -1,0 +1,141 @@
+/* newt-ui · Channel Header (channel name, topic and channel actions) */
+
+.newt-channel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 48px;
+  padding: 0 12px 0 16px;
+  border-bottom: 1px solid var(--newt-border);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-primary);
+}
+
+.newt-channel-header__info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.newt-channel-header__icon {
+  flex-shrink: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--newt-text-muted);
+}
+
+.newt-channel-header__name {
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+/* Round dot that sets the topic apart from the channel name. */
+.newt-channel-header__divider {
+  flex-shrink: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-text-muted);
+  opacity: 0.7;
+}
+
+.newt-channel-header__topic {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--newt-text-muted);
+}
+
+.newt-channel-header__toolbar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 16px;
+}
+
+.newt-channel-header__action {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--newt-text-muted);
+  cursor: pointer;
+  transition: color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-channel-header__action:hover,
+.newt-channel-header__action[data-state="active"] {
+  color: var(--newt-text-primary);
+}
+.newt-channel-header__action:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.newt-channel-header__search {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 240px;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-input);
+  color: var(--newt-text-muted);
+  cursor: pointer;
+  transition: border-color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-channel-header__search:hover {
+  border-color: var(--newt-text-muted);
+}
+.newt-channel-header__search:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.newt-channel-header__search-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: start;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* Compact "N Online" readout used by the narrow layout of the header. */
+.newt-channel-header__online {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+
+.newt-channel-header__online-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-online);
+}

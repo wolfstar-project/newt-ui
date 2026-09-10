@@ -1,0 +1,304 @@
+/* newt-ui · App Launcher (the Apps popout: search, recents, server apps) */
+
+.newt-app-launcher {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 504px;
+  height: min(680px, calc(100dvh - 2rem));
+  overflow: hidden;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-surface);
+  box-shadow: var(--newt-shadow-elevation-high);
+  color: var(--newt-text-primary);
+}
+
+/* Grip shown when the launcher is presented as a bottom sheet. */
+.newt-app-launcher__handle {
+  flex-shrink: 0;
+  width: 36px;
+  height: 4px;
+  margin: 8px auto 0;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-border);
+}
+
+/* Drill-in header: back control on the left, view title beside it. */
+.newt-app-launcher__header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  height: 56px;
+  padding: 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.newt-app-launcher__back {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-app-launcher__back:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+.newt-app-launcher__back:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.newt-app-launcher__search {
+  flex-shrink: 0;
+  padding: 16px 16px 12px;
+}
+
+.newt-app-launcher__search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.newt-app-launcher__search-icon {
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 14px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--newt-text-muted);
+}
+
+.newt-app-launcher__search-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px 0 44px;
+  appearance: none;
+  border: 2px solid transparent;
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-input);
+  font-size: 16px;
+  color: var(--newt-text-primary);
+  outline: none;
+}
+.newt-app-launcher__search-input::placeholder {
+  color: var(--newt-text-muted);
+  opacity: 1;
+}
+.newt-app-launcher__search-input:focus {
+  border-color: var(--newt-brand);
+}
+
+.newt-app-launcher__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 24px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 16px 16px;
+}
+
+.newt-app-launcher__section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.newt-app-launcher__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 2px;
+}
+
+.newt-app-launcher__section-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--newt-text-primary);
+}
+
+.newt-app-launcher__view-more {
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--newt-text-link);
+  cursor: pointer;
+}
+.newt-app-launcher__view-more:hover {
+  text-decoration: underline;
+}
+.newt-app-launcher__view-more:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+/* Card that stacks rows behind one rounded surface. */
+.newt-app-launcher__list {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-elevated);
+}
+
+.newt-app-launcher__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+  transition: background var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-app-launcher__item + .newt-app-launcher__item {
+  border-top: 1px solid var(--newt-border);
+}
+.newt-app-launcher__item:hover {
+  background: var(--newt-bg-hover);
+}
+.newt-app-launcher__item:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: -2px;
+}
+
+.newt-app-launcher__item-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--newt-bg-base);
+  color: var(--newt-text-secondary);
+}
+/* Bots use circular avatars; games and activities keep the squircle. */
+.newt-app-launcher__item-icon--round {
+  border-radius: var(--newt-radius-full);
+}
+.newt-app-launcher__item-icon > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.newt-app-launcher__item-icon > svg {
+  width: 20px;
+  height: 20px;
+}
+
+.newt-app-launcher__item-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 2px;
+  min-width: 0;
+}
+
+.newt-app-launcher__item-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.newt-app-launcher__item-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--newt-text-primary);
+}
+
+.newt-app-launcher__item-promoted {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-text-primary);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--newt-bg-surface);
+}
+
+.newt-app-launcher__item-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--newt-text-muted);
+}
+
+/* Horizontal strip of recently used apps. */
+.newt-app-launcher__recents {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.newt-app-launcher__recents::-webkit-scrollbar {
+  display: none;
+}
+
+.newt-app-launcher__recent {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 14px;
+  background: var(--newt-bg-base);
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+  transition: filter var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-app-launcher__recent:hover {
+  filter: brightness(1.1);
+}
+.newt-app-launcher__recent:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-app-launcher__recent > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.newt-app-launcher__recent > svg {
+  width: 24px;
+  height: 24px;
+}

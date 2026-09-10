@@ -4,7 +4,7 @@ import {
   tailwindV3Theme,
   tailwindV4Theme,
 } from "@/registry/registry-tokens"
-import { Registry } from "@/registry/schema"
+import type { Registry } from "@/registry/schema"
 
 /**
  * newt/ui ships a Discord-inspired dark theme driven by --newt-* vars, plus

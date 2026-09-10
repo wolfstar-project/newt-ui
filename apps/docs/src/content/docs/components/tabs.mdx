@@ -1,0 +1,78 @@
+---
+title: "Tabs"
+description: "A pill-style tab list that switches the active tab on click."
+component: true
+---
+
+A pill tab group. The panel is only rendered for the active tab, so a tab whose content is expensive does not cost anything until it is opened.
+
+<ComponentPreview name="tabs" />
+
+## Installation
+
+<Installation name="tabs" />
+
+## Usage
+
+<Usage name="tabs" />
+
+## API reference
+
+<PropsTable
+  of="Tabs"
+  rows={[
+    {
+      name: "value",
+      type: "string",
+      description: "The active tab, when you control it.",
+    },
+    {
+      name: "defaultValue",
+      type: "string",
+      description: "The tab active on first render, when you do not.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string) => void",
+      description: "Called with the tab that was activated.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="TabsTrigger"
+  rows={[
+    {
+      name: "value",
+      type: "string",
+      description: "Which panel this trigger opens.",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Skipped by arrow-key navigation.",
+      default: "false",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="TabsContent"
+  rows={[
+    {
+      name: "value",
+      type: "string",
+      description: "Which trigger opens this panel.",
+    },
+  ]}
+/>
+
+Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+
+## Accessibility
+
+It implements the tabs pattern: `role="tablist"`, `aria-selected` on the triggers, `aria-controls` and `aria-labelledby` linking each pair. Only the active trigger is in the tab order; `Left` and `Right` move between triggers, `Home` and `End` jump to the ends.
+
+## Tokens
+
+<TokensNote name="tabs" />

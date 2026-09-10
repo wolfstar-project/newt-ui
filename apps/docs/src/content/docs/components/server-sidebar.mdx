@@ -1,0 +1,50 @@
+---
+title: "Server sidebar"
+description: "The column beside a channel: the server banner, the voice channel and the grouped member list."
+component: true
+---
+
+The column beside a channel: the server banner, the voice channel and the grouped member list. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
+<ComponentPreview name="server-sidebar" />
+
+## Installation
+
+<Installation name="server-sidebar" />
+
+## Usage
+
+<Usage name="server-sidebar" />
+
+## API reference
+
+<PropsTable
+  of="ServerSidebar"
+  rows={[
+    {
+      name: "serverName",
+      type: "string",
+      description: "Required serverName value.",
+    },
+    {
+      name: "voiceChannel",
+      type: "{ name: string; members: readonly string[] } | undefined",
+      description: "Who is currently in the voice channel, in join order.",
+    },
+    {
+      name: "members",
+      type: "readonly SidebarMember[]",
+      description: "Required members value.",
+    },
+  ]}
+/>
+
+The registry exports `SidebarMember`, `ServerSidebar`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+## Tokens
+
+<TokensNote name="server-sidebar" />

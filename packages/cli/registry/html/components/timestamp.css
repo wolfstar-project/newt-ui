@@ -1,0 +1,14 @@
+/* newt-ui · Timestamp */
+
+/*
+ * The timestamp a message carries as `<t:1700000000:R>`. The plain flavour
+ * has no clock to read: whatever renders the page writes the text, and the
+ * full instant belongs in `datetime` and `title` so a relative label never
+ * hides the thing it labels.
+ */
+.newt-timestamp {
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-sm);
+  padding-inline: 4px;
+  color: var(--newt-text-primary);
+}

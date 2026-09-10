@@ -2,8 +2,8 @@
 /**
  * Generates registry index files for both apps from apps/www/registry/meta/*.json:
  *  - apps/www/registry/registry-ui.ts, registry-examples.ts, apps/www/__registry__/index.tsx
- *  - apps/vue/app/lib/registry/registry-ui.ts, registry-examples.ts, apps/vue/app/__registry__/index.ts
- *  - packages/newtui/registry.react.json, registry.vue.json (shadcn registry schema)
+ *  - apps/vue/registry/registry-ui.ts, registry-examples.ts, apps/vue/__registry__/index.ts
+ *  - apps/www/registry.json, apps/vue/registry.json (shadcn registry schema)
  * Run: node scripts/gen-registry.mjs
  */
 import {
@@ -16,10 +16,33 @@ import {
 import { join, dirname } from "node:path"
 import { fileURLToPath } from "node:url"
 
+import { format } from "oxfmt"
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const META_DIR = join(ROOT, "apps/www/registry/meta")
+const HTML_COMPONENTS = join(ROOT, "packages/cli/registry/html/components")
 const WWW = join(ROOT, "apps/www")
 const VUE = join(ROOT, "apps/vue")
+const REGISTRY_BASE = "registry/bases/newt"
+const GENERATED_FORMAT = {
+  printWidth: 80,
+  tabWidth: 2,
+  useTabs: false,
+  semi: false,
+  singleQuote: false,
+  trailingComma: "es5",
+  sortImports: {},
+}
+
+async function writeGenerated(filePath, source) {
+  const result = await format(filePath, source, GENERATED_FORMAT)
+  if (result.errors.length > 0) {
+    throw new Error(
+      `Could not format ${filePath}: ${result.errors.map((error) => error.message).join("; ")}`
+    )
+  }
+  writeFileSync(filePath, result.code)
+}
 
 const pascal = (s) =>
   s
@@ -43,6 +66,19 @@ function withOptionalDependencies(entry, m) {
   return entry
 }
 
+/*
+ * A component whose behaviour is CSS rather than markup — Typeset is the one —
+ * declares `cssFile`, and the canonical stylesheet in the HTML flavour is
+ * carried into the item so `add` appends it to the consumer's global CSS. The
+ * file stays the single source: nothing is retyped into the meta.
+ */
+function withCss(entry, m) {
+  if (!m.cssFile) return entry
+  const source = readFileSync(join(HTML_COMPONENTS, m.cssFile), "utf8")
+  entry.css = { "@layer components": source.trimEnd() }
+  return entry
+}
+
 // ---------- React ----------
 const reactUi = metas.map((m) => {
   const entry = withOptionalDependencies(
@@ -54,27 +90,46 @@ const reactUi = metas.map((m) => {
     },
     m
   )
-  entry.files = [{ path: `ui/${m.name}.tsx`, type: "registry:ui" }]
+  entry.type = m.type ?? "registry:ui"
+  withCss(entry, m)
+  entry.files = (m.reactFiles ?? [`ui/${m.name}.tsx`]).map((path) => ({
+    path,
+    type: entry.type,
+  }))
   return entry
 })
-const reactExamples = metas.map((m) => ({
-  name: m.reactDemo ?? `${m.name}-demo`,
-  type: "registry:example",
-  registryDependencies: [m.name],
-  files: [
-    {
-      path: `example/${m.reactDemo ?? `${m.name}-demo`}.tsx`,
-      type: "registry:example",
-    },
-  ],
-}))
-writeFileSync(
-  join(WWW, "registry/registry-ui.ts"),
-  `${header}import { Registry } from "@/registry/schema"\n\nexport const ui: Registry = ${j(reactUi)}\n`
+/** The default demo plus one entry per declared variant. */
+function reactDemoNames(m) {
+  return [
+    m.reactDemo ?? `${m.name}-demo`,
+    ...(m.examples ?? []).map((example) => `${m.name}-${example}-demo`),
+  ]
+}
+
+function vueDemoNames(m) {
+  return [
+    m.vueDemo ?? `${pascal(m.name)}Demo`,
+    ...(m.examples ?? []).map(
+      (example) => `${pascal(m.name)}${pascal(example)}Demo`
+    ),
+  ]
+}
+
+const reactExamples = metas.flatMap((m) =>
+  reactDemoNames(m).map((name) => ({
+    name,
+    type: "registry:example",
+    registryDependencies: [m.name],
+    files: [{ path: `examples/${name}.tsx`, type: "registry:example" }],
+  }))
 )
-writeFileSync(
+await writeGenerated(
+  join(WWW, "registry/registry-ui.ts"),
+  `${header}import type { Registry } from "@/registry/schema"\n\nexport const ui: Registry = ${j(reactUi)}\n`
+)
+await writeGenerated(
   join(WWW, "registry/registry-examples.ts"),
-  `${header}import { Registry } from "@/registry/schema"\n\nexport const examples: Registry = ${j(reactExamples)}\n`
+  `${header}import type { Registry } from "@/registry/schema"\n\nexport const examples: Registry = ${j(reactExamples)}\n`
 )
 
 const reactIndex = [...reactUi, ...reactExamples]
@@ -85,8 +140,8 @@ const reactIndex = [...reactUi, ...reactExamples]
       name: "${item.name}",
       type: "${item.type}",
       registryDependencies: ${j(item.registryDependencies ?? [])},
-      files: ${j(item.files.map((f) => `registry/default/${f.path}`))},
-      component: React.lazy(() => import("@/registry/default/${item.files[0].path.replace(/\.tsx$/, "")}")),
+      files: ${j(item.files.map((f) => `${REGISTRY_BASE}/${f.path}`))},
+      component: React.lazy(() => import("@/${REGISTRY_BASE}/${item.files[0].path.replace(/\.tsx$/, "")}")),
     },
   ],`
   )
@@ -97,17 +152,17 @@ mkdirSync(join(WWW, "__registry__"), { recursive: true })
 const demoImports = metas
   .map(
     (m) =>
-      `import ${pascal(m.reactDemo ?? `${m.name}-demo`)} from "@/registry/default/example/${m.reactDemo ?? `${m.name}-demo`}"`
+      `import ${pascal(m.reactDemo ?? `${m.name}-demo`)} from "@/${REGISTRY_BASE}/examples/${m.reactDemo ?? `${m.name}-demo`}"`
   )
   .join("\n")
 const demoEntries = metas
   .map((m) => `  ["${m.name}", ${pascal(m.reactDemo ?? `${m.name}-demo`)}],`)
   .join("\n")
-writeFileSync(
+await writeGenerated(
   join(WWW, "__registry__/demos.tsx"),
   `${header}import type * as React from "react"\n\n${demoImports}\n\n// Keys are the registry component names; built via \`Object.fromEntries\` (instead\n// of a \`Record<string, React.ComponentType>\` literal) so the lookup map stays\n// indexable by an arbitrary string without widening away the entry type.\nconst demoEntries: Array<[string, React.ComponentType]> = [\n${demoEntries}\n]\n\nexport const Demos = Object.fromEntries(demoEntries)\n`
 )
-writeFileSync(
+await writeGenerated(
   join(WWW, "__registry__/index.tsx"),
   `${header}// @ts-nocheck\nimport * as React from "react"\n\ninterface RegistryIndexEntry {\n  name: string\n  type: string\n  registryDependencies: string[]\n  files: string[]\n  component: React.ComponentType\n}\n\n// Keys are the registry component/example names; built via \`Object.fromEntries\`\n// (instead of a \`Record<string, any>\` literal) so the lookup map stays\n// indexable by an arbitrary string without widening away the entry type.\nconst registryIndexEntries: Array<[string, RegistryIndexEntry]> = [\n${reactIndex}\n]\n\nexport const Index = {\n  default: Object.fromEntries(registryIndexEntries),\n}\n`
 )
@@ -123,63 +178,68 @@ const vueUi = metas.map((m) => {
     },
     m
   )
+  entry.type = m.type ?? "registry:ui"
+  withCss(entry, m)
+  const dir = entry.type === "registry:block" ? "blocks" : "ui"
   entry.files = (m.vueFiles ?? [`${pascal(m.name)}.vue`, "index.ts"]).map(
     (f) => ({
-      path: `ui/${m.name}/${f}`,
-      type: "registry:ui",
+      path: `${dir}/${m.name}/${f}`,
+      type: entry.type,
     })
   )
   return entry
 })
-const vueExamples = metas.map((m) => ({
-  name: m.vueDemo ?? `${pascal(m.name)}Demo`,
-  type: "registry:example",
-  registryDependencies: [m.name],
-  files: [
-    {
-      path: `example/${m.vueDemo ?? `${pascal(m.name)}Demo`}.vue`,
-      type: "registry:example",
-    },
-  ],
-}))
-writeFileSync(
-  join(VUE, "app/lib/registry/registry-ui.ts"),
+const vueExamples = metas.flatMap((m) =>
+  vueDemoNames(m).map((name) => ({
+    name,
+    type: "registry:example",
+    registryDependencies: [m.name],
+    files: [{ path: `examples/${name}.vue`, type: "registry:example" }],
+  }))
+)
+await writeGenerated(
+  join(VUE, "registry/registry-ui.ts"),
   `${header}import type { Registry } from "./schema"\n\nexport const ui: Registry = ${j(vueUi)}\n`
 )
-writeFileSync(
-  join(VUE, "app/lib/registry/registry-examples.ts"),
+await writeGenerated(
+  join(VUE, "registry/registry-examples.ts"),
   `${header}import type { Registry } from "./schema"\n\nexport const examples: Registry = ${j(vueExamples)}\n`
 )
-const vueIndex = vueExamples
-  .map(
-    (ex, i) => `  [
-    "${ex.name}",
+// UI items and examples are independent lists. Keeping them separate matters
+// as soon as one item declares multiple examples: zipping by array index would
+// duplicate or drop UI entries after the first additional demo.
+const vueIndex = [
+  ...vueUi.map(
+    (item) => `  [
+    "${item.name}",
     {
-      name: "${ex.name}",
-      type: "registry:example",
-      registryDependencies: ${j(ex.registryDependencies)},
-      files: ${j(ex.files.map((f) => `app/lib/registry/default/${f.path}`))},
-      component: defineAsyncComponent(() => import("@/lib/registry/default/${ex.files[0].path}")),
-    },
-  ],
-  [
-    "${vueUi[i].name}",
-    {
-      name: "${vueUi[i].name}",
-      type: "registry:ui",
-      registryDependencies: ${j(vueUi[i].registryDependencies ?? [])},
-      files: ${j(vueUi[i].files.map((f) => `app/lib/registry/default/${f.path}`))},
+      name: "${item.name}",
+      type: "${item.type}",
+      registryDependencies: ${j(item.registryDependencies ?? [])},
+      files: ${j(item.files.map((f) => `${REGISTRY_BASE}/${f.path}`))},
     },
   ],`
-  )
-  .join("\n")
-mkdirSync(join(VUE, "app/__registry__"), { recursive: true })
-writeFileSync(
-  join(VUE, "app/__registry__/index.ts"),
+  ),
+  ...vueExamples.map(
+    (example) => `  [
+    "${example.name}",
+    {
+      name: "${example.name}",
+      type: "registry:example",
+      registryDependencies: ${j(example.registryDependencies)},
+      files: ${j(example.files.map((f) => `${REGISTRY_BASE}/${f.path}`))},
+      component: defineAsyncComponent(() => import("~~/${REGISTRY_BASE}/${example.files[0].path}")),
+    },
+  ],`
+  ),
+].join("\n")
+mkdirSync(join(VUE, "__registry__"), { recursive: true })
+await writeGenerated(
+  join(VUE, "__registry__/index.ts"),
   `${header}import { defineAsyncComponent } from "vue"\n\n// Consumers (e.g. app/pages/index.vue) read entries through a local\n// \`Record<string, unknown>\` binding, which requires this contract to carry\n// its own index signature — kept to the concrete value types below rather\n// than \`unknown\`/\`any\` so it stays a real contract instead of an escape hatch.\ninterface RegistryIndexEntry {\n  [key: string]: string | string[] | ReturnType<typeof defineAsyncComponent> | undefined\n  name: string\n  type: string\n  registryDependencies: string[]\n  files: string[]\n  component?: ReturnType<typeof defineAsyncComponent>\n}\n\n// Keys are the registry component/example names; built via \`Object.fromEntries\`\n// (instead of a \`Record<string, any>\` literal) so the lookup map stays\n// indexable by an arbitrary string without widening away the entry type.\nconst registryIndexEntries: Array<[string, RegistryIndexEntry]> = [\n${vueIndex}\n]\n\nexport const Index = {\n  default: Object.fromEntries(registryIndexEntries),\n}\n`
 )
 
-// ---------- packages/newtui/registry.<framework>.json (shadcn registry schema) ----------
+// ---------- apps/*/registry.json (shadcn registry schema) ----------
 // One manifest per framework rather than one combined file: the two
 // registries use the same item names (`button`, `avatar`, ...), which a
 // single shadcn registry cannot hold twice.
@@ -207,17 +267,14 @@ const registryJson = {
       Object.assign({}, i, {
         framework: "react",
         files: i.files.map((f) => ({
-          path: `registry/default/${f.path}`,
+          path: `${REGISTRY_BASE}/${f.path}`,
           type: f.type,
         })),
       })
     )
     .concat([{ ...themeItem, framework: "react" }]),
 }
-writeFileSync(
-  join(ROOT, "packages/newtui/registry.react.json"),
-  j(registryJson) + "\n"
-)
+await writeGenerated(join(WWW, "registry.json"), j(registryJson) + "\n")
 const vueRegistryJson = {
   ...registryJson,
   name: "newt-ui-vue",
@@ -226,33 +283,33 @@ const vueRegistryJson = {
       Object.assign({}, i, {
         framework: "vue",
         files: i.files.map((f) => ({
-          path: `registry/default/${f.path}`,
+          path: `${REGISTRY_BASE}/${f.path}`,
           type: f.type,
         })),
       })
     )
     .concat([{ ...themeItem, framework: "vue" }]),
 }
-writeFileSync(
-  join(ROOT, "packages/newtui/registry.vue.json"),
-  j(vueRegistryJson) + "\n"
-)
+await writeGenerated(join(VUE, "registry.json"), j(vueRegistryJson) + "\n")
 
 // warn about missing files
 let missing = 0
 for (const m of metas) {
+  // A block lives under `blocks/` and declares its own file list; a component
+  // lives under `ui/` and is named after itself.
+  const dir = m.type === "registry:block" ? "blocks" : "ui"
   const checks = [
-    join(WWW, `registry/default/ui/${m.name}.tsx`),
-    join(
-      WWW,
-      `registry/default/example/${m.reactDemo ?? `${m.name}-demo`}.tsx`
+    ...(m.reactFiles ?? [`ui/${m.name}.tsx`]).map((f) =>
+      join(WWW, `${REGISTRY_BASE}/${f}`)
     ),
-    join(
-      VUE,
-      `app/lib/registry/default/example/${m.vueDemo ?? `${pascal(m.name)}Demo`}.vue`
+    ...reactDemoNames(m).map((name) =>
+      join(WWW, `${REGISTRY_BASE}/examples/${name}.tsx`)
+    ),
+    ...vueDemoNames(m).map((name) =>
+      join(VUE, `${REGISTRY_BASE}/examples/${name}.vue`)
     ),
     ...(m.vueFiles ?? [`${pascal(m.name)}.vue`, "index.ts"]).map((f) =>
-      join(VUE, `app/lib/registry/default/ui/${m.name}/${f}`)
+      join(VUE, `${REGISTRY_BASE}/${dir}/${m.name}/${f}`)
     ),
   ]
   for (const c of checks)

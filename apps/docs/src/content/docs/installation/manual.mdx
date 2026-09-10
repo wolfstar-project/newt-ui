@@ -1,0 +1,78 @@
+---
+title: "Manual installation"
+description: "Everything the CLI does, done by hand — for a project the CLI cannot read, or one you would rather it did not touch."
+---
+
+The CLI is a convenience. Nothing it writes is magic, and a project it cannot
+read — an unusual monorepo layout, a bundler with its own alias scheme — can do
+the same four things by hand.
+
+<PathTabs framework="manual">
+
+<Steps>
+
+<section>
+
+#### Install the dependencies
+
+<PmTabs cmd="--yes class-variance-authority tailwindcss-animate" />
+
+Plus the class merger that matches your Tailwind major: `cn` on v4, or `clsx`
+with `tailwind-merge` on v3.
+
+</section>
+
+<section>
+
+#### Add the `cn` helper
+
+Every component imports it. On Tailwind v4:
+
+```ts title="lib/utils.ts"
+export { cn } from "cn"
+```
+
+On v3, where the merge tables still understand v3 class names:
+
+```ts title="lib/utils.ts"
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+```
+
+</section>
+
+<section>
+
+#### Add the tokens
+
+Copy the `--newt-*` block from
+[`tokens.css`](https://github.com/wolfstar-project/newt-ui/blob/main/packages/cli/registry/html/tokens.css)
+into your global stylesheet, then map them onto Tailwind — an `@theme` block on
+v4, a preset on v3. Both projections are in
+[Theming](/docs/theming#tailwind).
+
+</section>
+
+<section>
+
+#### Copy the component
+
+Take the source from the component's page — every one of them lists its files
+under Installation → Manual — and fix the two imports at the top: the `cn`
+helper, and any sibling component it builds on.
+
+</section>
+
+</Steps>
+
+</PathTabs>
+
+<Callout>
+  Without `components.json` there is no `newtui diff`, so an upgrade means
+  reading the component page again rather than a one-line command. That is the
+  only thing the manual route costs you.
+</Callout>

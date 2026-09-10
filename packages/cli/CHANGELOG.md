@@ -1,11 +1,27 @@
-# @newtui/vue
+# newtui
 
-## 2.0.1
+## 2.1.0
 
-### Patch Changes
+### Minor Changes
 
-- Updated dependencies [06f4a30]
-  - newtui@2.1.0
+- 06f4a30: Rework the Discord-inspired components against the wolfstar.rocks originals, and add an opt-in light surface set.
+
+  Tokens: new `--newt-bg-input-elevated`, `--newt-mention-text`, `--newt-mention-role` and `--newt-embed-max-width`; a `.newt-light` / `[data-newt-theme="light"]` block overrides the surfaces, text, status and shadow tokens for light backgrounds. The mention/badge/timeline/reaction/slash-command hex values that duplicated `#b3baff` and `#f3b95f` now read the tokens.
+
+  Components:
+
+  - `Mention` renders a real button with focus styles, gains an optional avatar, an `app` variant and a `color` prop for role mentions.
+  - `Button` gains `emoji` and the link-out glyph (`launchIcon`, on by default for `variant="link"`).
+  - `Embed` gains an accent `color`, an author row, a footer icon, a middle-dot separator and a `<time>` timestamp.
+  - `MemberList` gains role sections with headings, an offline state, coloured names and the APP tag (with the verified check).
+  - `ReplyPreview` gains an avatar, a "used" action and a slash-command chip; the spine is now driven by custom properties.
+  - `MessageGroup` gains a reply grid layout, an ephemeral state with its notice, the verified bot tag, and renders the timestamp as `<time>`.
+  - `Divider` gains `spacing` and `line`.
+  - `ScrollArea` gains `focusable` and `viewportLabel`.
+  - `SlashCommand` now takes the full invocation: subcommand path plus typed options, including the focused one.
+  - `SelectMenu` is now a complete combobox: trigger, keyboard-driven listbox, portalled panel that flips when space runs out.
+
+  New components: `InlineCode`, `ActionRow`, `MessageList`, `MessageComposer`, `Chat`, `Invite`, `ChannelHeader`, `ChannelWelcome`, `ChannelInfo`, `SlashCommandSuggestions`, `V2Container` and `AppLauncher`, plus a `ReactionGroup` part on `Reaction`.
 
 ## 2.0.0
 
@@ -29,41 +45,3 @@
   - a config with neither field is matched to a framework by the aliases it declares
 
   Registry items now carry `framework: "react" | "vue"`, stamped by each app's registry build and validated by `registryItemSchema`, so a single item JSON says which framework it targets. The two registries keep their existing urls (`/r` and `/vue/r`), so nothing consuming them has to change.
-
-### Patch Changes
-
-- Updated dependencies [546bd96]
-  - newtui@2.0.0
-
-## 1.0.0
-
-### Major Changes
-
-- 81c01a0: Rename the published packages to the `@newtui` npm scope:
-
-  - `@wolfstar/newt-ui` is now `@newtui/react`
-  - `@wolfstar/newt-ui-vue` is now `@newtui/vue`
-  - `@wolfstar/nuxt-newt-ui` is now `@newtui/nuxt`
-  - the planned HTML package is now `@newtui/html`
-
-  Update your dependencies and imports to the new names. The CLI binaries
-  (`newt-ui`, `newt-ui-vue`, `newt-ui-html`) are unchanged.
-
-## 0.3.0
-
-### Minor Changes
-
-- 5609259: Move the published packages to the `@wolfstar` npm scope: `newt-ui` is now
-  `@wolfstar/newt-ui`, `newt-ui-vue` is now `@wolfstar/newt-ui-vue`, and
-  `@newt-devs/nuxt` is now `@wolfstar/nuxt-newt-ui`. The `newt-ui`,
-  `newt-ui-vue`, and `newt-ui-html` binaries keep their names, so only the
-  `npx`/install target changes:
-
-  ```bash
-  npx @wolfstar/newt-ui@latest init
-  npx @wolfstar/newt-ui-vue@latest init
-  npx @wolfstar/newt-ui@latest --legacy init
-  ```
-
-  Package metadata now points at `wolfstar-project/newt-ui` and is licensed
-  under Apache-2.0, matching the repository license.

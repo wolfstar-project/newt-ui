@@ -5,8 +5,6 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "oxlint -c ../../.oxlintrc.json .",
-    "lint:fix": "oxlint -c ../../.oxlintrc.json --fix .",
     "registry:build": "tsx scripts/build-registry.mts",
     "start": "next start",
     "typecheck": "tsc --noEmit"

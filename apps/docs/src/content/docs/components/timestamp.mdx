@@ -1,0 +1,43 @@
+---
+title: "Timestamp"
+description: "One instant, written in the reader's own locale and time zone."
+component: true
+---
+
+One instant, written in the reader's own locale and time zone. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
+<ComponentPreview name="timestamp" />
+
+## Installation
+
+<Installation name="timestamp" />
+
+## Usage
+
+<Usage name="timestamp" />
+
+## API reference
+
+<PropsTable
+  of="Timestamp"
+  rows={[
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "Content rendered inside the component.",
+    },
+    {
+      name: "className / class",
+      type: "string",
+      description: "Additional classes merged with the component defaults.",
+    },
+  ]}
+/>
+
+## Accessibility
+
+Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+## Tokens
+
+<TokensNote name="timestamp" />

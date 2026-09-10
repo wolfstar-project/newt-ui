@@ -1,0 +1,111 @@
+---
+title: "Typeset"
+description: "Styles rendered markdown with three variables — size, leading and flow — over the --newt-* tokens."
+component: true
+---
+
+Rendered markdown is the one thing a component library cannot style with
+components: what arrives is whatever the renderer emitted. Typeset is a wrapper
+and two class names — the rules are the stylesheet `add typeset` appends, and
+nothing inside needs a class of its own.
+
+The [builder](/typeset) tunes the three variables live; [the guide](/docs/typeset)
+explains what each one does.
+
+<ComponentPreview name="typeset" />
+
+## Installation
+
+<Installation name="typeset" />
+
+## Usage
+
+<Usage name="typeset" />
+
+## What it styles \{#markdown\}
+
+Typeset never sees markdown — it sees whatever a renderer emitted from it. The
+left column is the syntax a chat client accepts, the middle is the element that
+reaches the wrapper, and everything in it is styled by the stylesheet without a
+class of its own.
+
+| Markdown                 | Element              | Notes                                                    |
+| ------------------------ | -------------------- | -------------------------------------------------------- |
+| `# H1` `## H2` `### H3`  | `<h1>` `<h2>` `<h3>` | `h4`–`h6` are styled too, for renderers that go deeper.  |
+| `**bold**`               | `<strong>`           | Weight 600 and the primary text colour.                  |
+| `*italic*`               | `<em>`               |                                                          |
+| `__underline__`          | `<u>`                | Same underline offset as a link, so the two agree.       |
+| `~~strikethrough~~`      | `<s>`                | Falls back to the muted colour.                          |
+| `***bold italics***`     | `<strong><em>`       | The marks nest, and so do the elements they produce.     |
+| `__**underline bold**__` | `<u><strong>`        | Any combination of the four, in any order.               |
+| `` `inline code` ``      | `<code>`             | Monospace on the surface colour.                         |
+| ` ```lang ` fenced block | `<pre><code>`        | Scrolls sideways rather than widening the column.        |
+| `[label](url)`           | `<a>`                | Link colour, underlined.                                 |
+| `> quote` / `>>> quote`  | `<blockquote>`       | Rule on the inline start edge. Holds several paragraphs. |
+| `- item` / `1. item`     | `<ul>` / `<ol>`      | Nested lists keep their own counter and a tighter gap.   |
+| `-# subtext`             | `<small>`            | Smaller and quieter, on the same rhythm.                 |
+| `\|\|spoiler\|\|`        | `<Spoiler>`          | Interface, not styling — see below.                      |
+
+<Callout>
+  A spoiler is not text styling: it hides content until clicked, which a class
+  cannot do. It stays the [Spoiler](/docs/components/spoiler) component, dropped
+  inline into the prose — `add typeset` installs it too. Mentions and timestamps
+  are the same story: their own components, not this stylesheet. Anything
+  block-level dropped into a typeset body — a card, a form, a wider widget —
+  should carry `not-typeset` so it keeps its own spacing rather than the
+  surrounding rhythm.
+</Callout>
+
+## API reference
+
+<PropsTable
+  of="Typeset"
+  rows={[
+    {
+      name: "preset",
+      type: '"docs" | "chat" | "article"',
+      default: '"docs"',
+      description:
+        "Which of the three rhythms to start from. Each sets size, leading and flow.",
+    },
+    {
+      name: "measure",
+      type: "boolean",
+      default: "false",
+      description:
+        "Caps the line length at 68ch. Line length belongs to the column, not to the type.",
+    },
+    {
+      name: "as",
+      type: '"div" | "article" | "section"',
+      default: '"div"',
+      description:
+        "The element to render. Long-form content usually wants article.",
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "The rendered markup. It needs no classes of its own.",
+    },
+    {
+      name: "className / class",
+      type: "string",
+      description: "Additional classes merged with the component defaults.",
+    },
+  ]}
+/>
+
+## Accessibility
+
+The wrapper adds no semantics of its own, which is the point: the headings,
+lists and tables a renderer emitted keep theirs. Two things the styles do carry
+are accessibility decisions rather than taste — the measure exists so a line
+does not outrun the eye returning to the next one, and the sizes are `em` so a
+reader who has enlarged their default text enlarges all of it.
+
+Mark an island of interface inside the prose with `not-typeset` and it keeps
+its own spacing and type.
+
+## Tokens
+
+<TokensNote name="typeset" />

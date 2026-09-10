@@ -7,6 +7,7 @@ import { styles } from "../registry/registry-styles"
 import { registryItemSchema, type Registry } from "../registry/schema"
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r")
+const REGISTRY_SOURCE = path.join(process.cwd(), "registry/bases/newt")
 // Every item in this app targets React; the field is stamped here so a
 // consumer reading a single item JSON knows which framework it belongs to.
 const REGISTRY_FRAMEWORK = "react" as const
@@ -21,7 +22,12 @@ function isFilePathShorthand(f: RegistryItemFile): f is string {
 async function buildRegistryIndex(allItems: Registry) {
   const items = allItems
     .filter((item) =>
-      ["registry:ui", "registry:lib", "registry:theme"].includes(item.type)
+      [
+        "registry:ui",
+        "registry:block",
+        "registry:lib",
+        "registry:theme",
+      ].includes(item.type)
     )
     .map((item) =>
       Object.assign({}, item, {
@@ -61,7 +67,7 @@ async function buildStyles(allItems: Registry) {
           const file = isFilePathShorthand(f) ? { path: f, type: item.type } : f
           const abs = file.path.startsWith("lib/")
             ? path.join(process.cwd(), file.path)
-            : path.join(process.cwd(), "registry", style.name, file.path)
+            : path.join(REGISTRY_SOURCE, file.path)
           const content = await fs.readFile(abs, "utf8")
           return { ...file, content }
         })

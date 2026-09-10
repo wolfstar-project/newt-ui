@@ -1,12 +1,18 @@
 {
-  "name": "@newtui/vue",
-  "version": "2.0.1",
-  "description": "Deprecated — merged into the unscoped `newtui` package. This wrapper forwards to it.",
+  "name": "newtui",
+  "version": "2.1.0",
+  "description": "CLI for newt/ui — Discord-native UI components for React, Vue and Nuxt (shadcn-style registry). Part of the WolfStar toolchain.",
   "keywords": [
-    "deprecated",
-    "newtui",
+    "component-library",
+    "design-system",
+    "discord",
+    "discord-bot",
     "nuxt",
-    "vue"
+    "react",
+    "shadcn",
+    "ui",
+    "vue",
+    "wolfstar"
   ],
   "homepage": "https://newtui.dev",
   "bugs": {
@@ -20,10 +26,13 @@
     "directory": "packages/cli"
   },
   "bin": {
-    "newt-ui-vue": "./bin/newt-ui-vue.js"
+    "newtui": "./dist/index.js",
+    "newtui-html": "./cli/index.js"
   },
   "files": [
-    "bin",
+    "dist",
+    "cli",
+    "registry",
     "README.md",
     "LICENSE"
   ],
@@ -33,11 +42,30 @@
     "provenance": true
   },
   "scripts": {
-    "lint": "oxlint -c ../../.oxlintrc.json .",
-    "lint:fix": "oxlint -c ../../.oxlintrc.json --fix ."
+    "build": "tsdown --config-loader unrun",
+    "dev": "tsdown --config-loader unrun --watch",
+    "prepack": "pnpm run build",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
-    "newtui": "workspace:*"
+    "@clack/prompts": "^1.7.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "cross-spawn": "^7.0.6",
+    "mri": "^1.2.0",
+    "package-manager-detector": "^1.8.0",
+    "picocolors": "^1.1.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.6",
+    "@types/node": "^22.10.2",
+    "tsdown": "^0.22.14",
+    "typescript": "^5.7.2",
+    "unrun": "^0.3.1",
+    "vitest": "^5.0.0"
   },
   "engines": {
     "node": ">=18"

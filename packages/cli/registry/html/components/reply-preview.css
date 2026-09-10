@@ -1,0 +1,88 @@
+/* newt-ui · Reply Preview (Discord-inspired "replying to" bar) */
+
+.newt-reply {
+  /* Override any of these to reshape the spine without touching the rule. */
+  --newt-reply-spine-width: 2px;
+  --newt-reply-spine-color: var(--newt-border);
+  --newt-reply-spine-size: 12px;
+  --newt-reply-spine-radius: 6px;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  margin-bottom: 4px;
+  padding-inline-start: calc(var(--newt-reply-spine-size) + 6px);
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--newt-text-muted);
+}
+
+/* The elbow that hooks the preview back up to the message above it. */
+.newt-reply::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 50%;
+  width: var(--newt-reply-spine-size);
+  height: var(--newt-reply-spine-size);
+  border-inline-start: var(--newt-reply-spine-width) solid
+    var(--newt-reply-spine-color);
+  border-top: var(--newt-reply-spine-width) solid var(--newt-reply-spine-color);
+  border-start-start-radius: var(--newt-reply-spine-radius);
+  transform: translateY(-100%);
+}
+
+.newt-reply__avatar {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--newt-radius-full);
+  object-fit: cover;
+}
+
+.newt-reply__author {
+  flex-shrink: 0;
+  color: var(--newt-text-link);
+  font-weight: 500;
+}
+
+.newt-reply__text {
+  min-width: 0;
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--newt-text-muted);
+}
+
+/* "used" — the verb between the author and an interaction chip. */
+.newt-reply__action {
+  flex-shrink: 0;
+}
+
+/* The command chip shown when the reply is a slash-command interaction. */
+.newt-reply__command {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  padding: 0 4px;
+  border-radius: var(--newt-radius-sm);
+  background: color-mix(in srgb, var(--newt-brand) 15%, transparent);
+  color: var(--newt-mention-text);
+  font-weight: 500;
+}
+
+.newt-reply__command-icon {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+}
+
+.newt-reply__command-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

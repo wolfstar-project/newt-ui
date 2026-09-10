@@ -12,17 +12,18 @@ tooling and mental model apply.
 ## Generation pipeline
 
 ```
-apps/www/registry/meta/<name>.json          <- the only hand-written input
+apps/www/registry/meta/<name>.json          <- generator metadata
+apps/*/registry/bases/newt/                 <- hand-written sources
         |  node scripts/gen-registry.mjs
         v
 apps/www/registry/registry-ui.ts            (React index)
 apps/www/registry/registry-examples.ts
 apps/www/__registry__/{index.tsx,demos.tsx} (demos: static imports, so docs prerender)
-apps/vue/app/lib/registry/registry-ui.ts    (Vue index)
-apps/vue/app/lib/registry/registry-examples.ts
-apps/vue/app/__registry__/index.ts
-packages/newtui/registry.react.json         (shadcn registry schema)
-packages/newtui/registry.vue.json
+apps/vue/registry/registry-ui.ts    (Vue index)
+apps/vue/registry/registry-examples.ts
+apps/vue/__registry__/index.ts
+apps/www/registry.json                       (shadcn registry schema)
+apps/vue/registry.json
         |  apps/*/scripts/build-registry.mts
         v
 apps/*/public/r/{index.json,styles/<style>/<name>.json}   <- what the CLI fetches
@@ -35,18 +36,19 @@ not a note.
 
 - Add a component by writing `meta/<name>.json` (`title`, `description`,
   `dependencies`, `registryDependencies`, `vueFiles`, `reactDemo`, `vueDemo`)
-  and putting it in a category in `registry-categories.ts` (both copies).
+  and putting it in a category in `apps/www/registry/registry-categories.ts`
+  (the shared taxonomy).
 - `registryDependencies` names other newt/ui components and must be resolvable
   recursively by the CLI. `dependencies` names npm packages only.
 - Every published item carries `framework: "react" | "vue"`, stamped by the
   app's `build-registry.mts` (React items come from `apps/www`, Vue items from
   `apps/vue`). The field is part of `registryItemSchema`, so adding a field
-  means editing all four copies of that schema — `apps/www/registry`,
-  `apps/vue/app/lib/registry`, and `packages/newtui/src/tools` — or the
+  means editing all three copies of that schema — `apps/www/registry`,
+  `apps/vue/registry`, and `packages/cli/src/registry/schema.ts` — or the
   build-time `parse` strips it before the CLI ever sees it.
 - Never hand-edit a generated file. Regenerate.
 - Token values live once, in `apps/www/registry/registry-tokens.ts`, mirroring
-  `packages/newtui/registry/html/tokens.css`. Changing a colour means
+  `packages/cli/registry/html/tokens.css`. Changing a colour means
   changing those two, then regenerating.
 
 ## Tailwind v3 and v4 must both work
@@ -69,7 +71,12 @@ entirely by these), and it is published to
   The schema marks `tailwind` deprecated upstream; we keep emitting it
   precisely because v3 consumers are still supported.
 - `css` — additional `@layer`/`@utility`/`@keyframes` rules when a component
-  needs them.
+  needs them. A component whose behaviour *is* CSS declares `"cssFile":
+  "<name>.css"` in its meta instead of restating anything: `gen-registry.mjs`
+  reads that file from `packages/cli/registry/html/components/` and carries it
+  into the item as `css["@layer components"]`, so the HTML flavour stays the
+  single source and `add` appends the same rules to a React or Vue project.
+  `typeset` is the one that uses it.
 
 When you add or rename a token, update `newtTokens`, `tailwindV3Theme`, and
 `tailwindV4Theme` together, or v3 and v4 consumers silently diverge.
@@ -77,7 +84,7 @@ When you add or rename a token, update `newtTokens`, `tailwindV3Theme`, and
 ## How the CLIs consume it
 
 `init` fetches `theme-newt`, detects the project's Tailwind major
-(`src/tools/tailwind.ts`: declared `tailwindcss` dependency first, then the
+(`src/utils/tailwind.ts`: declared `tailwindcss` dependency first, then the
 stylesheet's `@import "tailwindcss"` vs `@tailwind` directives, then the
 presence of a `tailwind.config.*`) and writes the matching shape — an `@theme`
 block for v4, the raw variables plus a printed preset for v3. `add` appends any

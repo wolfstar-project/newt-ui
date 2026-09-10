@@ -1,0 +1,8 @@
+{
+  "name": "media-gallery",
+  "title": "Media Gallery",
+  "description": "One to ten images in a mosaic, laid out by how many there are.",
+  "vueFiles": ["MediaGallery.vue", "MediaGalleryItem.vue", "index.ts"],
+  "reactDemo": "media-gallery-demo",
+  "vueDemo": "MediaGalleryDemo"
+}

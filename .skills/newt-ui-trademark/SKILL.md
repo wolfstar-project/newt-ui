@@ -27,6 +27,12 @@ component, doc page, example, and published package.
   project as a Discord product.
 - Demo content uses placeholder names (`username`, `Shard 3`, generic servers),
   never real Discord users, servers, or trademarks.
+- Other projects' logos are a different question, and the answer is narrower:
+  the framework marks on the installation picker are Simple Icons (CC0) and
+  each one sits beside a link to that project's own guide. That is nominative
+  use — identifying the thing being linked to. Do not put a third party's mark
+  anywhere it could read as an endorsement of newt/ui, and never treat this as
+  licence to relax the Discord rules above.
 
 ## Review workflow
 

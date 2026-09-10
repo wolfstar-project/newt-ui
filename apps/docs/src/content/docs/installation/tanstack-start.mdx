@@ -1,0 +1,122 @@
+---
+title: "TanStack Start"
+description: "Install newt/ui in a TanStack Start app: the root route stylesheet, the alias, and the two commands."
+---
+
+<PathTabs framework="tanstack-start">
+
+<Steps>
+
+<section>
+
+#### Create the app
+
+```bash frame="terminal"
+npx create-tsrouter-app@latest my-app --template file-router --tailwind
+```
+
+The template already carries Tailwind v4 through the Vite plugin. An app made
+without `--tailwind` needs `tailwindcss` and `@tailwindcss/vite` installed and
+the plugin added to `vite.config.ts`.
+
+</section>
+
+<section>
+
+#### Declare the alias twice
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": { "@/*": ["./src/*"] }
+  }
+}
+```
+
+```ts title="vite.config.ts"
+import { fileURLToPath } from "node:url"
+
+import { defineConfig } from "vite"
+
+export default defineConfig({
+  resolve: {
+    alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
+  },
+})
+```
+
+</section>
+
+<section>
+
+#### Run init
+
+<PmTabs cmd="newtui@latest init" />
+
+There is no `--template` for TanStack Start: the app is created by
+`create-tsrouter-app` above, and `init` reads what it finds — React from the
+dependencies, the stylesheet from `src/styles.css`.
+
+</section>
+
+<section>
+
+#### Mark the root document
+
+The root route owns the `<body>`, so `.newt-root` goes there:
+
+```tsx title="src/routes/__root.tsx"
+import appCss from "../styles.css?url"
+
+export const Route = createRootRoute({
+  head: () => ({ links: [{ rel: "stylesheet", href: appCss }] }),
+  component: () => (
+    <html lang="en">
+      <body className="newt-root">
+        <Outlet />
+      </body>
+    </html>
+  ),
+})
+```
+
+</section>
+
+<section>
+
+#### Add a component
+
+<PmTabs cmd="newtui@latest add button" />
+
+```tsx title="src/routes/index.tsx"
+import { Button } from "@/components/ui/button"
+
+export const Route = createFileRoute("/")({
+  component: () => <Button variant="primary">Send</Button>,
+})
+```
+
+</section>
+
+</Steps>
+
+</PathTabs>
+
+## Server rendering \{#ssr\}
+
+Start renders on the server by default, so the same rule as Next applies: the
+nine interactive components carry `"use client"`. Answer yes to the React Server
+Components question at `init` to keep those directives, no to have `add` strip
+them.
+
+## What init writes \{#written\}
+
+```text
+components.json                 the config, shared with shadcn
+src/styles.css                  the --newt-* token block
+src/lib/utils.ts                cn()
+src/components/ui/button.tsx    add button
+```
+
+See [Dark mode](/docs/dark-mode) for the theme toggle, and [RTL](/docs/rtl) if
+the app has to run right to left.

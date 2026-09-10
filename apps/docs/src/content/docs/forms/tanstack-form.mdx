@@ -1,0 +1,205 @@
+---
+title: "TanStack Form"
+description: "One form API for React and Vue, wired to newt/ui's controls with zod for validation."
+links:
+  doc: "https://tanstack.com/form/latest"
+---
+
+TanStack Form is the option to reach for when the same form has to exist in
+both frameworks: the API is the same on either side, and only the template
+changes.
+
+## Install \{#install\}
+
+<div data-framework="react">
+  <PmTabs cmd="--yes @tanstack/react-form zod" />
+</div>
+
+<div data-framework="vue">
+  <PmTabs cmd="--yes @tanstack/vue-form zod" />
+</div>
+
+<PmTabs cmd="newtui@latest add form-fields button" />
+
+## The schema \{#schema\}
+
+```ts title="lib/channel-schema.ts"
+import { z } from "zod"
+
+export const channelSchema = z.object({
+  name: z
+    .string()
+    .min(2, "At least two characters.")
+    .max(32, "At most 32 characters.")
+    .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers and dashes only."),
+  topic: z.string().max(120, "At most 120 characters.").optional(),
+  category: z.enum(["text", "voice", "announcement"]),
+  nsfw: z.boolean(),
+})
+```
+
+## The form \{#form\}
+
+Each field is a render function that receives its own state, which is what
+makes a field's error impossible to read from the wrong place.
+
+<div data-framework="react">
+
+```tsx title="components/create-channel-form.tsx"
+"use client"
+
+import { useForm } from "@tanstack/react-form"
+
+import { Button } from "@/components/ui/button"
+import { Field, FieldHelp, Input, Label } from "@/components/ui/form-fields"
+import { channelSchema } from "@/lib/channel-schema"
+
+export function CreateChannelForm() {
+  const form = useForm({
+    defaultValues: { name: "", topic: "", category: "text", nsfw: false },
+    validators: { onSubmit: channelSchema },
+    onSubmit: async ({ value }) => {
+      await createChannel(value)
+    },
+  })
+
+  return (
+    <form
+      className="flex flex-col gap-4"
+      onSubmit={(event) => {
+        event.preventDefault()
+        void form.handleSubmit()
+      }}
+    >
+      <form.Field name="name">
+        {(field) => {
+          const error = field.state.meta.errors[0]
+          return (
+            <Field invalid={Boolean(error)}>
+              <Label htmlFor={field.name}>Channel name</Label>
+              <Input
+                id={field.name}
+                name={field.name}
+                value={field.state.value}
+                aria-invalid={Boolean(error)}
+                onBlur={field.handleBlur}
+                onChange={(event) => field.handleChange(event.target.value)}
+              />
+              {error ? (
+                <FieldHelp variant="error">{String(error)}</FieldHelp>
+              ) : (
+                <FieldHelp>Lowercase letters, numbers and dashes.</FieldHelp>
+              )}
+            </Field>
+          )
+        }}
+      </form.Field>
+
+      <form.Subscribe selector={(state) => state.isSubmitting}>
+        {(isSubmitting) => (
+          <Button type="submit" variant="primary" disabled={isSubmitting}>
+            {isSubmitting ? "Creating…" : "Create channel"}
+          </Button>
+        )}
+      </form.Subscribe>
+    </form>
+  )
+}
+```
+
+</div>
+
+<div data-framework="vue">
+
+```vue title="components/CreateChannelForm.vue"
+<script setup lang="ts">
+import { useForm } from "@tanstack/vue-form"
+
+import { Button } from "@/components/ui/button"
+import { Field, FieldHelp, Input, Label } from "@/components/ui/form-fields"
+import { channelSchema } from "@/lib/channel-schema"
+
+const form = useForm({
+  defaultValues: { name: "", topic: "", category: "text", nsfw: false },
+  validators: { onSubmit: channelSchema },
+  onSubmit: async ({ value }) => {
+    await createChannel(value)
+  },
+})
+</script>
+
+<template>
+  <form class="flex flex-col gap-4" @submit.prevent="form.handleSubmit()">
+    <form.Field name="name">
+      <template #default="{ field }">
+        <Field :invalid="Boolean(field.state.meta.errors[0])">
+          <Label :for="field.name">Channel name</Label>
+          <Input
+            :id="field.name"
+            :name="field.name"
+            :model-value="field.state.value"
+            :aria-invalid="Boolean(field.state.meta.errors[0])"
+            @blur="field.handleBlur"
+            @update:model-value="field.handleChange"
+          />
+          <FieldHelp v-if="field.state.meta.errors[0]" variant="error">
+            {{ field.state.meta.errors[0] }}
+          </FieldHelp>
+          <FieldHelp v-else>Lowercase letters, numbers and dashes.</FieldHelp>
+        </Field>
+      </template>
+    </form.Field>
+
+    <Button type="submit" variant="primary">Create channel</Button>
+  </form>
+</template>
+```
+
+</div>
+
+## Validation timing \{#timing\}
+
+`validators` takes one schema per moment: `onChange`, `onBlur`, `onSubmit`.
+Putting the whole schema on `onSubmit` and a cheaper one on `onBlur` is the
+usual arrangement — a full parse on every keystroke is work nobody asked for.
+
+```ts
+validators: {
+  onBlur: z.object({ name: z.string().min(2) }),
+  onSubmit: channelSchema,
+}
+```
+
+## Array fields \{#arrays\}
+
+`mode="array"` on a field gives you `pushValue` and `removeValue`; each entry is
+addressed as `name.<index>`.
+
+```tsx
+<form.Field name="tags" mode="array">
+  {(tags) => (
+    <>
+      {tags.state.value.map((_, index) => (
+        <form.Field key={index} name={`tags[${index}]`}>
+          {(field) => (
+            <Field>
+              <Label>Tag {index + 1}</Label>
+              <Input
+                value={field.state.value}
+                onChange={(event) => field.handleChange(event.target.value)}
+              />
+            </Field>
+          )}
+        </form.Field>
+      ))}
+      <Button
+        type="button"
+        variant="secondary"
+        onClick={() => tags.pushValue("")}
+      >
+        Add tag
+      </Button>
+    </>
+  )}
+</form.Field>
+```

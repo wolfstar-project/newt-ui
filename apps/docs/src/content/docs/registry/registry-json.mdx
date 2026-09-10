@@ -1,0 +1,62 @@
+---
+title: "registry.json"
+description: "The index every registry serves: the list of items a CLI, an agent or a search box can read without fetching each one."
+---
+
+`index.json` at the root of a registry is an array of items with their metadata
+and without their file contents. It is what `newtui list` prints, what a search
+box filters, and what an agent reads to know what exists.
+
+```json title="/r/index.json"
+[
+  {
+    "name": "button",
+    "type": "registry:ui",
+    "framework": "react",
+    "title": "Button",
+    "description": "Displays a Discord-styled button with brand, secondary, success, danger, link and icon variants.",
+    "dependencies": ["class-variance-authority"],
+    "files": ["registry/bases/newt/ui/button.tsx"]
+  },
+  {
+    "name": "modal",
+    "type": "registry:ui",
+    "framework": "react",
+    "title": "Modal",
+    "description": "A centred dialog with a header, body and footer.",
+    "registryDependencies": ["button"],
+    "files": ["registry/bases/newt/ui/modal.tsx"]
+  }
+]
+```
+
+The item shape is the same one described in
+[registry-item.json](/docs/registry/registry-item-json), with one difference:
+in the index, `files` is a list of paths rather than a list of objects with
+contents. That keeps the index small enough to fetch on every command.
+
+## Fields \{#fields\}
+
+| Field                  | Required | What it is                                                                               |
+| ---------------------- | -------- | ---------------------------------------------------------------------------------------- |
+| `name`                 | yes      | The install name. `newtui add <name>`.                                                   |
+| `type`                 | yes      | One of the `registry:*` types.                                                           |
+| `framework`            | no       | `react` or `vue`. Informational: items are served from per-framework registries.         |
+| `title`                | no       | Human name, shown by `list` and in docs.                                                 |
+| `description`          | no       | One sentence, shown by `list` and read by agents.                                        |
+| `dependencies`         | no       | npm packages to install.                                                                 |
+| `registryDependencies` | no       | Other items to install first.                                                            |
+| `files`                | no       | Paths, in the index; objects with contents, in the item.                                 |
+| `categories`           | no       | Free-form tags. This registry drives its taxonomy from `registry-categories.ts` instead. |
+
+## The style index \{#styles\}
+
+`styles/index.json` lists the styles a registry serves. newt/ui has one:
+
+```json title="/r/styles/index.json"
+[{ "name": "default", "label": "Default" }]
+```
+
+An item then lives at `/r/styles/<style>/<name>.json`. The field exists so a
+second visual style can be added later without moving anything a consumer has
+already installed.

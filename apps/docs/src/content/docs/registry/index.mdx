@@ -1,0 +1,51 @@
+---
+title: "Registry"
+description: "How newt/ui serves components over HTTP, and how to run a registry of your own that the same CLI can install from."
+---
+
+A registry is static JSON. `newtui add button` fetches an index, resolves what
+the item depends on, fetches each one, rewrites its imports for your aliases and
+writes the files. Nothing is executed and nothing is fetched at runtime — the
+whole protocol is a directory of files on a CDN.
+
+newt/ui publishes two of them, one per framework:
+
+| Framework | Base URL                   |
+| --------- | -------------------------- |
+| React     | `https://newtui.dev/r`     |
+| Vue       | `https://newtui.dev/vue/r` |
+
+`components.json` records which one your project reads; `--registry` and
+`NEWT_REGISTRY_URL` override it.
+
+## Why you might run one \{#why\}
+
+- A private design system that extends newt/ui with your own components.
+- A pinned copy of this registry, so a build in CI never depends on a domain you
+  do not control.
+- A registry per product, sharing one token layer.
+
+The format is the shadcn registry schema, so a registry that works with `shadcn`
+works here, and vice versa.
+
+## The shape of it \{#shape\}
+
+```text
+/r
+  index.json                      every item: name, type, title, description
+  styles/index.json               the styles that exist (there is one: default)
+  styles/default/button.json      one file per item, with its file contents
+  styles/default/button-demo.json
+```
+
+`index.json` is what `list`, `search` and the MCP server read. Each item file
+carries everything needed to install it, including the source of each file, so
+`add` is one fetch per item and no directory traversal.
+
+## Next \{#next\}
+
+- [Getting started](/docs/registry/getting-started) — build and serve one.
+- [registry.json](/docs/registry/registry-json) — the index schema.
+- [registry-item.json](/docs/registry/registry-item-json) — the item schema.
+- [Examples](/docs/registry/examples) — a UI item, a themed item, a block.
+- [MCP](/docs/registry/mcp) — what a registry has to serve for an agent to read it.

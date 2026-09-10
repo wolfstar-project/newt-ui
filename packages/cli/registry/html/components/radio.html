@@ -1,0 +1,69 @@
+<!--
+  The group owns the state: `role="radiogroup"` with a label, and exactly one
+  child carrying `aria-checked="true"`. Roving tabindex — only the selected
+  row is tabbable, and the arrow keys move between rows — is what a screen
+  reader user expects here, and is what radio.js implements.
+-->
+<div class="newt-radio-group" role="radiogroup" aria-label="Input mode">
+  <button
+    class="newt-radio"
+    type="button"
+    role="radio"
+    aria-checked="true"
+    tabindex="0"
+    data-value="voice-activity"
+  >
+    <span class="newt-radio__control" aria-hidden="true"></span>
+    <span>Voice Activity</span>
+  </button>
+
+  <button
+    class="newt-radio"
+    type="button"
+    role="radio"
+    aria-checked="false"
+    tabindex="-1"
+    data-value="push-to-talk"
+  >
+    <span class="newt-radio__control" aria-hidden="true"></span>
+    <span>Push to Talk</span>
+  </button>
+</div>
+
+<!-- With a second line, when the choice needs explaining. -->
+<div class="newt-radio-group" role="radiogroup" aria-label="Who can reply">
+  <button
+    class="newt-radio"
+    type="button"
+    role="radio"
+    aria-checked="true"
+    tabindex="0"
+    data-value="everyone"
+  >
+    <span class="newt-radio__control" aria-hidden="true"></span>
+    <span class="newt-radio__body">
+      <span>Everyone</span>
+      <span class="newt-radio__description">
+        Anyone in the channel can reply to this message.
+      </span>
+    </span>
+  </button>
+
+  <button
+    class="newt-radio"
+    type="button"
+    role="radio"
+    aria-checked="false"
+    tabindex="-1"
+    aria-disabled="true"
+    data-value="nobody"
+  >
+    <span class="newt-radio__control" aria-hidden="true"></span>
+    <span class="newt-radio__body">
+      <span>Nobody</span>
+      <span class="newt-radio__description">
+        Replies are turned off for this message.
+      </span>
+    </span>
+  </button>
+</div>

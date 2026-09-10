@@ -1,0 +1,44 @@
+---
+import Docs from "../../../layouts/Docs.astro"
+import { categories, COMPONENTS } from "../../../lib/registry"
+
+/*
+ * The whole registry on one page, grouped the way the sidebar groups it. It is
+ * generated rather than authored, so it has no markdown twin and no entry in
+ * the previous/next walk.
+ */
+const groups = categories
+  .map((category) => ({
+    label: category.label,
+    slug: category.slug,
+    components: COMPONENTS.filter(
+      (component) => component.categorySlug === category.slug
+    ),
+  }))
+  .filter((group) => group.components.length > 0)
+---
+
+<Docs
+  title="Components"
+  description={`Every component in the registry — ${COMPONENTS.length} of them, in React, Vue and plain HTML.`}
+  pager={false}
+  toc={false}
+>
+  {
+    groups.map((group) => (
+      <section class="component-index-group">
+        <h2 id={group.slug}>{group.label}</h2>
+        <ul class="component-grid">
+          {group.components.map((component) => (
+            <li>
+              <a href={`/docs/components/${component.name}`}>
+                <span class="component-card-title">{component.title}</span>
+                <span class="component-card-description">{component.description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</Docs>

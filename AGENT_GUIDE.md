@@ -17,17 +17,18 @@ structurally consistent regardless of who — or what — builds the next piece.
 newt/ui is a pnpm + turborepo monorepo mirroring shadcn-ui (React) and
 shadcn-vue (Vue). Every component exists in three forms:
 
-| Form                             | Location                                                                                                                             | Notes                                                              |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| HTML/CSS (canonical visual spec) | `packages/newtui/registry/html/components/<name>.{css,html,js}`                                                                      | Original sources. `tokens.css` lives next to them.                 |
-| React                            | `apps/www/registry/default/ui/<name>.tsx` + `example/<name>-demo.tsx` + `content/docs/components/<name>.mdx`                         | `cva` + `cn` + Tailwind utilities mapped to `--newt-*` tokens.     |
-| Vue                              | `apps/vue/src/lib/registry/default/ui/<name>/{Pascal.vue,index.ts}` + `example/PascalDemo.vue` + `content/docs/components/<name>.md` | SFC `<script setup lang="ts">`, variants exported from `index.ts`. |
+| Form                             | Location                                                                                   | Notes                                                              |
+| -------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| HTML/CSS (canonical visual spec) | `packages/cli/registry/html/components/<name>.{css,html,js}`                               | Original sources. `tokens.css` lives next to them.                 |
+| React                            | `apps/www/registry/bases/newt/ui/<name>.tsx` + `examples/<name>-demo.tsx`                  | `cva` + `cn` + Tailwind utilities mapped to `--newt-*` tokens.     |
+| Vue                              | `apps/vue/registry/bases/newt/ui/<name>/{Pascal.vue,index.ts}` + `examples/PascalDemo.vue` | SFC `<script setup lang="ts">`, variants exported from `index.ts`. |
+| Shared docs                      | `apps/docs/src/content/docs/components/<name>.mdx`                                         | One page renders the paired React and Vue demos.                   |
 
 Per-component metadata lives in `apps/www/registry/meta/<name>.json`
 (`title`, `description`, `dependencies`, `registryDependencies`, `vueFiles`).
 Run `node scripts/gen-registry.mjs` after adding or renaming a component: it
 regenerates `registry-ui.ts`, `registry-examples.ts`, `__registry__/` for both
-apps and `packages/*/registry.json` (shadcn registry schema).
+apps and each app's root `registry.json` (shadcn registry schema).
 
 Tailwind token classes (both apps, see `tailwind.config.ts` → `newtPreset`):
 `bg-newt-bg-base|surface|elevated|floating|input|hover|active`,
@@ -44,7 +45,9 @@ plus framework wrappers (React first). Everything is built from a single token
 file (`tokens.css`) so any component automatically matches Discord's actual
 client surfaces, colors, and motion.
 
-Source of truth for tokens: `packages/newtui/registry/html/tokens.css`, `:root` block (mirrored into `apps/www/styles/globals.css` and `apps/vue/src/assets/css/tailwind.css`). Never hardcode a
+Source of truth for tokens: `packages/cli/registry/html/tokens.css`, `:root`
+block (mirrored into `apps/www/styles/globals.css` and
+`apps/vue/app/assets/css/main.css`). Never hardcode a
 color, radius, font, or shadow — reference a `--newt-*` variable. If a value you
 need doesn't exist as a token, propose adding it to `:root` rather than inlining
 a raw hex code.
@@ -108,6 +111,35 @@ Every component file/section includes, in order:
 - [ ] Animations respect `prefers-reduced-motion: reduce`.
 - [ ] Modals trap focus and close on `Escape`; toasts are `role="status"` /
       `aria-live="polite"` and never trap focus.
+
+## 5b. Direction (RTL)
+
+Every component is written with CSS logical properties, so a right-to-left tree
+needs only a `dir` attribute. Physical spellings — `margin-left`, `left:`,
+`ml-2`, `text-left` — must not appear in a component.
+
+| Physical                   | Logical                         |
+| -------------------------- | ------------------------------- |
+| `margin-left` / `-right`   | `margin-inline-start` / `-end`  |
+| `padding-left` / `-right`  | `padding-inline-start` / `-end` |
+| `border-left` / `-right`   | `border-inline-start` / `-end`  |
+| `left:` / `right:`         | `inset-inline-start` / `-end`   |
+| `border-top-left-radius`   | `border-start-start-radius`     |
+| `text-align: left`         | `text-align: start`             |
+| `ml/mr/pl/pr-*`            | `ms/me/ps/pe-*`                 |
+| `left-*` / `right-*`       | `start-*` / `end-*`             |
+| `rounded-l                 | r                               | tl  | tr  | bl  | br-*` | `rounded-s | e   | ss  | se  | es  | ee-*` |
+| `text-left` / `text-right` | `text-start` / `text-end`       |
+
+The sign of a sideways transform is the one thing CSS cannot express logically,
+so `tokens.css` carries `--newt-dir` (`1`, and `-1` under `[dir="rtl"]`):
+
+```css
+transform: translateX(calc(var(--newt-dir) * 16px));
+```
+
+Directional glyphs mirror with `rtl:-scale-x-100`; a clock or a checkmark does
+not. `newtui migrate rtl` converts components installed before this change.
 
 ## 6. Motion rules
 
@@ -180,7 +212,7 @@ showing a channel's name and topic description, e.g. for a bot's dashboard
 that mirrors a Discord channel view).
 
 **Step 1 — Confirm it doesn't already exist.** Check `index.html` section IDs
-and `packages/newtui/registry/html/components/` for `.newt-channel-topic*`. Not found → proceed.
+and `packages/cli/registry/html/components/` for `.newt-channel-topic*`. Not found → proceed.
 
 **Step 2 — Pick the root class.** `.newt-channel-topic`. Sub-elements:
 `.newt-channel-topic__icon`, `.newt-channel-topic__name`,

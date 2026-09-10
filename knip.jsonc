@@ -14,16 +14,41 @@
       "project": ["scripts/**/*.{mjs,ts}"],
     },
     "apps/docs": {
-      "entry": ["src/main.tsx", "scripts/*.mjs", "vite.config.ts"],
+      // Astro's own plugin finds the pages, the layouts and the integrations;
+      // these are the entry points it cannot see: the build scripts, the remark
+      // plugin the Astro config loads, and the islands MDX mounts by name.
+      "entry": [
+        "astro.config.ts",
+        "ec.config.mjs",
+        "scripts/*.mjs",
+        "src/content.config.ts",
+        "src/components/**/*.{ts,tsx,vue,astro}",
+        // Registry demos are copied in with their imports intact, so this file
+        // is reached from outside the workspace knip walks.
+        "src/lib/utils.ts",
+        "src/pages/**/*.{ts,astro}",
+        // The layout loads this one through `<script src="/src/pwa.ts">`,
+        // which is a string as far as any static walk is concerned.
+        "src/pwa.ts",
+      ],
       // `.css` is in `project` so knip follows `src/styles/site.css`, which is
       // where `tailwindcss` and `tw-animate-css` are imported from.
-      "project": ["src/**/*.{ts,tsx,css}", "scripts/**/*.mjs"],
+      "project": [
+        "src/**/*.{ts,tsx,vue,astro,css}",
+        "scripts/**/*.mjs",
+        "*.{ts,mjs}",
+      ],
+      // Two indirections nothing static can follow: the Open Graph renderer
+      // asks for a font file by name through `require.resolve`, and the PWA
+      // virtual modules are typed by a triple-slash reference to a package
+      // `@vite-pwa/astro` brings in itself.
+      "ignoreDependencies": ["@fontsource/inter", "vite-plugin-pwa"],
     },
     "apps/www": {
       "entry": [
         "app/**/*.{ts,tsx}",
         "registry/index.ts",
-        "registry/default/**/*.{ts,tsx}",
+        "registry/bases/newt/**/*.{ts,tsx}",
         "scripts/build-registry.mts",
       ],
       "project": ["**/*.{ts,tsx}"],
@@ -32,27 +57,31 @@
     "apps/vue": {
       "entry": [
         "app/app.vue",
-        "app/lib/registry/index.ts",
-        "app/lib/registry/default/**/*.{ts,vue}",
+        "registry/index.ts",
+        "registry/bases/newt/**/*.{ts,vue}",
         // Nuxt auto-imports this directory; nothing imports it explicitly.
         "app/utils/**/*.ts",
         "scripts/build-registry.mts",
       ],
-      "project": ["app/**/*.{ts,vue}", "nuxt.config.ts"],
-      "ignore": ["app/__registry__/**"],
+      "project": [
+        "app/**/*.{ts,vue}",
+        "registry/**/*.{ts,vue}",
+        "nuxt.config.ts",
+      ],
+      "ignore": ["__registry__/**"],
       "ignoreDependencies": ["vue-router"],
     },
-    "packages/newtui": {
+    "packages/cli": {
       "entry": ["src/index.ts", "cli/index.js"],
       "project": ["src/**/*.ts"],
     },
     // The two scoped packages are deprecation wrappers around `newtui`; their
     // only source is the bin that forwards to it.
-    "packages/newt-ui": {
+    "deprecated/react-cli": {
       "entry": ["bin/*.js"],
       "project": ["bin/*.js"],
     },
-    "packages/cli": {
+    "deprecated/vue-cli": {
       "entry": ["bin/*.js"],
       "project": ["bin/*.js"],
     },

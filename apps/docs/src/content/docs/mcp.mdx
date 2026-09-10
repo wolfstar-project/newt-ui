@@ -1,0 +1,130 @@
+---
+title: "MCP server"
+description: "Give your editor's agent the registry: what exists, what it looks like, and the command that installs it."
+---
+
+`newtui mcp` is a [Model Context Protocol](https://modelcontextprotocol.io)
+server over the same registry the CLI installs from. With it configured, an
+agent stops guessing component names and prop signatures: it lists what exists,
+reads the source, and asks for the install command.
+
+The tool names deliberately match shadcn's, so an agent that already knows how
+to shop in one registry needs no new vocabulary for this one.
+
+## Quick start \{#quick-start\}
+
+<Tabs labels={["Claude Code", "Cursor", "VS Code", "Codex", "OpenCode"]}>
+  <Fragment slot="tab-0">
+    ```bash frame="terminal"
+    npx newtui@latest mcp init --client claude
+    ```
+
+    Writes `.mcp.json` in the project root. Restart Claude Code and run `/mcp`
+    to confirm `newtui` is connected.
+
+  </Fragment>
+  <Fragment slot="tab-1">
+    ```bash frame="terminal"
+    npx newtui@latest mcp init --client cursor
+    ```
+
+    Writes `.cursor/mcp.json`. Enable the server in Cursor's MCP settings.
+
+  </Fragment>
+  <Fragment slot="tab-2">
+    ```bash frame="terminal"
+    npx newtui@latest mcp init --client vscode
+    ```
+
+    Writes `.vscode/mcp.json` under the `servers` key, which is where VS Code
+    looks.
+
+  </Fragment>
+  <Fragment slot="tab-3">
+    ```bash frame="terminal"
+    npx newtui@latest mcp init --client codex
+    ```
+
+    Appends an `[mcp_servers.newtui]` block to `~/.codex/config.toml`. Codex
+    keeps one global config rather than a file per project.
+
+  </Fragment>
+  <Fragment slot="tab-4">
+    ```bash frame="terminal"
+    npx newtui@latest mcp init --client opencode
+    ```
+
+    Writes `opencode.json` in the project root.
+
+  </Fragment>
+</Tabs>
+
+Then ask for something:
+
+- "What newt/ui components are there for showing presence?"
+- "Add a chat view with a composer, using newt/ui."
+- "Review this diff against the newt/ui checklist."
+
+## What it exposes \{#tools\}
+
+| Tool                                | What it answers                                                                   |
+| ----------------------------------- | --------------------------------------------------------------------------------- |
+| `get_project_registries`            | This project: framework, aliases, Tailwind major, registry, installed components. |
+| `list_items_in_registries`          | Every item, with title and description.                                           |
+| `search_items_in_registries`        | Items matching a query, so a name is never guessed.                               |
+| `view_items_in_registries`          | The full source of an item, without installing it.                                |
+| `get_item_examples_from_registries` | A component's demos — the shortest correct usage.                                 |
+| `get_add_command_for_items`         | The install command, using the package manager this project already uses.         |
+| `get_audit_checklist`               | The rules a newt/ui change is reviewed against.                                   |
+| `get_design_tokens`                 | Every `--newt-*` token and its value, dark or light.                              |
+
+Two prompts come with it: `install-component`, which walks the search → view →
+install path, and `build-with-newt`, which composes an interface and then checks
+itself against the audit checklist.
+
+<Callout>
+  Every tool is read-only. Installing is `get_add_command_for_items` followed by
+  somebody running that command — the write stays out of a tool call nobody
+  reviewed.
+</Callout>
+
+## Configure it by hand \{#manual\}
+
+`mcp init` merges into whatever is already in the file. If you would rather
+write it yourself:
+
+```json title=".mcp.json"
+{
+  "mcpServers": {
+    "newtui": { "command": "npx", "args": ["newtui@latest", "mcp"] }
+  }
+}
+```
+
+VS Code uses `servers` instead of `mcpServers` and wants `"type": "stdio"`;
+OpenCode uses `mcp` with the command as one array; Codex uses TOML:
+
+```toml title="~/.codex/config.toml"
+[mcp_servers.newtui]
+command = "npx"
+args = ["newtui@latest", "mcp"]
+```
+
+## Another registry \{#registries\}
+
+The server answers from the registry the project's
+[`components.json`](/docs/components-json) names, so pointing that at
+[a registry of your own](/docs/registry) points the agent at it too — the tools
+need no separate configuration.
+
+## Troubleshooting \{#troubleshooting\}
+
+**The server does not appear.** Restart the editor: every client reads its MCP
+config at startup. Then run `npx newtui@latest mcp` in a terminal — it should
+sit waiting on stdin rather than exiting.
+
+**Tools answer but the project looks empty.** `get_project_registries` needs a
+`components.json`. Run `newtui init` first.
+
+**The registry cannot be reached.** The tools fetch over HTTPS at call time. On
+a restricted network, set `NEWT_REGISTRY_URL` to a mirror you can reach.

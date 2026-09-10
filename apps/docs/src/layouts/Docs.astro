@@ -1,0 +1,94 @@
+---
+import type { MarkdownHeading } from "astro"
+
+import CopyPage from "../components/site/CopyPage.astro"
+import Pager from "../components/site/Pager.astro"
+import Sidebar from "../components/site/Sidebar.astro"
+import Toc from "../components/site/Toc.astro"
+import Base from "./Base.astro"
+
+/*
+ * The documentation shell: navigation on the left, the article in the middle,
+ * the table of contents on the right. Pages that are generated rather than
+ * authored (the component index, the changelog list) pass their own title and
+ * description instead of a collection entry.
+ */
+interface Props {
+  readonly title: string
+  readonly description: string
+  readonly headings?: readonly MarkdownHeading[]
+  readonly toc?: boolean
+  readonly pager?: boolean
+  readonly links?: { readonly doc?: string; readonly api?: string }
+  /** The `.md` twin; omitted on generated pages, which have none. */
+  readonly markdownPath?: string
+  /** Where this page is written, for the link that goes and changes it. */
+  readonly sourcePath?: string
+  /** The registry item this page documents, when it documents one. */
+  readonly registryItem?: string
+}
+
+const {
+  title,
+  description,
+  headings = [],
+  toc = true,
+  pager = true,
+  links,
+  markdownPath,
+  sourcePath,
+  registryItem,
+} = Astro.props
+
+const showToc = toc && headings.length > 0
+---
+
+<Base title={title} description={description} markdownPath={markdownPath}>
+  <div class="docs-layout" data-toc={showToc ? "true" : "false"}>
+    <Sidebar />
+
+    <main class="docs-main" id="main">
+      <article class="docs-article" data-pagefind-body>
+        <header class="docs-header">
+          <div class="docs-header-row">
+            <h1 data-pagefind-meta="title">{title}</h1>
+            {
+              markdownPath && (
+                <CopyPage
+                  markdownPath={markdownPath}
+                  sourcePath={sourcePath}
+                  registryItem={registryItem}
+                />
+              )
+            }
+          </div>
+          <p class="docs-description">{description}</p>
+          {
+            links && (
+              <p class="docs-links">
+                {links.doc && (
+                  <a href={links.doc} target="_blank" rel="noreferrer">
+                    Docs ↗
+                  </a>
+                )}
+                {links.api && (
+                  <a href={links.api} target="_blank" rel="noreferrer">
+                    API Reference ↗
+                  </a>
+                )}
+              </p>
+            )
+          }
+        </header>
+
+        <div class="prose">
+          <slot />
+        </div>
+      </article>
+
+      {pager && <Pager />}
+    </main>
+
+    {showToc && <div class="docs-rail"><Toc headings={headings} /></div>}
+  </div>
+</Base>

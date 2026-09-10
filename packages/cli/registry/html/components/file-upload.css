@@ -1,0 +1,68 @@
+/* newt-ui · File Upload */
+
+/*
+ * The drop zone a modal asks for a file with. Two ways in, because a drop is
+ * not available to everyone: dragging files onto it, and a `browse` label that
+ * opens the same picker from the keyboard.
+ */
+.newt-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 24px 16px;
+  text-align: center;
+  background: var(--newt-bg-base);
+  border: 1px dashed var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  transition:
+    border-color var(--newt-duration-fast) var(--newt-ease),
+    background var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-upload:focus-within,
+.newt-upload--dragging {
+  border-color: var(--newt-brand);
+}
+.newt-upload--dragging {
+  background: var(--newt-bg-surface);
+}
+.newt-upload__icon {
+  inline-size: 24px;
+  block-size: 24px;
+  color: var(--newt-text-muted);
+}
+.newt-upload__prompt {
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  margin: 0;
+}
+.newt-upload__browse {
+  color: var(--newt-text-link);
+  cursor: pointer;
+  text-underline-offset: 2px;
+}
+.newt-upload__browse:hover {
+  text-decoration: underline;
+}
+/* The input keeps its keyboard behaviour; only its box is taken away. */
+.newt-upload__input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.newt-upload__hint {
+  font-size: 12px;
+  color: var(--newt-text-muted);
+  margin: 0;
+}
+.newt-upload--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

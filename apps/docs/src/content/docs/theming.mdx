@@ -1,0 +1,130 @@
+---
+title: "Theming"
+description: "One layer of --newt-* custom properties drives every component in every flavour. Override a variable rather than a component."
+---
+
+Every colour, radius, shadow, font and duration in newt/ui is a CSS custom
+property. There is no theme object, no provider and no build step involved in
+changing one: the components read variables, so the variables are the theme.
+
+The values live in one file,
+`packages/cli/registry/html/tokens.css`, and everything else reads from it —
+the Tailwind theme maps its namespaces onto the same variables, and the plain
+CSS components use `var(--newt-brand)` directly.
+
+## Token convention \{#convention\}
+
+A token name says what the value is _for_, not what it looks like. `--newt-danger`
+rather than `--newt-red`, `--newt-bg-elevated` rather than `--newt-grey-700`. That
+is what lets a light palette override the same names without any component
+knowing a palette changed.
+
+| Group     | Tokens                                                                                                                                                                                   |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Surfaces  | `--newt-bg-base`, `--newt-bg-surface`, `--newt-bg-elevated`, `--newt-bg-floating`, `--newt-bg-input`, `--newt-bg-input-elevated`, `--newt-bg-hover`, `--newt-bg-active`, `--newt-border` |
+| Text      | `--newt-text-primary`, `--newt-text-secondary`, `--newt-text-muted`, `--newt-text-link`                                                                                                  |
+| Brand     | `--newt-brand`, `--newt-brand-hover`, `--newt-brand-active`                                                                                                                              |
+| Status    | `--newt-online`, `--newt-idle`, `--newt-dnd`, `--newt-offline`, `--newt-danger`, `--newt-danger-hover`                                                                                   |
+| Shape     | `--newt-radius-sm`, `--newt-radius-md`, `--newt-radius-lg`, `--newt-radius-full`                                                                                                         |
+| Type      | `--newt-font-sans`, `--newt-font-mono`, `--newt-font-display`                                                                                                                            |
+| Elevation | `--newt-shadow-low`, `--newt-shadow-high`                                                                                                                                                |
+| Motion    | `--newt-duration-fast`, `--newt-duration-base`, `--newt-ease`                                                                                                                            |
+
+Every value in the dark palette, with its light counterpart, is listed on
+[the colours page](/colors).
+
+## Override a token \{#override\}
+
+Put the override after the token block in your own stylesheet. It reaches every
+component that reads it, in all three flavours, at once.
+
+```css title="app/globals.css"
+:root {
+  /* one brand hue, and every button, link and focus ring follows */
+  --newt-brand: #7a5af8;
+  --newt-brand-hover: #6b4ce0;
+  --newt-brand-active: #5a3fc0;
+}
+```
+
+Scope it to a subtree instead, and only that subtree changes:
+
+```css
+.support-panel {
+  --newt-brand: var(--newt-online);
+}
+```
+
+<Callout type="warning">
+  Do not restyle a component by editing its file — you lose the next `newtui
+  diff` and the next upgrade with it. Override a token, or pass a class.
+</Callout>
+
+## The light palette \{#light\}
+
+A light surface set ships alongside the dark one and is opt-in. It overrides the
+surface, text, status and shadow tokens; everything else is shared.
+
+```html
+<html data-newt-theme="light">
+  <body class="newt-root">
+    …
+  </body>
+</html>
+```
+
+`.newt-light` on any wrapper does the same thing for a subtree. This site uses
+the attribute — the toggle in the header sets it, which is why the chrome and
+the live demos change together.
+
+See [Dark mode](/docs/dark-mode) for wiring a persisted toggle in your own
+project.
+
+## Tailwind v3 and v4 \{#tailwind\}
+
+The registry ships the theme three ways so one registry serves both majors, and
+`newtui init` writes whichever your project needs.
+
+<div data-framework="react">
+
+On Tailwind v3 the tokens arrive as a preset merged into `theme.extend`:
+
+```ts title="tailwind.config.ts"
+import { newtPreset } from "./newt-preset"
+
+export default {
+  presets: [newtPreset],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+}
+```
+
+</div>
+
+<div data-framework="vue">
+
+On Tailwind v4 there is no JS config. The tokens are an `@theme` block, and the
+utilities are generated from the namespaced properties in it:
+
+```css title="assets/css/tailwind.css"
+@import "tailwindcss";
+
+@theme {
+  --color-newt-brand: var(--newt-brand);
+  --color-newt-bg-base: var(--newt-bg-base);
+  /* … */
+}
+```
+
+</div>
+
+Either way the utilities are the same: `bg-newt-brand`, `text-newt-text-muted`,
+`border-newt-border`, `rounded-md`, `shadow-elevation-high`, `duration-fast`,
+`ease-newt`.
+
+## Adding a token \{#adding\}
+
+If a value you need has no token, add the token rather than the value. Edit
+`tokens.css` first — it is the source — then run `node scripts/gen-registry.mjs`
+so the Tailwind v3 and v4 projections and the registry theme item pick it up.
+A hardcoded hex is the one way to end up with a component that no longer follows
+the rest.

@@ -1,0 +1,9 @@
+{
+  "name": "custom-emoji",
+  "title": "Custom Emoji",
+  "description": "An uploaded emoji that sits on the text baseline and reads as :name:.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": ["CustomEmoji.vue", "index.ts"],
+  "reactDemo": "custom-emoji-demo",
+  "vueDemo": "CustomEmojiDemo"
+}

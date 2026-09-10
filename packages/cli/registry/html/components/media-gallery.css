@@ -1,0 +1,45 @@
+/* newt-ui · Media Gallery */
+
+/*
+ * One to ten images in a mosaic. The layout follows how many there are, not
+ * what each one is — the count is the only thing the gallery knows before the
+ * images load, so the count is what the rules key off.
+ */
+.newt-gallery {
+  display: grid;
+  gap: 4px;
+  grid-auto-rows: 1fr;
+  max-inline-size: 550px;
+  border-radius: var(--newt-radius-lg);
+  overflow: hidden;
+}
+.newt-gallery__item {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Blurred until it is clicked. */
+.newt-gallery__item--spoiler {
+  filter: blur(16px);
+  cursor: pointer;
+}
+
+.newt-gallery--1 {
+  grid-template-columns: 1fr;
+}
+.newt-gallery--2,
+.newt-gallery--3,
+.newt-gallery--4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+/* Three: the first takes the full height beside a stacked pair. */
+.newt-gallery--3 {
+  grid-template-rows: repeat(2, 1fr);
+}
+.newt-gallery--3 > .newt-gallery__item:first-child {
+  grid-row: span 2;
+}
+.newt-gallery--many {
+  grid-template-columns: repeat(3, 1fr);
+}

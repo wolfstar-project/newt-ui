@@ -1,0 +1,68 @@
+---
+title: "Modal"
+description: "A centered dialog over a dimmed overlay that closes on Escape, overlay click or an explicit close control."
+component: true
+---
+
+A centred dialog with a header, a body and a footer. It is the settings-panel shape from the client, so a form inside it looks like it belongs there.
+
+<ComponentPreview name="modal" />
+
+## Installation
+
+<Installation name="modal" />
+
+## Usage
+
+<Usage name="modal" />
+
+## API reference
+
+<PropsTable
+  of="Modal"
+  rows={[
+    {
+      name: "open",
+      type: "boolean",
+      description: "Whether the dialog is shown.",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description:
+        "Called when the dialog asks to close — the backdrop, the close button, or Escape.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="ModalHeader"
+  rows={[
+    {
+      name: "children",
+      type: "ReactNode",
+      description: "The title. Becomes the dialog's accessible name.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="ModalFooter"
+  rows={[
+    {
+      name: "children",
+      type: "ReactNode",
+      description: "Actions, laid out end-aligned.",
+    },
+  ]}
+/>
+
+Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+
+## Accessibility
+
+The dialog carries `role="dialog"` and `aria-modal="true"`, traps focus while it is open, returns focus to whatever opened it, and closes on `Escape`. The content behind it is inert. Give `ModalHeader` real text: it is what a screen reader announces when the dialog opens.
+
+## Tokens
+
+<TokensNote name="modal" />

@@ -1,0 +1,15 @@
+{
+  "name": "section",
+  "title": "Section",
+  "description": "A block of text with one accessory beside it — a thumbnail, or a button.",
+  "vueFiles": [
+    "Section.vue",
+    "SectionAccessory.vue",
+    "SectionContent.vue",
+    "SectionHeading.vue",
+    "SectionThumbnail.vue",
+    "index.ts"
+  ],
+  "reactDemo": "section-demo",
+  "vueDemo": "SectionDemo"
+}

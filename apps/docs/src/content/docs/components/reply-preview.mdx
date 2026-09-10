@@ -1,0 +1,46 @@
+---
+title: "Reply Preview"
+description: 'A compact "replying to" bar showing the author, a truncated excerpt, or the slash command that was used.'
+component: true
+---
+
+A reply preview keeps the referenced author and excerpt attached to the message that answers it. Compose the avatar, author, text, action and command parts so the compact row still reflects the content being referenced.
+
+<ComponentPreview name="reply-preview" />
+
+## Installation
+
+<Installation name="reply-preview" />
+
+## Usage
+
+<Usage name="reply-preview" />
+
+## API reference
+
+<PropsTable
+  of="ReplyPreview"
+  rows={[
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description:
+        "The avatar, author and referenced text or command, in reading order.",
+    },
+    {
+      name: "className / class",
+      type: "string",
+      description: "Additional classes merged with the preview defaults.",
+    },
+  ]}
+/>
+
+The registry also exports `ReplyPreviewAvatar`, `ReplyPreviewAuthor`, `ReplyPreviewText`, `ReplyPreviewAction` and `ReplyPreviewCommand`. Each part accepts the native attributes of the element it renders.
+
+## Accessibility
+
+The avatar is decorative by default; provide alternative text only when it adds information that the adjacent author name does not. Keep the referenced text in DOM order, and use a real button or link outside the preview when the row itself opens the original message.
+
+## Tokens
+
+<TokensNote name="reply-preview" />

@@ -1,0 +1,19 @@
+---
+import TypesetPreviewFrame from "../../components/typeset/TypesetPreviewFrame"
+import Base from "../../layouts/Base.astro"
+
+/*
+ * The preview on its own, for reading rather than for tuning: the builder's
+ * "Open in a new tab" points here with the same query, so a candidate typeset
+ * can be judged at the width of a real page with no controls beside it.
+ */
+---
+
+<Base
+  title="Typeset preview"
+  description="A Typeset configuration on its own page, at the width of real content."
+>
+  <main class="typeset-standalone newt-root" id="main">
+    <TypesetPreviewFrame client:load />
+  </main>
+</Base>

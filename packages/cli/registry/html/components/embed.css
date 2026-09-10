@@ -1,0 +1,106 @@
+/* newt-ui · Embed (Discord-inspired message embed) */
+
+.newt-embed {
+  /* Override per embed to carry the bot's accent colour. */
+  --newt-embed-color: var(--newt-brand);
+
+  display: flex;
+  max-width: var(--newt-embed-max-width);
+  border-radius: var(--newt-radius-md);
+  border-inline-start: 4px solid var(--newt-embed-color);
+  background: var(--newt-bg-elevated);
+  overflow: hidden;
+}
+
+.newt-embed__body {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.newt-embed__author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.newt-embed__author-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--newt-radius-full);
+  object-fit: cover;
+}
+
+.newt-embed__author-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.newt-embed__eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--newt-text-link);
+}
+
+.newt-embed__description {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.newt-embed__field-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+  margin-bottom: 2px;
+}
+
+.newt-embed__field-value {
+  font-size: 13px;
+  color: var(--newt-text-secondary);
+}
+
+.newt-embed__footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}
+
+.newt-embed__footer-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--newt-radius-full);
+  object-fit: cover;
+}
+
+/* Middle dot, the way Discord separates footer text from the timestamp. */
+.newt-embed__footer-separator {
+  margin: 0 4px;
+}

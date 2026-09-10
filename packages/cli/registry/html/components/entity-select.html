@@ -1,0 +1,129 @@
+<!--
+  The trigger's contents are rebuilt from the option list by the script, so
+  `data-value` on each row is the only place a value is written down. Above
+  `data-max="1"` the chosen rows leave the list and sit in the trigger as
+  removable chips.
+-->
+<div
+  class="newt-entity-select"
+  data-newt-entity-select
+  data-max="3"
+  data-placeholder="Which roles?"
+>
+  <button
+    class="newt-entity-select__trigger"
+    type="button"
+    role="combobox"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-controls="roles-listbox"
+    aria-label="Which roles?"
+  >
+    <span class="newt-entity-select__values"></span>
+    <svg
+      class="newt-entity-select__caret"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        fill="currentColor"
+        d="M5.3 9.3a1 1 0 0 1 1.4 0l5.3 5.29 5.3-5.3a1 1 0 1 1 1.4 1.42l-6 6a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.42Z"
+      />
+    </svg>
+  </button>
+
+  <div class="newt-entity-select__panel" data-placement="below" hidden>
+    <ul
+      class="newt-entity-select__listbox"
+      id="roles-listbox"
+      role="listbox"
+      aria-label="Which roles?"
+      aria-multiselectable="true"
+    >
+      <li
+        class="newt-entity-select__option"
+        id="roles-option-0"
+        role="option"
+        data-value="mod"
+        aria-selected="true"
+      >
+        <span class="newt-entity-select__label" style="color: #f0b232">
+          Moderator
+        </span>
+        <span class="newt-entity-select__count">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-3.9 0-7 2-7 4.5V20h14v-1.5c0-2.5-3.1-4.5-7-4.5Z"
+            />
+          </svg>
+          4
+        </span>
+        <span class="newt-entity-select__box" aria-hidden="true">
+          <svg viewBox="0 0 16 16">
+            <path
+              fill="currentColor"
+              d="M6.2 11.6 3.1 8.5a1 1 0 0 1 1.4-1.4l1.7 1.7 4.3-4.3a1 1 0 1 1 1.4 1.4l-5 5a1 1 0 0 1-1.4 0Z"
+            />
+          </svg>
+        </span>
+      </li>
+      <li
+        class="newt-entity-select__option"
+        id="roles-option-1"
+        role="option"
+        data-value="dev"
+        aria-selected="false"
+      >
+        <span class="newt-entity-select__label" style="color: #3ba55d">
+          Contributor
+        </span>
+        <span class="newt-entity-select__count">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-3.9 0-7 2-7 4.5V20h14v-1.5c0-2.5-3.1-4.5-7-4.5Z"
+            />
+          </svg>
+          12
+        </span>
+        <span class="newt-entity-select__box" aria-hidden="true">
+          <svg viewBox="0 0 16 16">
+            <path
+              fill="currentColor"
+              d="M6.2 11.6 3.1 8.5a1 1 0 0 1 1.4-1.4l1.7 1.7 4.3-4.3a1 1 0 1 1 1.4 1.4l-5 5a1 1 0 0 1-1.4 0Z"
+            />
+          </svg>
+        </span>
+      </li>
+      <li
+        class="newt-entity-select__option"
+        id="roles-option-2"
+        role="option"
+        data-value="player"
+        aria-selected="false"
+      >
+        <span class="newt-entity-select__label" style="color: #5865f2">
+          Player
+        </span>
+        <span class="newt-entity-select__count">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-3.9 0-7 2-7 4.5V20h14v-1.5c0-2.5-3.1-4.5-7-4.5Z"
+            />
+          </svg>
+          128
+        </span>
+        <span class="newt-entity-select__box" aria-hidden="true">
+          <svg viewBox="0 0 16 16">
+            <path
+              fill="currentColor"
+              d="M6.2 11.6 3.1 8.5a1 1 0 0 1 1.4-1.4l1.7 1.7 4.3-4.3a1 1 0 1 1 1.4 1.4l-5 5a1 1 0 0 1-1.4 0Z"
+            />
+          </svg>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>

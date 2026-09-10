@@ -1,0 +1,121 @@
+---
+/*
+ * Pagefind indexes the built HTML, so the index only exists after `astro
+ * build`. In `dev` the dialog says so rather than failing silently.
+ */
+---
+
+<button type="button" class="search-trigger" data-search-trigger>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <circle cx="11" cy="11" r="6.2"></circle>
+      <line x1="15.6" y1="15.6" x2="20" y2="20"></line>
+    </g>
+  </svg>
+  <span class="search-trigger-label">Search</span>
+  <kbd>⌘K</kbd>
+</button>
+
+<dialog class="search-dialog" data-search-dialog aria-label="Search the documentation">
+  <form method="dialog" class="search-form">
+    <input
+      type="search"
+      class="search-input"
+      placeholder="Search components and guides…"
+      autocomplete="off"
+      data-search-input
+    />
+  </form>
+  <div class="search-results" data-search-results role="listbox" aria-label="Results"></div>
+</dialog>
+
+<script>
+  interface PagefindResult {
+    readonly data: () => Promise<{
+      readonly url: string
+      readonly excerpt: string
+      readonly meta: Record<string, string>
+    }>
+  }
+
+  const trigger = document.querySelector<HTMLButtonElement>("[data-search-trigger]")
+  const dialog = document.querySelector<HTMLDialogElement>("[data-search-dialog]")
+  const input = document.querySelector<HTMLInputElement>("[data-search-input]")
+  const results = document.querySelector<HTMLElement>("[data-search-results]")
+
+  if (trigger && dialog && input && results) {
+    let pagefind: { search: (query: string) => Promise<{ results: PagefindResult[] }> } | null =
+      null
+    let loading: Promise<void> | null = null
+
+    async function load() {
+      if (pagefind || loading) return loading ?? undefined
+      loading = (async () => {
+        try {
+          // Built by the pagefind integration, so it does not exist at type time.
+          const bundle = "/pagefind/pagefind.js"
+          pagefind = await import(/* @vite-ignore */ bundle)
+        } catch {
+          results!.innerHTML =
+            '<p class="search-empty">Search is built with the site — run <code>pnpm --filter docs build</code> and preview it.</p>'
+        }
+      })()
+      return loading
+    }
+
+    function open() {
+      dialog!.showModal()
+      input!.value = ""
+      results!.innerHTML = ""
+      void load()
+      input!.focus()
+    }
+
+    trigger.addEventListener("click", open)
+
+    document.addEventListener("keydown", (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault()
+        if (dialog.open) dialog.close()
+        else open()
+      }
+    })
+
+    let token = 0
+    input.addEventListener("input", async () => {
+      const query = input.value.trim()
+      const current = ++token
+      if (query.length < 2) {
+        results.innerHTML = ""
+        return
+      }
+      await load()
+      if (!pagefind || current !== token) return
+      const search = await pagefind.search(query)
+      if (current !== token) return
+      const top = await Promise.all(search.results.slice(0, 8).map((result) => result.data()))
+      results.innerHTML =
+        top.length === 0
+          ? '<p class="search-empty">No results.</p>'
+          : top
+              .map(
+                (item) =>
+                  `<a class="search-result" href="${item.url}"><span class="search-result-title">${
+                    item.meta.title ?? item.url
+                  }</span><span class="search-result-excerpt">${item.excerpt}</span></a>`
+              )
+              .join("")
+    })
+
+    // Arrow keys walk the result list without leaving the input.
+    input.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowDown") return
+      event.preventDefault()
+      results.querySelector<HTMLAnchorElement>(".search-result")?.focus()
+    })
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close()
+    })
+  }
+</script>

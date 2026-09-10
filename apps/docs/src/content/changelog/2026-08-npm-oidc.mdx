@@ -1,0 +1,15 @@
+---
+title: "August 2026 — Trusted publishing"
+description: "Releases now publish to npm over OIDC, with no long-lived token in the repository."
+date: 2026-08-28
+---
+
+**The release workflow publishes to npm through trusted publishing (OIDC), so
+there is no npm token stored in the repository any more.**
+
+Every package ships with provenance attached, which means the npm page for
+`newtui`, `@newtui/react`, `@newtui/vue` and `@newtui/nuxt` links back to the
+exact workflow run and commit that produced the tarball you installed.
+
+Nothing changes for consumers: the install commands, the package names and the
+registry URLs are the same.

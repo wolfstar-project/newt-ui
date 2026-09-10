@@ -1,0 +1,152 @@
+---
+/*
+ * A tab list whose panels come in as `tab-0`, `tab-1`, … slots. The behaviour
+ * script is emitted once for the page however many tab groups it holds, and
+ * every group keeps its own state, so a component page can have a preview
+ * switcher and an installation switcher without them interfering. Groups that
+ * share a `persistKey` share a remembered default, nothing more.
+ */
+interface Props {
+  readonly labels: readonly string[]
+  /** Groups sharing a key start from the reader's last choice on later loads. */
+  readonly persistKey?: string
+  readonly class?: string
+}
+
+const { labels, persistKey, class: className } = Astro.props
+const uid = Math.random().toString(36).slice(2, 9)
+
+/*
+ * A slot's name has to be static in the template, so the panels are rendered
+ * here by name instead. `labels` decides how many there are, which keeps the
+ * two lists in step by construction.
+ */
+const panels = await Promise.all(
+  labels.map((_, index) =>
+    Astro.slots.has(`tab-${index}`) ? Astro.slots.render(`tab-${index}`) : ""
+  )
+)
+---
+
+<div
+  class:list={["tabs", className]}
+  data-tabs
+  data-persist-key={persistKey}
+>
+  <div class="tabs-list" role="tablist">
+    {
+      labels.map((label, index) => (
+        <button
+          type="button"
+          role="tab"
+          id={`tab-${uid}-${index}`}
+          aria-controls={`panel-${uid}-${index}`}
+          aria-selected={index === 0 ? "true" : "false"}
+          tabindex={index === 0 ? 0 : -1}
+          data-tab-value={label}
+          class="tabs-trigger"
+        >
+          {label}
+        </button>
+      ))
+    }
+  </div>
+  {
+    labels.map((label, index) => (
+      <div
+        role="tabpanel"
+        id={`panel-${uid}-${index}`}
+        aria-labelledby={`tab-${uid}-${index}`}
+        class="tabs-panel"
+        hidden={index !== 0}
+        tabindex={0}
+        set:html={panels[index]}
+      />
+    ))
+  }
+</div>
+
+<script>
+  const STORAGE_PREFIX = "newt-ui:tabs:"
+
+  /*
+   * Scoped to `:scope >`, not a bare descendant match: a panel is free to
+   * nest another `Tabs` (the Manual step of Installation nests a package
+   * manager switcher), and an unscoped `querySelectorAll` would pull that
+   * nested group's triggers and panels into this one's index space —
+   * selecting "Manual" would then also flip the nested group's tabs, and the
+   * counts would stop lining up with `hidden`.
+   */
+  function directTriggers(group: HTMLElement): HTMLElement[] {
+    return [...group.querySelectorAll<HTMLElement>(':scope > .tabs-list > [role="tab"]')]
+  }
+
+  function directPanels(group: HTMLElement): HTMLElement[] {
+    return [...group.querySelectorAll<HTMLElement>(':scope > [role="tabpanel"]')]
+  }
+
+  function select(group: HTMLElement, index: number, focus: boolean) {
+    const triggers = directTriggers(group)
+    const panels = directPanels(group)
+    triggers.forEach((trigger, i) => {
+      const active = i === index
+      trigger.setAttribute("aria-selected", String(active))
+      trigger.tabIndex = active ? 0 : -1
+      if (active && focus) trigger.focus()
+    })
+    panels.forEach((panel, i) => {
+      panel.hidden = i !== index
+    })
+
+    /*
+     * The choice is remembered for the next page, not pushed onto the other
+     * groups on this one. A click on one package-manager switcher used to flip
+     * every code block on the page, and "Code" on one preview flipped every
+     * preview — the reader had asked about one block and lost their place in
+     * the rest. Each group answers only its own clicks; the stored value is
+     * what the next page load starts from.
+     */
+    const key = group.dataset.persistKey
+    const label = triggers[index]?.dataset.tabValue
+    if (key && label) {
+      localStorage.setItem(`${STORAGE_PREFIX}${key}`, label)
+    }
+  }
+
+  function setup(group: HTMLElement) {
+    if (group.dataset.tabsReady === "true") return
+    group.dataset.tabsReady = "true"
+
+    const triggers = directTriggers(group)
+
+    const key = group.dataset.persistKey
+    if (key) {
+      const stored = localStorage.getItem(`${STORAGE_PREFIX}${key}`)
+      const index = triggers.findIndex((trigger) => trigger.dataset.tabValue === stored)
+      if (index > 0) select(group, index, false)
+    }
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener("click", () => select(group, index, false))
+      trigger.addEventListener("keydown", (event) => {
+        const next =
+          event.key === "ArrowRight"
+            ? index + 1
+            : event.key === "ArrowLeft"
+              ? index - 1
+              : event.key === "Home"
+                ? 0
+                : event.key === "End"
+                  ? triggers.length - 1
+                  : undefined
+        if (next === undefined) return
+        event.preventDefault()
+        select(group, (next + triggers.length) % triggers.length, true)
+      })
+    })
+  }
+
+  for (const group of document.querySelectorAll<HTMLElement>("[data-tabs]")) {
+    setup(group)
+  }
+</script>

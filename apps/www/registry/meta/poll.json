@@ -1,0 +1,15 @@
+{
+  "name": "poll",
+  "title": "Poll",
+  "description": "A question, its answers, and the share of the vote behind each one.",
+  "vueFiles": [
+    "Poll.vue",
+    "PollAnswer.vue",
+    "PollAnswers.vue",
+    "PollFooter.vue",
+    "PollQuestion.vue",
+    "index.ts"
+  ],
+  "reactDemo": "poll-demo",
+  "vueDemo": "PollDemo"
+}

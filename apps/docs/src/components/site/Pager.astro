@@ -1,0 +1,26 @@
+---
+import { neighbours } from "../../lib/nav"
+
+const { previous, next } = neighbours(Astro.url.pathname)
+---
+
+{
+  (previous || next) && (
+    <nav class="pager" aria-label="Pagination">
+      {previous ? (
+        <a class="pager-link" href={previous.href} rel="prev">
+          <span class="pager-direction">Previous</span>
+          <span class="pager-label">{previous.label}</span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {next && (
+        <a class="pager-link pager-next" href={next.href} rel="next">
+          <span class="pager-direction">Next</span>
+          <span class="pager-label">{next.label}</span>
+        </a>
+      )}
+    </nav>
+  )
+}

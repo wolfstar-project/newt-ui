@@ -1,0 +1,41 @@
+---
+title: "Invite"
+description: "The server invite card a link unfurls into inside a message."
+component: true
+---
+
+The server invite card a link unfurls into inside a message. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
+<ComponentPreview name="invite" />
+
+## Installation
+
+<Installation name="invite" />
+
+## Usage
+
+<Usage name="invite" />
+
+## API reference
+
+<PropsTable
+  of="InviteCount"
+  rows={[
+    {
+      name: "online",
+      type: "boolean | undefined",
+      description:
+        "Green dot for the online count, muted for the member total.",
+    },
+  ]}
+/>
+
+The registry exports `Invite`, `InviteEyebrow`, `InviteBody`, `InviteIcon`, `InviteInfo`, `InviteName`, `InviteCounts`, `InviteCount`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Use descriptive alternative text for a meaningful server image and an empty `alt` for a decorative one. The join action must remain a real button.
+
+## Tokens
+
+<TokensNote name="invite" />

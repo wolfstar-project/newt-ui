@@ -13,7 +13,14 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
 
-  typescript: { strict: true, typeCheck: false },
+  typescript: {
+    strict: true,
+    typeCheck: false,
+    shim: true,
+    tsConfig: {
+      include: ["../registry/**/*", "../__registry__/**/*"],
+    },
+  },
 
   app: {
     head: {

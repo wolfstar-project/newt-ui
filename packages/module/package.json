@@ -42,8 +42,6 @@
   "scripts": {
     "build": "nuxt-module-build build",
     "dev": "nuxt-module-build build --stub",
-    "lint": "oxlint -c ../../.oxlintrc.json .",
-    "lint:fix": "oxlint -c ../../.oxlintrc.json --fix .",
     "prepack": "nuxt-module-build build",
     "typecheck": "tsc --noEmit"
   },

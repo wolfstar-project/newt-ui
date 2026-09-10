@@ -1,0 +1,50 @@
+---
+title: "Spoiler"
+description: "Inline text hidden behind a dark block until the reader clicks to reveal it."
+component: true
+---
+
+Inline text hidden behind a dark block until the reader clicks to reveal it. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
+<ComponentPreview name="spoiler" />
+
+## Installation
+
+<Installation name="spoiler" />
+
+## Usage
+
+<Usage name="spoiler" />
+
+## API reference
+
+<PropsTable
+  of="Spoiler"
+  rows={[
+    {
+      name: "revealed",
+      type: "boolean | undefined",
+      description: "Controlled revealed state.",
+    },
+    {
+      name: "defaultRevealed",
+      type: "boolean | undefined",
+      description: "Initial revealed state when uncontrolled.",
+    },
+    {
+      name: "onRevealedChange",
+      type: "(revealed: boolean) => void | undefined",
+      description: "Called with the next revealed state when toggled.",
+    },
+  ]}
+/>
+
+The registry exports `Spoiler`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+The reveal control must be keyboard operable and expose its expanded state. Do not place essential instructions only inside hidden spoiler content.
+
+## Tokens
+
+<TokensNote name="spoiler" />

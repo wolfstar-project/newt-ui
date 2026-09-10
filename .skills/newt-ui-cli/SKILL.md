@@ -5,11 +5,11 @@ description: Use when adding or changing newtui CLI commands, flags, prompts, ou
 
 # newt/ui CLI
 
-One published CLI, `newtui` (`packages/newtui`), serving React and Vue from a
+One published CLI, `newtui` (`packages/cli`), serving React and Vue from a
 single command surface, plus the legacy `newtui-html` bin that copies the raw
-HTML/CSS registry. `packages/newt-ui` (`@newtui/react`) and `packages/cli`
+HTML/CSS registry. `deprecated/react-cli` (`@newtui/react`) and `deprecated/vue-cli`
 (`@newtui/vue`) are deprecation wrappers that forward to it and hold no logic.
-It follows the `create-http-framework` layout: `mri` for parsing,
+Its responsibility folders follow the shadcn CLI layout: `mri` for parsing,
 `@clack/prompts` for interaction, `tsdown` for the build.
 
 ## Framework dispatch
@@ -22,22 +22,45 @@ versus `lang="ts"` stripping — branches on that one field, never on a guess at
 the call site.
 
 A `components.json` written by either old CLI is migrated on read
-(`migrateRawConfig` in `config.ts`): the old Vue `framework: "nuxt" | "vite"`
+(`migrateComponentsFile` in `utils/get-config.ts`): the old Vue `framework: "nuxt" | "vite"`
 becomes `bundler`, and the old React `tsx` becomes `typescript`. Any new
 compatibility shim belongs there, not spread across the commands.
 
 ## Layout
 
 - `src/index.ts` — argv parsing, `printHelp()`, command dispatch, `main()`.
-- `src/commands/{init,add,list,diff}.ts` — one file per command.
-- `src/tools/*.ts` — focused helpers: `options.ts` (every flag table declared
-  `as const`, with the derived union types), `config.ts`, `registry.ts`,
-  `transformers.ts`, `tokens.ts`, `packageManager.ts`, `fileSystem.ts`,
-  `logger.ts`, `prompts.ts`, `schema.ts`.
+- `src/commands/{init,add,list,search,view,diff,info,apply,preset}.ts` — one
+  file per command. `info` also exports `readProjectInfo()`, the in-process
+  reader the MCP server uses instead of shelling out. `apply` and `preset`
+  are the two halves of newt/create: one writes a preset into a project, the
+  other reads a code without touching anything.
+- `src/mcp/server.ts` — the MCP server (`newtui mcp`). Tool names mirror
+  shadcn's on purpose; renaming one strands every prompt written against it.
+  Every tool is read-only: installing is a command the human runs.
+- `src/mcp/init.ts` — `newtui mcp init --client <name>`. Each client's config
+  is parsed and merged, never overwritten: those files hold other people's
+  servers.
+- `src/**/*.test.ts` — colocated Vitest tests. Installation tests serve a local
+  HTTP registry; they never reach the published registry. The MCP surface is
+  exercised through `InMemoryTransport.createLinkedPair()`.
+- `src/schema/index.ts` — re-exports the registry wire contracts.
+- `src/registry/` — wire schemas, fetching and dependency-tree resolution.
+- `src/utils/get-config.ts` — `components.json` schemas, migration and path resolution.
+- `src/utils/preset.ts` — the newt/create codec (`nt1.…`), the token overrides
+  it renders, and `templateFor()`. It is duplicated in `apps/docs/src/lib/preset.ts`
+  because the docs may not import CLI source; the two are pinned to each other
+  by the golden fixture in `src/utils/__fixtures__/presets.json`, and a test on
+  each side asserts the copies are byte-identical. Change one, copy the file.
+- `src/utils/templates.ts` — `init --template` runs the framework's own creator
+  rather than vendoring a starter, so there is no second copy to keep current.
+- `src/utils/` — focused helpers; import rewriting lives in
+  `utils/transformers/`. `utils/updaters/` writes component files and styles
+  and installs dependencies. `src/preflights/` validates the target project
+  before `add` fetches or writes registry items.
 
 ## Rules
 
-- Keep parsing pure and in `src/index.ts` + `src/tools/options.ts`; keep
+- Keep parsing pure and in `src/index.ts` + `src/utils/options.ts`; keep
   prompts and terminal effects out of the command logic.
 - Every interactive input needs a non-interactive equivalent (`--yes`,
   `--defaults`, and the explicit value flags). A CLI run in CI must never
@@ -46,7 +69,7 @@ compatibility shim belongs there, not spread across the commands.
   `BOOLEAN_FLAGS`/`STRING_FLAGS` (and `FLAG_ALIASES` if it gets a short form),
   never reaching into `argv` ad hoc.
 - Validate everything that comes from the network with the zod schemas in
-  `src/tools/schema.ts` before writing a file.
+  `src/registry/schema.ts` before writing a file.
 - The registry URL resolves as `--registry` > `NEWT_REGISTRY_URL` > the
   package default. Never hardcode a URL at a call site.
 - Resolve write targets through the user's `components.json` aliases, not by

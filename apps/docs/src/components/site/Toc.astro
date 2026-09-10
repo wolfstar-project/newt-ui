@@ -1,0 +1,64 @@
+---
+import type { MarkdownHeading } from "astro"
+
+/*
+ * Depth 2 and 3 only: a component page's `##` sections and their `###`
+ * examples. Deeper headings exist inside code samples and prose and would
+ * turn the rail into a second copy of the page.
+ */
+interface Props {
+  readonly headings: readonly MarkdownHeading[]
+}
+
+const { headings } = Astro.props
+const items = headings.filter((heading) => heading.depth === 2 || heading.depth === 3)
+---
+
+{
+  items.length > 0 && (
+    <nav class="toc" aria-labelledby="toc-title" data-toc>
+      <p class="toc-title" id="toc-title">
+        On this page
+      </p>
+      <ul>
+        {items.map((heading) => (
+          <li data-depth={heading.depth}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<script>
+  const toc = document.querySelector<HTMLElement>("[data-toc]")
+  if (toc) {
+    const links = [...toc.querySelectorAll<HTMLAnchorElement>("a[href^='#']")]
+    const targets = links
+      .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+      .filter((element): element is HTMLElement => element !== null)
+
+    /*
+     * The top band of the viewport is what counts as "here": a heading that
+     * has scrolled past the header is the section being read, not the one
+     * about to enter from the bottom.
+     */
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          for (const link of links) {
+            link.toggleAttribute(
+              "data-active",
+              decodeURIComponent(link.hash.slice(1)) === entry.target.id
+            )
+          }
+        }
+      },
+      { rootMargin: "-80px 0px -70% 0px", threshold: 0 }
+    )
+
+    for (const target of targets) observer.observe(target)
+  }
+</script>

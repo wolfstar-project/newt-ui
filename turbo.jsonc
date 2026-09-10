@@ -28,8 +28,51 @@
       "outputs": ["dist/**"],
     },
     "dev": { "cache": false, "persistent": true },
-    "lint": {},
-    "lint:fix": { "cache": false },
+
+    /*
+     * Lint and format run once over the whole repo rather than once per
+     * package: oxlint reads every workspace in about three seconds, which is
+     * less than the fan-out costs, and one process is the only way a rule
+     * about the repo can see the repo.
+     *
+     * The inputs are enumerated rather than `$TURBO_DEFAULT$`, which for a
+     * root task means the whole tree — including `.agents/` and `.claude/`,
+     * two farms of symlinks into `.skills/`. Hashing those never settles, so
+     * the task never hits its cache. What is listed is what the tools read.
+     */
+    "//#lint": {
+      "inputs": [
+        ".oxlintrc.json",
+        "tooling/oxc/**",
+        "{apps,packages,deprecated,templates,scripts}/**/*.{ts,mts,cts,tsx,js,mjs,cjs,jsx,vue,astro}",
+        "{apps,packages,deprecated,templates}/*/tsconfig*.json",
+        "tsconfig*.json",
+        "!**/dist/**",
+        "!**/.next/**",
+        "!**/.nuxt/**",
+        "!**/.output/**",
+        "!**/.astro/**",
+        "!**/public/r/**",
+        "!**/public/legacy/**",
+      ],
+    },
+    "//#lint:fix": { "cache": false },
+    "//#format:check": {
+      "inputs": [
+        "tooling/oxc/.oxfmtrc.json",
+        ".oxfmtignore",
+        "{apps,packages,deprecated,templates,scripts,.changeset,.github}/**/*.{ts,mts,cts,tsx,js,mjs,cjs,jsx,vue,astro,json,jsonc,yml,yaml,md,mdx,css}",
+        "*.{json,jsonc,yml,yaml,md,mdx,mjs,ts}",
+        "!**/dist/**",
+        "!**/.next/**",
+        "!**/.nuxt/**",
+        "!**/.output/**",
+        "!**/.astro/**",
+        "!**/public/r/**",
+        "!**/public/legacy/**",
+      ],
+    },
+    "//#format": { "cache": false },
     "typecheck": { "dependsOn": ["^build"] },
     "test": { "dependsOn": ["^build"] },
   },

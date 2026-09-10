@@ -1,0 +1,57 @@
+/* newt-ui · Thread Preview */
+
+/*
+ * The thread hanging off a message: its name, how many replies it holds, and
+ * who spoke last. The whole card is one link rather than a card with a link
+ * inside it — one tab stop, one target, one hover state.
+ */
+.newt-thread {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-inline-size: 440px;
+  padding: 8px 12px;
+  font-size: 14px;
+  text-decoration: none;
+  background: var(--newt-bg-surface);
+  border-radius: var(--newt-radius-md);
+  transition: background var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-thread:hover {
+  background: var(--newt-bg-elevated);
+}
+.newt-thread:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+/* The elbow tying the card back to the message above it. Decorative. */
+.newt-thread__spine {
+  inline-size: 16px;
+  block-size: 12px;
+  flex-shrink: 0;
+  border-inline-start: 2px solid var(--newt-border);
+  border-block-start: 2px solid var(--newt-border);
+  border-start-start-radius: 8px;
+}
+.newt-thread__name {
+  font-weight: 500;
+  color: var(--newt-text-link);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.newt-thread__count {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--newt-text-muted);
+}
+.newt-thread__last {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--newt-text-muted);
+}

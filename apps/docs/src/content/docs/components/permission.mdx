@@ -1,0 +1,55 @@
+---
+title: "Permission Row"
+description: "A settings row with a deny / inherit / allow tri-state toggle."
+component: true
+---
+
+A settings row with a deny / inherit / allow tri-state toggle. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
+<ComponentPreview name="permission" />
+
+## Installation
+
+<Installation name="permission" />
+
+## Usage
+
+<Usage name="permission" />
+
+## API reference
+
+<PropsTable
+  of="PermissionStates"
+  rows={[
+    {
+      name: "value",
+      type: "PermissionValue | undefined",
+      description: "Controlled value.",
+    },
+    {
+      name: "defaultValue",
+      type: "PermissionValue | undefined",
+      description: 'Initial value when uncontrolled. Defaults to `"inherit"`.',
+    },
+    {
+      name: "onValueChange",
+      type: "(value: PermissionValue) => void | undefined",
+      description: "Optional onValueChange value.",
+    },
+    {
+      name: "disabled",
+      type: "boolean | undefined",
+      description: "Optional disabled value.",
+    },
+  ]}
+/>
+
+The registry exports `Permission`, `PermissionInfo`, `PermissionName`, `PermissionDescription`, `PermissionStates`, `PermissionValue`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Expose deny, inherit and allow as one labelled choice group. The selected state must be announced programmatically and not communicated by colour alone.
+
+## Tokens
+
+<TokensNote name="permission" />

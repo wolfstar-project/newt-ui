@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content"
+
+import Docs from "../../../layouts/Docs.astro"
+
+/*
+ * Newest first. Each entry is a page of its own; this is the list, which is
+ * generated rather than authored and so has no markdown twin.
+ */
+const entries = (await getCollection("changelog")).toSorted(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+)
+
+const formatter = new Intl.DateTimeFormat("en", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+})
+---
+
+<Docs
+  title="Changelog"
+  description="What shipped, when, and what it changes for a project that already has newt/ui installed."
+  toc={false}
+  pager={false}
+>
+  <ul class="changelog-list">
+    {
+      entries.map((entry) => (
+        <li>
+          <time datetime={entry.data.date.toISOString()}>
+            {formatter.format(entry.data.date)}
+          </time>
+          <a href={`/docs/changelog/${entry.id}`}>{entry.data.title}</a>
+          <p>{entry.data.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Docs>

@@ -1,0 +1,45 @@
+---
+title: "Pagination"
+description: "Numbered page buttons with previous/next controls, plus a divider-style load-more row."
+component: true
+---
+
+Numbered page buttons with previous/next controls, plus a divider-style load-more row. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+
+<ComponentPreview name="pagination" />
+
+## Installation
+
+<Installation name="pagination" />
+
+## Usage
+
+<Usage name="pagination" />
+
+## API reference
+
+<PropsTable
+  of="Pagination"
+  rows={[
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "Content rendered inside the component.",
+    },
+    {
+      name: "className / class",
+      type: "string",
+      description: "Additional classes merged with the component defaults.",
+    },
+  ]}
+/>
+
+The registry exports `Pagination`, `PaginationButton`, `PaginationEllipsis`, `LoadMore`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+Label the navigation region and mark the current page with `aria-current="page"`. Previous and next controls need descriptive accessible names.
+
+## Tokens
+
+<TokensNote name="pagination" />

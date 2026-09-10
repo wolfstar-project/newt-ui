@@ -9,26 +9,33 @@ A component is done when it exists in all three forms and they look identical.
 
 ## The three forms
 
-1. **HTML/CSS** — `packages/newtui/registry/html/components/<name>.{css,html,js}`.
+1. **HTML/CSS** — `packages/cli/registry/html/components/<name>.{css,html,js}`.
    BEM-lite classes prefixed `newt-`: `.newt-block`, `.newt-block__element`,
    `.newt-block--variant`. This is the visual spec.
-2. **React** — `apps/www/registry/default/ui/<name>.tsx`. `cva` for variants,
+2. **React** — `apps/www/registry/bases/newt/ui/<name>.tsx`. `cva` for variants,
    `cn` for merging, `React.forwardRef` + `displayName`, compound exports for
    sub-elements (`Embed`, `EmbedTitle`, `EmbedField`, …), and the `*Variants`
    object exported alongside. `"use client"` only when it uses hooks or events.
-3. **Vue** — `apps/vue/app/lib/registry/default/ui/<name>/`: one `.vue` per
+3. **Vue** — `apps/vue/registry/bases/newt/ui/<name>/`: one `.vue` per
    sub-component (`<script setup lang="ts">`), plus `index.ts` re-exporting
    them and defining the `cva` variants and `VariantProps` types.
 
-Plus, every time: a demo (`example/<name>-demo.tsx` /
-`example/<Pascal>Demo.vue`), docs (`content/docs/components/<name>.mdx` /
-`content/docs/components/<name>.md`), `registry/meta/<name>.json`, and an
-entry in `registry-categories.ts` (both copies).
+Plus, every time: a demo (`examples/<name>-demo.tsx` /
+`examples/<Pascal>Demo.vue`), one docs page for both frameworks
+(`apps/docs/src/content/docs/components/<name>.mdx`, whose source-derived
+starter `pnpm --filter docs docs:gen` writes with API tables),
+`registry/meta/<name>.json`, and an
+entry in the shared `apps/www/registry/registry-categories.ts` taxonomy.
 
 ## Rules
 
 - Variant modifiers describe **state or intent**, never appearance:
   `--danger`, `--success`, `--online`. Not `--red`, `--green`.
+- Logical properties only. `margin-inline-start`, `inset-inline-start`,
+  `ms-*`, `ps-*`, `start-*`, `end-*`, `rounded-s|e|ss|se|es|ee-*`,
+  `text-start|end` — never their physical spellings. A sideways transform
+  multiplies by `var(--newt-dir)`, and a directional glyph carries
+  `rtl:-scale-x-100`.
 - Tokens only. Every colour, radius, font, shadow, easing, and duration comes
   from a `--newt-*` variable, reached through the Tailwind utility
   (`bg-newt-bg-elevated`, `text-newt-text-muted`, `rounded-md`,
@@ -49,6 +56,10 @@ entry in `registry-categories.ts` (both copies).
 - Class names in the React/Vue sources are Tailwind utilities only — the
   `newt-` BEM names belong to the HTML distribution, not to the framework
   ports (`data-*` attributes for state are fine).
+- A finished MDX page has explanatory prose, at least one working preview,
+  an API reference for every custom props interface, accessibility guidance,
+  and its token list. Add paired React/Vue variant demos when another state
+  teaches something the default preview cannot.
 
 ## Workflow
 

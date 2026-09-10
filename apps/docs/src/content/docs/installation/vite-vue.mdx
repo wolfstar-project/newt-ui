@@ -1,0 +1,121 @@
+---
+title: "Vite (Vue)"
+description: "Install newt/ui in a Vue 3 project built with Vite, from the template or into an app you already have."
+---
+
+<PathTabs framework="vite-vue">
+
+<Steps>
+
+<section>
+
+#### Create the app
+
+```bash frame="terminal"
+npm create vite@latest my-app -- --template vue-ts
+```
+
+</section>
+
+<section>
+
+#### Add Tailwind
+
+```bash frame="terminal"
+npm install tailwindcss @tailwindcss/vite
+```
+
+```css title="src/assets/index.css"
+@import "tailwindcss";
+```
+
+</section>
+
+<section>
+
+#### Declare the alias twice
+
+Once for the type checker, once for the bundler — `init` reads the first and
+your build needs the second:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": { "@/*": ["./src/*"] }
+  }
+}
+```
+
+```ts title="vite.config.ts"
+import { fileURLToPath } from "node:url"
+
+import tailwindcss from "@tailwindcss/vite"
+import vue from "@vitejs/plugin-vue"
+import { defineConfig } from "vite"
+
+export default defineConfig({
+  plugins: [vue(), tailwindcss()],
+  resolve: {
+    alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
+  },
+})
+```
+
+</section>
+
+<section>
+
+#### Run init
+
+<PmTabs cmd="newtui@latest init --framework vue --bundler vite" />
+
+Both flags are guesses it usually makes on its own: the framework comes from
+your dependencies, the bundler from the presence of a `vite.config`. Pass them
+when it guesses wrong.
+
+</section>
+
+<section>
+
+#### Load the stylesheet, then add a component
+
+```ts title="src/main.ts"
+import "./assets/index.css"
+```
+
+`.newt-root` goes on the element that wraps the application — the `<body>` in
+`index.html` is the usual place.
+
+<PmTabs cmd="newtui@latest add button" />
+
+```vue title="src/App.vue"
+<script setup lang="ts">
+import { Button } from "@/components/ui/button"
+</script>
+
+<template>
+  <Button variant="primary">Send</Button>
+</template>
+```
+
+</section>
+
+</Steps>
+
+</PathTabs>
+
+## What init writes \{#written\}
+
+```text
+components.json                          the config, shared with shadcn
+src/assets/index.css                     the --newt-* token block
+src/lib/utils.ts                         cn()
+src/components/ui/button/Button.vue      add button
+src/components/ui/button/index.ts
+```
+
+A folder per component: the single-file components, and an `index.ts` barrel
+that re-exports them with their `class-variance-authority` variants.
+
+See [Dark mode](/docs/dark-mode#vite) for the theme toggle, and [RTL](/docs/rtl)
+if the app has to run right to left.

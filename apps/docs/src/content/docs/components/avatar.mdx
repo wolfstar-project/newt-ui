@@ -1,0 +1,52 @@
+---
+title: "Avatar"
+description: "A circular user avatar with image support and initials fallback in three sizes."
+component: true
+---
+
+An image, or the initials that stand in for one. Three sizes, all circles, all sized in the same steps the rest of the library uses.
+
+<ComponentPreview name="avatar" />
+
+## Installation
+
+<Installation name="avatar" />
+
+## Usage
+
+<Usage name="avatar" />
+
+## API reference
+
+<PropsTable
+  of="Avatar"
+  rows={[
+    {
+      name: "size",
+      type: '"sm" | "default" | "lg"',
+      description: "24px, 40px or 80px.",
+      default: '"default"',
+    },
+    {
+      name: "src",
+      type: "string",
+      description:
+        "Image URL. Falls back to the children when it fails to load.",
+    },
+    {
+      name: "alt",
+      type: "string",
+      description: "Accessible name for the image.",
+    },
+  ]}
+/>
+
+Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+
+## Accessibility
+
+An avatar next to a name is decorative: the name is the accessible name, so `alt=""` is correct and repeating it is noise. An avatar that stands alone — a stack of participants, an author with no byline — needs a real `alt`.
+
+## Tokens
+
+<TokensNote name="avatar" />

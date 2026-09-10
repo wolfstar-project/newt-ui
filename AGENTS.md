@@ -14,21 +14,22 @@ source into the user's project, there is no runtime package dependency.
 
 ```
 apps/
-  docs/   THE documentation site (Vite + React + Vue). One site for both
-          frameworks: a React/Vue switcher picks which registry renders each
-          demo. It reads `apps/www/registry` and `apps/vue/app/lib/registry`
-          directly through path aliases and bundles both built registries
-          into its own `dist/`.
+  docs/   THE documentation site (Astro + MDX, React and Vue islands). One
+          site for both frameworks: a React/Vue switcher picks which registry
+          renders each demo. Content is `src/content/docs/**/*.mdx`; it reads
+          `apps/www/registry` and `apps/vue/registry` directly through
+          path aliases and bundles both built registries into its own `dist/`.
   www/    React registry source + builder (Next.js) — shadcn-ui layout:
-          registry/default/{ui,example}. No longer ships docs pages.
+          registry/bases/newt/{ui,blocks,examples}. No longer ships docs pages.
   vue/    Vue registry source + builder (Nuxt 4 + Tailwind 4) — shadcn-vue
-          layout: app/lib/registry/default/ui/<name>/. No longer ships docs
+          layout: registry/bases/newt/{ui,blocks,examples}. No longer ships docs
           pages.
 packages/
-  newtui/    `newtui` CLI (React + Vue) + registry/html (original HTML/CSS + tokens.css)
-  newt-ui/   `@newtui/react` deprecation wrapper forwarding to `newtui`
-  cli/       `@newtui/vue` deprecation wrapper forwarding to `newtui`
+  cli/       `newtui` CLI (React + Vue) + registry/html (original HTML/CSS + tokens.css)
   module/    `@newtui/nuxt` Nuxt module
+deprecated/
+  react-cli/ `@newtui/react` deprecation wrapper forwarding to `newtui`
+  vue-cli/   `@newtui/vue` deprecation wrapper forwarding to `newtui`
 templates/
   next-template/, nuxt-template/   Starter apps preconfigured with newt/ui
 tooling/oxc/   Shared oxlint + oxfmt configuration
@@ -47,10 +48,12 @@ pnpm install              # install everything (pnpm 11, Node >=22.11)
 pnpm dev                  # run every app in watch mode
 pnpm build                # turbo: build all apps/packages
 pnpm typecheck             # turbo: tsc --noEmit everywhere
-pnpm lint                  # turbo: oxlint everywhere
-pnpm lint:fix               # oxlint --fix everywhere
+pnpm lint                  # oxlint over the whole repo, in one process
+pnpm lint:fix               # the same, with --fix
 pnpm format                 # oxfmt --write everywhere
-pnpm format:check            # oxfmt --check (what CI runs)
+pnpm format:check            # oxfmt --check
+pnpm quality                # turbo: lint + format:check, both cached
+pnpm quality:fix             # turbo: lint:fix + format
 pnpm knip                   # unused files/exports/dependencies
 pnpm test                   # turbo: unit tests (per package)
 pnpm registry:build          # rebuild apps/*/public/r from registry sources
@@ -58,8 +61,8 @@ node scripts/gen-registry.mjs  # regenerate registry-ui.ts / registry-examples.t
 pnpm changeset               # record a changeset for a release
 ```
 
-Before opening a PR, run `format:check`, `lint`, and `knip` locally — CI
-runs all three plus `typecheck`, `build`, and `zizmor`.
+Before opening a PR, run `quality` and `knip` locally — CI runs both plus
+`typecheck`, `build`, and `zizmor`.
 
 ## Toolchain specifics
 
@@ -76,17 +79,29 @@ runs all three plus `typecheck`, `build`, and `zizmor`.
   `typeAware`/`typeCheck` on and `maxWarnings: 0` — fix warnings, don't
   suppress them, unless there's a genuine reason (use a scoped
   `// oxlint-disable-next-line <rule> -- <reason>` comment in that case).
+  Both are **root tasks**, not per-package scripts: oxlint reads the whole
+  repo in about three seconds, so fanning it out across nine workspaces cost
+  more than it saved and left each package unable to see the others. No
+  workspace declares a `lint` script. `pnpm lint` runs `astro sync` first —
+  the docs app's generated types are what the type-aware rules resolve
+  `astro:content` and `import.meta.glob` through, and without them the docs
+  app reports about twenty errors that are not there.
 - **Releases**: Changesets v3 (`@changesets/cli`). Requires Node
   `^22.11 || ^24 || >=26`. Run `pnpm changeset` when a change should ship in
   the next release.
-- **Skills**: project-specific skills are hand-written in `.skills/<name>/SKILL.md`
-  and symlinked into `.claude/skills/` (same split as `wolfstar-project/agent-zero`):
+- **Consumer skill**: `skills/newt-ui/` is published for
+  `npx skills add wolfstar-project/newt-ui` — it teaches a user's agent the
+  registry, the token rules and the review checklist. It is not one of the
+  contributor skills below and is not managed by skilld.
+- **Skills**: `.skills/<name>/` is the canonical shared location for every
+  skill. Each directory is symlinked into both `.claude/skills/` and
+  `.agents/skills/` so Claude Code and Codex read the same files. The
+  project-specific skills are hand-written:
   `newt-ui-architecture`, `newt-ui-registry`, `newt-ui-cli`,
   `newt-ui-components`, `newt-ui-trademark`. Read the one that matches what you
   are touching before you start. Third-party skills are managed by
-  [skilld](https://skilld.dev); they live in `.claude/skills/` too and are
-  pinned by `.claude/skills/skilld-lock.yaml` (the local ones are deliberately
-  not in that lockfile, and `skilld prepare` leaves them alone).
+  [skilld](https://skilld.dev) and pinned by `.skills/skilld-lock.yaml`; the
+  hand-written skills are deliberately not in that lockfile.
   `pnpm skills:install` restores them from the lock file, `pnpm skills:list`
   shows what's installed, and `pnpm skills:add <owner/repo> --skill <names>`
   adds more. The `prepare` script runs `skilld prepare --agent claude-code`
@@ -95,7 +110,7 @@ runs all three plus `typecheck`, `build`, and `zizmor`.
 
 ## Design tokens
 
-`packages/newtui/registry/html/tokens.css` is the single source of truth
+`packages/cli/registry/html/tokens.css` is the single source of truth
 for every `--newt-*` CSS variable. Both docs apps mirror it into their own
 global stylesheet and map every token to a Tailwind utility (`bg-newt-brand`,
 `text-newt-text-muted`, `rounded-md`, `shadow-elevation-high`, …) — `apps/www`
@@ -111,20 +126,22 @@ system, accessibility requirements, and a full worked example. Short
 version:
 
 1. Original HTML/CSS (if authoring the canonical spec) goes in
-   `packages/newtui/registry/html/components/<name>.{css,html,js}`.
-2. React: `apps/www/registry/default/ui/<name>.tsx` (cva + `cn` + Tailwind),
-   `apps/www/registry/default/example/<name>-demo.tsx`,
-   `apps/www/content/docs/components/<name>.mdx`.
-3. Vue: `apps/vue/app/lib/registry/default/ui/<name>/{Pascal.vue,index.ts}`,
-   `apps/vue/app/lib/registry/default/example/PascalDemo.vue`,
-   `apps/vue/content/docs/components/<name>.md`.
+   `packages/cli/registry/html/components/<name>.{css,html,js}`.
+2. React: `apps/www/registry/bases/newt/ui/<name>.tsx` (cva + `cn` + Tailwind),
+   `apps/www/registry/bases/newt/examples/<name>-demo.tsx`,
+   and the docs page at `apps/docs/src/content/docs/components/<name>.mdx`
+   (`pnpm --filter docs docs:gen` writes a source-derived starter with API and
+   accessibility sections).
+3. Vue: `apps/vue/registry/bases/newt/ui/<name>/{Pascal.vue,index.ts}`,
+   `apps/vue/registry/bases/newt/examples/PascalDemo.vue`.
 4. Add `apps/www/registry/meta/<name>.json` (title, description,
    dependencies, registryDependencies, vueFiles) — this drives the
    generated registry indexes.
 5. Add the component to a category in
    `apps/www/registry/registry-categories.ts` — the single taxonomy the
    docs site reads for both frameworks — so it appears in the side nav.
-6. Run `node scripts/gen-registry.mjs`, then `pnpm typecheck && pnpm build`.
+6. Run `node scripts/gen-registry.mjs` and `pnpm --filter docs docs:gen`, then
+   `pnpm typecheck && pnpm build`.
 
 ## Trademark note
 

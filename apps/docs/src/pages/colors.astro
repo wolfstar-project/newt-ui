@@ -1,0 +1,134 @@
+---
+import { newtTokens, newtTokensLight } from "@/registry/registry-tokens"
+
+import Docs from "../layouts/Docs.astro"
+
+/*
+ * Every token, with the value it takes in each palette. The list is read from
+ * the registry rather than restated here, so a token added to `tokens.css`
+ * appears on this page as soon as the registry is regenerated.
+ */
+interface TokenRow {
+  readonly name: string
+  readonly dark: string
+  readonly light: string
+  readonly utility?: string
+}
+
+const GROUPS = [
+  {
+    label: "Surfaces",
+    prefixes: ["newt-bg-", "newt-border"],
+    utility: (name: string) => `bg-${name}`,
+  },
+  {
+    label: "Text",
+    prefixes: ["newt-text-"],
+    utility: (name: string) => `text-${name}`,
+  },
+  {
+    label: "Brand",
+    prefixes: ["newt-brand"],
+    utility: (name: string) => `bg-${name}`,
+  },
+  {
+    label: "Status",
+    prefixes: [
+      "newt-online",
+      "newt-idle",
+      "newt-dnd",
+      "newt-offline",
+      "newt-danger",
+      "newt-mention-",
+    ],
+    utility: (name: string) => `bg-${name}`,
+  },
+  { label: "Shape", prefixes: ["newt-radius-", "newt-embed-"] },
+  { label: "Type", prefixes: ["newt-font-"] },
+  { label: "Elevation", prefixes: ["newt-shadow-"] },
+  { label: "Motion", prefixes: ["newt-ease", "newt-duration-"] },
+] as const
+
+/** A value that renders as a swatch rather than as text. */
+function isColour(value: string): boolean {
+  return value.startsWith("#") || value.startsWith("rgb")
+}
+
+const light: Record<string, string> = newtTokensLight
+const entries = Object.entries(newtTokens)
+
+const groups = GROUPS.map((group) => ({
+  label: group.label,
+  rows: entries
+    .filter(([name]) =>
+      group.prefixes.some((prefix) => name.startsWith(prefix))
+    )
+    .map(
+      ([name, dark]): TokenRow => ({
+        name,
+        dark,
+        light: light[name] ?? dark,
+        utility: "utility" in group ? group.utility(name) : undefined,
+      })
+    ),
+})).filter((group) => group.rows.length > 0)
+
+const total = groups.reduce((sum, group) => sum + group.rows.length, 0)
+---
+
+<Docs
+  title="Colours and tokens"
+  description={`Every --newt-* token — ${total} of them — with its dark and light value and the Tailwind utility it generates.`}
+  toc={false}
+  pager={false}
+>
+  <p>
+    Click any row to copy its <code>var(--newt-*)</code> reference. Override a
+    token in your own stylesheet and every component that reads it follows — see
+    <a href="/docs/theming">Theming</a>.
+  </p>
+
+  {
+    groups.map((group) => (
+      <section class="token-group">
+        <h2>{group.label}</h2>
+        <ul class="token-list">
+          {group.rows.map((row) => (
+            <li>
+              <button type="button" class="token-row" data-token={row.name}>
+                {isColour(row.dark) ? (
+                  <span class="token-swatches" aria-hidden="true">
+                    <span class="token-swatch" style={`background:${row.dark}`} />
+                    <span class="token-swatch" style={`background:${row.light}`} />
+                  </span>
+                ) : (
+                  <span class="token-swatches token-swatches-empty" aria-hidden="true" />
+                )}
+                <span class="token-name">--{row.name}</span>
+                <span class="token-value">{row.dark}</span>
+                <span class="token-value token-value-light">{row.light}</span>
+                <span class="token-utility">{row.utility ?? ""}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</Docs>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>("[data-token]")) {
+    button.addEventListener("click", async () => {
+      const token = button.dataset.token
+      if (!token) return
+      try {
+        await navigator.clipboard.writeText(`var(--${token})`)
+        button.dataset.copied = "true"
+        setTimeout(() => delete button.dataset.copied, 1000)
+      } catch {
+        /* clipboard denied: the value is on screen either way */
+      }
+    })
+  }
+</script>

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* newt/ui design tokens — source of truth: packages/newtui/registry/html/tokens.css */
+/* newt/ui design tokens — source of truth: packages/cli/registry/html/tokens.css */
 @layer base {
   :root {
     /* Surfaces */
@@ -64,6 +64,11 @@
 
     /* Motion */
     --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
+    /*
+   * Writing direction, as a multiplier. A component that moves something
+   * sideways multiplies its offset by this rather than branching on `dir`.
+   */
+    --newt-dir: 1;
     --newt-duration-fast: 100ms;
     --newt-duration-base: 150ms;
   }
@@ -125,4 +130,12 @@
     color: var(--newt-text-primary);
     -webkit-font-smoothing: antialiased;
   }
+}
+
+/*
+ * Components are written with logical properties, so a right-to-left subtree
+ * needs no override beyond the sign of its sideways transforms.
+ */
+[dir="rtl"] {
+  --newt-dir: -1;
 }
