@@ -162,14 +162,11 @@ function detectCssPath(
   bundler: Bundler | undefined,
   override?: string
 ): string {
-  const candidates =
-    framework === "vue"
-      ? CSS_CANDIDATES[bundler ?? DEFAULT_BUNDLER]
-      : CSS_CANDIDATES.react
+  const key = framework === "vue" ? (bundler ?? DEFAULT_BUNDLER) : "react"
   return (
     override ??
-    findFirstExisting(cwd, candidates) ??
-    DEFAULT_TAILWIND_CSS[framework]
+    findFirstExisting(cwd, CSS_CANDIDATES[key]) ??
+    DEFAULT_TAILWIND_CSS[key]
   )
 }
 

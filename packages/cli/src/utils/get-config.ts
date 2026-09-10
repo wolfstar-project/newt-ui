@@ -3,7 +3,12 @@ import path from "node:path"
 import { z } from "zod"
 
 import { pathExists, readFileIfExists } from "./fileSystem.js"
-import { BUNDLERS, FRAMEWORKS } from "./options.js"
+import {
+  BUNDLERS,
+  type BundlerName,
+  FRAMEWORKS,
+  NUXT_CONFIG_CANDIDATES,
+} from "./options.js"
 
 const DEFAULT_STYLE = "default"
 export const DEFAULT_COMPONENTS = "@/components"
@@ -22,8 +27,9 @@ export const DEFAULT_BUNDLER = "nuxt"
 /** Where `init` writes the tokens when it finds no existing stylesheet. */
 export const DEFAULT_TAILWIND_CSS = {
   react: "app/globals.css",
-  vue: "app/assets/css/main.css",
-} as const satisfies Record<Framework, string>
+  nuxt: "app/assets/css/main.css",
+  vite: "src/style.css",
+} as const satisfies Record<"react" | BundlerName, string>
 
 export const CONFIG_FILE_NAME = "components.json"
 
@@ -180,19 +186,21 @@ async function readTsConfigPaths(
 
 /**
  * Resolve an import alias such as `@/components/ui` to an absolute directory.
- * Uses tsconfig `paths` when available, otherwise falls back to `src/` (the
- * layout used by the newt/ui Vite and Nuxt templates) or the project root.
+ * Uses tsconfig `paths` when available, otherwise resolves under
+ * `forcedBaseDir` when given, or falls back to `src/` (the layout used by the
+ * newt/ui Vite template) if that exists, or the project root.
  */
 async function resolveImport(
   alias: string,
   cwd: string,
   /**
-   * Forces the `src/` base when the project uses a `src` directory but it does
-   * not exist on disk yet (e.g. during `init` on an empty project). Without
-   * this, `init` would write `lib/utils.ts` at the root while `add` later
-   * resolves the same alias to `src/lib`.
+   * Forces a base directory — `"app"` for a Nuxt 4 project, `"src"` for a
+   * `src`-directory one — even when it does not exist on disk yet (e.g.
+   * during `init` on an empty project). Without this, `init` would write
+   * `lib/utils.ts` at the root while `add` later resolves the same alias
+   * under the real base, disagreeing with itself.
    */
-  preferSrcDir?: boolean
+  forcedBaseDir?: string
 ): Promise<string> {
   const { baseUrl, paths } = await readTsConfigPaths(cwd)
   const base = path.resolve(cwd, baseUrl)
@@ -208,39 +216,89 @@ async function resolveImport(
     }
   }
 
-  // Fallback: strip a leading `@/` or `~/` and look in `src/` if present.
   const stripped = alias.replace(/^[@~]\//, "")
+  if (forcedBaseDir !== undefined) {
+    return path.resolve(cwd, forcedBaseDir, stripped)
+  }
+
+  // Fallback: look in `src/` if present.
   const srcDir = path.resolve(cwd, "src")
-  if (preferSrcDir || pathExists(srcDir)) {
+  if (pathExists(srcDir)) {
     return path.resolve(srcDir, stripped)
   }
   return path.resolve(cwd, stripped)
+}
+
+/**
+ * Nuxt 4 moves the source root to `app/`; Nuxt 3 (and a v4 project with a
+ * custom `srcDir`) may use something else entirely. Checked in order of how
+ * trustworthy the signal is: an explicit `srcDir` in the target's own
+ * `nuxt.config`, what is already on disk, then what the installed (or
+ * opted-in) Nuxt major implies for a project that has neither yet.
+ */
+async function detectNuxtBaseDir(cwd: string): Promise<string | undefined> {
+  const hints = await readNuxtConfigHints(cwd)
+  if (hints.srcDir !== undefined) return hints.srcDir
+
+  if (pathExists(path.resolve(cwd, "app"))) return "app"
+  if (pathExists(path.resolve(cwd, "src"))) return "src"
+
+  if (hints.compatibilityVersion4) return "app"
+  const major = await readNuxtMajor(cwd)
+  return major !== undefined && major >= 4 ? "app" : undefined
+}
+
+async function readNuxtConfigHints(
+  cwd: string
+): Promise<{ srcDir?: string; compatibilityVersion4?: boolean }> {
+  for (const candidate of NUXT_CONFIG_CANDIDATES) {
+    const raw = await readFileIfExists(path.resolve(cwd, candidate))
+    if (raw === null) continue
+    const srcDirMatch = raw.match(/srcDir\s*:\s*["'`]([^"'`]+)["'`]/)
+    return {
+      srcDir: srcDirMatch?.[1]?.replace(/\/$/, ""),
+      compatibilityVersion4: /compatibilityVersion\s*:\s*4\b/.test(raw),
+    }
+  }
+  return {}
+}
+
+async function readNuxtMajor(cwd: string): Promise<number | undefined> {
+  const raw = await readFileIfExists(path.resolve(cwd, "package.json"))
+  if (raw === null) return undefined
+  const match = raw.match(/"nuxt"\s*:\s*"[^"\d]*(\d+)/)
+  return match ? Number(match[1]) : undefined
 }
 
 export async function resolveConfigPaths(
   cwd: string,
   config: RawConfig
 ): Promise<Config> {
-  // A css path under `src/` means the project uses a src directory, even when
-  // that directory has not been created yet.
-  const preferSrcDir = config.tailwind.css.startsWith("src/")
-  const utils = await resolveImport(config.aliases.utils, cwd, preferSrcDir)
+  const forcedBaseDir =
+    config.bundler === "nuxt"
+      ? await detectNuxtBaseDir(cwd)
+      : // A css path under `src/` means the project uses a src directory,
+        // even when that directory has not been created yet.
+        config.tailwind.css.startsWith("src/")
+        ? "src"
+        : undefined
+  const utils = await resolveImport(config.aliases.utils, cwd, forcedBaseDir)
   const components = await resolveImport(
     config.aliases.components,
     cwd,
-    preferSrcDir
+    forcedBaseDir
   )
   const ui = config.aliases.ui
-    ? await resolveImport(config.aliases.ui, cwd, preferSrcDir)
+    ? await resolveImport(config.aliases.ui, cwd, forcedBaseDir)
     : path.resolve(components, "ui")
   const lib = config.aliases.lib
-    ? await resolveImport(config.aliases.lib, cwd, preferSrcDir)
+    ? await resolveImport(config.aliases.lib, cwd, forcedBaseDir)
     : path.dirname(utils)
   const hooks = config.aliases.hooks
-    ? await resolveImport(config.aliases.hooks, cwd, preferSrcDir)
+    ? await resolveImport(config.aliases.hooks, cwd, forcedBaseDir)
     : path.resolve(path.dirname(components), "hooks")
   const composables = config.aliases.composables
-    ? await resolveImport(config.aliases.composables, cwd, preferSrcDir)
+    ? await resolveImport(config.aliases.composables, cwd, forcedBaseDir)
     : path.resolve(path.dirname(components), "composables")
 
   return configSchema.parse({
