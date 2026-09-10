@@ -205,7 +205,7 @@
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
-      "description": "A monospace preformatted block with optional syntax-highlight tokens.",
+      "description": "A monospace preformatted block that colours its own source from a language name.",
       "dependencies": ["class-variance-authority"],
       "files": [
         {

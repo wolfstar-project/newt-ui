@@ -1,22 +1,29 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import { computed, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-import type { CodeTokenSpec } from "."
+import { tokenizeCode, type CodeLanguage, type CodeTokenSpec } from "."
 import CodeToken from "./CodeToken.vue"
 
 /*
- * `tokens` is the syntax most callers want: a flat list of runs, including
- * the line breaks as `{ text: "\n" }`. A highlighter (or a hand-written
- * token list) produces one array, with no whitespace-sensitive template
- * markup to get exactly right — the default slot still renders as-is for
- * anything composed by hand.
+ * Three ways in, in the order most callers want them: `language` with the
+ * source, which the built-in scanner colours; `tokens`, for runs a real
+ * highlighter produced; and the default slot, for `CodeToken` children placed
+ * by hand.
  */
 const props = defineProps<{
   class?: HTMLAttributes["class"]
+  language?: CodeLanguage
+  code?: string
   tokens?: readonly CodeTokenSpec[]
 }>()
+
+const runs = computed<readonly CodeTokenSpec[] | undefined>(() =>
+  props.language === undefined
+    ? props.tokens
+    : tokenizeCode(props.code ?? "", props.language)
+)
 </script>
 
 <template>
@@ -27,5 +34,5 @@ const props = defineProps<{
         props.class
       )
     "
-  ><template v-if="props.tokens"><template v-for="(token, index) in props.tokens" :key="index"><CodeToken v-if="token.kind" :kind="token.kind">{{ token.text }}</CodeToken><template v-else>{{ token.text }}</template></template></template><slot v-else /></pre>
+  ><template v-if="runs"><template v-for="(run, index) in runs" :key="index"><CodeToken v-if="run.kind" :kind="run.kind">{{ run.text }}</CodeToken><template v-else>{{ run.text }}</template></template></template><slot v-else /></pre>
 </template>

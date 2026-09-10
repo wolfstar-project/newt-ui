@@ -1,7 +1,7 @@
 {
   "name": "code-block",
   "title": "Code Block",
-  "description": "A monospace preformatted block with optional syntax-highlight tokens.",
+  "description": "A monospace preformatted block that colours its own source from a language name.",
   "dependencies": ["class-variance-authority"],
   "vueFiles": ["CodeBlock.vue", "CodeToken.vue", "index.ts"],
   "reactDemo": "code-block-demo",

@@ -202,7 +202,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Code Block",
     description:
-      "A monospace preformatted block with optional syntax-highlight tokens.",
+      "A monospace preformatted block that colours its own source from a language name.",
     dependencies: ["class-variance-authority"],
     files: [
       {

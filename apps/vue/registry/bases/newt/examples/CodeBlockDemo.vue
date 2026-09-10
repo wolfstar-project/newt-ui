@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { CodeBlock, CodeToken } from "~~/registry/bases/newt/ui/code-block"
+import { CodeBlock } from "~~/registry/bases/newt/ui/code-block"
+
+const code = `// example
+const greet = (name: string) => \`hello \${name}\`
+
+greet("world")`
 </script>
 
 <template>
-  <CodeBlock
-    ><CodeToken kind="comment">// example</CodeToken>{{ "\n"
-    }}<CodeToken kind="keyword">const</CodeToken>{{ " "
-    }}<CodeToken kind="function">greet</CodeToken>{{ " = () => "
-    }}<CodeToken kind="string">"hello"</CodeToken>;</CodeBlock
-  >
+  <CodeBlock language="ts" :code="code" />
 </template>

@@ -1,14 +1,10 @@
-import { CodeBlock, CodeToken } from "@/registry/bases/newt/ui/code-block"
+import { CodeBlock } from "@/registry/bases/newt/ui/code-block"
 
 export default function CodeBlockDemo() {
   return (
-    <CodeBlock>
-      <CodeToken kind="comment">{"// example"}</CodeToken>
-      {"\n"}
-      <CodeToken kind="keyword">const</CodeToken>{" "}
-      <CodeToken kind="function">greet</CodeToken>
-      {" = () => "}
-      <CodeToken kind="string">&quot;hello&quot;</CodeToken>;
-    </CodeBlock>
+    <CodeBlock language="ts">{`// example
+const greet = (name: string) => \`hello \${name}\`
+
+greet("world")`}</CodeBlock>
   )
 }

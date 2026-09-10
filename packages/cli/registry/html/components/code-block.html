@@ -1,2 +1,10 @@
+<!--
+  The plain flavour has no scanner to run: the spans are the highlighting, and
+  whatever produced the markup — a build-time highlighter, a template, a pair
+  of hands — decided the colours. React and Vue take a `language` prop instead
+  and colour the source themselves.
+-->
 <pre class="newt-code"><span class="tok-com">// example</span>
-<span class="tok-key">const</span> <span class="tok-fn">greet</span> = () => <span class="tok-str">"hello"</span>;</pre>
+<span class="tok-key">const</span> greet = (name: <span class="tok-key">string</span>) => <span class="tok-str">`hello ${name}`</span>
+
+<span class="tok-fn">greet</span>(<span class="tok-str">"world"</span>)</pre>
