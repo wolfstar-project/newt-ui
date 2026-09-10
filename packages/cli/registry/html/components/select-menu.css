@@ -111,6 +111,39 @@
   list-style: none;
 }
 
+/*
+ * A select attached to a message is not the same control as one in a settings
+ * panel. It carries at most 25 options — the platform rejects a payload with
+ * more — it shows the scrollbar rather than hiding it, because with a capped
+ * list the bar is what says there is more below the fold, and it marks no row
+ * as chosen: the choice is submitted rather than kept.
+ */
+.newt-select-menu--message .newt-select-menu__listbox {
+  max-height: 300px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--newt-bg-active) transparent;
+}
+.newt-select-menu--message .newt-select-menu__listbox::-webkit-scrollbar {
+  width: 8px;
+}
+.newt-select-menu--message .newt-select-menu__listbox::-webkit-scrollbar-track {
+  background: transparent;
+}
+.newt-select-menu--message .newt-select-menu__listbox::-webkit-scrollbar-thumb {
+  background-color: var(--newt-bg-active);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+.newt-select-menu--message
+  .newt-select-menu__listbox::-webkit-scrollbar-thumb:hover {
+  background-color: var(--newt-text-muted);
+  background-clip: padding-box;
+}
+.newt-select-menu--message .newt-select-menu__option--selected::after {
+  content: none;
+}
+
 .newt-select-menu__search {
   display: flex;
   align-items: center;

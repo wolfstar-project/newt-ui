@@ -24,11 +24,28 @@ export interface SelectMenuOption {
   disabled?: boolean
 }
 
+/**
+ * What a select attached to a message may carry. The platform rejects a
+ * payload with more, so a menu that rendered them would be showing something
+ * that cannot exist.
+ */
+export const SELECT_MENU_MAX_OPTIONS = 25
+
+/**
+ * Where the menu is: in a message, or in a settings panel. The two are not the
+ * same control — a message select caps its list, shows the scrollbar it needs
+ * to say the list continues, and marks nothing as chosen, because the choice
+ * is submitted rather than kept. A settings select has no cap and keeps a tick
+ * against the row that is in force.
+ */
+export type SelectMenuVariant = "settings" | "message"
+
 export interface SelectMenuProps extends Omit<
   React.HTMLAttributes<HTMLDivElement>,
   "onSelect" | "defaultValue"
 > {
   options: readonly SelectMenuOption[]
+  variant?: SelectMenuVariant
   /** Controlled selection. Leave undefined to let the menu own it. */
   value?: string
   defaultValue?: string
@@ -51,7 +68,8 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
   (
     {
       className,
-      options,
+      options: given,
+      variant = "settings",
       value,
       defaultValue,
       onValueChange,
@@ -62,6 +80,17 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
     },
     ref
   ) => {
+    /*
+     * The cap is applied here rather than left to the caller: everything below
+     * — the keyboard, the active index, the ids — counts rows, and a row the
+     * platform would reject should not be one of them.
+     */
+    const options = React.useMemo(
+      () =>
+        variant === "message" ? given.slice(0, SELECT_MENU_MAX_OPTIONS) : given,
+      [given, variant]
+    )
+
     const id = React.useId()
     const listboxId = `${id}-listbox`
     const optionId = (index: number) => `${id}-option-${index}`
@@ -253,7 +282,24 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
             id={listboxId}
             role="listbox"
             aria-label={label}
-            className="m-0 max-h-80 list-none overflow-y-auto p-0"
+            className={cn(
+              "m-0 list-none overflow-y-auto p-0",
+              /*
+               * A message select shows its scrollbar rather than hiding it
+               * until the pointer moves: the list is capped, so the bar is
+               * what says there is more of it below the fold.
+               */
+              variant === "message"
+                ? cn(
+                    "max-h-[300px]",
+                    "[scrollbar-width:thin] [scrollbar-color:var(--newt-bg-active)_transparent]",
+                    "[&::-webkit-scrollbar]:w-2",
+                    "[&::-webkit-scrollbar-track]:bg-transparent",
+                    "[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:border-2 [&::-webkit-scrollbar-thumb]:border-solid [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-newt-bg-active [&::-webkit-scrollbar-thumb]:bg-clip-padding",
+                    "[&::-webkit-scrollbar-thumb:hover]:bg-newt-text-muted [&::-webkit-scrollbar-thumb:hover]:bg-clip-padding"
+                  )
+                : "max-h-80"
+            )}
           >
             {options.map((option, index) => (
               <li
@@ -300,7 +346,13 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
                     </span>
                   ) : null}
                 </span>
-                {option.value === selected ? (
+                {/*
+                 * Only the settings menu ticks a row. In a message the choice
+                 * is submitted rather than kept, so there is no standing
+                 * selection for a tick to be about — `aria-selected` still
+                 * carries it for anything that asks.
+                 */}
+                {option.value === selected && variant === "settings" ? (
                   <span
                     aria-hidden="true"
                     className={cn(

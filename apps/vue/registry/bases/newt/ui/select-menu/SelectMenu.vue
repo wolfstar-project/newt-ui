@@ -4,22 +4,39 @@ import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from "vue"
 
 import { cn } from "@/lib/utils"
 
-import type { SelectMenuOption } from "."
+import {
+  SELECT_MENU_MAX_OPTIONS,
+  type SelectMenuOption,
+  type SelectMenuVariant,
+} from "."
 
 const props = withDefaults(
   defineProps<{
     class?: HTMLAttributes["class"]
     options: readonly SelectMenuOption[]
+    variant?: SelectMenuVariant
     placeholder?: string
     disabled?: boolean
     /** Accessible name of the trigger and the listbox. */
     label?: string
   }>(),
   {
+    variant: "settings",
     placeholder: "Make a selection",
     disabled: false,
     label: "Select an option",
   }
+)
+
+/*
+ * The cap is applied here rather than left to the caller: everything below —
+ * the keyboard, the active index, the ids — counts rows, and a row the
+ * platform would reject should not be one of them.
+ */
+const options = computed(() =>
+  props.variant === "message"
+    ? props.options.slice(0, SELECT_MENU_MAX_OPTIONS)
+    : props.options
 )
 
 const emit = defineEmits<{ select: [value: string] }>()
@@ -38,25 +55,25 @@ const active = ref(-1)
 const box = ref<CSSProperties | null>(null)
 
 const selectedOption = computed(() =>
-  props.options.find((option) => option.value === selected.value)
+  options.value.find((option) => option.value === selected.value)
 )
 
 const selectable = (index: number) => {
-  const option = props.options[index]
+  const option = options.value[index]
   return Boolean(option) && !option?.disabled
 }
 
-const firstSelectable = () => props.options.findIndex((o) => !o.disabled)
+const firstSelectable = () => options.value.findIndex((o) => !o.disabled)
 
 const lastSelectable = () => {
-  for (let i = props.options.length - 1; i >= 0; i--) {
-    if (!props.options[i]?.disabled) return i
+  for (let i = options.value.length - 1; i >= 0; i--) {
+    if (!options.value[i]?.disabled) return i
   }
   return -1
 }
 
 const step = (from: number, direction: 1 | -1) => {
-  const count = props.options.length
+  const count = options.value.length
   for (let i = 1; i <= count; i++) {
     const index = (from + direction * i + count * i) % count
     if (selectable(index)) return index
@@ -105,7 +122,7 @@ function scrollActiveIntoView() {
 function openMenu() {
   if (props.disabled || open.value) return
   open.value = true
-  const current = props.options.findIndex(
+  const current = options.value.findIndex(
     (option) => option.value === selected.value
   )
   active.value =
@@ -123,7 +140,7 @@ function closeMenu() {
 }
 
 function select(index: number) {
-  const option = props.options[index]
+  const option = options.value[index]
   if (!option || option.disabled) return
   selected.value = option.value
   emit("select", option.value)
@@ -269,10 +286,29 @@ onBeforeUnmount(() => {
           :id="listboxId"
           role="listbox"
           :aria-label="props.label"
-          class="m-0 max-h-80 list-none overflow-y-auto p-0"
+          :class="
+            cn(
+              'm-0 list-none overflow-y-auto p-0',
+              /*
+               * A message select shows its scrollbar rather than hiding it
+               * until the pointer moves: the list is capped, so the bar is
+               * what says there is more of it below the fold.
+               */
+              props.variant === 'message'
+                ? cn(
+                    'max-h-[300px]',
+                    '[scrollbar-width:thin] [scrollbar-color:var(--newt-bg-active)_transparent]',
+                    '[&::-webkit-scrollbar]:w-2',
+                    '[&::-webkit-scrollbar-track]:bg-transparent',
+                    '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:border-2 [&::-webkit-scrollbar-thumb]:border-solid [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-newt-bg-active [&::-webkit-scrollbar-thumb]:bg-clip-padding',
+                    '[&::-webkit-scrollbar-thumb:hover]:bg-newt-text-muted [&::-webkit-scrollbar-thumb:hover]:bg-clip-padding'
+                  )
+                : 'max-h-80'
+            )
+          "
         >
           <li
-            v-for="(option, index) of props.options"
+            v-for="(option, index) of options"
             :id="optionId(index)"
             :key="option.value"
             role="option"
@@ -318,8 +354,14 @@ onBeforeUnmount(() => {
                 {{ option.description }}
               </span>
             </span>
+            <!--
+              Only the settings menu ticks a row. In a message the choice is
+              submitted rather than kept, so there is no standing selection for
+              a tick to be about — `aria-selected` still carries it for
+              anything that asks.
+            -->
             <span
-              v-if="option.value === selected"
+              v-if="option.value === selected && props.variant === 'settings'"
               aria-hidden="true"
               :class="
                 cn(

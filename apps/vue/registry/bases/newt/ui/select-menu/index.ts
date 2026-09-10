@@ -21,3 +21,19 @@ export interface SelectMenuOption {
   note?: string
   disabled?: boolean
 }
+
+/**
+ * What a select attached to a message may carry. The platform rejects a
+ * payload with more, so a menu that rendered them would be showing something
+ * that cannot exist.
+ */
+export const SELECT_MENU_MAX_OPTIONS = 25
+
+/**
+ * Where the menu is: in a message, or in a settings panel. The two are not the
+ * same control — a message select caps its list, shows the scrollbar it needs
+ * to say the list continues, and marks nothing as chosen, because the choice
+ * is submitted rather than kept. A settings select has no cap and keeps a tick
+ * against the row that is in force.
+ */
+export type SelectMenuVariant = "settings" | "message"
