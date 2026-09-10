@@ -1,0 +1,8 @@
+{
+  "name": "timestamp",
+  "title": "Timestamp",
+  "description": "One instant, written in the reader's own locale and time zone.",
+  "vueFiles": ["Timestamp.vue", "index.ts"],
+  "reactDemo": "timestamp-demo",
+  "vueDemo": "TimestampDemo"
+}

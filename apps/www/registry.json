@@ -202,6 +202,19 @@
       "framework": "react"
     },
     {
+      "name": "checkbox-group",
+      "type": "registry:ui",
+      "title": "Checkbox Group",
+      "description": "Several answers out of a visible list, each with an optional description.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/checkbox-group.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
@@ -251,6 +264,20 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/cooldown-bar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "custom-emoji",
+      "type": "registry:ui",
+      "title": "Custom Emoji",
+      "description": "An uploaded emoji that sits on the text baseline and reads as :name:.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/custom-emoji.tsx",
           "type": "registry:ui"
         }
       ],
@@ -323,6 +350,19 @@
       "framework": "react"
     },
     {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "File Upload",
+      "description": "A drop zone that also opens a file picker from the keyboard.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/file-upload.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "form-fields",
       "type": "registry:ui",
       "title": "Form Fields",
@@ -370,6 +410,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/kbd-tag.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "media-gallery",
+      "type": "registry:ui",
+      "title": "Media Gallery",
+      "description": "One to ten images in a mosaic, laid out by how many there are.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/media-gallery.tsx",
           "type": "registry:ui"
         }
       ],
@@ -507,6 +560,19 @@
       "framework": "react"
     },
     {
+      "name": "poll",
+      "type": "registry:ui",
+      "title": "Poll",
+      "description": "A question, its answers, and the share of the vote behind each one.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/poll.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "progress",
       "type": "registry:ui",
       "title": "Progress Bar",
@@ -581,6 +647,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/scrollbar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "section",
+      "type": "registry:ui",
+      "title": "Section",
+      "description": "A block of text with one accessory beside it — a thumbnail, or a button.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/section.tsx",
           "type": "registry:ui"
         }
       ],
@@ -719,6 +798,20 @@
       "framework": "react"
     },
     {
+      "name": "system-message",
+      "type": "registry:ui",
+      "title": "System Message",
+      "description": "The lines a channel writes about itself — joins, boosts, pins — with no author and no avatar.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/system-message.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
@@ -726,6 +819,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "thread-preview",
+      "type": "registry:ui",
+      "title": "Thread Preview",
+      "description": "The thread hanging off a message: its name, its reply count and the last thing said.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/thread-preview.tsx",
           "type": "registry:ui"
         }
       ],
@@ -740,6 +846,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/timeline.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "timestamp",
+      "type": "registry:ui",
+      "title": "Timestamp",
+      "description": "One instant, written in the reader's own locale and time zone.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/timestamp.tsx",
           "type": "registry:ui"
         }
       ],

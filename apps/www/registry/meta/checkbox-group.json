@@ -1,0 +1,8 @@
+{
+  "name": "checkbox-group",
+  "title": "Checkbox Group",
+  "description": "Several answers out of a visible list, each with an optional description.",
+  "vueFiles": ["CheckboxGroup.vue", "CheckboxOption.vue", "index.ts"],
+  "reactDemo": "checkbox-group-demo",
+  "vueDemo": "CheckboxGroupDemo"
+}

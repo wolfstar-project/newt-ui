@@ -259,6 +259,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "checkbox-group",
+    {
+      name: "checkbox-group",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/checkbox-group/CheckboxGroup.vue",
+        "registry/bases/newt/ui/checkbox-group/CheckboxOption.vue",
+        "registry/bases/newt/ui/checkbox-group/index.ts",
+      ],
+    },
+  ],
+  [
     "code-block",
     {
       name: "code-block",
@@ -311,6 +324,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/cooldown-bar/CooldownBarValue.vue",
         "registry/bases/newt/ui/cooldown-bar/CooldownBarTrack.vue",
         "registry/bases/newt/ui/cooldown-bar/index.ts",
+      ],
+    },
+  ],
+  [
+    "custom-emoji",
+    {
+      name: "custom-emoji",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/custom-emoji/CustomEmoji.vue",
+        "registry/bases/newt/ui/custom-emoji/index.ts",
       ],
     },
   ],
@@ -399,6 +424,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "file-upload",
+    {
+      name: "file-upload",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/file-upload/FileUpload.vue",
+        "registry/bases/newt/ui/file-upload/index.ts",
+      ],
+    },
+  ],
+  [
     "form-fields",
     {
       name: "form-fields",
@@ -457,6 +494,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: [
         "registry/bases/newt/ui/kbd-tag/KbdTag.vue",
         "registry/bases/newt/ui/kbd-tag/index.ts",
+      ],
+    },
+  ],
+  [
+    "media-gallery",
+    {
+      name: "media-gallery",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/media-gallery/MediaGallery.vue",
+        "registry/bases/newt/ui/media-gallery/MediaGalleryItem.vue",
+        "registry/bases/newt/ui/media-gallery/index.ts",
       ],
     },
   ],
@@ -604,6 +654,22 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "poll",
+    {
+      name: "poll",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/poll/Poll.vue",
+        "registry/bases/newt/ui/poll/PollAnswer.vue",
+        "registry/bases/newt/ui/poll/PollAnswers.vue",
+        "registry/bases/newt/ui/poll/PollFooter.vue",
+        "registry/bases/newt/ui/poll/PollQuestion.vue",
+        "registry/bases/newt/ui/poll/index.ts",
+      ],
+    },
+  ],
+  [
     "progress",
     {
       name: "progress",
@@ -682,6 +748,22 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: [
         "registry/bases/newt/ui/scrollbar/ScrollArea.vue",
         "registry/bases/newt/ui/scrollbar/index.ts",
+      ],
+    },
+  ],
+  [
+    "section",
+    {
+      name: "section",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/section/Section.vue",
+        "registry/bases/newt/ui/section/SectionAccessory.vue",
+        "registry/bases/newt/ui/section/SectionContent.vue",
+        "registry/bases/newt/ui/section/SectionHeading.vue",
+        "registry/bases/newt/ui/section/SectionThumbnail.vue",
+        "registry/bases/newt/ui/section/index.ts",
       ],
     },
   ],
@@ -818,6 +900,20 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "system-message",
+    {
+      name: "system-message",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/system-message/SystemMessage.vue",
+        "registry/bases/newt/ui/system-message/SystemMessageActor.vue",
+        "registry/bases/newt/ui/system-message/SystemMessageTime.vue",
+        "registry/bases/newt/ui/system-message/index.ts",
+      ],
+    },
+  ],
+  [
     "tabs",
     {
       name: "tabs",
@@ -828,6 +924,22 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/tabs/TabsTrigger.vue",
         "registry/bases/newt/ui/tabs/TabsContent.vue",
         "registry/bases/newt/ui/tabs/index.ts",
+      ],
+    },
+  ],
+  [
+    "thread-preview",
+    {
+      name: "thread-preview",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/thread-preview/ThreadPreview.vue",
+        "registry/bases/newt/ui/thread-preview/ThreadPreviewCount.vue",
+        "registry/bases/newt/ui/thread-preview/ThreadPreviewLast.vue",
+        "registry/bases/newt/ui/thread-preview/ThreadPreviewName.vue",
+        "registry/bases/newt/ui/thread-preview/ThreadPreviewSpine.vue",
+        "registry/bases/newt/ui/thread-preview/index.ts",
       ],
     },
   ],
@@ -845,6 +957,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/timeline/TimelineTitle.vue",
         "registry/bases/newt/ui/timeline/TimelineMeta.vue",
         "registry/bases/newt/ui/timeline/index.ts",
+      ],
+    },
+  ],
+  [
+    "timestamp",
+    {
+      name: "timestamp",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/timestamp/Timestamp.vue",
+        "registry/bases/newt/ui/timestamp/index.ts",
       ],
     },
   ],
@@ -1142,6 +1266,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "CheckboxGroupDemo",
+    {
+      name: "CheckboxGroupDemo",
+      type: "registry:example",
+      registryDependencies: ["checkbox-group"],
+      files: ["registry/bases/newt/examples/CheckboxGroupDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/CheckboxGroupDemo.vue")
+      ),
+    },
+  ],
+  [
     "CodeBlockDemo",
     {
       name: "CodeBlockDemo",
@@ -1186,6 +1322,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/CooldownBarDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/CooldownBarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "CustomEmojiDemo",
+    {
+      name: "CustomEmojiDemo",
+      type: "registry:example",
+      registryDependencies: ["custom-emoji"],
+      files: ["registry/bases/newt/examples/CustomEmojiDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/CustomEmojiDemo.vue")
       ),
     },
   ],
@@ -1250,6 +1398,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "FileUploadDemo",
+    {
+      name: "FileUploadDemo",
+      type: "registry:example",
+      registryDependencies: ["file-upload"],
+      files: ["registry/bases/newt/examples/FileUploadDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/FileUploadDemo.vue")
+      ),
+    },
+  ],
+  [
     "FormFieldsDemo",
     {
       name: "FormFieldsDemo",
@@ -1294,6 +1454,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/KbdTagDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/KbdTagDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MediaGalleryDemo",
+    {
+      name: "MediaGalleryDemo",
+      type: "registry:example",
+      registryDependencies: ["media-gallery"],
+      files: ["registry/bases/newt/examples/MediaGalleryDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/MediaGalleryDemo.vue")
       ),
     },
   ],
@@ -1406,6 +1578,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "PollDemo",
+    {
+      name: "PollDemo",
+      type: "registry:example",
+      registryDependencies: ["poll"],
+      files: ["registry/bases/newt/examples/PollDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/PollDemo.vue")
+      ),
+    },
+  ],
+  [
     "ProgressDemo",
     {
       name: "ProgressDemo",
@@ -1474,6 +1658,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ScrollbarDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ScrollbarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SectionDemo",
+    {
+      name: "SectionDemo",
+      type: "registry:example",
+      registryDependencies: ["section"],
+      files: ["registry/bases/newt/examples/SectionDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SectionDemo.vue")
       ),
     },
   ],
@@ -1587,6 +1783,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "SystemMessageDemo",
+    {
+      name: "SystemMessageDemo",
+      type: "registry:example",
+      registryDependencies: ["system-message"],
+      files: ["registry/bases/newt/examples/SystemMessageDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SystemMessageDemo.vue")
+      ),
+    },
+  ],
+  [
     "TabsDemo",
     {
       name: "TabsDemo",
@@ -1599,6 +1807,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ThreadPreviewDemo",
+    {
+      name: "ThreadPreviewDemo",
+      type: "registry:example",
+      registryDependencies: ["thread-preview"],
+      files: ["registry/bases/newt/examples/ThreadPreviewDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/ThreadPreviewDemo.vue")
+      ),
+    },
+  ],
+  [
     "TimelineDemo",
     {
       name: "TimelineDemo",
@@ -1607,6 +1827,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/TimelineDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TimelineDemo.vue")
+      ),
+    },
+  ],
+  [
+    "TimestampDemo",
+    {
+      name: "TimestampDemo",
+      type: "registry:example",
+      registryDependencies: ["timestamp"],
+      files: ["registry/bases/newt/examples/TimestampDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TimestampDemo.vue")
       ),
     },
   ],

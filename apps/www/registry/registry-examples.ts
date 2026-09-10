@@ -157,6 +157,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "checkbox-group-demo",
+    type: "registry:example",
+    registryDependencies: ["checkbox-group"],
+    files: [
+      {
+        path: "examples/checkbox-group-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "code-block-demo",
     type: "registry:example",
     registryDependencies: ["code-block"],
@@ -196,6 +207,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/cooldown-bar-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "custom-emoji-demo",
+    type: "registry:example",
+    registryDependencies: ["custom-emoji"],
+    files: [
+      {
+        path: "examples/custom-emoji-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -256,6 +278,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "file-upload-demo",
+    type: "registry:example",
+    registryDependencies: ["file-upload"],
+    files: [
+      {
+        path: "examples/file-upload-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "form-fields-demo",
     type: "registry:example",
     registryDependencies: ["form-fields"],
@@ -295,6 +328,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/kbd-tag-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "media-gallery-demo",
+    type: "registry:example",
+    registryDependencies: ["media-gallery"],
+    files: [
+      {
+        path: "examples/media-gallery-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -399,6 +443,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "poll-demo",
+    type: "registry:example",
+    registryDependencies: ["poll"],
+    files: [
+      {
+        path: "examples/poll-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "progress-demo",
     type: "registry:example",
     registryDependencies: ["progress"],
@@ -460,6 +515,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/scrollbar-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "section-demo",
+    type: "registry:example",
+    registryDependencies: ["section"],
+    files: [
+      {
+        path: "examples/section-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -564,6 +630,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "system-message-demo",
+    type: "registry:example",
+    registryDependencies: ["system-message"],
+    files: [
+      {
+        path: "examples/system-message-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "tabs-demo",
     type: "registry:example",
     registryDependencies: ["tabs"],
@@ -575,12 +652,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "thread-preview-demo",
+    type: "registry:example",
+    registryDependencies: ["thread-preview"],
+    files: [
+      {
+        path: "examples/thread-preview-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "timeline-demo",
     type: "registry:example",
     registryDependencies: ["timeline"],
     files: [
       {
         path: "examples/timeline-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "timestamp-demo",
+    type: "registry:example",
+    registryDependencies: ["timestamp"],
+    files: [
+      {
+        path: "examples/timestamp-demo.tsx",
         type: "registry:example",
       },
     ],

@@ -1,0 +1,90 @@
+/* newt-ui · Poll */
+
+/*
+ * A poll in a message: a question, the answers, and what everyone picked. The
+ * bar behind each answer is the result, so it only appears once the results
+ * are showing — the row keeps its height either way, and the list never
+ * shuffles when the votes land.
+ */
+.newt-poll {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  inline-size: 100%;
+  max-inline-size: 440px;
+  padding: 16px;
+  background: var(--newt-bg-surface);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-lg);
+}
+.newt-poll__question {
+  margin: 0;
+  font-family: var(--newt-font-display);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.375;
+  color: var(--newt-text-primary);
+}
+.newt-poll__answers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.newt-poll__answer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  padding: 10px 12px;
+  text-align: start;
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  background: var(--newt-bg-base);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  cursor: pointer;
+  transition: border-color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-poll__answer:hover {
+  border-color: var(--newt-text-muted);
+}
+.newt-poll__answer:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-poll__answer--chosen {
+  border-color: var(--newt-brand);
+  color: var(--newt-text-primary);
+}
+.newt-poll__bar {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  background: color-mix(in oklab, var(--newt-brand) 25%, transparent);
+}
+.newt-poll__emoji,
+.newt-poll__label,
+.newt-poll__share {
+  position: relative;
+}
+.newt-poll__label {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.newt-poll__share {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--newt-text-muted);
+}
+.newt-poll__footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--newt-text-muted);
+}

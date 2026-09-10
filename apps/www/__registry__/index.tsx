@@ -180,6 +180,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "checkbox-group",
+    {
+      name: "checkbox-group",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/checkbox-group.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/checkbox-group")
+      ),
+    },
+  ],
+  [
     "code-block",
     {
       name: "code-block",
@@ -224,6 +236,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/ui/cooldown-bar.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/ui/cooldown-bar")
+      ),
+    },
+  ],
+  [
+    "custom-emoji",
+    {
+      name: "custom-emoji",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/custom-emoji.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/custom-emoji")
       ),
     },
   ],
@@ -280,6 +304,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "file-upload",
+    {
+      name: "file-upload",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/file-upload.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/file-upload")
+      ),
+    },
+  ],
+  [
     "form-fields",
     {
       name: "form-fields",
@@ -321,6 +357,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: ["registry/bases/newt/ui/kbd-tag.tsx"],
       component: React.lazy(() => import("@/registry/bases/newt/ui/kbd-tag")),
+    },
+  ],
+  [
+    "media-gallery",
+    {
+      name: "media-gallery",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/media-gallery.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/media-gallery")
+      ),
     },
   ],
   [
@@ -433,6 +481,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "poll",
+    {
+      name: "poll",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/poll.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/poll")),
+    },
+  ],
+  [
     "progress",
     {
       name: "progress",
@@ -492,6 +550,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: ["registry/bases/newt/ui/scrollbar.tsx"],
       component: React.lazy(() => import("@/registry/bases/newt/ui/scrollbar")),
+    },
+  ],
+  [
+    "section",
+    {
+      name: "section",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/section.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/section")),
     },
   ],
   [
@@ -606,6 +674,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "system-message",
+    {
+      name: "system-message",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/system-message.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/system-message")
+      ),
+    },
+  ],
+  [
     "tabs",
     {
       name: "tabs",
@@ -616,6 +696,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "thread-preview",
+    {
+      name: "thread-preview",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/thread-preview.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/thread-preview")
+      ),
+    },
+  ],
+  [
     "timeline",
     {
       name: "timeline",
@@ -623,6 +715,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: ["registry/bases/newt/ui/timeline.tsx"],
       component: React.lazy(() => import("@/registry/bases/newt/ui/timeline")),
+    },
+  ],
+  [
+    "timestamp",
+    {
+      name: "timestamp",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/timestamp.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/timestamp")),
     },
   ],
   [
@@ -889,6 +991,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "checkbox-group-demo",
+    {
+      name: "checkbox-group-demo",
+      type: "registry:example",
+      registryDependencies: ["checkbox-group"],
+      files: ["registry/bases/newt/examples/checkbox-group-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/checkbox-group-demo")
+      ),
+    },
+  ],
+  [
     "code-block-demo",
     {
       name: "code-block-demo",
@@ -933,6 +1047,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/cooldown-bar-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/cooldown-bar-demo")
+      ),
+    },
+  ],
+  [
+    "custom-emoji-demo",
+    {
+      name: "custom-emoji-demo",
+      type: "registry:example",
+      registryDependencies: ["custom-emoji"],
+      files: ["registry/bases/newt/examples/custom-emoji-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/custom-emoji-demo")
       ),
     },
   ],
@@ -997,6 +1123,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "file-upload-demo",
+    {
+      name: "file-upload-demo",
+      type: "registry:example",
+      registryDependencies: ["file-upload"],
+      files: ["registry/bases/newt/examples/file-upload-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/file-upload-demo")
+      ),
+    },
+  ],
+  [
     "form-fields-demo",
     {
       name: "form-fields-demo",
@@ -1041,6 +1179,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/kbd-tag-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/kbd-tag-demo")
+      ),
+    },
+  ],
+  [
+    "media-gallery-demo",
+    {
+      name: "media-gallery-demo",
+      type: "registry:example",
+      registryDependencies: ["media-gallery"],
+      files: ["registry/bases/newt/examples/media-gallery-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/media-gallery-demo")
       ),
     },
   ],
@@ -1153,6 +1303,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "poll-demo",
+    {
+      name: "poll-demo",
+      type: "registry:example",
+      registryDependencies: ["poll"],
+      files: ["registry/bases/newt/examples/poll-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/poll-demo")
+      ),
+    },
+  ],
+  [
     "progress-demo",
     {
       name: "progress-demo",
@@ -1221,6 +1383,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/scrollbar-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/scrollbar-demo")
+      ),
+    },
+  ],
+  [
+    "section-demo",
+    {
+      name: "section-demo",
+      type: "registry:example",
+      registryDependencies: ["section"],
+      files: ["registry/bases/newt/examples/section-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/section-demo")
       ),
     },
   ],
@@ -1336,6 +1510,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "system-message-demo",
+    {
+      name: "system-message-demo",
+      type: "registry:example",
+      registryDependencies: ["system-message"],
+      files: ["registry/bases/newt/examples/system-message-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/system-message-demo")
+      ),
+    },
+  ],
+  [
     "tabs-demo",
     {
       name: "tabs-demo",
@@ -1348,6 +1534,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "thread-preview-demo",
+    {
+      name: "thread-preview-demo",
+      type: "registry:example",
+      registryDependencies: ["thread-preview"],
+      files: ["registry/bases/newt/examples/thread-preview-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/thread-preview-demo")
+      ),
+    },
+  ],
+  [
     "timeline-demo",
     {
       name: "timeline-demo",
@@ -1356,6 +1554,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/timeline-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/timeline-demo")
+      ),
+    },
+  ],
+  [
+    "timestamp-demo",
+    {
+      name: "timestamp-demo",
+      type: "registry:example",
+      registryDependencies: ["timestamp"],
+      files: ["registry/bases/newt/examples/timestamp-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/timestamp-demo")
       ),
     },
   ],

@@ -53,6 +53,11 @@ export const categories: DocsCategory[] = [
       "invite",
       "reaction",
       "reply-preview",
+      "poll",
+      "system-message",
+      "thread-preview",
+      "section",
+      "media-gallery",
       "attachment",
       "slash-command",
       "slash-command-suggestions",
@@ -72,6 +77,8 @@ export const categories: DocsCategory[] = [
     components: [
       "form-fields",
       "radio",
+      "checkbox-group",
+      "file-upload",
       "token-field",
       "select-menu",
       "card",
@@ -83,7 +90,15 @@ export const categories: DocsCategory[] = [
   {
     slug: "formatting",
     label: "Formatting",
-    components: ["typeset", "mention", "spoiler", "inline-code", "code-block"],
+    components: [
+      "typeset",
+      "mention",
+      "custom-emoji",
+      "timestamp",
+      "spoiler",
+      "inline-code",
+      "code-block",
+    ],
   },
   {
     slug: "utilities",

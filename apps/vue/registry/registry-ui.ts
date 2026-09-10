@@ -498,6 +498,27 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "checkbox-group",
+    type: "registry:ui",
+    title: "Checkbox Group",
+    description:
+      "Several answers out of a visible list, each with an optional description.",
+    files: [
+      {
+        path: "ui/checkbox-group/CheckboxGroup.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/checkbox-group/CheckboxOption.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/checkbox-group/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "code-block",
     type: "registry:ui",
     title: "Code Block",
@@ -596,6 +617,24 @@ export const ui: Registry = [
       },
       {
         path: "ui/cooldown-bar/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "custom-emoji",
+    type: "registry:ui",
+    title: "Custom Emoji",
+    description:
+      "An uploaded emoji that sits on the text baseline and reads as :name:.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/custom-emoji/CustomEmoji.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/custom-emoji/index.ts",
         type: "registry:ui",
       },
     ],
@@ -783,6 +822,22 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "file-upload",
+    type: "registry:ui",
+    title: "File Upload",
+    description: "A drop zone that also opens a file picker from the keyboard.",
+    files: [
+      {
+        path: "ui/file-upload/FileUpload.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/file-upload/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "form-fields",
     type: "registry:ui",
     title: "Form Fields",
@@ -900,6 +955,27 @@ export const ui: Registry = [
       },
       {
         path: "ui/kbd-tag/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "media-gallery",
+    type: "registry:ui",
+    title: "Media Gallery",
+    description:
+      "One to ten images in a mosaic, laid out by how many there are.",
+    files: [
+      {
+        path: "ui/media-gallery/MediaGallery.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/media-gallery/MediaGalleryItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/media-gallery/index.ts",
         type: "registry:ui",
       },
     ],
@@ -1192,6 +1268,39 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "poll",
+    type: "registry:ui",
+    title: "Poll",
+    description:
+      "A question, its answers, and the share of the vote behind each one.",
+    files: [
+      {
+        path: "ui/poll/Poll.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/poll/PollAnswer.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/poll/PollAnswers.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/poll/PollFooter.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/poll/PollQuestion.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/poll/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "progress",
     type: "registry:ui",
     title: "Progress Bar",
@@ -1331,6 +1440,39 @@ export const ui: Registry = [
       },
       {
         path: "ui/scrollbar/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "section",
+    type: "registry:ui",
+    title: "Section",
+    description:
+      "A block of text with one accessory beside it — a thumbnail, or a button.",
+    files: [
+      {
+        path: "ui/section/Section.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/section/SectionAccessory.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/section/SectionContent.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/section/SectionHeading.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/section/SectionThumbnail.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/section/index.ts",
         type: "registry:ui",
       },
     ],
@@ -1575,6 +1717,32 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "system-message",
+    type: "registry:ui",
+    title: "System Message",
+    description:
+      "The lines a channel writes about itself — joins, boosts, pins — with no author and no avatar.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/system-message/SystemMessage.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/system-message/SystemMessageActor.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/system-message/SystemMessageTime.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/system-message/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "tabs",
     type: "registry:ui",
     title: "Tabs",
@@ -1594,6 +1762,39 @@ export const ui: Registry = [
       },
       {
         path: "ui/tabs/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "thread-preview",
+    type: "registry:ui",
+    title: "Thread Preview",
+    description:
+      "The thread hanging off a message: its name, its reply count and the last thing said.",
+    files: [
+      {
+        path: "ui/thread-preview/ThreadPreview.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/thread-preview/ThreadPreviewCount.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/thread-preview/ThreadPreviewLast.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/thread-preview/ThreadPreviewName.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/thread-preview/ThreadPreviewSpine.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/thread-preview/index.ts",
         type: "registry:ui",
       },
     ],
@@ -1632,6 +1833,23 @@ export const ui: Registry = [
       },
       {
         path: "ui/timeline/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "timestamp",
+    type: "registry:ui",
+    title: "Timestamp",
+    description:
+      "One instant, written in the reader's own locale and time zone.",
+    files: [
+      {
+        path: "ui/timestamp/Timestamp.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/timestamp/index.ts",
         type: "registry:ui",
       },
     ],

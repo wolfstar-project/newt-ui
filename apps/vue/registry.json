@@ -502,6 +502,27 @@
       "framework": "vue"
     },
     {
+      "name": "checkbox-group",
+      "type": "registry:ui",
+      "title": "Checkbox Group",
+      "description": "Several answers out of a visible list, each with an optional description.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/checkbox-group/CheckboxGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/checkbox-group/CheckboxOption.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/checkbox-group/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
@@ -599,6 +620,24 @@
         },
         {
           "path": "registry/bases/newt/ui/cooldown-bar/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "custom-emoji",
+      "type": "registry:ui",
+      "title": "Custom Emoji",
+      "description": "An uploaded emoji that sits on the text baseline and reads as :name:.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/custom-emoji/CustomEmoji.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/custom-emoji/index.ts",
           "type": "registry:ui"
         }
       ],
@@ -787,6 +826,23 @@
       "framework": "vue"
     },
     {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "File Upload",
+      "description": "A drop zone that also opens a file picker from the keyboard.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/file-upload/FileUpload.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/file-upload/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "form-fields",
       "type": "registry:ui",
       "title": "Form Fields",
@@ -906,6 +962,27 @@
         },
         {
           "path": "registry/bases/newt/ui/kbd-tag/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "media-gallery",
+      "type": "registry:ui",
+      "title": "Media Gallery",
+      "description": "One to ten images in a mosaic, laid out by how many there are.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/media-gallery/MediaGallery.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/media-gallery/MediaGalleryItem.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/media-gallery/index.ts",
           "type": "registry:ui"
         }
       ],
@@ -1199,6 +1276,39 @@
       "framework": "vue"
     },
     {
+      "name": "poll",
+      "type": "registry:ui",
+      "title": "Poll",
+      "description": "A question, its answers, and the share of the vote behind each one.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/poll/Poll.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/poll/PollAnswer.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/poll/PollAnswers.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/poll/PollFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/poll/PollQuestion.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/poll/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "progress",
       "type": "registry:ui",
       "title": "Progress Bar",
@@ -1337,6 +1447,39 @@
         },
         {
           "path": "registry/bases/newt/ui/scrollbar/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "section",
+      "type": "registry:ui",
+      "title": "Section",
+      "description": "A block of text with one accessory beside it — a thumbnail, or a button.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/section/Section.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/section/SectionAccessory.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/section/SectionContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/section/SectionHeading.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/section/SectionThumbnail.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/section/index.ts",
           "type": "registry:ui"
         }
       ],
@@ -1583,6 +1726,32 @@
       "framework": "vue"
     },
     {
+      "name": "system-message",
+      "type": "registry:ui",
+      "title": "System Message",
+      "description": "The lines a channel writes about itself — joins, boosts, pins — with no author and no avatar.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/system-message/SystemMessage.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/system-message/SystemMessageActor.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/system-message/SystemMessageTime.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/system-message/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
@@ -1602,6 +1771,39 @@
         },
         {
           "path": "registry/bases/newt/ui/tabs/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "thread-preview",
+      "type": "registry:ui",
+      "title": "Thread Preview",
+      "description": "The thread hanging off a message: its name, its reply count and the last thing said.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/thread-preview/ThreadPreview.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/thread-preview/ThreadPreviewCount.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/thread-preview/ThreadPreviewLast.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/thread-preview/ThreadPreviewName.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/thread-preview/ThreadPreviewSpine.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/thread-preview/index.ts",
           "type": "registry:ui"
         }
       ],
@@ -1640,6 +1842,23 @@
         },
         {
           "path": "registry/bases/newt/ui/timeline/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "timestamp",
+      "type": "registry:ui",
+      "title": "Timestamp",
+      "description": "One instant, written in the reader's own locale and time zone.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/timestamp/Timestamp.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/timestamp/index.ts",
           "type": "registry:ui"
         }
       ],

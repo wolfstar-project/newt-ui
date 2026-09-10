@@ -1,0 +1,15 @@
+{
+  "name": "thread-preview",
+  "title": "Thread Preview",
+  "description": "The thread hanging off a message: its name, its reply count and the last thing said.",
+  "vueFiles": [
+    "ThreadPreview.vue",
+    "ThreadPreviewCount.vue",
+    "ThreadPreviewLast.vue",
+    "ThreadPreviewName.vue",
+    "ThreadPreviewSpine.vue",
+    "index.ts"
+  ],
+  "reactDemo": "thread-preview-demo",
+  "vueDemo": "ThreadPreviewDemo"
+}

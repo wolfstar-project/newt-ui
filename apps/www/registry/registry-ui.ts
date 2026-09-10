@@ -198,6 +198,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "checkbox-group",
+    type: "registry:ui",
+    title: "Checkbox Group",
+    description:
+      "Several answers out of a visible list, each with an optional description.",
+    files: [
+      {
+        path: "ui/checkbox-group.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "code-block",
     type: "registry:ui",
     title: "Code Block",
@@ -248,6 +261,20 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/cooldown-bar.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "custom-emoji",
+    type: "registry:ui",
+    title: "Custom Emoji",
+    description:
+      "An uploaded emoji that sits on the text baseline and reads as :name:.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/custom-emoji.tsx",
         type: "registry:ui",
       },
     ],
@@ -319,6 +346,18 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "file-upload",
+    type: "registry:ui",
+    title: "File Upload",
+    description: "A drop zone that also opens a file picker from the keyboard.",
+    files: [
+      {
+        path: "ui/file-upload.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "form-fields",
     type: "registry:ui",
     title: "Form Fields",
@@ -364,6 +403,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/kbd-tag.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "media-gallery",
+    type: "registry:ui",
+    title: "Media Gallery",
+    description:
+      "One to ten images in a mosaic, laid out by how many there are.",
+    files: [
+      {
+        path: "ui/media-gallery.tsx",
         type: "registry:ui",
       },
     ],
@@ -500,6 +552,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "poll",
+    type: "registry:ui",
+    title: "Poll",
+    description:
+      "A question, its answers, and the share of the vote behind each one.",
+    files: [
+      {
+        path: "ui/poll.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "progress",
     type: "registry:ui",
     title: "Progress Bar",
@@ -575,6 +640,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/scrollbar.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "section",
+    type: "registry:ui",
+    title: "Section",
+    description:
+      "A block of text with one accessory beside it — a thumbnail, or a button.",
+    files: [
+      {
+        path: "ui/section.tsx",
         type: "registry:ui",
       },
     ],
@@ -711,6 +789,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "system-message",
+    type: "registry:ui",
+    title: "System Message",
+    description:
+      "The lines a channel writes about itself — joins, boosts, pins — with no author and no avatar.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/system-message.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "tabs",
     type: "registry:ui",
     title: "Tabs",
@@ -718,6 +810,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/tabs.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "thread-preview",
+    type: "registry:ui",
+    title: "Thread Preview",
+    description:
+      "The thread hanging off a message: its name, its reply count and the last thing said.",
+    files: [
+      {
+        path: "ui/thread-preview.tsx",
         type: "registry:ui",
       },
     ],
@@ -732,6 +837,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/timeline.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "timestamp",
+    type: "registry:ui",
+    title: "Timestamp",
+    description:
+      "One instant, written in the reader's own locale and time zone.",
+    files: [
+      {
+        path: "ui/timestamp.tsx",
         type: "registry:ui",
       },
     ],

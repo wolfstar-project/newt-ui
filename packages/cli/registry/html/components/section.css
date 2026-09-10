@@ -1,0 +1,47 @@
+/* newt-ui · Section */
+
+/*
+ * A block of text with one thing beside it: a thumbnail, or a button. The
+ * text column takes what is left; the accessory keeps its own width whatever
+ * the text does.
+ */
+.newt-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  inline-size: 100%;
+}
+.newt-section__content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-inline-size: 0;
+  font-size: 15px;
+  line-height: 1.375;
+  color: var(--newt-text-secondary);
+}
+.newt-section__heading {
+  font-family: var(--newt-font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--newt-text-primary);
+  margin: 0;
+}
+.newt-section__accessory {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+.newt-section__thumbnail {
+  inline-size: 86px;
+  block-size: 86px;
+  border-radius: var(--newt-radius-lg);
+  object-fit: cover;
+}
+/* Blurred until it is clicked, the same treatment a spoilered image gets. */
+.newt-section__thumbnail--spoiler {
+  filter: blur(16px);
+  cursor: pointer;
+}

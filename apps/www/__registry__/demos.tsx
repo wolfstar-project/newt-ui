@@ -15,19 +15,23 @@ import ChannelTopicDemo from "@/registry/bases/newt/examples/channel-topic-demo"
 import ChannelWelcomeDemo from "@/registry/bases/newt/examples/channel-welcome-demo"
 import ChatDemo from "@/registry/bases/newt/examples/chat-demo"
 import ChatWindowDemo from "@/registry/bases/newt/examples/chat-window-demo"
+import CheckboxGroupDemo from "@/registry/bases/newt/examples/checkbox-group-demo"
 import CodeBlockDemo from "@/registry/bases/newt/examples/code-block-demo"
 import CommandPanelDemo from "@/registry/bases/newt/examples/command-panel-demo"
 import ContextMenuDemo from "@/registry/bases/newt/examples/context-menu-demo"
 import CooldownBarDemo from "@/registry/bases/newt/examples/cooldown-bar-demo"
+import CustomEmojiDemo from "@/registry/bases/newt/examples/custom-emoji-demo"
 import DirectionDemo from "@/registry/bases/newt/examples/direction-demo"
 import DividerDemo from "@/registry/bases/newt/examples/divider-demo"
 import DropdownDemo from "@/registry/bases/newt/examples/dropdown-demo"
 import EmbedDemo from "@/registry/bases/newt/examples/embed-demo"
 import EmptyStateDemo from "@/registry/bases/newt/examples/empty-state-demo"
+import FileUploadDemo from "@/registry/bases/newt/examples/file-upload-demo"
 import FormFieldsDemo from "@/registry/bases/newt/examples/form-fields-demo"
 import InlineCodeDemo from "@/registry/bases/newt/examples/inline-code-demo"
 import InviteDemo from "@/registry/bases/newt/examples/invite-demo"
 import KbdTagDemo from "@/registry/bases/newt/examples/kbd-tag-demo"
+import MediaGalleryDemo from "@/registry/bases/newt/examples/media-gallery-demo"
 import MemberListDemo from "@/registry/bases/newt/examples/member-list-demo"
 import MentionDemo from "@/registry/bases/newt/examples/mention-demo"
 import MessageComposerDemo from "@/registry/bases/newt/examples/message-composer-demo"
@@ -37,12 +41,14 @@ import ModalDemo from "@/registry/bases/newt/examples/modal-demo"
 import NotifBadgeDemo from "@/registry/bases/newt/examples/notif-badge-demo"
 import PaginationDemo from "@/registry/bases/newt/examples/pagination-demo"
 import PermissionDemo from "@/registry/bases/newt/examples/permission-demo"
+import PollDemo from "@/registry/bases/newt/examples/poll-demo"
 import ProgressDemo from "@/registry/bases/newt/examples/progress-demo"
 import RadioDemo from "@/registry/bases/newt/examples/radio-demo"
 import ReactionDemo from "@/registry/bases/newt/examples/reaction-demo"
 import ReplyPreviewDemo from "@/registry/bases/newt/examples/reply-preview-demo"
 import RoleTagDemo from "@/registry/bases/newt/examples/role-tag-demo"
 import ScrollbarDemo from "@/registry/bases/newt/examples/scrollbar-demo"
+import SectionDemo from "@/registry/bases/newt/examples/section-demo"
 import SelectMenuDemo from "@/registry/bases/newt/examples/select-menu-demo"
 import ServerBannerDemo from "@/registry/bases/newt/examples/server-banner-demo"
 import ServerSidebarDemo from "@/registry/bases/newt/examples/server-sidebar-demo"
@@ -52,8 +58,11 @@ import SlashCommandSuggestionsDemo from "@/registry/bases/newt/examples/slash-co
 import SpoilerDemo from "@/registry/bases/newt/examples/spoiler-demo"
 import StageBannerDemo from "@/registry/bases/newt/examples/stage-banner-demo"
 import StatusIndicatorDemo from "@/registry/bases/newt/examples/status-indicator-demo"
+import SystemMessageDemo from "@/registry/bases/newt/examples/system-message-demo"
 import TabsDemo from "@/registry/bases/newt/examples/tabs-demo"
+import ThreadPreviewDemo from "@/registry/bases/newt/examples/thread-preview-demo"
 import TimelineDemo from "@/registry/bases/newt/examples/timeline-demo"
+import TimestampDemo from "@/registry/bases/newt/examples/timestamp-demo"
 import ToastDemo from "@/registry/bases/newt/examples/toast-demo"
 import TokenFieldDemo from "@/registry/bases/newt/examples/token-field-demo"
 import TooltipDemo from "@/registry/bases/newt/examples/tooltip-demo"
@@ -81,19 +90,23 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["channel-welcome", ChannelWelcomeDemo],
   ["chat", ChatDemo],
   ["chat-window", ChatWindowDemo],
+  ["checkbox-group", CheckboxGroupDemo],
   ["code-block", CodeBlockDemo],
   ["command-panel", CommandPanelDemo],
   ["context-menu", ContextMenuDemo],
   ["cooldown-bar", CooldownBarDemo],
+  ["custom-emoji", CustomEmojiDemo],
   ["direction", DirectionDemo],
   ["divider", DividerDemo],
   ["dropdown", DropdownDemo],
   ["embed", EmbedDemo],
   ["empty-state", EmptyStateDemo],
+  ["file-upload", FileUploadDemo],
   ["form-fields", FormFieldsDemo],
   ["inline-code", InlineCodeDemo],
   ["invite", InviteDemo],
   ["kbd-tag", KbdTagDemo],
+  ["media-gallery", MediaGalleryDemo],
   ["member-list", MemberListDemo],
   ["mention", MentionDemo],
   ["message-composer", MessageComposerDemo],
@@ -103,12 +116,14 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["notif-badge", NotifBadgeDemo],
   ["pagination", PaginationDemo],
   ["permission", PermissionDemo],
+  ["poll", PollDemo],
   ["progress", ProgressDemo],
   ["radio", RadioDemo],
   ["reaction", ReactionDemo],
   ["reply-preview", ReplyPreviewDemo],
   ["role-tag", RoleTagDemo],
   ["scrollbar", ScrollbarDemo],
+  ["section", SectionDemo],
   ["select-menu", SelectMenuDemo],
   ["server-banner", ServerBannerDemo],
   ["server-sidebar", ServerSidebarDemo],
@@ -118,8 +133,11 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["spoiler", SpoilerDemo],
   ["stage-banner", StageBannerDemo],
   ["status-indicator", StatusIndicatorDemo],
+  ["system-message", SystemMessageDemo],
   ["tabs", TabsDemo],
+  ["thread-preview", ThreadPreviewDemo],
   ["timeline", TimelineDemo],
+  ["timestamp", TimestampDemo],
   ["toast", ToastDemo],
   ["token-field", TokenFieldDemo],
   ["tooltip", TooltipDemo],

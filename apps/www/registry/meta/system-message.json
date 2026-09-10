@@ -1,0 +1,14 @@
+{
+  "name": "system-message",
+  "title": "System Message",
+  "description": "The lines a channel writes about itself — joins, boosts, pins — with no author and no avatar.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": [
+    "SystemMessage.vue",
+    "SystemMessageActor.vue",
+    "SystemMessageTime.vue",
+    "index.ts"
+  ],
+  "reactDemo": "system-message-demo",
+  "vueDemo": "SystemMessageDemo"
+}

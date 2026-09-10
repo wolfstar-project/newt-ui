@@ -1,0 +1,19 @@
+/* newt-ui · Custom Emoji */
+
+/*
+ * A custom emoji is an image that has to behave like a letter: it sits on the
+ * text baseline and carries its name as its accessible text, so a reader who
+ * cannot see it still hears `:name:`.
+ */
+.newt-emoji {
+  display: inline-block;
+  inline-size: 1.375em;
+  block-size: 1.375em;
+  object-fit: contain;
+  vertical-align: -0.2em;
+}
+/* A message made only of emoji renders them large. */
+.newt-emoji--jumbo {
+  inline-size: 48px;
+  block-size: 48px;
+}

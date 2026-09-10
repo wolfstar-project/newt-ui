@@ -1,0 +1,8 @@
+{
+  "name": "file-upload",
+  "title": "File Upload",
+  "description": "A drop zone that also opens a file picker from the keyboard.",
+  "vueFiles": ["FileUpload.vue", "index.ts"],
+  "reactDemo": "file-upload-demo",
+  "vueDemo": "FileUploadDemo"
+}
