@@ -19,7 +19,6 @@ const pathname = Astro.url.pathname
                   aria-current={item.href === pathname ? "page" : undefined}
                 >
                   {item.label}
-                  {item.badge && <span class="sidebar-badge" data-badge={item.badge} />}
                 </a>
               </li>
             ))}

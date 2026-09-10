@@ -1007,13 +1007,6 @@
     font-weight: 600;
   }
 
-  .sidebar-badge {
-    width: 0.4rem;
-    height: 0.4rem;
-    border-radius: var(--newt-radius-full);
-    background: var(--newt-brand);
-  }
-
   .sidebar-footer {
     margin-top: 2rem;
     font-size: 0.75rem;

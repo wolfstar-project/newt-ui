@@ -6,7 +6,6 @@ import { COMPONENTS } from "./registry"
 export interface NavItem {
   readonly href: string
   readonly label: string
-  readonly badge?: "new" | "updated"
   /** Machine routes and external links sit outside the previous/next walk. */
   readonly external?: boolean
 }
@@ -32,18 +31,18 @@ const GUIDES: readonly NavGroup[] = [
     items: [
       { href: "/docs", label: "Introduction" },
       { href: "/docs/installation", label: "Installation" },
-      { href: "/docs/create", label: "Presets", badge: "new" },
-      { href: "/docs/typeset", label: "Typeset", badge: "new" },
+      { href: "/docs/create", label: "Presets" },
+      { href: "/docs/typeset", label: "Typeset" },
       { href: "/docs/components-json", label: "components.json" },
       { href: "/docs/theming", label: "Theming" },
       { href: "/docs/dark-mode", label: "Dark mode" },
-      { href: "/docs/rtl", label: "RTL", badge: "new" },
+      { href: "/docs/rtl", label: "RTL" },
       { href: "/docs/cli", label: "CLI" },
       { href: "/docs/javascript", label: "JavaScript" },
       { href: "/docs/html-css", label: "HTML & CSS" },
       { href: "/docs/using-with-ai", label: "Using with AI" },
-      { href: "/docs/mcp", label: "MCP server", badge: "new" },
-      { href: "/docs/skills", label: "Skills", badge: "new" },
+      { href: "/docs/mcp", label: "MCP server" },
+      { href: "/docs/skills", label: "Skills" },
       { href: "/docs/changelog", label: "Changelog" },
       { href: "/llms.txt", label: "llms.txt", external: true },
     ],
@@ -71,7 +70,7 @@ const GUIDES: readonly NavGroup[] = [
   {
     label: "Forms",
     items: [
-      { href: "/docs/forms", label: "Overview", badge: "new" },
+      { href: "/docs/forms", label: "Overview" },
       { href: "/docs/forms/react-hook-form", label: "react-hook-form" },
       { href: "/docs/forms/tanstack-form", label: "TanStack Form" },
       { href: "/docs/forms/vee-validate", label: "vee-validate" },
