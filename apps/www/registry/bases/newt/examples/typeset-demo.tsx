@@ -1,3 +1,4 @@
+import { Spoiler } from "@/registry/bases/newt/ui/spoiler"
 import { Typeset } from "@/registry/bases/newt/ui/typeset"
 
 /*
@@ -33,6 +34,11 @@ export default function TypesetDemo() {
           </strong>
         </u>{" "}
         each arrive as elements inside elements.
+      </p>
+      <p>
+        <code>||spoiler||</code> is not text styling — it is interface, so it
+        stays a component rather than a class: <Spoiler>hidden text</Spoiler>{" "}
+        until it is clicked.
       </p>
       <blockquote>
         <p>One chevron quotes a single line.</p>

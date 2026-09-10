@@ -44,12 +44,16 @@ class of its own.
 | `> quote` / `>>> quote`  | `<blockquote>`       | Rule on the inline start edge. Holds several paragraphs. |
 | `- item` / `1. item`     | `<ul>` / `<ol>`      | Nested lists keep their own counter and a tighter gap.   |
 | `-# subtext`             | `<small>`            | Smaller and quieter, on the same rhythm.                 |
+| `\|\|spoiler\|\|`        | `<Spoiler>`          | Interface, not styling — see below.                      |
 
 <Callout>
-  Spoilers, mentions and timestamps are not text styling — they are interface,
-  and they have their own components: [Spoiler](/docs/components/spoiler),
-  [Mention](/docs/components/mention). Wrap either in `not-typeset` if it lands
-  inside a body of prose and should keep its own spacing.
+  A spoiler is not text styling: it hides content until clicked, which a class
+  cannot do. It stays the [Spoiler](/docs/components/spoiler) component, dropped
+  inline into the prose — `add typeset` installs it too. Mentions and timestamps
+  are the same story: their own components, not this stylesheet. Anything
+  block-level dropped into a typeset body — a card, a form, a wider widget —
+  should carry `not-typeset` so it keeps its own spacing rather than the
+  surrounding rhythm.
 </Callout>
 
 ## API reference

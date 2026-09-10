@@ -4,6 +4,7 @@
  * component has to survive: Typeset never sees the source, only the markup a
  * renderer produced from it.
  */
+import { Spoiler } from "~~/registry/bases/newt/ui/spoiler"
 import { Typeset } from "~~/registry/bases/newt/ui/typeset"
 </script>
 
@@ -25,6 +26,11 @@ import { Typeset } from "~~/registry/bases/newt/ui/typeset"
         ><strong><em>all three at once</em></strong></u
       >
       each arrive as elements inside elements.
+    </p>
+    <p>
+      <code>||spoiler||</code> is not text styling — it is interface, so it
+      stays a component rather than a class: <Spoiler>hidden text</Spoiler>
+      until it is clicked.
     </p>
     <blockquote>
       <p>One chevron quotes a single line.</p>
