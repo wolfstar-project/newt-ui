@@ -347,22 +347,38 @@ const vscodeMcpUrl = `vscode:mcp/install?${encodeURIComponent(
       trigger.focus()
     })
 
-    copy.addEventListener("click", async () => {
-      const path = root.dataset.markdown
-      if (!path) return
-      /* Only the title changes: the sentence under it still says what it did. */
-      const original = label.textContent
-      try {
-        const response = await fetch(path)
-        await navigator.clipboard.writeText(await response.text())
-        label.textContent = "Copied"
-      } catch {
-        label.textContent = "Copy failed"
-      }
-      setTimeout(() => {
-        label.textContent = original
-        setOpen(false)
-      }, 1200)
-    })
+    /*
+     * Two things in this menu copy to the clipboard: the page itself, fetched
+     * from its markdown twin, and the MCP config, already known at build time.
+     * Both share the same feedback — only the title changes, so the sentence
+     * under it still says what the row did.
+     */
+    for (const button of menu.querySelectorAll<HTMLButtonElement>(
+      "[data-copy-markdown], [data-copy-text]"
+    )) {
+      const label = button.querySelector<HTMLElement>("[data-copy-label]")
+      if (!label) continue
+
+      button.addEventListener("click", async () => {
+        const original = label.textContent
+        try {
+          const text =
+            button.dataset.copyText ??
+            (await (async () => {
+              const path = root.dataset.markdown
+              if (!path) throw new Error("No markdown path on this menu.")
+              return (await fetch(path)).text()
+            })())
+          await navigator.clipboard.writeText(text)
+          label.textContent = "Copied"
+        } catch {
+          label.textContent = "Copy failed"
+        }
+        setTimeout(() => {
+          label.textContent = original
+          setOpen(false)
+        }, 1200)
+      })
+    }
   }
 </script>
