@@ -49,19 +49,15 @@ export const categories: DocsCategory[] = [
       "message-composer",
       "embed",
       "message-group",
-      "action-row",
       "invite",
       "reaction",
       "reply-preview",
       "poll",
       "system-message",
       "thread-preview",
-      "section",
-      "media-gallery",
       "attachment",
       "slash-command",
       "slash-command-suggestions",
-      "v2-container",
       "divider",
       "channel-header",
       "channel-topic",
@@ -71,17 +67,34 @@ export const categories: DocsCategory[] = [
       "user-profile",
     ],
   },
+  /*
+   * The pieces that exist because a message or modal payload defines them,
+   * rather than because an interface needs them: they are assembled by an app
+   * and rendered by the client, and they are listed in the platform's own
+   * component reference. Anything that is also an ordinary control — a button,
+   * a select, a radio group — stays with its own kind.
+   */
+  {
+    slug: "message-components",
+    label: "Message components",
+    components: [
+      "action-row",
+      "v2-container",
+      "section",
+      "media-gallery",
+      "entity-select",
+      "file-upload",
+      "checkbox-group",
+    ],
+  },
   {
     slug: "forms-data",
     label: "Forms & data",
     components: [
       "form-fields",
       "radio",
-      "checkbox-group",
-      "file-upload",
       "token-field",
       "select-menu",
-      "entity-select",
       "card",
       "permission",
       "timeline",
