@@ -22,6 +22,10 @@ interface Props {
   readonly links?: { readonly doc?: string; readonly api?: string }
   /** The `.md` twin; omitted on generated pages, which have none. */
   readonly markdownPath?: string
+  /** Where this page is written, for the link that goes and changes it. */
+  readonly sourcePath?: string
+  /** The registry item this page documents, when it documents one. */
+  readonly registryItem?: string
 }
 
 const {
@@ -32,6 +36,8 @@ const {
   pager = true,
   links,
   markdownPath,
+  sourcePath,
+  registryItem,
 } = Astro.props
 
 const showToc = toc && headings.length > 0
@@ -46,7 +52,15 @@ const showToc = toc && headings.length > 0
         <header class="docs-header">
           <div class="docs-header-row">
             <h1 data-pagefind-meta="title">{title}</h1>
-            {markdownPath && <CopyPage markdownPath={markdownPath} />}
+            {
+              markdownPath && (
+                <CopyPage
+                  markdownPath={markdownPath}
+                  sourcePath={sourcePath}
+                  registryItem={registryItem}
+                />
+              )
+            }
           </div>
           <p class="docs-description">{description}</p>
           {

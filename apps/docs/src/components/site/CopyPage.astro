@@ -3,21 +3,52 @@ import { SITE } from "../../lib/site"
 
 /*
  * Every docs page is also served as markdown at the same path plus `.md`.
- * This menu is the handle on that: copy it, read it, or hand the URL to an
- * assistant that will fetch it.
+ * This menu is the handle on that: copy it, read it, hand it to an assistant
+ * that will fetch it, or go and change it.
+ *
+ * Each row says what it does twice — a name, and the sentence under it — so a
+ * reader deciding between "copy" and "view" does not have to guess which one
+ * ends up on the clipboard.
  */
 interface Props {
   /** The `.md` twin of the current page. */
   readonly markdownPath: string
+  /** Where this page is written, relative to the repository root. */
+  readonly sourcePath?: string
+  /** The registry item this page documents, when it documents one. */
+  readonly registryItem?: string
 }
 
-const { markdownPath } = Astro.props
+const { markdownPath, sourcePath, registryItem } = Astro.props
+
 const absolute = new URL(markdownPath, SITE.url).href
-const prompt = `Read ${absolute} — it is the ${SITE.name} documentation for this component — and help me use it.`
+const prompt = `Read ${absolute} — it is the ${SITE.name} documentation for this page — and help me use it.`
+const query = encodeURIComponent(prompt)
+
+const editUrl =
+  sourcePath === undefined
+    ? undefined
+    : `${SITE.github}/blob/main/${sourcePath}`
+
+/*
+ * v0 takes a registry item rather than a page: it reads the same JSON the CLI
+ * installs from, which is why this only appears where an item exists.
+ */
+const v0Url =
+  registryItem === undefined
+    ? undefined
+    : `https://v0.dev/chat/api/open?url=${encodeURIComponent(
+        new URL(`/r/styles/default/${registryItem}.json`, SITE.url).href
+      )}`
 ---
 
 <div class="copy-page" data-copy-page data-markdown={markdownPath}>
-  <button type="button" class="copy-page-trigger" aria-expanded="false" aria-haspopup="menu">
+  <button
+    type="button"
+    class="copy-page-trigger"
+    aria-expanded="false"
+    aria-haspopup="menu"
+  >
     Copy page
     <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-caret">
       <path
@@ -28,37 +59,154 @@ const prompt = `Read ${absolute} — it is the ${SITE.name} documentation for th
         stroke-linecap="round"></path>
     </svg>
   </button>
+
   <div class="copy-page-menu" role="menu" hidden>
-    <button type="button" role="menuitem" data-copy-markdown>Copy as Markdown</button>
-    <a role="menuitem" href={markdownPath}>View as Markdown</a>
+    <button type="button" role="menuitem" data-copy-markdown>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+        <path
+          fill="currentColor"
+          d="M9 2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V6.4a2 2 0 0 0-.6-1.4l-2.4-2.4A2 2 0 0 0 15.6 2H9Zm0 2h6v3a1 1 0 0 0 1 1h2v6H9V4ZM5 7a1 1 0 0 1 1 1v10h9a1 1 0 1 1 0 2H6a2 2 0 0 1-2-2V8a1 1 0 0 1 1-1Z"
+        />
+      </svg>
+      <span class="copy-page-text">
+        <span class="copy-page-title" data-copy-label>Copy page</span>
+        <span class="copy-page-hint">Copy this page as Markdown, for an LLM</span>
+      </span>
+    </button>
+
+    <a role="menuitem" href={markdownPath}>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+        <path
+          fill="currentColor"
+          d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm0 2v10h16V7H4Zm1.6 8V9h1.9l1.6 2 1.6-2h1.9v6h-1.9v-3.2L9.1 13.6 7.5 11.8V15H5.6Zm10.5 0-2.4-3h1.5V9h1.8v3h1.5l-2.4 3Z"
+        />
+      </svg>
+      <span class="copy-page-text">
+        <span class="copy-page-title">View as Markdown</span>
+        <span class="copy-page-hint">Open this page as plain text</span>
+      </span>
+    </a>
+
+    {
+      v0Url && (
+        <a role="menuitem" href={v0Url} target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+            <path
+              fill="currentColor"
+              d="M3 7h2.1l2.1 7.3L9.3 7h2.1l-3.1 10H6.1L3 7Zm14 0a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0v-2a4 4 0 0 1 4-4Zm0 2a2 2 0 0 0-2 2v2a2 2 0 1 0 4 0v-2a2 2 0 0 0-2-2Z"
+            />
+          </svg>
+          <span class="copy-page-text">
+            <span class="copy-page-title">Open in v0</span>
+            <span class="copy-page-hint">Build with this component in v0</span>
+          </span>
+        </a>
+      )
+    }
+
     <a
       role="menuitem"
-      href={`https://claude.ai/new?q=${encodeURIComponent(prompt)}`}
+      href={`https://claude.ai/new?q=${query}`}
       target="_blank"
-      rel="noreferrer">Open in Claude</a
+      rel="noreferrer"
     >
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+        <path
+          fill="currentColor"
+          d="M12 3a9 9 0 0 0-7.7 13.7L3 21l4.4-1.3A9 9 0 1 0 12 3Zm0 2a7 7 0 1 1-3.6 13l-.4-.2-2.2.6.6-2.1-.2-.4A7 7 0 0 1 12 5Z"
+        />
+      </svg>
+      <span class="copy-page-text">
+        <span class="copy-page-title">Open in Claude</span>
+        <span class="copy-page-hint">Use this page in another AI chat</span>
+      </span>
+    </a>
+
     <a
       role="menuitem"
-      href={`https://chatgpt.com/?q=${encodeURIComponent(prompt)}`}
+      href={`https://chatgpt.com/?q=${query}`}
       target="_blank"
-      rel="noreferrer">Open in ChatGPT</a
+      rel="noreferrer"
     >
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+        <path
+          fill="currentColor"
+          d="M12 2a5 5 0 0 1 4.3 2.5A5 5 0 0 1 20 9.4v5.2a5 5 0 0 1-3.7 4.9A5 5 0 0 1 12 22a5 5 0 0 1-4.3-2.5A5 5 0 0 1 4 14.6V9.4a5 5 0 0 1 3.7-4.9A5 5 0 0 1 12 2Zm0 2a3 3 0 0 0-3 3v10a3 3 0 1 0 6 0V7a3 3 0 0 0-3-3Z"
+        />
+      </svg>
+      <span class="copy-page-text">
+        <span class="copy-page-title">Open in ChatGPT</span>
+        <span class="copy-page-hint">Use this page in another AI chat</span>
+      </span>
+    </a>
+
+    {
+      editUrl && (
+        <a role="menuitem" href={editUrl} target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+            <path
+              fill="currentColor"
+              d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .26.18.58.69.48A10 10 0 0 0 12 2Z"
+            />
+          </svg>
+          <span class="copy-page-text">
+            <span class="copy-page-title">Edit this page on GitHub</span>
+            <span class="copy-page-hint">Suggest a change to this page</span>
+          </span>
+        </a>
+      )
+    }
   </div>
 </div>
 
 <script>
-  for (const root of document.querySelectorAll<HTMLElement>("[data-copy-page]")) {
+  for (const root of document.querySelectorAll<HTMLElement>(
+    "[data-copy-page]"
+  )) {
     const trigger = root.querySelector<HTMLButtonElement>(".copy-page-trigger")
     const menu = root.querySelector<HTMLElement>(".copy-page-menu")
     const copy = root.querySelector<HTMLButtonElement>("[data-copy-markdown]")
-    if (!trigger || !menu || !copy) continue
+    const label = root.querySelector<HTMLElement>("[data-copy-label]")
+    if (!trigger || !menu || !copy || !label) continue
+
+    const items = [...menu.querySelectorAll<HTMLElement>("[role='menuitem']")]
 
     const setOpen = (open: boolean) => {
       menu.hidden = !open
       trigger.setAttribute("aria-expanded", String(open))
     }
 
+    /* The arrows walk the menu; the first and last wrap into each other. */
+    const focusItem = (index: number) => {
+      const item = items[(index + items.length) % items.length]
+      item?.focus()
+    }
+
     trigger.addEventListener("click", () => setOpen(menu.hidden !== false))
+
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return
+      event.preventDefault()
+      setOpen(true)
+      focusItem(event.key === "ArrowDown" ? 0 : items.length - 1)
+    })
+
+    menu.addEventListener("keydown", (event) => {
+      const current = items.indexOf(document.activeElement as HTMLElement)
+      if (event.key === "ArrowDown") {
+        event.preventDefault()
+        focusItem(current + 1)
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault()
+        focusItem(current - 1)
+      } else if (event.key === "Home") {
+        event.preventDefault()
+        focusItem(0)
+      } else if (event.key === "End") {
+        event.preventDefault()
+        focusItem(items.length - 1)
+      }
+    })
 
     document.addEventListener("click", (event) => {
       // SAFETY: a click event's target is always a Node in the document.
@@ -67,22 +215,25 @@ const prompt = `Read ${absolute} — it is the ${SITE.name} documentation for th
     })
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") setOpen(false)
+      if (event.key !== "Escape" || menu.hidden) return
+      setOpen(false)
+      trigger.focus()
     })
 
     copy.addEventListener("click", async () => {
       const path = root.dataset.markdown
       if (!path) return
-      const label = copy.textContent
+      /* Only the title changes: the sentence under it still says what it did. */
+      const original = label.textContent
       try {
         const response = await fetch(path)
         await navigator.clipboard.writeText(await response.text())
-        copy.textContent = "Copied"
+        label.textContent = "Copied"
       } catch {
-        copy.textContent = "Copy failed"
+        label.textContent = "Copy failed"
       }
       setTimeout(() => {
-        copy.textContent = label
+        label.textContent = original
         setOpen(false)
       }, 1200)
     })

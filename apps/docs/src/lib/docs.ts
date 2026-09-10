@@ -19,3 +19,18 @@ export function pathFor(id: string): string {
 export function markdownPathFor(id: string): string {
   return `/docs/${id}.md`
 }
+
+/** Where a page is written, relative to the repository root. */
+export function sourcePathFor(id: string): string {
+  return `apps/docs/src/content/docs/${id}.mdx`
+}
+
+/**
+ * The registry item a page documents, for the pages that document one. Every
+ * other page — a guide, an installation path — returns nothing, because there
+ * is no item behind it to hand anybody.
+ */
+export function registryItemFor(id: string): string | undefined {
+  const prefix = "components/"
+  return id.startsWith(prefix) ? id.slice(prefix.length) : undefined
+}

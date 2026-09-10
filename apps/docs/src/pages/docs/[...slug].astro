@@ -13,7 +13,11 @@ import Tabs from "../../components/mdx/Tabs.astro"
 import TokensNote from "../../components/mdx/TokensNote.astro"
 import Usage from "../../components/mdx/Usage.astro"
 import Docs from "../../layouts/Docs.astro"
-import { markdownPathFor } from "../../lib/docs"
+import {
+  markdownPathFor,
+  registryItemFor,
+  sourcePathFor,
+} from "../../lib/docs"
 
 export async function getStaticPaths() {
   const entries = await getCollection("docs")
@@ -58,6 +62,8 @@ const components = {
   pager={entry.data.pager}
   links={entry.data.links}
   markdownPath={markdownPathFor(entry.id)}
+  sourcePath={sourcePathFor(entry.id)}
+  registryItem={registryItemFor(entry.id)}
 >
   <Content components={components} />
 </Docs>
