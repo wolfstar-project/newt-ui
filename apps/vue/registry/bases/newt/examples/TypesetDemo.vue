@@ -53,7 +53,9 @@ import { Typeset } from "~~/registry/bases/newt/ui/typeset"
   name: "release-notes",
 })</code></pre>
     <small>
-      Subtext is the aside under a message: smaller, quieter, same rhythm.
+      Subtext is the aside under a message: smaller, quieter, same rhythm — and
+      it still holds an element, like
+      <a href="#typeset-demo">a dismiss link</a>, at the same size.
     </small>
   </Typeset>
 </template>

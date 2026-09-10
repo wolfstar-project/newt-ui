@@ -63,7 +63,9 @@ export default function TypesetDemo() {
 })`}</code>
       </pre>
       <small>
-        Subtext is the aside under a message: smaller, quieter, same rhythm.
+        Subtext is the aside under a message: smaller, quieter, same rhythm —
+        and it still holds an element, like{" "}
+        <a href="#typeset-demo">a dismiss link</a>, at the same size.
       </small>
     </Typeset>
   )
