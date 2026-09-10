@@ -424,6 +424,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "entity-select",
+    {
+      name: "entity-select",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/entity-select/EntitySelect.vue",
+        "registry/bases/newt/ui/entity-select/index.ts",
+      ],
+    },
+  ],
+  [
     "file-upload",
     {
       name: "file-upload",
@@ -1394,6 +1406,31 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/EmptyStateDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/EmptyStateDemo.vue")
+      ),
+    },
+  ],
+  [
+    "EntitySelectDemo",
+    {
+      name: "EntitySelectDemo",
+      type: "registry:example",
+      registryDependencies: ["entity-select"],
+      files: ["registry/bases/newt/examples/EntitySelectDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/EntitySelectDemo.vue")
+      ),
+    },
+  ],
+  [
+    "EntitySelectRolesDemo",
+    {
+      name: "EntitySelectRolesDemo",
+      type: "registry:example",
+      registryDependencies: ["entity-select"],
+      files: ["registry/bases/newt/examples/EntitySelectRolesDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/EntitySelectRolesDemo.vue")
       ),
     },
   ],

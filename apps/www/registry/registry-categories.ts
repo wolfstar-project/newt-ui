@@ -81,6 +81,7 @@ export const categories: DocsCategory[] = [
       "file-upload",
       "token-field",
       "select-menu",
+      "entity-select",
       "card",
       "permission",
       "timeline",

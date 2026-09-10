@@ -358,6 +358,13 @@
       "js": "select-menu.js"
     },
     {
+      "name": "entity-select",
+      "title": "Entity Select",
+      "rootClass": "newt-entity-select",
+      "files": ["entity-select.css", "entity-select.html"],
+      "js": "entity-select.js"
+    },
+    {
       "name": "bot-command-card",
       "title": "Bot Command Card",
       "rootClass": "newt-command-card",

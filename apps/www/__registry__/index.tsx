@@ -304,6 +304,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "entity-select",
+    {
+      name: "entity-select",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/entity-select.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/entity-select")
+      ),
+    },
+  ],
+  [
     "file-upload",
     {
       name: "file-upload",
@@ -1119,6 +1131,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/empty-state-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/empty-state-demo")
+      ),
+    },
+  ],
+  [
+    "entity-select-demo",
+    {
+      name: "entity-select-demo",
+      type: "registry:example",
+      registryDependencies: ["entity-select"],
+      files: ["registry/bases/newt/examples/entity-select-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/entity-select-demo")
+      ),
+    },
+  ],
+  [
+    "entity-select-roles-demo",
+    {
+      name: "entity-select-roles-demo",
+      type: "registry:example",
+      registryDependencies: ["entity-select"],
+      files: ["registry/bases/newt/examples/entity-select-roles-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/entity-select-roles-demo")
       ),
     },
   ],

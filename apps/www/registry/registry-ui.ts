@@ -346,6 +346,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "entity-select",
+    type: "registry:ui",
+    title: "Entity Select",
+    description:
+      "The picker for a server's own members, roles and channels, with chips when more than one may be chosen.",
+    files: [
+      {
+        path: "ui/entity-select.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "file-upload",
     type: "registry:ui",
     title: "File Upload",

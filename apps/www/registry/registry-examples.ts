@@ -278,6 +278,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "entity-select-demo",
+    type: "registry:example",
+    registryDependencies: ["entity-select"],
+    files: [
+      {
+        path: "examples/entity-select-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "entity-select-roles-demo",
+    type: "registry:example",
+    registryDependencies: ["entity-select"],
+    files: [
+      {
+        path: "examples/entity-select-roles-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "file-upload-demo",
     type: "registry:example",
     registryDependencies: ["file-upload"],

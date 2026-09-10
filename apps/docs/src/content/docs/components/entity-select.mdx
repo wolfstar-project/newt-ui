@@ -1,0 +1,51 @@
+---
+title: "Entity Select"
+description: "The picker for a server's own members, roles and channels, with chips when more than one may be chosen."
+component: true
+---
+
+The picker for the things a server already knows about: its members, its roles, its channels, or all of them at once. It is a separate control from the [string select](/docs/components/select-menu) rather than a mode of it, because the rows are not strings — a member arrives with a face, a role with a colour and a headcount, a channel with the glyph that says what kind of channel it is.
+
+<ComponentPreview name="entity-select" />
+
+## More than one \{#multiple\}
+
+`max` above one turns the control into chips: the choices leave the list and sit in the trigger, each with a cross, and every row grows a box instead of a tick — the shape is what says whether picking this one un-picks the last. Backspace removes the chip nearest the caret.
+
+At the limit the list stays open and stops taking more, rather than silently dropping the oldest choice: somebody picked those, and a control that quietly un-picks one is a control that lies.
+
+<ComponentPreview name="entity-select" variant="roles" />
+
+## Installation
+
+<Installation name="entity-select" />
+
+## Usage
+
+<Usage name="entity-select" />
+
+## API reference
+
+<PropsTable
+  of="EntitySelect"
+  rows={[
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "Content rendered inside the component.",
+    },
+    {
+      name: "className / class",
+      type: "string",
+      description: "Additional classes merged with the component defaults.",
+    },
+  ]}
+/>
+
+## Accessibility
+
+Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+## Tokens
+
+<TokensNote name="entity-select" />

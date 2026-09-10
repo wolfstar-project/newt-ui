@@ -1,0 +1,219 @@
+/* newt-ui · Entity Select */
+
+/*
+ * The picker for things the server already knows about: its members, its
+ * roles, its channels, or all of them at once.
+ *
+ * A separate control from the string select rather than a mode of it, because
+ * the rows are not strings: a member arrives with a face, a role with a colour
+ * and a headcount, a channel with the glyph that says what kind it is. When
+ * more than one may be chosen, the choices leave the list and sit in the
+ * control as chips.
+ */
+.newt-entity-select {
+  position: relative;
+  inline-size: 100%;
+  max-inline-size: 420px;
+}
+.newt-entity-select__trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  inline-size: 100%;
+  padding: 8px 12px;
+  text-align: start;
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  background: var(--newt-bg-base);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  cursor: pointer;
+  transition: border-color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-entity-select__trigger:hover {
+  border-color: var(--newt-text-muted);
+}
+.newt-entity-select__trigger:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-entity-select__trigger[aria-expanded="true"] {
+  border-color: var(--newt-text-link);
+}
+.newt-entity-select__trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.newt-entity-select__values {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-inline-size: 0;
+}
+.newt-entity-select__placeholder {
+  color: var(--newt-text-muted);
+}
+.newt-entity-select__chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  font-size: 12px;
+  color: var(--newt-text-primary);
+  background: var(--newt-bg-elevated);
+  border-radius: var(--newt-radius-sm);
+}
+.newt-entity-select__chip svg {
+  inline-size: 12px;
+  block-size: 12px;
+}
+.newt-entity-select__caret {
+  inline-size: 18px;
+  block-size: 18px;
+  flex-shrink: 0;
+}
+.newt-entity-select__trigger[aria-expanded="true"] .newt-entity-select__caret {
+  transform: rotate(180deg);
+}
+
+.newt-entity-select__panel {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: calc(100% + 4px);
+  z-index: 50;
+  padding: 6px;
+  background: var(--newt-bg-floating);
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  box-shadow: var(--newt-shadow-elevation-high);
+}
+/* Flipped above the trigger when there is no room below it. */
+.newt-entity-select__panel[data-placement="above"] {
+  inset-block-start: auto;
+  inset-block-end: calc(100% + 4px);
+}
+.newt-entity-select__panel[hidden] {
+  display: none;
+}
+/*
+ * The scrollbar shows rather than hiding until the pointer moves: the list is
+ * capped at 25, so the bar is what says there is more of it below the fold.
+ */
+.newt-entity-select__listbox {
+  margin: 0;
+  padding: 0;
+  max-block-size: 300px;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--newt-bg-active) transparent;
+}
+.newt-entity-select__listbox::-webkit-scrollbar {
+  width: 8px;
+}
+.newt-entity-select__listbox::-webkit-scrollbar-track {
+  background: transparent;
+}
+.newt-entity-select__listbox::-webkit-scrollbar-thumb {
+  background-color: var(--newt-bg-active);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+.newt-entity-select__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+  border-radius: var(--newt-radius-sm);
+  cursor: pointer;
+}
+.newt-entity-select__option:hover,
+.newt-entity-select__option--active {
+  background: var(--newt-bg-elevated);
+}
+.newt-entity-select__option[aria-selected="true"] {
+  color: var(--newt-text-primary);
+}
+.newt-entity-select__option[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: none;
+}
+.newt-entity-select__icon {
+  inline-size: 24px;
+  block-size: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.newt-entity-select__label {
+  flex: 1;
+  min-inline-size: 0;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* The headcount beside a role: a number and the glyph for people. */
+.newt-entity-select__count {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--newt-text-muted);
+}
+.newt-entity-select__count svg {
+  inline-size: 14px;
+  block-size: 14px;
+}
+.newt-entity-select__badge {
+  flex-shrink: 0;
+  padding: 2px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--newt-brand);
+  border-radius: var(--newt-radius-sm);
+}
+/*
+ * A box rather than a tick, and only when more than one may be chosen: the
+ * shape says whether picking this one un-picks the last.
+ */
+.newt-entity-select__box {
+  inline-size: 20px;
+  block-size: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--newt-text-muted);
+  border-radius: var(--newt-radius-sm);
+}
+.newt-entity-select__option[aria-selected="true"] .newt-entity-select__box {
+  background: var(--newt-brand);
+  border-color: var(--newt-brand);
+}
+.newt-entity-select__box svg {
+  inline-size: 14px;
+  block-size: 14px;
+  color: #fff;
+  display: none;
+}
+.newt-entity-select__option[aria-selected="true"] .newt-entity-select__box svg {
+  display: block;
+}
+.newt-entity-select__empty {
+  padding: 8px 10px;
+  font-size: 14px;
+  color: var(--newt-text-muted);
+}

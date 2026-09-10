@@ -43,6 +43,7 @@ const rootClassEntries = [
   ["user-profile", "newt-profile"],
   ["message-group", "newt-message-group"],
   ["select-menu", "newt-select-menu"],
+  ["entity-select", "newt-entity-select"],
   ["bot-command-card", "newt-command-card"],
 ] as const
 

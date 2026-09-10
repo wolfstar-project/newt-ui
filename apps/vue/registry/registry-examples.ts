@@ -278,6 +278,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "EntitySelectDemo",
+    type: "registry:example",
+    registryDependencies: ["entity-select"],
+    files: [
+      {
+        path: "examples/EntitySelectDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "EntitySelectRolesDemo",
+    type: "registry:example",
+    registryDependencies: ["entity-select"],
+    files: [
+      {
+        path: "examples/EntitySelectRolesDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "FileUploadDemo",
     type: "registry:example",
     registryDependencies: ["file-upload"],

@@ -1,0 +1,9 @@
+{
+  "name": "entity-select",
+  "title": "Entity Select",
+  "description": "The picker for a server's own members, roles and channels, with chips when more than one may be chosen.",
+  "vueFiles": ["EntitySelect.vue", "index.ts"],
+  "reactDemo": "entity-select-demo",
+  "vueDemo": "EntitySelectDemo",
+  "examples": ["roles"]
+}

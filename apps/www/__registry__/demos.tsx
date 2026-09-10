@@ -26,6 +26,7 @@ import DividerDemo from "@/registry/bases/newt/examples/divider-demo"
 import DropdownDemo from "@/registry/bases/newt/examples/dropdown-demo"
 import EmbedDemo from "@/registry/bases/newt/examples/embed-demo"
 import EmptyStateDemo from "@/registry/bases/newt/examples/empty-state-demo"
+import EntitySelectDemo from "@/registry/bases/newt/examples/entity-select-demo"
 import FileUploadDemo from "@/registry/bases/newt/examples/file-upload-demo"
 import FormFieldsDemo from "@/registry/bases/newt/examples/form-fields-demo"
 import InlineCodeDemo from "@/registry/bases/newt/examples/inline-code-demo"
@@ -101,6 +102,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["dropdown", DropdownDemo],
   ["embed", EmbedDemo],
   ["empty-state", EmptyStateDemo],
+  ["entity-select", EntitySelectDemo],
   ["file-upload", FileUploadDemo],
   ["form-fields", FormFieldsDemo],
   ["inline-code", InlineCodeDemo],
