@@ -76,21 +76,16 @@ const GUIDES: readonly NavGroup[] = [
       { href: "/docs/forms/vee-validate", label: "vee-validate" },
     ],
   },
-  {
-    label: "Registry",
-    items: [
-      { href: "/docs/registry", label: "Introduction" },
-      { href: "/docs/registry/getting-started", label: "Getting started" },
-      { href: "/docs/registry/registry-json", label: "registry.json" },
-      {
-        href: "/docs/registry/registry-item-json",
-        label: "registry-item.json",
-      },
-      { href: "/docs/registry/examples", label: "Examples" },
-      { href: "/docs/registry/mcp", label: "MCP" },
-    ],
-  },
 ]
+
+/*
+ * The registry-authoring guides (`/docs/registry/**`) stay published — the CLI's
+ * `--registry` flag and `NEWT_REGISTRY_URL` are real, and `components.json` and
+ * the MCP guide both link into them — but they sit outside the sidebar. A
+ * shadcn-based library's own docs are where a reader expects to find its
+ * components, not a spec for hosting a registry of your own; that page is one
+ * a reader following one of those two links opts into, not one to browse into.
+ */
 
 /*
  * One group per registry category, in registry order, so the sidebar and the

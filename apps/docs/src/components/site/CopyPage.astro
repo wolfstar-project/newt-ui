@@ -40,6 +40,35 @@ const v0Url =
     : `https://v0.dev/chat/api/open?url=${encodeURIComponent(
         new URL(`/r/styles/default/${registryItem}.json`, SITE.url).href
       )}`
+
+/*
+ * The MCP server this project ships, in the three shapes its clients want it
+ * in. All three describe the same command — `npx newtui@latest mcp` — so this
+ * is the one place that spells it out; a client added later reuses `mcpEntry`
+ * rather than retyping it.
+ */
+const mcpEntry = { command: "npx", args: ["newtui@latest", "mcp"] }
+
+const mcpConfigJson = JSON.stringify(
+  { mcpServers: { newtui: mcpEntry } },
+  null,
+  2
+)
+
+/*
+ * Cursor's installer reads a base64 config off its own URL scheme; nothing
+ * about the transport, and no server started, until the reader confirms it
+ * inside Cursor.
+ */
+const cursorMcpUrl = `cursor://anysphere.cursor-deeplink/mcp/install?name=newtui&config=${btoa(
+  JSON.stringify(mcpEntry)
+)}`
+
+/* VS Code's installer wants the same entry, named, URL-encoded rather than
+ * base64 — its own scheme, not Cursor's. */
+const vscodeMcpUrl = `vscode:mcp/install?${encodeURIComponent(
+  JSON.stringify({ name: "newtui", ...mcpEntry })
+)}`
 ---
 
 <div class="copy-page" data-copy-page data-markdown={markdownPath}>
@@ -140,20 +169,120 @@ const v0Url =
       </span>
     </a>
 
+    <a
+      role="menuitem"
+      href={`https://grok.com/?q=${query}`}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+        <path
+          fill="currentColor"
+          d="M12 2 3.5 7v10L12 22l8.5-5V7L12 2Zm0 2.3 6.5 3.8v7.8L12 19.7l-6.5-3.8V8.1L12 4.3Zm-1 3.4v3h-2.3v2h2.3v3.6l3.7-3.6H12v-1h2.7L11 7.7Z"
+        />
+      </svg>
+      <span class="copy-page-text">
+        <span class="copy-page-title">Open in Grok</span>
+        <span class="copy-page-hint">Use this page in another AI chat</span>
+      </span>
+    </a>
+
+    <a
+      role="menuitem"
+      href={`https://www.perplexity.ai/search/?q=${query}`}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+        <path
+          fill="currentColor"
+          d="M12 2a1 1 0 0 1 1 1v2.6l5.3 4.6a1 1 0 0 1 .35.76V19a1 1 0 0 1-1 1h-3.65a1 1 0 0 1-1-1v-4h-2v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8.04a1 1 0 0 1 .35-.76L11 5.6V3a1 1 0 0 1 1-1Zm0 3.9-5 4.36V18h1.65v-4a2 2 0 0 1 2-2h2.7a2 2 0 0 1 2 2v4H17v-7.74L12 5.9Z"
+        />
+      </svg>
+      <span class="copy-page-text">
+        <span class="copy-page-title">Open in Perplexity</span>
+        <span class="copy-page-hint">Use this page in another AI chat</span>
+      </span>
+    </a>
+
+    <a
+      role="menuitem"
+      href={`https://gemini.google.com/app?q=${query}`}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+        <path
+          fill="currentColor"
+          d="M12 2c.5 4.2 2.3 8.3 5.5 9.5 1 .3 1 1.7 0 2C14.3 14.7 12.5 18.8 12 23c-.5-4.2-2.3-8.3-5.5-9.5-1-.3-1-1.7 0-2C9.7 10.3 11.5 6.2 12 2Z"
+        />
+      </svg>
+      <span class="copy-page-text">
+        <span class="copy-page-title">Open in Gemini</span>
+        <span class="copy-page-hint">Use this page in another AI chat</span>
+      </span>
+    </a>
+
+    <div class="copy-page-divider" role="separator"></div>
+
+    <button type="button" role="menuitem" data-copy-text={mcpConfigJson}>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+        <path
+          fill="currentColor"
+          d="M4 4h8a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm0 2v4h8V6H4Zm6 1.5A1.5 1.5 0 1 1 10 10.5 1.5 1.5 0 0 1 10 7.5ZM12 14h8a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2Zm0 2v4h8v-4h-8Zm2 1.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+        />
+      </svg>
+      <span class="copy-page-text">
+        <span class="copy-page-title" data-copy-label>
+          Copy MCP install command
+        </span>
+        <span class="copy-page-hint">Copy the config for any MCP client</span>
+      </span>
+    </button>
+
+    <a role="menuitem" href={cursorMcpUrl}>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+        <path
+          fill="currentColor"
+          d="M4 3.2 19.5 11a.9.9 0 0 1 0 1.6L13 15.9l-3 5.3a.9.9 0 0 1-1.62-.13L4 3.2Z"
+        />
+      </svg>
+      <span class="copy-page-text">
+        <span class="copy-page-title">Connect to Cursor</span>
+        <span class="copy-page-hint">Install the MCP server in Cursor</span>
+      </span>
+    </a>
+
+    <a role="menuitem" href={vscodeMcpUrl}>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+        <path
+          fill="currentColor"
+          d="M9.5 4.5a1 1 0 0 1 1.7-.72l3 2.86 4.5-3.45a1 1 0 0 1 1.62.79v16.04a1 1 0 0 1-1.62.79l-4.5-3.45-3 2.86a1 1 0 0 1-1.7-.72V16l-4.2 3.2a1 1 0 0 1-1.4-.14l-.9-1.12a1 1 0 0 1 .1-1.36L7.1 12 3.1 7.42a1 1 0 0 1-.1-1.36l.9-1.12a1 1 0 0 1 1.4-.14L9.5 8Zm2 4.9V15l3.2 3.05V5.95Z"
+        />
+      </svg>
+      <span class="copy-page-text">
+        <span class="copy-page-title">Connect to VS Code</span>
+        <span class="copy-page-hint">Install the MCP server in VS Code</span>
+      </span>
+    </a>
+
     {
       editUrl && (
-        <a role="menuitem" href={editUrl} target="_blank" rel="noreferrer">
-          <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
-            <path
-              fill="currentColor"
-              d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .26.18.58.69.48A10 10 0 0 0 12 2Z"
-            />
-          </svg>
-          <span class="copy-page-text">
-            <span class="copy-page-title">Edit this page on GitHub</span>
-            <span class="copy-page-hint">Suggest a change to this page</span>
-          </span>
-        </a>
+        <Fragment>
+          <div class="copy-page-divider" role="separator" />
+          <a role="menuitem" href={editUrl} target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="copy-page-icon">
+              <path
+                fill="currentColor"
+                d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .26.18.58.69.48A10 10 0 0 0 12 2Z"
+              />
+            </svg>
+            <span class="copy-page-text">
+              <span class="copy-page-title">Edit this page on GitHub</span>
+              <span class="copy-page-hint">Suggest a change to this page</span>
+            </span>
+          </a>
+        </Fragment>
       )
     }
   </div>
@@ -165,9 +294,7 @@ const v0Url =
   )) {
     const trigger = root.querySelector<HTMLButtonElement>(".copy-page-trigger")
     const menu = root.querySelector<HTMLElement>(".copy-page-menu")
-    const copy = root.querySelector<HTMLButtonElement>("[data-copy-markdown]")
-    const label = root.querySelector<HTMLElement>("[data-copy-label]")
-    if (!trigger || !menu || !copy || !label) continue
+    if (!trigger || !menu) continue
 
     const items = [...menu.querySelectorAll<HTMLElement>("[role='menuitem']")]
 
