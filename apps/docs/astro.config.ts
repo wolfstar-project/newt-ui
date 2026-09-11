@@ -6,8 +6,8 @@ import { satteri } from "@astrojs/markdown-satteri"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
 import vue from "@astrojs/vue"
+import { lotus } from "@prosefly/astro-theme-lotus"
 import AstroPWA from "@vite-pwa/astro"
-import lotus from "@prosefly/astro-theme-lotus"
 import expressiveCode from "astro-expressive-code"
 import astroTakumi from "astro-takumi"
 import { defineConfig } from "astro/config"
@@ -171,7 +171,6 @@ export default defineConfig({
     processor: satteri({ hastPlugins: [hastHeadingId] }),
   },
   vite: {
-    ssr: { external: ["pagefind"] },
     resolve: {
       /*
        * Registry source sits outside this app. Vue registry components use
