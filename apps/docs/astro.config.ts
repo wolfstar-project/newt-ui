@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs"
 import { createRequire } from "node:module"
 import { fileURLToPath } from "node:url"
 
-import { satteri } from "@astrojs/markdown-satteri"
+import { unified } from "@astrojs/markdown-remark"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
 import vue from "@astrojs/vue"
@@ -12,7 +12,6 @@ import expressiveCode from "astro-expressive-code"
 import astroTakumi from "astro-takumi"
 import { defineConfig } from "astro/config"
 
-import { hastHeadingId } from "./src/lib/hast-heading-id"
 import { buildDocsNav } from "./src/lib/lotus-nav"
 import { renderOgCard } from "./src/lib/og-card"
 import { SITE } from "./src/lib/site"
@@ -203,9 +202,28 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    // `## Heading {#id}` keeps the explicit id, so published anchors survive a
-    // reworded heading. Astro slugs everything else as usual.
-    processor: satteri({ hastPlugins: [hastHeadingId] }),
+    /*
+     * An empty `unified()` processor, and it has to be there.
+     *
+     * Expressive Code configures itself against whatever processor exists at
+     * its own setup hook: a `unified()` gets `rehypeExpressiveCode` pushed
+     * into its `rehypePlugins`, a `satteri()` gets a hast plugin pushed into
+     * its `hastPlugins`. Lotus then replaces the processor through
+     * `@prosefly/astro-components`, which reads the plugin lists off a
+     * `unified()` and carries them over — but throws a `satteri()` away whole,
+     * Expressive Code's plugin with it.
+     *
+     * Left at Astro's default (`satteri`), every fenced block in the 107 MDX
+     * files comes out as a bare `<pre><code class="language-bash"
+     * metastring="title=…">`: no highlighting, no frame, no copy button, and
+     * the meta string leaked into an attribute. Naming `unified()` here is
+     * what keeps them.
+     *
+     * `## Heading {#id}` keeps working either way: the theme's
+     * `remarkHeadingIds` reads the same syntax `lib/hast-heading-id.ts` used
+     * to, only unescaped.
+     */
+    processor: unified({}),
   },
   vite: {
     resolve: {

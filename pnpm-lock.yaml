@@ -133,6 +133,9 @@ importers:
       '@astrojs/check':
         specifier: ^0.9.6
         version: 0.9.10(prettier@3.9.6)(typescript-native-bridge@6.0.3-bridge.13.tsgo.7.0.2)
+      '@astrojs/markdown-remark':
+        specifier: ^7.3.1
+        version: 7.3.1(supports-color@10.2.2)
       '@fontsource/inter':
         specifier: ^5.3.0
         version: 5.3.0

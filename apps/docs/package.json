@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
+    "@astrojs/markdown-remark": "^7.3.1",
     "@fontsource/inter": "^5.3.0",
     "@iconify-json/lucide": "^1.2.131",
     "@iconify-json/simple-icons": "^1.2.95",

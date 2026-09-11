@@ -8,7 +8,7 @@ Discord-inspired system. The light palette is an override on the same token
 names, selected by `data-newt-theme="light"` or the `.newt-light` class, so no
 component has to know which one is active.
 
-## The attribute \{#attribute\}
+## The attribute {#attribute}
 
 ```html
 <!-- dark: the default, nothing to set -->
@@ -26,7 +26,7 @@ document.documentElement.dataset.newtTheme = theme
 document.documentElement.style.colorScheme = theme
 ```
 
-## Avoid the flash \{#flash\}
+## Avoid the flash {#flash}
 
 A theme read from storage after hydration paints the wrong palette first. Read
 it in a blocking inline script in `<head>`, before the first paint:
@@ -45,7 +45,7 @@ it in a blocking inline script in `<head>`, before the first paint:
 
 This site does exactly that; the source is in `apps/docs/src/layouts/Base.astro`.
 
-## Next.js \{#next\}
+## Next.js {#next}
 
 `next-themes` handles the storage, the system preference and the inline script.
 Point it at the attribute the palette uses:
@@ -89,7 +89,7 @@ export function ThemeToggle() {
 }
 ```
 
-## Vite \{#vite\}
+## Vite {#vite}
 
 No library needed — the whole toggle is the attribute plus storage:
 
@@ -112,7 +112,7 @@ export function readTheme(): Theme {
 Call `applyTheme(readTheme())` from the inline script in `index.html`, and again
 from your toggle.
 
-## Nuxt \{#nuxt\}
+## Nuxt {#nuxt}
 
 `@nuxtjs/color-mode` writes the attribute for you and injects the inline script:
 
