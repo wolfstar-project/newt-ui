@@ -6,3 +6,17 @@
 /// <reference types="vite-plugin-pwa/info" />
 /// <reference types="vite-plugin-pwa/pwa-assets" />
 /// <reference types="vite-plugin-pwa/client" />
+
+/*
+ * Spike: Lotus declares `App.Locals.t` in the package's own `src/virtual.d.ts`,
+ * which is not reachable through the exports map, so the site has to declare it
+ * itself. `LotusTranslate` is not exported either.
+ */
+declare namespace App {
+  interface Locals {
+    t: ((key: string, values?: Record<string, unknown>) => string) & {
+      dir(localeKey?: string): "ltr" | "rtl"
+      exists(key: string): boolean
+    }
+  }
+}
