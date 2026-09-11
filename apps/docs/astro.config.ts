@@ -3,14 +3,12 @@ import { createRequire } from "node:module"
 import { fileURLToPath } from "node:url"
 
 import { satteri } from "@astrojs/markdown-satteri"
-import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
 import vue from "@astrojs/vue"
-import tailwindcss from "@tailwindcss/vite"
 import AstroPWA from "@vite-pwa/astro"
+import lotus from "@prosefly/astro-theme-lotus"
 import expressiveCode from "astro-expressive-code"
-import pagefind from "astro-pagefind"
 import astroTakumi from "astro-takumi"
 import { defineConfig } from "astro/config"
 
@@ -45,7 +43,7 @@ export default defineConfig({
      * component looks for them.
      */
     expressiveCode(),
-    mdx(),
+    lotus({ docsBase: "/docs", markdown: { expressiveCode: false } }),
     react(),
     vue(),
     /*
@@ -55,16 +53,6 @@ export default defineConfig({
      * with `className={cn(...)}` from a code block rather than with the
      * sentence describing the component.
      */
-    pagefind({
-      indexConfig: {
-        excludeSelectors: [
-          ".expressive-code",
-          ".demo-frame",
-          ".tabs-list",
-          ".copy-page",
-        ],
-      },
-    }),
     sitemap(),
     /*
      * One Open Graph image per page, rendered at build time from the page's
@@ -154,7 +142,6 @@ export default defineConfig({
     processor: satteri({ hastPlugins: [hastHeadingId] }),
   },
   vite: {
-    plugins: [tailwindcss()],
     resolve: {
       /*
        * Registry source sits outside this app. Vue registry components use
