@@ -236,7 +236,9 @@ async function resolveImport(
  * `nuxt.config`, what is already on disk, then what the installed (or
  * opted-in) Nuxt major implies for a project that has neither yet.
  */
-async function detectNuxtBaseDir(cwd: string): Promise<string | undefined> {
+export async function detectNuxtBaseDir(
+  cwd: string
+): Promise<string | undefined> {
   const hints = await readNuxtConfigHints(cwd)
   if (hints.srcDir !== undefined) return hints.srcDir
 
@@ -254,16 +256,44 @@ async function readNuxtConfigHints(
   for (const candidate of NUXT_CONFIG_CANDIDATES) {
     const raw = await readFileIfExists(path.resolve(cwd, candidate))
     if (raw === null) continue
-    const srcDirMatch = raw.match(/srcDir\s*:\s*["'`]([^"'`]+)["'`]/)
+    // Strip comments first, or a `// srcDir: "…"` left over from an
+    // experiment reads as if it were live configuration.
+    const stripped = raw
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "")
+    const srcDirMatch = stripped.match(/srcDir\s*:\s*["'`]([^"'`]+)["'`]/)
     return {
       srcDir: srcDirMatch?.[1]?.replace(/\/$/, ""),
-      compatibilityVersion4: /compatibilityVersion\s*:\s*4\b/.test(raw),
+      compatibilityVersion4: /compatibilityVersion\s*:\s*4\b/.test(stripped),
     }
   }
   return {}
 }
 
+/**
+ * The declared specifier in `package.json` (`"nuxt": "catalog:"`,
+ * `"workspace:*"`, `"latest"`, …) does not always contain a version, so the
+ * installed package's own `package.json` — which always has a concrete
+ * `version` — is checked first. The declared specifier is only a fallback,
+ * for a project that has not run its package manager's install yet.
+ */
 async function readNuxtMajor(cwd: string): Promise<number | undefined> {
+  const installed = await readFileIfExists(
+    path.resolve(cwd, "node_modules/nuxt/package.json")
+  )
+  if (installed !== null) {
+    try {
+      // SAFETY: only `.version`, a string, is read below; any other shape
+      // degrades to the package.json fallback instead of throwing.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const parsed = JSON.parse(installed) as { version?: string }
+      const major = parsed.version?.match(/^(\d+)/)
+      if (major) return Number(major[1])
+    } catch {
+      // fall through to the declared specifier
+    }
+  }
+
   const raw = await readFileIfExists(path.resolve(cwd, "package.json"))
   if (raw === null) return undefined
   const match = raw.match(/"nuxt"\s*:\s*"[^"\d]*(\d+)/)

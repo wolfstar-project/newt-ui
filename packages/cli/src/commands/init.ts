@@ -25,6 +25,7 @@ import {
   DEFAULT_TAILWIND_CSS,
   DEFAULT_UI,
   DEFAULT_UTILS,
+  detectNuxtBaseDir,
   frameworkSchema,
   rawConfigSchema,
   resolveConfigPaths,
@@ -156,17 +157,35 @@ function detectBundler(cwd: string): Bundler {
   return DEFAULT_BUNDLER
 }
 
-function detectCssPath(
+export async function detectCssPath(
   cwd: string,
   framework: Framework,
   bundler: Bundler | undefined,
   override?: string
-): string {
+): Promise<string> {
+  if (override) return override
+
   const key = framework === "vue" ? (bundler ?? DEFAULT_BUNDLER) : "react"
+  if (key !== "nuxt") {
+    return (
+      findFirstExisting(cwd, CSS_CANDIDATES[key]) ?? DEFAULT_TAILWIND_CSS[key]
+    )
+  }
+
+  // A Nuxt project may keep its source root somewhere other than `app/`
+  // (Nuxt 3, or a custom `srcDir`); look there before the generic defaults.
+  const nuxtBaseDir = await detectNuxtBaseDir(cwd)
+  const candidates =
+    nuxtBaseDir !== undefined
+      ? [
+          `${nuxtBaseDir}/assets/css/main.css`,
+          `${nuxtBaseDir}/assets/css/tailwind.css`,
+          ...CSS_CANDIDATES.nuxt,
+        ]
+      : CSS_CANDIDATES.nuxt
   return (
-    override ??
-    findFirstExisting(cwd, CSS_CANDIDATES[key]) ??
-    DEFAULT_TAILWIND_CSS[key]
+    findFirstExisting(cwd, candidates) ??
+    `${nuxtBaseDir ?? "app"}/assets/css/main.css`
   )
 }
 
@@ -181,12 +200,12 @@ function detectTailwindConfig(cwd: string): string {
  * Build the `components.json` defaults for a framework. Each framework only
  * carries the aliases its registry actually references.
  */
-function buildDefaults(
+async function buildDefaults(
   cwd: string,
   framework: Framework,
   bundler: Bundler | undefined,
   options: InitOptions
-): RawConfig {
+): Promise<RawConfig> {
   // The fields that belong to only one framework are set to `undefined` for
   // the other, so `JSON.stringify` drops them from the written file.
   const isVue = framework === "vue"
@@ -199,7 +218,7 @@ function buildDefaults(
     rsc: isVue ? undefined : true,
     tailwind: {
       config: detectTailwindConfig(cwd),
-      css: detectCssPath(cwd, framework, bundler, options.css),
+      css: await detectCssPath(cwd, framework, bundler, options.css),
       baseColor: "neutral",
       cssVariables: true,
       prefix: "",
@@ -225,7 +244,7 @@ async function promptForConfig(
     detectedFramework === "vue"
       ? (options.bundler ?? detectBundler(cwd))
       : undefined
-  const defaults = buildDefaults(
+  const defaults = await buildDefaults(
     cwd,
     detectedFramework,
     detectedBundler,
@@ -263,7 +282,7 @@ async function promptForConfig(
   const frameworkDefaults =
     framework === defaults.framework
       ? defaults
-      : buildDefaults(cwd, framework, bundler, options)
+      : await buildDefaults(cwd, framework, bundler, options)
 
   const typescript = await promptConfirm(
     `Would you like to use ${highlighter.info("TypeScript")} (recommended)?`

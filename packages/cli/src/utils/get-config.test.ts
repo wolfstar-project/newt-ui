@@ -4,7 +4,11 @@ import path from "node:path"
 
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
 
-import { rawConfigSchema, resolveConfigPaths } from "./get-config.js"
+import {
+  detectNuxtBaseDir,
+  rawConfigSchema,
+  resolveConfigPaths,
+} from "./get-config.js"
 
 function nuxtConfig(cwd: string, defaults = { framework: "vue" as const }) {
   return rawConfigSchema.parse({
@@ -120,5 +124,46 @@ describe("resolveConfigPaths — Nuxt srcDir detection", () => {
     expect(config.resolvedPaths.components).toBe(
       path.resolve(cwd, "src/components")
     )
+  })
+})
+
+describe("detectNuxtBaseDir", () => {
+  let cwd: string
+
+  beforeEach(async () => {
+    cwd = await mkdtemp(path.join(tmpdir(), "newtui-nuxt-base-dir-"))
+  })
+
+  afterEach(async () => {
+    await rm(cwd, { recursive: true, force: true })
+  })
+
+  it("ignores a commented-out srcDir instead of treating it as live config", async () => {
+    await writeFile(
+      path.resolve(cwd, "nuxt.config.ts"),
+      `export default defineNuxtConfig({\n  // srcDir: "custom-source",\n})\n`
+    )
+    expect(await detectNuxtBaseDir(cwd)).toBeUndefined()
+  })
+
+  it("ignores a block-commented srcDir too", async () => {
+    await writeFile(
+      path.resolve(cwd, "nuxt.config.ts"),
+      `export default defineNuxtConfig({\n  /* srcDir: "custom-source", */\n})\n`
+    )
+    expect(await detectNuxtBaseDir(cwd)).toBeUndefined()
+  })
+
+  it("resolves the installed Nuxt major from node_modules when the declared specifier has no version (pnpm catalog, workspace, latest, …)", async () => {
+    await writeFile(
+      path.resolve(cwd, "package.json"),
+      JSON.stringify({ dependencies: { nuxt: "catalog:" } })
+    )
+    await mkdir(path.resolve(cwd, "node_modules/nuxt"), { recursive: true })
+    await writeFile(
+      path.resolve(cwd, "node_modules/nuxt/package.json"),
+      JSON.stringify({ name: "nuxt", version: "4.5.0" })
+    )
+    expect(await detectNuxtBaseDir(cwd)).toBe("app")
   })
 })
