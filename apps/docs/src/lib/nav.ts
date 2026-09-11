@@ -25,7 +25,7 @@ export interface NavNeighbours {
  * then the decisions behind the library, then how to publish your own items,
  * then every component grouped the way the registry groups them.
  */
-const GUIDES: readonly NavGroup[] = [
+export const GUIDES: readonly NavGroup[] = [
   {
     label: "Get Started",
     items: [

@@ -13,6 +13,7 @@ import astroTakumi from "astro-takumi"
 import { defineConfig } from "astro/config"
 
 import { hastHeadingId } from "./src/lib/hast-heading-id"
+import { buildDocsNav } from "./src/lib/lotus-nav"
 import { renderOgCard } from "./src/lib/og-card"
 import { SITE } from "./src/lib/site"
 
@@ -47,21 +48,7 @@ export default defineConfig({
       docsBase: "/docs",
       llms: false,
       siteNav: [{ label: "Docs", href: "/docs" }],
-      docsNav: [
-        {
-          slug: "docs",
-          label: "Docs",
-          items: [
-            "installation",
-            "theming",
-            { label: "Button", link: "/docs/components/button" },
-            {
-              label: "Components",
-              items: ["components/avatar", "components/badge"],
-            },
-          ],
-        },
-      ],
+      docsNav: buildDocsNav(),
       search: {
         provider: "pagefind",
         excludeSelectors: [
@@ -71,7 +58,28 @@ export default defineConfig({
           ".copy-page",
         ],
       },
-      markdown: { expressiveCode: false },
+      markdown: {
+        /*
+         * Expressive Code stays the site's own: the theme passes its options
+         * inline with plugin functions in them, and the `<Code>` component
+         * four MDX components use refuses to render when the config is not
+         * JSON-serialisable.
+         */
+        expressiveCode: false,
+        /*
+         * Seventeen shell fences across seven pages — nine of them in the CLI
+         * reference — are a single deliberate command, not a choose-your-own
+         * package manager. Left on, the theme rewrites each into a four-tab
+         * widget that the site already has its own `<PmTabs>` for.
+         */
+        packageManagerTabs: false,
+        /*
+         * Nothing in the content uses `:::note`, and the plugin's only other
+         * effect is to pull `remark-directive` into the parser, which gives
+         * every stray `:word` in prose a second meaning. Off, `:name` is text.
+         */
+        calloutDirectives: false,
+      },
     }),
     react(),
     vue(),
