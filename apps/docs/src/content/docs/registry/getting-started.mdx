@@ -3,13 +3,13 @@ title: "Registry: getting started"
 description: "Build a registry of your own, serve it as static JSON, and install from it with the same CLI."
 ---
 
-## Requirements \{#requirements\}
+## Requirements {#requirements}
 
 A registry is files on a static host. Anything that can serve JSON over HTTPS
 with CORS will do: a CDN, an S3 bucket, GitHub Pages, or the `public/`
 directory of the app you already deploy.
 
-## Write the items \{#items\}
+## Write the items {#items}
 
 Keep your components where you develop them and generate the registry from
 there — that way the source you edit and the source you publish cannot drift.
@@ -37,7 +37,7 @@ for (const item of items) {
 }
 ```
 
-## Serve it \{#serve\}
+## Serve it {#serve}
 
 Deploy the directory. If it lands at `https://acme.dev/r`, then
 `https://acme.dev/r/index.json` and
@@ -49,7 +49,7 @@ Deploy the directory. If it lands at `https://acme.dev/r`, then
   requests.
 </Callout>
 
-## Install from it \{#install\}
+## Install from it {#install}
 
 Point one command at it:
 
@@ -75,7 +75,7 @@ single item before you publish an index:
 npx newtui@latest add https://acme.dev/r/styles/default/button.json
 ```
 
-## Depend on newt/ui \{#depend\}
+## Depend on newt/ui {#depend}
 
 An item's `registryDependencies` may name items in your own registry. To build on
 top of newt/ui rather than beside it, vendor the components you extend into your

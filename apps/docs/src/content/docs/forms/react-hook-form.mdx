@@ -10,13 +10,13 @@ links:
   Form](/docs/forms/tanstack-form).
 </Callout>
 
-## Install \{#install\}
+## Install {#install}
 
 <PmTabs cmd="--yes react-hook-form @hookform/resolvers zod" />
 
 <PmTabs cmd="newtui@latest add form-fields button" />
 
-## The schema \{#schema\}
+## The schema {#schema}
 
 The schema is the contract. Nothing below restates a rule that is written here.
 
@@ -37,7 +37,7 @@ export const channelSchema = z.object({
 export type ChannelValues = z.infer<typeof channelSchema>
 ```
 
-## The form \{#form\}
+## The form {#form}
 
 `register` returns the props a native control needs, which is exactly what
 these controls are — so it goes straight on.
@@ -126,7 +126,7 @@ export function CreateChannelForm() {
 }
 ```
 
-## Validation timing \{#timing\}
+## Validation timing {#timing}
 
 The default is `onSubmit`, which is the right one: validating a field the
 reader has not finished typing in is noise. `mode: "onBlur"` is a reasonable
@@ -136,7 +136,7 @@ second choice; `mode: "onChange"` is rarely worth it.
 useForm({ resolver: zodResolver(channelSchema), mode: "onBlur" })
 ```
 
-## Switch and other controlled parts \{#controlled\}
+## Switch and other controlled parts {#controlled}
 
 `Switch` is a button with `aria-checked`, not an `<input>`, so it goes through
 `Controller`:
@@ -155,7 +155,7 @@ import { Switch } from "@/components/ui/form-fields"
 />
 ```
 
-## Array fields \{#arrays\}
+## Array fields {#arrays}
 
 ```tsx
 const { fields, append, remove } = useFieldArray({ control, name: "tags" })

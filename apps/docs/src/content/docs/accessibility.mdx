@@ -7,7 +7,7 @@ Every component in the registry is written against the list below. It is worth
 reading even if you never add one, because half of these are decisions you make
 again in your own markup.
 
-## The checklist \{#checklist\}
+## The checklist {#checklist}
 
 - **Contrast.** Text meets WCAG AA against its own background: 4.5:1 for body
   copy, 3:1 for large text. `--newt-text-muted` on `--newt-bg-elevated` is the
@@ -26,7 +26,7 @@ again in your own markup.
   <kbd>Esc</kbd>. A toast is `role="status"` with `aria-live="polite"` and never
   traps focus.
 
-## What the components give you \{#given\}
+## What the components give you {#given}
 
 The interactive components carry their own semantics: the modal manages focus,
 the tabs implement the arrow-key pattern with `role="tablist"`, the select menu
@@ -36,7 +36,7 @@ is a combobox with a keyboard-driven listbox, the reaction pill is a button with
 Each component page documents the keyboard behaviour it implements under its own
 Accessibility heading.
 
-## What is still yours \{#yours\}
+## What is still yours {#yours}
 
 - **Landmarks and headings.** The components are parts, not pages. A page still
   needs one `<h1>`, a `<main>`, and a heading order that does not skip levels.
@@ -47,7 +47,7 @@ Accessibility heading.
   which of its updates matter.
 - **Language and direction.** `lang` and `dir` on `<html>` are yours to set.
 
-## Checking it \{#checking\}
+## Checking it {#checking}
 
 Tab through the page first — it is the fastest way to find an unreachable
 control or a missing focus ring. Then run an automated pass (axe, Lighthouse)

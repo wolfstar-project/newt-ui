@@ -8,7 +8,7 @@ flavours uses CSS logical properties — `margin-inline-start` rather than
 `margin-left`, `inset-inline-start` rather than `left`, `ms-2` rather than
 `ml-2` — so a right-to-left tree restyles itself.
 
-## Get started \{#start\}
+## Get started {#start}
 
 Set the direction on the document:
 
@@ -56,7 +56,7 @@ which side a panel flips to, which arrow key advances a list.
 
 <ComponentPreview name="direction" />
 
-## How it works \{#how\}
+## How it works {#how}
 
 Two mechanisms, and only two.
 
@@ -99,7 +99,7 @@ transform: translateX(calc(var(--newt-dir) * 16px));
 
 The switch thumb in `form-fields` is the worked example.
 
-## Fonts \{#fonts\}
+## Fonts {#fonts}
 
 The token stack is `--newt-font-sans`, which starts at Inter. Inter covers Latin
 and Cyrillic but not Arabic or Hebrew, so add a face that does and let the stack
@@ -116,7 +116,7 @@ Arabic and Hebrew have taller ascenders than Latin at the same size; if the
 lines look cramped, raise `line-height` on the container rather than changing a
 component.
 
-## Icons \{#icons\}
+## Icons {#icons}
 
 Most glyphs in the registry are symmetric and need nothing. The ones that point
 — a reply arrow, a chevron, a send glyph — should mirror:
@@ -131,7 +131,7 @@ In Tailwind that is `rtl:-scale-x-100`. A clock, a checkmark or a logo must
 **not** mirror: they are not directional, and a reversed checkmark reads as
 broken.
 
-## Migrating \{#migrating\}
+## Migrating {#migrating}
 
 Components installed before the registry moved to logical properties still carry
 the physical ones. The CLI rewrites them in place:
@@ -157,7 +157,7 @@ cannot see: physical properties in your stylesheets, and directional icons.
   diff.
 </Callout>
 
-## Checking it \{#checking\}
+## Checking it {#checking}
 
 Every preview on this site has an LTR/RTL toggle in its corner — flipping it
 renders the same component in the other direction, which is the fastest check

@@ -8,7 +8,7 @@ component is being added to the library or composed in your own project — a pa
 built from these rules looks like the rest of the system without anyone having
 to check.
 
-## What newt/ui is \{#what\}
+## What newt/ui is {#what}
 
 A copy-into-your-project library, not an npm runtime dependency. Components are
 plain HTML and CSS with optional vanilla JavaScript, plus thin framework
@@ -25,7 +25,7 @@ Three forms, one source of truth:
 
 When the React or Vue version disagrees with the HTML, the HTML is right.
 
-## Naming \{#naming\}
+## Naming {#naming}
 
 - Classes are prefixed `newt-` and follow BEM-lite: `.newt-block`,
   `.newt-block__element`, `.newt-block--variant`.
@@ -37,7 +37,7 @@ When the React or Vue version disagrees with the HTML, the HTML is right.
 That last rule is what lets the light palette exist. A `--red` modifier would
 have to change when the palette does; a `--danger` one does not.
 
-## The token layer \{#tokens\}
+## The token layer {#tokens}
 
 Never hardcode a colour, radius, font, shadow, easing or duration. If the value
 you need has no token, add the token — see [Theming](/docs/theming).
@@ -59,7 +59,7 @@ The palette the dark theme is built from:
 
 Every token, dark and light, is on [the colours page](/colors).
 
-## Anatomy of a component \{#anatomy\}
+## Anatomy of a component {#anatomy}
 
 In order:
 
@@ -75,7 +75,7 @@ In order:
    state the component has, all styled. A state with no resting appearance does
    not exist.
 
-## Logical properties only \{#logical\}
+## Logical properties only {#logical}
 
 No component contains `margin-left`, `left:`, `ml-2` or `text-left`. Every
 inline direction is logical — `margin-inline-start`, `inset-inline-start`,
@@ -93,7 +93,7 @@ transform: translateX(calc(var(--newt-dir) * 16px));
 Directional glyphs — a reply arrow, a chevron, a send icon — mirror with
 `rtl:-scale-x-100`. A clock or a checkmark does not. See [RTL](/docs/rtl).
 
-## No motion \{#motion\}
+## No motion {#motion}
 
 newt/ui ships with no transitions, animations or keyframes. This is a
 constraint, not an oversight.
@@ -108,7 +108,7 @@ constraint, not an oversight.
 - If something seems to need motion to be legible, it needs another visual cue
   instead: an icon, a badge, a label.
 
-## Composition \{#composition\}
+## Composition {#composition}
 
 Compose the parts that exist rather than writing a new component in the library's
 style. A message row is `MessageGroup` with an `Avatar`, a `RoleTag` and a

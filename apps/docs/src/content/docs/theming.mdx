@@ -12,7 +12,7 @@ The values live in one file,
 the Tailwind theme maps its namespaces onto the same variables, and the plain
 CSS components use `var(--newt-brand)` directly.
 
-## Token convention \{#convention\}
+## Token convention {#convention}
 
 A token name says what the value is _for_, not what it looks like. `--newt-danger`
 rather than `--newt-red`, `--newt-bg-elevated` rather than `--newt-grey-700`. That
@@ -33,7 +33,7 @@ knowing a palette changed.
 Every value in the dark palette, with its light counterpart, is listed on
 [the colours page](/colors).
 
-## Override a token \{#override\}
+## Override a token {#override}
 
 Put the override after the token block in your own stylesheet. It reaches every
 component that reads it, in all three flavours, at once.
@@ -60,7 +60,7 @@ Scope it to a subtree instead, and only that subtree changes:
   diff` and the next upgrade with it. Override a token, or pass a class.
 </Callout>
 
-## The light palette \{#light\}
+## The light palette {#light}
 
 A light surface set ships alongside the dark one and is opt-in. It overrides the
 surface, text, status and shadow tokens; everything else is shared.
@@ -80,7 +80,7 @@ the live demos change together.
 See [Dark mode](/docs/dark-mode) for wiring a persisted toggle in your own
 project.
 
-## Tailwind v3 and v4 \{#tailwind\}
+## Tailwind v3 and v4 {#tailwind}
 
 The registry ships the theme three ways so one registry serves both majors, and
 `newtui init` writes whichever your project needs.
@@ -121,7 +121,7 @@ Either way the utilities are the same: `bg-newt-brand`, `text-newt-text-muted`,
 `border-newt-border`, `rounded-md`, `shadow-elevation-high`, `duration-fast`,
 `ease-newt`.
 
-## Adding a token \{#adding\}
+## Adding a token {#adding}
 
 If a value you need has no token, add the token rather than the value. Edit
 `tokens.css` first — it is the source — then run `node scripts/gen-registry.mjs`

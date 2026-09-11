@@ -5,7 +5,7 @@ description: "Three ways in: a preset from the builder, one CLI command, or the 
 
 <PathTabs />
 
-## Pick your framework \{#frameworks\}
+## Pick your framework {#frameworks}
 
 <FrameworkGrid />
 
@@ -14,7 +14,7 @@ project and the tokens in one pass. The rest already have a creator of their
 own, so their guides start with that command and let `init` run inside the
 result. Manual and HTML & CSS skip the CLI entirely.
 
-## What you need first \{#requirements\}
+## What you need first {#requirements}
 
 - Node 18 or newer, which is what both CLIs declare. The Nuxt module asks for
   Node 20, and this repository itself is built on Node 22.
@@ -33,7 +33,7 @@ result. Manual and HTML & CSS skip the CLI entirely.
   manager — it has [a guide of its own](/docs/html-css).
 </Callout>
 
-## Run init once \{#init\}
+## Run init once {#init}
 
 <PmTabs cmd="newtui@latest init" />
 
@@ -77,7 +77,7 @@ nothing here.
   tokens already in your stylesheet and skips.
 </Callout>
 
-## Then add what you need \{#add\}
+## Then add what you need {#add}
 
 <PmTabs cmd="newtui@latest add button" />
 
@@ -92,7 +92,7 @@ A file already on disk is kept, not replaced: you are asked, and with `--yes` it
 is skipped and reported. `--overwrite` is how you take the registry version
 back. Run `add` with no names and it lists the registry and lets you pick.
 
-## What lands in your project \{#written\}
+## What lands in your project {#written}
 
 Every path below the blank line is relative to whatever your aliases resolve to,
 so a project with a `src` directory gets them under `src`. The two paths above
@@ -150,7 +150,7 @@ becomes your ui alias and `@/lib/utils` becomes your utils alias.
   the components you already have.
 </Callout>
 
-## The token layer \{#tokens\}
+## The token layer {#tokens}
 
 Every colour, radius, shadow, font and duration in the library is a `--newt-*`
 custom property. The source of truth is one file in the repository,
@@ -191,7 +191,7 @@ import "./assets/index.css"
   that no longer follows the rest.
 </Callout>
 
-## Per-framework guides \{#guides\}
+## Per-framework guides {#guides}
 
 The rest of this page is the flow every project shares. The parts that differ —
 the Tailwind setup, the path aliases, where `.newt-root` goes and which
@@ -204,7 +204,7 @@ auto-imports the components, and
 <span id="html">[HTML & CSS](/docs/html-css)</span> for the copy-paste
 stylesheets.
 
-## Options \{#options\}
+## Options {#options}
 
 ```text
 -c, --cwd <dir>        working directory

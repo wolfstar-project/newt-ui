@@ -9,7 +9,7 @@ TanStack Form is the option to reach for when the same form has to exist in
 both frameworks: the API is the same on either side, and only the template
 changes.
 
-## Install \{#install\}
+## Install {#install}
 
 <div data-framework="react">
   <PmTabs cmd="--yes @tanstack/react-form zod" />
@@ -21,7 +21,7 @@ changes.
 
 <PmTabs cmd="newtui@latest add form-fields button" />
 
-## The schema \{#schema\}
+## The schema {#schema}
 
 ```ts title="lib/channel-schema.ts"
 import { z } from "zod"
@@ -38,7 +38,7 @@ export const channelSchema = z.object({
 })
 ```
 
-## The form \{#form\}
+## The form {#form}
 
 Each field is a render function that receives its own state, which is what
 makes a field's error impossible to read from the wrong place.
@@ -157,7 +157,7 @@ const form = useForm({
 
 </div>
 
-## Validation timing \{#timing\}
+## Validation timing {#timing}
 
 `validators` takes one schema per moment: `onChange`, `onBlur`, `onSubmit`.
 Putting the whole schema on `onSubmit` and a cheaper one on `onBlur` is the
@@ -170,7 +170,7 @@ validators: {
 }
 ```
 
-## Array fields \{#arrays\}
+## Array fields {#arrays}
 
 `mode="array"` on a field gives you `pushValue` and `removeValue`; each entry is
 addressed as `name.<index>`.

@@ -11,7 +11,7 @@ reads the source, and asks for the install command.
 The tool names deliberately match shadcn's, so an agent that already knows how
 to shop in one registry needs no new vocabulary for this one.
 
-## Quick start \{#quick-start\}
+## Quick start {#quick-start}
 
 <Tabs labels={["Claude Code", "Cursor", "VS Code", "Codex", "OpenCode"]}>
   <Fragment slot="tab-0">
@@ -65,7 +65,7 @@ Then ask for something:
 - "Add a chat view with a composer, using newt/ui."
 - "Review this diff against the newt/ui checklist."
 
-## What it exposes \{#tools\}
+## What it exposes {#tools}
 
 | Tool                                | What it answers                                                                   |
 | ----------------------------------- | --------------------------------------------------------------------------------- |
@@ -88,7 +88,7 @@ itself against the audit checklist.
   reviewed.
 </Callout>
 
-## Configure it by hand \{#manual\}
+## Configure it by hand {#manual}
 
 `mcp init` merges into whatever is already in the file. If you would rather
 write it yourself:
@@ -110,14 +110,14 @@ command = "npx"
 args = ["newtui@latest", "mcp"]
 ```
 
-## Another registry \{#registries\}
+## Another registry {#registries}
 
 The server answers from the registry the project's
 [`components.json`](/docs/components-json) names, so pointing that at
 [a registry of your own](/docs/registry) points the agent at it too — the tools
 need no separate configuration.
 
-## Troubleshooting \{#troubleshooting\}
+## Troubleshooting {#troubleshooting}
 
 **The server does not appear.** Restart the editor: every client reads its MCP
 config at startup. Then run `npx newtui@latest mcp` in a terminal — it should
