@@ -257,10 +257,11 @@ async function readNuxtConfigHints(
     const raw = await readFileIfExists(path.resolve(cwd, candidate))
     if (raw === null) continue
     // Strip comments first, or a `// srcDir: "…"` left over from an
-    // experiment reads as if it were live configuration.
+    // experiment — whether on its own line or trailing live code — reads
+    // as if it were live configuration.
     const stripped = raw
       .replace(/\/\*[\s\S]*?\*\//g, "")
-      .replace(/^\s*\/\/.*$/gm, "")
+      .replace(/\/\/.*$/gm, "")
     const srcDirMatch = stripped.match(/srcDir\s*:\s*["'`]([^"'`]+)["'`]/)
     return {
       srcDir: srcDirMatch?.[1]?.replace(/\/$/, ""),

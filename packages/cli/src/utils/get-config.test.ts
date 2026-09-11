@@ -154,6 +154,14 @@ describe("detectNuxtBaseDir", () => {
     expect(await detectNuxtBaseDir(cwd)).toBeUndefined()
   })
 
+  it("ignores a srcDir left in a trailing comment after live code", async () => {
+    await writeFile(
+      path.resolve(cwd, "nuxt.config.ts"),
+      `export default defineNuxtConfig({}) // srcDir: "old-source"\n`
+    )
+    expect(await detectNuxtBaseDir(cwd)).toBeUndefined()
+  })
+
   it("resolves the installed Nuxt major from node_modules when the declared specifier has no version (pnpm catalog, workspace, latest, …)", async () => {
     await writeFile(
       path.resolve(cwd, "package.json"),
