@@ -1,4 +1,6 @@
 import type { HeadConfig } from "@prosefly/astro-theme-lotus"
+import { pwaAssetsHead } from "virtual:pwa-assets/head"
+import { pwaInfo } from "virtual:pwa-info"
 
 import { ogImageUrl } from "./og-card"
 import { SITE } from "./site"
@@ -28,6 +30,47 @@ export interface HeadInput {
   readonly markdownPath?: string
   /** Extra tags for a single page, appended last. */
   readonly extra?: HeadConfig
+}
+
+/*
+ * The icons the assets generator rasterised and the manifest that names them.
+ * They used to be written by `Base.astro`; the theme's `BaseLayout` emits its
+ * own favicon config and nothing else, so a page that does not say this is a
+ * page the browser will not offer to install.
+ */
+function pwaTags(): HeadConfig {
+  const manifest = pwaInfo?.webManifest
+  return [
+    ...(pwaAssetsHead.themeColor
+      ? [
+          {
+            tag: "meta",
+            attrs: {
+              name: "theme-color",
+              content: pwaAssetsHead.themeColor.content,
+            },
+          },
+        ]
+      : []),
+    ...pwaAssetsHead.links.map((link) => ({
+      tag: "link",
+      attrs: { ...link } as HeadConfig[number]["attrs"],
+    })),
+    ...(manifest
+      ? [
+          {
+            tag: "link",
+            attrs: {
+              rel: "manifest",
+              href: manifest.href,
+              ...(manifest.useCredentials === true
+                ? { crossorigin: "use-credentials" }
+                : {}),
+            },
+          },
+        ]
+      : []),
+  ]
 }
 
 export function buildHead(input: HeadInput): HeadConfig {
@@ -80,6 +123,7 @@ export function buildHead(input: HeadInput): HeadConfig {
     },
     { tag: "meta", attrs: { name: "twitter:image", content: image } },
     { tag: "meta", attrs: { name: "twitter:image:alt", content: alt } },
+    ...pwaTags(),
     ...extra,
   ]
 }

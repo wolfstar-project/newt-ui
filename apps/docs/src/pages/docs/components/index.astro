@@ -1,5 +1,5 @@
 ---
-import Docs from "../../../layouts/Docs.astro"
+import DocsPage from "../../../layouts/DocsPage.astro"
 import { categories, COMPONENTS } from "../../../lib/registry"
 
 /*
@@ -18,11 +18,9 @@ const groups = categories
   .filter((group) => group.components.length > 0)
 ---
 
-<Docs
+<DocsPage
   title="Components"
   description={`Every component in the registry — ${COMPONENTS.length} of them, in React, Vue and plain HTML.`}
-  pager={false}
-  toc={false}
 >
   {
     groups.map((group) => (
@@ -41,4 +39,4 @@ const groups = categories
       </section>
     ))
   }
-</Docs>
+</DocsPage>

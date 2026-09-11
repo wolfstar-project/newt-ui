@@ -1,6 +1,6 @@
 ---
 import TypesetApp from "../components/typeset/TypesetApp"
-import Base from "../layouts/Base.astro"
+import Page from "../layouts/Page.astro"
 
 /*
  * The Typeset builder. The stylesheet it configures is the one the registry
@@ -9,7 +9,7 @@ import Base from "../layouts/Base.astro"
  */
 ---
 
-<Base
+<Page
   title="Typeset"
   description="Three controls — size, leading and flow — for every place this library renders markdown."
 >
@@ -28,4 +28,4 @@ import Base from "../layouts/Base.astro"
 
     <TypesetApp client:load />
   </main>
-</Base>
+</Page>

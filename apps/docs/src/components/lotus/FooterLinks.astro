@@ -1,0 +1,29 @@
+---
+import { SITE } from "../../lib/site"
+
+/*
+ * The theme's footer-links slot. Lotus renders columns of links from
+ * `footer.sections`; this site has two links and one paragraph, and the
+ * paragraph is the reason the slot is overridden rather than configured.
+ *
+ * The disclaimer below is legal text and is reproduced word for word from
+ * `components/site/Footer.astro`. It is the notice that keeps the project
+ * honest about what it is: an independent library that follows a visual
+ * language, shipping none of the trademarked assets.
+ */
+---
+
+<div class="page-footer-slot">
+  <p class="page-footer-links">
+    <a href={SITE.github} target="_blank" rel="noreferrer">Source on GitHub</a>
+    {/* Discord-inspired, and unaffiliated: the notice says so in full */}
+    <a href={SITE.disclaimer} target="_blank" rel="noreferrer">Trademark notice</a>
+  </p>
+  <p class="page-footer-disclaimer">
+    {SITE.name} is an independent, community-built component library. It is not affiliated
+    with, endorsed by, or sponsored by Discord Inc. Discord and the Discord logo are
+    trademarks of Discord Inc. No Discord asset, logo or wordmark ships with this project:
+    the components are original work that follows the visual language of the client, and
+    the code you copy is yours to change.
+  </p>
+</div>

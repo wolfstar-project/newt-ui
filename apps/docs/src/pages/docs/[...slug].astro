@@ -20,13 +20,7 @@ import Steps from "../../components/mdx/Steps.astro"
 import Tabs from "../../components/mdx/Tabs.astro"
 import TokensNote from "../../components/mdx/TokensNote.astro"
 import Usage from "../../components/mdx/Usage.astro"
-import CopyPage from "../../components/site/CopyPage.astro"
-import {
-  markdownPathFor,
-  pathFor,
-  registryItemFor,
-  sourcePathFor,
-} from "../../lib/docs"
+import { markdownPathFor, pathFor } from "../../lib/docs"
 import { buildHead } from "../../lib/lotus-head"
 import { DOCS_SECTION, pagination, sectionTitleFor } from "../../lib/lotus-nav"
 
@@ -73,6 +67,14 @@ const components = {
   TokensNote,
   Usage,
 }
+
+/*
+ * A gate, not a menu. `PageHeader` renders the page-actions slot only when
+ * this array is non-empty, and the slot is overridden with the site's own
+ * copy-page menu, which builds its entries from the page's id — so the one
+ * entry here is never read, it only says "yes, this page has actions".
+ */
+const PAGE_ACTIONS = [{ type: "copy-page" as const }]
 
 const markdownPath = markdownPathFor(entry.id)
 const currentPath = pathFor(entry.id)
@@ -121,6 +123,7 @@ const head = buildHead({
     <PageHeader
       description={entry.data.description}
       markdownUrl={markdownPath}
+      pageActions={PAGE_ACTIONS}
       pageUrl={currentPath}
       sectionTitle={sectionTitle}
       title={entry.data.title}
@@ -142,19 +145,6 @@ const head = buildHead({
         </p>
       )
     }
-
-    {/*
-     * Until the `PageActions` slot is overridden, the menu is rendered here:
-     * the theme's own version knows nothing about the registry item, the MCP
-     * deep links or the IDE handoffs this one carries.
-     */}
-    <div class="copy-page-row" data-pagefind-ignore>
-      <CopyPage
-        markdownPath={markdownPath}
-        sourcePath={sourcePathFor(entry.id)}
-        registryItem={registryItemFor(entry.id)}
-      />
-    </div>
 
     <div class="prose max-w-none py-8">
       <Content components={components} />

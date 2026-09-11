@@ -56,27 +56,55 @@ export default defineConfig({
        * `@import "tailwindcss"` can be avoided, and it is where the theme's own
        * `@source` of this app's `src` already lives.
        *
-       * The script beside it is the pre-paint pass the old `Base.astro` ran:
-       * the framework switch is a `data-framework` attribute on `<html>`, and
+       * The script beside it is the pre-paint pass the old `Base.astro` ran,
+       * grown by one job.
+       *
+       * The framework switch is a `data-framework` attribute on `<html>`, and
        * `BaseLayout` writes only `lang`, `dir` and its own theme attributes
-       * there, so a route cannot put it on the element — it has to be set
-       * before the body is parsed instead, or the reader sees both frameworks'
-       * code blocks for a frame.
+       * there, so no route can put it on the element — it has to be set before
+       * the body is parsed instead, or the reader sees both frameworks' code
+       * blocks for a frame.
+       *
+       * The new job is the theme. Lotus defaults `data-theme` to `system`, and
+       * the `--newt-*` light palette has no such state: it keys on
+       * `data-newt-theme="light"` or nothing. So `system` is resolved here,
+       * once, against the media query, and written to **both** attributes —
+       * which also means the theme's chrome and the site's palette can never
+       * disagree on the first frame.
        */
       head: [
         { tag: "style", src: "./src/styles/lotus.css" },
         {
           tag: "script",
           content:
-            'try{var f=localStorage.getItem("newt-ui:framework");' +
-            'document.documentElement.dataset.framework=' +
-            'f==="vue"||f==="react"?f:"react";' +
-            'var t=localStorage.getItem("newt-ui:theme");' +
-            'if(t==="light"||t==="dark"){' +
-            'document.documentElement.dataset.newtTheme=t;' +
-            'document.documentElement.style.colorScheme=t}}catch(e){}',
+            "try{" +
+            'var f=localStorage.getItem("newt-ui:framework");' +
+            'document.documentElement.dataset.framework=f==="vue"||f==="react"?f:"react";' +
+            'var t=localStorage.getItem("newt-ui:theme")||localStorage.getItem("lotus-theme");' +
+            'if(t!=="light"&&t!=="dark"){' +
+            't=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}' +
+            "document.documentElement.dataset.newtTheme=t;" +
+            "document.documentElement.dataset.theme=t;" +
+            "document.documentElement.style.colorScheme=t;" +
+            "}catch(e){}",
         },
       ],
+      /*
+       * Five of the twelve slots the theme exposes. Each one exists because
+       * the site's version carries something the theme's cannot know about:
+       * the mark is drawn inline, the switches are two (framework and theme),
+       * the page menu knows the registry item behind the page, the footer
+       * carries a trademark notice, and the assistant slot — rendered on every
+       * page by `BaseLayout` — is where the service worker gets registered.
+       */
+      components: {
+        Assistant: "./src/components/lotus/Assistant.astro",
+        FooterLinks: "./src/components/lotus/FooterLinks.astro",
+        PageActions: "./src/components/lotus/PageActions.astro",
+        SiteBrand: "./src/components/lotus/SiteBrand.astro",
+        ThemeSwitch: "./src/components/lotus/ThemeSwitch.astro",
+      },
+      footer: { copyright: `${SITE.license} · built by ${SITE.author}` },
       search: {
         provider: "pagefind",
         excludeSelectors: [

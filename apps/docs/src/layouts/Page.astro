@@ -1,0 +1,43 @@
+---
+import { BaseLayout, SiteFooter, SiteHeader } from "@prosefly/astro-theme-lotus/layouts"
+
+import { buildHead } from "../lib/lotus-head"
+import { SITE } from "../lib/site"
+
+/*
+ * Everything that is not a documentation page: the home page, the block
+ * gallery, the colour reference, the preset builder, the typeset previews and
+ * the 404. They have no sidebar and no table of contents, so they take the
+ * theme's header and footer around a full-width slot rather than the three
+ * column docs grid.
+ *
+ * The head is `buildHead()` because the theme emits only `<title>`,
+ * description, generator and its own favicons — canonical, Open Graph, Twitter
+ * and the whole PWA set are the site's responsibility on every route now.
+ */
+interface Props {
+  readonly title: string
+  readonly description?: string
+  /** Off on pages that are chrome rather than reading, like the 404. */
+  readonly pagefind?: boolean
+}
+
+const { title, description = SITE.tagline, pagefind = true } = Astro.props
+
+const head = buildHead({
+  title,
+  description,
+  pathname: Astro.url.pathname,
+  site: Astro.site,
+})
+---
+
+<BaseLayout title={title} description={description} head={head}>
+  <SiteHeader currentPath={Astro.url.pathname} />
+
+  <main id="main" {...pagefind ? { "data-pagefind-body": true } : { "data-pagefind-ignore": true }}>
+    <slot />
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

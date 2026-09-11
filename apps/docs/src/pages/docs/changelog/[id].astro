@@ -6,7 +6,7 @@ import ComponentPreview from "../../../components/mdx/ComponentPreview.astro"
 import PmTabs from "../../../components/mdx/PmTabs.astro"
 import Steps from "../../../components/mdx/Steps.astro"
 import Tabs from "../../../components/mdx/Tabs.astro"
-import Docs from "../../../layouts/Docs.astro"
+import DocsPage from "../../../layouts/DocsPage.astro"
 
 export async function getStaticPaths() {
   const entries = await getCollection("changelog")
@@ -23,11 +23,10 @@ const { Content, headings } = await render(entry)
 const components = { Callout, ComponentPreview, PmTabs, Steps, Tabs }
 ---
 
-<Docs
+<DocsPage
   title={entry.data.title}
   description={entry.data.description}
   headings={headings}
-  pager={false}
 >
   <Content components={components} />
-</Docs>
+</DocsPage>

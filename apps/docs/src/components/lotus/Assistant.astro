@@ -1,0 +1,64 @@
+---
+/*
+ * Lotus renders this slot from `BaseLayout`, on every page, just before
+ * `</body>`. It is meant for a chat widget; with no assistant configured it is
+ * the one place a site can put a script that has to exist everywhere, which is
+ * exactly what `Base.astro` used to be for.
+ *
+ * Two things live here.
+ *
+ * The service worker registration, which was `<script src="/src/pwa.ts">` in
+ * the old layout. Without it the manifest is advertised and nothing installs.
+ *
+ * The theme bridge. Lotus owns `data-theme` on `<html>` and stores its choice
+ * under `lotus-theme`, with a third state — `system` — that the `--newt-*`
+ * palette has no idea about. The site's own toggle owns `data-newt-theme` and
+ * `newt-ui:theme`. The listener below keeps the two in step in the one
+ * direction the site does not already handle: when something changes
+ * `data-theme` (the theme's own control, or another tab), `system` is resolved
+ * against the media query and mirrored onto `data-newt-theme`, so the chrome,
+ * every live demo and every Expressive Code block change together.
+ */
+---
+
+<script src="/src/pwa.ts"></script>
+
+<script>
+  import { $theme, isTheme } from "@/stores/theme"
+
+  const root = document.documentElement
+
+  function resolve(value: string | null | undefined): "dark" | "light" {
+    if (value === "light" || value === "dark") return value
+    return globalThis.matchMedia?.("(prefers-color-scheme: light)").matches === true
+      ? "light"
+      : "dark"
+  }
+
+  function mirror(): void {
+    const resolved = resolve(root.dataset.theme)
+    if (root.dataset.newtTheme !== resolved) $theme.set(resolved)
+  }
+
+  mirror()
+
+  /*
+   * `data-theme` is written by the theme's own controls and by its pre-paint
+   * script; neither fires an event, so the attribute itself is what is watched.
+   */
+  new MutationObserver(mirror).observe(root, {
+    attributeFilter: ["data-theme"],
+  })
+
+  /* And the other direction, so the theme's storage does not drift. */
+  $theme.subscribe((theme) => {
+    if (isTheme(theme)) {
+      root.dataset.theme = theme
+      try {
+        localStorage.setItem("lotus-theme", theme)
+      } catch {
+        /* private mode with storage disabled: the attribute is enough */
+      }
+    }
+  })
+</script>

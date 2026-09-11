@@ -1,0 +1,42 @@
+---
+import CopyPage from "../site/CopyPage.astro"
+import {
+  markdownPathFor,
+  registryItemFor,
+  slugFromPath,
+  sourcePathFor,
+} from "../../lib/docs"
+
+/*
+ * The theme's page-actions slot, filled with the site's copy-page menu.
+ *
+ * Lotus's own version offers copy, view-as-markdown and four assistants. This
+ * one also offers v0, the MCP server in the three shapes its clients want it
+ * in, the Cursor and VS Code deep links and the edit-on-GitHub link — none of
+ * which the theme knows anything about.
+ *
+ * The slot is handed `pageUrl` and `markdownUrl` and nothing else, so the entry
+ * id is recovered from the path rather than passed down. That is safe because
+ * the id *is* the path after `/docs/`: it is the same mapping `lib/docs.ts`
+ * spells out, read the other way round.
+ */
+interface Props {
+  readonly actions?: unknown[]
+  readonly title: string
+  readonly pageUrl: string
+  readonly markdownUrl: string
+}
+
+const { pageUrl } = Astro.props
+const id = slugFromPath(pageUrl)
+---
+
+{
+  id !== undefined && (
+    <CopyPage
+      markdownPath={markdownPathFor(id)}
+      sourcePath={sourcePathFor(id)}
+      registryItem={registryItemFor(id)}
+    />
+  )
+}

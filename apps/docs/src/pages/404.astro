@@ -1,9 +1,9 @@
 ---
-import Base from "../layouts/Base.astro"
+import Page from "../layouts/Page.astro"
 import { COMPONENTS } from "../lib/registry"
 ---
 
-<Base title="Not found" description="That page does not exist.">
+<Page title="Not found" description="That page does not exist.">
   <main class="not-found" id="main">
     <p class="not-found-code">404</p>
     <h1>That page does not exist.</h1>
@@ -13,4 +13,4 @@ import { COMPONENTS } from "../lib/registry"
       <a href="/docs/installation">the installation guide</a>.
     </p>
   </main>
-</Base>
+</Page>

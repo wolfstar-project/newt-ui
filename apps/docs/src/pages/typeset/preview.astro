@@ -1,6 +1,6 @@
 ---
 import TypesetPreviewFrame from "../../components/typeset/TypesetPreviewFrame"
-import Base from "../../layouts/Base.astro"
+import Page from "../../layouts/Page.astro"
 
 /*
  * The preview on its own, for reading rather than for tuning: the builder's
@@ -9,11 +9,11 @@ import Base from "../../layouts/Base.astro"
  */
 ---
 
-<Base
+<Page
   title="Typeset preview"
   description="A Typeset configuration on its own page, at the width of real content."
 >
   <main class="typeset-standalone newt-root" id="main">
     <TypesetPreviewFrame client:load />
   </main>
-</Base>
+</Page>
