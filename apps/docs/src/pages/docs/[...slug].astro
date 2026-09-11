@@ -1,5 +1,13 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content"
+import {
+  PageAside,
+  PageHeader,
+  PageMeta,
+  PageNavigation,
+} from "@prosefly/astro-theme-lotus/components"
+import { DocsContextLayout } from "@prosefly/astro-theme-lotus/layouts"
+import { getDocsContext } from "@prosefly/astro-theme-lotus/navigation"
 
 import Callout from "../../components/mdx/Callout.astro"
 import ComponentPreview from "../../components/mdx/ComponentPreview.astro"
@@ -12,13 +20,26 @@ import Steps from "../../components/mdx/Steps.astro"
 import Tabs from "../../components/mdx/Tabs.astro"
 import TokensNote from "../../components/mdx/TokensNote.astro"
 import Usage from "../../components/mdx/Usage.astro"
-import Docs from "../../layouts/Docs.astro"
+import CopyPage from "../../components/site/CopyPage.astro"
 import {
   markdownPathFor,
+  pathFor,
   registryItemFor,
   sourcePathFor,
 } from "../../lib/docs"
+import { buildHead } from "../../lib/lotus-head"
+import { DOCS_SECTION, pagination, sectionTitleFor } from "../../lib/lotus-nav"
 
+/*
+ * The docs page, on the theme's chrome.
+ *
+ * Lotus injects a route of its own for `/docs/[...slug]`; the patch removes it
+ * and this one takes its place, for one reason that cannot be configured away:
+ * the theme renders `<Content />` with no `components` prop, and every one of
+ * the 107 files here writes `<ComponentPreview>` or `<Installation>` without
+ * importing it. The rest of what this file does — the head tags, prev/next,
+ * the copy-page menu — the theme either does not emit or does not expose.
+ */
 export async function getStaticPaths() {
   const entries = await getCollection("docs")
   return entries.map((entry) => ({
@@ -52,18 +73,117 @@ const components = {
   TokensNote,
   Usage,
 }
+
+const markdownPath = markdownPathFor(entry.id)
+const currentPath = pathFor(entry.id)
+
+/*
+ * One section, so the sidebar is always this one; a page outside it — the
+ * registry guides, which are published but deliberately unlisted — still gets
+ * the same navigation rather than an empty rail.
+ */
+const docsContext = await getDocsContext(DOCS_SECTION)
+const sidebar = docsContext.sidebars[DOCS_SECTION] ?? { links: [], groups: [] }
+const sectionTitle = sectionTitleFor(sidebar, entry.id)
+
+/*
+ * `getSidebarPagination` is in the theme but not in its exports map, so the
+ * walk lives in `lib/lotus-nav.ts` and the result is handed to the theme's own
+ * `PageNavigation`.
+ */
+const pager =
+  entry.data.pager === false ? {} : pagination(sidebar, entry.id)
+
+const tocHeadings =
+  entry.data.toc === false
+    ? []
+    : headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3)
+
+const head = buildHead({
+  title: entry.data.title,
+  description: entry.data.description,
+  pathname: Astro.url.pathname,
+  site: Astro.site,
+  markdownPath,
+})
 ---
 
-<Docs
+<DocsContextLayout
   title={entry.data.title}
   description={entry.data.description}
-  headings={headings}
-  toc={entry.data.toc}
-  pager={entry.data.pager}
-  links={entry.data.links}
-  markdownPath={markdownPathFor(entry.id)}
-  sourcePath={sourcePathFor(entry.id)}
-  registryItem={registryItemFor(entry.id)}
+  head={head}
+  currentPath={currentPath}
+  currentSection={DOCS_SECTION}
+  currentSlug={entry.id}
+  headings={tocHeadings}
 >
-  <Content components={components} />
-</Docs>
+  <div>
+    <PageHeader
+      description={entry.data.description}
+      markdownUrl={markdownPath}
+      pageUrl={currentPath}
+      sectionTitle={sectionTitle}
+      title={entry.data.title}
+    />
+
+    {
+      entry.data.links && (
+        <p class="docs-links">
+          {entry.data.links.doc && (
+            <a href={entry.data.links.doc} target="_blank" rel="noreferrer">
+              Docs ↗
+            </a>
+          )}
+          {entry.data.links.api && (
+            <a href={entry.data.links.api} target="_blank" rel="noreferrer">
+              API Reference ↗
+            </a>
+          )}
+        </p>
+      )
+    }
+
+    {/*
+     * Until the `PageActions` slot is overridden, the menu is rendered here:
+     * the theme's own version knows nothing about the registry item, the MCP
+     * deep links or the IDE handoffs this one carries.
+     */}
+    <div class="copy-page-row" data-pagefind-ignore>
+      <CopyPage
+        markdownPath={markdownPath}
+        sourcePath={sourcePathFor(entry.id)}
+        registryItem={registryItemFor(entry.id)}
+      />
+    </div>
+
+    <div class="prose max-w-none py-8">
+      <Content components={components} />
+    </div>
+  </div>
+
+  <div class="xl:hidden" data-pagefind-ignore>
+    <PageAside
+      currentSlug={entry.id}
+      headings={tocHeadings}
+      markdownUrl={markdownPath}
+      pageUrl={currentPath}
+      tableOfContents={false}
+      title={entry.data.title}
+    />
+  </div>
+
+  <div data-pagefind-ignore>
+    <PageMeta title={entry.data.title} />
+    <PageNavigation navigation={pager} />
+  </div>
+
+  <Fragment slot="aside">
+    <PageAside
+      currentSlug={entry.id}
+      headings={tocHeadings}
+      markdownUrl={markdownPath}
+      pageUrl={currentPath}
+      title={entry.data.title}
+    />
+  </Fragment>
+</DocsContextLayout>

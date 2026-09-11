@@ -45,10 +45,39 @@ export default defineConfig({
      */
     expressiveCode(),
     lotus({
+      name: SITE.name,
+      description: SITE.tagline,
       docsBase: "/docs",
       llms: false,
       siteNav: [{ label: "Docs", href: "/docs" }],
       docsNav: buildDocsNav(),
+      /*
+       * The site stylesheet, inlined into the sheet the theme generates rather
+       * than imported by a layout: that is the only place a second
+       * `@import "tailwindcss"` can be avoided, and it is where the theme's own
+       * `@source` of this app's `src` already lives.
+       *
+       * The script beside it is the pre-paint pass the old `Base.astro` ran:
+       * the framework switch is a `data-framework` attribute on `<html>`, and
+       * `BaseLayout` writes only `lang`, `dir` and its own theme attributes
+       * there, so a route cannot put it on the element — it has to be set
+       * before the body is parsed instead, or the reader sees both frameworks'
+       * code blocks for a frame.
+       */
+      head: [
+        { tag: "style", src: "./src/styles/lotus.css" },
+        {
+          tag: "script",
+          content:
+            'try{var f=localStorage.getItem("newt-ui:framework");' +
+            'document.documentElement.dataset.framework=' +
+            'f==="vue"||f==="react"?f:"react";' +
+            'var t=localStorage.getItem("newt-ui:theme");' +
+            'if(t==="light"||t==="dark"){' +
+            'document.documentElement.dataset.newtTheme=t;' +
+            'document.documentElement.style.colorScheme=t}}catch(e){}',
+        },
+      ],
       search: {
         provider: "pagefind",
         excludeSelectors: [
