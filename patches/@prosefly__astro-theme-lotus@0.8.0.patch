@@ -1,0 +1,27 @@
+diff --git a/src/lib/routes.ts b/src/lib/routes.ts
+index f47a6bf703192461dfd20a1b0dcf65caa250d7be..57b4b6d6d38b3b4ce57ad1d23bd8a30a6842af23 100644
+--- a/src/lib/routes.ts
++++ b/src/lib/routes.ts
+@@ -28,20 +28,8 @@ function hasLocalizedRoutes(config: LotusThemeConfig): boolean {
+ export function getLotusInjectedRoutes(config: LotusThemeConfig): LotusInjectedRoute[] {
+   const docsBasePath = normalizeDocsBasePath(config.docsBase);
+   const llmsConfig = resolveLlmsConfig(config);
+-  const routes: LotusInjectedRoute[] = [
+-    {
+-      pattern: '/404',
+-      entrypoint: new URL('../routes/404.astro', import.meta.url),
+-    },
+-    {
+-      pattern: getDocsRoutePattern(docsBasePath, '/[...slug]'),
+-      entrypoint: new URL('../routes/docs.astro', import.meta.url),
+-    },
+-    {
+-      pattern: getDocsRoutePattern(docsBasePath, '/[...slug].md'),
+-      entrypoint: new URL('../routes/docs.md.ts', import.meta.url),
+-    },
+-  ];
++  // Patched: the site owns /404, /docs/[...slug] and /docs/[...slug].md.
++  const routes: LotusInjectedRoute[] = [];
+ 
+   if (llmsConfig.enabled) {
+     routes.push({

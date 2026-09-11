@@ -9,6 +9,7 @@ overrides:
   '@nuxt/schema': npm:@nuxt/schema@4.5.2
 
 patchedDependencies:
+  '@prosefly/astro-theme-lotus@0.8.0': 3a6b02f38c30abe36c9f5d589e47ea44f2207dbc750f71f573854d7e4d8a91ec
   astro-takumi@2.0.1: 9aa52ac8bc5c73cd270685bb4d8089d3b83fd6eef406cafa1d07d9fc22b724e2
 
 importers:
@@ -83,7 +84,7 @@ importers:
         version: 0.7.0(@expressive-code/core@0.44.2)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(supports-color@10.2.2)
       '@prosefly/astro-theme-lotus':
         specifier: 0.8.0
-        version: 0.8.0(@astrojs/markdown-satteri@0.4.0)(@prosefly/astro-components@0.7.0(@expressive-code/core@0.44.2)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(supports-color@10.2.2))(@types/mdast@4.0.4)(@types/node@24.13.3)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(esbuild@0.28.2)(jiti@2.7.0)(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@10.2.2))(pagefind@1.5.2)(supports-color@10.2.2)(tailwindcss@4.3.3)(terser@5.50.0)(tsx@4.23.12)(unified@11.0.5)(yaml@2.9.0)
+        version: 0.8.0(patch_hash=3a6b02f38c30abe36c9f5d589e47ea44f2207dbc750f71f573854d7e4d8a91ec)(@astrojs/markdown-satteri@0.4.0)(@prosefly/astro-components@0.7.0(@expressive-code/core@0.44.2)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(supports-color@10.2.2))(@types/mdast@4.0.4)(@types/node@24.13.3)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(esbuild@0.28.2)(jiti@2.7.0)(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@10.2.2))(pagefind@1.5.2)(supports-color@10.2.2)(tailwindcss@4.3.3)(terser@5.50.0)(tsx@4.23.12)(unified@11.0.5)(yaml@2.9.0)
       '@vite-pwa/astro':
         specifier: ^1.2.0
         version: 1.2.0(@vite-pwa/assets-generator@1.0.2(@types/node@24.13.3))(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(vite-plugin-pwa@1.3.0(@vite-pwa/assets-generator@1.0.2(@types/node@24.13.3))(supports-color@10.2.2)(vite@8.3.0(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(workbox-build@7.4.1(@types/babel__core@7.20.5)(supports-color@10.2.2))(workbox-window@7.4.1))
@@ -12149,8 +12150,8 @@ snapshots:
       hast-util-to-html: 9.0.5
       hast-util-to-text: 4.0.2
       hastscript: 9.0.1
-      postcss: 8.5.26
-      postcss-nested: 6.2.0(postcss@8.5.26)
+      postcss: 8.5.28
+      postcss-nested: 6.2.0(postcss@8.5.28)
       unist-util-visit: 5.1.0
       unist-util-visit-parents: 6.0.2
 
@@ -14130,7 +14131,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@prosefly/astro-theme-lotus@0.8.0(@astrojs/markdown-satteri@0.4.0)(@prosefly/astro-components@0.7.0(@expressive-code/core@0.44.2)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(supports-color@10.2.2))(@types/mdast@4.0.4)(@types/node@24.13.3)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(esbuild@0.28.2)(jiti@2.7.0)(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@10.2.2))(pagefind@1.5.2)(supports-color@10.2.2)(tailwindcss@4.3.3)(terser@5.50.0)(tsx@4.23.12)(unified@11.0.5)(yaml@2.9.0)':
+  '@prosefly/astro-theme-lotus@0.8.0(patch_hash=3a6b02f38c30abe36c9f5d589e47ea44f2207dbc750f71f573854d7e4d8a91ec)(@astrojs/markdown-satteri@0.4.0)(@prosefly/astro-components@0.7.0(@expressive-code/core@0.44.2)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(supports-color@10.2.2))(@types/mdast@4.0.4)(@types/node@24.13.3)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))(esbuild@0.28.2)(jiti@2.7.0)(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@10.2.2))(pagefind@1.5.2)(supports-color@10.2.2)(tailwindcss@4.3.3)(terser@5.50.0)(tsx@4.23.12)(unified@11.0.5)(yaml@2.9.0)':
     dependencies:
       '@astrojs/markdown-remark': 7.3.1(supports-color@10.2.2)
       '@astrojs/mdx': 8.0.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@astrojs/markdown-satteri@0.4.0)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
@@ -15229,7 +15230,7 @@ snapshots:
       '@vue/shared': 3.5.41
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.26
+      postcss: 8.5.28
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.41':
@@ -19950,6 +19951,11 @@ snapshots:
   postcss-nested@6.2.0(postcss@8.5.26):
     dependencies:
       postcss: 8.5.26
+      postcss-selector-parser: 6.1.4
+
+  postcss-nested@6.2.0(postcss@8.5.28):
+    dependencies:
+      postcss: 8.5.28
       postcss-selector-parser: 6.1.4
 
   postcss-nested@7.0.2(postcss@8.5.26):

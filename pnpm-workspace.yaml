@@ -27,4 +27,5 @@ allowBuilds:
   vue-demi: true
 
 patchedDependencies:
+  '@prosefly/astro-theme-lotus@0.8.0': patches/@prosefly__astro-theme-lotus@0.8.0.patch
   astro-takumi@2.0.1: patches/astro-takumi@2.0.1.patch

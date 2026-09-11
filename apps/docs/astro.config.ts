@@ -43,7 +43,7 @@ export default defineConfig({
      * component looks for them.
      */
     expressiveCode(),
-    lotus({ docsBase: "/docs", markdown: { expressiveCode: false } }),
+    lotus({ docsBase: "/docs", llms: false, markdown: { expressiveCode: false } }),
     react(),
     vue(),
     /*
