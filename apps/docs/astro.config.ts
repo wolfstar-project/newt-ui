@@ -46,8 +46,31 @@ export default defineConfig({
     lotus({
       docsBase: "/docs",
       llms: false,
-      pageActions: [],
-      iconify: { apiBase: "http://127.0.0.1:4599", scan: false, preload: [] },
+      siteNav: [{ label: "Docs", href: "/docs" }],
+      docsNav: [
+        {
+          slug: "docs",
+          label: "Docs",
+          items: [
+            "installation",
+            "theming",
+            { label: "Button", link: "/docs/components/button" },
+            {
+              label: "Components",
+              items: ["components/avatar", "components/badge"],
+            },
+          ],
+        },
+      ],
+      search: {
+        provider: "pagefind",
+        excludeSelectors: [
+          ".expressive-code",
+          ".demo-frame",
+          ".tabs-list",
+          ".copy-page",
+        ],
+      },
       markdown: { expressiveCode: false },
     }),
     react(),
@@ -148,6 +171,7 @@ export default defineConfig({
     processor: satteri({ hastPlugins: [hastHeadingId] }),
   },
   vite: {
+    ssr: { external: ["pagefind"] },
     resolve: {
       /*
        * Registry source sits outside this app. Vue registry components use

@@ -1,0 +1,36 @@
+---
+import { DocsContextLayout } from "@prosefly/astro-theme-lotus/layouts"
+import { getDocsContext } from "@prosefly/astro-theme-lotus/navigation"
+
+import { ogImageUrl } from "../lib/og-card"
+
+const context = await getDocsContext("docs")
+const t = Astro.locals.t
+const translated = typeof t === "function" ? t("search.label") : "NO-LOCALS-T"
+const ogImage = ogImageUrl(Astro.url.pathname, Astro.site)
+const sidebarKeys = Object.keys(context.sidebars).join(", ")
+const firstGroupLabel = context.sidebars.docs?.groups?.[0]?.label ?? "(no group)"
+---
+
+<DocsContextLayout
+  title="Spike locals"
+  description="Spike page for Astro.locals.t, head prop and trailing slash."
+  currentSection="docs"
+  currentPath={Astro.url.pathname}
+  head={[
+    { tag: "meta", attrs: { property: "og:title", content: "Spike locals" } },
+    { tag: "meta", attrs: { property: "og:type", content: "website" } },
+    { tag: "meta", attrs: { property: "og:url", content: Astro.url.href } },
+    { tag: "meta", attrs: { property: "og:image", content: ogImage } },
+    { tag: "meta", attrs: { name: "twitter:image", content: ogImage } },
+    { tag: "meta", attrs: { name: "twitter:card", content: "summary_large_image" } },
+  ]}
+  headings={[{ depth: 2, slug: "spike", text: "Spike" }]}
+>
+  <h2 id="spike">Spike</h2>
+  <p data-spike="locals-t">locals.t("search.label") = {translated}</p>
+  <p data-spike="og">ogImageUrl = {ogImage}</p>
+  <p data-spike="sidebars">sidebars = {sidebarKeys}</p>
+  <p data-spike="group">first group = {firstGroupLabel}</p>
+  <p data-spike="sections">sections = {context.sections.length}</p>
+</DocsContextLayout>
