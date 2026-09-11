@@ -17,6 +17,11 @@ overrides:
   # types, so `defineNuxtConfig(...)` type-checks as "not callable" wherever the
   # older one wins resolution. Everything here runs Nuxt 4.
   "@nuxt/schema": npm:@nuxt/schema@4.5.2
+  # spike: Lotus requires vite ^8.3.0 / @astrojs/mdx ^8.0.1; without these the
+  # monorepo ends up with two Vite instances (Astro on 8.2.2, Lotus's Tailwind
+  # plugin on 8.3.0).
+  vite: ^8.3.0
+  "@astrojs/mdx": ^8.0.1
 
 allowBuilds:
   "@google/genai": true
