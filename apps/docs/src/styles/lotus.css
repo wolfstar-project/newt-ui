@@ -1985,6 +1985,13 @@ html[data-theme="system"] {
   color: var(--newt-text-secondary);
 }
 
+/* Prosefly uses the semantic ink colour for an untitled callout's whole slot.
+ * Keep that accent on its icon and border, but render normal body copy with
+ * the primary text token so note and warning guidance meets WCAG AA. */
+html:root .prose .pf-callout[data-has-title="false"] .pf-callout__slot {
+  color: var(--newt-text-primary);
+}
+
 .prose h2:not(:where(.newt-root *)) {
   margin: 2.5rem 0 0.75rem;
   padding-top: 1.25rem;
