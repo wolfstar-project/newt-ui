@@ -2046,6 +2046,13 @@ html[data-theme="system"] {
 
 .prose kbd:not(:where(.newt-root *)) {
   padding: 0.1rem 0.35rem;
+  /*
+   * Typography draws a key as a raised block with a two-part `box-shadow` and
+   * no border. This site has always drawn it as an outlined tag, and the two
+   * are different properties, so without this reset both arrive and the key
+   * gets an outline and a lip.
+   */
+  box-shadow: none;
   border: 1px solid var(--newt-border);
   border-radius: 0.25rem;
   font-family: var(--newt-font-mono);
