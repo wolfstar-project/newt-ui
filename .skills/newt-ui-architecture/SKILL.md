@@ -24,6 +24,13 @@ flows back.
 - `packages/module`: `@newtui/nuxt`, auto-imports a consumer's
   `components/ui/**` and injects the tokens. Runtime-only; it never reads the
   registry.
+- `apps/docs`: the documentation site, and the only place the two registries
+  are shown side by side. Its chrome is `@prosefly/astro-theme-lotus`, a
+  pinned and patched dependency: layouts, sidebar, search and footer come from
+  the theme, and the app reaches it through `lotus({...})` in
+  `astro.config.ts`, five slot overrides in `src/components/lotus/`, and
+  `src/lib/lotus-nav.ts` / `src/lib/lotus-head.ts`. Read the docs site section
+  of `AGENTS.md` before touching a layout, a route or `src/styles/lotus.css`.
 - `apps/www`: React registry builder (Next.js), shadcn-ui layout. Owns
   `registry/meta/*.json`, which is the single input the generator reads for
   **both** frameworks.
@@ -58,6 +65,9 @@ flows back.
   `defineNuxtConfig` type-check as not callable.
 - Nothing in `apps/*` may import from `packages/*` source; the apps consume
   the published registry contract, exactly like a user would.
+- The docs theme is pinned to an exact version and patched in three places.
+  Prefer a slot override or a `--lotus-*` mapping over a fourth hunk; if the
+  patch outgrows three hunks, vendor the theme rather than keep patching it.
 
 ## Workflow
 
