@@ -3,8 +3,8 @@ import Page from "../layouts/Page.astro"
 import { COMPONENTS } from "../lib/registry"
 ---
 
-<Page title="Not found" description="That page does not exist.">
-  <main class="not-found" id="main">
+<Page title="Not found" description="That page does not exist." pagefind={false}>
+  <div class="not-found">
     <p class="not-found-code">404</p>
     <h1>That page does not exist.</h1>
     <p>
@@ -12,5 +12,5 @@ import { COMPONENTS } from "../lib/registry"
       Try <a href="/docs/components">the component index</a>, or start from
       <a href="/docs/installation">the installation guide</a>.
     </p>
-  </main>
+  </div>
 </Page>

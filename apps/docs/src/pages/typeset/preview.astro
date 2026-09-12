@@ -12,8 +12,9 @@ import Page from "../../layouts/Page.astro"
 <Page
   title="Typeset preview"
   description="A Typeset configuration on its own page, at the width of real content."
+  pagefind={false}
 >
-  <main class="typeset-standalone newt-root" id="main">
+  <div class="typeset-standalone newt-root">
     <TypesetPreviewFrame client:load />
-  </main>
+  </div>
 </Page>

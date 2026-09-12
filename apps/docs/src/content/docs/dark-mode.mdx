@@ -43,7 +43,9 @@ it in a blocking inline script in `<head>`, before the first paint:
 </script>
 ```
 
-This site does exactly that; the source is in `apps/docs/src/layouts/Base.astro`.
+This site does exactly that. Its own copy is the inline `head` script in
+`apps/docs/astro.config.ts`, which resolves the stored value before the first
+paint and writes it to `data-newt-theme`.
 
 ## Next.js {#next}
 

@@ -35,6 +35,13 @@ const head = buildHead({
 <BaseLayout title={title} description={description} head={head}>
   <SiteHeader currentPath={Astro.url.pathname} />
 
+  {/*
+    The one primary-content landmark on these routes. The pages themselves
+    carry a plain `<div>` with their own class: a page that opened a second
+    `<main id="main">` inside this one gave the document nested landmarks and
+    a duplicate id, which makes landmark navigation ambiguous. Saying it here
+    also means a page added later gets the landmark without remembering to.
+  */}
   <main id="main" {...pagefind ? { "data-pagefind-body": true } : { "data-pagefind-ignore": true }}>
     <slot />
   </main>
