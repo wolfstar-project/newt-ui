@@ -91,12 +91,45 @@ export const FRAMEWORK_MARKS = {
   ],
 } as const satisfies Record<FrameworkId, readonly MarkPath[]>
 
+export type FrameworkTint =
+  | "react"
+  | "vue"
+  | "next"
+  | "nuxt"
+  | "astro"
+  | "tanstack"
+  | "react-router"
+  | "laravel"
+  | "html"
+
 /**
  * The two Vite entries share the Vite mark, so their titles carry the
- * difference. The framework hue is reinforcement, never the only signal.
+ * difference. `manual` is a drawn glyph, not a borrowed logo, so it stays
+ * neutral. `next` and `tanstack` are monochrome brand marks (black on light
+ * surfaces, white on dark ones per each project's own guidelines), so their
+ * tint is theme-adaptive rather than a fixed hue — see the CSS rules.
  */
-export function markTint(id: FrameworkId): "react" | "vue" | undefined {
-  if (id === "vite-react") return "react"
-  if (id === "vite-vue") return "vue"
-  return undefined
+export function markTint(id: FrameworkId): FrameworkTint | undefined {
+  switch (id) {
+    case "vite-react":
+      return "react"
+    case "vite-vue":
+      return "vue"
+    case "next":
+      return "next"
+    case "nuxt":
+      return "nuxt"
+    case "astro":
+      return "astro"
+    case "tanstack-start":
+      return "tanstack"
+    case "react-router":
+      return "react-router"
+    case "laravel":
+      return "laravel"
+    case "html":
+      return "html"
+    default:
+      return undefined
+  }
 }

@@ -1,5 +1,20 @@
 # @newtui/react
 
+## 2.0.2
+
+### Patch Changes
+
+- Updated dependencies [c7e6a09]
+- Updated dependencies [c7e6a09]
+- Updated dependencies [c7e6a09]
+- Updated dependencies [c7e6a09]
+- Updated dependencies [c7e6a09]
+- Updated dependencies [c7e6a09]
+- Updated dependencies [c7e6a09]
+- Updated dependencies [c7e6a09]
+- Updated dependencies [88af7f0]
+  - newtui@2.2.0
+
 ## 2.0.1
 
 ### Patch Changes

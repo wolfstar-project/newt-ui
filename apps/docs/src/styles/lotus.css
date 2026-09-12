@@ -795,6 +795,41 @@ html[data-theme="system"] {
     color: #42b883;
   }
 
+  .framework-glyph[data-tint="nuxt"] {
+    color: #00dc82;
+  }
+
+  .framework-glyph[data-tint="astro"] {
+    color: #bc52ee;
+  }
+
+  .framework-glyph[data-tint="react-router"] {
+    color: #f44250;
+  }
+
+  .framework-glyph[data-tint="laravel"] {
+    color: #ff2d20;
+  }
+
+  .framework-glyph[data-tint="html"] {
+    color: #e34c26;
+  }
+
+  /*
+   * Next.js and TanStack ship monochrome marks (per their own brand
+   * guidelines: black on light surfaces, white on dark ones), so their
+   * "tint" follows the surface instead of a fixed brand hue.
+   */
+  .framework-glyph[data-tint="next"],
+  .framework-glyph[data-tint="tanstack"] {
+    color: #ffffff;
+  }
+
+  [data-newt-theme="light"] .framework-glyph[data-tint="next"],
+  [data-newt-theme="light"] .framework-glyph[data-tint="tanstack"] {
+    color: #000000;
+  }
+
   /* --- installation picker ------------------------------------------ */
 
   .framework-grid {
@@ -843,7 +878,7 @@ html[data-theme="system"] {
     color: var(--newt-text-secondary);
   }
 
-  .framework-card:hover .framework-card-mark {
+  .framework-card:hover .framework-card-mark:not([data-tint]) {
     color: var(--newt-text-primary);
   }
 
