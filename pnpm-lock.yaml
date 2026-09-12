@@ -60,12 +60,6 @@ importers:
 
   apps/docs:
     dependencies:
-      '@astrojs/markdown-satteri':
-        specifier: ^0.4.0
-        version: 0.4.0
-      '@astrojs/mdx':
-        specifier: ^8.0.1
-        version: 8.0.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@astrojs/markdown-satteri@0.4.0)(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
       '@astrojs/react':
         specifier: ^6.0.5
         version: 6.0.5(@types/node@24.13.3)(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@10.2.2)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)
@@ -96,12 +90,6 @@ importers:
       astro-expressive-code:
         specifier: ^0.44.2
         version: 0.44.2(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
-      astro-pagefind:
-        specifier: ^2.0.1
-        version: 2.0.1(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
-      astro-seo:
-        specifier: ^1.2.0
-        version: 1.2.0
       astro-takumi:
         specifier: ^2.0.1
         version: 2.0.1(patch_hash=9aa52ac8bc5c73cd270685bb4d8089d3b83fd6eef406cafa1d07d9fc22b724e2)(csstype@3.2.3)
@@ -120,9 +108,6 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.2.8(react@19.2.8)
-      satteri:
-        specifier: ^0.10.5
-        version: 0.10.5
       vue:
         specifier: ^3.5.13
         version: 3.5.41(typescript-native-bridge@6.0.3-bridge.13.tsgo.7.0.2)
@@ -148,9 +133,6 @@ importers:
       '@iconify-json/vscode-icons':
         specifier: ^1.2.77
         version: 1.2.77
-      '@tailwindcss/vite':
-        specifier: ^4.3.3
-        version: 4.3.3(vite@8.3.0(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
       '@types/react':
         specifier: ^19.0.2
         version: 19.2.18
@@ -160,9 +142,6 @@ importers:
       '@vite-pwa/assets-generator':
         specifier: ^1.0.2
         version: 1.0.2(@types/node@24.13.3)
-      tailwindcss:
-        specifier: ^4.3.3
-        version: 4.3.3
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
@@ -3504,9 +3483,6 @@ packages:
     resolution: {integrity: sha512-S0uyoxakDINJ4DPgqxGlEEvrdSMeQb7Z2lKVjxoY2gwsbZbfg2Xr8Klfeo5ZeraHmmdBCELFUHkSe6KEmBpMvg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@pagefind/component-ui@1.5.2':
-    resolution: {integrity: sha512-t8/aE0tan4JiKa6cyhhSt/5qrEVwAK/qlYBHFpnRoq+qaFFVrhmXFFMY+r6n4GJtVIFCN2A5nUpeLN68cYjEjw==}
-
   '@pagefind/darwin-arm64@1.5.2':
     resolution: {integrity: sha512-MXpI+7HsAdPkvJ0gk9xj9g541BCqBZOBbdwj9g6lB5LCj6kSV6nqDSjzcAJwvOsfu0fjwvC8hQU+ecfhp+MpiQ==}
     cpu: [arm64]
@@ -4891,10 +4867,6 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  adequate-little-templates@1.0.2:
-    resolution: {integrity: sha512-d0tFFG538l3Y4CElRKtticzrMr/OGohs32/nf3Ewn8rbTMBYwkVNe8mPdXWrDnMlz+ZVUFQjsTmsBD5zCtU4wg==}
-    engines: {node: '>=14'}
-
   adm-zip@0.5.18:
     resolution: {integrity: sha512-ufJnssQGbxzLNS1Ho9bCtX4rQKCCvoVuDLHoJyc3F9dOGDB4BkWs2Ci0kv53lqocAEQ/Cbi+I2XCsNYGqVYqng==}
     engines: {node: '>=12.0'}
@@ -5021,14 +4993,6 @@ packages:
     peerDependencies:
       astro: ^4.0.0-beta || ^5.0.0-beta || ^3.3.0 || ^6.0.0-beta || ^7.0.0
 
-  astro-pagefind@2.0.1:
-    resolution: {integrity: sha512-zhMTctuVuKrYH1C0Xl+p8mhexEuxVrqfT8paQOAbKZFtgUIWAMtR2nCeU11ti4Rfeit16LhiCxZFwjOqYoiaNQ==}
-    peerDependencies:
-      astro: ^2.0.4 || ^3 || ^4 || ^5 || ^6 || ^7
-
-  astro-seo@1.2.0:
-    resolution: {integrity: sha512-ZqS2ZLKJ9GZwcONho9W95xkGBWuPpikTsMBzjuq/6CKtKUEgMDbSZkoLwoZsmLVq/p52T4z7JwgjC3AtMg7Trg==}
-
   astro-takumi@2.0.1:
     resolution: {integrity: sha512-guh5lh24gWfuueoeqiVpTT3SaGDdUS2OfSXv8R/CVwqFyfrVzoWfgYpZDTeAa2GNJkDZU4ueja+Mt38Z/r6fgQ==}
 
@@ -5151,9 +5115,6 @@ packages:
 
   bcp-47-match@2.0.3:
     resolution: {integrity: sha512-JtTezzbAibu8G0R9op9zb3vcWZd9JF6M0xOYGPn0fNCd7wOpRB1mU2mH9T8gaBGbAAyIIVgB2G7xG0GP98zMAQ==}
-
-  bcp-47@2.1.1:
-    resolution: {integrity: sha512-KLw+H/gd2p4zly1X7Yh/qziuyae5/w/QFnvTng9eZL5fvszL7Whl3MBoWF8yxL7ksUjBfOD+OxkytiqbBpG+Fw==}
 
   beautiful-mermaid@1.1.3:
     resolution: {integrity: sha512-TItrtrAyHp1vwFfFVYauWGrquouk/6SS21Aq3RsxindSYZODcN4xYrPZD6BiZRU+o5mKJzDPz9MUSMvELdylyg==}
@@ -13985,11 +13946,6 @@ snapshots:
 
   '@oxlint/plugins@1.79.0': {}
 
-  '@pagefind/component-ui@1.5.2':
-    dependencies:
-      adequate-little-templates: 1.0.2
-      bcp-47: 2.1.1
-
   '@pagefind/darwin-arm64@1.5.2':
     optional: true
 
@@ -15279,8 +15235,6 @@ snapshots:
 
   acorn@8.18.0: {}
 
-  adequate-little-templates@1.0.2: {}
-
   adm-zip@0.5.18: {}
 
   agent-base@7.1.4: {}
@@ -15404,15 +15358,6 @@ snapshots:
       astro: 7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)
       rehype-expressive-code: 0.44.2
       url-extras: 0.1.0
-
-  astro-pagefind@2.0.1(astro@7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)):
-    dependencies:
-      '@pagefind/component-ui': 1.5.2
-      astro: 7.3.1(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(db0@0.3.4)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)
-      pagefind: 1.5.2
-      sirv: 3.0.2
-
-  astro-seo@1.2.0: {}
 
   astro-takumi@2.0.1(patch_hash=9aa52ac8bc5c73cd270685bb4d8089d3b83fd6eef406cafa1d07d9fc22b724e2)(csstype@3.2.3):
     dependencies:
@@ -15607,12 +15552,6 @@ snapshots:
   baseline-browser-mapping@2.11.15: {}
 
   bcp-47-match@2.0.3: {}
-
-  bcp-47@2.1.1:
-    dependencies:
-      is-alphabetical: 2.0.1
-      is-alphanumerical: 2.0.1
-      is-decimal: 2.0.1
 
   beautiful-mermaid@1.1.3:
     dependencies:
