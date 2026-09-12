@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "astro build && node scripts/bundle-registry.mjs && node scripts/verify-dist.mjs",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 astro build && node scripts/bundle-registry.mjs && node scripts/verify-dist.mjs",
     "dev": "astro dev",
     "docs:gen": "node scripts/gen-component-docs.mjs",
     "preview": "astro preview",
