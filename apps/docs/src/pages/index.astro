@@ -1,7 +1,7 @@
 ---
 import ComponentPreview from "../components/mdx/ComponentPreview.astro"
 import PmTabs from "../components/mdx/PmTabs.astro"
-import Base from "../layouts/Base.astro"
+import Page from "../layouts/Page.astro"
 import { COMPONENTS } from "../lib/registry"
 import { SITE } from "../lib/site"
 
@@ -41,8 +41,8 @@ const PRINCIPLES = [
 ] as const
 ---
 
-<Base title={SITE.name} description={SITE.tagline}>
-  <main class="home" id="main">
+<Page title={SITE.name} description={SITE.tagline}>
+  <div class="home">
     <section class="hero">
       <p class="hero-eyebrow">
         <span>{SITE.name}</span>
@@ -113,5 +113,5 @@ const PRINCIPLES = [
         source are on <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>.
       </p>
     </section>
-  </main>
-</Base>
+  </div>
+</Page>

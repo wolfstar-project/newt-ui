@@ -79,6 +79,54 @@ if (missing.length > 0) {
   process.exit(1)
 }
 
+/*
+ * The chrome is the theme's now, and the theme does not know about this site's
+ * manifest, icons or service worker: they reach `<head>` only because every
+ * route passes them through `buildHead`. A route added later that forgets to
+ * is a page the browser silently stops offering to install — and the files
+ * listed above are all still on disk, so their presence proves nothing. One
+ * page from each layout is read here to check that they are also linked.
+ */
+const HEAD_LINKED = [
+  "index.html",
+  "404.html",
+  "blocks/index.html",
+  "docs/index.html",
+  "docs/components/button/index.html",
+  "docs/changelog/index.html",
+]
+const HEAD_TAGS = [
+  ['rel="manifest"', "the web app manifest"],
+  ["apple-touch-icon", "the touch icon"],
+  ['name="theme-color"', "the theme colour"],
+  ['rel="canonical"', "the canonical link"],
+  ['property="og:image"', "the Open Graph card"],
+]
+
+const unlinked = []
+for (const page of HEAD_LINKED) {
+  const html = readFileSync(resolve(dist, page), "utf8")
+  /*
+   * `substring` rather than `slice`, which would do the same thing: `slice`
+   * reads as an array operation to `unicorn/prefer-set-has`, and the rule's
+   * autofix then wraps this in a `new Set(...)` of single characters, where
+   * every lookup below misses and the assertion can no longer fail. That
+   * autofix has already been applied once by the commit hook.
+   */
+  const head = html.substring(0, html.indexOf("</head>"))
+  for (const [needle, label] of HEAD_TAGS) {
+    if (!head.includes(needle)) {
+      unlinked.push(`${page} is missing ${label}`)
+    }
+  }
+}
+if (unlinked.length > 0) {
+  console.error(
+    `dist has pages with an incomplete head:\n  ${unlinked.join("\n  ")}`
+  )
+  process.exit(1)
+}
+
 const llms = readFileSync(resolve(dist, "llms.txt"), "utf8")
 const listed = (llms.match(/\/docs\/components\/[a-z0-9-]+\.md/g) ?? []).length
 const expected = Number(process.env.NEWT_EXPECTED_COMPONENTS ?? 60)

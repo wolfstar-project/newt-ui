@@ -3,7 +3,7 @@ title: "Registry examples"
 description: "Four items, whole: a component, one with dependencies, a theme, and a demo."
 ---
 
-## A component \{#ui\}
+## A component {#ui}
 
 The common case. One file, one npm dependency, no siblings.
 
@@ -24,7 +24,7 @@ The common case. One file, one npm dependency, no siblings.
 }
 ```
 
-## A component built on others \{#deps\}
+## A component built on others {#deps}
 
 `registryDependencies` are resolved before anything is written, so asking for
 this one writes three files.
@@ -46,7 +46,7 @@ this one writes three files.
 }
 ```
 
-## A Vue item \{#vue\}
+## A Vue item {#vue}
 
 Vue components are a directory: one file per part, plus the barrel that exports
 them and the variants.
@@ -71,7 +71,7 @@ them and the variants.
 }
 ```
 
-## A theme \{#theme\}
+## A theme {#theme}
 
 Installed by `init` rather than `add`. It has no files: it writes variables into
 the stylesheet the config names.
@@ -91,7 +91,7 @@ the stylesheet the config names.
 }
 ```
 
-## A demo \{#example\}
+## A demo {#example}
 
 An `registry:example` is never installed into a project. It exists so the docs
 site — and an agent reading the registry — can see the component in use.

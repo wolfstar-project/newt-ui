@@ -1,0 +1,68 @@
+---
+import type { MarkdownHeading } from "astro"
+import { PageAside, PageHeader } from "@prosefly/astro-theme-lotus/components"
+import { DocsContextLayout } from "@prosefly/astro-theme-lotus/layouts"
+
+import { buildHead } from "../lib/lotus-head"
+import { DOCS_SECTION } from "../lib/lotus-nav"
+
+/*
+ * The docs shell for the pages that are generated rather than authored: the
+ * component index and the changelog. They keep the sidebar and the header of a
+ * documentation page, because that is where a reader finds them, but they have
+ * no content entry behind them — so no markdown twin, no previous/next walk and
+ * no copy-page menu.
+ *
+ * `pages/docs/[...slug].astro` is the same shape with a collection entry in
+ * front of it; the two are kept apart rather than merged because everything
+ * that makes a content page a content page is exactly what these pages lack.
+ */
+interface Props {
+  readonly title: string
+  readonly description: string
+  readonly headings?: readonly MarkdownHeading[]
+}
+
+const { title, description, headings = [] } = Astro.props
+
+const tocHeadings = headings.filter(
+  (heading) => heading.depth >= 2 && heading.depth <= 3
+)
+
+const head = buildHead({
+  title,
+  description,
+  pathname: Astro.url.pathname,
+  site: Astro.site,
+})
+---
+
+<DocsContextLayout
+  title={title}
+  description={description}
+  head={head}
+  currentPath={Astro.url.pathname}
+  currentSection={DOCS_SECTION}
+  headings={tocHeadings}
+>
+  <div>
+    <PageHeader
+      description={description}
+      markdownUrl={Astro.url.pathname}
+      pageUrl={Astro.url.pathname}
+      title={title}
+    />
+
+    <div class="prose max-w-none py-8">
+      <slot />
+    </div>
+  </div>
+
+  <Fragment slot="aside">
+    <PageAside
+      headings={tocHeadings}
+      pageUrl={Astro.url.pathname}
+      title={title}
+    />
+  </Fragment>
+</DocsContextLayout>

@@ -11,7 +11,7 @@ That makes this the flavour to reach for in a server-rendered template, an email
 preview, a Rails or Django view, or anywhere a bundler would be the only reason
 to have a bundler.
 
-## Install \{#install\}
+## Install {#install}
 
 The build ships inside the CLI package and is reached through `--legacy`, or
 through the `newtui-html` binary, which is the same program.
@@ -38,7 +38,7 @@ the three that need behaviour (tabs, toast, modal). It follows the same
 dependency links the framework registries do, so asking for one component brings
 what it is built on.
 
-## Use it \{#use\}
+## Use it {#use}
 
 Load the tokens first — every component reads `var(--newt-*)` — then the
 components you copied, then put `.newt-root` on the element that wraps your
@@ -57,7 +57,7 @@ page.
 The `.html` file that came with the component is the markup to copy: it shows
 every element and every modifier the CSS styles.
 
-## Class names \{#naming\}
+## Class names {#naming}
 
 BEM-lite, prefixed `newt-`:
 
@@ -68,7 +68,7 @@ BEM-lite, prefixed `newt-`:
 
 Each component page on this site prints its root class next to the preview.
 
-## The registry file \{#registry\}
+## The registry file {#registry}
 
 `registry/html/registry.json` inside the package lists everything, and is what
 `--legacy list` reads:

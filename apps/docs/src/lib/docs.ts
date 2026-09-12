@@ -12,6 +12,18 @@ export function pathFor(id: string): string {
 }
 
 /**
+ * The other direction: `/docs/components/button` → `components/button`,
+ * `/docs` → `index`. Needed where a component is handed a URL and not an
+ * entry — the theme's page-actions slot, which is given `pageUrl` and nothing
+ * else.
+ */
+export function slugFromPath(pathname: string): string | undefined {
+  if (pathname !== "/docs" && !pathname.startsWith("/docs/")) return undefined
+  const rest = pathname.slice("/docs".length).replace(/^\/+|\/+$/g, "")
+  return rest === "" ? "index" : rest
+}
+
+/**
  * The markdown twin. `index` keeps its own name rather than becoming
  * `/docs.md`, so the route stays inside the `/docs/` directory alongside
  * every other twin.

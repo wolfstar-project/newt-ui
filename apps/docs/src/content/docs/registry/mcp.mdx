@@ -13,7 +13,7 @@ The [MCP server](/docs/mcp) answers from whichever registry the project's
 }
 ```
 
-## What the tools need \{#requirements\}
+## What the tools need {#requirements}
 
 | Tool                                | Reads                                                          |
 | ----------------------------------- | -------------------------------------------------------------- |
@@ -34,7 +34,7 @@ still installs fine from the CLI and reads as empty to an agent:
   the shortest correct usage of the component, and it is what stops a model
   inventing a prop.
 
-## Tokens \{#tokens\}
+## Tokens {#tokens}
 
 `get_design_tokens` reads the `registry:theme` item named `theme-newt` and
 returns its `cssVars`. A registry that extends newt/ui usually re-serves that
@@ -43,7 +43,7 @@ same item name, and every answer the agent gives follows the new palette.
 
 See [registry-item.json](/docs/registry/registry-item-json#theme) for the shape.
 
-## Checking it \{#checking\}
+## Checking it {#checking}
 
 ```bash frame="terminal"
 curl -s https://acme.dev/r/index.json | head -40

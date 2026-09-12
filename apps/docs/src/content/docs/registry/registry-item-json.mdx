@@ -24,7 +24,7 @@ carries the contents of each file, so installing is one fetch per item.
 }
 ```
 
-## Types \{#types\}
+## Types {#types}
 
 | Type                 | Written to             | For                                            |
 | -------------------- | ---------------------- | ---------------------------------------------- |
@@ -39,7 +39,7 @@ carries the contents of each file, so installing is one fetch per item.
 | `registry:page`      | a target path          | A whole route. Requires `target` on each file. |
 | `registry:file`      | a target path          | Anything else; requires `target`.              |
 
-## files \{#files\}
+## files {#files}
 
 Either a bare path, or an object:
 
@@ -56,7 +56,7 @@ Either a bare path, or an object:
 does not decide the destination. For every other type the CLI derives the path
 from the type's alias and rewrites the imports inside `content` to match.
 
-## cssVars and tailwind \{#theme\}
+## cssVars and tailwind {#theme}
 
 A theme item carries its values three ways, so one registry serves Tailwind v3
 and v4:
@@ -79,7 +79,7 @@ and v4:
 - `cssVars.theme` holds Tailwind v4 `@theme` entries.
 - `tailwind.config.theme` holds the v3 `theme.extend` object.
 
-## css \{#css\}
+## css {#css}
 
 Raw CSS keyed by at-rule or selector, for the rules a component needs that are
 not utilities:
@@ -97,7 +97,7 @@ not utilities:
 Tailwind v4 consumers get these appended to their stylesheet; v3 consumers get
 the same rules wrapped by the CLI.
 
-## Everything else \{#rest\}
+## Everything else {#rest}
 
 `devDependencies` for packages only needed at build time, `docs` for a note the
 CLI prints after installing, and `meta` for anything your own tooling wants to

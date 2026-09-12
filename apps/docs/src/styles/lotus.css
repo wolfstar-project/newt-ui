@@ -1,4 +1,15 @@
-@import "tailwindcss" source(none);
+/*
+ * The site stylesheet as the theme consumes it.
+ *
+ * Lotus inlines every `head` style source into the single sheet it
+ * generates in `.astro/lotus/styles.css`, which already opens with
+ * `@import "tailwindcss" source("../../src")`. So the two lines this file
+ * drops relative to `site.css` are the ones that would be said twice: the
+ * Tailwind import itself, and the `@source "../"` that names this app's
+ * `src` — and which, read from `.astro/lotus/`, would point at the wrong
+ * directory anyway. Every other relative path in the file happens to sit
+ * at the same depth from both places and is left alone.
+ */
 @import "tw-animate-css";
 
 /*
@@ -13,7 +24,6 @@
  * here. The two registries live outside this app and both are scanned: a demo
  * renders React or Vue depending on the framework switch.
  */
-@source "../";
 @source "../../../www/registry";
 @source "../../../vue/registry";
 
@@ -535,6 +545,127 @@
 }
 
 /* ------------------------------------------------------------------ *
+ * (c2) the lotus bridge
+ *
+ * The theme paints itself from `--lotus-*`, the library from `--newt-*`, and
+ * a page shows both at once — the chrome around a live demo. Every token the
+ * theme actually reads is redefined here in terms of the one the components
+ * read, so the two can never disagree and the theme toggle moves them
+ * together.
+ *
+ * The selector list is not decoration. The theme sets its dark values on
+ * `[data-theme="dark"]`, specificity (0,1,0); a bare `:root` here would lose
+ * to it. Each `html[data-theme=…]` is (0,1,1), and the plain `html` catches
+ * the frame before the pre-paint script has written the attribute.
+ *
+ * The palette itself — what `--newt-*` resolves to — is section (b), and is
+ * the one place the values are spelled out.
+ * ------------------------------------------------------------------ */
+html,
+html[data-theme="light"],
+html[data-theme="dark"],
+html[data-theme="system"] {
+  /* Surfaces */
+  --lotus-background: var(--newt-bg-base);
+  --lotus-surface: var(--newt-bg-surface);
+  --lotus-header-background: color-mix(
+    in srgb,
+    var(--newt-bg-base) 88%,
+    transparent
+  );
+  --lotus-footer-background: var(--newt-bg-base);
+
+  /* Text */
+  --lotus-text-strong: var(--newt-text-primary);
+  --lotus-text: var(--newt-text-secondary);
+  --lotus-text-muted: var(--newt-text-muted);
+  --lotus-text-subtle: var(--newt-text-muted);
+
+  /* Borders. One token in, three out: the theme distinguishes a resting edge
+   * from a hovered one, and this palette has only the resting value. */
+  --lotus-border-subtle: var(--newt-border);
+  --lotus-border-muted: var(--newt-border);
+  --lotus-border-hover: color-mix(
+    in srgb,
+    var(--newt-border) 60%,
+    var(--newt-text-muted)
+  );
+
+  /* Brand. `accent-light` and `accent-dark` are the two ends the theme picks
+   * `accent` from; blurple is legible on both palettes, so both are it. */
+  --lotus-accent: var(--newt-brand);
+  --lotus-accent-light: var(--newt-brand);
+  --lotus-accent-dark: var(--newt-brand);
+  --lotus-accent-soft: color-mix(
+    in srgb,
+    var(--newt-brand) 14%,
+    var(--newt-bg-base)
+  );
+  --lotus-accent-contrast: #fff;
+
+  /* Code. Expressive Code paints its own frames from `ec.config.mjs`; these
+   * are for the inline code and the prose blocks the theme styles itself. */
+  --lotus-code-background: var(--newt-bg-surface);
+  --lotus-code-surface: var(--newt-bg-elevated);
+  --lotus-code-border: var(--newt-border);
+
+  /* Status */
+  --lotus-danger: var(--newt-danger);
+  --lotus-danger-soft: color-mix(
+    in srgb,
+    var(--newt-danger) 14%,
+    var(--newt-bg-base)
+  );
+  --lotus-danger-ink: var(--newt-danger);
+  --lotus-danger-contrast: #fff;
+  --lotus-success: var(--newt-online);
+  --lotus-success-soft: color-mix(
+    in srgb,
+    var(--newt-online) 14%,
+    var(--newt-bg-base)
+  );
+  --lotus-success-ink: var(--newt-online);
+  --lotus-success-contrast: #fff;
+  --lotus-warning: var(--newt-idle);
+  --lotus-warning-soft: color-mix(
+    in srgb,
+    var(--newt-idle) 14%,
+    var(--newt-bg-base)
+  );
+  --lotus-warning-ink: var(--newt-idle);
+  --lotus-warning-contrast: #000;
+  --lotus-info: var(--newt-text-link);
+  --lotus-info-soft: color-mix(
+    in srgb,
+    var(--newt-text-link) 14%,
+    var(--newt-bg-base)
+  );
+  --lotus-info-ink: var(--newt-text-link);
+  --lotus-info-contrast: #fff;
+
+  /* Type and shape */
+  --lotus-font-sans: var(--newt-font-sans);
+  --lotus-font-mono: var(--newt-font-mono);
+  --lotus-radius-sm: var(--newt-radius-sm);
+  --lotus-radius-md: var(--newt-radius-md);
+  --lotus-radius-lg: var(--newt-radius-lg);
+  --lotus-radius-full: var(--newt-radius-full);
+
+  /*
+   * The measure. The theme's default is 48rem; the article on this site has
+   * always been 46rem, which is where the line length was settled.
+   */
+  --lotus-content-width: 46rem;
+
+  /*
+   * Vertical rhythm inside the prose. Tailwind Typography spaces blocks at
+   * `1.25em` of its own font size; the hand-written prose spaced them at
+   * `1.25rem` against a 0.95rem body, which is tighter. This is that number.
+   */
+  --lotus-prose-flow: 1.32em;
+}
+
+/* ------------------------------------------------------------------ *
  * (d) the documentation chrome
  *
  * The shell around the content: a sticky header, a navigation column, the
@@ -543,29 +674,6 @@
  * the live demos together.
  * ------------------------------------------------------------------ */
 @layer components {
-  body {
-    min-height: 100dvh;
-    margin: 0;
-    background: var(--newt-bg-base);
-    color: var(--newt-text-primary);
-    font-family: var(--newt-font-sans);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .skip-link {
-    position: absolute;
-    left: -9999px;
-    z-index: 100;
-    padding: 0.5rem 0.875rem;
-    border-radius: var(--newt-radius-sm);
-    background: var(--newt-bg-floating);
-  }
-
-  .skip-link:focus {
-    left: 1rem;
-    top: 1rem;
-  }
-
   .sr-only {
     position: absolute;
     width: 1px;
@@ -578,25 +686,6 @@
   }
 
   /* --- header ---------------------------------------------------- */
-
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    border-bottom: 1px solid var(--newt-border);
-    background: color-mix(in srgb, var(--newt-bg-base) 88%, transparent);
-    backdrop-filter: blur(12px);
-  }
-
-  .site-header-inner {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    max-width: 96rem;
-    margin: 0 auto;
-    padding: 0 1rem;
-    height: 3.5rem;
-  }
 
   .wordmark {
     display: inline-flex;
@@ -618,31 +707,6 @@
     font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: -0.02em;
-  }
-
-  .site-nav {
-    display: none;
-    gap: 1.25rem;
-    margin-inline-start: 0.75rem;
-    font-size: 0.875rem;
-  }
-
-  .site-nav a {
-    color: var(--newt-text-secondary);
-    text-decoration: none;
-    transition: color var(--newt-duration-fast) var(--newt-ease);
-  }
-
-  .site-nav a:hover,
-  .site-nav a[aria-current="page"] {
-    color: var(--newt-text-primary);
-  }
-
-  .site-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-inline-start: auto;
   }
 
   .icon-button {
@@ -855,228 +919,7 @@
     color: var(--newt-text-link);
   }
 
-  /* --- search ------------------------------------------------------ */
-
-  .search-trigger {
-    display: none;
-    align-items: center;
-    gap: 0.5rem;
-    min-width: 12rem;
-    padding: 0.35rem 0.6rem;
-    border: 1px solid var(--newt-border);
-    border-radius: var(--newt-radius-sm);
-    background: var(--newt-bg-surface);
-    color: var(--newt-text-muted);
-    font-size: 0.8rem;
-    cursor: pointer;
-  }
-
-  .search-trigger:hover {
-    border-color: var(--newt-text-muted);
-  }
-
-  .search-trigger svg {
-    width: 0.95rem;
-    height: 0.95rem;
-  }
-
-  .search-trigger kbd {
-    margin-inline-start: auto;
-    padding: 0.05rem 0.3rem;
-    border: 1px solid var(--newt-border);
-    border-radius: 0.25rem;
-    font-family: var(--newt-font-mono);
-    font-size: 0.7rem;
-  }
-
-  .search-dialog {
-    /*
-     * An open modal `<dialog>` is centred by the UA stylesheet with `inset: 0`
-     * and `margin: auto`. Tailwind's preflight resets `margin` on every
-     * element — `*, ::before, ::after, ::backdrop` — which drops the auto
-     * margins and pins the dialog to the top-left corner, so the centring is
-     * restated here.
-     */
-    margin: auto;
-    width: min(36rem, calc(100vw - 2rem));
-    padding: 0;
-    border: 1px solid var(--newt-border);
-    border-radius: var(--newt-radius-lg);
-    background: var(--newt-bg-floating);
-    color: inherit;
-    box-shadow: var(--newt-shadow-high, 0 8px 32px rgb(0 0 0 / 0.32));
-  }
-
-  .search-dialog::backdrop {
-    background: rgb(0 0 0 / 0.6);
-  }
-
-  .search-input {
-    width: 100%;
-    padding: 1rem 1.15rem;
-    border: 0;
-    border-bottom: 1px solid var(--newt-border);
-    background: transparent;
-    color: var(--newt-text-primary);
-    font-size: 0.95rem;
-  }
-
-  .search-input:focus {
-    outline: none;
-  }
-
-  .search-results {
-    max-height: 22rem;
-    overflow-y: auto;
-    padding: 0.5rem;
-  }
-
-  .search-result {
-    display: block;
-    padding: 0.55rem 0.7rem;
-    border-radius: var(--newt-radius-sm);
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .search-result:hover,
-  .search-result:focus-visible {
-    background: var(--newt-bg-hover);
-  }
-
-  .search-result-title {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-
-  .search-result-excerpt {
-    display: block;
-    margin-top: 0.15rem;
-    font-size: 0.8rem;
-    color: var(--newt-text-muted);
-  }
-
-  .search-empty {
-    padding: 1rem;
-    color: var(--newt-text-muted);
-    font-size: 0.85rem;
-  }
-
   /* --- layout ------------------------------------------------------ */
-
-  .docs-layout {
-    display: block;
-    max-width: 96rem;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-
-  .sidebar {
-    position: fixed;
-    inset-block: 3.5rem 0;
-    inset-inline-start: 0;
-    z-index: 35;
-    width: 17rem;
-    padding: 1.5rem 1rem 3rem;
-    overflow-y: auto;
-    border-inline-end: 1px solid var(--newt-border);
-    background: var(--newt-bg-base);
-    transform: translateX(-100%);
-    transition: transform var(--newt-duration-base) var(--newt-ease);
-  }
-
-  [dir="rtl"] .sidebar {
-    transform: translateX(100%);
-  }
-
-  .sidebar[data-open="true"] {
-    transform: none;
-  }
-
-  .sidebar-scrim {
-    position: fixed;
-    inset: 0;
-    z-index: 34;
-    background: rgb(0 0 0 / 0.5);
-  }
-
-  .sidebar-group + .sidebar-group {
-    margin-top: 1.5rem;
-  }
-
-  .sidebar-group-label {
-    margin: 0 0 0.4rem;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--newt-text-muted);
-  }
-
-  .sidebar-nav ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .sidebar-nav a {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.28rem 0.5rem;
-    border-radius: var(--newt-radius-sm);
-    color: var(--newt-text-secondary);
-    font-size: 0.85rem;
-    text-decoration: none;
-  }
-
-  .sidebar-nav a:hover {
-    background: var(--newt-bg-hover);
-    color: var(--newt-text-primary);
-  }
-
-  .sidebar-nav a[aria-current="page"] {
-    background: var(--newt-bg-active);
-    color: var(--newt-text-primary);
-    font-weight: 600;
-  }
-
-  .sidebar-footer {
-    margin-top: 2rem;
-    font-size: 0.75rem;
-    color: var(--newt-text-muted);
-  }
-
-  .docs-main {
-    min-width: 0;
-    padding: 2.5rem 0 4rem;
-  }
-
-  .docs-article {
-    max-width: 46rem;
-  }
-
-  .docs-header-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .docs-header h1 {
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-  .docs-description {
-    margin: 0.5rem 0 0;
-    color: var(--newt-text-secondary);
-    font-size: 1rem;
-    line-height: 1.6;
-  }
 
   .docs-links {
     display: flex;
@@ -1091,10 +934,6 @@
     color: var(--newt-text-secondary);
     font-size: 0.75rem;
     text-decoration: none;
-  }
-
-  .docs-rail {
-    display: none;
   }
 
   /* --- copy page ---------------------------------------------------- */
@@ -1185,88 +1024,6 @@
     line-height: 1.3;
   }
 
-  /* --- table of contents -------------------------------------------- */
-
-  .toc {
-    position: sticky;
-    top: 5rem;
-    padding: 2.5rem 0;
-    font-size: 0.82rem;
-  }
-
-  .toc-title {
-    margin: 0 0 0.5rem;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--newt-text-muted);
-  }
-
-  .toc ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .toc li[data-depth="3"] {
-    padding-inline-start: 0.75rem;
-  }
-
-  .toc a {
-    display: block;
-    padding: 0.2rem 0;
-    color: var(--newt-text-muted);
-    text-decoration: none;
-  }
-
-  .toc a:hover,
-  .toc a[data-active] {
-    color: var(--newt-text-primary);
-  }
-
-  /* --- pager -------------------------------------------------------- */
-
-  .pager {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    max-width: 46rem;
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--newt-border);
-  }
-
-  .pager-link {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    padding: 0.6rem 0.85rem;
-    border: 1px solid var(--newt-border);
-    border-radius: var(--newt-radius-md);
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .pager-link:hover {
-    border-color: var(--newt-text-muted);
-  }
-
-  .pager-next {
-    text-align: end;
-    margin-inline-start: auto;
-  }
-
-  .pager-direction {
-    font-size: 0.72rem;
-    color: var(--newt-text-muted);
-  }
-
-  .pager-label {
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-
   /* --- tabs --------------------------------------------------------- */
 
   .tabs {
@@ -1307,99 +1064,17 @@
   /*
    * The inactive framework's server-rendered markup is present but hidden, so
    * switching framework never waits on a render.
+   *
+   * Written as a negation rather than as a pair of positive matches because
+   * the theme's `BaseLayout` owns the `<html>` element and accepts no extra
+   * attributes: `data-framework` is no longer in the served markup and is
+   * written by the pre-paint script in the theme's `head` config. Phrased
+   * this way React is what a frame without that attribute shows, so a reader
+   * with JavaScript off sees one framework instead of both.
    */
-  html[data-framework="react"] [data-framework="vue"],
+  html:not([data-framework="vue"]) [data-framework="vue"],
   html[data-framework="vue"] [data-framework="react"] {
     display: none;
-  }
-
-  /* --- prose -------------------------------------------------------- */
-
-  .prose {
-    margin-top: 2rem;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: var(--newt-text-secondary);
-  }
-
-  .prose h2:not(:where(.newt-root *)) {
-    margin: 2.5rem 0 0.75rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--newt-border);
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-    color: var(--newt-text-primary);
-  }
-
-  .prose h3:not(:where(.newt-root *)) {
-    margin: 2rem 0 0.5rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--newt-text-primary);
-  }
-
-  .prose h4:not(:where(.newt-root *)) {
-    margin: 1.25rem 0 0.4rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--newt-text-primary);
-  }
-
-  .prose p:not(:where(.newt-root *)) {
-    margin: 0 0 1rem;
-  }
-
-  .prose ul:not(:where(.newt-root *)),
-  .prose ol:not(:where(.newt-root *)) {
-    margin: 0 0 1rem;
-    padding-inline-start: 1.25rem;
-  }
-
-  .prose li:not(:where(.newt-root *)) {
-    margin-bottom: 0.35rem;
-  }
-
-  .prose a:not(:where(.newt-root *)) {
-    color: var(--newt-text-link);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .prose code:not(pre code):not(:where(.newt-root *)) {
-    padding: 0.1rem 0.3rem;
-    border-radius: 0.25rem;
-    background: var(--newt-bg-surface);
-    font-family: var(--newt-font-mono);
-    font-size: 0.85em;
-    color: var(--newt-text-primary);
-  }
-
-  .prose kbd:not(:where(.newt-root *)) {
-    padding: 0.1rem 0.35rem;
-    border: 1px solid var(--newt-border);
-    border-radius: 0.25rem;
-    font-family: var(--newt-font-mono);
-    font-size: 0.8em;
-  }
-
-  .prose table:not(:where(.newt-root *)) {
-    width: 100%;
-    margin: 0 0 1.25rem;
-    border-collapse: collapse;
-    font-size: 0.875rem;
-  }
-
-  .prose th:not(:where(.newt-root *)),
-  .prose td:not(:where(.newt-root *)) {
-    padding: 0.5rem 0.6rem;
-    border-bottom: 1px solid var(--newt-border);
-    text-align: start;
-  }
-
-  .prose th:not(:where(.newt-root *)) {
-    color: var(--newt-text-primary);
-    font-weight: 600;
   }
 
   /* --- callout and steps -------------------------------------------- */
@@ -1696,13 +1371,6 @@
     border-top: 1px solid var(--newt-border);
     font-size: 0.8rem;
     color: var(--newt-text-muted);
-  }
-
-  .page-footer-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 1rem;
   }
 
   .page-footer-links {
@@ -2303,49 +1971,8 @@
   /* --- responsive ------------------------------------------------------- */
 
   @media (min-width: 48rem) {
-    .site-nav,
-    .segmented,
-    .search-trigger {
+    .segmented {
       display: flex;
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .sidebar-toggle {
-      display: none;
-    }
-
-    .sidebar-scrim {
-      display: none;
-    }
-
-    .sidebar {
-      position: sticky;
-      inset: 3.5rem auto auto auto;
-      height: calc(100dvh - 3.5rem);
-      transform: none;
-      border-inline-end: 0;
-      padding-inline-start: 0;
-    }
-
-    .docs-layout {
-      display: grid;
-      grid-template-columns: 17rem minmax(0, 1fr);
-      gap: 2rem;
-    }
-
-    .docs-main {
-      padding-inline-start: 0.5rem;
-    }
-  }
-
-  @media (min-width: 80rem) {
-    .docs-layout[data-toc="true"] {
-      grid-template-columns: 16rem minmax(0, 1fr) 14rem;
-    }
-
-    .docs-layout[data-toc="true"] .docs-rail {
-      display: block;
     }
   }
 
@@ -2368,5 +1995,164 @@
       position: sticky;
       top: 5rem;
     }
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * (e) the prose, said outside every layer
+ *
+ * Tailwind Typography lands in `@layer utilities`; everything above is in
+ * `@layer components`. A layer decides the cascade before specificity is
+ * even consulted, so the rules that follow would lose from inside a layer
+ * no matter how they were written — measured in the built sheet, the site's
+ * `.prose kbd` sits at byte 26813 (components) and Typography's at 47315
+ * (utilities), and the second one won.
+ *
+ * Unlayered declarations outrank every layer, which is the one place this
+ * file can restate the article's own measure, rhythm and rules and be sure
+ * of it. Colours are not restated: the theme already resolves its
+ * `--tw-prose-*` from `--lotus-*`, and section (c2) resolves those from
+ * `--newt-*`, so they arrive correct on their own.
+ *
+ * The `:not(:where(.newt-root *))` guard is the same one the rest of the
+ * file uses: inside a live demo the component's own stylesheet rules, not
+ * the article's.
+ * ------------------------------------------------------------------ */
+
+.prose {
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--newt-text-secondary);
+}
+
+.prose h2:not(:where(.newt-root *)) {
+  margin: 2.5rem 0 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--newt-border);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--newt-text-primary);
+}
+
+.prose h3:not(:where(.newt-root *)) {
+  margin: 2rem 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.prose h4:not(:where(.newt-root *)) {
+  margin: 1.25rem 0 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.prose p:not(:where(.newt-root *)) {
+  margin: 0 0 1rem;
+}
+
+.prose ul:not(:where(.newt-root *)),
+.prose ol:not(:where(.newt-root *)) {
+  margin: 0 0 1rem;
+  padding-inline-start: 1.25rem;
+}
+
+.prose li:not(:where(.newt-root *)) {
+  margin-bottom: 0.35rem;
+}
+
+.prose a:not(:where(.newt-root *)) {
+  color: var(--newt-text-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose code:not(pre code):not(:where(.newt-root *)) {
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  background: var(--newt-bg-surface);
+  font-family: var(--newt-font-mono);
+  font-size: 0.85em;
+  color: var(--newt-text-primary);
+}
+
+.prose kbd:not(:where(.newt-root *)) {
+  padding: 0.1rem 0.35rem;
+  /*
+   * Typography draws a key as a raised block with a two-part `box-shadow` and
+   * no border. This site has always drawn it as an outlined tag, and the two
+   * are different properties, so without this reset both arrive and the key
+   * gets an outline and a lip.
+   */
+  box-shadow: none;
+  border: 1px solid var(--newt-border);
+  border-radius: 0.25rem;
+  font-family: var(--newt-font-mono);
+  font-size: 0.8em;
+}
+
+.prose table:not(:where(.newt-root *)) {
+  width: 100%;
+  margin: 0 0 1.25rem;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+/*
+ * A table wide enough to push the page sideways, on a screen narrow enough for
+ * that to happen. The theme scrolls every table at every width by making it a
+ * block, which costs the stretch to the full measure that this site's tables
+ * have always had; the block is taken here only below the breakpoint where the
+ * article stops having room to spare.
+ *
+ * `max-content` with a `max-width` is what keeps a narrow table its natural
+ * size instead of stretching it inside its own scroller.
+ */
+@media (width < 48rem) {
+  .prose table:not(:where(.newt-root *)) {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+.prose th:not(:where(.newt-root *)),
+.prose td:not(:where(.newt-root *)) {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--newt-border);
+  text-align: start;
+}
+
+.prose th:not(:where(.newt-root *)) {
+  color: var(--newt-text-primary);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ *
+ * (f) the section bar, hidden
+ *
+ * The theme renders a bar of documentation sections under the header and
+ * offers no way to turn it off. This site has one section, so the bar would
+ * be a full-width strip holding a single tab that is always current — a
+ * control that cannot be used. It is hidden rather than removed because the
+ * same `sections` array feeds the mobile navigation, where it is the label
+ * of the open drawer and does carry meaning.
+ *
+ * `--lotus-subnav-height` is what the theme adds to the header height to
+ * park the sticky sidebar and table of contents. Zeroing it below `lg`
+ * would collapse the mobile bar, which is still on screen, so it is zeroed
+ * at the same breakpoint that shows the bar being hidden here.
+ * ------------------------------------------------------------------ */
+nav[aria-label="Documentation sections"] {
+  display: none;
+}
+
+@media (width >= 64rem) {
+  :root {
+    --lotus-subnav-height: 0px;
   }
 }

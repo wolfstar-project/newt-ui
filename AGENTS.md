@@ -19,6 +19,8 @@ apps/
           renders each demo. Content is `src/content/docs/**/*.mdx`; it reads
           `apps/www/registry` and `apps/vue/registry` directly through
           path aliases and bundles both built registries into its own `dist/`.
+          The chrome is `@prosefly/astro-theme-lotus` — see the docs site
+          section below before changing a layout, a route or a style.
   www/    React registry source + builder (Next.js) — shadcn-ui layout:
           registry/bases/newt/{ui,blocks,examples}. No longer ships docs pages.
   vue/    Vue registry source + builder (Nuxt 4 + Tailwind 4) — shadcn-vue
@@ -107,6 +109,56 @@ Before opening a PR, run `quality` and `knip` locally — CI runs both plus
   adds more. The `prepare` script runs `skilld prepare --agent claude-code`
   automatically after `pnpm install`. Skill sets are aligned with
   `wolfstar-project/agent-zero` and `wolfstar-project/wolfstar.rocks`.
+
+## The docs site
+
+`apps/docs` runs on `@prosefly/astro-theme-lotus`, pinned to an exact version
+and patched. What that means in practice:
+
+- **The theme owns the chrome**, so the app does not: header, sidebar, table of
+  contents, search dialog, prev/next and footer all come from the theme, and
+  the app configures them through `lotus({...})` in `astro.config.ts`. The
+  sidebar is not hand-written — `src/lib/lotus-nav.ts` turns `NAV` from
+  `src/lib/nav.ts` into the theme's `docsNav`, so a new page is added there.
+- **Five slots are overridden** in `src/components/lotus/`: `ThemeSwitch`
+  (the two-state toggle and the framework switcher), `PageActions` (the copy
+  menu with the MCP and IDE deep links), `SiteBrand`, `FooterLinks` (which is
+  where the trademark disclaimer lives) and `Assistant` (the site's scripts).
+  Reach for a slot before reaching for the patch.
+- **Every route builds its own `<head>`** through `src/lib/lotus-head.ts`. The
+  theme emits a title, a description and the favicons and stops, so canonical,
+  Open Graph, Twitter, the markdown twin link and the whole PWA head are the
+  app's to pass. `astro-takumi` refuses to render a card without `og:title`,
+  `og:url` and `og:type`, so forgetting fails the build; forgetting the
+  manifest does not, which is why `scripts/verify-dist.mjs` reads one page per
+  layout and asserts the tags are there.
+- **`patches/@prosefly__astro-theme-lotus@0.8.0.patch` has three hunks**: it
+  empties the three routes the theme injects unconditionally (they collide
+  with this app's own `/404`, `/docs/[...slug]` and `/docs/[...slug].md`),
+  drops the trailing slash the theme adds to every link (`trailingSlash` here
+  is `never`), and loads `pagefind` outside Vite's module runner. Reapply it on
+  every theme bump, and if it grows past three hunks, vendor the theme instead.
+- **`markdown.processor` is an empty `unified({})` and has to stay one.**
+  Expressive Code configures itself against whatever processor exists at its
+  own setup hook, and the theme replaces a `satteri()` processor without
+  carrying its plugins over — which silently turns all 107 files' fenced blocks
+  into bare `<pre>`. Explicit heading anchors are `{#id}`, read by
+  `mdast-heading-id`, and must not be escaped.
+- **`src/styles/lotus.css` is read off a path**, not imported: the theme
+  inlines it into `.astro/lotus/styles.css`, which already says
+  `@import "tailwindcss"`, so this file must not. Section (c2) maps every
+  `--lotus-*` the theme reads onto the `--newt-*` the components read — that
+  mapping is why the theme toggle moves the chrome and the demos together.
+  Section (e) is deliberately outside every cascade layer: Tailwind Typography
+  lands in `@layer utilities` and a layered rule loses to it before
+  specificity is even consulted.
+- **The build needs a raised heap and three Iconify packages.**
+  `NODE_OPTIONS=--max-old-space-size=4096` is in the build script because
+  `astro-takumi` holds all 118 pages while it rasterises the cards;
+  `@iconify-json/{lucide,simple-icons,vscode-icons}` are installed because the
+  theme's icon middleware otherwise fetches `api.iconify.design` at build time
+  and the build stops working offline. Both are listed in `knip.jsonc` as
+  untraceable, along with `lotus.css` itself.
 
 ## Design tokens
 

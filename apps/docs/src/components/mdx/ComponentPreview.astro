@@ -47,7 +47,14 @@ const rootClass = rootClasses[name]
 <Tabs labels={["Preview", "Code"]} persistKey="preview" class="component-preview">
   <Fragment slot="tab-0">
     <figure
-      class:list={["demo-frame", size === "full" && "demo-frame-full"]}
+      class:list={[
+        "demo-frame",
+        size === "full" && "demo-frame-full",
+        /* Tailwind Typography styles every descendant of `.prose`; a live
+         * demo is the one thing on the page that must look exactly like the
+         * component a reader will install. */
+        "not-prose",
+      ]}
       dir={dir}
       data-demo-frame
     >

@@ -1,7 +1,7 @@
 ---
 import ComponentPreview from "../../components/mdx/ComponentPreview.astro"
 import PmTabs from "../../components/mdx/PmTabs.astro"
-import Base from "../../layouts/Base.astro"
+import Page from "../../layouts/Page.astro"
 import { COMPONENTS } from "../../lib/registry"
 
 /*
@@ -12,11 +12,11 @@ import { COMPONENTS } from "../../lib/registry"
 const blocks = COMPONENTS.filter((component) => component.categorySlug === "blocks")
 ---
 
-<Base
+<Page
   title="Blocks"
   description="Whole sections, composed from the registry and installed the same way a component is."
 >
-  <main class="blocks" id="main">
+  <div class="blocks">
     <header class="blocks-header">
       <h1>Blocks</h1>
       <p>
@@ -44,5 +44,5 @@ const blocks = COMPONENTS.filter((component) => component.categorySlug === "bloc
         </section>
       ))
     }
-  </main>
-</Base>
+  </div>
+</Page>

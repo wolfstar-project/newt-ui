@@ -30,6 +30,9 @@
         // The layout loads this one through `<script src="/src/pwa.ts">`,
         // which is a string as far as any static walk is concerned.
         "src/pwa.ts",
+        // The theme reads this one off a path in `head`, so nothing imports
+        // it. It is where `tw-animate-css` and the registry sources come in.
+        "src/styles/lotus.css",
       ],
       // `.css` is in `project` so knip follows `src/styles/site.css`, which is
       // where `tailwindcss` and `tw-animate-css` are imported from.
@@ -38,11 +41,20 @@
         "scripts/**/*.mjs",
         "*.{ts,mjs}",
       ],
-      // Two indirections nothing static can follow: the Open Graph renderer
-      // asks for a font file by name through `require.resolve`, and the PWA
-      // virtual modules are typed by a triple-slash reference to a package
-      // `@vite-pwa/astro` brings in itself.
-      "ignoreDependencies": ["@fontsource/inter", "vite-plugin-pwa"],
+      // Indirections nothing static can follow: the Open Graph renderer asks
+      // for a font file by name through `require.resolve`; the PWA virtual
+      // modules are typed by a triple-slash reference to a package
+      // `@vite-pwa/astro` brings in itself; and the three Iconify collections
+      // are looked up by package name at build time by the theme's icon
+      // middleware, which otherwise reaches for `api.iconify.design` and makes
+      // the build need a network.
+      "ignoreDependencies": [
+        "@fontsource/inter",
+        "vite-plugin-pwa",
+        "@iconify-json/lucide",
+        "@iconify-json/simple-icons",
+        "@iconify-json/vscode-icons",
+      ],
     },
     "apps/www": {
       "entry": [

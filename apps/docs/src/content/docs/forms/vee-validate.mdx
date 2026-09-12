@@ -10,13 +10,13 @@ links:
   Form](/docs/forms/tanstack-form).
 </Callout>
 
-## Install \{#install\}
+## Install {#install}
 
 <PmTabs cmd="--yes vee-validate @vee-validate/zod zod" />
 
 <PmTabs cmd="newtui@latest add form-fields button" />
 
-## The schema \{#schema\}
+## The schema {#schema}
 
 ```ts title="lib/channel-schema.ts"
 import { z } from "zod"
@@ -33,7 +33,7 @@ export const channelSchema = z.object({
 })
 ```
 
-## The form \{#form\}
+## The form {#form}
 
 `useField` gives each control its value, its handlers and its error. The
 controls are ordinary inputs, so `v-model` binds straight to it.
@@ -114,13 +114,13 @@ const onSubmit = handleSubmit(async (values) => {
 </template>
 ```
 
-## Validation timing \{#timing\}
+## Validation timing {#timing}
 
 vee-validate validates on change once a field has been touched, which is
 usually right. `validateOnValueUpdate: false` on a `useField` turns it into
 submit-only for a field that is expensive to check.
 
-## Array fields \{#arrays\}
+## Array fields {#arrays}
 
 ```vue
 <script setup lang="ts">

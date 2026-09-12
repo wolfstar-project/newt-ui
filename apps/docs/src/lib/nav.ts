@@ -15,17 +15,12 @@ export interface NavGroup {
   readonly items: readonly NavItem[]
 }
 
-export interface NavNeighbours {
-  readonly previous?: NavItem
-  readonly next?: NavItem
-}
-
 /*
  * The sidebar, in reading order: what you need to get a component on screen,
  * then the decisions behind the library, then how to publish your own items,
  * then every component grouped the way the registry groups them.
  */
-const GUIDES: readonly NavGroup[] = [
+export const GUIDES: readonly NavGroup[] = [
   {
     label: "Get Started",
     items: [
@@ -103,13 +98,3 @@ export const NAV: readonly NavGroup[] = [
     })),
   })),
 ]
-
-const FLAT: readonly NavItem[] = NAV.flatMap((group) => group.items).filter(
-  (item) => item.external !== true
-)
-
-export function neighbours(path: string): NavNeighbours {
-  const index = FLAT.findIndex((item) => item.href === path)
-  if (index === -1) return {}
-  return { previous: FLAT[index - 1], next: FLAT[index + 1] }
-}

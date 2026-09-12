@@ -5,7 +5,7 @@ description: "One code carries the five things a project actually varies, and th
 
 [newt/create](/create) is the builder. This page is what it hands you.
 
-## What a preset is \{#what\}
+## What a preset is {#what}
 
 A preset is not a theme file. It is a short list of overrides for tokens that
 already exist, which is why a project without one looks exactly like a project
@@ -24,7 +24,7 @@ The code is `nt1.` followed by that payload as base64url. The version is in the
 prefix and in the payload, so a link shared today cannot quietly decode into
 something else after a new axis is added.
 
-## Use it when you create the project \{#init\}
+## Use it when you create the project {#init}
 
 <PmTabs cmd="newtui@latest init --template next --preset nt1.…" />
 
@@ -39,7 +39,7 @@ runs afterwards:
 The preset that names one of those frameworks still records the choice. It just
 does not imply a template, and the CLI says so rather than inventing one.
 
-## Or afterwards \{#apply\}
+## Or afterwards {#apply}
 
 <PmTabs cmd="newtui@latest apply --preset nt1.…" />
 
@@ -51,7 +51,7 @@ rather than whichever was chosen.
 
 `--dry-run` prints the block and writes nothing.
 
-## What it writes \{#written\}
+## What it writes {#written}
 
 After the token block, fenced by two comments so it can be found again and
 deleted in one selection:
@@ -79,7 +79,7 @@ Light surfaces and right-to-left add a line each — `color-scheme` and
 `<html>`, which is yours to set. See [Dark mode](/docs/dark-mode) and
 [RTL](/docs/rtl).
 
-## Reading a code \{#decode\}
+## Reading a code {#decode}
 
 ```bash frame="terminal"
 npx newtui@latest preset decode nt1.…
@@ -98,7 +98,7 @@ direction  ltr
 `preset encode '{"t":"nuxt"}'` goes the other way, starting from the defaults,
 and `preset css <code>` prints the block without touching a project.
 
-## Sharing one \{#share\}
+## Sharing one {#share}
 
 The builder keeps its state in the URL and nowhere else: `/create?p=nt1.…`
 restores every control. A preset worth keeping is a preset worth sending to

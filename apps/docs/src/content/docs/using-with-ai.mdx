@@ -3,7 +3,7 @@ title: "Using with AI"
 description: "A copy-paste registry suits an agent well: the component source is already in the repository it is editing, and every value it may reach for is a named token."
 ---
 
-## Why this works \{#why\}
+## Why this works {#why}
 
 An agent writing against a package it cannot see guesses at prop names and
 invents CSS. Neither is possible here. The component is a file in the
@@ -18,7 +18,7 @@ property, so there is nothing to invent a value for.
 - The same markup exists three times over, so a prompt written for React holds
   for Vue and for the plain HTML build with only the import line changed.
 
-## The house rules \{#house-rules\}
+## The house rules {#house-rules}
 
 Paste this into the system message. It is the whole contract: what to use, what
 never to hardcode, and what not to touch.
@@ -49,7 +49,7 @@ Rules:
   text, not by colour alone.
 ```
 
-## Install the skill \{#skill\}
+## Install the skill {#skill}
 
 If your agent supports skills, that is the shortest path of all — it carries
 everything on this page plus the review checklist:
@@ -60,7 +60,7 @@ npx skills add wolfstar-project/newt-ui
 
 See [Skills](/docs/skills).
 
-## Give it the registry over MCP \{#mcp\}
+## Give it the registry over MCP {#mcp}
 
 The shortest path is not a prompt at all: run
 [the MCP server](/docs/mcp) and the agent can list, search and read the registry
@@ -73,7 +73,7 @@ npx newtui@latest mcp init --client claude
 Everything below still applies — the house rules are what keep it inside the
 token system once it knows what exists.
 
-## Let the agent drive the CLI \{#cli\}
+## Let the agent drive the CLI {#cli}
 
 The registry is discoverable from the terminal, which is the one place an agent
 can check itself rather than guess.
@@ -96,7 +96,7 @@ exist, and the closest real one should be used instead.
   metadata these pages read.
 </Callout>
 
-## Wire real data to a component \{#wiring\}
+## Wire real data to a component {#wiring}
 
 The components carry no data model. An integration is a map from what your bot
 knows onto the props a component takes.
@@ -157,7 +157,7 @@ Presence is the clearest case: four health values, four statuses, and the
 component decides what green means. An agent asked to "show the shard as
 offline" has one correct edit to make, and no colour to choose.
 
-## Generating plain HTML \{#html\}
+## Generating plain HTML {#html}
 
 When the target has no bundler, the same rules hold against the class names
 instead of the components.
@@ -184,7 +184,7 @@ Every component page prints its root class beside the preview, and
 Those two together are enough context for a model to write correct markup
 without seeing the CSS.
 
-## Review what it wrote \{#review\}
+## Review what it wrote {#review}
 
 ```text
 Review this diff against the newt/ui house rules and report only breaches:
@@ -200,7 +200,7 @@ For each, quote the line and name the token or component that should
 have been used. Report nothing else.
 ```
 
-## What not to ask for \{#limits\}
+## What not to ask for {#limits}
 
 Three requests that produce plausible code and a component that no longer
 belongs to the system.

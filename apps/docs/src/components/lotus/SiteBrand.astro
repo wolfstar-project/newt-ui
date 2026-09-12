@@ -1,0 +1,24 @@
+---
+import Wordmark from "../site/Wordmark.astro"
+
+/*
+ * The theme's brand slot, filled with the site's own mark. Lotus draws a logo
+ * from a file path in config; this one is four strokes and a bar drawn inline,
+ * so it inherits the text colour and costs no request — which is the reason it
+ * was written that way in the first place.
+ *
+ * The theme passes `class`, `textClass` and `markIdPrefix`; only the first
+ * means anything here, because the mark has no gradient ids to keep unique and
+ * the wordmark's own stylesheet already sizes the text.
+ */
+interface Props {
+  readonly class?: string
+  readonly fetchPriority?: "high" | "low" | "auto"
+  readonly markIdPrefix?: string
+  readonly textClass?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<Wordmark class={className} />

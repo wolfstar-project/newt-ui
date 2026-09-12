@@ -9,8 +9,25 @@ import { defineEcConfig } from "astro-expressive-code"
  * palette uses, so code blocks follow the theme toggle rather than the
  * operating system.
  */
+/*
+ * Every rendered block carries `not-prose`. The theme's own Expressive Code
+ * registration does this and is switched off here, so without it Tailwind
+ * Typography restyles the `pre` and the `code` inside a frame that already
+ * paints itself.
+ */
+const proseIsolation = {
+  name: "prose isolation",
+  hooks: {
+    postprocessRenderedBlockGroup: ({ renderData }) => {
+      const className = renderData.groupAst.properties.className ?? []
+      renderData.groupAst.properties.className = [...className, "not-prose"]
+    },
+  },
+}
+
 export default defineEcConfig({
   themes: ["github-dark", "github-light"],
+  plugins: [proseIsolation],
   themeCssSelector: (theme) =>
     theme.type === "dark"
       ? "html:not([data-newt-theme='light'])"

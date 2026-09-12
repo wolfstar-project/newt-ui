@@ -10,7 +10,7 @@ class you chose. Typeset styles that markup from the outside.
 
 <ComponentPreview name="typeset" />
 
-## Principles \{#principles\}
+## Principles {#principles}
 
 **Three controls, not thirty.** Size, leading and flow decide almost everything
 about how a block of prose reads. `--typeset-size` is the base every other size
@@ -31,7 +31,7 @@ light surfaces and a [preset](/docs/create) without knowing they exist.
 The selectors match elements, wrapped in `:where()` so their specificity is
 zero — any class you add wins without `!important`.
 
-## Installation \{#installation\}
+## Installation {#installation}
 
 <Installation name="typeset" />
 
@@ -39,7 +39,7 @@ The stylesheet lands next to your global CSS and is imported after Tailwind, so
 the `:where()` rules sit at the end of the cascade where they can be overridden
 by anything.
 
-## The three controls \{#controls\}
+## The three controls {#controls}
 
 | Variable            | Default  | What it decides                                                    |
 | ------------------- | -------- | ------------------------------------------------------------------ |
@@ -52,7 +52,7 @@ Three more name the fonts, and each resolves to a token by default:
 
 [The builder](/typeset) moves all six live and prints what you land on.
 
-## Presets \{#presets\}
+## Presets {#presets}
 
 Three combinations cover the surfaces this library renders into:
 
@@ -68,7 +68,7 @@ Three combinations cover the surfaces this library renders into:
 </article>
 ```
 
-## Building your own \{#custom\}
+## Building your own {#custom}
 
 A project with its own rhythm names it once and puts that name beside
 `typeset`:
@@ -91,7 +91,7 @@ A project with its own rhythm names it once and puts that name beside
 The preset still supplies the base; the class after it overrides the parts you
 named. That is the whole extension mechanism.
 
-## Measure \{#measure\}
+## Measure {#measure}
 
 Line length belongs to the column, not to the type, so it is a separate class:
 `typeset-measure` caps the block at `68ch`. It is on by default in the React
@@ -101,27 +101,27 @@ until you add it.
 A block inside a fixed-width column — a sidebar, an embed — usually wants it
 off, because the column already decided.
 
-## Themes and dark mode \{#themes\}
+## Themes and dark mode {#themes}
 
 Nothing to do. Every colour is a token, so the light surfaces
 ([Dark mode](/docs/dark-mode)) and a brand hue from
 [newt/create](/docs/create) both reach a typeset block without a second rule.
 
-## RTL \{#rtl\}
+## RTL {#rtl}
 
 Also nothing to do: the stylesheet is written in logical properties throughout
 — `padding-inline-start` for lists and quotes, `border-inline-start` for the
 quote rule, `text-align: start` in tables. A `dir="rtl"` anywhere above the
 wrapper is the whole feature. See [RTL](/docs/rtl).
 
-## The responsive table \{#tables\}
+## The responsive table {#tables}
 
 A table is the one element that cannot reflow. Below `40rem` a direct child
 table scrolls sideways inside its own box rather than widening the page, which
 keeps the surrounding prose readable at the cost of a horizontal scroll on the
 one element that needs it.
 
-## Overrides \{#overrides\}
+## Overrides {#overrides}
 
 Every selector is wrapped in `:where()`, so its specificity is zero. A utility
 class, a component class or a plain element rule all win:
@@ -132,7 +132,7 @@ class, a component class or a plain element rule all win:
 </article>
 ```
 
-## Opting out \{#opt-out\}
+## Opting out {#opt-out}
 
 An island of interface inside a body of prose — a component, an embed, a table
 of controls — should not inherit the rhythm:
@@ -150,7 +150,7 @@ of controls — should not inherit the rhythm:
 `not-typeset` reverts margin, font, size, line height and colour for the
 element and everything under it.
 
-## Streaming \{#streaming\}
+## Streaming {#streaming}
 
 Text that arrives a token at a time reflows constantly, and the rhythm is what
 keeps that from looking like a fault. Because the spacing is a single trailing
@@ -158,7 +158,7 @@ margin per block, a paragraph that is still being written has the same geometry
 as one that is finished — nothing shifts when the last word lands. Applying
 `typeset-chat` to a streaming assistant reply is the usual case.
 
-## Prior art \{#prior-art\}
+## Prior art {#prior-art}
 
 The three-variable model is [shadcn's Typeset](https://www.shadcn-vue.com/typeset),
 and it is the right abstraction — this implementation keeps it and resolves

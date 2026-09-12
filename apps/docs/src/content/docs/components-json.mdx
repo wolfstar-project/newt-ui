@@ -36,12 +36,12 @@ the CLI's behaviour follows from it.
 }
 ```
 
-## style \{#style\}
+## style {#style}
 
 The registry style to read from. There is one, `default`, and the field exists
 so a second one can be added without breaking installed projects.
 
-## typescript, tsx and rsc \{#language\}
+## typescript, tsx and rsc {#language}
 
 `typescript: false` makes the CLI strip types as it writes, so a JavaScript
 project gets JavaScript files. See [JavaScript](/docs/javascript).
@@ -63,7 +63,7 @@ where the global stylesheet lives.
 
 </div>
 
-## tailwind \{#tailwind\}
+## tailwind {#tailwind}
 
 | Field          | What it does                                                                                      |
 | -------------- | ------------------------------------------------------------------------------------------------- |
@@ -73,7 +73,7 @@ where the global stylesheet lives.
 | `cssVariables` | Whether components reference variables (`bg-newt-brand`) or literal values. Leave it `true`.      |
 | `prefix`       | A Tailwind class prefix, if your project uses one.                                                |
 
-## aliases \{#aliases\}
+## aliases {#aliases}
 
 Where files land. The CLI resolves each alias through your `tsconfig.json` or
 `jsconfig.json` `paths` — it reads them, it never writes them — and falls back
@@ -96,7 +96,7 @@ becomes your `utils` alias.
 
 </div>
 
-## registry \{#registry\}
+## registry {#registry}
 
 The base URL items are fetched from. It defaults to `https://newtui.dev/r` for
 React and `https://newtui.dev/vue/r` for Vue. `--registry` on any command and

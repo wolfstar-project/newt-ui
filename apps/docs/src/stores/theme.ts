@@ -22,8 +22,17 @@ export function toggleTheme(): void {
   $theme.set($theme.get() === "dark" ? "light" : "dark")
 }
 
+/*
+ * The theme also owns `data-theme` and the key `lotus-theme`, which is what
+ * its own chrome reads. Neither is the source of truth here — this store is —
+ * but a stored `lotus-theme` from a previous visit is the best first guess
+ * when the site's own key is missing, and both are written back in
+ * `components/lotus/Assistant.astro` so the two never drift.
+ */
 onMount($theme, () => {
-  const stored = localStorage.getItem(THEME_STORAGE_KEY)
+  const stored =
+    localStorage.getItem(THEME_STORAGE_KEY) ??
+    localStorage.getItem("lotus-theme")
   if (isTheme(stored)) $theme.set(stored)
 
   return $theme.subscribe((value) => {

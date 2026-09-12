@@ -1,0 +1,31 @@
+---
+import FrameworkSwitcher from "../site/FrameworkSwitcher"
+import ThemeToggle from "../site/ThemeToggle.astro"
+
+/*
+ * The theme's control slot, holding the two switches this site has always had
+ * in the header: React/Vue, and dark/light.
+ *
+ * Lotus ships a three-state control (light, dark, system) that writes
+ * `data-theme` on `<html>` and the key `lotus-theme`. The site's toggle is two
+ * states and writes `data-newt-theme` and `newt-ui:theme`, because that is the
+ * attribute the `--newt-*` light palette keys on and the attribute every live
+ * demo and every Expressive Code block reads. Rather than teach the palette a
+ * third state, the two are kept in step: `stores/theme.ts` now writes both
+ * attributes and both keys, and the pre-paint script in the Lotus config
+ * resolves `system` to a concrete value before the first frame.
+ */
+---
+
+<div class="lotus-theme-switch">
+  <FrameworkSwitcher client:load />
+  <ThemeToggle />
+</div>
+
+<style>
+  .lotus-theme-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>

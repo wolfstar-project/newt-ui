@@ -1,7 +1,7 @@
 ---
 import { newtTokens, newtTokensLight } from "@/registry/registry-tokens"
 
-import Docs from "../layouts/Docs.astro"
+import DocsPage from "../layouts/DocsPage.astro"
 
 /*
  * Every token, with the value it takes in each palette. The list is read from
@@ -76,11 +76,9 @@ const groups = GROUPS.map((group) => ({
 const total = groups.reduce((sum, group) => sum + group.rows.length, 0)
 ---
 
-<Docs
+<DocsPage
   title="Colours and tokens"
   description={`Every --newt-* token — ${total} of them — with its dark and light value and the Tailwind utility it generates.`}
-  toc={false}
-  pager={false}
 >
   <p>
     Click any row to copy its <code>var(--newt-*)</code> reference. Override a
@@ -115,7 +113,7 @@ const total = groups.reduce((sum, group) => sum + group.rows.length, 0)
       </section>
     ))
   }
-</Docs>
+</DocsPage>
 
 <script>
   for (const button of document.querySelectorAll<HTMLButtonElement>("[data-token]")) {

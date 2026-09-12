@@ -9,7 +9,7 @@ command reads it from there.
 
 <PmTabs cmd="newtui@latest init" />
 
-## init \{#init\}
+## init {#init}
 
 Reads your project and writes three things: `components.json`, a `cn` helper at
 your utils alias, and the `--newt-*` token block appended to the global
@@ -33,7 +33,7 @@ npx newtui@latest init --framework vue --bundler nuxt --css src/assets/css/tailw
 Running it twice does not write the tokens twice: it looks for them in your
 stylesheet first and skips.
 
-## add \{#add\}
+## add {#add}
 
 Writes a component and everything it is built out of.
 
@@ -59,7 +59,7 @@ whole tree and installed in one pass.
 A file already on disk is kept, not replaced: you are asked, and with `--yes` it
 is skipped and reported.
 
-## list \{#list\}
+## list {#list}
 
 Prints the registry.
 
@@ -72,7 +72,7 @@ npx newtui@latest list --framework vue --type registry:ui
 `--json` is the cheapest grounding you can hand an agent — see
 [Using with AI](/docs/using-with-ai).
 
-## search \{#search\}
+## search {#search}
 
 `list` with a filter. Matches case-insensitively across name, title and
 description, so a half-remembered word is enough.
@@ -82,7 +82,7 @@ npx newtui@latest search presence
 npx newtui@latest search chat --json
 ```
 
-## view \{#view\}
+## view {#view}
 
 Prints a component's source without installing it — the read-only half of
 `add`, for deciding whether you want it.
@@ -92,7 +92,7 @@ npx newtui@latest view button
 npx newtui@latest view modal badge --json
 ```
 
-## info \{#info\}
+## info {#info}
 
 What this project is: framework, bundler, Tailwind major, where the aliases
 point, which registry it reads, and which components it already has.
@@ -106,7 +106,7 @@ npx newtui@latest info --json
 [MCP server](/docs/mcp) read, so an agent starts from facts rather than from a
 guess about your layout.
 
-## mcp \{#mcp\}
+## mcp {#mcp}
 
 Runs the MCP server over stdio, or writes the configuration an editor needs to
 launch it.
@@ -119,7 +119,7 @@ npx newtui@latest mcp init --client claude
 See [MCP server](/docs/mcp) for what it exposes and which clients are
 supported.
 
-## diff \{#diff\}
+## diff {#diff}
 
 Compares a component you have installed against the one the registry currently
 ships, so an upgrade is a decision rather than a surprise.
@@ -128,7 +128,7 @@ ships, so an upgrade is a decision rather than a surprise.
 npx newtui@latest diff button
 ```
 
-## Global flags \{#flags\}
+## Global flags {#flags}
 
 | Flag                   | Effect                                                               |
 | ---------------------- | -------------------------------------------------------------------- |
@@ -138,7 +138,7 @@ npx newtui@latest diff button
 | `-h, --help`           | Print the help.                                                      |
 | `-v, --version`        | Print the version.                                                   |
 
-## The HTML/CSS CLI \{#legacy\}
+## The HTML/CSS CLI {#legacy}
 
 The same components exist as plain CSS with BEM class names, with no Tailwind,
 no framework and no build step. That flavour ships inside the same package and

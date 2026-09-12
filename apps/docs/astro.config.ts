@@ -2,19 +2,17 @@ import { readFileSync } from "node:fs"
 import { createRequire } from "node:module"
 import { fileURLToPath } from "node:url"
 
-import { satteri } from "@astrojs/markdown-satteri"
-import mdx from "@astrojs/mdx"
+import { unified } from "@astrojs/markdown-remark"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
 import vue from "@astrojs/vue"
-import tailwindcss from "@tailwindcss/vite"
+import { lotus } from "@prosefly/astro-theme-lotus"
 import AstroPWA from "@vite-pwa/astro"
 import expressiveCode from "astro-expressive-code"
-import pagefind from "astro-pagefind"
 import astroTakumi from "astro-takumi"
 import { defineConfig } from "astro/config"
 
-import { hastHeadingId } from "./src/lib/hast-heading-id"
+import { buildDocsNav } from "./src/lib/lotus-nav"
 import { renderOgCard } from "./src/lib/og-card"
 import { SITE } from "./src/lib/site"
 
@@ -45,7 +43,100 @@ export default defineConfig({
      * component looks for them.
      */
     expressiveCode(),
-    mdx(),
+    lotus({
+      name: SITE.name,
+      description: SITE.tagline,
+      docsBase: "/docs",
+      llms: false,
+      siteNav: [{ label: "Docs", href: "/docs" }],
+      docsNav: buildDocsNav(),
+      /*
+       * The site stylesheet, inlined into the sheet the theme generates rather
+       * than imported by a layout: that is the only place a second
+       * `@import "tailwindcss"` can be avoided, and it is where the theme's own
+       * `@source` of this app's `src` already lives.
+       *
+       * The script beside it is the pre-paint pass the old `Base.astro` ran,
+       * grown by one job.
+       *
+       * The framework switch is a `data-framework` attribute on `<html>`, and
+       * `BaseLayout` writes only `lang`, `dir` and its own theme attributes
+       * there, so no route can put it on the element — it has to be set before
+       * the body is parsed instead, or the reader sees both frameworks' code
+       * blocks for a frame.
+       *
+       * The new job is the theme. Lotus defaults `data-theme` to `system`, and
+       * the `--newt-*` light palette has no such state: it keys on
+       * `data-newt-theme="light"` or nothing. So `system` is resolved here,
+       * once, against the media query, and written to **both** attributes —
+       * which also means the theme's chrome and the site's palette can never
+       * disagree on the first frame.
+       */
+      head: [
+        { tag: "style", src: "./src/styles/lotus.css" },
+        {
+          tag: "script",
+          content:
+            "try{" +
+            'var f=localStorage.getItem("newt-ui:framework");' +
+            'document.documentElement.dataset.framework=f==="vue"||f==="react"?f:"react";' +
+            'var t=localStorage.getItem("newt-ui:theme")||localStorage.getItem("lotus-theme");' +
+            'if(t!=="light"&&t!=="dark"){' +
+            't=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}' +
+            "document.documentElement.dataset.newtTheme=t;" +
+            "document.documentElement.dataset.theme=t;" +
+            "document.documentElement.style.colorScheme=t;" +
+            "}catch(e){}",
+        },
+      ],
+      /*
+       * Five of the twelve slots the theme exposes. Each one exists because
+       * the site's version carries something the theme's cannot know about:
+       * the mark is drawn inline, the switches are two (framework and theme),
+       * the page menu knows the registry item behind the page, the footer
+       * carries a trademark notice, and the assistant slot — rendered on every
+       * page by `BaseLayout` — is where the service worker gets registered.
+       */
+      components: {
+        Assistant: "./src/components/lotus/Assistant.astro",
+        FooterLinks: "./src/components/lotus/FooterLinks.astro",
+        PageActions: "./src/components/lotus/PageActions.astro",
+        SiteBrand: "./src/components/lotus/SiteBrand.astro",
+        ThemeSwitch: "./src/components/lotus/ThemeSwitch.astro",
+      },
+      footer: { copyright: `${SITE.license} · built by ${SITE.author}` },
+      search: {
+        provider: "pagefind",
+        excludeSelectors: [
+          ".expressive-code",
+          ".demo-frame",
+          ".tabs-list",
+          ".copy-page",
+        ],
+      },
+      markdown: {
+        /*
+         * Expressive Code stays the site's own: the theme passes its options
+         * inline with plugin functions in them, and the `<Code>` component
+         * four MDX components use refuses to render when the config is not
+         * JSON-serialisable.
+         */
+        expressiveCode: false,
+        /*
+         * Seventeen shell fences across seven pages — nine of them in the CLI
+         * reference — are a single deliberate command, not a choose-your-own
+         * package manager. Left on, the theme rewrites each into a four-tab
+         * widget that the site already has its own `<PmTabs>` for.
+         */
+        packageManagerTabs: false,
+        /*
+         * Nothing in the content uses `:::note`, and the plugin's only other
+         * effect is to pull `remark-directive` into the parser, which gives
+         * every stray `:word` in prose a second meaning. Off, `:name` is text.
+         */
+        calloutDirectives: false,
+      },
+    }),
     react(),
     vue(),
     /*
@@ -55,16 +146,6 @@ export default defineConfig({
      * with `className={cn(...)}` from a code block rather than with the
      * sentence describing the component.
      */
-    pagefind({
-      indexConfig: {
-        excludeSelectors: [
-          ".expressive-code",
-          ".demo-frame",
-          ".tabs-list",
-          ".copy-page",
-        ],
-      },
-    }),
     sitemap(),
     /*
      * One Open Graph image per page, rendered at build time from the page's
@@ -149,12 +230,30 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    // `## Heading {#id}` keeps the explicit id, so published anchors survive a
-    // reworded heading. Astro slugs everything else as usual.
-    processor: satteri({ hastPlugins: [hastHeadingId] }),
+    /*
+     * An empty `unified()` processor, and it has to be there.
+     *
+     * Expressive Code configures itself against whatever processor exists at
+     * its own setup hook: a `unified()` gets `rehypeExpressiveCode` pushed
+     * into its `rehypePlugins`, a `satteri()` gets a hast plugin pushed into
+     * its `hastPlugins`. Lotus then replaces the processor through
+     * `@prosefly/astro-components`, which reads the plugin lists off a
+     * `unified()` and carries them over — but throws a `satteri()` away whole,
+     * Expressive Code's plugin with it.
+     *
+     * Left at Astro's default (`satteri`), every fenced block in the 107 MDX
+     * files comes out as a bare `<pre><code class="language-bash"
+     * metastring="title=…">`: no highlighting, no frame, no copy button, and
+     * the meta string leaked into an attribute. Naming `unified()` here is
+     * what keeps them.
+     *
+     * `## Heading {#id}` keeps working either way: the theme's
+     * `remarkHeadingIds` reads the same syntax `lib/hast-heading-id.ts` used
+     * to, only unescaped.
+     */
+    processor: unified({}),
   },
   vite: {
-    plugins: [tailwindcss()],
     resolve: {
       /*
        * Registry source sits outside this app. Vue registry components use
