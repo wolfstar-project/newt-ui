@@ -106,9 +106,16 @@ const HEAD_TAGS = [
 const unlinked = []
 for (const page of HEAD_LINKED) {
   const html = readFileSync(resolve(dist, page), "utf8")
-  const head = new Set(html.slice(0, html.indexOf("</head>")))
+  /*
+   * `substring` rather than `slice`, which would do the same thing: `slice`
+   * reads as an array operation to `unicorn/prefer-set-has`, and the rule's
+   * autofix then wraps this in a `new Set(...)` of single characters, where
+   * every lookup below misses and the assertion can no longer fail. That
+   * autofix has already been applied once by the commit hook.
+   */
+  const head = html.substring(0, html.indexOf("</head>"))
   for (const [needle, label] of HEAD_TAGS) {
-    if (!head.has(needle)) {
+    if (!head.includes(needle)) {
       unlinked.push(`${page} is missing ${label}`)
     }
   }
