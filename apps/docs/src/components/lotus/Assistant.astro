@@ -5,7 +5,7 @@
  * the one place a site can put a script that has to exist everywhere, which is
  * exactly what `Base.astro` used to be for.
  *
- * Two things live here.
+ * Three things live here.
  *
  * The service worker registration, which was `<script src="/src/pwa.ts">` in
  * the old layout. Without it the manifest is advertised and nothing installs.
@@ -18,6 +18,8 @@
  * `data-theme` (the theme's own control, or another tab), `system` is resolved
  * against the media query and mirrored onto `data-newt-theme`, so the chrome,
  * every live demo and every Expressive Code block change together.
+ *
+ * And the search results' trailing slashes, explained where they are fixed.
  */
 ---
 
@@ -61,4 +63,41 @@
       }
     }
   })
+
+  /*
+   * Pagefind builds a result's URL from the file it indexed, so
+   * `dist/docs/components/button/index.html` comes back as
+   * `/docs/components/button/`. This site is `trailingSlash: "never"` and
+   * serves that path as a 404 — confirmed against `astro preview`, which is
+   * stricter than most hosts but is the only contract the repo controls.
+   *
+   * The theme reads `data.url` straight through and offers no hook, and
+   * Pagefind has no option to drop the slash, so the links are corrected in
+   * the dialog after the provider renders them. Same-origin paths only, and
+   * never the root, which is the one path whose slash is the whole path.
+   */
+  const dialog = document.getElementById("lotus-search-dialog")
+
+  if (dialog) {
+    function trim(): void {
+      for (const link of dialog!.querySelectorAll("a[href]")) {
+        const href = link.getAttribute("href")
+        if (href === null || href.startsWith("#")) continue
+
+        const url = new URL(href, location.origin)
+        if (url.origin !== location.origin) continue
+        if (url.pathname === "/" || !url.pathname.endsWith("/")) continue
+
+        link.setAttribute(
+          "href",
+          url.pathname.slice(0, -1) + url.search + url.hash
+        )
+      }
+    }
+
+    new MutationObserver(trim).observe(dialog, {
+      childList: true,
+      subtree: true,
+    })
+  }
 </script>

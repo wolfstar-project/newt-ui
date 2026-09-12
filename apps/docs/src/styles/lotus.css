@@ -2066,6 +2066,25 @@ html[data-theme="system"] {
   font-size: 0.875rem;
 }
 
+/*
+ * A table wide enough to push the page sideways, on a screen narrow enough for
+ * that to happen. The theme scrolls every table at every width by making it a
+ * block, which costs the stretch to the full measure that this site's tables
+ * have always had; the block is taken here only below the breakpoint where the
+ * article stops having room to spare.
+ *
+ * `max-content` with a `max-width` is what keeps a narrow table its natural
+ * size instead of stretching it inside its own scroller.
+ */
+@media (width < 48rem) {
+  .prose table:not(:where(.newt-root *)) {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
 .prose th:not(:where(.newt-root *)),
 .prose td:not(:where(.newt-root *)) {
   padding: 0.5rem 0.6rem;
