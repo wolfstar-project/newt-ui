@@ -1,4 +1,6 @@
 ---
+import { Card, CardGrid } from "@prosefly/astro-components"
+
 import DocsPage from "../../../layouts/DocsPage.astro"
 import { categories, COMPONENTS } from "../../../lib/registry"
 
@@ -26,16 +28,16 @@ const groups = categories
     groups.map((group) => (
       <section class="component-index-group">
         <h2 id={group.slug}>{group.label}</h2>
-        <ul class="component-grid">
+        <CardGrid>
           {group.components.map((component) => (
-            <li>
-              <a href={`/docs/components/${component.name}`}>
-                <span class="component-card-title">{component.title}</span>
-                <span class="component-card-description">{component.description}</span>
-              </a>
-            </li>
+            <Card
+              href={`/docs/components/${component.name}`}
+              title={component.title}
+            >
+              {component.description}
+            </Card>
           ))}
-        </ul>
+        </CardGrid>
       </section>
     ))
   }

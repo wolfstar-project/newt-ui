@@ -48,7 +48,8 @@ export default defineConfig({
       description: SITE.tagline,
       docsBase: "/docs",
       llms: false,
-      siteNav: [{ label: "Docs", href: "/docs" }],
+      /* Keep the primary destinations from the pre-Lotus header. */
+      siteNav: SITE.nav.map((item) => ({ ...item })),
       docsNav: buildDocsNav(),
       /*
        * The site stylesheet, inlined into the sheet the theme generates rather

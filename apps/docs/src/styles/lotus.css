@@ -651,6 +651,57 @@ html[data-theme="system"] {
   --lotus-radius-lg: var(--newt-radius-lg);
   --lotus-radius-full: var(--newt-radius-full);
 
+  /* `@prosefly/astro-components` uses the shared `--pf-*` contract. Lotus
+   * configures the package; these aliases keep its cards and callouts on the
+   * same newt/ui palette as the theme chrome and live component previews. */
+  --pf-text-strong: var(--newt-text-primary);
+  --pf-text: var(--newt-text-secondary);
+  --pf-text-muted: var(--newt-text-muted);
+  --pf-background: var(--newt-bg-base);
+  --pf-surface: var(--newt-bg-surface);
+  --pf-accent: var(--newt-brand);
+  --pf-accent-soft: color-mix(
+    in srgb,
+    var(--newt-brand) 14%,
+    var(--newt-bg-base)
+  );
+  --pf-info: var(--newt-text-link);
+  --pf-info-soft: color-mix(
+    in srgb,
+    var(--newt-text-link) 14%,
+    var(--newt-bg-base)
+  );
+  --pf-info-ink: var(--newt-text-link);
+  --pf-success: var(--newt-online);
+  --pf-success-soft: color-mix(
+    in srgb,
+    var(--newt-online) 14%,
+    var(--newt-bg-base)
+  );
+  --pf-success-ink: var(--newt-online);
+  --pf-warning: var(--newt-idle);
+  --pf-warning-soft: color-mix(
+    in srgb,
+    var(--newt-idle) 14%,
+    var(--newt-bg-base)
+  );
+  --pf-warning-ink: var(--newt-idle);
+  --pf-danger: var(--newt-danger);
+  --pf-danger-soft: color-mix(
+    in srgb,
+    var(--newt-danger) 14%,
+    var(--newt-bg-base)
+  );
+  --pf-danger-ink: var(--newt-danger);
+  --pf-border-subtle: var(--newt-border);
+  --pf-border-muted: var(--newt-border);
+  --pf-font-sans: var(--newt-font-sans);
+  --pf-font-mono: var(--newt-font-mono);
+  --pf-radius-sm: var(--newt-radius-sm);
+  --pf-radius-md: var(--newt-radius-md);
+  --pf-radius-lg: var(--newt-radius-lg);
+  --pf-radius-full: var(--newt-radius-full);
+
   /*
    * The measure. The theme's default is 48rem; the article on this site has
    * always been 46rem, which is where the line length was settled.
@@ -1077,31 +1128,7 @@ html[data-theme="system"] {
     display: none;
   }
 
-  /* --- callout and steps -------------------------------------------- */
-
-  .callout {
-    margin: 1.25rem 0;
-    padding: 0.85rem 1rem;
-    border: 1px solid var(--newt-border);
-    border-inline-start: 3px solid var(--newt-brand);
-    border-radius: var(--newt-radius-md);
-    background: var(--newt-bg-surface);
-    font-size: 0.9rem;
-  }
-
-  .callout[data-callout="warning"] {
-    border-inline-start-color: var(--newt-danger);
-  }
-
-  .callout > :last-child {
-    margin-bottom: 0;
-  }
-
-  .callout-title {
-    margin: 0 0 0.35rem;
-    font-weight: 600;
-    color: var(--newt-text-primary);
-  }
+  /* --- steps ---------------------------------------------------------- */
 
   .steps {
     counter-reset: step;
@@ -1262,74 +1289,12 @@ html[data-theme="system"] {
     color: var(--newt-text-link);
   }
 
-  .principles {
-    display: grid;
-    gap: 1.25rem;
-  }
-
-  .principle {
-    padding-top: 1rem;
-    border-top: 1px solid var(--newt-border);
-  }
-
-  .principle h3 {
-    margin: 0 0 0.35rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
-
-  .principle p {
-    margin: 0;
-    color: var(--newt-text-secondary);
-    font-size: 0.85rem;
-    line-height: 1.65;
-  }
-
   /* --- component index ------------------------------------------------ */
 
   .component-index-group h2 {
     margin: 2.5rem 0 1rem;
     font-size: 1.25rem;
     font-weight: 700;
-  }
-
-  .component-grid {
-    display: grid;
-    gap: 0.75rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  }
-
-  .component-grid a {
-    display: block;
-    height: 100%;
-    padding: 0.85rem 1rem;
-    border: 1px solid var(--newt-border);
-    border-radius: var(--newt-radius-md);
-    background: var(--newt-bg-surface);
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .component-grid a:hover {
-    border-color: var(--newt-brand);
-  }
-
-  .component-card-title {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--newt-text-primary);
-  }
-
-  .component-card-description {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    color: var(--newt-text-muted);
   }
 
   /* --- 404 ------------------------------------------------------------ */
@@ -1976,12 +1941,6 @@ html[data-theme="system"] {
     }
   }
 
-  @media (min-width: 40rem) {
-    .principles {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
   @media (min-width: 64rem) {
     .create-layout,
     .typeset-app {
@@ -2024,6 +1983,13 @@ html[data-theme="system"] {
   font-size: 0.95rem;
   line-height: 1.7;
   color: var(--newt-text-secondary);
+}
+
+/* Prosefly uses the semantic ink colour for an untitled callout's whole slot.
+ * Keep that accent on its icon and border, but render normal body copy with
+ * the primary text token so note and warning guidance meets WCAG AA. */
+html:root .prose .pf-callout[data-has-title="false"] .pf-callout__slot {
+  color: var(--newt-text-primary);
 }
 
 .prose h2:not(:where(.newt-root *)) {

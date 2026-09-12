@@ -3,6 +3,8 @@ title: "Introduction"
 description: "A component library, a design token system and an agent guide for building Discord-inspired interfaces in React, Vue and plain HTML."
 ---
 
+import { Card, CardGrid } from "@prosefly/astro-components"
+
 newt/ui is a component library for building Discord-inspired interfaces — bots,
 dashboards and docs that look like they belong next to the client. Every
 component ships three times over: as plain HTML and CSS, as a React file, and as
@@ -19,21 +21,28 @@ there.
 Four decisions the whole registry is built on. They are why a component here is
 short enough to read before you paste it.
 
-**One token system, three targets.** The tokens are declared once and every
-surface reads them: the plain HTML and CSS build, the React wrappers, and the
-Vue single file components. Change a token and all three move together.
-
-**You own the code.** The CLI writes component source into your project and
-stops there. A component you need to bend is a file you already have, under
-Apache-2.0.
-
-**No motion by default.** Hover, focus, online, do-not-disturb and loading are
-carried by colour, border and shape — the status dot states its mode by its
-outline, not by a pulse.
-
-**Accessible by construction.** Body text meets WCAG AA contrast, every control
-is reachable by <kbd>Tab</kbd> with a visible focus ring, and presence is
-announced rather than left to colour alone.
+<CardGrid>
+  <Card icon="lucide:swatch-book" title="One token system, three targets">
+    The tokens are declared once and every surface reads them: the plain HTML
+    and CSS build, the React wrappers, and the Vue single file components.
+    Change a token and all three move together.
+  </Card>
+  <Card icon="lucide:code-xml" title="You own the code">
+    The CLI writes component source into your project and stops there. A
+    component you need to bend is a file you already have, under Apache-2.0.
+  </Card>
+  <Card icon="lucide:pause" title="No motion by default">
+    Hover, focus, online, do-not-disturb and loading are carried by colour,
+    border and shape — the status dot states its mode by its outline, not by a
+    pulse.
+  </Card>
+  <Card icon="lucide:accessibility" title="Accessible by construction">
+    Body text meets WCAG AA contrast, every control is reachable by{" "}
+    <kbd>Tab</kbd>
+    with a visible focus ring, and presence is announced rather than left to
+    colour alone.
+  </Card>
+</CardGrid>
 
 ## Install {#install}
 

@@ -1,6 +1,7 @@
 ---
 import ComponentPreview from "../components/mdx/ComponentPreview.astro"
 import PmTabs from "../components/mdx/PmTabs.astro"
+import { Card, CardGrid } from "@prosefly/astro-components"
 import Page from "../layouts/Page.astro"
 import { COMPONENTS } from "../lib/registry"
 import { SITE } from "../lib/site"
@@ -23,18 +24,22 @@ const MANIFEST = [
 
 const PRINCIPLES = [
   {
+    icon: "lucide:swatch-book",
     title: "One token system, three targets",
     body: "The tokens are declared once and every surface reads them: the plain HTML and CSS build, the React wrappers, and the Vue single file components. Change a token and all three move together.",
   },
   {
+    icon: "lucide:code-xml",
     title: "You own the code",
     body: `The CLI writes component source into your project and stops there. A component you need to bend is a file you already have, under ${SITE.license}.`,
   },
   {
+    icon: "lucide:pause",
     title: "No motion by default",
     body: "Hover, focus, online, do-not-disturb and loading are carried by colour, border and shape — the status dot states its mode by its outline, not by a pulse.",
   },
   {
+    icon: "lucide:accessibility",
     title: "Accessible by construction",
     body: "Body text meets WCAG AA contrast, every control is reachable by Tab with a visible focus ring, and presence is announced rather than left to colour alone.",
   },
@@ -92,16 +97,15 @@ const PRINCIPLES = [
 
     <section class="home-section" id="principles">
       <h2>What it is</h2>
-      <div class="principles">
+      <CardGrid>
         {
           PRINCIPLES.map((principle) => (
-            <div class="principle">
-              <h3>{principle.title}</h3>
-              <p>{principle.body}</p>
-            </div>
+            <Card icon={principle.icon} title={principle.title}>
+              {principle.body}
+            </Card>
           ))
         }
-      </div>
+      </CardGrid>
     </section>
 
     <section class="home-section" id="next">
