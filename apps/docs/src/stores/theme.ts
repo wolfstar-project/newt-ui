@@ -31,7 +31,8 @@ export function toggleTheme(): void {
  */
 onMount($theme, () => {
   const stored =
-    localStorage.getItem(THEME_STORAGE_KEY) ?? localStorage.getItem("lotus-theme")
+    localStorage.getItem(THEME_STORAGE_KEY) ??
+    localStorage.getItem("lotus-theme")
   if (isTheme(stored)) $theme.set(stored)
 
   return $theme.subscribe((value) => {

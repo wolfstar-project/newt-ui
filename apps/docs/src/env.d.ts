@@ -8,13 +8,21 @@
 /// <reference types="vite-plugin-pwa/client" />
 
 /*
- * Spike: Lotus declares `App.Locals.t` in the package's own `src/virtual.d.ts`,
- * which is not reachable through the exports map, so the site has to declare it
- * itself. `LotusTranslate` is not exported either.
+ * The theme's middleware puts a translate function on `Astro.locals`, and
+ * declares it in the package's own `src/virtual.d.ts` — a file the exports map
+ * does not reach, so the type never arrives here and this site has to say it.
+ * `LotusTranslate` is not exported either, so the shape is restated rather
+ * than imported, narrowed to the three members the routes here call.
+ *
+ * The value type of the interpolation record is the theme's own
+ * `TranslationValues`: what `interpolate()` will put in a string.
  */
 declare namespace App {
   interface Locals {
-    t: ((key: string, values?: Record<string, unknown>) => string) & {
+    t: ((
+      key: string,
+      values?: Record<string, string | number | boolean | undefined>
+    ) => string) & {
       dir(localeKey?: string): "ltr" | "rtl"
       exists(key: string): boolean
     }

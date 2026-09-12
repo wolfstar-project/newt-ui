@@ -39,38 +39,40 @@ export interface HeadInput {
  * page the browser will not offer to install.
  */
 function pwaTags(): HeadConfig {
+  const tags: HeadConfig = []
+
+  if (pwaAssetsHead.themeColor) {
+    tags.push({
+      tag: "meta",
+      attrs: {
+        name: "theme-color",
+        content: pwaAssetsHead.themeColor.content,
+      },
+    })
+  }
+
+  for (const link of pwaAssetsHead.links) {
+    /*
+     * The generator types a link as `Record<string, string>`, which is the
+     * attribute record a head entry already takes; the copy is here so the
+     * entry owns its object rather than aliasing the plugin's.
+     */
+    tags.push({ tag: "link", attrs: { ...link } })
+  }
+
   const manifest = pwaInfo?.webManifest
-  return [
-    ...(pwaAssetsHead.themeColor
-      ? [
-          {
-            tag: "meta",
-            attrs: {
-              name: "theme-color",
-              content: pwaAssetsHead.themeColor.content,
-            },
-          },
-        ]
-      : []),
-    ...pwaAssetsHead.links.map((link) => ({
-      tag: "link",
-      attrs: { ...link } as HeadConfig[number]["attrs"],
-    })),
-    ...(manifest
-      ? [
-          {
-            tag: "link",
-            attrs: {
-              rel: "manifest",
-              href: manifest.href,
-              ...(manifest.useCredentials === true
-                ? { crossorigin: "use-credentials" }
-                : {}),
-            },
-          },
-        ]
-      : []),
-  ]
+  if (manifest) {
+    const attrs: NonNullable<HeadConfig[number]["attrs"]> = {
+      rel: "manifest",
+      href: manifest.href,
+    }
+    if (manifest.useCredentials) {
+      attrs.crossorigin = "use-credentials"
+    }
+    tags.push({ tag: "link", attrs })
+  }
+
+  return tags
 }
 
 export function buildHead(input: HeadInput): HeadConfig {
@@ -105,7 +107,10 @@ export function buildHead(input: HeadInput): HeadConfig {
           },
         ]),
     { tag: "meta", attrs: { property: "og:title", content: fullTitle } },
-    { tag: "meta", attrs: { property: "og:description", content: description } },
+    {
+      tag: "meta",
+      attrs: { property: "og:description", content: description },
+    },
     { tag: "meta", attrs: { property: "og:type", content: "website" } },
     { tag: "meta", attrs: { property: "og:url", content: canonical } },
     { tag: "meta", attrs: { property: "og:site_name", content: SITE.name } },
