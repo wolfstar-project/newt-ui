@@ -14,12 +14,18 @@ on:
 permissions:
   contents: read
 
+# Each agent run is independent: serialize runs with the same name, never cancel one mid-flight.
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.name || github.run_id }}
+  cancel-in-progress: false
+
 jobs:
   pullfrog:
+    name: 🐸 Pullfrog agent
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
+      id-token: write # OIDC token exchanged by pullfrog/pullfrog for a scoped GitHub App token
+      contents: read # checkout the repository
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
