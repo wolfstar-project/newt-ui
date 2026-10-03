@@ -87,8 +87,10 @@ GitHub App to push lint/format fixes back to PR branches. Install it at
 
 A changeset is the release note for a package. It is not the changelog a reader
 of the documentation sees: that lives in
-`apps/docs/src/content/changelog/YYYY-MM-<topic>.mdx`, one file per entry, and
-it can embed a live `<ComponentPreview>` of whatever changed.
+`apps/docs/content/changelog/YYYY-MM-<topic>.mdx`, one file per entry with
+`type: changelog`, a `date` and a `slug: changelog/YYYY-MM-<topic>` (Blume
+would otherwise read the leading year as a sort prefix and drop it from the
+URL), and it can embed a live `<ComponentPreview>` of whatever changed.
 
 Write one whenever a change alters what somebody installs — a new component, a
 reworked one, a new token, a new CLI command. A refactor with no visible effect

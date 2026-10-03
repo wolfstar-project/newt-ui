@@ -1,17 +1,21 @@
 ---
-import { Code } from "astro-expressive-code/components"
+import CodeBlock from "blume/components/content/CodeBlock.astro"
+import Tab from "blume/components/content/Tab.astro"
+import Tabs from "blume/components/content/Tabs.astro"
 
-import ReactDemo from "../demo/ReactDemo"
-import VueDemo from "../demo/VueDemo.vue"
 import { demoSource, findComponent, rootClasses } from "../../lib/registry"
 import { pascalCase } from "../../lib/strings"
-import Tabs from "./Tabs.astro"
+import ReactDemo from "../demo/ReactDemo"
+import VueDemo from "../demo/VueDemo.vue"
 
 /*
  * The live example plus its source. Both framework islands mount; the store
  * decides which paints, and the two code blocks are both rendered here and
  * shown or hidden by the `data-framework` attribute, so switching framework
  * costs nothing at runtime.
+ *
+ * `sync` is off: a page carries several previews, and a reader who opens the
+ * code of one has not asked to see the code of all of them.
  */
 interface Props {
   readonly name: string
@@ -44,67 +48,69 @@ const vueCode = demoSource("vue", vueDemo)
 const rootClass = rootClasses[name]
 ---
 
-<Tabs labels={["Preview", "Code"]} persistKey="preview" class="component-preview">
-  <Fragment slot="tab-0">
-    <figure
-      class:list={[
-        "demo-frame",
-        size === "full" && "demo-frame-full",
-        /* Tailwind Typography styles every descendant of `.prose`; a live
-         * demo is the one thing on the page that must look exactly like the
-         * component a reader will install. */
-        "not-prose",
-      ]}
-      dir={dir}
-      data-demo-frame
-    >
-      <button
-        type="button"
-        class="demo-dir-toggle"
-        data-demo-dir-toggle
-        aria-pressed={dir === "rtl" ? "true" : "false"}
+<div class="component-preview">
+  <Tabs hash={false} sync={false}>
+    <Tab title="Preview">
+      <figure
+        class:list={[
+          "demo-frame",
+          size === "full" && "demo-frame-full",
+          /* Tailwind Typography styles every descendant of `.prose`; a live
+           * demo is the one thing on the page that must look exactly like the
+           * component a reader will install. */
+          "not-prose",
+        ]}
+        dir={dir}
+        data-demo-frame
       >
-        <span class="sr-only">Render this example right to left</span>
-        <span aria-hidden="true">RTL</span>
-      </button>
-      <div
-        class:list={["newt-root", size === "default" && "demo-body"]}
-        data-demo={name}
-        data-demo-variant={variant}
-      >
-        <ReactDemo client:only="react" demo={reactDemo} />
-        <VueDemo client:only="vue" demo={vueDemo} />
+        <button
+          type="button"
+          class="demo-dir-toggle"
+          data-demo-dir-toggle
+          aria-pressed={dir === "rtl" ? "true" : "false"}
+        >
+          <span class="sr-only">Render this example right to left</span>
+          <span aria-hidden="true">RTL</span>
+        </button>
+        <div
+          class:list={["newt-root", size === "default" && "demo-body"]}
+          data-demo={name}
+          data-demo-variant={variant}
+        >
+          <ReactDemo client:only="react" demo={reactDemo} />
+          <VueDemo client:only="vue" demo={vueDemo} />
+        </div>
+        {
+          rootClass && (
+            <figcaption class="demo-caption">
+              Root class <code>{rootClass}</code>
+            </figcaption>
+          )
+        }
+      </figure>
+    </Tab>
+    <Tab title="Code">
+      <div data-framework="react">
+        {
+          reactCode === undefined ? (
+            <p class="demo-error">No React demo named {reactDemo}.</p>
+          ) : (
+            <CodeBlock code={reactCode} lang="tsx" title={`${reactDemo}.tsx`} />
+          )
+        }
       </div>
-      {
-        rootClass && (
-          <figcaption class="demo-caption">
-            Root class <code>{rootClass}</code>
-          </figcaption>
-        )
-      }
-    </figure>
-  </Fragment>
-  <Fragment slot="tab-1">
-    <div data-framework="react">
-      {
-        reactCode === undefined ? (
-          <p class="demo-error">No React demo named {reactDemo}.</p>
-        ) : (
-          <Code code={reactCode} lang="tsx" title={`${reactDemo}.tsx`} />
-        )
-      }
-    </div>
-    <div data-framework="vue">
-      {
-        vueCode === undefined ? (
-          <p class="demo-error">No Vue demo named {vueDemo}.</p>
-        ) : (
-          <Code code={vueCode} lang="vue" title={`${vueDemo}.vue`} />
-        )
-      }
-    </div>
-  </Fragment>
-</Tabs>
+      <div data-framework="vue">
+        {
+          vueCode === undefined ? (
+            <p class="demo-error">No Vue demo named {vueDemo}.</p>
+          ) : (
+            <CodeBlock code={vueCode} lang="vue" title={`${vueDemo}.vue`} />
+          )
+        }
+      </div>
+    </Tab>
+  </Tabs>
+</div>
 
 <script>
   /*

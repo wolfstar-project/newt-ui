@@ -14,13 +14,13 @@ source into the user's project, there is no runtime package dependency.
 
 ```
 apps/
-  docs/   THE documentation site (Astro + MDX, React and Vue islands). One
-          site for both frameworks: a React/Vue switcher picks which registry
-          renders each demo. Content is `src/content/docs/**/*.mdx`; it reads
-          `apps/www/registry` and `apps/vue/registry` directly through
+  docs/   THE documentation site (Blume: MDX on Astro, React and Vue islands).
+          One site for both frameworks: a React/Vue switcher picks which
+          registry renders each demo. Content is `content/docs/**/*.mdx`; it
+          reads `apps/www/registry` and `apps/vue/registry` directly through
           path aliases and bundles both built registries into its own `dist/`.
-          The chrome is `@prosefly/astro-theme-lotus` — see the docs site
-          section below before changing a layout, a route or a style.
+          The chrome is Blume's — see the docs site section below before
+          changing the config, a page, a component override or a style.
   www/    React registry source + builder (Next.js) — shadcn-ui layout:
           registry/bases/newt/{ui,blocks,examples}. No longer ships docs pages.
   vue/    Vue registry source + builder (Nuxt 4 + Tailwind 4) — shadcn-vue
@@ -112,53 +112,58 @@ Before opening a PR, run `quality` and `knip` locally — CI runs both plus
 
 ## The docs site
 
-`apps/docs` runs on `@prosefly/astro-theme-lotus`, pinned to an exact version
-and patched. What that means in practice:
+`apps/docs` runs on [Blume](https://useblume.dev), the Markdown-first docs
+framework on Astro: `blume dev` and `blume build` generate and drive a hidden
+Astro project under `apps/docs/.blume/` (gitignored), so the app owns its
+content, a config file and a handful of overrides and nothing else. What that
+means in practice:
 
-- **The theme owns the chrome**, so the app does not: header, sidebar, table of
-  contents, search dialog, prev/next and footer all come from the theme, and
-  the app configures them through `lotus({...})` in `astro.config.ts`. The
-  sidebar is not hand-written — `src/lib/lotus-nav.ts` turns `NAV` from
-  `src/lib/nav.ts` into the theme's `docsNav`, so a new page is added there.
-- **Five slots are overridden** in `src/components/lotus/`: `ThemeSwitch`
-  (the two-state toggle and the framework switcher), `PageActions` (the copy
-  menu with the MCP and IDE deep links), `SiteBrand`, `FooterLinks` (which is
-  where the trademark disclaimer lives) and `Assistant` (the site's scripts).
-  Reach for a slot before reaching for the patch.
-- **Every route builds its own `<head>`** through `src/lib/lotus-head.ts`. The
-  theme emits a title, a description and the favicons and stops, so canonical,
-  Open Graph, Twitter, the markdown twin link and the whole PWA head are the
-  app's to pass. `astro-takumi` refuses to render a card without `og:title`,
-  `og:url` and `og:type`, so forgetting fails the build; forgetting the
-  manifest does not, which is why `scripts/verify-dist.mjs` reads one page per
-  layout and asserts the tags are there.
-- **`patches/@prosefly__astro-theme-lotus@0.8.0.patch` has three hunks**: it
-  empties the three routes the theme injects unconditionally (they collide
-  with this app's own `/404`, `/docs/[...slug]` and `/docs/[...slug].md`),
-  drops the trailing slash the theme adds to every link (`trailingSlash` here
-  is `never`), and loads `pagefind` outside Vite's module runner. Reapply it on
-  every theme bump, and if it grows past three hunks, vendor the theme instead.
-- **`markdown.processor` is an empty `unified({})` and has to stay one.**
-  Expressive Code configures itself against whatever processor exists at its
-  own setup hook, and the theme replaces a `satteri()` processor without
-  carrying its plugins over — which silently turns all 107 files' fenced blocks
-  into bare `<pre>`. Explicit heading anchors are `{#id}`, read by
-  `mdast-heading-id`, and must not be escaped.
-- **`src/styles/lotus.css` is read off a path**, not imported: the theme
-  inlines it into `.astro/lotus/styles.css`, which already says
-  `@import "tailwindcss"`, so this file must not. Section (c2) maps every
-  `--lotus-*` the theme reads onto the `--newt-*` the components read — that
-  mapping is why the theme toggle moves the chrome and the demos together.
-  Section (e) is deliberately outside every cascade layer: Tailwind Typography
-  lands in `@layer utilities` and a layered rule loses to it before
-  specificity is even consulted.
-- **The build needs a raised heap and three Iconify packages.**
-  `NODE_OPTIONS=--max-old-space-size=4096` is in the build script because
-  `astro-takumi` holds all 118 pages while it rasterises the cards;
-  `@iconify-json/{lucide,simple-icons,vscode-icons}` are installed because the
-  theme's icon middleware otherwise fetches `api.iconify.design` at build time
-  and the build stops working offline. Both are listed in `knip.jsonc` as
-  untraceable, along with `lotus.css` itself.
+- **Content is `content/`.** `content/docs/**/*.mdx` is the documentation,
+  which is why every route starts with `/docs`; `content/changelog/*.mdx` are
+  `type: changelog` entries Blume collects into the `/changelog` index. Blume's
+  frontmatter is strict — an unknown key fails the build — and explicit heading
+  anchors are written `## Title [#id]`, never `{#id}`, which MDX reads as an
+  expression.
+- **`blume.config.ts` is the site.** It builds the explicit sidebar from `NAV`
+  in `src/lib/nav.ts` (the guides, then one group per registry category, read
+  from `apps/www/registry/meta` through `src/lib/registry-meta.ts`), the header
+  links from `SITE.nav`, the Open Graph palette, the redirects for the two
+  routes that moved (`/colors`, `/docs/changelog`), and the
+  `agents.markdownComponents` serialisers that give every registry-driven tag
+  a Markdown form for the `.md` twins and `llms.txt`. It is evaluated by the
+  CLI _and_ by the generated Astro config, so keep it a pure read of the
+  registry.
+- **`components.ts` names what MDX writes without importing**:
+  `ComponentPreview`, `Installation`, `Usage`, `TokensNote`, `PropsTable`,
+  `PmTabs`, `PathTabs`, `FrameworkGrid`, `TokenReference` and `ComponentIndex`
+  under `src/components/mdx/`, built on Blume's own `Tabs`, `Steps`,
+  `TypeTable`, `Card` and `CodeBlock`. `ReactDemo` and `VueDemo` are registered
+  as islands there so Blume wires up both renderers; `ComponentPreview` mounts
+  them itself. Two layout slots are overridden in `src/components/layout/`:
+  `Search`, which is the built-in trigger with the React/Vue switch beside it,
+  and `Footer`, which is where the trademark disclaimer lives. Blume reads this
+  file statically — every entry is a path string or an object literal.
+- **Pages that are not documents live in `pages/`**: the home page, `/blocks`,
+  `/create`, `/typeset` and `/typeset/preview`, each wrapped in
+  `pages/_site/SiteLayout.astro`, which hands Blume's `PageLayout` the resolved
+  config from `blume:data`. The 404, the `.md` twins, `llms.txt`, the sitemap,
+  search (Orama, local), Open Graph cards and the component index page are
+  Blume's.
+- **`theme.css` is spliced into the Tailwind entry Blume generates**, so it
+  must not `@import "tailwindcss"`. Section (a) maps the `--newt-*` tokens onto
+  Tailwind namespaces so the registry demos get their utilities (`@source`
+  names both registries); section (b) redefines every `--blume-*` token the
+  chrome reads in terms of a `--newt-*` token — that mapping is why the header
+  toggle moves the chrome and the demos together. The light palette keys on
+  Blume's `data-theme="light"`. The Typeset stylesheet is imported through the
+  `@newt-html/*` path alias in `tsconfig.json`, which Blume hands to Vite along
+  with every other `paths` entry — that is also what lets the registry demos
+  import `@/registry/...` unchanged from inside `.blume/`.
+- **`pnpm typecheck` is `blume check`**, which regenerates the runtime, syncs
+  Astro's types into `.blume/.astro/types.d.ts` (listed in `tsconfig.json`)
+  and runs `astro check` over the project. `scripts/verify-dist.mjs` still
+  reads one page per layout after the build and asserts the registry JSON, the
+  Markdown twins and the head tags are there.
 
 ## Design tokens
 

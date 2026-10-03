@@ -1,0 +1,54 @@
+---
+import PageLayout from "blume/components/layout/PageLayout.astro"
+import data from "blume:data"
+
+import { SITE } from "../../src/lib/site"
+
+/*
+ * Everything that is not a documentation page: the home page, the block
+ * gallery, the preset builder and the typeset previews. They have no sidebar
+ * and no table of contents, so they take Blume's `PageLayout` — the document
+ * shell, the header and the footer around one full-width slot — with the
+ * resolved config handed through from `blume:data`, which is what gives them
+ * the same canonical, Open Graph card and structured data every docs page has.
+ */
+interface Props {
+  readonly title: string
+  readonly description?: string
+  /** `Astro.url.pathname`, which is what the card and the canonical key on. */
+  readonly route: string
+  /** Off on pages that are a tool rather than reading, like the preview frame. */
+  readonly noindex?: boolean
+}
+
+const { title, description = SITE.tagline, route, noindex = false } = Astro.props
+const { config } = data
+
+/*
+ * `PageLayout` uses `page.title` verbatim as the document title, so the
+ * suffix every docs page carries is added here.
+ */
+const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`
+---
+
+<PageLayout
+  site={{ title: config.title, description: config.description }}
+  logo={config.logo}
+  banner={config.banner}
+  analytics={config.analytics}
+  navigation={data.navigation}
+  favicon={config.favicon}
+  appleIcon={config.appleIcon}
+  fontCssVars={data.fontCssVars}
+  themeMode={config.theme.mode}
+  searchEnabled={config.search.enabled}
+  siteUrl={config.site}
+  ogEnabled={config.og.enabled}
+  structuredDataEnabled={config.structuredData}
+  page={{ title: fullTitle, description, route }}
+  noindex={noindex}
+>
+  <main id="main">
+    <slot />
+  </main>
+</PageLayout>

@@ -1,5 +1,5 @@
 ---
-import { Code } from "astro-expressive-code/components"
+import CodeBlock from "blume/components/content/CodeBlock.astro"
 
 import { findComponent } from "../../lib/registry"
 import { SITE } from "../../lib/site"
@@ -44,8 +44,8 @@ import { ${vueExports.join(", ")} } from "${importAlias}/${meta.name}"
 ---
 
 <div data-framework="react">
-  <Code code={reactCode} lang="tsx" />
+  <CodeBlock code={reactCode} lang="tsx" />
 </div>
 <div data-framework="vue">
-  <Code code={vueCode} lang="vue" />
+  <CodeBlock code={vueCode} lang="vue" />
 </div>

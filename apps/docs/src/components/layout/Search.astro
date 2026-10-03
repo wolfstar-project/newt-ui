@@ -1,0 +1,16 @@
+---
+import BlumeSearch from "blume/components/layout/Search.astro"
+
+import FrameworkSwitcher from "../site/FrameworkSwitcher"
+
+/*
+ * Blume's `Search` layout slot, with the one control this site adds to the
+ * header beside it: the React/Vue switch that decides what every demo, code
+ * tab, install path and usage snippet shows. The search trigger itself is the
+ * built-in, handed every prop the header gives the slot.
+ */
+const props = Astro.props
+---
+
+<FrameworkSwitcher client:load />
+<BlumeSearch {...props} />

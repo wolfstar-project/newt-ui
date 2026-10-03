@@ -1,11 +1,13 @@
 ---
-import { Code } from "astro-expressive-code/components"
+import CodeBlock from "blume/components/content/CodeBlock.astro"
+import Step from "blume/components/content/Step.astro"
+import Steps from "blume/components/content/Steps.astro"
+import Tab from "blume/components/content/Tab.astro"
+import Tabs from "blume/components/content/Tabs.astro"
 
 import { findComponent, targetPaths, uiSource } from "../../lib/registry"
 import { SITE } from "../../lib/site"
 import PmTabs from "./PmTabs.astro"
-import Steps from "./Steps.astro"
-import Tabs from "./Tabs.astro"
 
 /*
  * Two ways in: the CLI, which is what almost everyone wants, and the manual
@@ -24,14 +26,8 @@ if (meta === undefined) {
   throw new Error(`<Installation name="${name}"> — no registry meta.`)
 }
 
-/*
- * A long file is collapsed past its first ten lines: the reader is here to
- * copy it, not to scroll it, and the frame keeps the page readable.
- */
 function codeProps(path: string, source: string | undefined, lang: string) {
-  const code = source ?? `// missing source for ${path}`
-  const collapse = code.split("\n").length > 40 ? { collapse: "10-9999" } : {}
-  return { code, lang, title: path, ...collapse }
+  return { code: source ?? `// missing source for ${path}`, lang, title: path }
 }
 
 const reactFiles = targetPaths("react", meta).map((path) =>
@@ -40,7 +36,7 @@ const reactFiles = targetPaths("react", meta).map((path) =>
 
 const vuePaths = targetPaths("vue", meta)
 const vueFiles = meta.vueFiles.map((file, index) => {
-  const path = vuePaths[index]
+  const path = vuePaths[index] ?? file
   return codeProps(
     path,
     uiSource("vue", meta.name, file),
@@ -51,26 +47,24 @@ const vueFiles = meta.vueFiles.map((file, index) => {
 const npmDependencies = meta.dependencies.join(" ")
 ---
 
-<Tabs labels={["CLI", "Manual"]} persistKey="install">
-  <Fragment slot="tab-0">
+<Tabs hash={false} sync={false}>
+  <Tab title="CLI">
     <PmTabs cmd={`newtui@latest add ${meta.name}`} />
-  </Fragment>
+  </Tab>
 
-  <Fragment slot="tab-1">
+  <Tab title="Manual">
     <Steps>
       {
         npmDependencies !== "" && (
-          <section>
-            <h4>Install the dependencies</h4>
+          <Step title="Install the dependencies">
             <PmTabs cmd={`--yes ${npmDependencies}`} />
-          </section>
+          </Step>
         )
       }
 
       {
         meta.registryDependencies.length > 0 && (
-          <section>
-            <h4>Add the components it builds on</h4>
+          <Step title="Add the components it builds on">
             <p>
               {meta.registryDependencies.map((dependency, index) => (
                 <>
@@ -79,32 +73,30 @@ const npmDependencies = meta.dependencies.join(" ")
                 </>
               ))}
             </p>
-          </section>
+          </Step>
         )
       }
 
-      <section>
-        <h4>Copy the source into your project</h4>
+      <Step title="Copy the source into your project">
         <div data-framework="react">
           {reactFiles.map((file) => (
-            <Code {...file} />
+            <CodeBlock {...file} />
           ))}
         </div>
         <div data-framework="vue">
           {vueFiles.map((file) => (
-            <Code {...file} />
+            <CodeBlock {...file} />
           ))}
         </div>
-      </section>
+      </Step>
 
-      <section>
-        <h4>Update the import paths</h4>
+      <Step title="Update the import paths">
         <p>
           The files import <code>{SITE.utilsAlias}</code> and sibling components
           through the aliases in your <code>components.json</code>. Point them at
           wherever those live in your project.
         </p>
-      </section>
+      </Step>
     </Steps>
-  </Fragment>
+  </Tab>
 </Tabs>

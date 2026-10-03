@@ -14,46 +14,28 @@
       "project": ["scripts/**/*.{mjs,ts}"],
     },
     "apps/docs": {
-      // Astro's own plugin finds the pages, the layouts and the integrations;
-      // these are the entry points it cannot see: the build scripts, the remark
-      // plugin the Astro config loads, and the islands MDX mounts by name.
+      // Blume drives a hidden Astro project, so nothing here is reached from a
+      // framework entry knip can see: the config and the component map are
+      // read by the CLI, the pages are mounted by path, the MDX components and
+      // islands are named in `components.ts`, and the build scripts run after
+      // `blume build`.
       "entry": [
-        "astro.config.ts",
-        "ec.config.mjs",
+        "blume.config.ts",
+        "components.ts",
+        "pages/**/*.astro",
         "scripts/*.mjs",
-        "src/content.config.ts",
         "src/components/**/*.{ts,tsx,vue,astro}",
         // Registry demos are copied in with their imports intact, so this file
         // is reached from outside the workspace knip walks.
         "src/lib/utils.ts",
-        "src/pages/**/*.{ts,astro}",
-        // The layout loads this one through `<script src="/src/pwa.ts">`,
-        // which is a string as far as any static walk is concerned.
-        "src/pwa.ts",
-        // The theme reads this one off a path in `head`, so nothing imports
-        // it. It is where `tw-animate-css` and the registry sources come in.
-        "src/styles/lotus.css",
       ],
-      // `.css` is in `project` so knip follows `src/styles/site.css`, which is
-      // where `tailwindcss` and `tw-animate-css` are imported from.
+      // `theme.css` is not listed: Blume splices it into the Tailwind entry it
+      // generates, and it imports nothing knip could trace.
       "project": [
-        "src/**/*.{ts,tsx,vue,astro,css}",
+        "src/**/*.{ts,tsx,vue,astro}",
+        "pages/**/*.astro",
         "scripts/**/*.mjs",
-        "*.{ts,mjs}",
-      ],
-      // Indirections nothing static can follow: the Open Graph renderer asks
-      // for a font file by name through `require.resolve`; the PWA virtual
-      // modules are typed by a triple-slash reference to a package
-      // `@vite-pwa/astro` brings in itself; and the three Iconify collections
-      // are looked up by package name at build time by the theme's icon
-      // middleware, which otherwise reaches for `api.iconify.design` and makes
-      // the build need a network.
-      "ignoreDependencies": [
-        "@fontsource/inter",
-        "vite-plugin-pwa",
-        "@iconify-json/lucide",
-        "@iconify-json/simple-icons",
-        "@iconify-json/vscode-icons",
+        "*.ts",
       ],
     },
     "apps/www": {

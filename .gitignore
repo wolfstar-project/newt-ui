@@ -60,5 +60,6 @@ pnpm-lock.yaml.bak
 # Skilld references (recreated by `skilld install`)
 .skilld
 
-# Astro generates these type files on every dev/build.
-apps/docs/.astro/
+# Blume generates its hidden Astro runtime on every dev/build.
+apps/docs/.blume/
+apps/docs/.blume-verify/

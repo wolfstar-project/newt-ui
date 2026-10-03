@@ -4,6 +4,8 @@
   "ignorePatterns": [
     "**/next-env.d.ts",
     "**/.astro/**",
+    "**/.blume/**",
+    "**/.blume-verify/**",
     ".agents/**",
     ".claude/**",
     ".skills/**",

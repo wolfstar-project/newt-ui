@@ -16,8 +16,8 @@ This is a pnpm + turborepo monorepo laid out like
 
 ```
 apps/
-  docs/                     Shared Astro docs (MDX + React/Vue islands)
-    src/content/docs/       Guides and one page per component
+  docs/                     Shared docs on Blume (MDX + React/Vue islands)
+    content/docs/           Guides and one page per component
     src/components/         Site chrome, code blocks, and preview frames
     src/lib/                Registry metadata and paired demo loaders
     src/styles/site.css     Tailwind v4 + the --newt-* token bridge
@@ -129,7 +129,7 @@ back. Pass `--framework react|vue` to override it.
 
 Detailed guides live on the documentation site (`apps/docs`), which serves the
 same installation page for React and Vue behind a framework switcher — see
-[`apps/docs/src/content/docs/installation.mdx`](./apps/docs/src/content/docs/installation.mdx).
+[`apps/docs/content/docs/installation.mdx`](./apps/docs/content/docs/installation.mdx).
 
 ## Design tokens
 
@@ -186,14 +186,14 @@ agent as tools. Both are documented at
 
 ## Documentation site
 
-`apps/docs` is an Astro site that runs React and Vue side by side: pages are
-static HTML built from MDX, and each preview mounts a React island and a Vue
-island together. The framework switcher in the header decides which one paints
+`apps/docs` is a [Blume](https://useblume.dev) site that runs React and Vue
+side by side: pages are static HTML built from MDX, and each preview mounts a
+React island and a Vue island together. The framework switcher in the header decides which one paints
 and which install command, import line and code block is shown — the choice
 survives a reload through `localStorage`, and the markup for both is rendered
 at build time, so switching costs nothing.
 
-Content lives in `src/content/docs/**/*.mdx`, one file per page including one
+Content lives in `content/docs/**/*.mdx`, one file per page including one
 per registry item; `pnpm --filter docs docs:gen` writes a source-derived starter
 with prose, API tables and accessibility guidance for any item that does not
 have one yet. Every page is also served as markdown at the same

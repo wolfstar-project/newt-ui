@@ -1,8 +1,14 @@
 ---
+import TypeTable from "blume/components/content/TypeTable.astro"
+
 /*
  * A component's public surface, stated once per part. The rows are written by
  * hand in the page rather than derived from the source: the types a reader
  * needs are the documented ones, not every prop the DOM element also accepts.
+ *
+ * Rendered with Blume's own type table, so the registry's tables look like
+ * every other table on the site; this file only translates the row shape the
+ * 71 component pages already write.
  */
 interface PropRow {
   readonly name: string
@@ -18,34 +24,16 @@ interface Props {
 }
 
 const { of: part, rows } = Astro.props
+
+const type = Object.fromEntries(
+  rows.map((row) => [
+    row.name,
+    { type: row.type, description: row.description, default: row.default },
+  ])
+)
 ---
 
-<div class="props-table not-prose">
+<div class="props-table">
   {part && <p class="props-table-part"><code>{part}</code></p>}
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      {
-        rows.map((row) => (
-          <tr>
-            <td>
-              <code>{row.name}</code>
-            </td>
-            <td>
-              <code class="props-table-type">{row.type}</code>
-            </td>
-            <td>{row.default ? <code>{row.default}</code> : "—"}</td>
-            <td>{row.description}</td>
-          </tr>
-        ))
-      }
-    </tbody>
-  </table>
+  <TypeTable type={type} />
 </div>

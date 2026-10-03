@@ -1,13 +1,16 @@
-import { categories } from "@/registry/registry-categories"
-
 import { INSTALL_TARGETS } from "./install-targets"
-import { COMPONENTS } from "./registry"
+import { categories, COMPONENTS } from "./registry-meta"
 
 export interface NavItem {
   readonly href: string
   readonly label: string
   /** Machine routes and external links sit outside the previous/next walk. */
   readonly external?: boolean
+  /**
+   * The sidebar says something shorter than the page's own title. Blume labels
+   * a page from its frontmatter unless told otherwise, so these are flagged.
+   */
+  readonly labelDiffers?: boolean
 }
 
 export interface NavGroup {
@@ -17,8 +20,9 @@ export interface NavGroup {
 
 /*
  * The sidebar, in reading order: what you need to get a component on screen,
- * then the decisions behind the library, then how to publish your own items,
- * then every component grouped the way the registry groups them.
+ * then the decisions behind the library, then every component grouped the way
+ * the registry groups them. `blume.config.ts` turns this into Blume's explicit
+ * sidebar; the home page and the component index read it too.
  */
 export const GUIDES: readonly NavGroup[] = [
   {
@@ -38,7 +42,8 @@ export const GUIDES: readonly NavGroup[] = [
       { href: "/docs/using-with-ai", label: "Using with AI" },
       { href: "/docs/mcp", label: "MCP server" },
       { href: "/docs/skills", label: "Skills" },
-      { href: "/docs/changelog", label: "Changelog" },
+      /* The index Blume generates from `content/changelog`, not a page. */
+      { href: "/changelog", label: "Changelog", external: true },
       { href: "/llms.txt", label: "llms.txt", external: true },
     ],
   },
@@ -50,7 +55,11 @@ export const GUIDES: readonly NavGroup[] = [
      * two groups would give the previous/next walk two answers.
      */
     items: INSTALL_TARGETS.filter((target) => target.id !== "html").map(
-      (target) => ({ href: target.href, label: target.title })
+      (target) => ({
+        href: target.href,
+        label: target.title,
+        labelDiffers: target.id === "manual",
+      })
     ),
   },
   {
@@ -58,14 +67,14 @@ export const GUIDES: readonly NavGroup[] = [
     items: [
       { href: "/docs/design", label: "Design guide" },
       { href: "/docs/accessibility", label: "Accessibility" },
-      { href: "/docs/trademark", label: "Trademark" },
-      { href: "/colors", label: "Colours and tokens" },
+      { href: "/docs/trademark", label: "Trademark", labelDiffers: true },
+      { href: "/docs/colors", label: "Colours and tokens" },
     ],
   },
   {
     label: "Forms",
     items: [
-      { href: "/docs/forms", label: "Overview" },
+      { href: "/docs/forms", label: "Overview", labelDiffers: true },
       { href: "/docs/forms/react-hook-form", label: "react-hook-form" },
       { href: "/docs/forms/tanstack-form", label: "TanStack Form" },
       { href: "/docs/forms/vee-validate", label: "vee-validate" },

@@ -1,34 +1,36 @@
 ---
-import { Code } from "astro-expressive-code/components"
-
-import Tabs from "./Tabs.astro"
+import CodeBlock from "blume/components/content/CodeBlock.astro"
+import Tab from "blume/components/content/Tab.astro"
+import Tabs from "blume/components/content/Tabs.astro"
 
 /*
  * One command, four package managers. `cmd` is the bare package and arguments
  * — `newtui@latest add button` — and each tab prefixes its own runner, so a
  * page never has to spell the same command out four times.
  *
- * The four fragments are written out rather than mapped: a slot name has to be
- * a literal for the compiler to route it.
+ * The groups share `syncKey="pm"`: a reader who picks pnpm once sees pnpm in
+ * every command on the page, and nothing else on the page moves with it.
  */
 interface Props {
   readonly cmd: string
 }
 
 const { cmd } = Astro.props
+
+const RUNNERS = [
+  ["pnpm", `pnpm dlx ${cmd}`],
+  ["npm", `npx ${cmd}`],
+  ["yarn", `yarn dlx ${cmd}`],
+  ["bun", `bunx ${cmd}`],
+] as const
 ---
 
-<Tabs labels={["pnpm", "npm", "yarn", "bun"]} persistKey="pm" class="pm-tabs">
-  <Fragment slot="tab-0">
-    <Code code={`pnpm dlx ${cmd}`} lang="bash" frame="terminal" />
-  </Fragment>
-  <Fragment slot="tab-1">
-    <Code code={`npx ${cmd}`} lang="bash" frame="terminal" />
-  </Fragment>
-  <Fragment slot="tab-2">
-    <Code code={`yarn dlx ${cmd}`} lang="bash" frame="terminal" />
-  </Fragment>
-  <Fragment slot="tab-3">
-    <Code code={`bunx ${cmd}`} lang="bash" frame="terminal" />
-  </Fragment>
+<Tabs hash={false} syncKey="pm">
+  {
+    RUNNERS.map(([label, command]) => (
+      <Tab title={label}>
+        <CodeBlock code={command} lang="bash" icons={false} />
+      </Tab>
+    ))
+  }
 </Tabs>

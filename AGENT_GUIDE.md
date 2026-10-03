@@ -22,7 +22,7 @@ shadcn-vue (Vue). Every component exists in three forms:
 | HTML/CSS (canonical visual spec) | `packages/cli/registry/html/components/<name>.{css,html,js}`                               | Original sources. `tokens.css` lives next to them.                 |
 | React                            | `apps/www/registry/bases/newt/ui/<name>.tsx` + `examples/<name>-demo.tsx`                  | `cva` + `cn` + Tailwind utilities mapped to `--newt-*` tokens.     |
 | Vue                              | `apps/vue/registry/bases/newt/ui/<name>/{Pascal.vue,index.ts}` + `examples/PascalDemo.vue` | SFC `<script setup lang="ts">`, variants exported from `index.ts`. |
-| Shared docs                      | `apps/docs/src/content/docs/components/<name>.mdx`                                         | One page renders the paired React and Vue demos.                   |
+| Shared docs                      | `apps/docs/content/docs/components/<name>.mdx`                                             | One page renders the paired React and Vue demos.                   |
 
 Per-component metadata lives in `apps/www/registry/meta/<name>.json`
 (`title`, `description`, `dependencies`, `registryDependencies`, `vueFiles`).

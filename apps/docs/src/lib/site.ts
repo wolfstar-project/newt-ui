@@ -32,15 +32,15 @@ export const SITE = {
   componentsAlias: "@/components",
   /*
    * Header links. A route lands here once it exists, so `main` never links to
-   * a page a later phase still owes.
+   * a page a later phase still owes. The token reference sits in the sidebar's
+   * Design group rather than here; the changelog is the index Blume generates.
    */
   nav: [
     { href: "/docs", label: "Docs" },
     { href: "/docs/components", label: "Components" },
     { href: "/blocks", label: "Blocks" },
-    { href: "/colors", label: "Colours" },
     { href: "/create", label: "Create" },
     { href: "/typeset", label: "Typeset" },
-    { href: "/docs/changelog", label: "Changelog" },
+    { href: "/changelog", label: "Changelog" },
   ],
 } as const
