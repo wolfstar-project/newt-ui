@@ -1,24 +1,27 @@
 ---
-import PageLayout from "blume/components/layout/PageLayout.astro"
+import RootLayout from "blume/components/layout/RootLayout.astro"
 import data from "blume:data"
 
-import FrameworkPrePaint from "../../src/components/site/FrameworkPrePaint.astro"
-import FrameworkSwitcher from "../../src/components/site/FrameworkSwitcher"
+import Footer from "../../src/components/layout/Footer.astro"
+import Header from "../../src/components/layout/Header.astro"
 import { SITE } from "../../src/lib/site"
 
 /*
  * Everything that is not a documentation page: the home page, the block
- * gallery, the preset builder and the typeset previews. They have no sidebar
- * and no table of contents, so they take Blume's `PageLayout` — the document
- * shell, the header and the footer around one full-width slot — with the
- * resolved config handed through from `blume:data`, which is what gives them
- * the same canonical, Open Graph card and structured data every docs page has.
+ * gallery, the preset builder and the typeset previews.
  *
- * `PageLayout` takes no slot overrides, so the header here carries Blume's own
- * search trigger and not the `Search` slot the docs pages get. The React/Vue
- * switch these pages need — the home page and the block gallery run live
- * demos — is rendered at the top of the page instead, with the same pre-paint
- * script in front of it.
+ * They are Blume's `RootLayout` in its `custom` mode — the document head and
+ * the header, and nothing else: no sidebar column, no title, no table of
+ * contents, no page-end links. `PageLayout` would be the obvious shell, but it
+ * takes no layout slots, so it would carry Blume's own header instead of the
+ * site's; `RootLayout` takes the same `layout` map the docs pages get from
+ * `components.ts`, which is what keeps every route wearing one header. The
+ * custom mode drops the footer with the rest of the page chrome, so it is
+ * rendered here.
+ *
+ * The head is the resolved config from `blume:data` plus the canonical and
+ * the Open Graph card Blume renders for every static custom page at
+ * `/og/<route>.png`, which the generated docs pages pass themselves.
  */
 interface Props {
   readonly title: string
@@ -32,35 +35,37 @@ interface Props {
 const { title, description = SITE.tagline, route, noindex = false } = Astro.props
 const { config } = data
 
-/*
- * `PageLayout` uses `page.title` verbatim as the document title, so the
- * suffix every docs page carries is added here.
- */
-const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`
+const site = config.site ?? SITE.url
+const canonical = new URL(route, site).href
+const card = route === "/" ? "/og/index.png" : `/og${route}.png`
+const ogImage = config.og.enabled ? new URL(card, site).href : null
 ---
 
-<PageLayout
+<RootLayout
   site={{ title: config.title, description: config.description }}
   logo={config.logo}
+  favicon={config.favicon}
+  appleIcon={config.appleIcon}
   banner={config.banner}
   analytics={config.analytics}
   navigation={data.navigation}
-  favicon={config.favicon}
-  appleIcon={config.appleIcon}
   fontCssVars={data.fontCssVars}
   themeMode={config.theme.mode}
   searchEnabled={config.search.enabled}
   siteUrl={config.site}
-  ogEnabled={config.og.enabled}
+  canonical={canonical}
+  ogImage={ogImage}
+  ogGenerated={ogImage !== null}
   structuredDataEnabled={config.structuredData}
-  page={{ title: fullTitle, description, route }}
+  page={{ title, description, route }}
+  headings={[]}
+  indexable={!noindex}
   noindex={noindex}
+  pageMode="custom"
+  layout={{ Header }}
 >
-  <FrameworkPrePaint />
-  <main id="main">
-    <div class="site-toolbar">
-      <FrameworkSwitcher client:load />
-    </div>
+  <div class="not-prose site-page">
     <slot />
-  </main>
-</PageLayout>
+  </div>
+  <Footer />
+</RootLayout>

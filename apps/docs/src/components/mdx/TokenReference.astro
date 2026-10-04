@@ -103,17 +103,20 @@ const groups = GROUPS.map((group) => ({
 </div>
 
 <script>
-  for (const button of document.querySelectorAll<HTMLButtonElement>("[data-token]")) {
-    button.addEventListener("click", async () => {
-      const token = button.dataset.token
-      if (!token) return
-      try {
-        await navigator.clipboard.writeText(`var(--${token})`)
-        button.dataset.copied = "true"
-        setTimeout(() => delete button.dataset.copied, 1000)
-      } catch {
-        /* clipboard denied: the value is on screen either way */
-      }
-    })
-  }
+  /* Delegated, so rows on a page the client router swaps in copy too. */
+  document.addEventListener("click", async (event) => {
+    const button =
+      event.target instanceof Element
+        ? event.target.closest<HTMLButtonElement>("[data-token]")
+        : null
+    const token = button?.dataset.token
+    if (!button || !token) return
+    try {
+      await navigator.clipboard.writeText(`var(--${token})`)
+      button.dataset.copied = "true"
+      setTimeout(() => delete button.dataset.copied, 1000)
+    } catch {
+      /* clipboard denied: the value is on screen either way */
+    }
+  })
 </script>

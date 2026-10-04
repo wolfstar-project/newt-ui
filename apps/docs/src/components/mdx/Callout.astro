@@ -1,0 +1,17 @@
+---
+/*
+ * An aside that must not be skimmed past. `warning` is for the things that
+ * cost a reader time if missed; `info` is context.
+ */
+interface Props {
+  readonly type?: "info" | "warning"
+  readonly title?: string
+}
+
+const { type = "info", title } = Astro.props
+---
+
+<aside class="callout" data-callout={type}>
+  {title && <p class="callout-title">{title}</p>}
+  <slot />
+</aside>

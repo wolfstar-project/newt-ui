@@ -1,25 +1,30 @@
 import { defineComponents } from "blume"
 
 /*
- * What the content writes without importing, and the two pieces of Blume's
+ * What the content writes without importing, and the pieces of Blume's
  * chrome this site replaces.
  *
- * Every `mdx` entry is a name the 109 content files use as a tag. The
+ * Every `mdx` entry is a name the content files use as a tag. The
  * registry-driven ones (`ComponentPreview`, `Installation`, `Usage`,
  * `TokensNote`) read `apps/www/registry/meta`; the rest are the site's own
- * primitives. `ReactDemo` and `VueDemo` are registered as islands so Blume
- * wires up both renderers — `ComponentPreview` mounts them itself, and nothing
- * else about a `.vue` file would tell Blume the site needs Vue.
+ * primitives. `Callout` replaces Blume's with the one the site always had.
+ * `ReactDemo` and `VueDemo` are registered as islands so Blume wires up both
+ * renderers — `ComponentPreview` mounts them itself, and nothing else about a
+ * `.vue` file would tell Blume the site needs Vue.
  *
- * Two layout slots: `Search`, because the header is where the React/Vue switch
- * has always lived and the search trigger is the one slot in it; and `Footer`,
- * which is where the trademark disclaimer goes.
+ * The `layout` slots put back the chrome the site had before the Lotus port:
+ * its header (wordmark, primary links, search, the React/Vue switch, the
+ * theme toggle), its sidebar, its table of contents, its pager, the
+ * copy-page menu beside the title, and its footer with the trademark
+ * disclaimer. The breadcrumb trail it never had is emptied. Blume keeps the
+ * document head, the grid, the drawer, search and every generated route.
  *
  * Blume reads this file statically, so every entry is a path string or an
  * object literal — never a value computed here.
  */
 export default defineComponents({
   mdx: {
+    Callout: "./src/components/mdx/Callout.astro",
     ComponentIndex: "./src/components/mdx/ComponentIndex.astro",
     ComponentPreview: "./src/components/mdx/ComponentPreview.astro",
     FrameworkGrid: "./src/components/mdx/FrameworkGrid.astro",
@@ -37,7 +42,12 @@ export default defineComponents({
     VueDemo: { component: "./src/components/demo/VueDemo.vue", client: "only" },
   },
   layout: {
+    Breadcrumbs: "./src/components/layout/NoBreadcrumbs.astro",
     Footer: "./src/components/layout/Footer.astro",
-    Search: "./src/components/layout/Search.astro",
+    Header: "./src/components/layout/Header.astro",
+    PageHeader: "./src/components/layout/PageHeader.astro",
+    Pagination: "./src/components/layout/Pager.astro",
+    Sidebar: "./src/components/layout/Sidebar.astro",
+    TableOfContents: "./src/components/layout/Toc.astro",
   },
 })

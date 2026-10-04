@@ -380,22 +380,6 @@
 
   /* --- the framework switch ---------------------------------------- */
 
-  /*
-   * On the pages without a sidebar the switch sits above the content rather
-   * than in the header, which Blume's page layout does not hand over.
-   */
-  .site-toolbar {
-    display: flex;
-    justify-content: flex-end;
-    max-width: 68rem;
-    margin: 0 auto;
-    padding: 1rem 1rem 0;
-  }
-
-  .site-toolbar .segmented {
-    display: flex;
-  }
-
   .segmented {
     display: none;
     gap: 0.125rem;
@@ -677,17 +661,6 @@
     margin: 2.5rem 0 1rem;
     font-size: 1.25rem;
     font-weight: 700;
-  }
-
-  /* --- footer ----------------------------------------------------------- */
-
-  .page-footer-disclaimer {
-    max-width: 52rem;
-    margin: 0 auto;
-    padding: 0 1rem 2.5rem;
-    font-size: 0.8rem;
-    line-height: 1.6;
-    color: var(--newt-text-muted);
   }
 
   /* --- token reference --------------------------------------------------- */
@@ -1314,23 +1287,805 @@
 }
 
 /* ------------------------------------------------------------------ *
- * (e) the prose, said outside every layer
+ * (e) the documentation chrome, said outside every layer
  *
- * Tailwind Typography lands in `@layer utilities`; everything above is in
- * `@layer components`. A layer decides the cascade before specificity is
- * even consulted, so these few rules sit outside every layer to be sure of
- * winning. Colours are not restated: Blume resolves its `--tw-prose-*` from
- * `--blume-*`, and section (b) resolves those from `--newt-*`.
+ * The shell the site had before the Lotus port: a 3.5rem sticky header, a
+ * 17rem navigation column of flat links under uppercase group labels, a
+ * 46rem article, a 14rem "On this page" rail, the pager and the footer.
+ * Blume keeps the grid, the drawer, search and every generated route; the
+ * layout slots in `components.ts` render the old markup, and these rules
+ * give it, and the grid around it, the old measurements.
  *
- * The `:not(:where(.newt-root *))` guard is the same one the rest of the
- * file uses: inside a live demo the component's own stylesheet rules, not
- * the article's.
+ * Tailwind Typography and Blume's own utilities land in `@layer utilities`;
+ * everything in section (d) is in `@layer components`. A layer decides the
+ * cascade before specificity is even consulted, so these rules sit outside
+ * every layer to be sure of winning over the utilities Blume's markup
+ * carries. The `:not(:where(.newt-root *, .not-prose *))` guard on the prose
+ * rules keeps them out of live demos and of anything that opts out of
+ * prose: there the component's own stylesheet rules, not the article's.
  * ------------------------------------------------------------------ */
-.prose h2:not(:where(.newt-root *)) {
-  padding-top: 1.25rem;
+
+body {
+  min-height: 100dvh;
+  background: var(--newt-bg-base);
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- header -------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--newt-border);
+  background: color-mix(in srgb, var(--newt-bg-base) 88%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 96rem;
+  height: 3.5rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--newt-text-primary);
+  text-decoration: none;
+}
+
+.wordmark-mark {
+  flex-shrink: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--newt-brand);
+}
+
+.wordmark-text {
+  font-family: var(--newt-font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.site-nav {
+  display: none;
+  gap: 1.25rem;
+  margin-inline-start: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.site-nav a {
+  color: var(--newt-text-secondary);
+  text-decoration: none;
+  transition: color var(--newt-duration-fast) var(--newt-ease);
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  color: var(--newt-text-primary);
+}
+
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+
+.icon-button:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+
+.icon-button svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+/* Only the icon for the theme you can switch *to* is shown. */
+.theme-icon-light,
+html[data-theme="light"] .theme-icon-dark {
+  display: none;
+}
+
+html[data-theme="light"] .theme-icon-light {
+  display: block;
+}
+
+/*
+ * Blume's search trigger is an icon button, bound by its own element, so it
+ * is restyled rather than replaced: from 48rem it is the old labelled box,
+ * its label read from the button's own `data-label` and the shortcut drawn
+ * after it. Below that it stays an icon, as the old trigger left room for
+ * nothing else.
+ */
+.site-header [data-blume-search-open] {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--newt-radius-sm);
+  color: var(--newt-text-secondary);
+}
+
+.site-header [data-blume-search-open] svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* --- grid ----------------------------------------------------------- */
+
+[data-blume-doc-grid] {
+  max-width: 96rem;
+  padding-inline: 1rem;
+}
+
+#blume-content {
+  min-width: 0;
+  padding: 2.5rem 0 4rem;
+}
+
+/*
+ * The custom pages (home, blocks, create, typeset) lay themselves out, so the
+ * grid's gutter and the main column's padding step aside for them.
+ */
+[data-blume-doc-grid]:not([class*="grid-cols-["]) {
+  max-width: none;
+  padding-inline: 0;
+}
+
+[data-blume-doc-grid]:not([class*="grid-cols-["]) #blume-content {
+  padding: 0;
+}
+
+/* The drawer below 64rem: the old sidebar, under the 3.5rem header. */
+[data-blume-nav-drawer] {
+  width: 17rem;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--newt-bg-base);
+}
+
+/*
+ * The measure. Blume centres the article in the main column; the old site
+ * set it against the sidebar, with the page-end links under it.
+ */
+#blume-content > article.max-w-content,
+#blume-content > [data-blume-page-end] > * {
+  max-width: 46rem;
+  margin-inline: 0;
+}
+
+/* Blume's own page actions are replaced by the copy-page menu by the title. */
+[data-blume-page-actions],
+[data-blume-page-actions-mount] {
+  display: none;
+}
+
+/* --- sidebar --------------------------------------------------------- */
+
+.sidebar-group + .sidebar-group {
+  margin-top: 1.5rem;
+}
+
+.sidebar-group-label {
+  margin: 0 0 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--newt-text-muted);
+}
+
+.sidebar-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.5rem;
+  border-radius: var(--newt-radius-sm);
+  color: var(--newt-text-secondary);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.sidebar-nav a:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+
+.sidebar-nav a[aria-current="page"] {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  margin: 2rem 0 0;
+  font-size: 0.75rem;
+  color: var(--newt-text-muted);
+}
+
+/* --- title, description and the copy-page menu ----------------------- */
+
+#blume-content > article > h1:first-of-type {
+  margin: 0;
+  padding-inline-end: 9rem;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--newt-text-primary);
+}
+
+#blume-content > article > h1:first-of-type + p {
+  margin: 0.5rem 0 2rem;
+  color: var(--newt-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/*
+ * The menu renders above the article and is lifted level with its `<h1>`:
+ * a zero-height box the width of the measure, the menu pinned to its end.
+ */
+.docs-copy-page {
+  position: relative;
+  max-width: 46rem;
+  height: 0;
+}
+
+.docs-copy-page > .copy-page {
+  position: absolute;
+  top: 0.15rem;
+  inset-inline-end: 0;
+  z-index: 10;
+}
+
+.copy-page {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.copy-page-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-secondary);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.copy-page-caret {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.copy-page-menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  inset-inline-end: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  min-width: 17rem;
+  padding: 0.25rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-floating);
+  box-shadow: var(--newt-shadow-elevation-high);
+}
+
+.copy-page-menu[hidden] {
+  display: none;
+}
+
+.copy-page-menu > * {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.5rem 0.55rem;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  color: var(--newt-text-secondary);
+  font-size: 0.82rem;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.copy-page-menu > *:hover,
+.copy-page-menu > *:focus-visible {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+
+.copy-page-icon {
+  flex-shrink: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+  /* Optical: the glyph lines up with the title, not with the pair. */
+  margin-top: 0.1rem;
+  color: var(--newt-text-muted);
+}
+
+.copy-page-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.copy-page-title {
+  color: var(--newt-text-primary);
+  font-weight: 500;
+}
+
+.copy-page-hint {
+  color: var(--newt-text-muted);
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+/* --- table of contents ------------------------------------------------ */
+
+[data-blume-toc] {
+  padding: 0;
+}
+
+.toc {
+  padding: 2.5rem 0;
+  font-size: 0.82rem;
+}
+
+.toc-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--newt-text-muted);
+}
+
+.toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toc li[data-depth="3"] {
+  padding-inline-start: 0.75rem;
+}
+
+.toc a {
+  display: block;
+  padding: 0.2rem 0;
+  color: var(--newt-text-muted);
+  text-decoration: none;
+}
+
+.toc a:hover,
+.toc a[data-active] {
+  color: var(--newt-text-primary);
+}
+
+/* --- pager ------------------------------------------------------------ */
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--newt-border);
 }
 
-.prose kbd:not(:where(.newt-root *)) {
+.pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  color: inherit;
+  text-decoration: none;
+}
+
+.pager-link:hover {
+  border-color: var(--newt-text-muted);
+}
+
+.pager-next {
+  margin-inline-start: auto;
+  text-align: end;
+}
+
+.pager-direction {
+  font-size: 0.72rem;
+  color: var(--newt-text-muted);
+}
+
+.pager-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* --- footer ------------------------------------------------------------ */
+
+.page-footer {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  border-top: 1px solid var(--newt-border);
+  font-size: 0.8rem;
+  color: var(--newt-text-muted);
+}
+
+.page-footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.page-footer a {
+  color: var(--newt-text-secondary);
+  text-decoration: none;
+}
+
+.page-footer a:hover {
+  color: var(--newt-text-primary);
+}
+
+.page-footer-disclaimer {
+  max-width: 52rem;
+  margin: 1rem 0 0;
+  line-height: 1.6;
+}
+
+/* --- tabs ---------------------------------------------------------------- */
+
+/*
+ * Blume boxes a tab group and underlines the current tab; the site always
+ * drew a pill strip above bare panels. The triggers are built by Blume's
+ * script, so they are styled by role and state.
+ */
+blume-tabs:not(:where(.newt-root *)) {
+  margin: 1.25rem 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+blume-tabs [data-blume-tablist][role="tablist"] {
+  gap: 0.25rem;
+  width: fit-content;
+  margin-bottom: 0.75rem;
+  padding: 0.2rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-surface);
+}
+
+blume-tabs [role="tab"] {
+  margin: 0;
+  padding: 0.28rem 0.7rem;
+  border: 0;
+  border-radius: calc(var(--newt-radius-sm) - 1px);
+  background: transparent;
+  color: var(--newt-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+blume-tabs [role="tab"][aria-selected="true"] {
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-primary);
+}
+
+blume-tabs [data-blume-tab-actions] {
+  border: 0;
+}
+
+blume-tabs [data-blume-tab-panel] {
+  padding: 0;
+}
+
+/*
+ * The inactive framework's server-rendered markup is present but hidden, so
+ * switching framework never waits on a render.
+ */
+html[data-framework="react"] [data-framework="vue"],
+html[data-framework="vue"] [data-framework="react"] {
+  display: none;
+}
+
+/* --- callout and steps ------------------------------------------------- */
+
+.callout {
+  margin: 1.25rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--newt-border);
+  border-inline-start: 3px solid var(--newt-brand);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-surface);
+  font-size: 0.9rem;
+}
+
+.callout[data-callout="warning"] {
+  border-inline-start-color: var(--newt-danger);
+}
+
+.callout > :first-child {
+  margin-top: 0;
+}
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+.prose .callout-title {
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+/* Blume's step marker, as the old outlined counter. */
+[data-blume-step] > span:first-child {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1px solid var(--newt-border);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-muted);
+  font-weight: 400;
+}
+
+/* --- prose ------------------------------------------------------------- */
+
+/*
+ * Blume's own prose rules (`.prose :where(a)`, `.prose :where(h1, h2, h3, h4)`
+ * and the rest) are unlayered and do not honour `not-prose`, so inside a
+ * custom page, a preview or a tab group they would beat every rule in
+ * section (d). `revert-layer` hands those elements back to the layered
+ * rules, which is where the site styles them.
+ */
+/* A custom page was never set in the article's type: it takes the body's. */
+.prose .site-page {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--newt-text-primary);
+}
+
+.prose .not-prose :where(h1, h2, h3, h4, p, ul, ol, a, strong, hr, table) {
+  margin: revert-layer;
+  padding: revert-layer;
+  border: revert-layer;
+  color: revert-layer;
+  font-size: revert-layer;
+  font-weight: revert-layer;
+  line-height: revert-layer;
+  text-decoration: revert-layer;
+  text-underline-offset: revert-layer;
+}
+
+.prose {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--newt-text-secondary);
+}
+
+.prose h2:not(:where(.newt-root *, .not-prose *)) {
+  margin: 2.5rem 0 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--newt-border);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--newt-text-primary);
+}
+
+.prose h3:not(:where(.newt-root *, .not-prose *)) {
+  margin: 2rem 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.prose h4:not(:where(.newt-root *, .not-prose *)) {
+  margin: 1.25rem 0 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.prose p:not(:where(.newt-root *, .not-prose *)) {
+  margin: 0 0 1rem;
+}
+
+.prose ul:not(:where(.newt-root *, .not-prose *)),
+.prose ol:not(:where(.newt-root *, .not-prose *)) {
+  margin: 0 0 1rem;
+  padding-inline-start: 1.25rem;
+}
+
+.prose li:not(:where(.newt-root *, .not-prose *)) {
+  margin: 0 0 0.35rem;
+}
+
+.prose a:not([class]):not(:where(.newt-root *, .not-prose *)) {
+  color: var(--newt-text-link);
+  font-weight: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose :not(pre) > code:not(:where(.newt-root *, .not-prose *)) {
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  background: var(--newt-bg-surface);
   font-family: var(--newt-font-mono);
+  font-size: 0.85em;
+  font-weight: 400;
+  color: var(--newt-text-primary);
+}
+
+.prose :not(pre) > code:not(:where(.newt-root *, .not-prose *))::before,
+.prose :not(pre) > code:not(:where(.newt-root *, .not-prose *))::after {
+  content: none;
+}
+
+.prose kbd:not(:where(.newt-root *, .not-prose *)) {
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--newt-border);
+  border-radius: 0.25rem;
+  font-family: var(--newt-font-mono);
+  font-size: 0.8em;
+}
+
+.prose table:not(:where(.newt-root *, .not-prose *)) {
+  width: 100%;
+  margin: 0 0 1.25rem;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.prose th:not(:where(.newt-root *, .not-prose *)),
+.prose td:not(:where(.newt-root *, .not-prose *)) {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--newt-border);
+  text-align: start;
+}
+
+.prose th:not(:where(.newt-root *, .not-prose *)) {
+  color: var(--newt-text-primary);
+  font-weight: 600;
+}
+
+/* --- responsive ---------------------------------------------------------- */
+
+@media (min-width: 48rem) {
+  .site-nav {
+    display: flex;
+  }
+
+  .site-header [data-blume-search-open] {
+    display: inline-flex;
+    gap: 0.5rem;
+    width: auto;
+    min-width: 12rem;
+    height: auto;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--newt-border);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-muted);
+    font-size: 0.8rem;
+  }
+
+  .site-header [data-blume-search-open]:hover {
+    border-color: var(--newt-text-muted);
+    background: var(--newt-bg-surface);
+  }
+
+  /* Blume's tooltip is drawn on the same pseudo-element; it becomes the label. */
+  .site-header [data-blume-search-open][data-blume-tooltip]::after {
+    content: attr(data-label);
+    position: static;
+    order: 1;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+  }
+
+  .site-header [data-blume-search-open]::before {
+    content: "⌘K";
+    order: 2;
+    margin-inline-start: auto;
+    padding: 0.05rem 0.3rem;
+    border: 1px solid var(--newt-border);
+    border-radius: 0.25rem;
+    font-family: var(--newt-font-mono);
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .sidebar-toggle {
+    display: none;
+  }
+
+  [data-blume-doc-grid][class*="lg:grid-cols-"] {
+    grid-template-columns: 17rem minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  [data-blume-nav-drawer] {
+    top: 3.5rem;
+    width: auto;
+    height: calc(100dvh - 3.5rem);
+    padding: 1.5rem 0 3rem;
+    background: transparent;
+  }
+
+  [data-blume-doc-grid][class*="lg:grid-cols-"] #blume-content {
+    padding-inline-start: 0.5rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  [data-blume-doc-grid][class*="xl:grid-cols-"] {
+    grid-template-columns: 16rem minmax(0, 1fr) 14rem;
+  }
+
+  [data-blume-toc] {
+    top: 3.5rem;
+    height: calc(100dvh - 3.5rem);
+  }
 }

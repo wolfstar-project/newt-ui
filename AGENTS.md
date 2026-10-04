@@ -134,18 +134,25 @@ means in practice:
   registry.
 - **`components.ts` names what MDX writes without importing**:
   `ComponentPreview`, `Installation`, `Usage`, `TokensNote`, `PropsTable`,
-  `PmTabs`, `PathTabs`, `FrameworkGrid`, `TokenReference` and `ComponentIndex`
-  under `src/components/mdx/`, built on Blume's own `Tabs`, `Steps`,
-  `TypeTable`, `Card` and `CodeBlock`. `ReactDemo` and `VueDemo` are registered
-  as islands there so Blume wires up both renderers; `ComponentPreview` mounts
-  them itself. Two layout slots are overridden in `src/components/layout/`:
-  `Search`, which is the built-in trigger with the React/Vue switch beside it,
-  and `Footer`, which is where the trademark disclaimer lives. Blume reads this
-  file statically — every entry is a path string or an object literal.
+  `PmTabs`, `PathTabs`, `FrameworkGrid`, `TokenReference`, `ComponentIndex`
+  and `Callout` under `src/components/mdx/`, built on Blume's own `Tabs`,
+  `Steps`, `TypeTable`, `Card` and `CodeBlock`. `ReactDemo` and `VueDemo` are
+  registered as islands there so Blume wires up both renderers;
+  `ComponentPreview` mounts them itself. The layout slots in
+  `src/components/layout/` put back the chrome the site had before the Lotus
+  port (commit `b31ac30`): `Header` (wordmark, primary links, Blume's search,
+  the React/Vue switch, the theme toggle — it also carries the theme and
+  drawer click handling Blume's header owned), `Sidebar`, `TableOfContents`,
+  `Pagination`, `PageHeader` (the copy-page menu beside the title) and
+  `Footer` (with the trademark disclaimer); `Breadcrumbs` is emptied. Blume
+  keeps the grid, the drawer, search and the generated routes. Blume reads
+  this file statically — every entry is a path string or an object literal.
 - **Pages that are not documents live in `pages/`**: the home page, `/blocks`,
   `/create`, `/typeset` and `/typeset/preview`, each wrapped in
-  `pages/_site/SiteLayout.astro`, which hands Blume's `PageLayout` the resolved
-  config from `blume:data`. The 404, the `.md` twins, `llms.txt`, the sitemap,
+  `pages/_site/SiteLayout.astro`, which renders Blume's `RootLayout` in its
+  `custom` page mode with the site's `Header` and `Footer` and the resolved
+  config from `blume:data` (`PageLayout` takes no layout slots, so it would
+  carry Blume's header). The 404, the `.md` twins, `llms.txt`, the sitemap,
   search (Orama, local), Open Graph cards and the component index page are
   Blume's.
 - **`theme.css` is spliced into the Tailwind entry Blume generates**, so it
@@ -153,8 +160,11 @@ means in practice:
   Tailwind namespaces so the registry demos get their utilities (`@source`
   names both registries); section (b) redefines every `--blume-*` token the
   chrome reads in terms of a `--newt-*` token — that mapping is why the header
-  toggle moves the chrome and the demos together. The light palette keys on
-  Blume's `data-theme="light"`. The Typeset stylesheet is imported through the
+  toggle moves the chrome and the demos together. Section (e) is the old
+  chrome's stylesheet, unlayered so it beats the utilities on Blume's markup;
+  it also hands `not-prose` content back to the layered rules with
+  `revert-layer`, because Blume's own unlayered prose rules ignore
+  `not-prose`. The light palette keys on Blume's `data-theme="light"`. The Typeset stylesheet is imported through the
   `@newt-html/*` path alias in `tsconfig.json`, which Blume hands to Vite along
   with every other `paths` entry — that is also what lets the registry demos
   import `@/registry/...` unchanged from inside `.blume/`.

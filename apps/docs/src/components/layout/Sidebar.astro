@@ -1,0 +1,87 @@
+---
+import { COMPONENTS } from "../../lib/registry"
+
+/*
+ * Blume's `Sidebar` layout slot, drawn the way the site drew it before the
+ * Lotus port: a small uppercase label per group and a flat list of links
+ * under it, with the component count at the foot. Blume hands over the tree
+ * it built from `navigation.sidebar` in `blume.config.ts`, so the order and
+ * the labels are still the ones `NAV` declares; this file only draws them.
+ * The drawer around it — fixed on mobile, sticky on desktop — is Blume's.
+ */
+type Node =
+  | { readonly kind: "page"; readonly label: string; readonly route: string }
+  | {
+      readonly kind: "group"
+      readonly label: string
+      readonly route?: string
+      readonly children: readonly Node[]
+    }
+
+interface Props {
+  readonly items: readonly Node[]
+  readonly currentRoute: string
+}
+
+const { items, currentRoute } = Astro.props
+
+/** A group's pages, with any nested group flattened into the same list. */
+function pagesOf(nodes: readonly Node[]): { label: string; route: string }[] {
+  return nodes.flatMap((node) =>
+    node.kind === "page"
+      ? [{ label: node.label, route: node.route }]
+      : [
+          ...(node.route ? [{ label: node.label, route: node.route }] : []),
+          ...pagesOf(node.children),
+        ]
+  )
+}
+
+const loose = pagesOf(items.filter((node) => node.kind === "page"))
+const groups = items.flatMap((node) =>
+  node.kind === "group"
+    ? [{ label: node.label, pages: pagesOf(node.children) }]
+    : []
+)
+---
+
+<div class="sidebar-nav">
+  {
+    loose.length > 0 && (
+      <div class="sidebar-group">
+        <ul>
+          {loose.map((page) => (
+            <li>
+              <a
+                href={page.route}
+                aria-current={page.route === currentRoute ? "page" : undefined}
+              >
+                {page.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+  {
+    groups.map((group) => (
+      <div class="sidebar-group">
+        <p class="sidebar-group-label">{group.label}</p>
+        <ul>
+          {group.pages.map((page) => (
+            <li>
+              <a
+                href={page.route}
+                aria-current={page.route === currentRoute ? "page" : undefined}
+              >
+                {page.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</div>
+<p class="sidebar-footer">{COMPONENTS.length} components</p>
