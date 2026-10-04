@@ -84,10 +84,9 @@ Before opening a PR, run `quality` and `knip` locally — CI runs both plus
   Both are **root tasks**, not per-package scripts: oxlint reads the whole
   repo in about three seconds, so fanning it out across nine workspaces cost
   more than it saved and left each package unable to see the others. No
-  workspace declares a `lint` script. `pnpm lint` runs `astro sync` first —
-  the docs app's generated types are what the type-aware rules resolve
-  `astro:content` and `import.meta.glob` through, and without them the docs
-  app reports about twenty errors that are not there.
+  workspace declares a `lint` script. The docs app's `src/env.d.ts`
+  references `astro/client`, which is what the type-aware rules resolve
+  `import.meta.glob` through without a `blume check` having run first.
 - **Releases**: Changesets v3 (`@changesets/cli`). Requires Node
   `^22.11 || ^24 || >=26`. Run `pnpm changeset` when a change should ship in
   the next release.
@@ -186,7 +185,7 @@ version:
    `packages/cli/registry/html/components/<name>.{css,html,js}`.
 2. React: `apps/www/registry/bases/newt/ui/<name>.tsx` (cva + `cn` + Tailwind),
    `apps/www/registry/bases/newt/examples/<name>-demo.tsx`,
-   and the docs page at `apps/docs/src/content/docs/components/<name>.mdx`
+   and the docs page at `apps/docs/content/docs/components/<name>.mdx`
    (`pnpm --filter docs docs:gen` writes a source-derived starter with API and
    accessibility sections).
 3. Vue: `apps/vue/registry/bases/newt/ui/<name>/{Pascal.vue,index.ts}`,
