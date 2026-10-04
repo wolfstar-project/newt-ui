@@ -240,6 +240,17 @@ export default defineConfig({
   feedback: false,
 
   agents: {
+    /*
+     * The llms.txt "details" block: what an agent should know before the page
+     * list — how to install, where the registries are, and the trademark
+     * framing every description of this project carries.
+     */
+    llmsTxt: {
+      details: [
+        `Copy-paste components for React, Vue and plain HTML/CSS, built on the \`--newt-*\` design token layer. Install with \`${SITE.cli} init\`, then \`${SITE.cli} add <component>\`; the React registry index is ${SITE.registryUrl}/index.json and the Vue one is ${SITE.vueRegistryUrl}/index.json.`,
+        `${SITE.name} is Discord-inspired and independent: not affiliated with, endorsed by, or sponsored by Discord Inc. See the trademark notice at ${SITE.disclaimer}.`,
+      ].join("\n\n"),
+    },
     markdownComponents: {
       ComponentIndex: componentIndex,
       ComponentPreview: componentPreview,

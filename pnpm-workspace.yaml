@@ -26,5 +26,9 @@ allowBuilds:
   sharp: true
   vue-demi: true
 
+# pnpm's supply-chain guard holds back versions younger than its release-age
+# window; the docs site pins the Blume release that was current when it was
+# ported, which the guard would otherwise refuse. Drop the entry once that
+# version is older than the window.
 minimumReleaseAgeExclude:
   - blume@2.1.1

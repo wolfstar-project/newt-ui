@@ -18,9 +18,9 @@ This is a pnpm + turborepo monorepo laid out like
 apps/
   docs/                     Shared docs on Blume (MDX + React/Vue islands)
     content/docs/           Guides and one page per component
-    src/components/         Site chrome, code blocks, and preview frames
+    src/components/         MDX components, layout slots and demo islands
     src/lib/                Registry metadata and paired demo loaders
-    src/styles/site.css     Tailwind v4 + the --newt-* token bridge
+    theme.css               The --blume-* and --newt-* token bridge
   www/                      React registry source + builder (Next.js)
     __registry__/           Generated React loaders
     registry.json           Generated public registry manifest
@@ -142,9 +142,9 @@ that exists as a token. See the `newt-ui-registry` skill for how one registry
 serves both majors.
 
 The documentation site keeps two palettes apart: its own chrome (header,
-sidebar, code blocks) draws from a site palette declared in
-`apps/docs/src/styles/site.css`, while every component demo renders inside a
-`.newt-root` frame that uses the `--newt-*` tokens unchanged.
+sidebar, code blocks) is Blume's, repainted from the `--newt-*` tokens by
+`apps/docs/theme.css`, while every component demo renders inside a
+`.newt-root` frame that uses the tokens unchanged.
 
 ## Development
 
@@ -188,10 +188,10 @@ agent as tools. Both are documented at
 
 `apps/docs` is a [Blume](https://useblume.dev) site that runs React and Vue
 side by side: pages are static HTML built from MDX, and each preview mounts a
-React island and a Vue island together. The framework switcher in the header decides which one paints
-and which install command, import line and code block is shown — the choice
-survives a reload through `localStorage`, and the markup for both is rendered
-at build time, so switching costs nothing.
+React island and a Vue island together. The framework switcher in the header
+decides which one paints and which install command, import line and code block
+is shown — the choice survives a reload through `localStorage`, and the markup
+for both is rendered at build time, so switching costs nothing.
 
 Content lives in `content/docs/**/*.mdx`, one file per page including one
 per registry item; `pnpm --filter docs docs:gen` writes a source-derived starter

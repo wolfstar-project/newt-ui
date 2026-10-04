@@ -380,6 +380,22 @@
 
   /* --- the framework switch ---------------------------------------- */
 
+  /*
+   * On the pages without a sidebar the switch sits above the content rather
+   * than in the header, which Blume's page layout does not hand over.
+   */
+  .site-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 1rem 1rem 0;
+  }
+
+  .site-toolbar .segmented {
+    display: flex;
+  }
+
   .segmented {
     display: none;
     gap: 0.125rem;

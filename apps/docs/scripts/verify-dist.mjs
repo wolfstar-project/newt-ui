@@ -115,8 +115,14 @@ if (unlinked.length > 0) {
   process.exit(1)
 }
 
+/*
+ * Link targets only, not prose that happens to mention a component: Blume
+ * writes one `- [Title](https://…/docs/components/<name>): …` line per page.
+ */
 const llms = readFileSync(resolve(dist, "llms.txt"), "utf8")
-const listed = (llms.match(/\/docs\/components\/[a-z0-9-]+/g) ?? []).length
+const listed = (
+  llms.match(/\]\(https?:\/\/[^)\s]*\/docs\/components\/[a-z0-9-]+\)/g) ?? []
+).length
 const expected = Number(process.env.NEWT_EXPECTED_COMPONENTS ?? 60)
 if (listed < expected) {
   console.error(

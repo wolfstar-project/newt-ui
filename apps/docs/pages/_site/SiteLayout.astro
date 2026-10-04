@@ -2,6 +2,8 @@
 import PageLayout from "blume/components/layout/PageLayout.astro"
 import data from "blume:data"
 
+import FrameworkPrePaint from "../../src/components/site/FrameworkPrePaint.astro"
+import FrameworkSwitcher from "../../src/components/site/FrameworkSwitcher"
 import { SITE } from "../../src/lib/site"
 
 /*
@@ -11,6 +13,12 @@ import { SITE } from "../../src/lib/site"
  * shell, the header and the footer around one full-width slot — with the
  * resolved config handed through from `blume:data`, which is what gives them
  * the same canonical, Open Graph card and structured data every docs page has.
+ *
+ * `PageLayout` takes no slot overrides, so the header here carries Blume's own
+ * search trigger and not the `Search` slot the docs pages get. The React/Vue
+ * switch these pages need — the home page and the block gallery run live
+ * demos — is rendered at the top of the page instead, with the same pre-paint
+ * script in front of it.
  */
 interface Props {
   readonly title: string
@@ -48,7 +56,11 @@ const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`
   page={{ title: fullTitle, description, route }}
   noindex={noindex}
 >
+  <FrameworkPrePaint />
   <main id="main">
+    <div class="site-toolbar">
+      <FrameworkSwitcher client:load />
+    </div>
     <slot />
   </main>
 </PageLayout>
