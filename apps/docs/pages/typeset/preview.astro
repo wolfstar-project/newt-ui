@@ -1,0 +1,21 @@
+---
+import TypesetPreviewFrame from "../../src/components/typeset/TypesetPreviewFrame"
+import SiteLayout from "../_site/SiteLayout.astro"
+
+/*
+ * The preview on its own, for reading rather than for tuning: the builder's
+ * "Open in a new tab" points here with the same query, so a candidate typeset
+ * can be judged at the width of a real page with no controls beside it.
+ */
+---
+
+<SiteLayout
+  title="Typeset preview"
+  description="A Typeset configuration on its own page, at the width of real content."
+  route={Astro.url.pathname}
+  noindex
+>
+  <div class="typeset-standalone newt-root">
+    <TypesetPreviewFrame client:load />
+  </div>
+</SiteLayout>

@@ -6,6 +6,8 @@
 **/node_modules/**
 **/.turbo/**
 **/.astro/**
+**/.blume/**
+**/.blume-verify/**
 pnpm-lock.yaml
 apps/*/public/r/**
 apps/www/public/legacy/**

@@ -1,0 +1,17 @@
+---
+/*
+ * The pre-paint pass for the framework switch. `data-framework` on `<html>`
+ * is what hides the inactive framework's server-rendered markup, and the store
+ * only writes it once the switcher has hydrated — late enough that a reader
+ * who chose Vue would see React code, installs and usage for a frame on every
+ * load. Rendered inline at the top of `<body>` (the header on docs pages, the
+ * page shell on custom ones), it runs before any of that markup is parsed.
+ */
+---
+
+<script is:inline>
+  try {
+    var f = localStorage.getItem("newt-ui:framework")
+    document.documentElement.dataset.framework = f === "vue" ? "vue" : "react"
+  } catch (e) {}
+</script>

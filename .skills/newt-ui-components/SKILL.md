@@ -22,7 +22,7 @@ A component is done when it exists in all three forms and they look identical.
 
 Plus, every time: a demo (`examples/<name>-demo.tsx` /
 `examples/<Pascal>Demo.vue`), one docs page for both frameworks
-(`apps/docs/src/content/docs/components/<name>.mdx`, whose source-derived
+(`apps/docs/content/docs/components/<name>.mdx`, whose source-derived
 starter `pnpm --filter docs docs:gen` writes with API tables),
 `registry/meta/<name>.json`, and an
 entry in the shared `apps/www/registry/registry-categories.ts` taxonomy.

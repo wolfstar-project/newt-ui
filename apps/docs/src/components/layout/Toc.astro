@@ -1,0 +1,85 @@
+---
+/*
+ * Blume's `TableOfContents` layout slot, as the site drew it before the Lotus
+ * port: an "On this page" label and a plain list in the right rail, the
+ * current section brightened as the reader scrolls. Blume already filters the
+ * headings to depths 2 and 3.
+ *
+ * The rail is desktop only, as it always was. Blume also renders this slot as
+ * a `mobile` dropdown above the content on narrow screens; the old site had
+ * nothing there, so that variant renders nothing.
+ */
+interface Props {
+  readonly headings: readonly {
+    readonly depth: number
+    readonly slug: string
+    readonly text: string
+  }[]
+  readonly title: string
+  readonly variant: "mobile" | "desktop"
+}
+
+const { headings, variant } = Astro.props
+---
+
+{
+  variant === "desktop" && headings.length > 0 && (
+    <nav class="toc" aria-labelledby="toc-title" data-toc>
+      <p class="toc-title" id="toc-title">
+        On this page
+      </p>
+      <ul>
+        {headings.map((heading) => (
+          <li data-depth={heading.depth}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<script>
+  /*
+   * `astro:page-load` rather than top-level code: Blume's client router swaps
+   * pages in place, and a module script runs once per real load, so the
+   * observer has to be rebuilt for each page it lands on.
+   */
+  let observer: IntersectionObserver | undefined
+
+  function init(): void {
+    observer?.disconnect()
+    const toc = document.querySelector<HTMLElement>("[data-toc]")
+    if (!toc) return
+    const links = [
+      ...toc.querySelectorAll<HTMLAnchorElement>("a[href^='#']"),
+    ]
+    /*
+     * The top band of the viewport is what counts as "here": a heading that
+     * has scrolled past the header is the section being read, not the one
+     * about to enter from the bottom.
+     */
+    observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          for (const link of links) {
+            link.toggleAttribute(
+              "data-active",
+              decodeURIComponent(link.hash.slice(1)) === entry.target.id
+            )
+          }
+        }
+      },
+      { rootMargin: "-80px 0px -70% 0px", threshold: 0 }
+    )
+    for (const link of links) {
+      const target = document.getElementById(
+        decodeURIComponent(link.hash.slice(1))
+      )
+      if (target) observer.observe(target)
+    }
+  }
+
+  document.addEventListener("astro:page-load", init)
+</script>

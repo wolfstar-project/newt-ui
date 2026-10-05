@@ -1,6 +1,11 @@
 {
   // No `baseUrl`: the repo overrides `typescript` with `typescript-native-bridge`,
   // whose checker removed it. `paths` alone resolves relative to this file.
+  //
+  // Blume reads these `paths` into the generated runtime's Vite aliases, which
+  // is what lets the registry demos import `@/registry/...` unchanged from
+  // inside `.blume/`. `.blume/.astro/types.d.ts` is where `blume check` writes
+  // the `astro:*` and `blume:*` module types.
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "jsx": "react-jsx",
@@ -14,17 +19,18 @@
       "@/registry/*": ["../www/registry/*"],
       "@/components": ["./src/components"],
       "@/components/*": ["./src/components/*"],
-      "@/layouts/*": ["./src/layouts/*"],
       "@/stores/*": ["./src/stores/*"],
-      "@/styles/*": ["./src/styles/*"],
-      "@/lib/*": ["./src/lib/*"]
+      "@/lib/*": ["./src/lib/*"],
+      "@newt-html/*": ["../../packages/cli/registry/html/*"]
     }
   },
   "include": [
-    ".astro/types.d.ts",
+    ".blume/.astro/types.d.ts",
     "src/**/*",
+    "pages/**/*",
     "scripts/**/*",
-    "astro.config.ts",
+    "blume.config.ts",
+    "components.ts",
     "../www/registry/**/*",
     "../vue/registry/**/*"
   ],

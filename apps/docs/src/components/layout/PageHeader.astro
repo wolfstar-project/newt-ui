@@ -1,0 +1,48 @@
+---
+import { existsSync } from "node:fs"
+import { resolve } from "node:path"
+
+import CopyPage from "../site/CopyPage.astro"
+
+/*
+ * Blume's `PageHeader` layout slot: what sits just above the article. The site
+ * put its copy-page menu beside the title before the Lotus port, so it goes
+ * here and `theme.css` lifts it level with the `<h1>` that opens the article.
+ * Blume's own page actions in the rail are hidden in its place.
+ *
+ * The menu needs three things the slot is not handed directly: the page's
+ * Markdown twin (Blume serves `<route>.md` for every content page), the file
+ * the page is written in, for the edit link, and the registry item a
+ * component page documents. The source file is looked up rather than derived,
+ * because a folder's index page and a single page differ only on disk; a
+ * route with no file behind it — a generated index — gets no menu at all.
+ */
+interface Props {
+  readonly route: string
+}
+
+const { route } = Astro.props
+
+/* `/docs/forms` → `content/docs/forms.mdx` or `content/docs/forms/index.mdx`. */
+const stem = route.replace(/^\/+|\/+$/g, "")
+const sourcePath = [`content/${stem}.mdx`, `content/${stem}/index.mdx`].find(
+  (candidate) => existsSync(resolve(process.cwd(), candidate))
+)
+
+const prefix = "/docs/components/"
+const registryItem = route.startsWith(prefix)
+  ? route.slice(prefix.length)
+  : undefined
+---
+
+{
+  sourcePath !== undefined && (
+    <div class="docs-copy-page">
+      <CopyPage
+        markdownPath={`${route}.md`}
+        sourcePath={`apps/docs/${sourcePath}`}
+        registryItem={registryItem}
+      />
+    </div>
+  )
+}

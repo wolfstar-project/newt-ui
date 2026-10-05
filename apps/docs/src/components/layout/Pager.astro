@@ -1,0 +1,38 @@
+---
+/*
+ * Blume's `Pagination` layout slot, as the site drew it before the Lotus
+ * port. Blume computes the neighbours from the sidebar order, which is `NAV`.
+ */
+interface Page {
+  readonly route: string
+  readonly label: string
+}
+
+interface Props {
+  readonly prev: Page | null
+  readonly next: Page | null
+}
+
+const { prev, next } = Astro.props
+---
+
+{
+  (prev || next) && (
+    <nav class="pager" aria-label="Pagination">
+      {prev ? (
+        <a class="pager-link" href={prev.route} rel="prev">
+          <span class="pager-direction">Previous</span>
+          <span class="pager-label">{prev.label}</span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {next && (
+        <a class="pager-link pager-next" href={next.route} rel="next">
+          <span class="pager-direction">Next</span>
+          <span class="pager-label">{next.label}</span>
+        </a>
+      )}
+    </nav>
+  )
+}

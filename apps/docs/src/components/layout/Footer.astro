@@ -1,0 +1,34 @@
+---
+import { SITE } from "../../lib/site"
+
+/*
+ * Blume's `Footer` layout slot, as the site drew it before the Lotus port:
+ * the licence and author on one side, the repository and the trademark notice
+ * on the other, and the disclaimer under both.
+ *
+ * The disclaimer is legal text and is reproduced word for word. It is the
+ * notice that keeps the project honest about what it is: an independent
+ * library that follows a visual language, shipping none of the trademarked
+ * assets.
+ */
+---
+
+<footer class="page-footer">
+  <div class="page-footer-row">
+    <span>{SITE.license} · built by {SITE.author}</span>
+    <span class="page-footer-links">
+      <a href={SITE.github} target="_blank" rel="noreferrer">Source on GitHub</a>
+      {/* Discord-inspired, and unaffiliated: the notice says so in full */}
+      <a href={SITE.disclaimer} target="_blank" rel="noreferrer"
+        >Trademark notice</a
+      >
+    </span>
+  </div>
+  <p class="page-footer-disclaimer">
+    {SITE.name} is an independent, community-built component library. It is not
+    affiliated with, endorsed by, or sponsored by Discord Inc. Discord and the
+    Discord logo are trademarks of Discord Inc. No Discord asset, logo or wordmark
+    ships with this project: the components are original work that follows the
+    visual language of the client, and the code you copy is yours to change.
+  </p>
+</footer>

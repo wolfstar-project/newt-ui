@@ -289,12 +289,29 @@ const vscodeMcpUrl = `vscode:mcp/install?${encodeURIComponent(
 </div>
 
 <script>
-  for (const root of document.querySelectorAll<HTMLElement>(
-    "[data-copy-page]"
-  )) {
+  /*
+   * Bound on `astro:page-load` rather than at the top level: Blume's client
+   * router swaps pages in place and a module script runs once per real load,
+   * so the menu on each page it lands on is wired then. The document-level
+   * listeners of the page before are dropped through the abort signal.
+   */
+  let controller: AbortController | undefined
+
+  function init(): void {
+    controller?.abort()
+    controller = new AbortController()
+    const { signal } = controller
+    for (const root of document.querySelectorAll<HTMLElement>(
+      "[data-copy-page]"
+    )) {
+      wire(root, signal)
+    }
+  }
+
+  function wire(root: HTMLElement, signal: AbortSignal): void {
     const trigger = root.querySelector<HTMLButtonElement>(".copy-page-trigger")
     const menu = root.querySelector<HTMLElement>(".copy-page-menu")
-    if (!trigger || !menu) continue
+    if (!trigger || !menu) return
 
     const items = [...menu.querySelectorAll<HTMLElement>("[role='menuitem']")]
 
@@ -342,13 +359,13 @@ const vscodeMcpUrl = `vscode:mcp/install?${encodeURIComponent(
       // SAFETY: a click event's target is always a Node in the document.
       const target = event.target as Node
       if (!root.contains(target)) setOpen(false)
-    })
+    }, { signal })
 
     document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape" || menu.hidden) return
       setOpen(false)
       trigger.focus()
-    })
+    }, { signal })
 
     /*
      * Two things in this menu copy to the clipboard: the page itself, fetched
@@ -384,4 +401,6 @@ const vscodeMcpUrl = `vscode:mcp/install?${encodeURIComponent(
       })
     }
   }
+
+  document.addEventListener("astro:page-load", init)
 </script>

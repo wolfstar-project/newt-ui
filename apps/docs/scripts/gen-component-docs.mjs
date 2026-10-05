@@ -21,7 +21,7 @@ import ts from "typescript"
  */
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const metaDir = join(root, "..", "www", "registry", "meta")
-const outDir = join(root, "src", "content", "docs", "components")
+const outDir = join(root, "content", "docs", "components")
 const registryDir = join(root, "..", "www", "registry", "default")
 const refreshStubs = process.argv.includes("--refresh-stubs")
 
@@ -36,7 +36,6 @@ function legacyStub(meta) {
   return `---
 title: ${yamlString(meta.title)}
 description: ${yamlString(meta.description)}
-component: true
 ---
 
 <ComponentPreview name="${meta.name}" />
@@ -222,7 +221,6 @@ function completeTemplate(meta) {
   return `---
 title: ${yamlString(meta.title)}
 description: ${yamlString(meta.description)}
-component: true
 ---
 
 ${meta.description} Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.

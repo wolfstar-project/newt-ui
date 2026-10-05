@@ -1,0 +1,104 @@
+---
+title: "Vite (React)"
+description: "Install newt/ui in a React project built with Vite, from the template or into an app you already have."
+---
+
+<PathTabs framework="vite-react">
+
+<Steps>
+
+<Step title="Create the app">
+
+```bash
+npm create vite@latest my-app -- --template react-ts
+```
+
+</Step>
+
+<Step title="Add Tailwind">
+
+```bash
+npm install tailwindcss @tailwindcss/vite
+```
+
+```css title="src/index.css"
+@import "tailwindcss";
+```
+
+</Step>
+
+<Step title="Declare the alias twice">
+
+Once for the type checker, once for the bundler — `init` reads the first and
+your build needs the second:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": { "@/*": ["./src/*"] }
+  }
+}
+```
+
+```ts title="vite.config.ts"
+import { fileURLToPath } from "node:url"
+
+import tailwindcss from "@tailwindcss/vite"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
+  },
+})
+```
+
+</Step>
+
+<Step title="Run init">
+
+<PmTabs cmd="newtui@latest init" />
+
+It detects React from your dependencies; `--framework react` settles it if the
+project carries both.
+
+</Step>
+
+<Step title="Load the stylesheet, then add a component">
+
+```ts title="src/main.tsx"
+import "./index.css"
+```
+
+`.newt-root` goes on the element that wraps the application — the `<body>` in
+`index.html` is the usual place.
+
+<PmTabs cmd="newtui@latest add button" />
+
+```tsx title="src/App.tsx"
+import { Button } from "@/components/ui/button"
+
+export function App() {
+  return <Button variant="primary">Send</Button>
+}
+```
+
+</Step>
+
+</Steps>
+
+</PathTabs>
+
+## What init writes [#written]
+
+```text
+components.json                 the config, shared with shadcn
+src/index.css                   the --newt-* token block
+src/lib/utils.ts                cn()
+src/components/ui/button.tsx    add button
+```
+
+See [Dark mode](/docs/dark-mode#vite) for the theme toggle, and [RTL](/docs/rtl)
+if the app has to run right to left.

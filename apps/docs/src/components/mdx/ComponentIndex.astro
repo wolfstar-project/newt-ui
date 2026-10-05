@@ -1,0 +1,39 @@
+---
+import Card from "blume/components/content/Card.astro"
+import CardGroup from "blume/components/content/CardGroup.astro"
+
+import { categories, COMPONENTS } from "../../lib/registry"
+
+/*
+ * The whole registry on one page, grouped the way the sidebar groups it. The
+ * list is read from the registry meta rather than restated, so a component
+ * that gains a meta file appears here on the next build.
+ */
+const groups = categories
+  .map((category) => ({
+    label: category.label,
+    slug: category.slug,
+    components: COMPONENTS.filter(
+      (component) => component.categorySlug === category.slug
+    ),
+  }))
+  .filter((group) => group.components.length > 0)
+---
+
+{
+  groups.map((group) => (
+    <section class="component-index-group">
+      <h2 id={group.slug}>{group.label}</h2>
+      <CardGroup cols={2}>
+        {group.components.map((component) => (
+          <Card
+            href={`/docs/components/${component.name}`}
+            title={component.title}
+          >
+            {component.description}
+          </Card>
+        ))}
+      </CardGroup>
+    </section>
+  ))
+}

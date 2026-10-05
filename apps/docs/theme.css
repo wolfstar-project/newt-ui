@@ -1,0 +1,2091 @@
+/*
+ * The site stylesheet, as Blume consumes it.
+ *
+ * Blume splices this file verbatim into the Tailwind entry it generates, after
+ * its own base styles and config tokens, so it is the last word on every
+ * `--blume-*` token and it may use every Tailwind directive. It must not
+ * `@import "tailwindcss"` — the generated entry already has. The `@source`
+ * paths are rewritten by Blume to keep pointing where they point from here.
+ */
+
+/*
+ * The Typeset stylesheet, from the registry rather than restated here: this
+ * site previews the item, so it has to be styled by the same file `add
+ * typeset` copies into a consumer's project. Reached through the
+ * `@newt-html/*` path alias in `tsconfig.json`, which Blume hands to Vite,
+ * because a relative path would be read from the generated entry's directory.
+ */
+@import "@newt-html/components/typeset.css";
+
+/*
+ * The two registries live outside this app and both are scanned: a demo
+ * renders React or Vue depending on the framework switch.
+ */
+@source "../www/registry";
+@source "../vue/registry";
+
+/* ------------------------------------------------------------------ *
+ * (a) newt token bridge
+ *
+ * Every entry maps a Tailwind theme namespace onto a `--newt-*` CSS
+ * variable, which keeps the raw token contract (`var(--newt-brand)`)
+ * usable from plain CSS while Tailwind generates the utilities
+ * (`bg-newt-brand`, `rounded-md`, `shadow-elevation-high`, `ease-newt`,
+ * `duration-fast`, …). The registry components read both.
+ *
+ * Source of truth for the token values:
+ * packages/cli/registry/html/tokens.css
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Surfaces */
+  --color-newt-bg-base: var(--newt-bg-base);
+  --color-newt-bg-surface: var(--newt-bg-surface);
+  --color-newt-bg-elevated: var(--newt-bg-elevated);
+  --color-newt-bg-floating: var(--newt-bg-floating);
+  --color-newt-bg-input: var(--newt-bg-input);
+  --color-newt-bg-input-elevated: var(--newt-bg-input-elevated);
+  --color-newt-bg-hover: var(--newt-bg-hover);
+  --color-newt-bg-active: var(--newt-bg-active);
+  --color-newt-border: var(--newt-border);
+
+  /* Text */
+  --color-newt-text-primary: var(--newt-text-primary);
+  --color-newt-text-secondary: var(--newt-text-secondary);
+  --color-newt-text-muted: var(--newt-text-muted);
+  --color-newt-text-link: var(--newt-text-link);
+
+  /* Brand */
+  --color-newt-brand: var(--newt-brand);
+  --color-newt-brand-hover: var(--newt-brand-hover);
+  --color-newt-brand-active: var(--newt-brand-active);
+
+  /* Status */
+  --color-newt-online: var(--newt-online);
+  --color-newt-idle: var(--newt-idle);
+  --color-newt-dnd: var(--newt-dnd);
+  --color-newt-offline: var(--newt-offline);
+  --color-newt-danger: var(--newt-danger);
+  --color-newt-danger-hover: var(--newt-danger-hover);
+
+  /* Accents */
+  --color-newt-mention-text: var(--newt-mention-text);
+  --color-newt-mention-role: var(--newt-mention-role);
+
+  /* Radius */
+  --radius-sm: var(--newt-radius-sm);
+  --radius-md: var(--newt-radius-md);
+  --radius-lg: var(--newt-radius-lg);
+  --radius-full: var(--newt-radius-full);
+
+  /* Shadows */
+  --shadow-elevation-low: var(--newt-shadow-elevation-low);
+  --shadow-elevation-high: var(--newt-shadow-elevation-high);
+
+  /* Motion */
+  --ease-newt: var(--newt-ease);
+  --transition-duration-fast: var(--newt-duration-fast);
+  --transition-duration-base: var(--newt-duration-base);
+
+  /* The site's own names for the chrome around a demo. */
+  --font-ui: var(--newt-font-sans);
+  --font-data: var(--newt-font-mono);
+  --color-ground: var(--newt-bg-base);
+  --color-raised: var(--newt-bg-elevated);
+  --color-sunken: var(--newt-bg-surface);
+  --color-shed: var(--newt-bg-hover);
+  --color-reed: var(--newt-border);
+  --color-reed-lit: var(--newt-bg-active);
+  --color-weft: var(--newt-text-primary);
+  --color-weft-dim: var(--newt-text-secondary);
+  --color-weft-faint: var(--newt-text-muted);
+  --color-indigo: var(--newt-brand);
+  --color-link: var(--newt-text-link);
+}
+
+/* newt/ui design tokens — source of truth: packages/cli/registry/html/tokens.css */
+@layer base {
+  :root {
+    /* Surfaces */
+    --newt-bg-base: #1e1f22;
+    --newt-bg-surface: #2b2d31;
+    --newt-bg-elevated: #313338;
+    --newt-bg-floating: #1e1f22;
+    --newt-bg-input: #1e1f22;
+    --newt-bg-input-elevated: #383a40;
+    --newt-bg-hover: rgba(78, 80, 88, 0.4);
+    --newt-bg-active: rgba(78, 80, 88, 0.6);
+    --newt-border: #3f4147;
+
+    /* Text */
+    --newt-text-primary: #f2f3f5;
+    --newt-text-secondary: #b5bac1;
+    --newt-text-muted: #949ba4;
+    --newt-text-link: #00a8fc;
+
+    /* Brand */
+    --newt-brand: #5865f2;
+    --newt-brand-hover: #4752c4;
+    --newt-brand-active: #3c45a5;
+
+    /* Status */
+    --newt-online: #23a55a;
+    --newt-idle: #f0b232;
+    --newt-dnd: #f23f42;
+    --newt-offline: #80848e;
+    --newt-danger: #da373c;
+    --newt-danger-hover: #a12828;
+
+    /* Accents */
+    --newt-mention-text: #b3baff;
+    --newt-mention-role: #f3b95f;
+
+    /* Type */
+    --newt-font-sans:
+      "Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    --newt-font-mono:
+      "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --newt-font-display: "Inter", sans-serif;
+
+    /* Radius */
+    --newt-radius-sm: 4px;
+    --newt-radius-md: 8px;
+    --newt-radius-lg: 12px;
+    --newt-radius-full: 9999px;
+
+    /* Sizing */
+    --newt-embed-max-width: 520px;
+
+    /* Shadows */
+    --newt-shadow-elevation-low:
+      0 1px 0 rgba(0, 0, 0, 0.2), 0 1.5px 0 rgba(0, 0, 0, 0.05),
+      0 2px 0 rgba(0, 0, 0, 0.05);
+    --newt-shadow-elevation-high: 0 8px 16px rgba(0, 0, 0, 0.24);
+
+    /* Motion */
+    --newt-ease: cubic-bezier(0.3, 0.7, 0.4, 1);
+    /*
+     * Writing direction, as a multiplier. A component that moves something
+     * sideways multiplies its offset by this rather than branching on `dir`.
+     */
+    --newt-dir: 1;
+    --newt-duration-fast: 100ms;
+    --newt-duration-base: 150ms;
+  }
+
+  /*
+   * The light surface set. In a consumer's project it is opt-in, keyed on
+   * `.newt-light` or `data-newt-theme="light"`; here it is also what Blume's
+   * header toggle switches to, which it records as `data-theme="light"` on
+   * `<html>`. The dark values in `:root` stay the default, so the first frame
+   * — before the pre-paint script has written the attribute — is dark.
+   */
+  .newt-light,
+  [data-newt-theme="light"],
+  :root[data-theme="light"] {
+    /* Surfaces */
+    --newt-bg-base: #e3e5e8;
+    --newt-bg-surface: #f2f3f5;
+    --newt-bg-elevated: #ffffff;
+    --newt-bg-floating: #ffffff;
+    --newt-bg-input: #ebedef;
+    --newt-bg-input-elevated: #ffffff;
+    --newt-bg-hover: rgba(6, 6, 7, 0.08);
+    --newt-bg-active: rgba(6, 6, 7, 0.12);
+    --newt-border: #d3d5d9;
+
+    /* Text */
+    --newt-text-primary: #060607;
+    --newt-text-secondary: #4e5058;
+    --newt-text-muted: #5c5e66;
+    --newt-text-link: #006ce7;
+
+    /* Brand */
+    --newt-brand: #5865f2;
+    --newt-brand-hover: #4752c4;
+    --newt-brand-active: #3c45a5;
+
+    /* Status */
+    --newt-online: #248046;
+    --newt-idle: #b58500;
+    --newt-dnd: #d83a3e;
+    --newt-offline: #80848e;
+    --newt-danger: #d83a3e;
+    --newt-danger-hover: #a12828;
+
+    /* Accents */
+    --newt-mention-text: #505cdc;
+    --newt-mention-role: #a06a00;
+
+    /* Shadows */
+    --newt-shadow-elevation-low:
+      0 1px 0 rgba(6, 6, 7, 0.1), 0 1.5px 0 rgba(6, 6, 7, 0.025),
+      0 2px 0 rgba(6, 6, 7, 0.025);
+    --newt-shadow-elevation-high: 0 8px 16px rgba(6, 6, 7, 0.16);
+  }
+
+  /*
+   * Tailwind v3 compatibility, inside a demo only: v4's Preflight drops the
+   * implicit `border-color: theme(colors.gray.200)` and the `cursor: pointer`
+   * on buttons. Both are restored for the registry components so they render
+   * exactly as they do under v3, without touching the site chrome around them.
+   */
+  .newt-root *,
+  .newt-root ::after,
+  .newt-root ::before {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  .newt-root button:not(:disabled),
+  .newt-root [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * (b) the Blume bridge
+ *
+ * The theme paints itself from `--blume-*`, the library from `--newt-*`, and
+ * a page shows both at once — the chrome around a live demo. Every token the
+ * theme reads is redefined here in terms of the one the components read, so
+ * the two can never disagree and the header toggle moves them together.
+ *
+ * Both selectors are needed: Blume declares its dark values on
+ * `[data-theme="dark"]`, specificity (0,1,0), and a bare `:root` would lose
+ * to them.
+ * ------------------------------------------------------------------ */
+:root,
+:root[data-theme="dark"] {
+  --blume-background: var(--newt-bg-base);
+  --blume-foreground: var(--newt-text-primary);
+  --blume-muted: var(--newt-bg-surface);
+  --blume-muted-foreground: var(--newt-text-secondary);
+  --blume-border: var(--newt-border);
+  --blume-accent: var(--newt-brand);
+  --blume-accent-foreground: #ffffff;
+  --blume-action: var(--newt-brand);
+  --blume-action-foreground: #ffffff;
+  --blume-code-background: var(--newt-bg-surface);
+  --blume-radius: var(--newt-radius-md);
+  --blume-font-display: var(--newt-font-display);
+  --blume-font-body: var(--newt-font-sans);
+  --blume-font-mono: var(--newt-font-mono);
+  /*
+   * The measure. Blume's default is 42rem; the article on this site has
+   * always been 46rem, which is where the line length was settled.
+   */
+  --blume-content-width: 46rem;
+
+  /*
+   * The site ships ONE density. These are the comfortable values, and a
+   * control reads them rather than declaring sizes of its own.
+   */
+  --ctl-h: 34px;
+  --cell-x: 14px;
+  --stack: 10px;
+  --ui-text: 14px;
+
+  /* motion comes from the token layer, so the chrome moves like a component */
+  --dur-instant: var(--newt-duration-fast);
+  --dur-local: var(--newt-duration-base);
+  --dur-overlay: 240ms;
+  --ease-beat: var(--newt-ease);
+  --shadow-layer: var(--newt-shadow-elevation-high);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0ms;
+    --dur-local: 0ms;
+    --dur-overlay: 0ms;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * (c) base rules
+ * ------------------------------------------------------------------ */
+
+/* Scrollbars, in the client's own idiom */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--newt-bg-active) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--newt-bg-active);
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--newt-text-muted);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--newt-text-link);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--newt-brand);
+    color: #fff;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * (d) the site's own components
+ *
+ * The frame around a demo, the switches, the builders and the three pages that
+ * are not documents. Every colour, radius and duration resolves to a
+ * `--newt-*` token, so the theme toggle moves the chrome and the live demos
+ * together.
+ * ------------------------------------------------------------------ */
+@layer components {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /*
+   * A demo brings the library's typography with it. The frame around it is
+   * built from the same tokens, so the two only differ where they should.
+   */
+  .newt-root {
+    font-family: var(--newt-font-sans);
+    color: var(--newt-text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- the framework switch ---------------------------------------- */
+
+  .segmented {
+    display: none;
+    gap: 0.125rem;
+    padding: 0.125rem;
+    margin: 0;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+  }
+
+  .segmented-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.55rem;
+    border: 0;
+    border-radius: calc(var(--newt-radius-sm) - 1px);
+    background: transparent;
+    color: var(--newt-text-secondary);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition:
+      background-color var(--newt-duration-fast) var(--newt-ease),
+      color var(--newt-duration-fast) var(--newt-ease);
+  }
+
+  .segmented-option[aria-pressed="true"] {
+    background: var(--newt-bg-elevated);
+    color: var(--newt-text-primary);
+  }
+
+  .framework-mark {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  /*
+   * The framework marks in their own colours, which is the one place on the
+   * site carrying a colour the palette does not own. A mark is somebody else's,
+   * and a reader recognises it by its colour or not at all.
+   */
+  .framework-mark-react,
+  .framework-glyph[data-tint="react"] {
+    color: #61dafb;
+  }
+
+  .framework-mark-vue,
+  .framework-glyph[data-tint="vue"] {
+    color: #42b883;
+  }
+
+  .framework-glyph[data-tint="nuxt"] {
+    color: #00dc82;
+  }
+
+  .framework-glyph[data-tint="astro"] {
+    color: #bc52ee;
+  }
+
+  .framework-glyph[data-tint="react-router"] {
+    color: #f44250;
+  }
+
+  .framework-glyph[data-tint="laravel"] {
+    color: #ff2d20;
+  }
+
+  .framework-glyph[data-tint="html"] {
+    color: #e34c26;
+  }
+
+  /*
+   * Next.js and TanStack ship monochrome marks (per their own brand
+   * guidelines: black on light surfaces, white on dark ones), so their
+   * "tint" follows the surface instead of a fixed brand hue.
+   */
+  .framework-glyph[data-tint="next"],
+  .framework-glyph[data-tint="tanstack"] {
+    color: #ffffff;
+  }
+
+  [data-theme="light"] .framework-glyph[data-tint="next"],
+  [data-theme="light"] .framework-glyph[data-tint="tanstack"] {
+    color: #000000;
+  }
+
+  /*
+   * The inactive framework's server-rendered markup is present but hidden, so
+   * switching framework never waits on a render. Phrased as a negation so
+   * React is what a frame without the attribute shows: the attribute is
+   * written by the store on mount, and a reader with JavaScript off sees one
+   * framework instead of both.
+   */
+  html:not([data-framework="vue"]) [data-framework="vue"],
+  html[data-framework="vue"] [data-framework="react"] {
+    display: none;
+  }
+
+  /* --- installation picker ------------------------------------------ */
+
+  .framework-grid {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+    grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
+  }
+
+  .framework-card {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    align-items: center;
+    gap: 0.15rem 0.7rem;
+    height: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-lg);
+    background: var(--newt-bg-surface);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .framework-card:hover {
+    border-color: var(--newt-brand);
+    background: var(--newt-bg-elevated);
+  }
+
+  .framework-card:focus-visible {
+    outline: 2px solid var(--newt-brand);
+    outline-offset: 2px;
+  }
+
+  .framework-card-mark {
+    grid-row: span 2;
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--newt-text-secondary);
+  }
+
+  .framework-card:hover .framework-card-mark:not([data-tint]) {
+    color: var(--newt-text-primary);
+  }
+
+  .framework-card-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--newt-text-primary);
+  }
+
+  .framework-card-note {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--newt-text-muted);
+  }
+
+  /*
+   * The three install paths. Their panels are mostly command blocks, which
+   * already carry their own margin, so the prose above them is the only thing
+   * that needs spacing of its own.
+   */
+  .path-tabs [data-blume-tab-panel] > p {
+    margin: 0 0 0.75rem;
+    color: var(--newt-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  /* --- demo frame ----------------------------------------------------- */
+
+  .component-preview {
+    margin: 1.25rem 0;
+  }
+
+  /*
+   * The frame every demo sits in, drawn once because two frameworks both draw
+   * it. The corner tick is the one mark the documentation signs a preview with.
+   */
+  .demo-frame {
+    position: relative;
+    display: flex;
+    max-width: 100%;
+    flex-direction: column;
+    margin: 0;
+    border: 1px solid var(--newt-border);
+    background-color: var(--newt-bg-elevated);
+  }
+
+  .demo-frame::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid var(--newt-brand);
+    border-left: 1px solid var(--newt-brand);
+  }
+
+  .demo-frame-full {
+    padding: 0;
+  }
+
+  .demo-body {
+    display: flex;
+    min-width: 0;
+    min-height: 10rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2.5rem 1.75rem 1.75rem;
+  }
+
+  .demo-caption {
+    border-top: 1px solid var(--newt-border);
+    padding: 0.5rem 1rem;
+    font-family: var(--newt-font-mono);
+    font-size: 12px;
+    color: var(--newt-text-muted);
+  }
+
+  .demo-error {
+    padding: 0.75rem 1rem;
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+    color: var(--newt-danger);
+    font-size: 0.85rem;
+  }
+
+  .demo-loading {
+    min-height: 4rem;
+  }
+
+  .demo-dir-toggle {
+    position: absolute;
+    inset-block-start: 0.5rem;
+    inset-inline-end: 0.5rem;
+    z-index: 1;
+    padding: 0.1rem 0.4rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-muted);
+    font-family: var(--newt-font-mono);
+    font-size: 0.65rem;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity var(--newt-duration-fast) var(--newt-ease);
+  }
+
+  /* Present for keyboard users always; visible on hover for everyone else. */
+  [data-demo-frame]:hover .demo-dir-toggle,
+  .demo-dir-toggle:focus-visible,
+  .demo-dir-toggle[aria-pressed="true"] {
+    opacity: 1;
+  }
+
+  .demo-dir-toggle[aria-pressed="true"] {
+    border-color: var(--newt-brand);
+    color: var(--newt-text-primary);
+  }
+
+  /* --- props tables ----------------------------------------------------- */
+
+  .props-table {
+    margin: 1.25rem 0;
+  }
+
+  .props-table-part {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--newt-text-muted);
+  }
+
+  /* --- component index ------------------------------------------------ */
+
+  .component-index-group h2 {
+    margin: 2.5rem 0 1rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  /* --- token reference --------------------------------------------------- */
+
+  .token-group h2 {
+    margin: 2.5rem 0 0.75rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--newt-text-primary);
+  }
+
+  .token-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .token-row {
+    display: grid;
+    align-items: center;
+    gap: 0.75rem;
+    grid-template-columns: 2.6rem minmax(10rem, 1fr) 8rem 8rem 1fr;
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    border: 0;
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    color: inherit;
+    font-size: 0.8rem;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .token-row:hover {
+    background: var(--newt-bg-hover);
+  }
+
+  .token-row[data-copied] .token-name::after {
+    content: " copied";
+    color: var(--newt-online);
+  }
+
+  .token-swatches {
+    display: flex;
+    overflow: hidden;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+  }
+
+  .token-swatch {
+    width: 1.2rem;
+    height: 1.5rem;
+  }
+
+  .token-swatches-empty {
+    height: 1.5rem;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--newt-bg-surface) 0 4px,
+      transparent 4px 8px
+    );
+  }
+
+  .token-name {
+    font-family: var(--newt-font-mono);
+    color: var(--newt-text-primary);
+  }
+
+  .token-value {
+    overflow: hidden;
+    font-family: var(--newt-font-mono);
+    color: var(--newt-text-muted);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .token-utility {
+    font-family: var(--newt-font-mono);
+    color: var(--newt-text-secondary);
+  }
+
+  @media (max-width: 52rem) {
+    .token-row {
+      grid-template-columns: 2.6rem 1fr;
+    }
+
+    .token-value-light,
+    .token-utility {
+      display: none;
+    }
+  }
+
+  /* --- home ---------------------------------------------------------- */
+
+  .home {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 4rem 1rem 5rem;
+  }
+
+  .hero h1 {
+    margin: 0.75rem 0 0;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--newt-text-primary);
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0;
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+    color: var(--newt-text-muted);
+  }
+
+  .hero-eyebrow span + span::before {
+    content: "·";
+    margin-inline-end: 0.5rem;
+  }
+
+  .hero-lead {
+    max-width: 42rem;
+    margin: 1rem 0 0;
+    color: var(--newt-text-secondary);
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .button-primary,
+  .button-secondary {
+    padding: 0.55rem 1.1rem;
+    border-radius: var(--newt-radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .button-primary {
+    background: var(--newt-brand);
+    color: #fff;
+  }
+
+  .button-primary:hover {
+    background: var(--newt-brand-hover);
+  }
+
+  .button-secondary {
+    border: 1px solid var(--newt-border);
+    color: var(--newt-text-primary);
+  }
+
+  .hero-manifest {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 0.75rem;
+    margin: 2.5rem 0 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--newt-border);
+    font-family: var(--newt-font-mono);
+    font-size: 0.78rem;
+  }
+
+  .hero-manifest dt {
+    color: var(--newt-text-muted);
+  }
+
+  .hero-manifest dd {
+    margin: 0.15rem 0 0;
+    color: var(--newt-text-primary);
+  }
+
+  .home-section {
+    margin-top: 4rem;
+  }
+
+  .home-section h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--newt-text-primary);
+  }
+
+  .home-section > p {
+    max-width: 42rem;
+    margin: 0 0 1.25rem;
+    color: var(--newt-text-secondary);
+    line-height: 1.7;
+  }
+
+  .home-section a {
+    color: var(--newt-text-link);
+  }
+
+  /* --- blocks ----------------------------------------------------------- */
+
+  .blocks,
+  .create {
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 3rem 1rem 5rem;
+  }
+
+  .blocks-header h1,
+  .create-header h1 {
+    margin: 0 0 0.75rem;
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--newt-text-primary);
+  }
+
+  .blocks-header p,
+  .create-header p {
+    max-width: 46rem;
+    margin: 0;
+    color: var(--newt-text-secondary);
+    line-height: 1.7;
+  }
+
+  .create-header a {
+    color: var(--newt-text-link);
+  }
+
+  .block-entry {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  .block-entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .block-entry h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--newt-text-primary);
+  }
+
+  .block-entry p {
+    max-width: 42rem;
+    margin: 0;
+    color: var(--newt-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* --- newt/create ------------------------------------------------------ */
+
+  .create-layout {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .create-field {
+    margin: 0 0 1.5rem;
+    padding: 0;
+    border: 0;
+  }
+
+  .create-field legend {
+    margin-bottom: 0.5rem;
+    padding: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--newt-text-muted);
+  }
+
+  .create-field .segmented {
+    display: flex;
+  }
+
+  .create-frameworks {
+    display: grid;
+    gap: 0.4rem;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  }
+
+  .create-framework {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-secondary);
+    font-size: 0.82rem;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .create-framework:hover {
+    color: var(--newt-text-primary);
+  }
+
+  .create-framework[aria-pressed="true"] {
+    border-color: var(--newt-brand);
+    background: var(--newt-bg-elevated);
+    color: var(--newt-text-primary);
+  }
+
+  .create-framework .framework-glyph {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .create-hues {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .create-hue {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid transparent;
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    color: var(--newt-text-secondary);
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+
+  .create-hue[aria-pressed="true"] {
+    border-color: var(--newt-brand);
+    background: var(--newt-bg-elevated);
+    color: var(--newt-text-primary);
+  }
+
+  .theme-swatch {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: var(--newt-radius-full);
+  }
+
+  .theme-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--newt-text-secondary);
+  }
+
+  .theme-custom input {
+    width: 2.25rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .create-reset {
+    display: inline-block;
+    margin-bottom: 2rem;
+    border: 1px solid var(--newt-border);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .create-output {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  .create-output-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .create-output h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--newt-text-primary);
+  }
+
+  .create-output h3 {
+    margin: 2rem 0 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--newt-text-primary);
+  }
+
+  .create-copy {
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-secondary);
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+
+  .create-copy:hover {
+    color: var(--newt-text-primary);
+  }
+
+  .create-code {
+    margin: 0 0 1rem;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    color: var(--newt-text-primary);
+  }
+
+  .create-pm {
+    margin-bottom: 0.75rem;
+    display: flex;
+  }
+
+  .create-commands {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .create-commands li,
+  .create-command-single {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: 0 0 0.4rem;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+  }
+
+  .create-commands code,
+  .create-command-single code {
+    font-family: var(--newt-font-mono);
+    font-size: 0.78rem;
+    overflow-wrap: anywhere;
+    color: var(--newt-text-primary);
+  }
+
+  .create-note {
+    margin: 0.5rem 0 1rem;
+    color: var(--newt-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .create-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .create-actions button {
+    border: 1px solid var(--newt-border);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .create-css {
+    margin: 0.75rem 0;
+    padding: 0.75rem 0.9rem;
+    max-height: 22rem;
+    overflow: auto;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-surface);
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--newt-text-secondary);
+  }
+
+  .create-preview h2 {
+    margin: 0 0 1rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--newt-text-primary);
+  }
+
+  /* --- typeset builder --------------------------------------------------- */
+
+  .typeset-app {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .typeset-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .typeset-row legend {
+    inline-size: 100%;
+  }
+
+  .typeset-row select {
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-primary);
+    font-size: 0.82rem;
+  }
+
+  .typeset-row input[type="range"] {
+    flex: 1;
+    min-inline-size: 8rem;
+    accent-color: var(--newt-brand);
+  }
+
+  .typeset-value {
+    font-family: var(--newt-font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--newt-text-secondary);
+  }
+
+  .typeset-lock {
+    padding: 0.15rem 0.4rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+
+  .typeset-lock[aria-pressed="true"] {
+    border-color: var(--newt-brand);
+    background: var(--newt-bg-elevated);
+  }
+
+  .typeset-code {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  .typeset-surface {
+    padding: 1.75rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-lg);
+    background: var(--newt-bg-surface);
+  }
+
+  .typeset-standalone {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 3rem 1rem 5rem;
+  }
+
+  .typeset-standalone-section + .typeset-standalone-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  .typeset-standalone-label {
+    margin: 0 0 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--newt-text-muted);
+  }
+
+  /* --- responsive ------------------------------------------------------- */
+
+  @media (min-width: 48rem) {
+    .segmented {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .create-layout,
+    .typeset-app {
+      grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+      align-items: start;
+      gap: 3rem;
+    }
+
+    .create-preview,
+    .typeset-stage {
+      position: sticky;
+      top: 5rem;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * (e) the documentation chrome, said outside every layer
+ *
+ * The shell the site had before the Lotus port: a 3.5rem sticky header, a
+ * 17rem navigation column of flat links under uppercase group labels, a
+ * 46rem article, a 14rem "On this page" rail, the pager and the footer.
+ * Blume keeps the grid, the drawer, search and every generated route; the
+ * layout slots in `components.ts` render the old markup, and these rules
+ * give it, and the grid around it, the old measurements.
+ *
+ * Tailwind Typography and Blume's own utilities land in `@layer utilities`;
+ * everything in section (d) is in `@layer components`. A layer decides the
+ * cascade before specificity is even consulted, so these rules sit outside
+ * every layer to be sure of winning over the utilities Blume's markup
+ * carries. The `:not(:where(.newt-root *, .not-prose *))` guard on the prose
+ * rules keeps them out of live demos and of anything that opts out of
+ * prose: there the component's own stylesheet rules, not the article's.
+ * ------------------------------------------------------------------ */
+
+body {
+  min-height: 100dvh;
+  background: var(--newt-bg-base);
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- header -------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--newt-border);
+  background: color-mix(in srgb, var(--newt-bg-base) 88%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 96rem;
+  height: 3.5rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--newt-text-primary);
+  text-decoration: none;
+}
+
+.wordmark-mark {
+  flex-shrink: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--newt-brand);
+}
+
+.wordmark-text {
+  font-family: var(--newt-font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.site-nav {
+  display: none;
+  gap: 1.25rem;
+  margin-inline-start: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.site-nav a {
+  color: var(--newt-text-secondary);
+  text-decoration: none;
+  transition: color var(--newt-duration-fast) var(--newt-ease);
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  color: var(--newt-text-primary);
+}
+
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+
+.icon-button:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+
+.icon-button svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+/* Only the icon for the theme you can switch *to* is shown. */
+.theme-icon-light,
+html[data-theme="light"] .theme-icon-dark {
+  display: none;
+}
+
+html[data-theme="light"] .theme-icon-light {
+  display: block;
+}
+
+/*
+ * Blume's search trigger is an icon button, bound by its own element, so it
+ * is restyled rather than replaced: from 48rem it is the old labelled box,
+ * its label read from the button's own `data-label` and the shortcut drawn
+ * after it. Below that it stays an icon, as the old trigger left room for
+ * nothing else.
+ */
+.site-header [data-blume-search-open] {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--newt-radius-sm);
+  color: var(--newt-text-secondary);
+}
+
+.site-header [data-blume-search-open] svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* --- grid ----------------------------------------------------------- */
+
+[data-blume-doc-grid] {
+  max-width: 96rem;
+  padding-inline: 1rem;
+}
+
+#blume-content {
+  min-width: 0;
+  padding: 2.5rem 0 4rem;
+}
+
+/*
+ * The custom pages (home, blocks, create, typeset) lay themselves out, so the
+ * grid's gutter and the main column's padding step aside for them.
+ */
+[data-blume-doc-grid]:not([class*="grid-cols-["]) {
+  max-width: none;
+  padding-inline: 0;
+}
+
+[data-blume-doc-grid]:not([class*="grid-cols-["]) #blume-content {
+  padding: 0;
+}
+
+/* The drawer below 64rem: the old sidebar, under the 3.5rem header. */
+[data-blume-nav-drawer] {
+  width: 17rem;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--newt-bg-base);
+}
+
+/*
+ * The measure. Blume centres the article in the main column; the old site
+ * set it against the sidebar, with the page-end links under it.
+ */
+#blume-content > article.max-w-content,
+#blume-content > [data-blume-page-end] > * {
+  max-width: 46rem;
+  margin-inline: 0;
+}
+
+/* Blume's own page actions are replaced by the copy-page menu by the title. */
+[data-blume-page-actions],
+[data-blume-page-actions-mount] {
+  display: none;
+}
+
+/* --- sidebar --------------------------------------------------------- */
+
+.sidebar-group + .sidebar-group {
+  margin-top: 1.5rem;
+}
+
+.sidebar-group-label {
+  margin: 0 0 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--newt-text-muted);
+}
+
+.sidebar-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.5rem;
+  border-radius: var(--newt-radius-sm);
+  color: var(--newt-text-secondary);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.sidebar-nav a:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+
+.sidebar-nav a[aria-current="page"] {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  margin: 2rem 0 0;
+  font-size: 0.75rem;
+  color: var(--newt-text-muted);
+}
+
+/* --- title, description and the copy-page menu ----------------------- */
+
+#blume-content > article > h1:first-of-type {
+  margin: 0;
+  padding-inline-end: 9rem;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--newt-text-primary);
+}
+
+#blume-content > article > h1:first-of-type + p {
+  margin: 0.5rem 0 2rem;
+  color: var(--newt-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/*
+ * The menu renders above the article and is lifted level with its `<h1>`:
+ * a zero-height box the width of the measure, the menu pinned to its end.
+ */
+.docs-copy-page {
+  position: relative;
+  max-width: 46rem;
+  height: 0;
+}
+
+.docs-copy-page > .copy-page {
+  position: absolute;
+  top: 0.15rem;
+  inset-inline-end: 0;
+  z-index: 10;
+}
+
+.copy-page {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.copy-page-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-secondary);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.copy-page-caret {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.copy-page-menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  inset-inline-end: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  min-width: 17rem;
+  padding: 0.25rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-floating);
+  box-shadow: var(--newt-shadow-elevation-high);
+}
+
+.copy-page-menu[hidden] {
+  display: none;
+}
+
+.copy-page-menu > * {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.5rem 0.55rem;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  color: var(--newt-text-secondary);
+  font-size: 0.82rem;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.copy-page-menu > *:hover,
+.copy-page-menu > *:focus-visible {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+
+.copy-page-icon {
+  flex-shrink: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+  /* Optical: the glyph lines up with the title, not with the pair. */
+  margin-top: 0.1rem;
+  color: var(--newt-text-muted);
+}
+
+.copy-page-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.copy-page-title {
+  color: var(--newt-text-primary);
+  font-weight: 500;
+}
+
+.copy-page-hint {
+  color: var(--newt-text-muted);
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+/* --- table of contents ------------------------------------------------ */
+
+[data-blume-toc] {
+  padding: 0;
+}
+
+.toc {
+  padding: 2.5rem 0;
+  font-size: 0.82rem;
+}
+
+.toc-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--newt-text-muted);
+}
+
+.toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toc li[data-depth="3"] {
+  padding-inline-start: 0.75rem;
+}
+
+.toc a {
+  display: block;
+  padding: 0.2rem 0;
+  color: var(--newt-text-muted);
+  text-decoration: none;
+}
+
+.toc a:hover,
+.toc a[data-active] {
+  color: var(--newt-text-primary);
+}
+
+/* --- pager ------------------------------------------------------------ */
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--newt-border);
+}
+
+.pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  color: inherit;
+  text-decoration: none;
+}
+
+.pager-link:hover {
+  border-color: var(--newt-text-muted);
+}
+
+.pager-next {
+  margin-inline-start: auto;
+  text-align: end;
+}
+
+.pager-direction {
+  font-size: 0.72rem;
+  color: var(--newt-text-muted);
+}
+
+.pager-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* --- footer ------------------------------------------------------------ */
+
+.page-footer {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  border-top: 1px solid var(--newt-border);
+  font-size: 0.8rem;
+  color: var(--newt-text-muted);
+}
+
+.page-footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.page-footer a {
+  color: var(--newt-text-secondary);
+  text-decoration: none;
+}
+
+.page-footer a:hover {
+  color: var(--newt-text-primary);
+}
+
+.page-footer-disclaimer {
+  max-width: 52rem;
+  margin: 1rem 0 0;
+  line-height: 1.6;
+}
+
+/* --- tabs ---------------------------------------------------------------- */
+
+/*
+ * Blume boxes a tab group and underlines the current tab; the site always
+ * drew a pill strip above bare panels. The triggers are built by Blume's
+ * script, so they are styled by role and state.
+ */
+blume-tabs:not(:where(.newt-root *)) {
+  margin: 1.25rem 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+blume-tabs [data-blume-tablist][role="tablist"] {
+  gap: 0.25rem;
+  width: fit-content;
+  margin-bottom: 0.75rem;
+  padding: 0.2rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-surface);
+}
+
+blume-tabs [role="tab"] {
+  margin: 0;
+  padding: 0.28rem 0.7rem;
+  border: 0;
+  border-radius: calc(var(--newt-radius-sm) - 1px);
+  background: transparent;
+  color: var(--newt-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+blume-tabs [role="tab"][aria-selected="true"] {
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-primary);
+}
+
+blume-tabs [data-blume-tab-actions] {
+  border: 0;
+}
+
+blume-tabs [data-blume-tab-panel] {
+  padding: 0;
+}
+
+/*
+ * The inactive framework's server-rendered markup is present but hidden, so
+ * switching framework never waits on a render.
+ */
+html[data-framework="react"] [data-framework="vue"],
+html[data-framework="vue"] [data-framework="react"] {
+  display: none;
+}
+
+/* --- callout and steps ------------------------------------------------- */
+
+.callout {
+  margin: 1.25rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--newt-border);
+  border-inline-start: 3px solid var(--newt-brand);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-surface);
+  font-size: 0.9rem;
+}
+
+.callout[data-callout="warning"] {
+  border-inline-start-color: var(--newt-danger);
+}
+
+.callout > :first-child {
+  margin-top: 0;
+}
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+.prose .callout-title {
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+/* Blume's step marker, as the old outlined counter. */
+[data-blume-step] > span:first-child {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1px solid var(--newt-border);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-muted);
+  font-weight: 400;
+}
+
+/* --- prose ------------------------------------------------------------- */
+
+/*
+ * Blume's own prose rules (`.prose :where(a)`, `.prose :where(h1, h2, h3, h4)`
+ * and the rest) are unlayered and do not honour `not-prose`, so inside a
+ * custom page, a preview or a tab group they would beat every rule in
+ * section (d). `revert-layer` hands those elements back to the layered
+ * rules, which is where the site styles them.
+ */
+/* A custom page was never set in the article's type: it takes the body's. */
+.prose .site-page {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--newt-text-primary);
+}
+
+.prose .not-prose :where(h1, h2, h3, h4, p, ul, ol, a, strong, hr, table) {
+  margin: revert-layer;
+  padding: revert-layer;
+  border: revert-layer;
+  color: revert-layer;
+  font-size: revert-layer;
+  font-weight: revert-layer;
+  line-height: revert-layer;
+  text-decoration: revert-layer;
+  text-underline-offset: revert-layer;
+}
+
+.prose {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--newt-text-secondary);
+}
+
+.prose h2:not(:where(.newt-root *, .not-prose *)) {
+  margin: 2.5rem 0 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--newt-border);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--newt-text-primary);
+}
+
+.prose h3:not(:where(.newt-root *, .not-prose *)) {
+  margin: 2rem 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.prose h4:not(:where(.newt-root *, .not-prose *)) {
+  margin: 1.25rem 0 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.prose p:not(:where(.newt-root *, .not-prose *)) {
+  margin: 0 0 1rem;
+}
+
+.prose ul:not(:where(.newt-root *, .not-prose *)),
+.prose ol:not(:where(.newt-root *, .not-prose *)) {
+  margin: 0 0 1rem;
+  padding-inline-start: 1.25rem;
+}
+
+.prose li:not(:where(.newt-root *, .not-prose *)) {
+  margin: 0 0 0.35rem;
+}
+
+.prose a:not([class]):not(:where(.newt-root *, .not-prose *)) {
+  color: var(--newt-text-link);
+  font-weight: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose :not(pre) > code:not(:where(.newt-root *, .not-prose *)) {
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  background: var(--newt-bg-surface);
+  font-family: var(--newt-font-mono);
+  font-size: 0.85em;
+  font-weight: 400;
+  color: var(--newt-text-primary);
+}
+
+.prose :not(pre) > code:not(:where(.newt-root *, .not-prose *))::before,
+.prose :not(pre) > code:not(:where(.newt-root *, .not-prose *))::after {
+  content: none;
+}
+
+.prose kbd:not(:where(.newt-root *, .not-prose *)) {
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--newt-border);
+  border-radius: 0.25rem;
+  font-family: var(--newt-font-mono);
+  font-size: 0.8em;
+}
+
+.prose table:not(:where(.newt-root *, .not-prose *)) {
+  width: 100%;
+  margin: 0 0 1.25rem;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.prose th:not(:where(.newt-root *, .not-prose *)),
+.prose td:not(:where(.newt-root *, .not-prose *)) {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--newt-border);
+  text-align: start;
+}
+
+.prose th:not(:where(.newt-root *, .not-prose *)) {
+  color: var(--newt-text-primary);
+  font-weight: 600;
+}
+
+/* --- responsive ---------------------------------------------------------- */
+
+@media (min-width: 48rem) {
+  .site-nav {
+    display: flex;
+  }
+
+  .site-header [data-blume-search-open] {
+    display: inline-flex;
+    gap: 0.5rem;
+    width: auto;
+    min-width: 12rem;
+    height: auto;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--newt-border);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-muted);
+    font-size: 0.8rem;
+  }
+
+  .site-header [data-blume-search-open]:hover {
+    border-color: var(--newt-text-muted);
+    background: var(--newt-bg-surface);
+  }
+
+  /* Blume's tooltip is drawn on the same pseudo-element; it becomes the label. */
+  .site-header [data-blume-search-open][data-blume-tooltip]::after {
+    content: attr(data-label);
+    position: static;
+    order: 1;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+  }
+
+  .site-header [data-blume-search-open]::before {
+    content: "⌘K";
+    order: 2;
+    margin-inline-start: auto;
+    padding: 0.05rem 0.3rem;
+    border: 1px solid var(--newt-border);
+    border-radius: 0.25rem;
+    font-family: var(--newt-font-mono);
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .sidebar-toggle {
+    display: none;
+  }
+
+  [data-blume-doc-grid][class*="lg:grid-cols-"] {
+    grid-template-columns: 17rem minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  [data-blume-nav-drawer] {
+    top: 3.5rem;
+    width: auto;
+    height: calc(100dvh - 3.5rem);
+    padding: 1.5rem 0 3rem;
+    background: transparent;
+  }
+
+  [data-blume-doc-grid][class*="lg:grid-cols-"] #blume-content {
+    padding-inline-start: 0.5rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  [data-blume-doc-grid][class*="xl:grid-cols-"] {
+    grid-template-columns: 16rem minmax(0, 1fr) 14rem;
+  }
+
+  [data-blume-toc] {
+    top: 3.5rem;
+    height: calc(100dvh - 3.5rem);
+  }
+}

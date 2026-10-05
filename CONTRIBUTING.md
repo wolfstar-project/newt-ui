@@ -7,7 +7,7 @@ opening a pull request.
 
 ```
 apps
-├── docs           # Shared Astro documentation site
+├── docs           # Shared documentation site (Blume)
 ├── www            # React registry builder (Next.js, shadcn-ui layout)
 └── vue            # Vue registry builder (Nuxt, shadcn-vue layout)
 packages
@@ -23,7 +23,7 @@ templates
 
 | Path                           | Description                                          |
 | ------------------------------ | ---------------------------------------------------- |
-| `apps/docs/src/content/docs`   | Shared React/Vue documentation (MDX)                 |
+| `apps/docs/content/docs`       | Shared React/Vue documentation (MDX)                 |
 | `apps/www/registry/bases/newt` | React components, blocks, and examples               |
 | `apps/www/registry/meta`       | Metadata driving both generated framework registries |
 | `apps/vue/registry/bases/newt` | Vue components, blocks, and examples                 |
@@ -46,7 +46,7 @@ pnpm --filter vue-www dev
 2. Add an example to `apps/www/registry/bases/newt/examples/<name>-demo.tsx`.
 3. Repeat for Vue in `apps/vue/registry/bases/newt/ui/<name>/` and
    `apps/vue/registry/bases/newt/examples/<Pascal>Demo.vue`.
-4. Add the shared docs page in `apps/docs/src/content/docs/components/<name>.mdx`.
+4. Add the shared docs page in `apps/docs/content/docs/components/<name>.mdx`.
 5. Run `node scripts/gen-registry.mjs && pnpm registry:build`.
 6. Add a changeset: `pnpm changeset`.
 

@@ -1,0 +1,71 @@
+---
+import RootLayout from "blume/components/layout/RootLayout.astro"
+import data from "blume:data"
+
+import Footer from "../../src/components/layout/Footer.astro"
+import Header from "../../src/components/layout/Header.astro"
+import { SITE } from "../../src/lib/site"
+
+/*
+ * Everything that is not a documentation page: the home page, the block
+ * gallery, the preset builder and the typeset previews.
+ *
+ * They are Blume's `RootLayout` in its `custom` mode — the document head and
+ * the header, and nothing else: no sidebar column, no title, no table of
+ * contents, no page-end links. `PageLayout` would be the obvious shell, but it
+ * takes no layout slots, so it would carry Blume's own header instead of the
+ * site's; `RootLayout` takes the same `layout` map the docs pages get from
+ * `components.ts`, which is what keeps every route wearing one header. The
+ * custom mode drops the footer with the rest of the page chrome, so it is
+ * rendered here.
+ *
+ * The head is the resolved config from `blume:data` plus the canonical and
+ * the Open Graph card Blume renders for every static custom page at
+ * `/og/<route>.png`, which the generated docs pages pass themselves.
+ */
+interface Props {
+  readonly title: string
+  readonly description?: string
+  /** `Astro.url.pathname`, which is what the card and the canonical key on. */
+  readonly route: string
+  /** Off on pages that are a tool rather than reading, like the preview frame. */
+  readonly noindex?: boolean
+}
+
+const { title, description = SITE.tagline, route, noindex = false } = Astro.props
+const { config } = data
+
+const site = config.site ?? SITE.url
+const canonical = new URL(route, site).href
+const card = route === "/" ? "/og/index.png" : `/og${route}.png`
+const ogImage = config.og.enabled ? new URL(card, site).href : null
+---
+
+<RootLayout
+  site={{ title: config.title, description: config.description }}
+  logo={config.logo}
+  favicon={config.favicon}
+  appleIcon={config.appleIcon}
+  banner={config.banner}
+  analytics={config.analytics}
+  navigation={data.navigation}
+  fontCssVars={data.fontCssVars}
+  themeMode={config.theme.mode}
+  searchEnabled={config.search.enabled}
+  siteUrl={config.site}
+  canonical={canonical}
+  ogImage={ogImage}
+  ogGenerated={ogImage !== null}
+  structuredDataEnabled={config.structuredData}
+  page={{ title, description, route }}
+  headings={[]}
+  indexable={!noindex}
+  noindex={noindex}
+  pageMode="custom"
+  layout={{ Header }}
+>
+  <div class="not-prose site-page">
+    <slot />
+  </div>
+  <Footer />
+</RootLayout>
