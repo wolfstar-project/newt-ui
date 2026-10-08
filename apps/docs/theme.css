@@ -1528,6 +1528,24 @@ html[data-theme="light"] .theme-icon-light {
   font-weight: 600;
 }
 
+.sidebar-framework {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--newt-border);
+}
+
+.sidebar-framework .segmented {
+  display: flex;
+  width: fit-content;
+}
+
+/* The header carries the switch from 48rem up, so the drawer's copy leaves. */
+@media (min-width: 48rem) {
+  .sidebar-framework {
+    display: none;
+  }
+}
+
 .sidebar-footer {
   margin: 2rem 0 0;
   font-size: 0.75rem;
@@ -1627,8 +1645,17 @@ html[data-theme="light"] .theme-icon-light {
   cursor: pointer;
 }
 
-.copy-page-menu > *:hover,
-.copy-page-menu > *:focus-visible {
+.copy-page-menu > .copy-page-divider {
+  display: block;
+  height: 1px;
+  margin: 0.25rem 0.35rem;
+  padding: 0;
+  background: var(--newt-border);
+  cursor: default;
+}
+
+.copy-page-menu > [role="menuitem"]:hover,
+.copy-page-menu > [role="menuitem"]:focus-visible {
   background: var(--newt-bg-hover);
   color: var(--newt-text-primary);
 }
