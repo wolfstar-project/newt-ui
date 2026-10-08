@@ -1,5 +1,6 @@
 ---
 import { COMPONENTS } from "../../lib/registry"
+import FrameworkSwitcher from "../site/FrameworkSwitcher"
 
 /*
  * Blume's `Sidebar` layout slot, drawn the way the site drew it before the
@@ -8,6 +9,8 @@ import { COMPONENTS } from "../../lib/registry"
  * it built from `navigation.sidebar` in `blume.config.ts`, so the order and
  * the labels are still the ones `NAV` declares; this file only draws them.
  * The drawer around it — fixed on mobile, sticky on desktop — is Blume's.
+ * Under 48rem the header has no room for the React/Vue switch, so the drawer
+ * carries it at the top.
  */
 type Node =
   | { readonly kind: "page"; readonly label: string; readonly route: string }
@@ -46,6 +49,9 @@ const groups = items.flatMap((node) =>
 ---
 
 <div class="sidebar-nav">
+  <div class="sidebar-framework">
+    <FrameworkSwitcher client:load />
+  </div>
   {
     loose.length > 0 && (
       <div class="sidebar-group">
