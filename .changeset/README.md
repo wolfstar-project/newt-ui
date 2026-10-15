@@ -2,8 +2,7 @@
 
 newt/ui uses [`@changesets/cli`](https://github.com/changesets/changesets) for
 monorepo releases. Each published package — `newtui` (the CLI),
-`@newtui/nuxt` (the Nuxt module), and the `@newtui/react` / `@newtui/vue`
-deprecation wrappers — is versioned independently according to the changesets
+`@newtui/nuxt` (the Nuxt module) and `@newtui/mcp` (the docs MCP server) — is versioned independently according to the changesets
 included in each release.
 
 ---
@@ -62,8 +61,7 @@ requires pnpm >= 11.1.3, which fixed pnpm sending an unresolved
 OIDC ([pnpm/pnpm#11526](https://github.com/pnpm/pnpm/pull/11526)) — the
 pinned `packageManager` version here is well above that.
 
-For each published package (`newtui`, `@newtui/nuxt`, `@newtui/react`,
-`@newtui/vue`), configure a trusted publisher once at
+For each published package (`newtui`, `@newtui/nuxt`, `@newtui/mcp`), configure a trusted publisher once at
 `https://www.npmjs.com/package/<name>/access` → **Publishing access** →
 **Add GitHub Actions**:
 
@@ -102,9 +100,11 @@ needs a changeset and no changelog entry.
 
 1. Merge one or more PRs that include changeset files.
 2. The `release` job in `.github/workflows/release.yml` automatically creates
-   or updates a **"chore: update changelog and release"** PR. This PR bumps
-   affected package versions and updates CHANGELOGs.
-3. Review the PR and optionally edit the changelog entries.
+   or updates a **"chore: update changelog and release"** PR. Its version step,
+   `pnpm run version` (`scripts/version.mjs`), bumps affected package
+   versions, updates their CHANGELOGs and writes the matching page in
+   `apps/docs/content/changelog/` from the same changesets.
+3. Review the PR and optionally edit the changelog entries and the site page.
 4. Merge the PR. `changesets/action` publishes the bumped packages to npm
    automatically with provenance attestation and creates GitHub Releases.
 
@@ -115,6 +115,7 @@ Only packages with pending changesets are versioned and published.
 | Script                      | Purpose                                           |
 | :-------------------------- | :------------------------------------------------ |
 | `pnpm changeset`            | Add a changeset file (`changeset add`)            |
+| `pnpm run version`          | Version packages and write the site changelog     |
 | `pnpm run publish:snapshot` | Publish a `@next` snapshot (CI uses this)         |
 | `pnpm run publish`          | Version, build, and publish to npm (CI uses this) |
 

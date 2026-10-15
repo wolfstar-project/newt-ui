@@ -17,10 +17,9 @@ flows back.
   `tokens.css`. The legacy `newtui-html` bin (`cli/index.js`) copies straight
   out of that directory. This package owns the design tokens; nothing else may
   redefine a value.
-- `deprecated/react-cli` (`@newtui/react`) and `deprecated/vue-cli`
-  (`@newtui/vue`):
-  deprecation wrappers. Each ships one bin that prints a notice and forwards to
-  `newtui`. They hold no CLI logic and are removed in the next major.
+- `packages/mcp`: `@newtui/mcp`, a read-only MCP server over the published
+  documentation (`llms.txt`, `llms-full.txt`, the `.md` page twins). It talks
+  HTTP to the docs site only — it never imports `apps/docs` or the registry.
 - `packages/module`: `@newtui/nuxt`, auto-imports a consumer's
   `components/ui/**` and injects the tokens. Runtime-only; it never reads the
   registry.

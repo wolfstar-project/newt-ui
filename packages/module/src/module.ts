@@ -1,6 +1,7 @@
 import { join } from "node:path"
 
 import { addComponentsDir, createResolver, defineNuxtModule } from "@nuxt/kit"
+import type { NuxtModule } from "@nuxt/schema"
 
 export interface ModuleOptions {
   /**
@@ -23,7 +24,9 @@ export interface ModuleOptions {
 
 export const DEFAULT_COMPONENT_DIR = "components"
 
-export default defineNuxtModule<ModuleOptions>({
+// Annotated so the emitted declaration names `NuxtModule` instead of inlining
+// a type from @nuxt/schema's internals.
+const newtModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
   meta: {
     name: "@newtui/nuxt",
     configKey: "newt",
@@ -59,3 +62,5 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.build.transpile.push(resolver.resolve("./runtime"))
   },
 })
+
+export default newtModule

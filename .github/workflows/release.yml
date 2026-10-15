@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  CI: "true"
+  CI: true
 
 permissions: {}
 
@@ -18,7 +18,7 @@ concurrency:
 jobs:
   snapshot_filter:
     name: Snapshot filter
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     if: |
       github.repository_owner == 'wolfstar-project'
       && (
@@ -39,12 +39,8 @@ jobs:
       - name: Check snapshot changes
         id: snapshot_changes
         shell: bash
-        # Context expressions are passed in via `env:` and read back as shell
-        # variables instead of being interpolated directly into the script.
-        # Direct `${{ }}` interpolation in a `run:` block splices the
-        # (potentially attacker-influenced) value into the script text before
-        # bash ever sees it, which is a code-injection vector; env vars are
-        # passed as plain strings and can't break out of the shell context.
+        # Context values go through `env:` rather than `${{ }}` in the script,
+        # so they reach bash as plain strings and cannot inject code.
         env:
           EVENT_NAME: ${{ github.event_name }}
           EVENT_BEFORE: ${{ github.event.before }}
@@ -60,10 +56,8 @@ jobs:
             exit 0
           fi
 
-          # Assigned separately (not piped straight into the `if`): a failed
-          # `git diff` (e.g. an unreachable `before` SHA) must fail this step
-          # via `set -e`, not silently resolve to "no relevant changes" — a
-          # nonzero exit inside an `if` condition does not trigger `set -e`.
+          # Assigned separately so a failed `git diff` fails the step instead
+          # of silently resolving to "no relevant changes".
           changed_files="$(git diff --name-only "$EVENT_BEFORE" "$HEAD_SHA")"
           if echo "$changed_files" | grep -qE '^(packages/|package.json$)'; then
             echo "publish=true" >> "$GITHUB_OUTPUT"
@@ -73,15 +67,15 @@ jobs:
 
   snapshot:
     name: Publish @next snapshot
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     needs: snapshot_filter
     if: |
       github.repository_owner == 'wolfstar-project'
       && needs.snapshot_filter.outputs.publish == 'true'
     permissions:
-      contents: read # checkout the repo
-      pull-requests: read # changesets reads PR metadata to build the snapshot changelog
-      id-token: write # npm provenance / OIDC trusted publishing for the @next snapshot
+      contents: read
+      pull-requests: read
+      id-token: write
     steps:
       - name: Checkout Project
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -89,54 +83,65 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Setup
-        uses: ./.github/actions/setup-toolchain
+      - name: Setup pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - name: Setup Node.js v24
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
+          node-version: 24
+          cache: pnpm
           registry-url: https://registry.npmjs.org/
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Publish snapshot
         run: pnpm run publish:snapshot
         env:
-          # Changelog generator (@changesets/get-github-info) requires a token
+          # The v3 changelog generator queries GitHub while versioning snapshots.
           GITHUB_TOKEN: ${{ secrets.WOLFSTAR_TOKEN }}
           # No NPM_TOKEN/NODE_AUTH_TOKEN: npm authenticates via OIDC trusted
           # publishing (id-token: write above), which also implies provenance.
 
   release:
     name: Create Release PR or Publish
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     if: github.repository_owner == 'wolfstar-project'
     permissions:
-      contents: write # changesets/action commits/pushes the "Version Packages" branch and publishes tags
-      pull-requests: write # changesets/action opens/updates the "Version Packages" release PR
-      id-token: write # npm provenance / OIDC trusted publishing when `pnpm run publish` runs
+      contents: write
+      pull-requests: write
+      id-token: write
     steps:
       - name: Checkout Project
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-          # `token:` (not the default GITHUB_TOKEN) so that changesets/action's
-          # commits/PRs are attributed to WOLFSTAR_TOKEN and can trigger other
-          # workflows. persist-credentials is left at its safe default (false)
-          # since changesets/action authenticates its own git operations via a
-          # ~/.netrc it writes from the GITHUB_TOKEN env var below — it does
-          # not rely on credentials persisted in .git/config by this step.
           persist-credentials: false
           token: ${{ secrets.WOLFSTAR_TOKEN }}
 
-      - name: Setup
-        uses: ./.github/actions/setup-toolchain
+      - name: Setup pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - name: Setup Node.js v24
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
+          node-version: 24
+          cache: pnpm
           registry-url: https://registry.npmjs.org/
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
 
       # No NPM_TOKEN/NODE_AUTH_TOKEN: npm authenticates via OIDC trusted
       # publishing (id-token: write above), which also implies provenance.
       - name: Process Changesets
         id: changesets
-        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          publish: pnpm run publish
-          title: "chore: update changelog and release"
-          commit: "chore: update changelog and release"
-        env:
-          GITHUB_TOKEN: ${{ secrets.WOLFSTAR_TOKEN }}
+          github-token: ${{ secrets.WOLFSTAR_TOKEN }}
+          publish-script: pnpm run publish
+          # `changeset version` plus the matching page in apps/docs/content/changelog.
+          version-script: pnpm run version
+          pr-title: "chore: update changelog and release"
+          commit-message: "chore: update changelog and release"

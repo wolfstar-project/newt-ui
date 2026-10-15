@@ -21,7 +21,7 @@ function Message() {
   return (
     <>
       <p>
-        Rolled the migration back — the failure was in the <code>threads</code>
+        Rolled the migration back — the failure was in the <code>threads</code>{" "}
         table, not in the deploy. Details in the thread.
       </p>
       <ul>
@@ -45,7 +45,7 @@ function Embed() {
         on the first new message.
       </p>
       <blockquote>
-        Breaking: <code>channel.threads.create</code> now requires a
+        Breaking: <code>channel.threads.create</code> now requires a{" "}
         <code>type</code>.
       </blockquote>
     </>

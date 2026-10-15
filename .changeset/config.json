@@ -1,13 +1,19 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": "@changesets/cli/changelog",
+  "$schema": "https://unpkg.com/@changesets/config/schema.json",
+  "changelog": [
+    "./generator.ts",
+    {
+      "repo": "wolfstar-project/newt-ui"
+    }
+  ],
   "commit": false,
+  "format": "oxfmt",
   "fixed": [],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["www", "vue-www", "next-template", "nuxt-template"],
+  "ignore": ["docs", "www", "vue-www", "next-template", "nuxt-template"],
   "snapshot": {
     "useCalculatedVersion": true,
     "prereleaseTemplate": "{tag}-{datetime}"

@@ -117,6 +117,34 @@ The server answers from the registry the project's
 [a registry of your own](/docs/registry) points the agent at it too — the tools
 need no separate configuration.
 
+## The docs server [#docs-server]
+
+`newtui mcp` knows the registry; `@newtui/mcp` knows the documentation —
+installation per framework, theming, the token reference, the accessibility
+notes on every component page. It reads what this site already publishes for
+agents (`llms.txt`, `llms-full.txt` and the `.md` twin of every page), so the
+answer is the page you are reading, not a recollection of it. Run both.
+
+```json title=".mcp.json"
+{
+  "mcpServers": {
+    "newtui": { "command": "npx", "args": ["newtui@latest", "mcp"] },
+    "newtui-docs": { "command": "npx", "args": ["-y", "@newtui/mcp@latest"] }
+  }
+}
+```
+
+| Tool          | What it answers                                                                    |
+| ------------- | ---------------------------------------------------------------------------------- |
+| `list_docs`   | Every page, with its route, description and section of the sidebar.                |
+| `search_docs` | Pages ranked against a few keywords; `content: true` searches page bodies as well. |
+| `get_doc`     | One page as Markdown, from a route, a slug such as `button`, or a full URL.        |
+
+Every tool is read-only, and answers are cached in memory for five minutes. The
+site defaults to `https://newtui.dev`; `--url` or `NEWTUI_DOCS_URL` points it at
+another build — `http://localhost:4321` while you write docs, where full-text
+search is not available because the dev server does not serve `llms-full.txt`.
+
 ## Troubleshooting [#troubleshooting]
 
 **The server does not appear.** Restart the editor: every client reads its MCP
