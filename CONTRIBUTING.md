@@ -13,9 +13,6 @@ apps
 packages
 ├── cli            # `newtui` CLI (React + Vue) + HTML/CSS registry sources
 └── module         # Nuxt module
-deprecated
-├── react-cli      # `@newtui/react` forwarding wrapper
-└── vue-cli        # `@newtui/vue` forwarding wrapper
 templates
 ├── next-template
 └── nuxt-template

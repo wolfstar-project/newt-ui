@@ -59,7 +59,7 @@ jobs:
           # Assigned separately so a failed `git diff` fails the step instead
           # of silently resolving to "no relevant changes".
           changed_files="$(git diff --name-only "$EVENT_BEFORE" "$HEAD_SHA")"
-          if echo "$changed_files" | grep -qE '^(packages/|deprecated/|package.json$)'; then
+          if echo "$changed_files" | grep -qE '^(packages/|package.json$)'; then
             echo "publish=true" >> "$GITHUB_OUTPUT"
           else
             echo "publish=false" >> "$GITHUB_OUTPUT"

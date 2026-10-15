@@ -55,9 +55,6 @@ packages/
     src/utils/transformers/ Consumer source/import transforms
     src/utils/updaters/     File, CSS, and dependency updates
   module/                   `@newtui/nuxt` Nuxt module
-deprecated/
-  react-cli/                `@newtui/react` forwarding wrapper
-  vue-cli/                  `@newtui/vue` forwarding wrapper
 templates/
   next-template/            Next.js starter preconfigured with newt/ui
   nuxt-template/            Nuxt starter preconfigured with newt/ui

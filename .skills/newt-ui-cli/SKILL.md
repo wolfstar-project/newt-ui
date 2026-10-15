@@ -7,8 +7,7 @@ description: Use when adding or changing newtui CLI commands, flags, prompts, ou
 
 One published CLI, `newtui` (`packages/cli`), serving React and Vue from a
 single command surface, plus the legacy `newtui-html` bin that copies the raw
-HTML/CSS registry. `deprecated/react-cli` (`@newtui/react`) and `deprecated/vue-cli`
-(`@newtui/vue`) are deprecation wrappers that forward to it and hold no logic.
+HTML/CSS registry.
 Its responsibility folders follow the shadcn CLI layout: `mri` for parsing,
 `@clack/prompts` for interaction, `tsdown` for the build.
 

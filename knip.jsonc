@@ -69,16 +69,6 @@
       "entry": ["src/index.ts", "cli/index.js"],
       "project": ["src/**/*.ts"],
     },
-    // The two scoped packages are deprecation wrappers around `newtui`; their
-    // only source is the bin that forwards to it.
-    "deprecated/react-cli": {
-      "entry": ["bin/*.js"],
-      "project": ["bin/*.js"],
-    },
-    "deprecated/vue-cli": {
-      "entry": ["bin/*.js"],
-      "project": ["bin/*.js"],
-    },
     "packages/module": {
       "entry": ["src/module.ts"],
       "project": ["src/**/*.ts"],

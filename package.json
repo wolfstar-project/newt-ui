@@ -15,7 +15,7 @@
     "lint:ci": "turbo run //#lint //#format:check",
     "lint:fix": "oxlint --fix .",
     "prepare": "node .husky/install.mjs && skilld prepare --agent claude-code",
-    "publish": "turbo run build --filter=./packages/* --filter=./deprecated/* && changeset publish",
+    "publish": "turbo run build --filter=./packages/* && changeset publish",
     "publish:snapshot": "node scripts/publish-snapshot.mjs",
     "quality": "turbo run //#lint //#format:check",
     "quality:fix": "turbo run //#lint:fix //#format",

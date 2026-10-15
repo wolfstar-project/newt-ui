@@ -29,9 +29,6 @@ apps/
 packages/
   cli/       `newtui` CLI (React + Vue) + registry/html (original HTML/CSS + tokens.css)
   module/    `@newtui/nuxt` Nuxt module
-deprecated/
-  react-cli/ `@newtui/react` deprecation wrapper forwarding to `newtui`
-  vue-cli/   `@newtui/vue` deprecation wrapper forwarding to `newtui`
 templates/
   next-template/, nuxt-template/   Starter apps preconfigured with newt/ui
 tooling/oxc/   Shared oxlint + oxfmt configuration

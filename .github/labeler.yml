@@ -23,11 +23,6 @@ packages:module:
       - any-glob-to-any-file:
           - packages/module/*
           - packages/module/**/*
-deprecated:
-  - changed-files:
-      - any-glob-to-any-file:
-          - deprecated/*
-          - deprecated/**/*
 templates:
   - changed-files:
       - any-glob-to-any-file:

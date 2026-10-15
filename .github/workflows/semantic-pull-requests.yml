@@ -47,7 +47,6 @@ jobs:
             module
             registry
             templates
-            deprecated
             docs
             deps
             release

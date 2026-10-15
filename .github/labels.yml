@@ -37,9 +37,6 @@
 - name: "packages:module"
   color: "bfd4f2"
   description: Changes to the @newtui/nuxt module
-- name: deprecated
-  color: "e4e669"
-  description: Changes to the deprecated wrapper packages
 - name: templates
   color: "d4c5f9"
   description: Changes to the starter templates

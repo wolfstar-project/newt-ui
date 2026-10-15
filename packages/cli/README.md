@@ -30,9 +30,7 @@ Each framework has its own registry, and every item carries a `framework` field 
 
 Override the base url with `--registry <url>` or `NEWT_REGISTRY_URL`, or set `"registry"` in `components.json`.
 
-## Migrating from `@newtui/react` / `@newtui/vue`
-
-Both packages are deprecated and now forward to this one. Replace `npx @newtui/react …` and `npx @newtui/vue …` with `npx newtui …`.
+## Older `components.json` files
 
 An existing `components.json` keeps working — it is migrated on read:
 
