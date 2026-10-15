@@ -1,0 +1,19 @@
+---
+title: "October 2026 — @newtui/mcp 0.1.0, newtui 2.2.1, @newtui/nuxt 1.0.1"
+description: "New package: @newtui/mcp, an MCP server for the newt/ui documentation."
+type: changelog
+slug: changelog/2026-10-15-release
+date: 2026-10-15
+---
+
+## `@newtui/mcp` 0.1.0
+
+- New package: `@newtui/mcp`, an MCP server for the newt/ui documentation. Run it with `npx @newtui/mcp` and an agent gets three read-only tools — `list_docs`, `search_docs` and `get_doc` — that read the `llms.txt` index, the `llms-full.txt` bodies and each page's Markdown twin from https://newtui.dev, with a short in-memory cache. Point it at another build of the site with `--url` or `NEWTUI_DOCS_URL`, e.g. `http://localhost:4321` while writing docs.
+
+## `newtui` 2.2.1
+
+- Update dependencies. `newtui` follows the narrower cancel type in `@clack/prompts` 1.8, and `@newtui/nuxt` annotates its default export so the declaration build no longer depends on an `@nuxt/schema` internal type.
+
+## `@newtui/nuxt` 1.0.1
+
+- Update dependencies. `newtui` follows the narrower cancel type in `@clack/prompts` 1.8, and `@newtui/nuxt` annotates its default export so the declaration build no longer depends on an `@nuxt/schema` internal type.

@@ -1,6 +1,6 @@
 {
   "name": "@newtui/mcp",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "MCP server for the newt/ui documentation — lets a coding agent list, search and read the Discord-inspired component library's docs. Part of the WolfStar toolchain.",
   "keywords": [
     "component-library",
