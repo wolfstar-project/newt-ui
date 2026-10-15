@@ -1,8 +1,8 @@
 # Releasing with Changesets
 
 newt/ui uses [`@changesets/cli`](https://github.com/changesets/changesets) for
-monorepo releases. Each published package — `newtui` (the CLI) and
-`@newtui/nuxt` (the Nuxt module) — is versioned independently according to the changesets
+monorepo releases. Each published package — `newtui` (the CLI),
+`@newtui/nuxt` (the Nuxt module) and `@newtui/mcp` (the docs MCP server) — is versioned independently according to the changesets
 included in each release.
 
 ---
@@ -61,7 +61,7 @@ requires pnpm >= 11.1.3, which fixed pnpm sending an unresolved
 OIDC ([pnpm/pnpm#11526](https://github.com/pnpm/pnpm/pull/11526)) — the
 pinned `packageManager` version here is well above that.
 
-For each published package (`newtui`, `@newtui/nuxt`), configure a trusted publisher once at
+For each published package (`newtui`, `@newtui/nuxt`, `@newtui/mcp`), configure a trusted publisher once at
 `https://www.npmjs.com/package/<name>/access` → **Publishing access** →
 **Add GitHub Actions**:
 

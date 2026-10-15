@@ -69,6 +69,10 @@
       "entry": ["src/index.ts", "cli/index.js"],
       "project": ["src/**/*.ts"],
     },
+    "packages/mcp": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.ts"],
+    },
     "packages/module": {
       "entry": ["src/module.ts"],
       "project": ["src/**/*.ts"],

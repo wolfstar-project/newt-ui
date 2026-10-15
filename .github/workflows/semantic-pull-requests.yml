@@ -44,6 +44,7 @@ jobs:
             vue
             newt-ui
             cli
+            mcp
             module
             registry
             templates

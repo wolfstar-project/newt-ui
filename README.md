@@ -54,6 +54,7 @@ packages/
     src/registry/           Wire schemas, fetching, dependency resolution
     src/utils/transformers/ Consumer source/import transforms
     src/utils/updaters/     File, CSS, and dependency updates
+  mcp/                      `@newtui/mcp` MCP server for the documentation
   module/                   `@newtui/nuxt` Nuxt module
 templates/
   next-template/            Next.js starter preconfigured with newt/ui

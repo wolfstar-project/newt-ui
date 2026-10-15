@@ -18,6 +18,11 @@ packages:cli:
       - any-glob-to-any-file:
           - packages/cli/*
           - packages/cli/**/*
+packages:mcp:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/mcp/*
+          - packages/mcp/**/*
 packages:module:
   - changed-files:
       - any-glob-to-any-file:
