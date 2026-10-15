@@ -13,7 +13,6 @@ export const SITE = {
    * from `packages/*`.
    */
   version: "0.3.0",
-  channel: "early access",
   license: "Apache-2.0",
   author: "WolfStar",
   github: "https://github.com/wolfstar-project/newt-ui",
