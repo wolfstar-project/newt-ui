@@ -1462,6 +1462,15 @@ html[data-theme="light"] .theme-icon-light {
   padding: 0;
 }
 
+/*
+ * Blume's own full-width pages (the `/changelog` index) share that grid but
+ * not the custom pages' `max-w-none` article, so they get the gutter back.
+ */
+[data-blume-doc-grid]:not([class*="grid-cols-["])
+  #blume-content:has(> article:not(.max-w-none)) {
+  padding: 2.5rem 1.5rem 4rem;
+}
+
 /* The drawer below 64rem: the old sidebar, under the 3.5rem header. */
 [data-blume-nav-drawer] {
   width: 17rem;

@@ -1,0 +1,41 @@
+---
+title: "October 2026 — Release pipeline and docs MCP"
+description: "Releases publish again, the site changelog writes itself, and the documentation gets its own MCP server."
+type: changelog
+slug: changelog/2026-10-release-pipeline
+date: 2026-10-15
+---
+
+**Releases publish to npm again, and every release now leaves a page here.**
+
+The release workflow had been failing since September: npm refused the OIDC
+token for `newtui` because the package had no trusted publisher. The workflow
+now matches the other WolfStar repositories, and the packages it publishes are
+`newtui` and `@newtui/nuxt`.
+
+## The site changelog follows releases
+
+The release PR now writes a page in this changelog from the same changesets
+that produce each package's `CHANGELOG.md` and its GitHub release. You no
+longer have to read the repository to find out what shipped.
+
+## `@newtui/mcp`
+
+A new MCP server over this documentation. `npx @newtui/mcp` lets an agent list,
+search and read these pages through their Markdown twins. It complements the
+registry tools in `newtui mcp`, which answer questions about components rather
+than the guides.
+
+## Removed: `@newtui/react` and `@newtui/vue`
+
+The two wrapper packages that forwarded to `newtui` are gone. Neither was ever
+published to npm, so nothing you install changes: `npx newtui` remains the one
+CLI for React and Vue.
+
+## Also
+
+- Dependencies are up to date, including Nuxt 4.6, React 19.3, Astro 7.3 and
+  Blume 2.2.
+- Renovate keeps them that way, and its dependency PRs carry their own
+  changesets.
+- The "early access" label is gone from the home page.
