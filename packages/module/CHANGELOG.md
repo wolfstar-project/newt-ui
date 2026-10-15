@@ -1,5 +1,11 @@
 # @newtui/nuxt
 
+## 1.0.1
+
+### Patch Changes
+
+- [#24](https://github.com/wolfstar-project/newt-ui/pull/24) [`dc0b233`](https://github.com/wolfstar-project/newt-ui/commit/dc0b233e13e524b76f5228e77322ad4b1032009e) - Update dependencies. `newtui` follows the narrower cancel type in `@clack/prompts` 1.8, and `@newtui/nuxt` annotates its default export so the declaration build no longer depends on an `@nuxt/schema` internal type.
+
 ## 1.0.0
 
 ### Major Changes
