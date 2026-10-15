@@ -46,13 +46,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "^4.5.2"
+    "@nuxt/kit": "^4.6.1"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/schema": "^4.5.2",
+    "@nuxt/schema": "4.6.1",
     "@types/node": "^22.10.2",
-    "nuxt": "^4.5.2",
+    "nuxt": "^4.6.1",
     "typescript": "^5.7.2"
   },
   "engines": {

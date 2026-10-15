@@ -12,20 +12,20 @@
     "typecheck": "blume check"
   },
   "dependencies": {
-    "@astrojs/vue": "^7.0.2",
+    "@astrojs/vue": "^7.0.3",
     "@nanostores/react": "^2.0.1",
     "@nanostores/vue": "^1.1.0",
-    "blume": "^2.1.1",
+    "blume": "^2.2.3",
     "cn": "^0.2.4",
-    "nanostores": "^1.5.3",
+    "nanostores": "^1.5.5",
     "react": "^19.3.0",
-    "vue": "^3.5.13",
+    "vue": "^3.5.44",
     "zod": "^4.1.0"
   },
   "devDependencies": {
-    "@types/react": "^19.0.2",
-    "astro": "^7.3.2",
+    "@types/react": "^19.3.0",
+    "astro": "^7.3.8",
     "typescript": "^5.7.2",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.4"
   }
 }

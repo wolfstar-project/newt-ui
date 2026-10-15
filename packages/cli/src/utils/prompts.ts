@@ -1,4 +1,5 @@
 import {
+  type CANCEL_SYMBOL,
   cancel,
   confirm,
   isCancel,
@@ -8,7 +9,7 @@ import {
 } from "@clack/prompts"
 
 /** Exit cleanly when the user cancels a prompt (ctrl+c / esc). */
-function unwrap<T>(value: T | symbol): T {
+function unwrap<T>(value: T | typeof CANCEL_SYMBOL): T {
   if (isCancel(value)) {
     cancel("Operation cancelled.")
     process.exit(1)
