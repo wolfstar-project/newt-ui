@@ -52,7 +52,42 @@ function parseChangeset(source) {
   const packages = [...match[1].matchAll(/^\s*["']?([^"':]+)["']?\s*:/gm)].map(
     (line) => line[1].trim()
   )
-  return { packages, summary: match[2].trim() }
+  return { packages, summary: stripDirectives(match[2]) }
+}
+
+/**
+ * Drops the `pr:`, `commit:` and `author:` lines `.changeset/generator.ts`
+ * reads for the package changelogs; on the site they would be stray text.
+ *
+ * @param {string} summary
+ * @returns {string}
+ */
+function stripDirectives(summary) {
+  return summary
+    .replace(/^\s*(?:pr|commit|author):\s*\S+[^\n]*\n?/gim, "")
+    .trim()
+}
+
+/**
+ * Escapes what MDX would read as JSX or an expression — `{`, `}` and `<` —
+ * everywhere except fenced blocks and inline code, which MDX leaves alone.
+ * A summary written for a Markdown CHANGELOG must not break the site build.
+ *
+ * @param {string} summary
+ * @returns {string}
+ */
+function escapeMdx(summary) {
+  return summary
+    .split(/(```[\s\S]*?```|`[^`\n]*`)/)
+    .map((part, index) =>
+      index % 2 === 1
+        ? part
+        : part
+            .replaceAll("{", "\\{")
+            .replaceAll("}", "\\}")
+            .replaceAll("<", "&lt;")
+    )
+    .join("")
 }
 
 /**
@@ -121,7 +156,12 @@ function firstSentence(summary) {
  * @returns {string}
  */
 function asListItem(summary) {
-  return `- ${summary.replace(/\n(?!\n)/g, "\n  ").replace(/\n\n/g, "\n\n  ")}`
+  const lines = escapeMdx(summary).split("\n")
+  return lines
+    .map((line, index) =>
+      index === 0 ? `- ${line}` : line === "" ? line : `  ${line}`
+    )
+    .join("\n")
 }
 
 /**
