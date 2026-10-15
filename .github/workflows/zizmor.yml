@@ -1,39 +1,33 @@
-# https://docs.zizmor.sh/
-name: zizmor
+name: GitHub Actions Security Analysis with zizmor
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
-  merge_group:
+    paths:
+      - ".github/workflows/**"
+  pull_request:
     branches:
-      - main
+      - "**"
+    paths:
+      - ".github/workflows/**"
   workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
-  cancel-in-progress: true
 
 permissions: {}
 
 jobs:
   zizmor:
-    name: 🌈 GitHub Actions security analysis
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 10
+    name: Security analysis
+    runs-on: ubuntu-latest
     permissions:
-      contents: read # checkout repository
-
+      security-events: write
+      contents: read
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-
-      - uses: zizmorcore/zizmor-action@5f14fd08f7cf1cb1609c1e344975f152c7ee938d # v0.5.6
+      - name: Run zizmor
+        uses: zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482 # v0.6.4
         with:
-          persona: pedantic
-          annotations: true
           advanced-security: false

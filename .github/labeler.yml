@@ -1,0 +1,35 @@
+apps:docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - apps/docs/*
+          - apps/docs/**/*
+apps:www:
+  - changed-files:
+      - any-glob-to-any-file:
+          - apps/www/*
+          - apps/www/**/*
+apps:vue:
+  - changed-files:
+      - any-glob-to-any-file:
+          - apps/vue/*
+          - apps/vue/**/*
+packages:cli:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/cli/*
+          - packages/cli/**/*
+packages:module:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/module/*
+          - packages/module/**/*
+deprecated:
+  - changed-files:
+      - any-glob-to-any-file:
+          - deprecated/*
+          - deprecated/**/*
+templates:
+  - changed-files:
+      - any-glob-to-any-file:
+          - templates/*
+          - templates/**/*

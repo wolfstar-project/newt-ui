@@ -22,3 +22,24 @@
 - name: release
   color: "0e8a16"
   description: Release pull request
+- name: "apps:docs"
+  color: "c5def5"
+  description: Changes to the documentation site
+- name: "apps:www"
+  color: "c5def5"
+  description: Changes to the React registry
+- name: "apps:vue"
+  color: "c5def5"
+  description: Changes to the Vue registry
+- name: "packages:cli"
+  color: "bfd4f2"
+  description: Changes to the newtui CLI
+- name: "packages:module"
+  color: "bfd4f2"
+  description: Changes to the @newtui/nuxt module
+- name: deprecated
+  color: "e4e669"
+  description: Changes to the deprecated wrapper packages
+- name: templates
+  color: "d4c5f9"
+  description: Changes to the starter templates

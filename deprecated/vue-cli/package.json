@@ -1,6 +1,7 @@
 {
   "name": "@newtui/vue",
   "version": "2.0.2",
+  "private": true,
   "description": "Deprecated — merged into the unscoped `newtui` package. This wrapper forwards to it.",
   "keywords": [
     "deprecated",
@@ -28,10 +29,6 @@
     "LICENSE"
   ],
   "type": "module",
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
   "dependencies": {
     "newtui": "workspace:*"
   },

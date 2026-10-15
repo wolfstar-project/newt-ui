@@ -1,6 +1,7 @@
 name: Semantic Pull Requests
 
 on:
+  # zizmor: ignore[dangerous-triggers]
   pull_request_target:
     types:
       - opened
@@ -15,16 +16,29 @@ permissions: {}
 
 jobs:
   semantic-pr:
+    name: Validate PR title
+    runs-on: ubuntu-latest
+    if: github.repository == 'wolfstar-project/newt-ui'
     permissions:
       contents: read
-      pull-requests: read # analyze pull requests
-      statuses: write # publish validation status
-    runs-on: ubuntu-latest
-    name: 🏷️ Validate PR title
+      pull-requests: read
+      statuses: write
     steps:
       - name: Validate PR title
         uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
         with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            revert
           scopes: |
             www
             vue
@@ -32,20 +46,16 @@ jobs:
             cli
             module
             registry
-            ci
-            deps
-            docs
-            release
             templates
+            deprecated
+            docs
+            deps
+            release
+            ci
           subjectPattern: ^(?![A-Z]).+$
           subjectPatternError: |
             The subject "{subject}" found in the pull request title "{title}"
-            didn't match the configured pattern. Please ensure that the subject
-            doesn't start with an uppercase character.
-
-            Examples:
-              ✅ feat(www): add voice-channel docs page
-              ✅ docs: update README
-              ❌ feat(www): Add voice-channel docs page
+            did not match the configured pattern. Please ensure that the subject
+            does not start with an uppercase character.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

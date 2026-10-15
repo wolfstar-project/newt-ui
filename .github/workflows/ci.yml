@@ -10,65 +10,149 @@ on:
   merge_group:
     branches:
       - main
-  workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
   cancel-in-progress: true
-
-env:
-  CI: "true"
-
-permissions:
-  contents: read
 
 jobs:
   lint:
     name: 🔠 Lint project
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 15
+
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout Project
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - name: Setup
-        uses: ./.github/actions/setup-toolchain
-
-      # One turbo run for both, so each is cached on its own inputs: a commit
-      # that only touches markdown re-runs the formatter and replays the lint.
-      - name: 🔠 Lint and check formatting
-        run: pnpm run quality
-
-      - name: 🧹 Check for unused code
-        run: pnpm run knip
-
-  typecheck:
-    name: 🔎 Typecheck project
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup pnpm + Node.js v24
+        uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3
         with:
-          persist-credentials: false
+          runtime: node@24
+          cache: true
+          install: false
 
-      - name: Setup
-        uses: ./.github/actions/setup-toolchain
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: 🔎 Typecheck project
-        run: pnpm run typecheck
+      # One turbo run for both, so each is cached on its own inputs.
+      - name: Run lint
+        run: pnpm quality
 
   build:
-    name: 🏗️ Build project
+    name: 🏗️ Build & Typecheck
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: write
+
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout Project
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - name: Setup
-        uses: ./.github/actions/setup-toolchain
+      - name: Add problem matchers
+        run: echo "::add-matcher::.github/problemMatchers/tsc.json"
 
-      - name: 🏗️ Build project
-        run: pnpm run build
+      - name: Setup pnpm + Node.js v24
+        uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3
+        with:
+          runtime: node@24
+          cache: true
+          install: false
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build code
+        run: pnpm build
+
+      - name: Typecheck code
+        run: pnpm typecheck
+
+  unit:
+    name: 🧪 Unit tests
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm + Node.js v24
+        uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3
+        with:
+          runtime: node@24
+          cache: true
+          install: false
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run unit tests
+        run: pnpm test
+
+  knip:
+    name: 🧹 Unused code check
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm + Node.js v24
+        uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3
+        with:
+          runtime: node@24
+          cache: true
+          install: false
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check for unused code
+        run: pnpm knip
+
+  changesets:
+    name: 🦋 Verify changesets
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    if: |
+      github.event_name == 'pull_request'
+      && github.event.pull_request.title != 'chore: update changelog and release'
+      && !startsWith(github.head_ref, 'changeset-release/')
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup pnpm + Node.js v24
+        uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3
+        with:
+          runtime: node@24
+          cache: true
+          install: false
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify changesets
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: pnpm exec changeset status --since=origin/${BASE_REF}
