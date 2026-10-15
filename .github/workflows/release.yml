@@ -140,5 +140,7 @@ jobs:
         with:
           github-token: ${{ secrets.WOLFSTAR_TOKEN }}
           publish-script: pnpm run publish
+          # `changeset version` plus the matching page in apps/docs/content/changelog.
+          version-script: pnpm run version
           pr-title: "chore: update changelog and release"
           commit-message: "chore: update changelog and release"

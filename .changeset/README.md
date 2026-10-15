@@ -100,9 +100,11 @@ needs a changeset and no changelog entry.
 
 1. Merge one or more PRs that include changeset files.
 2. The `release` job in `.github/workflows/release.yml` automatically creates
-   or updates a **"chore: update changelog and release"** PR. This PR bumps
-   affected package versions and updates CHANGELOGs.
-3. Review the PR and optionally edit the changelog entries.
+   or updates a **"chore: update changelog and release"** PR. Its version step,
+   `pnpm run version` (`scripts/version.mjs`), bumps affected package
+   versions, updates their CHANGELOGs and writes the matching page in
+   `apps/docs/content/changelog/` from the same changesets.
+3. Review the PR and optionally edit the changelog entries and the site page.
 4. Merge the PR. `changesets/action` publishes the bumped packages to npm
    automatically with provenance attestation and creates GitHub Releases.
 
@@ -113,6 +115,7 @@ Only packages with pending changesets are versioned and published.
 | Script                      | Purpose                                           |
 | :-------------------------- | :------------------------------------------------ |
 | `pnpm changeset`            | Add a changeset file (`changeset add`)            |
+| `pnpm run version`          | Version packages and write the site changelog     |
 | `pnpm run publish:snapshot` | Publish a `@next` snapshot (CI uses this)         |
 | `pnpm run publish`          | Version, build, and publish to npm (CI uses this) |
 

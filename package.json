@@ -26,7 +26,7 @@
     "skills:update": "skilld update --agent claude-code",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "version": "changeset version"
+    "version": "node scripts/version.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
