@@ -209,3 +209,17 @@ skills:
     generator: external
     path: skills/react-best-practices
     ref: main
+  mcp-builder:
+    repo: anthropics/skills
+    source: github
+    syncedAt: 2026-10-15
+    generator: external
+    path: skills/mcp-builder
+    ref: main
+  turborepo:
+    repo: vercel/turborepo
+    source: github
+    syncedAt: 2026-10-15
+    generator: external
+    path: skills/turborepo
+    ref: main
