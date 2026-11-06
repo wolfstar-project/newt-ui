@@ -35,7 +35,7 @@ AI agents that open or edit pull requests in this repository on their own must a
 
 ## Secrets and private data
 
-Do not paste secrets, tokens, `.env` files, private user data, or unreported security vulnerabilities into third-party AI services. Report vulnerabilities privately to the maintainers, not through an AI service or a public issue.
+Do not paste secrets, tokens, `.env` files, private user data, or unreported security vulnerabilities into third-party AI services. Report vulnerabilities privately, not through an AI service or a public issue: send a direct message to a maintainer on the [Discord server](https://join.wolfstar.rocks), or email contact@wolfstar.rocks.
 
 ## Spam and abuse
 
