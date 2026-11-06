@@ -126,7 +126,7 @@ pnpm changeset            # add a changeset (`pnpm changeset add --empty` when n
   way the PR must follow the template rule above.
 - AI disclosure: when an AI agent wrote or edited the code or the PR
   description, end the PR body with the disclosure line defined in
-  [`CONTRIBUTING.md`](CONTRIBUTING.md#ai-assisted-contributions), naming the
+  [`AI_POLICY.md`](AI_POLICY.md#disclosure), naming the
   tool and the exact model ids you ran on (never a guess). That line is the
   **only** AI attribution a PR body may carry: do not append the agent
   tooling's default footers (for example `🤖 Generated with [Claude Code]`),
