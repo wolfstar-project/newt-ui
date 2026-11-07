@@ -851,7 +851,7 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
-        path: "ui/expressions-picker/ExpressionResults.vue",
+        path: "ui/expressions-picker/ExpressionArt.vue",
         type: "registry:ui",
       },
       {

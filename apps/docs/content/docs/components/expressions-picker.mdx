@@ -3,11 +3,13 @@ title: "Expressions Picker"
 description: "A Discord-inspired picker for Unicode emoji and caller-supplied stickers and GIFs."
 ---
 
-Choose an emoji, sticker, or GIF from a searchable dialog. The picker returns the chosen item to your application; it does not send messages, fetch media catalogs, or persist recent choices.
+Choose an emoji, sticker, or GIF from one searchable dialog. The Emoji tab follows the layout of a chat client's emoji picker: a search field with a skin tone button, a rail of categories beside a grid of collapsible sections, and a bar at the foot that names the expression under the pointer or focus. Stickers and GIFs use the same grid with larger cells.
+
+The picker returns the chosen item and value to your application. It ships no emoji dataset, artwork, or media service, and it does not store anything: you pass the items and categories, and you keep the list of recently used IDs.
 
 <ComponentPreview name="expressions-picker" />
 
-The framework switch above selects the React or Vue demo. Try searching for “happy”, changing the expression type, and selecting an item. Moon demonstrates an unavailable entry. The sticker and GIF examples use application IDs and text labels; supply static previews for your own media.
+The framework switch above selects the React or Vue demo. Search for "celebrate", pick a skin tone, collapse a section, and select an item: it moves to the top of "Recently used" and stays marked as pressed. The crescent moon demonstrates an unavailable entry. "Newt Lab" shows how a server's own emoji appear with an image.
 
 ## Installation
 
@@ -17,7 +19,7 @@ The framework switch above selects the React or Vue demo. Try searching for “h
 
 <Usage name="expressions-picker" />
 
-React receives selections through `onSelect`; Vue emits `select`. Both receive the complete `ExpressionItem`. Use its `kind` to decide whether to insert Unicode text or attach media. Every selection closes the dialog, including repeated choices of the same item.
+React receives selections through `onSelect(item, value)`; Vue emits `select` with the same two arguments. `value` is the item's value in the chosen skin tone, or `item.value` when it has no tones. Every selection closes the dialog. Store `value` as the current choice and move `item.id` to the front of `recent` yourself; the demo keeps the last 18.
 
 ## API reference
 
@@ -29,7 +31,28 @@ React receives selections through `onSelect`; Vue emits `select`. Both receive t
       type: "readonly ExpressionItem[]",
       default: "[]",
       description:
-        "Available expressions, in display order. IDs must be unique across all types.",
+        "Available expressions. Each tab shows the items of its kind, grouped by category in the order of `categories`.",
+    },
+    {
+      name: "categories",
+      type: "readonly ExpressionCategory[]",
+      default: "[]",
+      description:
+        "The sections of each tab, in display order. Items whose category is missing are not shown.",
+    },
+    {
+      name: "recent",
+      type: "readonly string[]",
+      default: "[]",
+      description:
+        'Item IDs used last, most recent first. Shown as a "Recently used" section above the categories.',
+    },
+    {
+      name: "current",
+      type: "string | null",
+      default: "null",
+      description:
+        "The value chosen now. Matching cells are pressed, and the foot bar names it while nothing is hovered.",
     },
     {
       name: "label",
@@ -45,8 +68,9 @@ React receives selections through `onSelect`; Vue emits `select`. Both receive t
     },
     {
       name: "onSelect / @select",
-      type: "(item: ExpressionItem) => void",
-      description: "Receives an enabled item when selected.",
+      type: "(item: ExpressionItem, value: string) => void",
+      description:
+        "Receives an enabled item and its value in the chosen skin tone.",
     },
     {
       name: "className / class",
@@ -58,38 +82,52 @@ React receives selections through `onSelect`; Vue emits `select`. Both receive t
 
 ### ExpressionItem
 
-| Field        | Type                            | Meaning                                                                                                      |
-| ------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `id`         | `string`                        | Stable ID, unique across the complete list.                                                                  |
-| `kind`       | `"emoji" \| "sticker" \| "gif"` | Which tab contains this item.                                                                                |
-| `label`      | `string`                        | Visible, accessible name; included in search.                                                                |
-| `value`      | `string`                        | Unicode text for emoji; an application ID or URL for media. Never fetched by the picker.                     |
-| `keywords`   | `readonly string[]`             | Optional search aliases. Search ignores case and surrounding whitespace.                                     |
-| `disabled`   | `boolean`                       | Optional unavailable state. Shown with a label and cannot be selected.                                       |
-| `previewSrc` | `string`                        | Optional **static** image URL for stickers and GIFs. Omit to display only the label. Not accepted for emoji. |
+| Field      | Type                            | Meaning                                                                                        |
+| ---------- | ------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `id`       | `string`                        | Stable ID, unique across the complete list. `recent` refers to it.                             |
+| `kind`     | `"emoji" \| "sticker" \| "gif"` | Which tab contains this item.                                                                  |
+| `category` | `string`                        | The `id` of its `ExpressionCategory`.                                                          |
+| `label`    | `string`                        | Accessible name, searched, and shown in the foot bar. Emoji show it as `:snake_case:`.         |
+| `value`    | `string`                        | What a selection returns: Unicode text, or an application token for server emoji and media.    |
+| `keywords` | `readonly string[]`             | Optional search aliases. Every word of a search must match the label or a keyword.             |
+| `skins`    | `readonly string[]`             | Optional: the emoji in the five skin tones, light to dark. Without it the tone does not apply. |
+| `src`      | `string`                        | Optional **static** image: a server emoji, a sticker, or a GIF poster. Never fetched as media. |
+| `disabled` | `boolean`                       | Optional unavailable state, shown dimmed with a dashed border and announced as unavailable.    |
 
-Media previews must be still images you have permission to use. Provide a static poster for a GIF, not its animated URL. The picker never renders `value` as a media source. The label remains visible when a preview cannot load. No artwork, media service, or new dependency is bundled.
+### ExpressionCategory
 
-`expressionsPickerVariants({ selected })` exports the shared control styles. The selected variant adds an underline and a surface change, as used by the tabs.
+| Field     | Type                            | Meaning                                                            |
+| --------- | ------------------------------- | ------------------------------------------------------------------ |
+| `id`      | `string`                        | Unique across all categories.                                      |
+| `kind`    | `"emoji" \| "sticker" \| "gif"` | Which tab shows this section.                                      |
+| `label`   | `string`                        | Section title, rail button name, and source named in the foot bar. |
+| `glyph`   | `string`                        | Optional Unicode character for the rail button.                    |
+| `iconSrc` | `string`                        | Optional static image for the rail button, such as a server icon.  |
+
+Use a dataset such as Emojibase to build `items` for the full Unicode set; group its entries into categories and pass its skin tone variants as `skins`. Images must be still and yours to use. The picker never renders `value` as a media source.
+
+`expressionsPickerVariants({ selected })` exports the style of the tabs and small controls. The selected variant adds an underline and a surface change.
 
 ## HTML and CSS
 
-Load `tokens.css`, `expressions-picker.css`, and `expressions-picker.js` with `defer`, after copying the example markup. The script initializes each `data-newt-expressions-picker` root separately and assigns unique ARIA IDs. Listen for the bubbling `newt:expression-select` event on that root; `event.detail` contains the same item fields as the framework callback.
+Load `tokens.css`, `expressions-picker.css`, and `expressions-picker.js` with `defer`, after copying the example markup. Put the categories, items, and recent IDs as JSON in the `data-newt-expressions-data` script; the fields are the same as above. The script draws the rail, sections, and foot bar, and initializes each `data-newt-expressions-picker` root separately with unique ARIA IDs.
 
-Define each button with `data-newt-expression` and `data-newt-id`, `data-newt-kind`, `data-newt-label`, and `data-newt-value`. Optional `data-newt-keywords` contains space-separated aliases. Use a native `disabled` attribute for unavailable items and include the visible “Unavailable” label. A media button may contain an image with an empty `alt` and the `newt-expressions-picker__preview` class; its visible label supplies the accessible name. Keep each button inside a `data-newt-expression-row` list item. Disable the trigger to disable opening the picker. Close the dialog before disabling a currently open HTML picker.
+Listen for the bubbling `newt:expression-select` event on the root. `event.detail` holds `item`, `value`, and `recent`, the updated list of IDs to persist. The script keeps that list for the life of the page and marks the last choice as pressed. Disable the trigger to disable opening the picker, and close the dialog before disabling an open one.
 
 ## Accessibility
 
-The native modal dialog contains keyboard focus and makes the surrounding page inert. Opening focuses the labeled search field. Tab and Shift+Tab reach the selected tab, search, results panel, enabled result buttons, and close control. Enter or Space activates a button. Escape closes the dialog; closing or selecting returns focus to the trigger.
+The native modal dialog contains keyboard focus and makes the surrounding page inert. Opening focuses the search field; Down Arrow moves from it into the grid. Escape closes the skin tone list first, then the dialog; closing or selecting returns focus to the trigger.
 
-The tab list uses automatic activation: Left and Right move between types in reading direction, and Home and End select the first and last tab. The selected tab is underlined as well as colored. Search is preserved between tabs and cleared when reopening. Results have ordinary list and button semantics, not a grid or listbox; use Tab to navigate them. A polite status announces result counts and empty searches. Every focus indicator uses a 2px link-color outline with a 2px offset.
+The tab list uses automatic activation: Left and Right move between types in reading direction, and Home and End select the first and last tab. The selected tab is underlined as well as colored.
 
-The layout follows inherited `dir`, scales down to narrow screens, and uses no motion. Unicode emoji appearance depends on the operating system. Supply meaningful labels for every item, even when its artwork appears self-explanatory.
+The grid keeps one cell in the tab order. Arrow keys move by position on screen, following the reading direction, and Home and End jump to the first and last cell. Each cell is a button named by its label; the current choice is `aria-pressed`. Section titles are buttons with `aria-expanded`, and the rail is a navigation landmark whose buttons name their section and mark the visible one with `aria-current` and an outline. The skin tone list is a group of pressed-state buttons. A polite status announces the number of search results and explains empty searches.
+
+Every focus indicator uses a 2px link-color outline with a 2px offset. The layout follows inherited `dir`, scales down to narrow screens, and uses no motion: jumping to a section scrolls instantly, and the collapsed chevron is a static rotation. Unicode emoji appearance depends on the operating system.
 
 ## Tokens
 
 <TokensNote name="expressions-picker" />
 
-The picker uses the existing surface, border, text, font, radius, and elevation tokens. New shared tokens are `--newt-space-1` (4px), `--newt-space-2` (8px), `--newt-space-3` (12px), `--newt-font-size-sm` (14px), `--newt-font-size-expression` (24px), and `--newt-line-height-normal` (1.5). Picker geometry uses `--newt-expressions-width` (360px), `--newt-expressions-results-height` (240px), `--newt-expressions-target-size` (40px), and `--newt-expressions-preview-size` (64px).
+The picker uses the existing surface, border, text, brand, font, radius, and elevation tokens. New shared tokens are `--newt-space-1` (4px), `--newt-space-2` (8px), `--newt-space-3` (12px), `--newt-font-size-xs` (12px), `--newt-font-size-sm` (14px), `--newt-font-size-expression` (28px), and `--newt-line-height-normal` (1.5). Picker geometry uses `--newt-expressions-width` (472px), `--newt-expressions-height` (456px), `--newt-expressions-target-size` (40px, an emoji cell), and `--newt-expressions-preview-size` (96px, the smallest sticker or GIF cell).
 
 These additions are backward compatible. Existing installations should refresh `theme-newt` or copy the new token declarations before adding this picker.

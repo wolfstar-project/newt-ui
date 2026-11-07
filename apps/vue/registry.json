@@ -854,7 +854,7 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/bases/newt/ui/expressions-picker/ExpressionResults.vue",
+          "path": "registry/bases/newt/ui/expressions-picker/ExpressionArt.vue",
           "type": "registry:ui"
         },
         {

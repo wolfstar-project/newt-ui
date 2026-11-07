@@ -443,7 +443,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "registry/bases/newt/ui/expressions-picker/ExpressionsPicker.vue",
-        "registry/bases/newt/ui/expressions-picker/ExpressionResults.vue",
+        "registry/bases/newt/ui/expressions-picker/ExpressionArt.vue",
         "registry/bases/newt/ui/expressions-picker/index.ts",
       ],
     },

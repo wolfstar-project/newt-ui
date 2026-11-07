@@ -16,21 +16,32 @@ const behavior = readFileSync(
 
 function button(name: string) {
   const found = [...document.querySelectorAll("button")].find(
-    (el) => el.textContent?.trim() === name
+    (el) =>
+      el.getAttribute("aria-label") === name || el.textContent?.trim() === name
   )
   if (!found) throw new Error(`Missing button: ${name}`)
   return found
 }
 function search(value: string) {
-  const input = document.querySelector("input")
+  const input = document.querySelector<HTMLInputElement>("[data-newt-search]")
   if (!input) throw new Error("Missing search")
   input.value = value
   input.dispatchEvent(new Event("input", { bubbles: true }))
 }
-function results() {
-  return [...document.querySelectorAll<HTMLLIElement>("li")]
-    .filter((row) => !row.hidden)
-    .map((row) => row.textContent?.trim())
+function sectionTitles() {
+  return [...document.querySelectorAll("[data-section] h3")].map((title) =>
+    title.textContent?.trim()
+  )
+}
+function cells() {
+  return [...document.querySelectorAll<HTMLButtonElement>("[data-cell]")]
+}
+function selections() {
+  const found: unknown[] = []
+  document.body.addEventListener("newt:expression-select", (event) => {
+    if (event instanceof CustomEvent) found.push(event.detail)
+  })
+  return found
 }
 
 beforeEach(() => {
@@ -48,63 +59,107 @@ beforeEach(() => {
 })
 
 describe("HTML expressions picker", () => {
-  it("filters aliases case-insensitively and explains empty results", () => {
+  it("groups emoji into recent, server, and Unicode sections", () => {
     button("Choose an expression").click()
-    search(" HAPPY ")
-    expect(results()).toEqual(["😀Smile"])
+    expect(sectionTitles()).toEqual([
+      "Recently used",
+      "Newt Lab",
+      "Smileys & Emotion",
+      "People & Body",
+      "Symbols",
+    ])
+    expect(
+      [...document.querySelectorAll("[data-newt-rail] button")].map((rail) =>
+        rail.getAttribute("aria-label")
+      )
+    ).toEqual(sectionTitles())
+  })
+
+  it("searches every word across labels and keywords, and explains empty results", () => {
+    button("Choose an expression").click()
+    search(" HAPPY face ")
+    expect(sectionTitles()).toEqual(["Search results"])
+    expect(cells().map((cell) => cell.getAttribute("aria-label"))).toEqual([
+      "grinning face",
+    ])
+    expect(
+      document.querySelector<HTMLElement>("[data-newt-rail]")?.hidden
+    ).toBe(true)
     search("not present")
-    expect(results()).toEqual([])
+    expect(cells()).toEqual([])
     expect(document.querySelector('[role="status"]')?.textContent).toContain(
-      "Try another search or type"
+      "Try another word or another tab"
     )
   })
 
-  it("emits the selected item and restores trigger focus", () => {
-    const selections: unknown[] = []
-    document.body.addEventListener(
-      "newt:expression-select",
-      (event) => {
-        if (event instanceof CustomEvent) selections.push(event.detail)
-      },
-      { once: true }
-    )
+  it("returns the value in the chosen skin tone and remembers it as recent", () => {
+    const found = selections()
     button("Choose an expression").click()
-    button("Stickers").click()
-    button("Hello sticker").click()
-    expect(selections).toEqual([
-      {
-        id: "hello-sticker",
-        kind: "sticker",
-        label: "Hello sticker",
-        value: "hello-sticker",
-        keywords: [],
-      },
+    button("Skin tone: Default skin tone").click()
+    button("Medium skin tone").click()
+    search("thumbs")
+    cells()[0]?.click()
+    expect(found).toMatchObject([
+      { item: { id: "thumbs-up" }, value: "👍🏽", recent: ["thumbs-up", "wave"] },
     ])
     expect(document.querySelector("dialog")?.open).toBe(false)
     expect(document.activeElement).toBe(button("Choose an expression"))
-  })
 
-  it("does not select unavailable entries", () => {
     button("Choose an expression").click()
-    const unavailable = document.querySelector<HTMLButtonElement>(
-      "button[data-newt-id='moon']"
-    )
-    unavailable?.click()
-    expect(document.querySelector("dialog")?.open).toBe(true)
-    expect(unavailable?.disabled).toBe(true)
+    const recent = document.querySelector('[data-section="recent"]')
+    expect(
+      [...(recent?.querySelectorAll("[data-cell]") ?? [])].map((cell) =>
+        cell.getAttribute("aria-label")
+      )
+    ).toEqual(["thumbs up", "waving hand"])
+    expect(
+      recent?.querySelector('[aria-pressed="true"]')?.getAttribute("aria-label")
+    ).toBe("thumbs up")
   })
 
-  it("moves between types with the keyboard and clears search on reopen", () => {
+  it("collapses a section without removing it from the rail", () => {
+    button("Choose an expression").click()
+    const toggle = document.querySelector<HTMLButtonElement>(
+      '[data-section="category-smileys"] h3 button'
+    )
+    toggle?.click()
+    const again = document.querySelector<HTMLButtonElement>(
+      '[data-section="category-smileys"] h3 button'
+    )
+    expect(again?.getAttribute("aria-expanded")).toBe("false")
+    expect(
+      document.querySelector('[data-section="category-smileys"] [data-cell]')
+    ).toBeNull()
+    button("Smileys & Emotion").click()
+    expect(
+      document.querySelector('[data-section="category-smileys"] [data-cell]')
+    ).not.toBeNull()
+  })
+
+  it("keeps one cell in the tab order and skips unavailable entries", () => {
+    button("Choose an expression").click()
+    expect(
+      cells()
+        .filter((cell) => cell.tabIndex === 0)
+        .map((cell) => cell.dataset.newtId)
+    ).toEqual(["wave"])
+    const moon = cells().find((cell) => cell.dataset.newtId === "moon")
+    expect(moon?.disabled).toBe(true)
+    expect(moon?.getAttribute("aria-label")).toBe("crescent moon, unavailable")
+    moon?.click()
+    expect(document.querySelector("dialog")?.open).toBe(true)
+  })
+
+  it("moves between types with the keyboard and hides the tone on media tabs", () => {
     button("Choose an expression").click()
     button("Emoji").dispatchEvent(
       new KeyboardEvent("keydown", { key: "End", bubbles: true })
     )
     expect(document.activeElement).toBe(button("GIFs"))
-    expect(results()).toEqual(["Celebration GIF"])
-    search("missing")
-    document.querySelector<HTMLDialogElement>("dialog")?.close()
-    button("Choose an expression").click()
-    expect(results()).toEqual(["Celebration GIF"])
+    expect(sectionTitles()).toEqual(["Trending"])
+    expect(
+      document.querySelector<HTMLElement>("[data-newt-tone]")?.hidden
+    ).toBe(true)
   })
 
   it("initializes multiple roots without duplicate IDs or listeners", () => {
