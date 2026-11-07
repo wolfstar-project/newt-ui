@@ -132,7 +132,7 @@ function tabKey(event: KeyboardEvent, index: number) {
       :id="id"
       ref="dialog"
       :aria-label="label"
-      class="m-auto box-border w-[var(--newt-expressions-width)] max-w-[calc(100%-2*var(--newt-space-3))] max-h-[calc(100dvh-2*var(--newt-space-3))] overflow-y-auto rounded-lg border border-newt-border bg-newt-bg-floating p-[var(--newt-space-3)] font-sans text-[length:var(--newt-font-size-sm)] leading-[var(--newt-line-height-normal)] text-newt-text-primary shadow-elevation-high backdrop:bg-newt-bg-base/80"
+      class="m-auto box-border w-[var(--newt-expressions-width)] max-w-[calc(100%-2*var(--newt-space-3))] max-h-[calc(100dvh-2*var(--newt-space-3))] overflow-y-auto rounded-lg border border-newt-border bg-newt-bg-floating p-[var(--newt-space-3)] font-sans text-[length:var(--newt-font-size-sm)] leading-[var(--newt-line-height-normal)] text-newt-text-primary shadow-elevation-high backdrop:bg-[color-mix(in_srgb,var(--newt-bg-base)_80%,transparent)]"
       @close="closed"
       @keydown="trapFocus"
     >
