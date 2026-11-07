@@ -117,7 +117,7 @@ describe("HTML expressions picker", () => {
     ).toBe("thumbs up")
   })
 
-  it("collapses a section without removing it from the rail", () => {
+  it("collapses a section and keeps focus on the control that was used", () => {
     button("Choose an expression").click()
     const toggle = document.querySelector<HTMLButtonElement>(
       '[data-section="category-smileys"] h3 button'
@@ -127,6 +127,7 @@ describe("HTML expressions picker", () => {
       '[data-section="category-smileys"] h3 button'
     )
     expect(again?.getAttribute("aria-expanded")).toBe("false")
+    expect(document.activeElement).toBe(again)
     expect(
       document.querySelector('[data-section="category-smileys"] [data-cell]')
     ).toBeNull()
@@ -134,6 +135,9 @@ describe("HTML expressions picker", () => {
     expect(
       document.querySelector('[data-section="category-smileys"] [data-cell]')
     ).not.toBeNull()
+    expect(document.activeElement).toBe(
+      document.querySelector('[data-rail="category-smileys"]')
+    )
   })
 
   it("keeps one cell in the tab order and skips unavailable entries", () => {
@@ -163,15 +167,33 @@ describe("HTML expressions picker", () => {
   })
 
   it("initializes multiple roots without duplicate IDs or listeners", () => {
+    const firstId = document.querySelector("dialog")?.id
     document.body.insertAdjacentHTML("beforeend", markup)
     runInThisContext(behavior)
     const dialogs = [...document.querySelectorAll("dialog")]
+    expect(dialogs[0]?.id).toBe(firstId)
     expect(new Set(dialogs.map((dialog) => dialog.id)).size).toBe(2)
+
+    let opened = 0
+    HTMLDialogElement.prototype.showModal = function () {
+      opened += 1
+      this.open = true
+    }
+    const found = selections()
     const triggers = [
       ...document.querySelectorAll<HTMLButtonElement>("[data-newt-trigger]"),
     ]
+    triggers[0]?.click()
+    expect(opened).toBe(1)
+    expect(dialogs[0]?.open).toBe(true)
+    expect(dialogs[1]?.open).toBe(false)
+    dialogs[0]
+      ?.querySelector<HTMLButtonElement>('[data-cell][tabindex="0"]')
+      ?.click()
+    expect(found).toHaveLength(1)
+
     triggers[1]?.click()
-    expect(dialogs[0]?.open).toBe(false)
+    expect(opened).toBe(2)
     expect(dialogs[1]?.open).toBe(true)
   })
 })

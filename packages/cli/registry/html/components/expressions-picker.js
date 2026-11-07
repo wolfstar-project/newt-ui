@@ -169,7 +169,11 @@
       data.items ??= []
       data.categories ??= []
       let recent = [...(data.recent ?? [])]
-      const id = `newt-expressions-${crypto.randomUUID()}`
+      // A counter, not crypto.randomUUID(): that only exists in secure contexts.
+      let serial = 0
+      let id
+      do id = `newt-expressions-${++serial}`
+      while (document.getElementById(id))
       dialog.id = id
       panel.id = `${id}-panel`
       trigger.setAttribute("aria-controls", id)
@@ -257,6 +261,7 @@
             "aria-label": section.label,
             title: section.label,
             "aria-current": activeSection === section.key ? "true" : undefined,
+            "data-rail": section.key,
           })
           if (section.iconSrc)
             button.append(
@@ -278,6 +283,8 @@
               `[data-section="${section.key}"]`
             )
             if (target) scroll.scrollTop = target.offsetTop
+            // render() rebuilt the rail: keep focus on the same section's button.
+            rail.querySelector(`[data-rail="${section.key}"]`)?.focus()
           })
           rail.append(button)
         }
@@ -310,6 +317,10 @@
                 ? [...collapsed, section.key]
                 : collapsed.filter((key) => key !== section.key)
               render()
+              // render() rebuilt the sections: keep focus on the same title.
+              scroll
+                .querySelector(`[data-section="${section.key}"] h3 button`)
+                ?.focus()
             })
             title.append(toggle)
           } else {
