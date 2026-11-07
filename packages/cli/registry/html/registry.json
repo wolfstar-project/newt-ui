@@ -370,6 +370,13 @@
       "rootClass": "newt-command-card",
       "files": ["bot-command-card.css", "bot-command-card.html"],
       "uses": ["badge"]
+    },
+    {
+      "name": "expressions-picker",
+      "title": "Expressions Picker",
+      "rootClass": "newt-expressions-picker",
+      "files": ["expressions-picker.css", "expressions-picker.html"],
+      "js": "expressions-picker.js"
     }
   ]
 }

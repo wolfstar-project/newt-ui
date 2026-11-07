@@ -1,0 +1,211 @@
+<!-- Load tokens.css and expressions-picker.css; load expressions-picker.js with defer. -->
+<div class="newt-expressions-picker" data-newt-expressions-picker>
+  <button
+    type="button"
+    class="newt-expressions-picker__control"
+    data-newt-trigger
+    aria-haspopup="dialog"
+    aria-expanded="false"
+  >
+    Choose an expression
+  </button>
+  <dialog
+    class="newt-expressions-picker__panel"
+    data-newt-dialog
+    aria-label="Choose an expression"
+  >
+    <div class="newt-expressions-picker__body">
+      <div class="newt-expressions-picker__header">
+        <strong>Choose an expression</strong
+        ><button
+          type="button"
+          class="newt-expressions-picker__control"
+          data-newt-close
+          aria-label="Close expressions picker"
+        >
+          ×
+        </button>
+      </div>
+      <div
+        role="tablist"
+        aria-label="Expression type"
+        class="newt-expressions-picker__tabs"
+      >
+        <button
+          type="button"
+          role="tab"
+          class="newt-expressions-picker__control"
+          data-newt-kind="emoji"
+          aria-selected="true"
+          tabindex="0"
+        >
+          Emoji</button
+        ><button
+          type="button"
+          role="tab"
+          class="newt-expressions-picker__control"
+          data-newt-kind="sticker"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          Stickers</button
+        ><button
+          type="button"
+          role="tab"
+          class="newt-expressions-picker__control"
+          data-newt-kind="gif"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          GIFs
+        </button>
+      </div>
+      <label class="newt-expressions-picker__search-label"
+        >Search expressions<input
+          type="search"
+          class="newt-expressions-picker__search"
+          data-newt-search
+          placeholder="Search by name or keyword"
+      /></label>
+      <div
+        role="tabpanel"
+        tabindex="0"
+        class="newt-expressions-picker__results"
+        data-newt-results
+      >
+        <ul class="newt-expressions-picker__grid">
+          <li data-newt-expression-row>
+            <button
+              type="button"
+              class="newt-expressions-picker__control newt-expressions-picker__item"
+              data-newt-expression
+              data-newt-id="smile"
+              data-newt-kind="emoji"
+              data-newt-label="Smile"
+              data-newt-value="😀"
+              data-newt-keywords="happy"
+            >
+              <span aria-hidden="true" class="newt-expressions-picker__glyph"
+                >😀</span
+              ><span>Smile</span>
+            </button>
+          </li>
+          <li data-newt-expression-row>
+            <button
+              type="button"
+              class="newt-expressions-picker__control newt-expressions-picker__item"
+              data-newt-expression
+              data-newt-id="wave"
+              data-newt-kind="emoji"
+              data-newt-label="Wave"
+              data-newt-value="👋"
+              data-newt-keywords="hello"
+            >
+              <span aria-hidden="true" class="newt-expressions-picker__glyph"
+                >👋</span
+              ><span>Wave</span>
+            </button>
+          </li>
+          <li data-newt-expression-row>
+            <button
+              type="button"
+              class="newt-expressions-picker__control newt-expressions-picker__item"
+              data-newt-expression
+              data-newt-id="heart"
+              data-newt-kind="emoji"
+              data-newt-label="Heart"
+              data-newt-value="❤️"
+              data-newt-keywords=""
+            >
+              <span aria-hidden="true" class="newt-expressions-picker__glyph"
+                >❤️</span
+              ><span>Heart</span>
+            </button>
+          </li>
+          <li data-newt-expression-row>
+            <button
+              type="button"
+              class="newt-expressions-picker__control newt-expressions-picker__item"
+              data-newt-expression
+              data-newt-id="party"
+              data-newt-kind="emoji"
+              data-newt-label="Celebrate"
+              data-newt-value="🎉"
+              data-newt-keywords=""
+            >
+              <span aria-hidden="true" class="newt-expressions-picker__glyph"
+                >🎉</span
+              ><span>Celebrate</span>
+            </button>
+          </li>
+          <li data-newt-expression-row>
+            <button
+              type="button"
+              class="newt-expressions-picker__control newt-expressions-picker__item"
+              data-newt-expression
+              data-newt-id="coffee"
+              data-newt-kind="emoji"
+              data-newt-label="Coffee"
+              data-newt-value="☕"
+              data-newt-keywords=""
+            >
+              <span aria-hidden="true" class="newt-expressions-picker__glyph"
+                >☕</span
+              ><span>Coffee</span>
+            </button>
+          </li>
+          <li data-newt-expression-row>
+            <button
+              type="button"
+              class="newt-expressions-picker__control newt-expressions-picker__item"
+              data-newt-expression
+              data-newt-id="moon"
+              data-newt-kind="emoji"
+              data-newt-label="Moon"
+              data-newt-value="🌙"
+              data-newt-keywords=""
+              disabled
+            >
+              <span aria-hidden="true" class="newt-expressions-picker__glyph"
+                >🌙</span
+              ><span>Moon</span><span>Unavailable</span>
+            </button>
+          </li>
+          <li data-newt-expression-row>
+            <button
+              type="button"
+              class="newt-expressions-picker__control newt-expressions-picker__item"
+              data-newt-expression
+              data-newt-id="hello-sticker"
+              data-newt-kind="sticker"
+              data-newt-label="Hello sticker"
+              data-newt-value="hello-sticker"
+              data-newt-keywords=""
+            >
+              <span>Hello sticker</span>
+            </button>
+          </li>
+          <li data-newt-expression-row>
+            <button
+              type="button"
+              class="newt-expressions-picker__control newt-expressions-picker__item"
+              data-newt-expression
+              data-newt-id="celebrate-gif"
+              data-newt-kind="gif"
+              data-newt-label="Celebration GIF"
+              data-newt-value="celebrate-gif"
+              data-newt-keywords=""
+            >
+              <span>Celebration GIF</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <p
+        role="status"
+        class="newt-expressions-picker__status"
+        data-newt-status
+      ></p>
+    </div>
+  </dialog>
+</div>

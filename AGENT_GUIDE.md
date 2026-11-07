@@ -174,6 +174,7 @@ and border changes only. This is a deliberate constraint, not an oversight.
 | Modal                 | `.newt-modal-overlay` / `.newt-modal`                                          | dialog, requires focus trap in JS layer                              |
 | Toast                 | `.newt-toast`                                                                  | success/error variants                                               |
 | Code block            | `.newt-code`                                                                   | syntax token classes `.tok-*`                                        |
+| Expressions picker    | `.newt-expressions-picker`                                                     | searchable emoji, sticker and GIF dialog                             |
 | Reaction pill         | `.newt-reaction`                                                               | clickable, `--active` state, `aria-pressed`                          |
 | Reply preview         | `.newt-reply`                                                                  | "replying to" bar above a message                                    |
 | Typing indicator      | `.newt-typing`                                                                 | static three-dot marker, paired with `aria-label`                    |

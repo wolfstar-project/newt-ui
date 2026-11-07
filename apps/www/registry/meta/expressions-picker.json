@@ -1,0 +1,10 @@
+{
+  "name": "expressions-picker",
+  "title": "Expressions Picker",
+  "description": "A Discord-inspired picker for Unicode emoji and caller-supplied stickers and GIFs.",
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": [],
+  "vueFiles": ["ExpressionsPicker.vue", "ExpressionResults.vue", "index.ts"],
+  "reactDemo": "expressions-picker-demo",
+  "vueDemo": "ExpressionsPickerDemo"
+}

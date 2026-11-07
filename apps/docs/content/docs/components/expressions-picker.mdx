@@ -1,0 +1,95 @@
+---
+title: "Expressions Picker"
+description: "A Discord-inspired picker for Unicode emoji and caller-supplied stickers and GIFs."
+---
+
+Choose an emoji, sticker, or GIF from a searchable dialog. The picker returns the chosen item to your application; it does not send messages, fetch media catalogs, or persist recent choices.
+
+<ComponentPreview name="expressions-picker" />
+
+The framework switch above selects the React or Vue demo. Try searching for “happy”, changing the expression type, and selecting an item. Moon demonstrates an unavailable entry. The sticker and GIF examples use application IDs and text labels; supply static previews for your own media.
+
+## Installation
+
+<Installation name="expressions-picker" />
+
+## Usage
+
+<Usage name="expressions-picker" />
+
+React receives selections through `onSelect`; Vue emits `select`. Both receive the complete `ExpressionItem`. Use its `kind` to decide whether to insert Unicode text or attach media. Every selection closes the dialog, including repeated choices of the same item.
+
+## API reference
+
+<PropsTable
+  of="ExpressionsPicker"
+  rows={[
+    {
+      name: "items",
+      type: "readonly ExpressionItem[]",
+      default: "[]",
+      description:
+        "Available expressions, in display order. IDs must be unique across all types.",
+    },
+    {
+      name: "label",
+      type: "string",
+      default: "Choose an expression",
+      description: "Trigger text and accessible dialog name.",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      default: "false",
+      description: "Disables the trigger and closes an open picker.",
+    },
+    {
+      name: "onSelect / @select",
+      type: "(item: ExpressionItem) => void",
+      description: "Receives an enabled item when selected.",
+    },
+    {
+      name: "className / class",
+      type: "string",
+      description: "Classes applied to the outer wrapper.",
+    },
+  ]}
+/>
+
+### ExpressionItem
+
+| Field        | Type                            | Meaning                                                                                                      |
+| ------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `id`         | `string`                        | Stable ID, unique across the complete list.                                                                  |
+| `kind`       | `"emoji" \| "sticker" \| "gif"` | Which tab contains this item.                                                                                |
+| `label`      | `string`                        | Visible, accessible name; included in search.                                                                |
+| `value`      | `string`                        | Unicode text for emoji; an application ID or URL for media. Never fetched by the picker.                     |
+| `keywords`   | `readonly string[]`             | Optional search aliases. Search ignores case and surrounding whitespace.                                     |
+| `disabled`   | `boolean`                       | Optional unavailable state. Shown with a label and cannot be selected.                                       |
+| `previewSrc` | `string`                        | Optional **static** image URL for stickers and GIFs. Omit to display only the label. Not accepted for emoji. |
+
+Media previews must be still images you have permission to use. Provide a static poster for a GIF, not its animated URL. The picker never renders `value` as a media source. The label remains visible when a preview cannot load. No artwork, media service, or new dependency is bundled.
+
+`expressionsPickerVariants({ selected })` exports the shared control styles. The selected variant adds an underline and a surface change, as used by the tabs.
+
+## HTML and CSS
+
+Load `tokens.css`, `expressions-picker.css`, and `expressions-picker.js` with `defer`, after copying the example markup. The script initializes each `data-newt-expressions-picker` root separately and assigns unique ARIA IDs. Listen for the bubbling `newt:expression-select` event on that root; `event.detail` contains the same item fields as the framework callback.
+
+Define each button with `data-newt-expression` and `data-newt-id`, `data-newt-kind`, `data-newt-label`, and `data-newt-value`. Optional `data-newt-keywords` contains space-separated aliases. Use a native `disabled` attribute for unavailable items and include the visible “Unavailable” label. A media button may contain an image with an empty `alt` and the `newt-expressions-picker__preview` class; its visible label supplies the accessible name. Keep each button inside a `data-newt-expression-row` list item. Disable the trigger to disable opening the picker. Close the dialog before disabling a currently open HTML picker.
+
+## Accessibility
+
+The native modal dialog contains keyboard focus and makes the surrounding page inert. Opening focuses the labeled search field. Tab and Shift+Tab reach the selected tab, search, results panel, enabled result buttons, and close control. Enter or Space activates a button. Escape closes the dialog; closing or selecting returns focus to the trigger.
+
+The tab list uses automatic activation: Left and Right move between types in reading direction, and Home and End select the first and last tab. The selected tab is underlined as well as colored. Search is preserved between tabs and cleared when reopening. Results have ordinary list and button semantics, not a grid or listbox; use Tab to navigate them. A polite status announces result counts and empty searches. Every focus indicator uses a 2px link-color outline with a 2px offset.
+
+The layout follows inherited `dir`, scales down to narrow screens, and uses no motion. Unicode emoji appearance depends on the operating system. Supply meaningful labels for every item, even when its artwork appears self-explanatory.
+
+## Tokens
+
+<TokensNote name="expressions-picker" />
+
+The picker uses the existing surface, border, text, font, radius, and elevation tokens. New shared tokens are `--newt-space-1` (4px), `--newt-space-2` (8px), `--newt-space-3` (12px), `--newt-font-size-sm` (14px), `--newt-font-size-expression` (24px), and `--newt-line-height-normal` (1.5). Picker geometry uses `--newt-expressions-width` (360px), `--newt-expressions-results-height` (240px), `--newt-expressions-target-size` (40px), and `--newt-expressions-preview-size` (64px).
+
+These additions are backward compatible. Existing installations should refresh `theme-newt` or copy the new token declarations before adding this picker.

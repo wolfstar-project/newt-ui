@@ -359,6 +359,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "expressions-picker",
+    type: "registry:ui",
+    title: "Expressions Picker",
+    description:
+      "A Discord-inspired picker for Unicode emoji and caller-supplied stickers and GIFs.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/expressions-picker.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "file-upload",
     type: "registry:ui",
     title: "File Upload",

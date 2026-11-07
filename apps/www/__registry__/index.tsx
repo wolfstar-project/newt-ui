@@ -316,6 +316,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "expressions-picker",
+    {
+      name: "expressions-picker",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/expressions-picker.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/expressions-picker")
+      ),
+    },
+  ],
+  [
     "file-upload",
     {
       name: "file-upload",
@@ -1155,6 +1167,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/entity-select-roles-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/entity-select-roles-demo")
+      ),
+    },
+  ],
+  [
+    "expressions-picker-demo",
+    {
+      name: "expressions-picker-demo",
+      type: "registry:example",
+      registryDependencies: ["expressions-picker"],
+      files: ["registry/bases/newt/examples/expressions-picker-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/expressions-picker-demo")
       ),
     },
   ],

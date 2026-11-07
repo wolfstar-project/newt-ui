@@ -300,6 +300,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "expressions-picker-demo",
+    type: "registry:example",
+    registryDependencies: ["expressions-picker"],
+    files: [
+      {
+        path: "examples/expressions-picker-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "file-upload-demo",
     type: "registry:example",
     registryDependencies: ["file-upload"],
