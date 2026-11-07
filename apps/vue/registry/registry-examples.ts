@@ -300,6 +300,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ExpressionsPickerDemo",
+    type: "registry:example",
+    registryDependencies: ["expressions-picker"],
+    files: [
+      {
+        path: "examples/ExpressionsPickerDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "FileUploadDemo",
     type: "registry:example",
     registryDependencies: ["file-upload"],

@@ -436,6 +436,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "expressions-picker",
+    {
+      name: "expressions-picker",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/expressions-picker/ExpressionsPicker.vue",
+        "registry/bases/newt/ui/expressions-picker/ExpressionArt.vue",
+        "registry/bases/newt/ui/expressions-picker/index.ts",
+      ],
+    },
+  ],
+  [
     "file-upload",
     {
       name: "file-upload",
@@ -1431,6 +1444,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       component: defineAsyncComponent(
         () =>
           import("~~/registry/bases/newt/examples/EntitySelectRolesDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ExpressionsPickerDemo",
+    {
+      name: "ExpressionsPickerDemo",
+      type: "registry:example",
+      registryDependencies: ["expressions-picker"],
+      files: ["registry/bases/newt/examples/ExpressionsPickerDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/ExpressionsPickerDemo.vue")
       ),
     },
   ],

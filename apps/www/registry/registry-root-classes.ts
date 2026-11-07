@@ -37,18 +37,31 @@ const rootClassEntries = [
   ["cooldown-bar", "newt-cooldown"],
   ["pagination", "newt-pagination"],
   ["stage-banner", "newt-stage-banner"],
+  ["direction", "newt-root"],
   ["scrollbar", "newt-scrollbar"],
   ["channel-topic", "newt-channel-topic"],
   ["notif-badge", "newt-notif-badge"],
   ["user-profile", "newt-profile"],
   ["message-group", "newt-message-group"],
+  ["message-list", "newt-message-list"],
+  ["message-composer", "newt-composer"],
+  ["chat", "newt-chat"],
+  ["inline-code", "newt-inline-code"],
+  ["action-row", "newt-action-row"],
+  ["app-launcher", "newt-app-launcher"],
+  ["slash-command-suggestions", "newt-slash-suggestions"],
+  ["v2-container", "newt-v2-container"],
+  ["channel-header", "newt-channel-header"],
+  ["channel-welcome", "newt-channel-welcome"],
+  ["channel-info", "newt-channel-info"],
+  ["invite", "newt-invite"],
   ["select-menu", "newt-select-menu"],
   ["entity-select", "newt-entity-select"],
   ["bot-command-card", "newt-command-card"],
+  ["expressions-picker", "newt-expressions-picker"],
 ] as const
 
-// Component names are looked up by arbitrary route params (see
-// apps/docs/src/pages/ComponentPage.tsx), so this stays a genuine open
-// dictionary rather than a closed, literal-keyed type.
+// Component names are looked up by arbitrary route params, so this remains
+// an open dictionary rather than a closed, literal-keyed type.
 export const rootClasses: Record<string, string> =
   Object.fromEntries(rootClassEntries)

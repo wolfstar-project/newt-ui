@@ -51,6 +51,7 @@ export const categories: DocsCategory[] = [
       "message-group",
       "invite",
       "reaction",
+      "expressions-picker",
       "reply-preview",
       "poll",
       "system-message",

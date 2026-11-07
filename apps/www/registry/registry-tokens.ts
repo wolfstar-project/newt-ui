@@ -17,6 +17,18 @@
 
 /** Raw token values, written to `:root` / the dark selector. */
 export const newtTokens = {
+  "newt-space-1": "4px",
+  "newt-space-2": "8px",
+  "newt-space-3": "12px",
+  "newt-font-size-xs": "12px",
+  "newt-font-size-sm": "14px",
+  "newt-line-height-normal": "1.5",
+  "newt-font-size-expression": "32px",
+  "newt-expressions-width": "512px",
+  "newt-expressions-height": "496px",
+  "newt-expressions-target-size": "48px",
+  "newt-expressions-preview-size": "96px",
+
   "newt-bg-base": "#1e1f22",
   "newt-bg-surface": "#2b2d31",
   "newt-bg-elevated": "#313338",

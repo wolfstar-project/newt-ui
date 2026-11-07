@@ -843,6 +843,28 @@
       "framework": "vue"
     },
     {
+      "name": "expressions-picker",
+      "type": "registry:ui",
+      "title": "Expressions Picker",
+      "description": "A Discord-inspired picker for Unicode emoji and caller-supplied stickers and GIFs.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/expressions-picker/ExpressionsPicker.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/expressions-picker/ExpressionArt.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/expressions-picker/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "file-upload",
       "type": "registry:ui",
       "title": "File Upload",
