@@ -27,6 +27,6 @@
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.23.15",
     "typescript": "^5.7.2",
-    "zod": "^3.24.1"
+    "zod": "^4.6.7"
   }
 }
