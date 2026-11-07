@@ -56,9 +56,9 @@ export interface ExpressionsPickerProps extends Omit<
 }
 
 const kinds: { kind: ExpressionKind; label: string }[] = [
-  { kind: "emoji", label: "Emoji" },
-  { kind: "sticker", label: "Stickers" },
   { kind: "gif", label: "GIFs" },
+  { kind: "sticker", label: "Stickers" },
+  { kind: "emoji", label: "Emoji" },
 ]
 
 const skinTones: { tone: SkinTone; label: string; sample: string }[] = [
@@ -190,11 +190,11 @@ const focusRing =
 
 /** Tabs and the small controls of the panel. */
 export const expressionsPickerVariants = cva(
-  `inline-flex min-h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] min-w-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] cursor-pointer items-center justify-center gap-[var(--newt-space-1)] rounded-sm border-0 px-[var(--newt-space-2)] font-sans text-[length:var(--newt-font-size-sm)] font-semibold leading-[var(--newt-line-height-normal)] enabled:hover:bg-newt-bg-hover enabled:hover:text-newt-text-primary enabled:active:bg-newt-bg-active disabled:cursor-not-allowed disabled:text-newt-text-muted ${focusRing}`,
+  `inline-flex min-h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] min-w-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] cursor-pointer items-center justify-center gap-[var(--newt-space-1)] rounded-md border-0 px-[var(--newt-space-3)] font-sans text-[length:var(--newt-font-size-sm)] font-semibold leading-[var(--newt-line-height-normal)] enabled:hover:bg-newt-bg-hover enabled:hover:text-newt-text-primary enabled:active:bg-newt-bg-active disabled:cursor-not-allowed disabled:text-newt-text-muted ${focusRing}`,
   {
     variants: {
       selected: {
-        true: "bg-newt-bg-active text-newt-text-primary underline underline-offset-[var(--newt-space-1)]",
+        true: "bg-newt-bg-active text-newt-text-primary",
         false: "bg-transparent text-newt-text-secondary",
       },
     },
@@ -262,6 +262,23 @@ function ExpressionArt({
       className="px-[var(--newt-space-1)] text-center text-[length:var(--newt-font-size-xs)] text-newt-text-secondary"
     >
       {item.label}
+    </span>
+  )
+}
+
+function SectionIcon({ section }: { section: Section }) {
+  if (section.iconSrc)
+    return (
+      <img
+        src={section.iconSrc}
+        alt=""
+        className="size-[calc(var(--newt-space-3)+var(--newt-space-1))] shrink-0 rounded-full"
+      />
+    )
+  if (!section.glyph) return null
+  return (
+    <span aria-hidden="true" className="shrink-0 leading-none">
+      {section.glyph}
     </span>
   )
 }
@@ -508,6 +525,10 @@ const ExpressionsPicker = React.forwardRef<
           id={id}
           aria-label={label}
           onKeyDown={onDialogKeyDown}
+          onClick={(event) => {
+            // The panel fills the dialog, so only the backdrop targets it.
+            if (event.target === event.currentTarget) close()
+          }}
           onClose={() => {
             setOpen(false)
             setShowTones(false)
@@ -519,7 +540,7 @@ const ExpressionsPicker = React.forwardRef<
             <div
               role="tablist"
               aria-label="Expression type"
-              className="flex items-center gap-[var(--newt-space-1)]"
+              className="flex items-center gap-[var(--newt-space-2)]"
             >
               {kinds.map((tab, index) => (
                 <button
@@ -540,14 +561,6 @@ const ExpressionsPicker = React.forwardRef<
                 </button>
               ))}
             </div>
-            <button
-              type="button"
-              aria-label="Close expressions picker"
-              onClick={close}
-              className={cn(expressionsPickerVariants(), "ms-auto")}
-            >
-              <span aria-hidden="true">×</span>
-            </button>
           </div>
 
           <div className="flex shrink-0 items-center gap-[var(--newt-space-2)] border-b border-newt-border p-[var(--newt-space-3)]">
@@ -565,8 +578,16 @@ const ExpressionsPicker = React.forwardRef<
                   setHovered(null)
                 }}
                 onKeyDown={focusFirstCell}
-                className={`box-border h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] w-full rounded-sm border-0 bg-newt-bg-input pe-[calc(var(--newt-expressions-target-size)-var(--newt-space-1))] ps-[var(--newt-space-3)] font-sans text-[length:var(--newt-font-size-sm)] text-newt-text-primary placeholder:text-newt-text-muted ${focusRing}`}
+                className={`box-border h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] w-full rounded-md border-0 bg-newt-bg-input pe-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] ps-[calc(var(--newt-space-3)*3)] font-sans text-[length:var(--newt-font-size-sm)] text-newt-text-primary placeholder:text-newt-text-muted ${focusRing}`}
               />
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                className="pointer-events-none absolute start-[var(--newt-space-3)] top-1/2 size-[calc(var(--newt-space-3)+var(--newt-space-1))] -translate-y-1/2 fill-none stroke-newt-text-secondary stroke-2"
+              >
+                <circle cx="7" cy="7" r="5" />
+                <path d="m11 11 4 4" strokeLinecap="round" />
+              </svg>
               {query ? (
                 <button
                   type="button"
@@ -577,21 +598,12 @@ const ExpressionsPicker = React.forwardRef<
                   }}
                   className={cn(
                     expressionsPickerVariants(),
-                    "absolute end-[var(--newt-space-1)] top-1/2 min-h-0 min-w-0 -translate-y-1/2 size-[calc(var(--newt-expressions-target-size)-var(--newt-space-3)-var(--newt-space-1))] p-0"
+                    "absolute end-[var(--newt-space-1)] top-1/2 min-h-0 min-w-0 -translate-y-1/2 size-[calc(var(--newt-expressions-target-size)-var(--newt-space-3)-var(--newt-space-2))] p-0"
                   )}
                 >
                   <span aria-hidden="true">×</span>
                 </button>
-              ) : (
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 16 16"
-                  className="pointer-events-none absolute end-[var(--newt-space-3)] top-1/2 size-[var(--newt-space-3)] -translate-y-1/2 fill-none stroke-newt-text-muted stroke-2"
-                >
-                  <circle cx="7" cy="7" r="5" />
-                  <path d="m11 11 4 4" strokeLinecap="round" />
-                </svg>
-              )}
+              ) : null}
             </div>
             {kind === "emoji" ? (
               <div ref={toneRoot} className="relative shrink-0">
@@ -655,7 +667,7 @@ const ExpressionsPicker = React.forwardRef<
             {!searching && sections.length > 1 ? (
               <nav
                 aria-label="Categories"
-                className="flex w-[calc(var(--newt-expressions-target-size)+var(--newt-space-2))] shrink-0 flex-col items-center gap-[var(--newt-space-1)] overflow-y-auto overflow-x-hidden border-e border-newt-border p-[var(--newt-space-2)]"
+                className="flex w-[calc(var(--newt-expressions-target-size)+var(--newt-space-2))] shrink-0 flex-col items-center gap-[var(--newt-space-1)] overflow-y-auto overflow-x-hidden border-e border-newt-border p-[var(--newt-space-2)] ![scrollbar-width:none]"
               >
                 {sections.map((section) => (
                   <button
@@ -668,10 +680,10 @@ const ExpressionsPicker = React.forwardRef<
                     }
                     onClick={() => goTo(section.key)}
                     className={cn(
-                      expressionsPickerVariants({
-                        selected: activeSection === section.key,
-                      }),
-                      "shrink-0 p-0 no-underline aria-[current=true]:shadow-[inset_0_0_0_2px_var(--newt-border)]"
+                      expressionsPickerVariants(),
+                      "relative shrink-0 p-0",
+                      activeSection === section.key &&
+                        "text-newt-text-primary before:absolute before:-start-[var(--newt-space-2)] before:top-1/2 before:h-[calc(var(--newt-space-3)+var(--newt-space-2))] before:w-[var(--newt-space-1)] before:-translate-y-1/2 before:rounded-e-full before:bg-newt-text-primary before:content-['']"
                     )}
                   >
                     {section.iconSrc ? (
@@ -681,7 +693,10 @@ const ExpressionsPicker = React.forwardRef<
                         className="size-[calc(var(--newt-expressions-target-size)-var(--newt-space-3)-var(--newt-space-1))] rounded-full"
                       />
                     ) : (
-                      <span aria-hidden="true" className="leading-none">
+                      <span
+                        aria-hidden="true"
+                        className="text-[length:calc(var(--newt-font-size-expression)*0.625)] leading-none"
+                      >
                         {section.glyph ?? section.label.slice(0, 1)}
                       </span>
                     )}
@@ -705,7 +720,7 @@ const ExpressionsPicker = React.forwardRef<
                 >
                   <h3
                     id={`${id}-${section.key}-title`}
-                    className="sticky top-0 z-10 m-0 bg-newt-bg-surface pb-[var(--newt-space-1)] pt-[var(--newt-space-2)] text-[length:var(--newt-font-size-xs)] font-semibold uppercase text-newt-text-secondary"
+                    className="sticky top-0 z-10 m-0 bg-newt-bg-surface pb-[var(--newt-space-1)] pt-[var(--newt-space-2)] text-[length:var(--newt-font-size-sm)] font-semibold text-newt-text-secondary"
                   >
                     {section.collapsible ? (
                       <button
@@ -713,8 +728,9 @@ const ExpressionsPicker = React.forwardRef<
                         aria-expanded={isOpen(section.key)}
                         aria-controls={`${id}-${section.key}`}
                         onClick={() => toggleSection(section.key)}
-                        className={`flex w-full cursor-pointer items-center gap-[var(--newt-space-1)] rounded-sm border-0 bg-transparent px-[var(--newt-space-1)] font-[inherit] uppercase text-[inherit] hover:text-newt-text-primary ${focusRing}`}
+                        className={`inline-flex max-w-full cursor-pointer items-center gap-[var(--newt-space-2)] rounded-sm border-0 bg-transparent px-[var(--newt-space-1)] font-[inherit] text-[inherit] hover:text-newt-text-primary ${focusRing}`}
                       >
+                        <SectionIcon section={section} />
                         <span className="min-w-0 truncate">
                           {section.label}
                         </span>
@@ -722,7 +738,7 @@ const ExpressionsPicker = React.forwardRef<
                           aria-hidden="true"
                           viewBox="0 0 16 16"
                           className={cn(
-                            "ms-auto size-[var(--newt-space-3)] shrink-0 fill-none stroke-current stroke-2",
+                            "size-[var(--newt-space-3)] shrink-0 fill-none stroke-current stroke-2",
                             !isOpen(section.key) &&
                               "[transform:rotate(calc(-90deg*var(--newt-dir)))]"
                           )}
@@ -735,7 +751,7 @@ const ExpressionsPicker = React.forwardRef<
                         </svg>
                       </button>
                     ) : (
-                      <span className="px-[var(--newt-space-1)]">
+                      <span className="inline-flex items-center gap-[var(--newt-space-2)] px-[var(--newt-space-1)]">
                         {section.label}
                       </span>
                     )}
@@ -824,7 +840,7 @@ const ExpressionsPicker = React.forwardRef<
             </div>
           </div>
 
-          <div className="flex h-[calc(var(--newt-expressions-target-size)+var(--newt-space-2))] shrink-0 items-center gap-[var(--newt-space-2)] border-t border-newt-border bg-newt-bg-floating px-[var(--newt-space-3)]">
+          <div className="flex h-[calc(var(--newt-expressions-target-size)+var(--newt-space-3))] shrink-0 items-center gap-[var(--newt-space-3)] border-t border-newt-border bg-newt-bg-floating px-[var(--newt-space-3)]">
             {preview ? (
               <>
                 <span
@@ -843,11 +859,16 @@ const ExpressionsPicker = React.forwardRef<
                     </span>
                   ) : null}
                 </span>
-                <span className="min-w-0 truncate font-semibold">
-                  {expressionShortcode(preview.item)}
-                </span>
-                <span className="ms-auto shrink-0 truncate ps-[var(--newt-space-2)] text-[length:var(--newt-font-size-xs)] text-newt-text-secondary">
-                  {preview.where}
+                <span className="flex min-w-0 flex-col">
+                  <span className="truncate font-semibold">
+                    {expressionShortcode(preview.item)}
+                  </span>
+                  {preview.where ? (
+                    <span className="truncate text-[length:var(--newt-font-size-xs)] text-newt-text-secondary">
+                      from{" "}
+                      <strong className="font-semibold">{preview.where}</strong>
+                    </span>
+                  ) : null}
                 </span>
               </>
             ) : (

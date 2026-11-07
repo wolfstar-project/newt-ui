@@ -1,6 +1,6 @@
 /* Load with defer, after the picker markup. Safe to load again for new roots. */
 ;(() => {
-  const KINDS = ["emoji", "sticker", "gif"]
+  const KINDS = ["gif", "sticker", "emoji"]
   const TONES = [
     ["Default skin tone", "👋"],
     ["Light skin tone", "👋🏻"],
@@ -113,6 +113,19 @@
     text.textContent = item.kind === "emoji" ? value : item.label
     return text
   }
+  function sectionIcon(section) {
+    if (section.iconSrc)
+      return [
+        el("img", "newt-expressions-picker__title-icon", {
+          src: section.iconSrc,
+          alt: "",
+        }),
+      ]
+    if (!section.glyph) return []
+    const glyph = el("span", "", { "aria-hidden": "true" })
+    glyph.textContent = section.glyph
+    return [glyph]
+  }
   function chevron() {
     const svg = document.createElementNS(SVG, "svg")
     svg.setAttribute("class", "newt-expressions-picker__chevron")
@@ -135,8 +148,6 @@
       const dialog = q("dialog")
       const search = q("search")
       const clear = q("clear")
-      const searchIcon = q("search-icon")
-      const close = q("close")
       const toneRoot = q("tone")
       const toneButton = q("tone-button")
       const toneList = q("tones")
@@ -151,7 +162,6 @@
           dialog,
           search,
           clear,
-          close,
           toneRoot,
           toneButton,
           toneList,
@@ -219,11 +229,18 @@
         })
         if (shown.item.src || shown.item.kind === "emoji")
           preview.append(art(shown.item, valueOf(shown.item, tone)))
+        const text = el("span", "newt-expressions-picker__preview-text")
         const name = el("span", "newt-expressions-picker__shortcode")
         name.textContent = shortcode(shown.item)
-        const from = el("span", "newt-expressions-picker__where")
-        from.textContent = shown.where
-        footer.append(preview, name, from)
+        text.append(name)
+        if (shown.where) {
+          const from = el("span", "newt-expressions-picker__where")
+          const source = el("strong")
+          source.textContent = shown.where
+          from.append("from ", source)
+          text.append(from)
+        }
+        footer.append(preview, text)
       }
 
       function render() {
@@ -248,7 +265,6 @@
           if (selected) panel.setAttribute("aria-labelledby", tab.id)
         })
         clear.hidden = !searching
-        if (searchIcon) searchIcon.toggleAttribute("hidden", searching)
         toneRoot.hidden = kind !== "emoji"
         toneButton.setAttribute("aria-label", `Skin tone: ${TONES[tone][0]}`)
         toneButton.querySelector("span").textContent = TONES[tone][1]
@@ -311,7 +327,7 @@
                 "aria-controls": `${id}-${section.key}`,
               }
             )
-            toggle.append(label, chevron())
+            toggle.append(...sectionIcon(section), label, chevron())
             toggle.addEventListener("click", () => {
               collapsed = open
                 ? [...collapsed, section.key]
@@ -547,7 +563,10 @@
         trigger.setAttribute("aria-expanded", "true")
         search.focus()
       })
-      close.addEventListener("click", () => dialog.close())
+      // The panel fills the dialog, so only the backdrop targets it.
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) dialog.close()
+      })
       dialog.addEventListener("close", () => {
         hideTones()
         trigger.setAttribute("aria-expanded", "false")

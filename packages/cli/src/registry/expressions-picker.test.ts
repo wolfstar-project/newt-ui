@@ -29,9 +29,11 @@ function search(value: string) {
   input.dispatchEvent(new Event("input", { bubbles: true }))
 }
 function sectionTitles() {
-  return [...document.querySelectorAll("[data-section] h3")].map((title) =>
-    title.textContent?.trim()
-  )
+  return [
+    ...document.querySelectorAll(
+      "[data-section] .newt-expressions-picker__title-label"
+    ),
+  ].map((title) => title.textContent?.trim())
 }
 function cells() {
   return [...document.querySelectorAll<HTMLButtonElement>("[data-cell]")]
@@ -157,13 +159,25 @@ describe("HTML expressions picker", () => {
   it("moves between types with the keyboard and hides the tone on media tabs", () => {
     button("Choose an expression").click()
     button("Emoji").dispatchEvent(
-      new KeyboardEvent("keydown", { key: "End", bubbles: true })
+      new KeyboardEvent("keydown", { key: "Home", bubbles: true })
     )
     expect(document.activeElement).toBe(button("GIFs"))
     expect(sectionTitles()).toEqual(["Trending"])
     expect(
       document.querySelector<HTMLElement>("[data-newt-tone]")?.hidden
     ).toBe(true)
+  })
+
+  it("closes when the backdrop is clicked, not the panel", () => {
+    button("Choose an expression").click()
+    const dialog = document.querySelector("dialog")
+    document
+      .querySelector("[data-newt-scroll]")
+      ?.dispatchEvent(new MouseEvent("click", { bubbles: true }))
+    expect(dialog?.open).toBe(true)
+    dialog?.dispatchEvent(new MouseEvent("click", { bubbles: true }))
+    expect(dialog?.open).toBe(false)
+    expect(document.activeElement).toBe(button("Choose an expression"))
   })
 
   it("initializes multiple roots without duplicate IDs or listeners", () => {

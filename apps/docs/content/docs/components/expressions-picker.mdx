@@ -3,7 +3,7 @@ title: "Expressions Picker"
 description: "A Discord-inspired picker for Unicode emoji and caller-supplied stickers and GIFs."
 ---
 
-Choose an emoji, sticker, or GIF from one searchable dialog. The Emoji tab follows the layout of a chat client's emoji picker: a search field with a skin tone button, a rail of categories beside a grid of collapsible sections, and a bar at the foot that names the expression under the pointer or focus. Stickers and GIFs use the same grid with larger cells.
+Choose an emoji, sticker, or GIF from one searchable dialog. The GIFs, Stickers, and Emoji tabs sit at the top, and the Emoji tab opens by default. It follows the layout of a chat client's emoji picker: a search field with a skin tone button, a rail of categories beside a grid of collapsible sections, and a bar at the foot that names the expression under the pointer or focus. Stickers and GIFs use the same grid with larger cells.
 
 The picker returns the chosen item and value to your application. It ships no emoji dataset, artwork, or media service, and it does not store anything: you pass the items and categories, and you keep the list of recently used IDs.
 
@@ -106,7 +106,7 @@ React receives selections through `onSelect(item, value)`; Vue emits `select` wi
 
 Use a dataset such as Emojibase to build `items` for the full Unicode set; group its entries into categories and pass its skin tone variants as `skins`. Images must be still and yours to use. The picker never renders `value` as a media source.
 
-`expressionsPickerVariants({ selected })` exports the style of the tabs and small controls. The selected variant adds an underline and a surface change.
+`expressionsPickerVariants({ selected })` exports the style of the tabs and small controls. The selected variant fills the control with the active surface.
 
 ## HTML and CSS
 
@@ -116,18 +116,18 @@ Listen for the bubbling `newt:expression-select` event on the root. `event.detai
 
 ## Accessibility
 
-The native modal dialog contains keyboard focus and makes the surrounding page inert. Opening focuses the search field; Down Arrow moves from it into the grid. Escape closes the skin tone list first, then the dialog; closing or selecting returns focus to the trigger.
+The native modal dialog contains keyboard focus and makes the surrounding page inert. Opening focuses the search field; Down Arrow moves from it into the grid. Escape closes the skin tone list first, then the dialog. A click on the backdrop also closes it. Closing or selecting returns focus to the trigger.
 
-The tab list uses automatic activation: Left and Right move between types in reading direction, and Home and End select the first and last tab. The selected tab is underlined as well as colored.
+The tab list uses automatic activation: Left and Right move between types in reading direction, and Home and End select the first and last tab. The selected tab is a filled pill, not only a color change.
 
-The grid keeps one cell in the tab order. Arrow keys move by position on screen, following the reading direction, and Home and End jump to the first and last cell. Each cell is a button named by its label; the current choice is `aria-pressed`. Section titles are buttons with `aria-expanded`, and the rail is a navigation landmark whose buttons name their section and mark the visible one with `aria-current` and an outline. The skin tone list is a group of pressed-state buttons. A polite status announces the number of search results and explains empty searches.
+The grid keeps one cell in the tab order. Arrow keys move by position on screen, following the reading direction, and Home and End jump to the first and last cell. Each cell is a button named by its label; the current choice is `aria-pressed`. Section titles are buttons with `aria-expanded`, and the rail is a navigation landmark whose buttons name their section and mark the visible one with `aria-current` and a bar on the rail's start edge. The skin tone list is a group of pressed-state buttons. A polite status announces the number of search results and explains empty searches.
 
-Every focus indicator uses a 2px link-color outline with a 2px offset. The layout follows inherited `dir`, scales down to narrow screens, and uses no motion: jumping to a section scrolls instantly, and the collapsed chevron is a static rotation. Unicode emoji appearance depends on the operating system.
+Every focus indicator uses a 2px link-color outline with a 2px offset. The layout follows inherited `dir`, scales down to narrow screens, and uses no motion: jumping to a section scrolls instantly, and a collapsed section's chevron is a static rotation that points along the reading direction. The rail hides its scrollbar but still scrolls with the wheel, touch, and keyboard. Unicode emoji appearance depends on the operating system.
 
 ## Tokens
 
 <TokensNote name="expressions-picker" />
 
-The picker uses the existing surface, border, text, brand, font, radius, and elevation tokens. New shared tokens are `--newt-space-1` (4px), `--newt-space-2` (8px), `--newt-space-3` (12px), `--newt-font-size-xs` (12px), `--newt-font-size-sm` (14px), `--newt-font-size-expression` (28px), and `--newt-line-height-normal` (1.5). Picker geometry uses `--newt-expressions-width` (472px), `--newt-expressions-height` (456px), `--newt-expressions-target-size` (40px, an emoji cell), and `--newt-expressions-preview-size` (96px, the smallest sticker or GIF cell).
+The picker uses the existing surface, border, text, brand, font, radius, and elevation tokens. New shared tokens are `--newt-space-1` (4px), `--newt-space-2` (8px), `--newt-space-3` (12px), `--newt-font-size-xs` (12px), `--newt-font-size-sm` (14px), `--newt-font-size-expression` (32px), and `--newt-line-height-normal` (1.5). Picker geometry uses `--newt-expressions-width` (512px), `--newt-expressions-height` (496px), `--newt-expressions-target-size` (48px, an emoji cell), and `--newt-expressions-preview-size` (96px, the smallest sticker or GIF cell).
 
 These additions are backward compatible. Existing installations should refresh `theme-newt` or copy the new token declarations before adding this picker.

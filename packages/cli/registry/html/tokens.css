@@ -6,10 +6,10 @@
   --newt-font-size-xs: 12px;
   --newt-font-size-sm: 14px;
   --newt-line-height-normal: 1.5;
-  --newt-font-size-expression: 28px;
-  --newt-expressions-width: 472px;
-  --newt-expressions-height: 456px;
-  --newt-expressions-target-size: 40px;
+  --newt-font-size-expression: 32px;
+  --newt-expressions-width: 512px;
+  --newt-expressions-height: 496px;
+  --newt-expressions-target-size: 48px;
   --newt-expressions-preview-size: 96px;
 
   /* Surfaces */

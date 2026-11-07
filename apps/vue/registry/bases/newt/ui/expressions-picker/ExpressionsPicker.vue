@@ -302,6 +302,7 @@ function clearQuery() {
       class="m-auto box-border h-[min(var(--newt-expressions-height),calc(100dvh-2*var(--newt-space-3)))] w-[min(var(--newt-expressions-width),calc(100%-2*var(--newt-space-3)))] max-w-none overflow-hidden rounded-lg border border-newt-border bg-newt-bg-surface p-0 font-sans text-[length:var(--newt-font-size-sm)] leading-[var(--newt-line-height-normal)] text-newt-text-primary shadow-elevation-high backdrop:bg-[color-mix(in_srgb,var(--newt-bg-base)_80%,transparent)] open:flex open:flex-col"
       @close="closed"
       @keydown="onDialogKeyDown"
+      @click.self="close"
     >
       <div
         class="flex shrink-0 items-center gap-[var(--newt-space-2)] px-[var(--newt-space-3)] pt-[var(--newt-space-3)]"
@@ -309,7 +310,7 @@ function clearQuery() {
         <div
           role="tablist"
           aria-label="Expression type"
-          class="flex items-center gap-[var(--newt-space-1)]"
+          class="flex items-center gap-[var(--newt-space-2)]"
         >
           <button
             v-for="(tab, index) in expressionKinds"
@@ -327,14 +328,6 @@ function clearQuery() {
             {{ tab.label }}
           </button>
         </div>
-        <button
-          type="button"
-          aria-label="Close expressions picker"
-          :class="cn(expressionsPickerVariants(), 'ms-auto')"
-          @click="close"
-        >
-          <span aria-hidden="true">×</span>
-        </button>
       </div>
 
       <div
@@ -349,10 +342,18 @@ function clearQuery() {
             spellcheck="false"
             aria-label="Search expressions"
             placeholder="Search by name or keyword"
-            :class="`box-border h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] w-full rounded-sm border-0 bg-newt-bg-input pe-[calc(var(--newt-expressions-target-size)-var(--newt-space-1))] ps-[var(--newt-space-3)] font-sans text-[length:var(--newt-font-size-sm)] text-newt-text-primary placeholder:text-newt-text-muted ${expressionsFocusRing}`"
+            :class="`box-border h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] w-full rounded-md border-0 bg-newt-bg-input pe-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] ps-[calc(var(--newt-space-3)*3)] font-sans text-[length:var(--newt-font-size-sm)] text-newt-text-primary placeholder:text-newt-text-muted ${expressionsFocusRing}`"
             @input="hovered = null"
             @keydown.down.prevent="focusFirstCell"
           />
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 16 16"
+            class="pointer-events-none absolute start-[var(--newt-space-3)] top-1/2 size-[calc(var(--newt-space-3)+var(--newt-space-1))] -translate-y-1/2 fill-none stroke-newt-text-secondary stroke-2"
+          >
+            <circle cx="7" cy="7" r="5" />
+            <path d="m11 11 4 4" stroke-linecap="round" />
+          </svg>
           <button
             v-if="query"
             type="button"
@@ -360,22 +361,13 @@ function clearQuery() {
             :class="
               cn(
                 expressionsPickerVariants(),
-                'absolute end-[var(--newt-space-1)] top-1/2 min-h-0 min-w-0 -translate-y-1/2 size-[calc(var(--newt-expressions-target-size)-var(--newt-space-3)-var(--newt-space-1))] p-0'
+                'absolute end-[var(--newt-space-1)] top-1/2 min-h-0 min-w-0 -translate-y-1/2 size-[calc(var(--newt-expressions-target-size)-var(--newt-space-3)-var(--newt-space-2))] p-0'
               )
             "
             @click="clearQuery"
           >
             <span aria-hidden="true">×</span>
           </button>
-          <svg
-            v-else
-            aria-hidden="true"
-            viewBox="0 0 16 16"
-            class="pointer-events-none absolute end-[var(--newt-space-3)] top-1/2 size-[var(--newt-space-3)] -translate-y-1/2 fill-none stroke-newt-text-muted stroke-2"
-          >
-            <circle cx="7" cy="7" r="5" />
-            <path d="m11 11 4 4" stroke-linecap="round" />
-          </svg>
         </div>
         <div v-if="kind === 'emoji'" ref="toneRoot" class="relative shrink-0">
           <button
@@ -437,7 +429,7 @@ function clearQuery() {
         <nav
           v-if="!searching && sections.length > 1"
           aria-label="Categories"
-          class="flex w-[calc(var(--newt-expressions-target-size)+var(--newt-space-2))] shrink-0 flex-col items-center gap-[var(--newt-space-1)] overflow-y-auto overflow-x-hidden border-e border-newt-border p-[var(--newt-space-2)]"
+          class="flex w-[calc(var(--newt-expressions-target-size)+var(--newt-space-2))] shrink-0 flex-col items-center gap-[var(--newt-space-1)] overflow-y-auto overflow-x-hidden border-e border-newt-border p-[var(--newt-space-2)] ![scrollbar-width:none]"
         >
           <button
             v-for="section in sections"
@@ -448,10 +440,10 @@ function clearQuery() {
             :aria-current="activeSection === section.key ? 'true' : undefined"
             :class="
               cn(
-                expressionsPickerVariants({
-                  selected: activeSection === section.key,
-                }),
-                'shrink-0 p-0 no-underline aria-[current=true]:shadow-[inset_0_0_0_2px_var(--newt-border)]'
+                expressionsPickerVariants(),
+                'relative shrink-0 p-0',
+                activeSection === section.key &&
+                  `text-newt-text-primary before:absolute before:-start-[var(--newt-space-2)] before:top-1/2 before:h-[calc(var(--newt-space-3)+var(--newt-space-2))] before:w-[var(--newt-space-1)] before:-translate-y-1/2 before:rounded-e-full before:bg-newt-text-primary before:content-['']`
               )
             "
             @click="goTo(section.key)"
@@ -462,9 +454,12 @@ function clearQuery() {
               alt=""
               class="size-[calc(var(--newt-expressions-target-size)-var(--newt-space-3)-var(--newt-space-1))] rounded-full"
             />
-            <span v-else aria-hidden="true" class="leading-none">{{
-              section.glyph ?? section.label.slice(0, 1)
-            }}</span>
+            <span
+              v-else
+              aria-hidden="true"
+              class="text-[length:calc(var(--newt-font-size-expression)*0.625)] leading-none"
+              >{{ section.glyph ?? section.label.slice(0, 1) }}</span
+            >
           </button>
         </nav>
 
@@ -483,23 +478,35 @@ function clearQuery() {
           >
             <h3
               :id="`${id}-${section.key}-title`"
-              class="sticky top-0 z-10 m-0 bg-newt-bg-surface pb-[var(--newt-space-1)] pt-[var(--newt-space-2)] text-[length:var(--newt-font-size-xs)] font-semibold uppercase text-newt-text-secondary"
+              class="sticky top-0 z-10 m-0 bg-newt-bg-surface pb-[var(--newt-space-1)] pt-[var(--newt-space-2)] text-[length:var(--newt-font-size-sm)] font-semibold text-newt-text-secondary"
             >
               <button
                 v-if="section.collapsible"
                 type="button"
                 :aria-expanded="isOpen(section.key)"
                 :aria-controls="`${id}-${section.key}`"
-                :class="`flex w-full cursor-pointer items-center gap-[var(--newt-space-1)] rounded-sm border-0 bg-transparent px-[var(--newt-space-1)] font-[inherit] uppercase text-[inherit] hover:text-newt-text-primary ${expressionsFocusRing}`"
+                :class="`inline-flex max-w-full cursor-pointer items-center gap-[var(--newt-space-2)] rounded-sm border-0 bg-transparent px-[var(--newt-space-1)] font-[inherit] text-[inherit] hover:text-newt-text-primary ${expressionsFocusRing}`"
                 @click="toggleSection(section.key)"
               >
+                <img
+                  v-if="section.iconSrc"
+                  :src="section.iconSrc"
+                  alt=""
+                  class="size-[calc(var(--newt-space-3)+var(--newt-space-1))] shrink-0 rounded-full"
+                />
+                <span
+                  v-else-if="section.glyph"
+                  aria-hidden="true"
+                  class="shrink-0 leading-none"
+                  >{{ section.glyph }}</span
+                >
                 <span class="min-w-0 truncate">{{ section.label }}</span>
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 16 16"
                   :class="
                     cn(
-                      'ms-auto size-[var(--newt-space-3)] shrink-0 fill-none stroke-current stroke-2',
+                      'size-[var(--newt-space-3)] shrink-0 fill-none stroke-current stroke-2',
                       !isOpen(section.key) &&
                         '[transform:rotate(calc(-90deg*var(--newt-dir)))]'
                     )
@@ -587,7 +594,7 @@ function clearQuery() {
       </div>
 
       <div
-        class="flex h-[calc(var(--newt-expressions-target-size)+var(--newt-space-2))] shrink-0 items-center gap-[var(--newt-space-2)] border-t border-newt-border bg-newt-bg-floating px-[var(--newt-space-3)]"
+        class="flex h-[calc(var(--newt-expressions-target-size)+var(--newt-space-3))] shrink-0 items-center gap-[var(--newt-space-3)] border-t border-newt-border bg-newt-bg-floating px-[var(--newt-space-3)]"
       >
         <template v-if="preview">
           <span
@@ -606,13 +613,17 @@ function clearQuery() {
               >{{ expressionValue(preview.item, tone) }}</span
             >
           </span>
-          <span class="min-w-0 truncate font-semibold">{{
-            expressionShortcode(preview.item)
-          }}</span>
-          <span
-            class="ms-auto shrink-0 truncate ps-[var(--newt-space-2)] text-[length:var(--newt-font-size-xs)] text-newt-text-secondary"
-            >{{ preview.where }}</span
-          >
+          <span class="flex min-w-0 flex-col">
+            <span class="truncate font-semibold">{{
+              expressionShortcode(preview.item)
+            }}</span>
+            <span
+              v-if="preview.where"
+              class="truncate text-[length:var(--newt-font-size-xs)] text-newt-text-secondary"
+              >from
+              <strong class="font-semibold">{{ preview.where }}</strong></span
+            >
+          </span>
         </template>
         <span v-else class="text-newt-text-secondary"
           >Hover or focus an expression to preview it.</span

@@ -73,7 +73,7 @@
 .newt-expressions-picker__tabs {
   display: flex;
   align-items: center;
-  gap: var(--newt-space-1);
+  gap: var(--newt-space-2);
 }
 
 /* Tabs and the small controls of the panel. */
@@ -89,10 +89,10 @@
     var(--newt-expressions-target-size) - var(--newt-space-2)
   );
   padding-block: 0;
-  padding-inline: var(--newt-space-2);
+  padding-inline: var(--newt-space-3);
   cursor: pointer;
   border: 0;
-  border-radius: var(--newt-radius-sm);
+  border-radius: var(--newt-radius-md);
   background: transparent;
   font-family: var(--newt-font-sans);
   font-size: var(--newt-font-size-sm);
@@ -110,11 +110,6 @@
 .newt-expressions-picker__control[aria-selected="true"] {
   background: var(--newt-bg-active);
   color: var(--newt-text-primary);
-  text-decoration: underline;
-  text-underline-offset: var(--newt-space-1);
-}
-.newt-expressions-picker__close {
-  margin-inline-start: auto;
 }
 
 .newt-expressions-picker__toolbar {
@@ -134,12 +129,12 @@
   box-sizing: border-box;
   inline-size: 100%;
   block-size: calc(var(--newt-expressions-target-size) - var(--newt-space-2));
-  padding-inline-start: var(--newt-space-3);
+  padding-inline-start: calc(var(--newt-space-3) * 3);
   padding-inline-end: calc(
-    var(--newt-expressions-target-size) - var(--newt-space-1)
+    var(--newt-expressions-target-size) - var(--newt-space-2)
   );
   border: 0;
-  border-radius: var(--newt-radius-sm);
+  border-radius: var(--newt-radius-md);
   background: var(--newt-bg-input);
   font-family: var(--newt-font-sans);
   font-size: var(--newt-font-size-sm);
@@ -152,13 +147,13 @@
 .newt-expressions-picker__search-icon {
   position: absolute;
   inset-block-start: 50%;
-  inset-inline-end: var(--newt-space-3);
-  inline-size: var(--newt-space-3);
-  block-size: var(--newt-space-3);
+  inset-inline-start: var(--newt-space-3);
+  inline-size: calc(var(--newt-space-3) + var(--newt-space-1));
+  block-size: calc(var(--newt-space-3) + var(--newt-space-1));
   transform: translateY(-50%);
   pointer-events: none;
   fill: none;
-  stroke: var(--newt-text-muted);
+  stroke: var(--newt-text-secondary);
   stroke-width: 2;
 }
 .newt-expressions-picker__clear {
@@ -167,11 +162,11 @@
   inset-inline-end: var(--newt-space-1);
   inline-size: calc(
     var(--newt-expressions-target-size) - var(--newt-space-3) -
-      var(--newt-space-1)
+      var(--newt-space-2)
   );
   block-size: calc(
     var(--newt-expressions-target-size) - var(--newt-space-3) -
-      var(--newt-space-1)
+      var(--newt-space-2)
   );
   min-inline-size: 0;
   min-block-size: 0;
@@ -233,16 +228,31 @@
   padding: var(--newt-space-2);
   overflow-x: hidden;
   overflow-y: auto;
+  scrollbar-width: none !important;
   border-inline-end: 1px solid var(--newt-border);
 }
 .newt-expressions-picker__rail .newt-expressions-picker__control {
+  position: relative;
   flex-shrink: 0;
   padding: 0;
+  font-size: calc(var(--newt-font-size-expression) * 0.625);
+  line-height: 1;
 }
+/* The visible section: a pill on the rail's start edge. */
 .newt-expressions-picker__rail [aria-current="true"] {
-  background: var(--newt-bg-active);
   color: var(--newt-text-primary);
-  box-shadow: inset 0 0 0 2px var(--newt-border);
+}
+.newt-expressions-picker__rail [aria-current="true"]::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: calc(-1 * var(--newt-space-2));
+  inline-size: var(--newt-space-1);
+  block-size: calc(var(--newt-space-3) + var(--newt-space-2));
+  transform: translateY(-50%);
+  border-start-end-radius: var(--newt-radius-full);
+  border-end-end-radius: var(--newt-radius-full);
+  background: var(--newt-text-primary);
 }
 .newt-expressions-picker__rail-icon {
   inline-size: calc(
@@ -271,17 +281,16 @@
   margin: 0;
   padding-block: var(--newt-space-2) var(--newt-space-1);
   background: var(--newt-bg-surface);
-  font-size: var(--newt-font-size-xs);
+  font-size: var(--newt-font-size-sm);
   font-weight: 600;
-  text-transform: uppercase;
   color: var(--newt-text-secondary);
 }
 .newt-expressions-picker__title-button,
 .newt-expressions-picker__title-text {
-  display: flex;
-  inline-size: 100%;
+  display: inline-flex;
+  max-inline-size: 100%;
   align-items: center;
-  gap: var(--newt-space-1);
+  gap: var(--newt-space-2);
   box-sizing: border-box;
   padding-inline: var(--newt-space-1);
   border: 0;
@@ -290,7 +299,12 @@
   color: inherit;
   font: inherit;
   text-align: start;
-  text-transform: inherit;
+}
+.newt-expressions-picker__title-icon {
+  flex-shrink: 0;
+  inline-size: calc(var(--newt-space-3) + var(--newt-space-1));
+  block-size: calc(var(--newt-space-3) + var(--newt-space-1));
+  border-radius: var(--newt-radius-full);
 }
 .newt-expressions-picker__title-button {
   cursor: pointer;
@@ -306,7 +320,6 @@
 }
 .newt-expressions-picker__chevron {
   flex-shrink: 0;
-  margin-inline-start: auto;
   inline-size: var(--newt-space-3);
   block-size: var(--newt-space-3);
   fill: none;
@@ -401,8 +414,8 @@
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: var(--newt-space-2);
-  block-size: calc(var(--newt-expressions-target-size) + var(--newt-space-2));
+  gap: var(--newt-space-3);
+  block-size: calc(var(--newt-expressions-target-size) + var(--newt-space-3));
   padding-inline: var(--newt-space-3);
   border-block-start: 1px solid var(--newt-border);
   background: var(--newt-bg-floating);
@@ -421,6 +434,11 @@
   block-size: 100%;
   object-fit: contain;
 }
+.newt-expressions-picker__preview-text {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
 .newt-expressions-picker__shortcode {
   min-inline-size: 0;
   overflow: hidden;
@@ -429,9 +447,9 @@
   font-weight: 600;
 }
 .newt-expressions-picker__where {
-  flex-shrink: 0;
-  margin-inline-start: auto;
-  padding-inline-start: var(--newt-space-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: var(--newt-font-size-xs);
   color: var(--newt-text-secondary);
 }
