@@ -15,7 +15,7 @@ overrides:
   # Two @nuxt/schema instances mean two nominally different `DefineNuxtConfig`
   # types, so `defineNuxtConfig(...)` type-checks as "not callable" wherever the
   # older one wins resolution. Everything here runs Nuxt 4.
-  "@nuxt/schema": npm:@nuxt/schema@4.6.1
+  "@nuxt/schema": npm:@nuxt/schema@4.6.4
 
 allowBuilds:
   "@google/genai": true
