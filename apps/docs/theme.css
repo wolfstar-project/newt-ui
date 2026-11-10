@@ -712,11 +712,8 @@
   }
 
   .component-index-jump a {
-    flex: none;
-  }
-
-  .component-index-jump a {
     display: inline-flex;
+    flex: none;
     align-items: center;
     gap: 0.35rem;
     padding: 0.15rem 0.5rem;
@@ -896,7 +893,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.15rem 0.5rem 0.15rem 0.3rem;
+    padding: 0.15rem 0.5rem;
     border: 1px solid var(--newt-border);
     border-radius: var(--newt-radius-sm);
     background: var(--newt-bg-surface);
@@ -908,17 +905,13 @@
     color: var(--newt-text-secondary);
   }
 
-  /*
-   * A colour token paints the swatch; a radius, font or duration is not a
-   * valid background and leaves it the neutral square underneath.
-   */
+  /* Only a colour token gets a swatch; the others are a name and nothing more. */
   .token-chip-swatch {
     width: 0.8rem;
     height: 0.8rem;
     flex: none;
     border: 1px solid var(--newt-border);
     border-radius: 2px;
-    background-color: var(--newt-bg-active);
   }
 
   /* --- token reference --------------------------------------------------- */
@@ -1116,6 +1109,12 @@
     flex-wrap: wrap;
     gap: 0.75rem 2.5rem;
     margin: 2.5rem 0 0;
+  }
+
+  /* The term comes first in the markup; the figure is drawn above it. */
+  .hero-stats > div {
+    display: flex;
+    flex-direction: column-reverse;
   }
 
   .hero-stats dd {
