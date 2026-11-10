@@ -69,6 +69,8 @@ document.querySelectorAll("[data-newt-command-palette]").forEach((palette) => {
   input.addEventListener("input", filter)
 
   input.addEventListener("keydown", (event) => {
+    // While an input method is composing, Enter confirms a candidate.
+    if (event.isComposing) return
     const rest = shown()
     const current = rest.findIndex(
       (option) => option.getAttribute("aria-selected") === "true"

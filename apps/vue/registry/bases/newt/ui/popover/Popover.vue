@@ -15,8 +15,8 @@ import { popoverKey } from "."
 /*
  * A small panel that hangs off the button that opened it. The root is the
  * positioning context, so the panel follows its trigger without any
- * measuring. Escape and a press anywhere outside close it, and closing with
- * the keyboard hands focus back to the trigger.
+ * measuring. Escape and a press anywhere outside close it; if focus was inside
+ * when Escape closed it, focus goes back to the trigger.
  */
 const props = defineProps<{
   class?: HTMLAttributes["class"]
@@ -27,39 +27,44 @@ const open = defineModel<boolean>("open", { default: false })
 
 const id = useId()
 
+function root(): Element | null {
+  return document.querySelector(`[data-popover="${id}"]`)
+}
+
 function onPointerDown(event: PointerEvent) {
-  const inside =
-    event.target instanceof Element &&
-    event.target.closest(`[data-popover="${id}"]`) !== null
+  const inside = event.target instanceof Node && root()?.contains(event.target)
   if (!inside) open.value = false
 }
 
 function onKeydown(event: KeyboardEvent) {
-  if (event.key !== "Escape" || !open.value) return
-  event.stopPropagation()
+  if (event.key !== "Escape" || event.defaultPrevented) return
+  /* Handled here, so an enclosing dialog does not close as well. */
+  event.preventDefault()
+  const focusInside = root()?.contains(document.activeElement)
   open.value = false
-  if (event.currentTarget instanceof HTMLElement) {
-    event.currentTarget
-      .querySelector<HTMLElement>("[data-popover-trigger]")
-      ?.focus()
+  /* Focus goes back to the trigger only if it would otherwise be lost. */
+  if (focusInside) {
+    root()?.querySelector<HTMLElement>("[data-popover-trigger]")?.focus()
   }
+}
+
+/*
+ * Both listeners sit on the document while the popover is open. Escape has to
+ * work wherever focus is: some browsers do not focus a button on click, and a
+ * click on the panel's text leaves focus on the body.
+ */
+function listen(on: boolean) {
+  const change = on ? "addEventListener" : "removeEventListener"
+  document[change]("pointerdown", onPointerDown)
+  document[change]("keydown", onKeydown)
 }
 
 // `onMounted` only runs in the browser, which keeps `document` client-only.
 onMounted(() => {
-  watch(
-    open,
-    (isOpen) => {
-      if (isOpen) document.addEventListener("pointerdown", onPointerDown)
-      else document.removeEventListener("pointerdown", onPointerDown)
-    },
-    { immediate: true }
-  )
+  watch(open, (isOpen) => listen(isOpen), { immediate: true })
 })
 
-onBeforeUnmount(() => {
-  document.removeEventListener("pointerdown", onPointerDown)
-})
+onBeforeUnmount(() => listen(false))
 
 provide(popoverKey, { open, id })
 </script>
@@ -69,7 +74,6 @@ provide(popoverKey, { open, id })
     :data-popover="id"
     :data-state="open ? 'open' : 'closed'"
     :class="cn('relative inline-flex', props.class)"
-    @keydown="onKeydown"
   >
     <slot />
   </div>

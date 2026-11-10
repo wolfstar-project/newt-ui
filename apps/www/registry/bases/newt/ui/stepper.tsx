@@ -59,7 +59,8 @@ const Stepper = React.forwardRef<HTMLOListElement, StepperProps>(
           const last = index === steps.length - 1
           return (
             <li
-              key={step.title}
+              // Positional: the list is fixed, and two steps may share a title.
+              key={index}
               aria-current={current ? "step" : undefined}
               className={cn(
                 "relative flex min-w-0",

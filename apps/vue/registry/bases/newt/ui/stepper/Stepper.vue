@@ -42,7 +42,7 @@ const vertical = computed(() => props.orientation === "vertical")
   >
     <li
       v-for="(step, index) in props.steps"
-      :key="step.title"
+      :key="index"
       :aria-current="index === props.value ? 'step' : undefined"
       :class="
         cn(
