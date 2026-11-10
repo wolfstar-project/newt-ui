@@ -1,0 +1,91 @@
+---
+title: "Audit Log"
+description: "A list of who changed what and when, with entries that open to show each change."
+---
+
+Use it to show a history of administrative actions: role edits, channel changes, bans. Newest first. An entry reads as a sentence, "ada updated the role Moderator", and one with details opens to list them.
+
+The kind of change is drawn as a shape before the entry (a plus, a ring, a minus) so that added, updated and removed do not depend on telling green, amber and red apart.
+
+<ComponentPreview name="audit-log" />
+
+## Installation
+
+<Installation name="audit-log" />
+
+## Usage
+
+<Usage name="audit-log" />
+
+## API reference
+
+<PropsTable
+  of="AuditLogEntry"
+  rows={[
+    {
+      name: "actor",
+      type: "string",
+      description: "Who did it. Its first letter is the default avatar.",
+    },
+    {
+      name: "action",
+      type: "string",
+      description:
+        'What they did, as the middle of a sentence: "updated the role".',
+    },
+    {
+      name: "target",
+      type: "string",
+      description: "What they did it to.",
+    },
+    {
+      name: "kind",
+      type: '"create" | "update" | "delete"',
+      description: "Sets the shape and colour before the entry.",
+      default: '"update"',
+    },
+    {
+      name: "time",
+      type: "string",
+      description: "The time as the reader should see it.",
+    },
+    {
+      name: "dateTime",
+      type: "string",
+      description: "The same moment in machine form, for the `<time>` element.",
+    },
+    {
+      name: "avatar / #avatar",
+      type: "React.ReactNode / Vue slot",
+      description: "Replaces the initial avatar, for one with an image.",
+    },
+    {
+      name: "kindLabel",
+      type: "string",
+      description:
+        "Read by a screen reader in place of the shape. Defaults to Added, Updated or Removed.",
+    },
+    {
+      name: "defaultOpen",
+      type: "boolean",
+      description: "Start with the changes showing.",
+      default: "false",
+    },
+    {
+      name: "children / default slot",
+      type: "AuditLogChange rows",
+      description:
+        "The changes. With none, the entry is a plain row that does not open.",
+    },
+  ]}
+/>
+
+`AuditLog` is the ordered list and `AuditLogChange` one numbered line under an entry. Wrap the value that changed in `<strong>` to set it apart.
+
+## Accessibility
+
+The log is an ordered list; name it with `aria-label`. An entry with changes is a native `<details>`: its summary is a button with an expanded state, toggled by `Enter` or `Space`. The kind is announced through a hidden word (`kindLabel`) before the sentence. Give `dateTime` alongside `time`, so the moment is unambiguous to assistive technology even when the visible text says "Yesterday".
+
+## Tokens
+
+<TokensNote name="audit-log" />

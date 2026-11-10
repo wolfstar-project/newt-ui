@@ -1,0 +1,74 @@
+---
+title: "Channel sidebar"
+description: "The column a server is navigated from: its name, its channels as a tree and the user panel at the foot."
+---
+
+The navigation column of a chat-shaped app, assembled from the registry: the server's name, its categories and channels as a [Tree](/docs/components/tree), and the signed-in user's [User Panel](/docs/components/user-panel) pinned to the bottom. The channel list scrolls; the header and the panel stay put.
+
+Give it a height, and pair it with the [Chat window](/docs/components/chat-window) block for a whole screen.
+
+<ComponentPreview name="channel-sidebar" size="full" />
+
+## Installation
+
+<Installation name="channel-sidebar" />
+
+## Usage
+
+<Usage name="channel-sidebar" />
+
+## API reference
+
+<PropsTable
+  of="ChannelSidebar"
+  rows={[
+    {
+      name: "serverName",
+      type: "string",
+      description: "Shown in the header and used to name the region.",
+    },
+    {
+      name: "channels",
+      type: "TreeNode[]",
+      description:
+        "Categories and their channels, in the shape the tree takes.",
+    },
+    {
+      name: "defaultExpanded",
+      type: "string[]",
+      description: "Ids of the categories that start open.",
+    },
+    {
+      name: "channel / v-model:channel",
+      type: "string",
+      description: "The id of the channel being shown.",
+    },
+    {
+      name: "onChannelChange",
+      type: "(channel: string) => void",
+      description:
+        "React only. Called when a channel is chosen; Vue emits `update:channel`.",
+    },
+    {
+      name: "user",
+      type: "{ name: string; initials: string; status: Status; statusText?: string }",
+      description: "The signed-in user, for the panel at the foot.",
+    },
+    {
+      name: "onOpenSettings / @open-settings",
+      type: "() => void",
+      description:
+        "Called when the settings button in the user panel is pressed.",
+    },
+  ]}
+/>
+
+Mute and deafen are local state inside the block, because it has no voice connection to tell. When yours does, copy the block and lift those two values out.
+
+## Accessibility
+
+The column is an `<aside>` named after the server. Inside it the channels are one tab stop with the tree's arrow-key model, and the user panel's buttons follow in the tab order. See the Tree and User Panel pages for the detail of each.
+
+## Tokens
+
+<TokensNote name="channel-sidebar" />

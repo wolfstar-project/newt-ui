@@ -191,6 +191,9 @@ and border changes only. This is a deliberate constraint, not an oversight.
 | Table                 | `.newt-table-wrap` / `.newt-table`                                             | native table, `aria-sort` headings, `aria-selected` rows             |
 | Tree                  | `.newt-tree`                                                                   | flat `role="tree"` rows with `aria-level`                            |
 | Calendar              | `.newt-calendar`                                                               | month `role="grid"`, dates as `YYYY-MM-DD`                           |
+| User panel            | `.newt-user-panel`                                                             | signed-in user strip, `aria-pressed` toggle buttons                  |
+| Side nav              | `.newt-side-nav`                                                               | grouped `<nav>` links, `aria-current="page"`                         |
+| Audit log             | `.newt-audit-log`                                                              | entries as `<details>`, kind `--create` / `--update` / `--delete`    |
 | Reaction pill         | `.newt-reaction`                                                               | clickable, `--active` state, `aria-pressed`                          |
 | Reply preview         | `.newt-reply`                                                                  | "replying to" bar above a message                                    |
 | Typing indicator      | `.newt-typing`                                                                 | static three-dot marker, paired with `aria-label`                    |

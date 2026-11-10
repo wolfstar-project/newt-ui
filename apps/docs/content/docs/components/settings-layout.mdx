@@ -1,0 +1,64 @@
+---
+title: "Settings layout"
+description: "A settings screen: grouped sections down the side and the chosen section's breadcrumb, heading and content beside them."
+---
+
+The frame of a settings area, assembled from a [Side Nav](/docs/components/side-nav) and a [Breadcrumb](/docs/components/breadcrumb). You describe the sections as data and render the current one as the block's content, so each section stays an ordinary component of yours.
+
+Below 40rem the navigation moves above the content.
+
+<ComponentPreview name="settings-layout" size="full" />
+
+## Installation
+
+<Installation name="settings-layout" />
+
+## Usage
+
+<Usage name="settings-layout" />
+
+## API reference
+
+<PropsTable
+  of="SettingsLayout"
+  rows={[
+    {
+      name: "title",
+      type: "string",
+      description:
+        "What is being configured. It is the first crumb and the name of the navigation.",
+    },
+    {
+      name: "groups",
+      type: "{ label?: string; sections: SettingsSection[] }[]",
+      description:
+        "The sections, in groups. A section is `{ id, label, badge?, danger? }`.",
+    },
+    {
+      name: "section / v-model:section",
+      type: "string",
+      description: "The id of the section being shown.",
+    },
+    {
+      name: "onSectionChange",
+      type: "(section: string) => void",
+      description:
+        "React only. Called when an entry is chosen; Vue emits `update:section`.",
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "The content of the current section.",
+    },
+  ]}
+/>
+
+The entries are buttons, because the block swaps content in place. In a routed app, copy the block and give each `SideNavItem` an `href`.
+
+## Accessibility
+
+The navigation is a landmark named by `title` and the content is the page's `<main>`, so render one settings layout per page. The current section carries `aria-current="page"` in the navigation and is repeated as the breadcrumb's last crumb and as the heading above the content.
+
+## Tokens
+
+<TokensNote name="settings-layout" />

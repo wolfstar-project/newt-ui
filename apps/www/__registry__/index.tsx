@@ -71,6 +71,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "audit-log",
+    {
+      name: "audit-log",
+      type: "registry:ui",
+      registryDependencies: ["avatar"],
+      files: ["registry/bases/newt/ui/audit-log.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/audit-log")),
+    },
+  ],
+  [
     "avatar",
     {
       name: "avatar",
@@ -177,6 +187,24 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/ui/channel-info.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/ui/channel-info")
+      ),
+    },
+  ],
+  [
+    "channel-sidebar",
+    {
+      name: "channel-sidebar",
+      type: "registry:block",
+      registryDependencies: [
+        "tree",
+        "user-panel",
+        "status-indicator",
+        "avatar",
+      ],
+      files: ["registry/bases/newt/blocks/channel-sidebar/channel-sidebar.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/blocks/channel-sidebar/channel-sidebar")
       ),
     },
   ],
@@ -581,6 +609,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "onboarding",
+    {
+      name: "onboarding",
+      type: "registry:block",
+      registryDependencies: ["stepper", "button"],
+      files: ["registry/bases/newt/blocks/onboarding/onboarding.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/blocks/onboarding/onboarding")
+      ),
+    },
+  ],
+  [
     "pagination",
     {
       name: "pagination",
@@ -747,6 +787,29 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         () =>
           import("@/registry/bases/newt/blocks/server-sidebar/server-sidebar")
       ),
+    },
+  ],
+  [
+    "settings-layout",
+    {
+      name: "settings-layout",
+      type: "registry:block",
+      registryDependencies: ["side-nav", "breadcrumb"],
+      files: ["registry/bases/newt/blocks/settings-layout/settings-layout.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/blocks/settings-layout/settings-layout")
+      ),
+    },
+  ],
+  [
+    "side-nav",
+    {
+      name: "side-nav",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/side-nav.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/side-nav")),
     },
   ],
   [
@@ -976,6 +1039,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "user-panel",
+    {
+      name: "user-panel",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/user-panel.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/user-panel")
+      ),
+    },
+  ],
+  [
     "user-profile",
     {
       name: "user-profile",
@@ -1073,6 +1148,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/attachment-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/attachment-demo")
+      ),
+    },
+  ],
+  [
+    "audit-log-demo",
+    {
+      name: "audit-log-demo",
+      type: "registry:example",
+      registryDependencies: ["audit-log"],
+      files: ["registry/bases/newt/examples/audit-log-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/audit-log-demo")
       ),
     },
   ],
@@ -1193,6 +1280,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/channel-info-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/channel-info-demo")
+      ),
+    },
+  ],
+  [
+    "channel-sidebar-demo",
+    {
+      name: "channel-sidebar-demo",
+      type: "registry:example",
+      registryDependencies: ["channel-sidebar"],
+      files: ["registry/bases/newt/examples/channel-sidebar-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/channel-sidebar-demo")
       ),
     },
   ],
@@ -1617,6 +1716,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "onboarding-demo",
+    {
+      name: "onboarding-demo",
+      type: "registry:example",
+      registryDependencies: ["onboarding"],
+      files: ["registry/bases/newt/examples/onboarding-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/onboarding-demo")
+      ),
+    },
+  ],
+  [
     "pagination-demo",
     {
       name: "pagination-demo",
@@ -1793,6 +1904,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/server-sidebar-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/server-sidebar-demo")
+      ),
+    },
+  ],
+  [
+    "settings-layout-demo",
+    {
+      name: "settings-layout-demo",
+      type: "registry:example",
+      registryDependencies: ["settings-layout"],
+      files: ["registry/bases/newt/examples/settings-layout-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/settings-layout-demo")
+      ),
+    },
+  ],
+  [
+    "side-nav-demo",
+    {
+      name: "side-nav-demo",
+      type: "registry:example",
+      registryDependencies: ["side-nav"],
+      files: ["registry/bases/newt/examples/side-nav-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/side-nav-demo")
       ),
     },
   ],
@@ -2048,6 +2183,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/typing-indicator-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/typing-indicator-demo")
+      ),
+    },
+  ],
+  [
+    "user-panel-demo",
+    {
+      name: "user-panel-demo",
+      type: "registry:example",
+      registryDependencies: ["user-panel"],
+      files: ["registry/bases/newt/examples/user-panel-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/user-panel-demo")
       ),
     },
   ],

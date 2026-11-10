@@ -1,0 +1,14 @@
+{
+  "name": "user-panel",
+  "title": "User Panel",
+  "description": "The strip at the foot of a sidebar: the signed-in user and their mute, deafen and settings controls.",
+  "vueFiles": [
+    "UserPanel.vue",
+    "UserPanelInfo.vue",
+    "UserPanelActions.vue",
+    "UserPanelButton.vue",
+    "index.ts"
+  ],
+  "reactDemo": "user-panel-demo",
+  "vueDemo": "UserPanelDemo"
+}

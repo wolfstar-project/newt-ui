@@ -75,6 +75,9 @@ const rootClassEntries = [
   ["table", "newt-table"],
   ["tree", "newt-tree"],
   ["calendar", "newt-calendar"],
+  ["user-panel", "newt-user-panel"],
+  ["side-nav", "newt-side-nav"],
+  ["audit-log", "newt-audit-log"],
 ] as const
 
 // Component names are looked up by arbitrary route params, so this remains

@@ -58,6 +58,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "audit-log-demo",
+    type: "registry:example",
+    registryDependencies: ["audit-log"],
+    files: [
+      {
+        path: "examples/audit-log-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "avatar-demo",
     type: "registry:example",
     registryDependencies: ["avatar"],
@@ -163,6 +174,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/channel-info-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "channel-sidebar-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-sidebar"],
+    files: [
+      {
+        path: "examples/channel-sidebar-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -553,6 +575,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "onboarding-demo",
+    type: "registry:example",
+    registryDependencies: ["onboarding"],
+    files: [
+      {
+        path: "examples/onboarding-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "pagination-demo",
     type: "registry:example",
     registryDependencies: ["pagination"],
@@ -713,6 +746,28 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/server-sidebar-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "settings-layout-demo",
+    type: "registry:example",
+    registryDependencies: ["settings-layout"],
+    files: [
+      {
+        path: "examples/settings-layout-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "side-nav-demo",
+    type: "registry:example",
+    registryDependencies: ["side-nav"],
+    files: [
+      {
+        path: "examples/side-nav-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -944,6 +999,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/typing-indicator-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "user-panel-demo",
+    type: "registry:example",
+    registryDependencies: ["user-panel"],
+    files: [
+      {
+        path: "examples/user-panel-demo.tsx",
         type: "registry:example",
       },
     ],

@@ -70,6 +70,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "audit-log",
+    type: "registry:ui",
+    title: "Audit Log",
+    description:
+      "A list of who changed what and when, with entries that open to show each change.",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "ui/audit-log.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "avatar",
     type: "registry:ui",
     title: "Avatar",
@@ -200,6 +214,20 @@ export const ui: Registry = [
       {
         path: "ui/channel-info.tsx",
         type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-sidebar",
+    type: "registry:block",
+    title: "Channel sidebar",
+    description:
+      "The column a server is navigated from: its name, its channels as a tree and the user panel at the foot.",
+    registryDependencies: ["tree", "user-panel", "status-indicator", "avatar"],
+    files: [
+      {
+        path: "blocks/channel-sidebar/channel-sidebar.tsx",
+        type: "registry:block",
       },
     ],
   },
@@ -670,6 +698,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "onboarding",
+    type: "registry:block",
+    title: "Onboarding",
+    description:
+      "A short setup flow: a stepper, the current step's content and the buttons that move through it.",
+    registryDependencies: ["stepper", "button"],
+    files: [
+      {
+        path: "blocks/onboarding/onboarding.tsx",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
     name: "pagination",
     type: "registry:ui",
     title: "Pagination",
@@ -874,6 +916,33 @@ export const ui: Registry = [
       {
         path: "blocks/server-sidebar/server-sidebar.tsx",
         type: "registry:block",
+      },
+    ],
+  },
+  {
+    name: "settings-layout",
+    type: "registry:block",
+    title: "Settings layout",
+    description:
+      "A settings screen: grouped sections down the side and the chosen section's breadcrumb, heading and content beside them.",
+    registryDependencies: ["side-nav", "breadcrumb"],
+    files: [
+      {
+        path: "blocks/settings-layout/settings-layout.tsx",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
+    name: "side-nav",
+    type: "registry:ui",
+    title: "Side Nav",
+    description:
+      "A vertical list of grouped links for the sections of a settings screen.",
+    files: [
+      {
+        path: "ui/side-nav.tsx",
+        type: "registry:ui",
       },
     ],
   },
@@ -1159,6 +1228,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/typing-indicator.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "user-panel",
+    type: "registry:ui",
+    title: "User Panel",
+    description:
+      "The strip at the foot of a sidebar: the signed-in user and their mute, deafen and settings controls.",
+    files: [
+      {
+        path: "ui/user-panel.tsx",
         type: "registry:ui",
       },
     ],
