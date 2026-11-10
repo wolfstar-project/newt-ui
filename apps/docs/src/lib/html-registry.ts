@@ -47,10 +47,27 @@ const cssSources = import.meta.glob<string>(
   { query: "?raw", import: "default", eager: true }
 )
 
+const tokenSources = import.meta.glob<string>(
+  "../../../../packages/cli/registry/html/tokens.css",
+  {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }
+)
+
+/** Every custom property `tokens.css` declares. */
+const declaredTokens = new Set(
+  Object.values(tokenSources).flatMap((css) =>
+    [...css.matchAll(/(--newt-[a-z0-9-]+)\s*:/g)].map((match) => match[1])
+  )
+)
+
 /**
  * Every `--newt-*` token a component's stylesheet reads, in the order it first
- * reads them. This is the component's whole theming surface: there is nothing
- * else in the file to override.
+ * reads them, kept to the ones `tokens.css` declares: a property a component
+ * sets for one instance (a member's name colour, an embed's stripe) is not
+ * part of the theme.
  */
 export function componentTokens(name: string): readonly string[] {
   const path = Object.keys(cssSources).find((key) =>
@@ -60,7 +77,9 @@ export function componentTokens(name: string): readonly string[] {
   if (css === undefined) return []
   const tokens = new Set<string>()
   for (const match of css.matchAll(/var\(\s*(--newt-[a-z0-9-]+)/g)) {
-    if (match[1] !== undefined) tokens.add(match[1])
+    if (match[1] !== undefined && declaredTokens.has(match[1])) {
+      tokens.add(match[1])
+    }
   }
   return [...tokens]
 }
