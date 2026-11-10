@@ -54,9 +54,13 @@ function onKeydown(event: KeyboardEvent) {
  * click on the panel's text leaves focus on the body.
  */
 function listen(on: boolean) {
-  const change = on ? "addEventListener" : "removeEventListener"
-  document[change]("pointerdown", onPointerDown)
-  document[change]("keydown", onKeydown)
+  if (on) {
+    document.addEventListener("pointerdown", onPointerDown)
+    document.addEventListener("keydown", onKeydown)
+  } else {
+    document.removeEventListener("pointerdown", onPointerDown)
+    document.removeEventListener("keydown", onKeydown)
+  }
 }
 
 // `onMounted` only runs in the browser, which keeps `document` client-only.
