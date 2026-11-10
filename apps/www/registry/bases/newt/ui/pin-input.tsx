@@ -123,6 +123,30 @@ const PinInput = React.forwardRef<HTMLDivElement, PinInputProps>(
       focus(at + chars.length)
     }
 
+    /*
+     * A paste is handled on its own event. Read from the input's value it
+     * cannot be told apart from typing, and a pasted code that begins with
+     * the box's current character would lose that character.
+     */
+    const handlePaste = (
+      index: number,
+      event: React.ClipboardEvent<HTMLInputElement>
+    ) => {
+      event.preventDefault()
+      const chars =
+        event.clipboardData.getData("text").match(ACCEPT[type]) ?? []
+      if (chars.length === 0) return
+      const at = Math.min(index, code.length)
+      commit(
+        (
+          code.slice(0, at) +
+          chars.join("") +
+          code.slice(at + chars.length)
+        ).slice(0, length)
+      )
+      focus(at + chars.length)
+    }
+
     const handleKeyDown = (
       index: number,
       event: React.KeyboardEvent<HTMLInputElement>
@@ -176,6 +200,7 @@ const PinInput = React.forwardRef<HTMLDivElement, PinInputProps>(
               value={code[index] ?? ""}
               onChange={(event) => handleChange(index, event.target.value)}
               onKeyDown={(event) => handleKeyDown(index, event)}
+              onPaste={(event) => handlePaste(index, event)}
               onFocus={(event) => event.target.select()}
               className="h-[52px] w-11 rounded-sm border border-newt-border bg-newt-bg-input p-0 text-center font-mono text-xl font-semibold text-newt-text-primary caret-newt-brand transition-colors duration-fast ease-newt focus:border-newt-brand focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 group-data-[invalid]/pin:border-newt-danger"
             />
