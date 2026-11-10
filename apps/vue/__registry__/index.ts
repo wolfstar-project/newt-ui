@@ -48,6 +48,21 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "alert",
+    {
+      name: "alert",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/alert/Alert.vue",
+        "registry/bases/newt/ui/alert/AlertTitle.vue",
+        "registry/bases/newt/ui/alert/AlertDescription.vue",
+        "registry/bases/newt/ui/alert/AlertActions.vue",
+        "registry/bases/newt/ui/alert/index.ts",
+      ],
+    },
+  ],
+  [
     "app-launcher",
     {
       name: "app-launcher",
@@ -105,6 +120,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "avatar-group",
+    {
+      name: "avatar-group",
+      type: "registry:ui",
+      registryDependencies: ["avatar"],
+      files: [
+        "registry/bases/newt/ui/avatar-group/AvatarGroup.vue",
+        "registry/bases/newt/ui/avatar-group/index.ts",
+      ],
+    },
+  ],
+  [
     "badge",
     {
       name: "badge",
@@ -155,6 +182,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: [
         "registry/bases/newt/ui/button/Button.vue",
         "registry/bases/newt/ui/button/index.ts",
+      ],
+    },
+  ],
+  [
+    "calendar",
+    {
+      name: "calendar",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/calendar/Calendar.vue",
+        "registry/bases/newt/ui/calendar/index.ts",
       ],
     },
   ],
@@ -1067,6 +1106,24 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "table",
+    {
+      name: "table",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/table/Table.vue",
+        "registry/bases/newt/ui/table/TableHeader.vue",
+        "registry/bases/newt/ui/table/TableBody.vue",
+        "registry/bases/newt/ui/table/TableRow.vue",
+        "registry/bases/newt/ui/table/TableHead.vue",
+        "registry/bases/newt/ui/table/TableCell.vue",
+        "registry/bases/newt/ui/table/TableCaption.vue",
+        "registry/bases/newt/ui/table/index.ts",
+      ],
+    },
+  ],
+  [
     "tabs",
     {
       name: "tabs",
@@ -1181,6 +1238,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "tree",
+    {
+      name: "tree",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/tree/Tree.vue",
+        "registry/bases/newt/ui/tree/index.ts",
+      ],
+    },
+  ],
+  [
     "typeset",
     {
       name: "typeset",
@@ -1287,6 +1356,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "AlertDemo",
+    {
+      name: "AlertDemo",
+      type: "registry:example",
+      registryDependencies: ["alert"],
+      files: ["registry/bases/newt/examples/AlertDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AlertDemo.vue")
+      ),
+    },
+  ],
+  [
     "AppLauncherDemo",
     {
       name: "AppLauncherDemo",
@@ -1319,6 +1400,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/AvatarDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AvatarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AvatarGroupDemo",
+    {
+      name: "AvatarGroupDemo",
+      type: "registry:example",
+      registryDependencies: ["avatar-group"],
+      files: ["registry/bases/newt/examples/AvatarGroupDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AvatarGroupDemo.vue")
       ),
     },
   ],
@@ -1367,6 +1460,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ButtonDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ButtonDemo.vue")
+      ),
+    },
+  ],
+  [
+    "CalendarDemo",
+    {
+      name: "CalendarDemo",
+      type: "registry:example",
+      registryDependencies: ["calendar"],
+      files: ["registry/bases/newt/examples/CalendarDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/CalendarDemo.vue")
       ),
     },
   ],
@@ -2118,6 +2223,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "TableDemo",
+    {
+      name: "TableDemo",
+      type: "registry:example",
+      registryDependencies: ["table"],
+      files: ["registry/bases/newt/examples/TableDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TableDemo.vue")
+      ),
+    },
+  ],
+  [
     "TabsDemo",
     {
       name: "TabsDemo",
@@ -2210,6 +2327,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/TooltipDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TooltipDemo.vue")
+      ),
+    },
+  ],
+  [
+    "TreeDemo",
+    {
+      name: "TreeDemo",
+      type: "registry:example",
+      registryDependencies: ["tree"],
+      files: ["registry/bases/newt/examples/TreeDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TreeDemo.vue")
       ),
     },
   ],

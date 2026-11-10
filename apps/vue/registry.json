@@ -43,6 +43,36 @@
       "framework": "vue"
     },
     {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "An inline notice with an icon and a coloured edge, in info, success, warning and danger kinds.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/alert/Alert.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/alert/AlertTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/alert/AlertDescription.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/alert/AlertActions.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/alert/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "app-launcher",
       "type": "registry:ui",
       "title": "App Launcher",
@@ -180,6 +210,24 @@
       "framework": "vue"
     },
     {
+      "name": "avatar-group",
+      "type": "registry:ui",
+      "title": "Avatar Group",
+      "description": "A row of overlapping avatars with a count for the members not shown.",
+      "registryDependencies": ["avatar"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/avatar-group/AvatarGroup.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/avatar-group/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
@@ -269,6 +317,23 @@
         },
         {
           "path": "registry/bases/newt/ui/button/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "A month grid for picking one day, with keyboard navigation and a selectable range of dates.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/calendar/Calendar.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/calendar/index.ts",
           "type": "registry:ui"
         }
       ],
@@ -1993,6 +2058,47 @@
       "framework": "vue"
     },
     {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A bordered data table with sortable headings, selectable rows and a caption.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/table/Table.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/table/TableHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/table/TableBody.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/table/TableRow.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/table/TableHead.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/table/TableCell.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/table/TableCaption.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/table/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
@@ -2198,6 +2304,23 @@
         },
         {
           "path": "registry/bases/newt/ui/tooltip/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "tree",
+      "type": "registry:ui",
+      "title": "Tree",
+      "description": "A collapsible, keyboard-driven list of nested rows, such as categories and their channels.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/tree/Tree.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/tree/index.ts",
           "type": "registry:ui"
         }
       ],

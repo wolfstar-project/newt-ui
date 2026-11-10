@@ -186,6 +186,11 @@ and border changes only. This is a deliberate constraint, not an oversight.
 | Popover               | `.newt-popover`                                                                | panel anchored to its trigger, `hidden` when closed                  |
 | Drawer                | `.newt-drawer`                                                                 | native `<dialog>` side panel, open with `showModal()`                |
 | Command palette       | `.newt-command-palette`                                                        | `<dialog>` with a combobox over a filtered listbox                   |
+| Alert                 | `.newt-alert`                                                                  | inline notice, `--info` / `--success` / `--warning` / `--danger`     |
+| Avatar group          | `.newt-avatar-group`                                                           | overlapped avatars with a `+N` chip                                  |
+| Table                 | `.newt-table-wrap` / `.newt-table`                                             | native table, `aria-sort` headings, `aria-selected` rows             |
+| Tree                  | `.newt-tree`                                                                   | flat `role="tree"` rows with `aria-level`                            |
+| Calendar              | `.newt-calendar`                                                               | month `role="grid"`, dates as `YYYY-MM-DD`                           |
 | Reaction pill         | `.newt-reaction`                                                               | clickable, `--active` state, `aria-pressed`                          |
 | Reply preview         | `.newt-reply`                                                                  | "replying to" bar above a message                                    |
 | Typing indicator      | `.newt-typing`                                                                 | static three-dot marker, paired with `aria-label`                    |

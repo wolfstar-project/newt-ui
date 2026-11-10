@@ -1,0 +1,83 @@
+---
+title: "Calendar"
+description: "A month grid for picking one day, with keyboard navigation and a selectable range of dates."
+---
+
+Use it to pick a single day when seeing the month helps: scheduling an event, choosing when a timeout ends. For a date the reader already knows, such as a birthday, a text field is faster.
+
+Dates go in and out as `YYYY-MM-DD` strings. They sort as text, survive JSON, and carry no time zone, so the day the reader picked is the day you store.
+
+<ComponentPreview name="calendar" />
+
+## Installation
+
+<Installation name="calendar" />
+
+## Usage
+
+<Usage name="calendar" />
+
+## API reference
+
+<PropsTable
+  of="Calendar"
+  rows={[
+    {
+      name: "value / v-model",
+      type: "string",
+      description:
+        "The chosen day as `YYYY-MM-DD`. In React, leave it undefined and pass `defaultValue` to let the calendar own it.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string) => void",
+      description:
+        "React only. Called with the chosen day; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "min",
+      type: "string",
+      description:
+        "The first day that can be chosen. Earlier days are disabled.",
+    },
+    {
+      name: "max",
+      type: "string",
+      description: "The last day that can be chosen. Later days are disabled.",
+    },
+    {
+      name: "locale",
+      type: "string",
+      description: "A BCP 47 tag for the month and weekday names.",
+      default: '"en-US"',
+    },
+    {
+      name: "weekStartsOn",
+      type: "0 | 1",
+      description: "`0` starts the week on Sunday, `1` on Monday.",
+      default: "0",
+    },
+    {
+      name: "previousLabel",
+      type: "string",
+      description: "Accessible name of the previous-month button.",
+      default: '"Previous month"',
+    },
+    {
+      name: "nextLabel",
+      type: "string",
+      description: "Accessible name of the next-month button.",
+      default: '"Next month"',
+    },
+  ]}
+/>
+
+With no value, the calendar opens on the current month once it is running in the browser; today is the reader's own date, so it is not known during server rendering.
+
+## Accessibility
+
+The month is a table with `role="grid"`, named by the month and year, with the full weekday name on each column heading. One day at a time is a tab stop. The arrow keys move by a day or a week, `Home` and `End` go to the ends of the week, `Page Up` and `Page Down` change month, and moving past the edge of the month turns the page. `Enter` or `Space` chooses the focused day. Today is marked with `aria-current="date"` and an outline, the chosen day with `aria-selected` and a fill, so the two differ in shape as well as colour. Say the chosen date in text near the calendar, as the example does.
+
+## Tokens
+
+<TokensNote name="calendar" />

@@ -29,6 +29,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "alert",
+    type: "registry:ui",
+    title: "Alert",
+    description:
+      "An inline notice with an icon and a coloured edge, in info, success, warning and danger kinds.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/alert.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "app-launcher",
     type: "registry:ui",
     title: "App Launcher",
@@ -65,6 +79,20 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/avatar.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "avatar-group",
+    type: "registry:ui",
+    title: "Avatar Group",
+    description:
+      "A row of overlapping avatars with a count for the members not shown.",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "ui/avatar-group.tsx",
         type: "registry:ui",
       },
     ],
@@ -119,6 +147,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/button.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "calendar",
+    type: "registry:ui",
+    title: "Calendar",
+    description:
+      "A month grid for picking one day, with keyboard navigation and a selectable range of dates.",
+    files: [
+      {
+        path: "ui/calendar.tsx",
         type: "registry:ui",
       },
     ],
@@ -960,6 +1001,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "table",
+    type: "registry:ui",
+    title: "Table",
+    description:
+      "A bordered data table with sortable headings, selectable rows and a caption.",
+    files: [
+      {
+        path: "ui/table.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "tabs",
     type: "registry:ui",
     title: "Tabs",
@@ -1060,6 +1114,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/tooltip.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "tree",
+    type: "registry:ui",
+    title: "Tree",
+    description:
+      "A collapsible, keyboard-driven list of nested rows, such as categories and their channels.",
+    files: [
+      {
+        path: "ui/tree.tsx",
         type: "registry:ui",
       },
     ],

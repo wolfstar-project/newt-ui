@@ -1,0 +1,31 @@
+/* newt-ui · Avatar Group */
+
+/*
+ * A few avatars, overlapped, and a count for the rest. Each one is ringed in
+ * the colour of the surface behind it so the overlap reads as a cut-out; set
+ * `--newt-avatar-group-ring` when the group sits on something other than the
+ * default surface.
+ */
+.newt-avatar-group {
+  display: inline-flex;
+  align-items: center;
+}
+.newt-avatar-group > * {
+  box-shadow: 0 0 0 2px var(--newt-avatar-group-ring, var(--newt-bg-surface));
+}
+.newt-avatar-group > * + * {
+  margin-inline-start: -8px;
+}
+.newt-avatar-group__overflow {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.newt-avatar-group__label {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

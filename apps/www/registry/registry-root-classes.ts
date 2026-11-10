@@ -70,6 +70,11 @@ const rootClassEntries = [
   ["popover", "newt-popover"],
   ["drawer", "newt-drawer"],
   ["command-palette", "newt-command-palette"],
+  ["alert", "newt-alert"],
+  ["avatar-group", "newt-avatar-group"],
+  ["table", "newt-table"],
+  ["tree", "newt-tree"],
+  ["calendar", "newt-calendar"],
 ] as const
 
 // Component names are looked up by arbitrary route params, so this remains

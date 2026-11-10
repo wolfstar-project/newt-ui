@@ -25,6 +25,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "alert-demo",
+    type: "registry:example",
+    registryDependencies: ["alert"],
+    files: [
+      {
+        path: "examples/alert-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "app-launcher-demo",
     type: "registry:example",
     registryDependencies: ["app-launcher"],
@@ -53,6 +64,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/avatar-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "avatar-group-demo",
+    type: "registry:example",
+    registryDependencies: ["avatar-group"],
+    files: [
+      {
+        path: "examples/avatar-group-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -97,6 +119,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/button-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "calendar-demo",
+    type: "registry:example",
+    registryDependencies: ["calendar"],
+    files: [
+      {
+        path: "examples/calendar-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -784,6 +817,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "table-demo",
+    type: "registry:example",
+    registryDependencies: ["table"],
+    files: [
+      {
+        path: "examples/table-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "tabs-demo",
     type: "registry:example",
     registryDependencies: ["tabs"],
@@ -867,6 +911,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/tooltip-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "tree-demo",
+    type: "registry:example",
+    registryDependencies: ["tree"],
+    files: [
+      {
+        path: "examples/tree-demo.tsx",
         type: "registry:example",
       },
     ],

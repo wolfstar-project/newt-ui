@@ -27,6 +27,7 @@ export const categories: DocsCategory[] = [
     label: "Feedback",
     components: [
       "badge",
+      "alert",
       "toast",
       "modal",
       "drawer",
@@ -43,6 +44,7 @@ export const categories: DocsCategory[] = [
     label: "Identity & presence",
     components: [
       "avatar",
+      "avatar-group",
       "status-indicator",
       "member-list",
       "role-tag",
@@ -114,6 +116,9 @@ export const categories: DocsCategory[] = [
       "color-picker",
       "select-menu",
       "card",
+      "table",
+      "tree",
+      "calendar",
       "permission",
       "timeline",
       "bot-command-card",

@@ -3,13 +3,16 @@ import type * as React from "react"
 
 import AccordionDemo from "@/registry/bases/newt/examples/accordion-demo"
 import ActionRowDemo from "@/registry/bases/newt/examples/action-row-demo"
+import AlertDemo from "@/registry/bases/newt/examples/alert-demo"
 import AppLauncherDemo from "@/registry/bases/newt/examples/app-launcher-demo"
 import AttachmentDemo from "@/registry/bases/newt/examples/attachment-demo"
 import AvatarDemo from "@/registry/bases/newt/examples/avatar-demo"
+import AvatarGroupDemo from "@/registry/bases/newt/examples/avatar-group-demo"
 import BadgeDemo from "@/registry/bases/newt/examples/badge-demo"
 import BotCommandCardDemo from "@/registry/bases/newt/examples/bot-command-card-demo"
 import BreadcrumbDemo from "@/registry/bases/newt/examples/breadcrumb-demo"
 import ButtonDemo from "@/registry/bases/newt/examples/button-demo"
+import CalendarDemo from "@/registry/bases/newt/examples/calendar-demo"
 import CardDemo from "@/registry/bases/newt/examples/card-demo"
 import ChannelHeaderDemo from "@/registry/bases/newt/examples/channel-header-demo"
 import ChannelInfoDemo from "@/registry/bases/newt/examples/channel-info-demo"
@@ -71,6 +74,7 @@ import StageBannerDemo from "@/registry/bases/newt/examples/stage-banner-demo"
 import StatusIndicatorDemo from "@/registry/bases/newt/examples/status-indicator-demo"
 import StepperDemo from "@/registry/bases/newt/examples/stepper-demo"
 import SystemMessageDemo from "@/registry/bases/newt/examples/system-message-demo"
+import TableDemo from "@/registry/bases/newt/examples/table-demo"
 import TabsDemo from "@/registry/bases/newt/examples/tabs-demo"
 import TagInputDemo from "@/registry/bases/newt/examples/tag-input-demo"
 import ThreadPreviewDemo from "@/registry/bases/newt/examples/thread-preview-demo"
@@ -79,6 +83,7 @@ import TimestampDemo from "@/registry/bases/newt/examples/timestamp-demo"
 import ToastDemo from "@/registry/bases/newt/examples/toast-demo"
 import TokenFieldDemo from "@/registry/bases/newt/examples/token-field-demo"
 import TooltipDemo from "@/registry/bases/newt/examples/tooltip-demo"
+import TreeDemo from "@/registry/bases/newt/examples/tree-demo"
 import TypesetDemo from "@/registry/bases/newt/examples/typeset-demo"
 import TypingIndicatorDemo from "@/registry/bases/newt/examples/typing-indicator-demo"
 import UserProfileDemo from "@/registry/bases/newt/examples/user-profile-demo"
@@ -91,13 +96,16 @@ import VoiceChannelDemo from "@/registry/bases/newt/examples/voice-channel-demo"
 const demoEntries: Array<[string, React.ComponentType]> = [
   ["accordion", AccordionDemo],
   ["action-row", ActionRowDemo],
+  ["alert", AlertDemo],
   ["app-launcher", AppLauncherDemo],
   ["attachment", AttachmentDemo],
   ["avatar", AvatarDemo],
+  ["avatar-group", AvatarGroupDemo],
   ["badge", BadgeDemo],
   ["bot-command-card", BotCommandCardDemo],
   ["breadcrumb", BreadcrumbDemo],
   ["button", ButtonDemo],
+  ["calendar", CalendarDemo],
   ["card", CardDemo],
   ["channel-header", ChannelHeaderDemo],
   ["channel-info", ChannelInfoDemo],
@@ -159,6 +167,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["status-indicator", StatusIndicatorDemo],
   ["stepper", StepperDemo],
   ["system-message", SystemMessageDemo],
+  ["table", TableDemo],
   ["tabs", TabsDemo],
   ["tag-input", TagInputDemo],
   ["thread-preview", ThreadPreviewDemo],
@@ -167,6 +176,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["toast", ToastDemo],
   ["token-field", TokenFieldDemo],
   ["tooltip", TooltipDemo],
+  ["tree", TreeDemo],
   ["typeset", TypesetDemo],
   ["typing-indicator", TypingIndicatorDemo],
   ["user-profile", UserProfileDemo],

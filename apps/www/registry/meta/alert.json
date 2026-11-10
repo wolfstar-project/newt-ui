@@ -1,0 +1,15 @@
+{
+  "name": "alert",
+  "title": "Alert",
+  "description": "An inline notice with an icon and a coloured edge, in info, success, warning and danger kinds.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": [
+    "Alert.vue",
+    "AlertTitle.vue",
+    "AlertDescription.vue",
+    "AlertActions.vue",
+    "index.ts"
+  ],
+  "reactDemo": "alert-demo",
+  "vueDemo": "AlertDemo"
+}

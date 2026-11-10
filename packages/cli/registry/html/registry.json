@@ -453,6 +453,39 @@
       "rootClass": "newt-command-palette",
       "files": ["command-palette.css", "command-palette.html"],
       "js": "command-palette.js"
+    },
+    {
+      "name": "alert",
+      "title": "Alert",
+      "rootClass": "newt-alert",
+      "files": ["alert.css", "alert.html"]
+    },
+    {
+      "name": "avatar-group",
+      "title": "Avatar Group",
+      "rootClass": "newt-avatar-group",
+      "files": ["avatar-group.css", "avatar-group.html"],
+      "uses": ["avatar"]
+    },
+    {
+      "name": "table",
+      "title": "Table",
+      "rootClass": "newt-table",
+      "files": ["table.css", "table.html"]
+    },
+    {
+      "name": "tree",
+      "title": "Tree",
+      "rootClass": "newt-tree",
+      "files": ["tree.css", "tree.html"],
+      "js": "tree.js"
+    },
+    {
+      "name": "calendar",
+      "title": "Calendar",
+      "rootClass": "newt-calendar",
+      "files": ["calendar.css", "calendar.html"],
+      "js": "calendar.js"
     }
   ]
 }

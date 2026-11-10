@@ -1,0 +1,59 @@
+/* newt-ui · Alert */
+
+/*
+ * A notice that sits in the page, where a toast floats over it. What kind of
+ * notice it is shows three ways: the bar down its leading edge, the icon's
+ * shape and the words. Colour alone never carries it.
+ */
+.newt-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  inline-size: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--newt-border);
+  border-inline-start: 4px solid var(--newt-alert-accent, var(--newt-text-link));
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-secondary);
+  font-size: 14px;
+  line-height: 20px;
+}
+.newt-alert + .newt-alert {
+  margin-block-start: 8px;
+}
+.newt-alert--info {
+  --newt-alert-accent: var(--newt-text-link);
+}
+.newt-alert--success {
+  --newt-alert-accent: var(--newt-online);
+}
+.newt-alert--warning {
+  --newt-alert-accent: var(--newt-idle);
+}
+.newt-alert--danger {
+  --newt-alert-accent: var(--newt-danger);
+}
+.newt-alert__icon {
+  inline-size: 20px;
+  block-size: 20px;
+  flex-shrink: 0;
+  color: var(--newt-alert-accent, var(--newt-text-link));
+}
+.newt-alert__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+}
+.newt-alert__title {
+  color: var(--newt-text-primary);
+  font-weight: 600;
+}
+.newt-alert__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block-start: 8px;
+}

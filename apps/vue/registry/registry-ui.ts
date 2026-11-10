@@ -41,6 +41,36 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "alert",
+    type: "registry:ui",
+    title: "Alert",
+    description:
+      "An inline notice with an icon and a coloured edge, in info, success, warning and danger kinds.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/alert/Alert.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/alert/AlertTitle.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/alert/AlertDescription.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/alert/AlertActions.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/alert/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "app-launcher",
     type: "registry:ui",
     title: "App Launcher",
@@ -178,6 +208,24 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "avatar-group",
+    type: "registry:ui",
+    title: "Avatar Group",
+    description:
+      "A row of overlapping avatars with a count for the members not shown.",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "ui/avatar-group/AvatarGroup.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/avatar-group/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "badge",
     type: "registry:ui",
     title: "Badge",
@@ -267,6 +315,23 @@ export const ui: Registry = [
       },
       {
         path: "ui/button/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "calendar",
+    type: "registry:ui",
+    title: "Calendar",
+    description:
+      "A month grid for picking one day, with keyboard navigation and a selectable range of dates.",
+    files: [
+      {
+        path: "ui/calendar/Calendar.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/calendar/index.ts",
         type: "registry:ui",
       },
     ],
@@ -1984,6 +2049,47 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "table",
+    type: "registry:ui",
+    title: "Table",
+    description:
+      "A bordered data table with sortable headings, selectable rows and a caption.",
+    files: [
+      {
+        path: "ui/table/Table.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableBody.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableRow.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableHead.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableCell.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableCaption.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "tabs",
     type: "registry:ui",
     title: "Tabs",
@@ -2188,6 +2294,23 @@ export const ui: Registry = [
       },
       {
         path: "ui/tooltip/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "tree",
+    type: "registry:ui",
+    title: "Tree",
+    description:
+      "A collapsible, keyboard-driven list of nested rows, such as categories and their channels.",
+    files: [
+      {
+        path: "ui/tree/Tree.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/tree/index.ts",
         type: "registry:ui",
       },
     ],

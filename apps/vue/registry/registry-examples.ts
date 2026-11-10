@@ -25,6 +25,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "AlertDemo",
+    type: "registry:example",
+    registryDependencies: ["alert"],
+    files: [
+      {
+        path: "examples/AlertDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AppLauncherDemo",
     type: "registry:example",
     registryDependencies: ["app-launcher"],
@@ -53,6 +64,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/AvatarDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AvatarGroupDemo",
+    type: "registry:example",
+    registryDependencies: ["avatar-group"],
+    files: [
+      {
+        path: "examples/AvatarGroupDemo.vue",
         type: "registry:example",
       },
     ],
@@ -97,6 +119,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/ButtonDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "CalendarDemo",
+    type: "registry:example",
+    registryDependencies: ["calendar"],
+    files: [
+      {
+        path: "examples/CalendarDemo.vue",
         type: "registry:example",
       },
     ],
@@ -784,6 +817,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "TableDemo",
+    type: "registry:example",
+    registryDependencies: ["table"],
+    files: [
+      {
+        path: "examples/TableDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "TabsDemo",
     type: "registry:example",
     registryDependencies: ["tabs"],
@@ -867,6 +911,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/TooltipDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TreeDemo",
+    type: "registry:example",
+    registryDependencies: ["tree"],
+    files: [
+      {
+        path: "examples/TreeDemo.vue",
         type: "registry:example",
       },
     ],
