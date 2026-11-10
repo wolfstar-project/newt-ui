@@ -231,11 +231,17 @@ means in practice:
   and `Callout` under `src/components/mdx/`, built on Blume's own `Tabs`,
   `Steps`, `TypeTable`, `Card` and `CodeBlock`. `ReactDemo` and `VueDemo` are
   registered as islands there so Blume wires up both renderers;
-  `ComponentPreview` mounts them itself. The layout slots in
+  `ComponentPreview` mounts them itself.
+  `ComponentIndex` and the home page's wall draw each component from its
+  reference HTML in `packages/cli/registry/html/components/` through
+  `src/lib/html-registry.ts` and `src/components/site/ComponentThumb.astro`
+  (static markup, no island), and `TokensNote` lists the `--newt-*` tokens
+  read out of the same component's stylesheet. The layout slots in
   `src/components/layout/` put back the chrome the site had before the Lotus
   port (commit `b31ac30`): `Header` (wordmark, primary links, Blume's search,
   the React/Vue switch, the theme toggle — it also carries the theme and
-  drawer click handling Blume's header owned), `Sidebar`, `TableOfContents`,
+  drawer click handling Blume's header owned), `Sidebar` (which draws either the guides or the component reference,
+  whichever the current page belongs to), `TableOfContents`,
   `Pagination`, `PageHeader` (the copy-page menu beside the title) and
   `Footer` (with the trademark disclaimer); `Breadcrumbs` is emptied. Blume
   keeps the grid, the drawer, search and the generated routes. Blume reads

@@ -670,10 +670,255 @@
 
   /* --- component index ------------------------------------------------ */
 
+  .component-index-bar {
+    position: sticky;
+    top: 3.5rem;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0 0 0.5rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--newt-border);
+    background: var(--newt-bg-base);
+  }
+
+  .component-index-filter input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-input);
+    color: var(--newt-text-primary);
+    font: inherit;
+    font-size: 0.9rem;
+  }
+
+  .component-index-filter input::placeholder {
+    color: var(--newt-text-muted);
+  }
+
+  .component-index-filter input:focus-visible {
+    outline: 2px solid var(--newt-text-link);
+    outline-offset: 1px;
+  }
+
+  /* One row that scrolls sideways, so the sticky bar stays two rows tall. */
+  .component-index-jump {
+    display: flex;
+    gap: 0.35rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .component-index-jump a {
+    flex: none;
+  }
+
+  .component-index-jump a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-full);
+    color: var(--newt-text-secondary);
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+
+  .component-index-jump a:hover {
+    border-color: var(--newt-brand);
+    color: var(--newt-text-primary);
+  }
+
+  .component-index-jump span,
+  .component-index-group h2 span {
+    font-family: var(--newt-font-mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--newt-text-muted);
+  }
+
+  .component-index-none {
+    margin: 2rem 0;
+    color: var(--newt-text-muted);
+  }
+
   .component-index-group h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
     margin: 2.5rem 0 1rem;
     font-size: 1.25rem;
     font-weight: 700;
+    color: var(--newt-text-primary);
+    scroll-margin-top: 10rem;
+  }
+
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .component-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-surface);
+    color: inherit;
+    text-decoration: none;
+    overflow: hidden;
+    transition: border-color var(--newt-duration-fast) var(--newt-ease);
+  }
+
+  .component-tile:hover {
+    border-color: var(--newt-brand);
+  }
+
+  .component-tile[hidden] {
+    display: none;
+  }
+
+  .component-tile:focus-within {
+    outline: 2px solid var(--newt-text-link);
+    outline-offset: 2px;
+  }
+
+  /* The title is the link; it is stretched over the tile so all of it clicks. */
+  .component-tile-title::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .component-tile-title:focus-visible {
+    outline: none;
+  }
+
+  .component-tile-title {
+    text-decoration: none;
+    padding: 0.7rem 0.85rem 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--newt-text-primary);
+  }
+
+  .component-tile-note {
+    display: -webkit-box;
+    margin: 0.2rem 0 0.8rem;
+    padding: 0 0.85rem;
+    overflow: hidden;
+    color: var(--newt-text-muted);
+    font-size: 0.78rem;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  /*
+   * A thumbnail: the reference example, scaled down and clipped. The transform
+   * also makes the stage the containing block of a fixed-position example, so
+   * a modal's overlay covers its tile and not the page.
+   */
+  .thumb {
+    position: relative;
+    display: flex;
+    height: 8.5rem;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--newt-border);
+    background: var(--newt-bg-elevated);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .thumb-stage {
+    display: flex;
+    width: calc(100% / var(--thumb-scale, 0.8));
+    max-height: calc(100% / var(--thumb-scale, 0.8));
+    flex: none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem;
+    transform: scale(var(--thumb-scale, 0.8));
+    contain: layout paint;
+  }
+
+  /* The wall's tiles: the example at its own size, clipped only if it is huge. */
+  .thumb-natural {
+    height: auto;
+    max-height: 22rem;
+    border-bottom: 0;
+    background: transparent;
+  }
+
+  .thumb-natural .thumb-stage {
+    max-height: none;
+    padding: 1.25rem 1rem;
+  }
+
+  .thumb [data-thumb-image] {
+    display: inline-block;
+    min-width: 1em;
+    min-height: 1em;
+    background: var(--newt-bg-active);
+  }
+
+  .thumb-empty {
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+    color: var(--newt-text-muted);
+  }
+
+  /* --- the tokens a component reads ----------------------------------- */
+
+  .token-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .token-chips li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.15rem 0.5rem 0.15rem 0.3rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+  }
+
+  .token-chips code {
+    font-family: var(--newt-font-mono);
+    font-size: 0.72rem;
+    color: var(--newt-text-secondary);
+  }
+
+  /*
+   * A colour token paints the swatch; a radius, font or duration is not a
+   * valid background and leaves it the neutral square underneath.
+   */
+  .token-chip-swatch {
+    width: 0.8rem;
+    height: 0.8rem;
+    flex: none;
+    border: 1px solid var(--newt-border);
+    border-radius: 2px;
+    background-color: var(--newt-bg-active);
   }
 
   /* --- token reference --------------------------------------------------- */
@@ -769,54 +1014,83 @@
   /* --- home ---------------------------------------------------------- */
 
   .home {
-    max-width: 60rem;
+    max-width: 76rem;
     margin: 0 auto;
-    padding: 4rem 1rem 5rem;
+    padding: 4.5rem 1.25rem 6rem;
+  }
+
+  /* A chosen brand hue brings its own hover and active shades with it. */
+  .home[data-branded] {
+    --newt-brand-hover: color-mix(in srgb, var(--newt-brand) 85%, #000);
+    --newt-brand-active: color-mix(in srgb, var(--newt-brand) 70%, #000);
+  }
+
+  .hero {
+    max-width: 50rem;
   }
 
   .hero h1 {
-    margin: 0.75rem 0 0;
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    margin: 1.25rem 0 0;
+    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
     color: var(--newt-text-primary);
   }
 
   .hero-eyebrow {
-    display: flex;
+    display: inline-flex;
+    align-items: center;
     gap: 0.5rem;
-    margin: 0;
-    font-family: var(--newt-font-mono);
-    font-size: 0.75rem;
-    color: var(--newt-text-muted);
+    padding: 0.2rem 0.7rem 0.2rem 0.2rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-full);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-secondary);
+    font-size: 0.78rem;
+    text-decoration: none;
   }
 
-  .hero-eyebrow span + span::before {
-    content: "·";
-    margin-inline-end: 0.5rem;
+  .hero-eyebrow:hover {
+    border-color: var(--newt-brand);
+    color: var(--newt-text-primary);
+  }
+
+  .hero-eyebrow-tag {
+    padding: 0.1rem 0.5rem;
+    border-radius: var(--newt-radius-full);
+    background: var(--newt-brand);
+    color: #fff;
+    font-family: var(--newt-font-mono);
+    font-size: 0.7rem;
   }
 
   .hero-lead {
-    max-width: 42rem;
-    margin: 1rem 0 0;
+    max-width: 40rem;
+    margin: 1.25rem 0 0;
     color: var(--newt-text-secondary);
-    line-height: 1.7;
+    font-size: 1.1rem;
+    line-height: 1.65;
   }
 
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    margin-top: 1.5rem;
+    margin-top: 1.75rem;
   }
 
   .button-primary,
   .button-secondary {
-    padding: 0.55rem 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.15rem;
     border-radius: var(--newt-radius-sm);
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
+    transition: background-color var(--newt-duration-fast) var(--newt-ease);
   }
 
   .button-primary {
@@ -833,28 +1107,173 @@
     color: var(--newt-text-primary);
   }
 
-  .hero-manifest {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-    gap: 0.75rem;
-    margin: 2.5rem 0 0;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--newt-border);
-    font-family: var(--newt-font-mono);
-    font-size: 0.78rem;
+  .button-secondary:hover {
+    background: var(--newt-bg-hover);
   }
 
-  .hero-manifest dt {
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2.5rem;
+    margin: 2.5rem 0 0;
+  }
+
+  .hero-stats dd {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--newt-text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hero-stats dt {
+    font-size: 0.78rem;
     color: var(--newt-text-muted);
   }
 
-  .hero-manifest dd {
-    margin: 0.15rem 0 0;
+  /* --- home: the wall --- */
+
+  .home-wall {
+    margin-top: 4rem;
+  }
+
+  .home-wall-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .home-wall-bar h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     color: var(--newt-text-primary);
   }
 
+  .home-wall-bar p {
+    max-width: 34rem;
+    margin: 0.35rem 0 0;
+    color: var(--newt-text-secondary);
+  }
+
+  .brand-switch {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .brand-switch button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-full);
+    background: transparent;
+    color: var(--newt-text-secondary);
+    font: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .brand-switch button:hover {
+    color: var(--newt-text-primary);
+  }
+
+  .brand-switch button[aria-pressed="true"] {
+    border-color: var(--newt-brand);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-primary);
+  }
+
+  .brand-switch button:focus-visible,
+  .wall-tile a:focus-visible,
+  .agent-grid a:focus-visible,
+  .home-next a:focus-visible {
+    outline: 2px solid var(--newt-text-link);
+    outline-offset: 2px;
+  }
+
+  /* The first dot is the token's shipped value, which the page root never overrides. */
+  .brand-switch-dot {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background: var(--swatch, #5865f2);
+  }
+
+  .brand-switch a {
+    margin-inline-start: 0.5rem;
+    color: var(--newt-text-link);
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+
+  .brand-switch a:hover {
+    text-decoration: underline;
+  }
+
+  .wall {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    columns: 3 19rem;
+    column-gap: 0.75rem;
+  }
+
+  .wall-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-elevated);
+    overflow: hidden;
+    break-inside: avoid;
+    transition: border-color var(--newt-duration-fast) var(--newt-ease);
+  }
+
+  .wall-tile:hover {
+    border-color: var(--newt-brand);
+  }
+
+  .wall-tile a {
+    padding: 0.4rem 0.75rem;
+    border-top: 1px solid var(--newt-border);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-muted);
+    font-family: var(--newt-font-mono);
+    font-size: 0.72rem;
+    text-decoration: none;
+  }
+
+  .wall-tile a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .wall-tile:hover a {
+    color: var(--newt-text-primary);
+  }
+
+  .home-wall-more {
+    display: flex;
+    justify-content: center;
+    margin: 1.25rem 0 0;
+  }
+
+  /* --- home: sections --- */
+
   .home-section {
-    margin-top: 4rem;
+    margin-top: 5.5rem;
   }
 
   .home-section h2 {
@@ -865,15 +1284,89 @@
     color: var(--newt-text-primary);
   }
 
-  .home-section > p {
+  .home-section > p,
+  .home-split p {
     max-width: 42rem;
     margin: 0 0 1.25rem;
     color: var(--newt-text-secondary);
     line-height: 1.7;
   }
 
-  .home-section a {
-    color: var(--newt-text-link);
+  .home-split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 2.5rem 3rem;
+  }
+
+  .home-split > div {
+    min-width: 0;
+  }
+
+  .agent-grid,
+  .home-next {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 0.75rem;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .agent-grid a,
+  .home-next a {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-surface);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--newt-duration-fast) var(--newt-ease);
+  }
+
+  .agent-grid a:hover,
+  .home-next a:hover {
+    border-color: var(--newt-brand);
+  }
+
+  .agent-title,
+  .home-next-title {
+    font-weight: 600;
+    color: var(--newt-text-primary);
+  }
+
+  .agent-grid code {
+    align-self: start;
+    max-width: 100%;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-base);
+    color: var(--newt-text-secondary);
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+    overflow-wrap: anywhere;
+  }
+
+  .agent-body,
+  .home-next-body {
+    color: var(--newt-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .home-next-kicker {
+    font-family: var(--newt-font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--newt-brand);
+  }
+
+  .home-next-title {
+    font-size: 1.05rem;
   }
 
   /* --- blocks ----------------------------------------------------------- */
@@ -1509,6 +2002,29 @@ html[data-theme="light"] .theme-icon-light {
 
 /* --- sidebar --------------------------------------------------------- */
 
+.sidebar-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-bottom: 1.25rem;
+  padding: 2px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-surface);
+}
+
+.sidebar-nav .sidebar-sections a {
+  justify-content: center;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.sidebar-nav .sidebar-sections a[aria-current="true"] {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+}
+
 .sidebar-group + .sidebar-group {
   margin-top: 1.5rem;
 }
@@ -1749,6 +2265,18 @@ html[data-theme="light"] .theme-icon-light {
 .toc a:hover,
 .toc a[data-active] {
   color: var(--newt-text-primary);
+}
+
+.toc-sources {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--newt-border);
+}
+
+.toc-sources a {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 /* --- pager ------------------------------------------------------------ */
