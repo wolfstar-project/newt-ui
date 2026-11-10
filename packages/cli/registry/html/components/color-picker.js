@@ -18,6 +18,7 @@ document.querySelectorAll("[data-newt-color-picker]").forEach((picker) => {
     const radio = event.target.closest(".newt-color-picker__input")
     if (!radio) return
     custom?.classList.remove("newt-color-picker__custom--active")
+    custom?.style.removeProperty("--newt-swatch")
     announce(radio.value)
   })
 
