@@ -1,0 +1,120 @@
+---
+title: "Command Palette"
+description: "A searchable quick switcher of grouped destinations and actions, driven from the keyboard."
+---
+
+Use it to give keyboard users one place to jump anywhere or run anything: switch channel, open settings, mention a member. It complements the visible navigation and never replaces it, because nothing on screen says the palette exists. Bind it to a shortcut and offer a button too.
+
+Typing narrows the list to the rows whose label, description or `keywords` contain the query. The palette filters the rows it is given; for results from a server, pass new `groups` as the query changes.
+
+<ComponentPreview name="command-palette" />
+
+## Installation
+
+<Installation name="command-palette" />
+
+## Usage
+
+<Usage name="command-palette" />
+
+## API reference
+
+<PropsTable
+  of="CommandPalette"
+  rows={[
+    {
+      name: "open / v-model:open",
+      type: "boolean",
+      description: "Whether the palette is shown.",
+      default: "false",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description:
+        "React only. Called with `false` on Escape, a press of the backdrop or a selection; Vue emits `update:open`.",
+    },
+    {
+      name: "groups",
+      type: "{ label: string; items: CommandItem[] }[]",
+      description:
+        "The rows, under their headings. A group with no matching row is hidden.",
+    },
+    {
+      name: "onSelect / @select",
+      type: "(item: CommandItem) => void",
+      description:
+        "Called with the chosen row. The palette then closes itself.",
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "Accessible name of the dialog and of the list.",
+      default: '"Command palette"',
+    },
+    {
+      name: "placeholder",
+      type: "string",
+      description: "Placeholder and accessible name of the search field.",
+      default: '"Where would you like to go?"',
+    },
+    {
+      name: "emptyText",
+      type: "string",
+      description: "Shown when the query matches nothing.",
+      default: '"Nothing matches that."',
+    },
+    {
+      name: "hints",
+      type: "{ move: string; select: string; close: string } | false",
+      description:
+        "The wording of the footer's key hints. `false` leaves the footer out.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="CommandItem"
+  rows={[
+    {
+      name: "id",
+      type: "string",
+      description: "Unique across the whole palette.",
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "The row's main text.",
+    },
+    {
+      name: "description",
+      type: "string",
+      description: "Quieter text beside the label.",
+    },
+    {
+      name: "prefix",
+      type: "string",
+      description: "A one-character sign before the label, such as `#` or `@`.",
+    },
+    {
+      name: "shortcut",
+      type: "string",
+      description: "A key combination shown at the end of the row.",
+    },
+    {
+      name: "keywords",
+      type: "string[]",
+      description: "Extra words the search matches that the row does not show.",
+    },
+  ]}
+/>
+
+Opening the palette always starts from an empty query with the first row highlighted.
+
+## Accessibility
+
+The shell is a native `<dialog>`, so focus is held inside it and `Escape` closes it. The search field is a `role="combobox"` that keeps focus the whole time: `Up` and `Down` move the highlight, wrapping at the ends, and `aria-activedescendant` tells a screen reader which row is highlighted. `Enter` chooses it. Rows are `role="option"` inside a `role="listbox"`, grouped under their headings. The footer hints repeat what the keys do for sighted users and are hidden from assistive technology.
+
+## Tokens
+
+<TokensNote name="command-palette" />

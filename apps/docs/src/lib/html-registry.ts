@@ -20,6 +20,12 @@ const htmlSources = import.meta.glob<string>(
  */
 const IMAGE = /<img\b([^>]*)>/g
 
+/*
+ * A browser does not paint an open `<dialog>` inside an inert subtree, and a
+ * thumbnail is inert. The dialog-based examples are drawn as a plain box that
+ * keeps the `open` attribute their stylesheets key on.
+ */
+
 /**
  * A component's reference markup, or `undefined` for one that only exists as
  * a composition (the blocks). Ids are dropped: a thumbnail is inert, and a
@@ -39,6 +45,8 @@ export function htmlExample(name: string): string | undefined {
       const kept = attributes.replace(/\s(?:src|alt|srcset)="[^"]*"/g, "")
       return `<span data-thumb-image${kept.replace(/\s*\/\s*$/, "")}></span>`
     })
+    .replace(/<dialog\b/g, "<div data-thumb-dialog")
+    .replace(/<\/dialog>/g, "</div>")
     .trim()
 }
 

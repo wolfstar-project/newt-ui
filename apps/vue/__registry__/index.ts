@@ -23,6 +23,19 @@ interface RegistryIndexEntry {
 // indexable by an arbitrary string without widening away the entry type.
 const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
   [
+    "accordion",
+    {
+      name: "accordion",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/accordion/Accordion.vue",
+        "registry/bases/newt/ui/accordion/AccordionItem.vue",
+        "registry/bases/newt/ui/accordion/index.ts",
+      ],
+    },
+  ],
+  [
     "action-row",
     {
       name: "action-row",
@@ -117,6 +130,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/bot-command-card/BotCommandCardOptions.vue",
         "registry/bases/newt/ui/bot-command-card/BotCommandCardOption.vue",
         "registry/bases/newt/ui/bot-command-card/index.ts",
+      ],
+    },
+  ],
+  [
+    "breadcrumb",
+    {
+      name: "breadcrumb",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/breadcrumb/Breadcrumb.vue",
+        "registry/bases/newt/ui/breadcrumb/BreadcrumbItem.vue",
+        "registry/bases/newt/ui/breadcrumb/index.ts",
       ],
     },
   ],
@@ -297,6 +323,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "command-palette",
+    {
+      name: "command-palette",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/command-palette/CommandPalette.vue",
+        "registry/bases/newt/ui/command-palette/index.ts",
+      ],
+    },
+  ],
+  [
     "command-panel",
     {
       name: "command-panel",
@@ -373,6 +411,22 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: [
         "registry/bases/newt/ui/divider/Divider.vue",
         "registry/bases/newt/ui/divider/index.ts",
+      ],
+    },
+  ],
+  [
+    "drawer",
+    {
+      name: "drawer",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/drawer/Drawer.vue",
+        "registry/bases/newt/ui/drawer/DrawerHeader.vue",
+        "registry/bases/newt/ui/drawer/DrawerBody.vue",
+        "registry/bases/newt/ui/drawer/DrawerFooter.vue",
+        "registry/bases/newt/ui/drawer/DrawerClose.vue",
+        "registry/bases/newt/ui/drawer/index.ts",
       ],
     },
   ],
@@ -731,6 +785,20 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "popover",
+    {
+      name: "popover",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/popover/Popover.vue",
+        "registry/bases/newt/ui/popover/PopoverTrigger.vue",
+        "registry/bases/newt/ui/popover/PopoverContent.vue",
+        "registry/bases/newt/ui/popover/index.ts",
+      ],
+    },
+  ],
+  [
     "progress",
     {
       name: "progress",
@@ -973,6 +1041,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "stepper",
+    {
+      name: "stepper",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/stepper/Stepper.vue",
+        "registry/bases/newt/ui/stepper/index.ts",
+      ],
+    },
+  ],
+  [
     "system-message",
     {
       name: "system-message",
@@ -1183,6 +1263,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "AccordionDemo",
+    {
+      name: "AccordionDemo",
+      type: "registry:example",
+      registryDependencies: ["accordion"],
+      files: ["registry/bases/newt/examples/AccordionDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AccordionDemo.vue")
+      ),
+    },
+  ],
+  [
     "ActionRowDemo",
     {
       name: "ActionRowDemo",
@@ -1251,6 +1343,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/BotCommandCardDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/BotCommandCardDemo.vue")
+      ),
+    },
+  ],
+  [
+    "BreadcrumbDemo",
+    {
+      name: "BreadcrumbDemo",
+      type: "registry:example",
+      registryDependencies: ["breadcrumb"],
+      files: ["registry/bases/newt/examples/BreadcrumbDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/BreadcrumbDemo.vue")
       ),
     },
   ],
@@ -1387,6 +1491,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "CommandPaletteDemo",
+    {
+      name: "CommandPaletteDemo",
+      type: "registry:example",
+      registryDependencies: ["command-palette"],
+      files: ["registry/bases/newt/examples/CommandPaletteDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/CommandPaletteDemo.vue")
+      ),
+    },
+  ],
+  [
     "CommandPanelDemo",
     {
       name: "CommandPanelDemo",
@@ -1455,6 +1571,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/DividerDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/DividerDemo.vue")
+      ),
+    },
+  ],
+  [
+    "DrawerDemo",
+    {
+      name: "DrawerDemo",
+      type: "registry:example",
+      registryDependencies: ["drawer"],
+      files: ["registry/bases/newt/examples/DrawerDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/DrawerDemo.vue")
       ),
     },
   ],
@@ -1749,6 +1877,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "PopoverDemo",
+    {
+      name: "PopoverDemo",
+      type: "registry:example",
+      registryDependencies: ["popover"],
+      files: ["registry/bases/newt/examples/PopoverDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/PopoverDemo.vue")
+      ),
+    },
+  ],
+  [
     "ProgressDemo",
     {
       name: "ProgressDemo",
@@ -1950,6 +2090,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/StatusIndicatorDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/StatusIndicatorDemo.vue")
+      ),
+    },
+  ],
+  [
+    "StepperDemo",
+    {
+      name: "StepperDemo",
+      type: "registry:example",
+      registryDependencies: ["stepper"],
+      files: ["registry/bases/newt/examples/StepperDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/StepperDemo.vue")
       ),
     },
   ],

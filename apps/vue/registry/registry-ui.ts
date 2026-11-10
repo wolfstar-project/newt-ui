@@ -3,6 +3,27 @@ import type { Registry } from "./schema"
 
 export const ui: Registry = [
   {
+    name: "accordion",
+    type: "registry:ui",
+    title: "Accordion",
+    description:
+      "Sections that open and close under their headings, one at a time or independently.",
+    files: [
+      {
+        path: "ui/accordion/Accordion.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/accordion/AccordionItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/accordion/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "action-row",
     type: "registry:ui",
     title: "Action Row",
@@ -207,6 +228,27 @@ export const ui: Registry = [
       },
       {
         path: "ui/bot-command-card/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "breadcrumb",
+    type: "registry:ui",
+    title: "Breadcrumb",
+    description:
+      "The path from the top of a section to the current page, as a row of links.",
+    files: [
+      {
+        path: "ui/breadcrumb/Breadcrumb.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/breadcrumb/BreadcrumbItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/breadcrumb/index.ts",
         type: "registry:ui",
       },
     ],
@@ -558,6 +600,23 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "command-palette",
+    type: "registry:ui",
+    title: "Command Palette",
+    description:
+      "A searchable quick switcher of grouped destinations and actions, driven from the keyboard.",
+    files: [
+      {
+        path: "ui/command-palette/CommandPalette.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/command-palette/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "command-panel",
     type: "registry:block",
     title: "Command panel",
@@ -691,6 +750,39 @@ export const ui: Registry = [
       },
       {
         path: "ui/divider/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "drawer",
+    type: "registry:ui",
+    title: "Drawer",
+    description:
+      "A modal panel that slides against an edge of the screen, built on the native dialog element.",
+    files: [
+      {
+        path: "ui/drawer/Drawer.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerBody.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerFooter.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerClose.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/index.ts",
         type: "registry:ui",
       },
     ],
@@ -1391,6 +1483,31 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "popover",
+    type: "registry:ui",
+    title: "Popover",
+    description:
+      "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+    files: [
+      {
+        path: "ui/popover/Popover.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/popover/PopoverTrigger.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/popover/PopoverContent.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/popover/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "progress",
     type: "registry:ui",
     title: "Progress Bar",
@@ -1819,6 +1936,23 @@ export const ui: Registry = [
       },
       {
         path: "ui/status-indicator/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "stepper",
+    type: "registry:ui",
+    title: "Stepper",
+    description:
+      "Progress through a fixed sequence of steps, horizontal or stacked.",
+    files: [
+      {
+        path: "ui/stepper/Stepper.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/stepper/index.ts",
         type: "registry:ui",
       },
     ],

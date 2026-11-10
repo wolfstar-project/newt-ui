@@ -3,6 +3,17 @@ import type { Registry } from "./schema"
 
 export const examples: Registry = [
   {
+    name: "AccordionDemo",
+    type: "registry:example",
+    registryDependencies: ["accordion"],
+    files: [
+      {
+        path: "examples/AccordionDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ActionRowDemo",
     type: "registry:example",
     registryDependencies: ["action-row"],
@@ -64,6 +75,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/BotCommandCardDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "BreadcrumbDemo",
+    type: "registry:example",
+    registryDependencies: ["breadcrumb"],
+    files: [
+      {
+        path: "examples/BreadcrumbDemo.vue",
         type: "registry:example",
       },
     ],
@@ -190,6 +212,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "CommandPaletteDemo",
+    type: "registry:example",
+    registryDependencies: ["command-palette"],
+    files: [
+      {
+        path: "examples/CommandPaletteDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "CommandPanelDemo",
     type: "registry:example",
     registryDependencies: ["command-panel"],
@@ -251,6 +284,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/DividerDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "DrawerDemo",
+    type: "registry:example",
+    registryDependencies: ["drawer"],
+    files: [
+      {
+        path: "examples/DrawerDemo.vue",
         type: "registry:example",
       },
     ],
@@ -520,6 +564,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "PopoverDemo",
+    type: "registry:example",
+    registryDependencies: ["popover"],
+    files: [
+      {
+        path: "examples/PopoverDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ProgressDemo",
     type: "registry:example",
     registryDependencies: ["progress"],
@@ -702,6 +757,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/StatusIndicatorDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "StepperDemo",
+    type: "registry:example",
+    registryDependencies: ["stepper"],
+    files: [
+      {
+        path: "examples/StepperDemo.vue",
         type: "registry:example",
       },
     ],

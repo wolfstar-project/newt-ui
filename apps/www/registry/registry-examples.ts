@@ -3,6 +3,17 @@ import type { Registry } from "@/registry/schema"
 
 export const examples: Registry = [
   {
+    name: "accordion-demo",
+    type: "registry:example",
+    registryDependencies: ["accordion"],
+    files: [
+      {
+        path: "examples/accordion-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "action-row-demo",
     type: "registry:example",
     registryDependencies: ["action-row"],
@@ -64,6 +75,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/bot-command-card-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "breadcrumb-demo",
+    type: "registry:example",
+    registryDependencies: ["breadcrumb"],
+    files: [
+      {
+        path: "examples/breadcrumb-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -190,6 +212,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "command-palette-demo",
+    type: "registry:example",
+    registryDependencies: ["command-palette"],
+    files: [
+      {
+        path: "examples/command-palette-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "command-panel-demo",
     type: "registry:example",
     registryDependencies: ["command-panel"],
@@ -251,6 +284,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/divider-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "drawer-demo",
+    type: "registry:example",
+    registryDependencies: ["drawer"],
+    files: [
+      {
+        path: "examples/drawer-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -520,6 +564,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "popover-demo",
+    type: "registry:example",
+    registryDependencies: ["popover"],
+    files: [
+      {
+        path: "examples/popover-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "progress-demo",
     type: "registry:example",
     registryDependencies: ["progress"],
@@ -702,6 +757,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/status-indicator-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "stepper-demo",
+    type: "registry:example",
+    registryDependencies: ["stepper"],
+    files: [
+      {
+        path: "examples/stepper-demo.tsx",
         type: "registry:example",
       },
     ],

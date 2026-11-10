@@ -1,0 +1,59 @@
+---
+title: "Stepper"
+description: "Progress through a fixed sequence of steps, horizontal or stacked."
+---
+
+Use it when a task has a known number of stages in a fixed order and the reader benefits from seeing how far along they are: creating an app, onboarding a server, a setup wizard. It shows progress and does not navigate; put Back and Next buttons beside it, as the example does.
+
+<ComponentPreview name="stepper" />
+
+## Installation
+
+<Installation name="stepper" />
+
+## Usage
+
+<Usage name="stepper" />
+
+## API reference
+
+<PropsTable
+  of="Stepper"
+  rows={[
+    {
+      name: "steps",
+      type: "{ title: string; description?: string }[]",
+      description: "The stages, in order.",
+    },
+    {
+      name: "value",
+      type: "number",
+      description:
+        "Index of the step in progress. Every step before it is complete, and a value equal to `steps.length` marks them all complete.",
+    },
+    {
+      name: "orientation",
+      type: '"horizontal" | "vertical"',
+      description:
+        "`vertical` stacks the steps with the marker beside the text, for a narrow column.",
+      default: '"horizontal"',
+    },
+    {
+      name: "completedLabel",
+      type: "string",
+      description:
+        "Read by a screen reader after the title of a finished step.",
+      default: '"completed"',
+    },
+  ]}
+/>
+
+Three to five steps fit a horizontal stepper. Past that, or in a sidebar, use `orientation="vertical"`.
+
+## Accessibility
+
+The steps are an ordered list, so their count and order are announced. The step in progress carries `aria-current="step"`, and a finished step's title is followed by the hidden word from `completedLabel`. State is never carried by colour alone: a finished step shows a check where its number was, and the current one has a filled outline.
+
+## Tokens
+
+<TokensNote name="stepper" />

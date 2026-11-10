@@ -4,6 +4,19 @@
   "homepage": "https://newtui.dev",
   "items": [
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Sections that open and close under their headings, one at a time or independently.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "action-row",
       "type": "registry:ui",
       "title": "Action Row",
@@ -81,6 +94,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/bot-command-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "The path from the top of a section to the current page, as a row of links.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/breadcrumb.tsx",
           "type": "registry:ui"
         }
       ],
@@ -242,6 +268,19 @@
       "framework": "react"
     },
     {
+      "name": "command-palette",
+      "type": "registry:ui",
+      "title": "Command Palette",
+      "description": "A searchable quick switcher of grouped destinations and actions, driven from the keyboard.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/command-palette.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "command-panel",
       "type": "registry:block",
       "title": "Command panel",
@@ -318,6 +357,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/divider.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A modal panel that slides against an edge of the screen, built on the native dialog element.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/drawer.tsx",
           "type": "registry:ui"
         }
       ],
@@ -639,6 +691,19 @@
       "framework": "react"
     },
     {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "progress",
       "type": "registry:ui",
       "title": "Progress Bar",
@@ -871,6 +936,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/status-indicator.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Progress through a fixed sequence of steps, horizontal or stacked.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/stepper.tsx",
           "type": "registry:ui"
         }
       ],

@@ -412,6 +412,47 @@
       "rootClass": "newt-color-picker",
       "files": ["color-picker.css", "color-picker.html"],
       "js": "color-picker.js"
+    },
+    {
+      "name": "accordion",
+      "title": "Accordion",
+      "rootClass": "newt-accordion",
+      "files": ["accordion.css", "accordion.html"]
+    },
+    {
+      "name": "breadcrumb",
+      "title": "Breadcrumb",
+      "rootClass": "newt-breadcrumb",
+      "files": ["breadcrumb.css", "breadcrumb.html"]
+    },
+    {
+      "name": "stepper",
+      "title": "Stepper",
+      "rootClass": "newt-stepper",
+      "files": ["stepper.css", "stepper.html"]
+    },
+    {
+      "name": "popover",
+      "title": "Popover",
+      "rootClass": "newt-popover",
+      "files": ["popover.css", "popover.html"],
+      "js": "popover.js",
+      "uses": ["button"]
+    },
+    {
+      "name": "drawer",
+      "title": "Drawer",
+      "rootClass": "newt-drawer",
+      "files": ["drawer.css", "drawer.html"],
+      "js": "drawer.js",
+      "uses": ["button"]
+    },
+    {
+      "name": "command-palette",
+      "title": "Command Palette",
+      "rootClass": "newt-command-palette",
+      "files": ["command-palette.css", "command-palette.html"],
+      "js": "command-palette.js"
     }
   ]
 }

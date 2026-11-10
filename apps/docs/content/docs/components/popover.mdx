@@ -1,0 +1,66 @@
+---
+title: "Popover"
+description: "A small panel anchored to the button that opens it, closed by Escape or a press outside."
+---
+
+Use it for a few controls or a short explanation that belong to one button: notification settings for a channel, a filter, a confirmation that does not deserve a modal. For a list of actions use a [Dropdown Menu](/docs/components/dropdown), and for anything the reader must answer before going on use a [Modal](/docs/components/modal).
+
+The panel is positioned against its trigger by CSS alone, below and start-aligned unless `side` and `align` say otherwise. It does not flip when it would leave the viewport, so pick the side that has room.
+
+<ComponentPreview name="popover" />
+
+## Installation
+
+<Installation name="popover" />
+
+## Usage
+
+<Usage name="popover" />
+
+## API reference
+
+<PropsTable
+  of="Popover"
+  rows={[
+    {
+      name: "open / v-model:open",
+      type: "boolean",
+      description:
+        "Whether the panel is shown. In React, leave it undefined and pass `defaultOpen` to let the popover own it.",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description:
+        "React only. Called when the popover opens or closes; Vue emits `update:open`.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="PopoverContent"
+  rows={[
+    {
+      name: "side",
+      type: '"bottom" | "top"',
+      description: "Which side of the trigger the panel opens on.",
+      default: '"bottom"',
+    },
+    {
+      name: "align",
+      type: '"start" | "center" | "end"',
+      description: "Which edge of the trigger the panel lines up with.",
+      default: '"start"',
+    },
+  ]}
+/>
+
+`PopoverTrigger` is a plain button that carries the state and has no look of its own. Give it the classes of the button it should be: `buttonVariants({ variant: "secondary" })` in the example.
+
+## Accessibility
+
+The trigger carries `aria-expanded` and, while the panel is open, `aria-controls` pointing at it. The panel is a `role="dialog"` and needs a name: pass `aria-label` to `PopoverContent`, or `aria-labelledby` naming a heading inside it. It follows the trigger in the document, so `Tab` moves from the button straight into it. `Escape` closes it and returns focus to the trigger, and a press anywhere outside closes it too.
+
+## Tokens
+
+<TokensNote name="popover" />

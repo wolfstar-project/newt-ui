@@ -9,7 +9,18 @@ export const categories: DocsCategory[] = [
   {
     slug: "actions",
     label: "Actions",
-    components: ["button", "dropdown", "context-menu", "kbd-tag", "tabs"],
+    components: [
+      "button",
+      "dropdown",
+      "context-menu",
+      "popover",
+      "command-palette",
+      "kbd-tag",
+      "tabs",
+      "accordion",
+      "breadcrumb",
+      "stepper",
+    ],
   },
   {
     slug: "feedback",
@@ -18,6 +29,7 @@ export const categories: DocsCategory[] = [
       "badge",
       "toast",
       "modal",
+      "drawer",
       "tooltip",
       "progress",
       "cooldown-bar",
