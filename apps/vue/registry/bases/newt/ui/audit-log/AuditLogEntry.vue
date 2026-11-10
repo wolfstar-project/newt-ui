@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { computed, type HTMLAttributes } from "vue"
+import {
+  Comment,
+  computed,
+  Fragment,
+  useSlots,
+  type HTMLAttributes,
+  type VNode,
+} from "vue"
 import { Avatar } from "~~/registry/bases/newt/ui/avatar"
 
 import { cn } from "@/lib/utils"
@@ -54,6 +61,26 @@ const KIND = {
 
 const mark = computed(() => KIND[props.kind])
 
+/*
+ * Whether the default slot rendered anything. A slot that is passed but
+ * empty, such as a `v-for` over no changes, is truthy as a function and
+ * yields only comments or empty fragments, which must not make the entry
+ * expandable.
+ */
+const slots = useSlots()
+
+function rendersSomething(nodes: readonly VNode[]): boolean {
+  return nodes.some((node) => {
+    if (node.type === Comment) return false
+    if (node.type === Fragment) {
+      return Array.isArray(node.children) && node.children.length > 0
+    }
+    return true
+  })
+}
+
+const expandable = computed(() => rendersSomething(slots.default?.() ?? []))
+
 const summaryClassName =
   "flex list-none items-center gap-2.5 px-3 py-2.5 text-sm leading-5 text-newt-text-secondary [&::-webkit-details-marker]:hidden"
 </script>
@@ -69,16 +96,16 @@ const summaryClassName =
     "
   >
     <component
-      :is="$slots.default ? 'details' : 'div'"
-      :open="$slots.default && props.defaultOpen ? true : undefined"
+      :is="expandable ? 'details' : 'div'"
+      :open="expandable && props.defaultOpen ? true : undefined"
       class="group"
     >
       <component
-        :is="$slots.default ? 'summary' : 'div'"
+        :is="expandable ? 'summary' : 'div'"
         :class="
           cn(
             summaryClassName,
-            $slots.default &&
+            expandable &&
               'cursor-pointer hover:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link'
           )
         "
@@ -111,7 +138,7 @@ const summaryClassName =
           {{ props.time }}
         </time>
         <svg
-          v-if="$slots.default"
+          v-if="expandable"
           viewBox="0 0 16 16"
           aria-hidden="true"
           class="h-3.5 w-3.5 shrink-0 text-newt-text-muted group-open:rotate-90 rtl:-scale-x-100 rtl:group-open:scale-x-100"
@@ -123,7 +150,7 @@ const summaryClassName =
         </svg>
       </component>
       <ol
-        v-if="$slots.default"
+        v-if="expandable"
         class="m-0 flex flex-col gap-1 pb-3 pe-3 ps-12 pt-1 text-[13px] leading-[18px] text-newt-text-secondary [list-style:decimal-leading-zero_inside]"
       >
         <slot />

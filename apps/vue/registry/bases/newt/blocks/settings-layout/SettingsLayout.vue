@@ -17,8 +17,10 @@ import type { SettingsGroup } from "./types"
 /*
  * A settings screen: the list of sections down the side, and the chosen
  * section's heading, breadcrumb and content beside it. The content is the
- * default slot, so each section stays an ordinary component of yours. Below
- * 40rem the navigation moves above the content.
+ * default slot, so each section stays an ordinary component of yours. The
+ * content column is a plain box and not a `<main>`, because the page the
+ * block is dropped into has one already. Below 40rem the navigation moves
+ * above the content.
  */
 const props = defineProps<{
   class?: HTMLAttributes["class"]
@@ -57,14 +59,14 @@ const current = computed(() =>
           :key="each.id"
           :badge="each.badge"
           :variant="each.danger ? 'danger' : 'default'"
-          :current="each.id === section"
+          :current="!each.danger && each.id === section"
           @click="section = each.id"
         >
           {{ each.label }}
         </SideNavItem>
       </SideNavGroup>
     </SideNav>
-    <main class="flex min-w-0 flex-1 flex-col gap-4 p-6">
+    <div class="flex min-w-0 flex-1 flex-col gap-4 p-6">
       <Breadcrumb>
         <BreadcrumbItem>{{ props.title }}</BreadcrumbItem>
         <BreadcrumbItem current>{{ current?.label ?? section }}</BreadcrumbItem>
@@ -73,6 +75,6 @@ const current = computed(() =>
         {{ current?.label ?? section }}
       </h2>
       <slot />
-    </main>
+    </div>
   </div>
 </template>

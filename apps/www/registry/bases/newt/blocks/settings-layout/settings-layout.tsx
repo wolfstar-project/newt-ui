@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -42,8 +44,10 @@ export interface SettingsLayoutProps extends Omit<
 /*
  * A settings screen: the list of sections down the side, and the chosen
  * section's heading, breadcrumb and content beside it. The content is the
- * children, so each section stays an ordinary component of yours. Below
- * 40rem the navigation moves above the content.
+ * children, so each section stays an ordinary component of yours. The
+ * content column is a plain box and not a `<main>`, because the page the
+ * block is dropped into has one already. Below 40rem the navigation moves
+ * above the content.
  */
 export function SettingsLayout({
   title,
@@ -77,7 +81,7 @@ export function SettingsLayout({
                 key={each.id}
                 badge={each.badge}
                 variant={each.danger ? "danger" : "default"}
-                current={each.id === section}
+                current={!each.danger && each.id === section}
                 onClick={() => onSectionChange?.(each.id)}
               >
                 {each.label}
@@ -86,7 +90,7 @@ export function SettingsLayout({
           </SideNavGroup>
         ))}
       </SideNav>
-      <main className="flex min-w-0 flex-1 flex-col gap-4 p-6">
+      <div className="flex min-w-0 flex-1 flex-col gap-4 p-6">
         <Breadcrumb>
           <BreadcrumbItem>{title}</BreadcrumbItem>
           <BreadcrumbItem current>{current?.label ?? section}</BreadcrumbItem>
@@ -95,7 +99,7 @@ export function SettingsLayout({
           {current?.label ?? section}
         </h2>
         {children}
-      </main>
+      </div>
     </div>
   )
 }
