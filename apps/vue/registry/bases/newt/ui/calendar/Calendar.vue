@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, type HTMLAttributes } from "vue"
+import {
+  computed,
+  nextTick,
+  onMounted,
+  ref,
+  watch,
+  type HTMLAttributes,
+} from "vue"
 
 import { cn } from "@/lib/utils"
 
@@ -68,7 +75,28 @@ const root = ref<HTMLDivElement | null>(null)
  */
 const today = ref<string | undefined>(undefined)
 const cursor = ref(selected.value)
-const focused = computed(() => cursor.value ?? today.value)
+
+/* A value changed from outside turns the page to it. */
+watch(selected, (next) => {
+  if (next !== undefined) cursor.value = next
+})
+
+/* The nearest day that can be chosen; a month jump lands on it too. */
+function clamp(iso: string): string {
+  if (props.min !== undefined && iso < props.min) return props.min
+  if (props.max !== undefined && iso > props.max) return props.max
+  return iso
+}
+
+/*
+ * The one tab stop. It is clamped because a disabled day cannot take focus:
+ * with today or the value outside the range, the grid would otherwise have no
+ * way in from the keyboard.
+ */
+const focused = computed(() => {
+  const anchorDay = cursor.value ?? today.value
+  return anchorDay === undefined ? undefined : clamp(anchorDay)
+})
 
 onMounted(() => {
   const now = new Date()
@@ -80,13 +108,6 @@ function allowed(iso: string): boolean {
     (props.min === undefined || iso >= props.min) &&
     (props.max === undefined || iso <= props.max)
   )
-}
-
-/* A month jump lands on the nearest day that can be chosen. */
-function clamp(iso: string): string {
-  if (props.min !== undefined && iso < props.min) return props.min
-  if (props.max !== undefined && iso > props.max) return props.max
-  return iso
 }
 
 async function goTo(iso: string, withFocus: boolean) {
