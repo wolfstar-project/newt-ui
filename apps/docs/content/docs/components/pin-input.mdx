@@ -37,7 +37,8 @@ The value is a single string with no gaps, so a character typed in a later box l
     {
       name: "onComplete / @complete",
       type: "(value: string) => void",
-      description: "Called once, with the code, when the last box is filled.",
+      description:
+        "Called with the code when the last box is filled, and again each time a complete code is changed to a different one.",
     },
     {
       name: "length",
