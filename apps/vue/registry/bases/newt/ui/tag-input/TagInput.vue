@@ -50,6 +50,11 @@ function remove(tag: string) {
 }
 
 function onKeydown(event: KeyboardEvent) {
+  /*
+   * While an input method is composing, Enter confirms a candidate and is not
+   * the reader committing a tag.
+   */
+  if (event.isComposing) return
   if (event.key === "Enter" || event.key === ",") {
     event.preventDefault()
     add([text.value])

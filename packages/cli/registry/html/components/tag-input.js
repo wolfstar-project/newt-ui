@@ -42,6 +42,8 @@ document.querySelectorAll("[data-newt-tag-input]").forEach((field) => {
   }
 
   input.addEventListener("keydown", (event) => {
+    // While an input method is composing, Enter confirms a candidate.
+    if (event.isComposing) return
     if (event.key === "Enter" || event.key === ",") {
       event.preventDefault()
       add(input.value)
