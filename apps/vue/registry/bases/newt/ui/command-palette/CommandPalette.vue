@@ -90,12 +90,38 @@ function choose(item: CommandItem) {
   close()
 }
 
-function move(direction: 1 | -1) {
+/*
+ * The highlighted row is scrolled into view only when the keyboard moved it.
+ * The pointer moves the highlight too, and scrolling then would slide the
+ * list under the pointer and make it jitter.
+ */
+async function move(direction: 1 | -1) {
   const count = flat.value.length
   if (count === 0) return
   const from =
     current.value === undefined ? 0 : flat.value.indexOf(current.value)
   active.value = (from + direction + count) % count
+  await nextTick()
+  if (current.value !== undefined) {
+    document
+      .getElementById(optionId(current.value))
+      ?.scrollIntoView({ block: "nearest" })
+  }
+}
+
+function onKeydown(event: KeyboardEvent) {
+  /* While an input method is composing, Enter confirms a candidate. */
+  if (event.isComposing) return
+  if (event.key === "Enter") {
+    event.preventDefault()
+    if (current.value !== undefined) choose(current.value)
+  } else if (event.key === "ArrowDown") {
+    event.preventDefault()
+    void move(1)
+  } else if (event.key === "ArrowUp") {
+    event.preventDefault()
+    void move(-1)
+  }
 }
 
 function onInput() {
@@ -105,12 +131,6 @@ function onInput() {
 function onClick(event: MouseEvent) {
   if (event.target === event.currentTarget) close()
 }
-
-watch(current, async (item) => {
-  if (item === undefined) return
-  await nextTick()
-  document.getElementById(optionId(item))?.scrollIntoView({ block: "nearest" })
-})
 
 // `showModal` needs the element, so the watcher starts once it is mounted.
 onMounted(() => {
@@ -163,9 +183,7 @@ onMounted(() => {
       spellcheck="false"
       class="mx-3 mt-3 rounded-sm border border-newt-border bg-newt-bg-input px-3.5 py-3 font-sans text-base text-newt-text-primary placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none"
       @input="onInput"
-      @keydown.enter.prevent="current !== undefined && choose(current)"
-      @keydown.down.prevent="move(1)"
-      @keydown.up.prevent="move(-1)"
+      @keydown="onKeydown"
     />
     <div
       :id="`${id}-list`"

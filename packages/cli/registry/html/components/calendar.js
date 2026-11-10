@@ -28,17 +28,23 @@ document.querySelectorAll("[data-newt-calendar]").forEach((calendar) => {
   let selected = calendar.dataset.value || ""
   let focused = selected || today
 
-  const allowed = (iso) =>
-    (!calendar.dataset.min || iso >= calendar.dataset.min) &&
-    (!calendar.dataset.max || iso <= calendar.dataset.max)
-
-  /* A month jump lands on the nearest day that can be chosen. */
+  /* The nearest day that can be chosen; a month jump lands on it too. */
   const clamp = (iso) =>
     calendar.dataset.min && iso < calendar.dataset.min
       ? calendar.dataset.min
       : calendar.dataset.max && iso > calendar.dataset.max
         ? calendar.dataset.max
         : iso
+
+  /*
+   * The one tab stop is clamped: a disabled day cannot take focus, so with
+   * today or the value outside the range the grid would have no way in.
+   */
+  focused = clamp(focused)
+
+  const allowed = (iso) =>
+    (!calendar.dataset.min || iso >= calendar.dataset.min) &&
+    (!calendar.dataset.max || iso <= calendar.dataset.max)
 
   function render(moveFocus) {
     const anchor = fromIso(focused)

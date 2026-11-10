@@ -26,7 +26,7 @@ const props = withDefaults(
 
 const itemClassName = computed(() =>
   cn(
-    "flex w-full cursor-pointer items-center justify-between gap-2 rounded-sm px-2.5 py-1.5 text-start font-sans text-[15px] font-medium leading-5 no-underline transition-colors duration-fast ease-newt hover:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link aria-[current=page]:bg-newt-bg-active",
+    "flex w-full cursor-pointer items-center justify-between gap-2 rounded-sm px-2.5 py-1.5 text-start font-sans text-[15px] font-medium leading-5 no-underline transition-colors duration-fast ease-newt hover:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50 aria-[current=page]:bg-newt-bg-active",
     props.variant === "danger"
       ? "text-newt-danger"
       : "text-newt-text-secondary hover:text-newt-text-primary aria-[current=page]:text-newt-text-primary"

@@ -121,7 +121,8 @@ const AuditLogEntry = React.forwardRef<HTMLLIElement, AuditLogEntryProps>(
         </time>
       </>
     )
-    const expandable = React.Children.count(children) > 0
+    /* `toArray` drops `null` and `false`, so `{cond && <Change />}` counts as none. */
+    const expandable = React.Children.toArray(children).length > 0
     return (
       <li
         ref={ref}

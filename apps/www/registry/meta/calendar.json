@@ -1,7 +1,7 @@
 {
   "name": "calendar",
   "title": "Calendar",
-  "description": "A month grid for picking one day, with keyboard navigation and a selectable range of dates.",
+  "description": "A month grid for picking one day, with keyboard navigation and optional first and last selectable dates.",
   "vueFiles": ["Calendar.vue", "index.ts"],
   "reactDemo": "calendar-demo",
   "vueDemo": "CalendarDemo"

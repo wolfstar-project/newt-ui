@@ -59,7 +59,7 @@ The panel is positioned against its trigger by CSS alone, below and start-aligne
 
 ## Accessibility
 
-The trigger carries `aria-expanded` and, while the panel is open, `aria-controls` pointing at it. The panel is a `role="dialog"` and needs a name: pass `aria-label` to `PopoverContent`, or `aria-labelledby` naming a heading inside it. It follows the trigger in the document, so `Tab` moves from the button straight into it. `Escape` closes it and returns focus to the trigger, and a press anywhere outside closes it too.
+The trigger carries `aria-expanded` and, while the panel is open, `aria-controls` pointing at it. The panel is a `role="dialog"` and needs a name: pass `aria-label` to `PopoverContent`, or `aria-labelledby` naming a heading inside it. It follows the trigger in the document, so `Tab` moves from the button straight into it. `Escape` closes it wherever focus is, and hands focus back to the trigger when focus was inside the popover. A press anywhere outside closes it too. Inside a drawer or a modal, `Escape` closes the popover first and the dialog on the next press.
 
 ## Tokens
 
