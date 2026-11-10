@@ -179,6 +179,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ColorPickerDemo",
+    type: "registry:example",
+    registryDependencies: ["color-picker"],
+    files: [
+      {
+        path: "examples/ColorPickerDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "CommandPanelDemo",
     type: "registry:example",
     registryDependencies: ["command-panel"],
@@ -454,6 +465,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "NumberInputDemo",
+    type: "registry:example",
+    registryDependencies: ["number-input"],
+    files: [
+      {
+        path: "examples/NumberInputDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "PaginationDemo",
     type: "registry:example",
     registryDependencies: ["pagination"],
@@ -471,6 +493,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/PermissionDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "PinInputDemo",
+    type: "registry:example",
+    registryDependencies: ["pin-input"],
+    files: [
+      {
+        path: "examples/PinInputDemo.vue",
         type: "registry:example",
       },
     ],
@@ -630,6 +663,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "SliderDemo",
+    type: "registry:example",
+    registryDependencies: ["slider"],
+    files: [
+      {
+        path: "examples/SliderDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SpoilerDemo",
     type: "registry:example",
     registryDependencies: ["spoiler"],
@@ -680,6 +724,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/TabsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TagInputDemo",
+    type: "registry:example",
+    registryDependencies: ["tag-input"],
+    files: [
+      {
+        path: "examples/TagInputDemo.vue",
         type: "registry:example",
       },
     ],

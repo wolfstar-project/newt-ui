@@ -17,6 +17,7 @@ import ChatDemo from "@/registry/bases/newt/examples/chat-demo"
 import ChatWindowDemo from "@/registry/bases/newt/examples/chat-window-demo"
 import CheckboxGroupDemo from "@/registry/bases/newt/examples/checkbox-group-demo"
 import CodeBlockDemo from "@/registry/bases/newt/examples/code-block-demo"
+import ColorPickerDemo from "@/registry/bases/newt/examples/color-picker-demo"
 import CommandPanelDemo from "@/registry/bases/newt/examples/command-panel-demo"
 import ContextMenuDemo from "@/registry/bases/newt/examples/context-menu-demo"
 import CooldownBarDemo from "@/registry/bases/newt/examples/cooldown-bar-demo"
@@ -41,8 +42,10 @@ import MessageGroupDemo from "@/registry/bases/newt/examples/message-group-demo"
 import MessageListDemo from "@/registry/bases/newt/examples/message-list-demo"
 import ModalDemo from "@/registry/bases/newt/examples/modal-demo"
 import NotifBadgeDemo from "@/registry/bases/newt/examples/notif-badge-demo"
+import NumberInputDemo from "@/registry/bases/newt/examples/number-input-demo"
 import PaginationDemo from "@/registry/bases/newt/examples/pagination-demo"
 import PermissionDemo from "@/registry/bases/newt/examples/permission-demo"
+import PinInputDemo from "@/registry/bases/newt/examples/pin-input-demo"
 import PollDemo from "@/registry/bases/newt/examples/poll-demo"
 import ProgressDemo from "@/registry/bases/newt/examples/progress-demo"
 import RadioDemo from "@/registry/bases/newt/examples/radio-demo"
@@ -57,11 +60,13 @@ import ServerSidebarDemo from "@/registry/bases/newt/examples/server-sidebar-dem
 import SkeletonDemo from "@/registry/bases/newt/examples/skeleton-demo"
 import SlashCommandDemo from "@/registry/bases/newt/examples/slash-command-demo"
 import SlashCommandSuggestionsDemo from "@/registry/bases/newt/examples/slash-command-suggestions-demo"
+import SliderDemo from "@/registry/bases/newt/examples/slider-demo"
 import SpoilerDemo from "@/registry/bases/newt/examples/spoiler-demo"
 import StageBannerDemo from "@/registry/bases/newt/examples/stage-banner-demo"
 import StatusIndicatorDemo from "@/registry/bases/newt/examples/status-indicator-demo"
 import SystemMessageDemo from "@/registry/bases/newt/examples/system-message-demo"
 import TabsDemo from "@/registry/bases/newt/examples/tabs-demo"
+import TagInputDemo from "@/registry/bases/newt/examples/tag-input-demo"
 import ThreadPreviewDemo from "@/registry/bases/newt/examples/thread-preview-demo"
 import TimelineDemo from "@/registry/bases/newt/examples/timeline-demo"
 import TimestampDemo from "@/registry/bases/newt/examples/timestamp-demo"
@@ -94,6 +99,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["chat-window", ChatWindowDemo],
   ["checkbox-group", CheckboxGroupDemo],
   ["code-block", CodeBlockDemo],
+  ["color-picker", ColorPickerDemo],
   ["command-panel", CommandPanelDemo],
   ["context-menu", ContextMenuDemo],
   ["cooldown-bar", CooldownBarDemo],
@@ -118,8 +124,10 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["message-list", MessageListDemo],
   ["modal", ModalDemo],
   ["notif-badge", NotifBadgeDemo],
+  ["number-input", NumberInputDemo],
   ["pagination", PaginationDemo],
   ["permission", PermissionDemo],
+  ["pin-input", PinInputDemo],
   ["poll", PollDemo],
   ["progress", ProgressDemo],
   ["radio", RadioDemo],
@@ -134,11 +142,13 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["skeleton", SkeletonDemo],
   ["slash-command", SlashCommandDemo],
   ["slash-command-suggestions", SlashCommandSuggestionsDemo],
+  ["slider", SliderDemo],
   ["spoiler", SpoilerDemo],
   ["stage-banner", StageBannerDemo],
   ["status-indicator", StatusIndicatorDemo],
   ["system-message", SystemMessageDemo],
   ["tabs", TabsDemo],
+  ["tag-input", TagInputDemo],
   ["thread-preview", ThreadPreviewDemo],
   ["timeline", TimelineDemo],
   ["timestamp", TimestampDemo],

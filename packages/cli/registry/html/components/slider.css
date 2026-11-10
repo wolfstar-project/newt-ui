@@ -1,0 +1,100 @@
+/* newt-ui · Slider */
+
+/*
+ * A real `<input type="range">` does the work: arrow keys, Home and End, the
+ * announced value and touch dragging are all the browser's. It is laid over
+ * the drawing and made transparent, so the track, the fill and the grabber
+ * are plain boxes placed by one number, `--newt-slider-ratio` (0 to 1).
+ */
+.newt-slider {
+  --newt-slider-ratio: 0;
+  --newt-slider-thumb: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  inline-size: 100%;
+}
+.newt-slider__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  block-size: 24px;
+}
+.newt-slider__input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.newt-slider__track {
+  inline-size: 100%;
+  block-size: 8px;
+  overflow: hidden;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-active);
+}
+.newt-slider__fill {
+  block-size: 100%;
+  inline-size: calc(
+    var(--newt-slider-thumb) / 2 + (100% - var(--newt-slider-thumb)) *
+      var(--newt-slider-ratio)
+  );
+  background: var(--newt-brand);
+}
+.newt-slider__thumb {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(
+    (100% - var(--newt-slider-thumb)) * var(--newt-slider-ratio)
+  );
+  inline-size: var(--newt-slider-thumb);
+  block-size: 24px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: #fff;
+  box-shadow: var(--newt-shadow-elevation-low);
+  pointer-events: none;
+}
+.newt-slider__input:focus-visible ~ .newt-slider__thumb {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+/* Marks sit over the points they name, inset by half a grabber like the fill. */
+.newt-slider__marks {
+  position: relative;
+  block-size: 22px;
+  margin-inline: calc(var(--newt-slider-thumb) / 2);
+}
+.newt-slider__mark {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(100% * var(--newt-slider-at, 0));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 12px;
+  color: var(--newt-text-muted);
+  transform: translateX(calc(var(--newt-dir) * -50%));
+}
+.newt-slider__mark::after {
+  content: "";
+  inline-size: 2px;
+  block-size: 6px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-active);
+}
+
+.newt-slider--disabled {
+  opacity: 0.5;
+}
+.newt-slider--disabled .newt-slider__input {
+  cursor: not-allowed;
+}

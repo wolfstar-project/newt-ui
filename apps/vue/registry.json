@@ -545,6 +545,23 @@
       "framework": "vue"
     },
     {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "Color Picker",
+      "description": "A palette of swatches with a custom colour tile, for role and accent colours.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/color-picker/ColorPicker.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/color-picker/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "command-panel",
       "type": "registry:block",
       "title": "Command panel",
@@ -1251,6 +1268,23 @@
       "framework": "vue"
     },
     {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "Number Input",
+      "description": "A number field with decrement and increment buttons that respect min, max and step.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/number-input/NumberInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/number-input/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
@@ -1309,6 +1343,23 @@
         },
         {
           "path": "registry/bases/newt/ui/permission/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "pin-input",
+      "type": "registry:ui",
+      "title": "Pin Input",
+      "description": "A short code entered one character to a box, for two-factor and verification codes.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/pin-input/PinInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/pin-input/index.ts",
           "type": "registry:ui"
         }
       ],
@@ -1695,6 +1746,23 @@
       "framework": "vue"
     },
     {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "A range control with a filled track, a grabber and optional labelled marks, for volumes and thresholds.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/slider/Slider.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/slider/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "spoiler",
       "type": "registry:ui",
       "title": "Spoiler",
@@ -1810,6 +1878,23 @@
         },
         {
           "path": "registry/bases/newt/ui/tabs/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "tag-input",
+      "type": "registry:ui",
+      "title": "Tag Input",
+      "description": "A text field that keeps what was typed as removable chips.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/tag-input/TagInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/tag-input/index.ts",
           "type": "registry:ui"
         }
       ],

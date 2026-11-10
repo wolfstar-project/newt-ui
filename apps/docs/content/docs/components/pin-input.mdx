@@ -1,0 +1,104 @@
+---
+title: "Pin Input"
+description: "A short code entered one character to a box, for two-factor and verification codes."
+---
+
+Use it for a code of known length that somebody reads off another screen: a two-factor code, an email verification code, a pairing code. Typing fills a box and moves on, `Backspace` steps back, and a pasted code is dealt out across the boxes.
+
+The value is a single string with no gaps, so a character typed in a later box lands in the first empty one.
+
+<ComponentPreview name="pin-input" />
+
+## Installation
+
+<Installation name="pin-input" />
+
+## Usage
+
+<Usage name="pin-input" />
+
+## API reference
+
+<PropsTable
+  of="PinInput"
+  rows={[
+    {
+      name: "value / v-model",
+      type: "string",
+      description:
+        "The code so far. In React, leave it undefined and pass `defaultValue` to let the component own it.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string) => void",
+      description:
+        "React only. Called on every change; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "onComplete / @complete",
+      type: "(value: string) => void",
+      description: "Called once, with the code, when the last box is filled.",
+    },
+    {
+      name: "length",
+      type: "number",
+      description: "How many characters the code has.",
+      default: "6",
+    },
+    {
+      name: "type",
+      type: '"numeric" | "alphanumeric"',
+      description:
+        "`numeric` accepts digits only and asks a phone for its number pad.",
+      default: '"numeric"',
+    },
+    {
+      name: "mask",
+      type: "boolean",
+      description: "Draws every character as a dot.",
+      default: "false",
+    },
+    {
+      name: "groupSize",
+      type: "number",
+      description:
+        "Draws a separator after every this-many boxes. `0` draws none.",
+      default: "0",
+    },
+    {
+      name: "invalid",
+      type: "boolean",
+      description:
+        "Turns the borders to the danger colour and sets `aria-invalid` on each box.",
+      default: "false",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Stops every box taking input.",
+      default: "false",
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "Accessible name of the group.",
+      default: '"Verification code"',
+    },
+    {
+      name: "name",
+      type: "string",
+      description:
+        "Adds a hidden input with this name, so the code posts with a form.",
+    },
+  ]}
+/>
+
+Submit from the complete callback when the code should be checked as soon as it is whole, and keep a visible button for readers who paste a code and expect to confirm it.
+
+## Accessibility
+
+The boxes sit in a `role="group"` named by `label`, and each box announces its position ("Digit 2 of 6"). The first box carries `autocomplete="one-time-code"`, which lets a phone offer the code from a text message. `Left` and `Right` move between boxes following the reading direction, and `Home` and `End` jump to the ends. An error needs words as well as the red border: put the message in a `FieldHelp` with `variant="error"`.
+
+## Tokens
+
+<TokensNote name="pin-input" />

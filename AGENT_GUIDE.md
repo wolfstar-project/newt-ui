@@ -175,6 +175,11 @@ and border changes only. This is a deliberate constraint, not an oversight.
 | Toast                 | `.newt-toast`                                                                  | success/error variants                                               |
 | Code block            | `.newt-code`                                                                   | syntax token classes `.tok-*`                                        |
 | Expressions picker    | `.newt-expressions-picker`                                                     | searchable emoji, sticker and GIF dialog                             |
+| Slider                | `.newt-slider`                                                                 | range control with fill, grabber and marks                           |
+| Pin input             | `.newt-pin`                                                                    | one-character boxes for a short code                                 |
+| Tag input             | `.newt-tag-input`                                                              | text field that keeps entries as chips                               |
+| Number input          | `.newt-number`                                                                 | number field with stepper buttons                                    |
+| Color picker          | `.newt-color-picker`                                                           | swatch palette with a custom colour tile                             |
 | Reaction pill         | `.newt-reaction`                                                               | clickable, `--active` state, `aria-pressed`                          |
 | Reply preview         | `.newt-reply`                                                                  | "replying to" bar above a message                                    |
 | Typing indicator      | `.newt-typing`                                                                 | static three-dot marker, paired with `aria-label`                    |

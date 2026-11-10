@@ -1,0 +1,88 @@
+/* newt-ui · Tag Input */
+
+/*
+ * A text field that keeps what was typed as chips. The wrapper is drawn as
+ * the field and the real `<input>` inside it has no chrome of its own, so the
+ * chips and the caret share one box and one focus border.
+ */
+.newt-tag-input {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  inline-size: 100%;
+  min-block-size: 42px;
+  padding: 6px 8px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-input);
+  cursor: text;
+  transition: border-color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-tag-input:focus-within {
+  border-color: var(--newt-brand);
+}
+.newt-tag-input__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-inline-size: 100%;
+  padding-block: 3px;
+  padding-inline: 8px 4px;
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+.newt-tag-input__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 16px;
+  block-size: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-full);
+  background: transparent;
+  color: var(--newt-text-muted);
+  cursor: pointer;
+}
+.newt-tag-input__remove svg {
+  inline-size: 12px;
+  block-size: 12px;
+}
+.newt-tag-input__remove:hover {
+  background: var(--newt-danger);
+  color: #fff;
+}
+.newt-tag-input__remove:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 1px;
+}
+.newt-tag-input__input {
+  flex: 1;
+  min-inline-size: 80px;
+  padding: 3px 4px;
+  border: 0;
+  background: transparent;
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+  font-size: 14px;
+  line-height: 18px;
+}
+.newt-tag-input__input:focus {
+  outline: none;
+}
+.newt-tag-input__input::placeholder {
+  color: var(--newt-text-muted);
+}
+.newt-tag-input--invalid,
+.newt-field[data-invalid] .newt-tag-input {
+  border-color: var(--newt-danger);
+}
+.newt-tag-input--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -179,6 +179,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "color-picker-demo",
+    type: "registry:example",
+    registryDependencies: ["color-picker"],
+    files: [
+      {
+        path: "examples/color-picker-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "command-panel-demo",
     type: "registry:example",
     registryDependencies: ["command-panel"],
@@ -454,6 +465,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "number-input-demo",
+    type: "registry:example",
+    registryDependencies: ["number-input"],
+    files: [
+      {
+        path: "examples/number-input-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "pagination-demo",
     type: "registry:example",
     registryDependencies: ["pagination"],
@@ -471,6 +493,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/permission-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "pin-input-demo",
+    type: "registry:example",
+    registryDependencies: ["pin-input"],
+    files: [
+      {
+        path: "examples/pin-input-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -630,6 +663,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "slider-demo",
+    type: "registry:example",
+    registryDependencies: ["slider"],
+    files: [
+      {
+        path: "examples/slider-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "spoiler-demo",
     type: "registry:example",
     registryDependencies: ["spoiler"],
@@ -680,6 +724,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/tabs-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "tag-input-demo",
+    type: "registry:example",
+    registryDependencies: ["tag-input"],
+    files: [
+      {
+        path: "examples/tag-input-demo.tsx",
         type: "registry:example",
       },
     ],

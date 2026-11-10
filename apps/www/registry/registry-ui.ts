@@ -225,6 +225,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "color-picker",
+    type: "registry:ui",
+    title: "Color Picker",
+    description:
+      "A palette of swatches with a custom colour tile, for role and accent colours.",
+    files: [
+      {
+        path: "ui/color-picker.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "command-panel",
     type: "registry:block",
     title: "Command panel",
@@ -551,6 +564,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "number-input",
+    type: "registry:ui",
+    title: "Number Input",
+    description:
+      "A number field with decrement and increment buttons that respect min, max and step.",
+    files: [
+      {
+        path: "ui/number-input.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "pagination",
     type: "registry:ui",
     title: "Pagination",
@@ -574,6 +600,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/permission.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "pin-input",
+    type: "registry:ui",
+    title: "Pin Input",
+    description:
+      "A short code entered one character to a box, for two-factor and verification codes.",
+    files: [
+      {
+        path: "ui/pin-input.tsx",
         type: "registry:ui",
       },
     ],
@@ -774,6 +813,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "slider",
+    type: "registry:ui",
+    title: "Slider",
+    description:
+      "A range control with a filled track, a grabber and optional labelled marks, for volumes and thresholds.",
+    files: [
+      {
+        path: "ui/slider.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "spoiler",
     type: "registry:ui",
     title: "Spoiler",
@@ -837,6 +889,18 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/tabs.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "tag-input",
+    type: "registry:ui",
+    title: "Tag Input",
+    description: "A text field that keeps what was typed as removable chips.",
+    files: [
+      {
+        path: "ui/tag-input.tsx",
         type: "registry:ui",
       },
     ],

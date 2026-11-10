@@ -285,6 +285,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "color-picker",
+    {
+      name: "color-picker",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/color-picker/ColorPicker.vue",
+        "registry/bases/newt/ui/color-picker/index.ts",
+      ],
+    },
+  ],
+  [
     "command-panel",
     {
       name: "command-panel",
@@ -648,6 +660,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "number-input",
+    {
+      name: "number-input",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/number-input/NumberInput.vue",
+        "registry/bases/newt/ui/number-input/index.ts",
+      ],
+    },
+  ],
+  [
     "pagination",
     {
       name: "pagination",
@@ -675,6 +699,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/permission/PermissionDescription.vue",
         "registry/bases/newt/ui/permission/PermissionStates.vue",
         "registry/bases/newt/ui/permission/index.ts",
+      ],
+    },
+  ],
+  [
+    "pin-input",
+    {
+      name: "pin-input",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/pin-input/PinInput.vue",
+        "registry/bases/newt/ui/pin-input/index.ts",
       ],
     },
   ],
@@ -885,6 +921,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "slider",
+    {
+      name: "slider",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/slider/Slider.vue",
+        "registry/bases/newt/ui/slider/index.ts",
+      ],
+    },
+  ],
+  [
     "spoiler",
     {
       name: "spoiler",
@@ -949,6 +997,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/tabs/TabsTrigger.vue",
         "registry/bases/newt/ui/tabs/TabsContent.vue",
         "registry/bases/newt/ui/tabs/index.ts",
+      ],
+    },
+  ],
+  [
+    "tag-input",
+    {
+      name: "tag-input",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/tag-input/TagInput.vue",
+        "registry/bases/newt/ui/tag-input/index.ts",
       ],
     },
   ],
@@ -1315,6 +1375,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ColorPickerDemo",
+    {
+      name: "ColorPickerDemo",
+      type: "registry:example",
+      registryDependencies: ["color-picker"],
+      files: ["registry/bases/newt/examples/ColorPickerDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/ColorPickerDemo.vue")
+      ),
+    },
+  ],
+  [
     "CommandPanelDemo",
     {
       name: "CommandPanelDemo",
@@ -1617,6 +1689,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "NumberInputDemo",
+    {
+      name: "NumberInputDemo",
+      type: "registry:example",
+      registryDependencies: ["number-input"],
+      files: ["registry/bases/newt/examples/NumberInputDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/NumberInputDemo.vue")
+      ),
+    },
+  ],
+  [
     "PaginationDemo",
     {
       name: "PaginationDemo",
@@ -1637,6 +1721,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/PermissionDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/PermissionDemo.vue")
+      ),
+    },
+  ],
+  [
+    "PinInputDemo",
+    {
+      name: "PinInputDemo",
+      type: "registry:example",
+      registryDependencies: ["pin-input"],
+      files: ["registry/bases/newt/examples/PinInputDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/PinInputDemo.vue")
       ),
     },
   ],
@@ -1810,6 +1906,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "SliderDemo",
+    {
+      name: "SliderDemo",
+      type: "registry:example",
+      registryDependencies: ["slider"],
+      files: ["registry/bases/newt/examples/SliderDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SliderDemo.vue")
+      ),
+    },
+  ],
+  [
     "SpoilerDemo",
     {
       name: "SpoilerDemo",
@@ -1866,6 +1974,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/TabsDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TabsDemo.vue")
+      ),
+    },
+  ],
+  [
+    "TagInputDemo",
+    {
+      name: "TagInputDemo",
+      type: "registry:example",
+      registryDependencies: ["tag-input"],
+      files: ["registry/bases/newt/examples/TagInputDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TagInputDemo.vue")
       ),
     },
   ],
