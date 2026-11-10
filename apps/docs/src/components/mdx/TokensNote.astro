@@ -27,6 +27,14 @@ const rootClass = rootClasses[meta.name]
  * only if `tokens.css` declares them, which the colours page settles.
  */
 const tokens = componentTokens(meta.name)
+
+/*
+ * A swatch is only drawn for a token that is a colour. A radius or a font
+ * used as a `background` is invalid when it is computed, which resets the
+ * property to transparent and leaves an empty box.
+ */
+const COLOUR =
+  /^--newt-(?:bg|text|border|brand|online|idle|dnd|offline|danger|mention)(?:-|$)/
 ---
 
 <p>
@@ -51,11 +59,13 @@ const tokens = componentTokens(meta.name)
     <ul class="token-chips" aria-label={`Tokens ${meta.title} reads`}>
       {tokens.map((token) => (
         <li>
-          <span
-            class="token-chip-swatch"
-            style={`background:var(${token})`}
-            aria-hidden="true"
-          />
+          {COLOUR.test(token) && (
+            <span
+              class="token-chip-swatch"
+              style={`background:var(${token})`}
+              aria-hidden="true"
+            />
+          )}
           <code>{token}</code>
         </li>
       ))}

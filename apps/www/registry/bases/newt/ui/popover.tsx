@@ -31,14 +31,11 @@ export interface PopoverProps extends React.ComponentProps<"div"> {
 /*
  * A small panel that hangs off the button that opened it. The root is the
  * positioning context, so the panel follows its trigger without any
- * measuring. Escape and a press anywhere outside close it, and closing with
- * the keyboard hands focus back to the trigger.
+ * measuring. Escape and a press anywhere outside close it; if focus was
+ * inside when Escape closed it, focus goes back to the trigger.
  */
 const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
-  (
-    { className, open, defaultOpen = false, onOpenChange, onKeyDown, ...props },
-    ref
-  ) => {
+  ({ className, open, defaultOpen = false, onOpenChange, ...props }, ref) => {
     const id = React.useId()
     const [internal, setInternal] = React.useState(defaultOpen)
     const isControlled = open !== undefined
@@ -52,16 +49,36 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
       [isControlled, onOpenChange]
     )
 
+    /*
+     * Both listeners sit on the document while the popover is open. Escape
+     * has to work wherever focus is: some browsers do not focus a button on
+     * click, and a click on the panel's text leaves focus on the body.
+     */
     React.useEffect(() => {
       if (!isOpen) return
+      const root = () => document.querySelector(`[data-popover="${id}"]`)
       const onPointerDown = (event: PointerEvent) => {
         const inside =
-          event.target instanceof Element &&
-          event.target.closest(`[data-popover="${id}"]`) !== null
+          event.target instanceof Node && root()?.contains(event.target)
         if (!inside) setOpen(false)
       }
+      const onKeyDown = (event: KeyboardEvent) => {
+        if (event.key !== "Escape" || event.defaultPrevented) return
+        /* Handled here, so an enclosing dialog does not close as well. */
+        event.preventDefault()
+        const focusInside = root()?.contains(document.activeElement)
+        setOpen(false)
+        /* Focus goes back to the trigger only if it would otherwise be lost. */
+        if (focusInside) {
+          root()?.querySelector<HTMLElement>("[data-popover-trigger]")?.focus()
+        }
+      }
       document.addEventListener("pointerdown", onPointerDown)
-      return () => document.removeEventListener("pointerdown", onPointerDown)
+      document.addEventListener("keydown", onKeyDown)
+      return () => {
+        document.removeEventListener("pointerdown", onPointerDown)
+        document.removeEventListener("keydown", onKeyDown)
+      }
     }, [isOpen, id, setOpen])
 
     const context = React.useMemo(
@@ -71,23 +88,11 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
 
     return (
       <PopoverContext.Provider value={context}>
-        {/* oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- Escape is caught as it bubbles from the trigger or the panel; the wrapper itself is never focused */}
         <div
           ref={ref}
           data-popover={id}
           data-state={isOpen ? "open" : "closed"}
           className={cn("relative inline-flex", className)}
-          onKeyDown={(event) => {
-            onKeyDown?.(event)
-            if (event.defaultPrevented || event.key !== "Escape" || !isOpen) {
-              return
-            }
-            event.stopPropagation()
-            setOpen(false)
-            event.currentTarget
-              .querySelector<HTMLElement>("[data-popover-trigger]")
-              ?.focus()
-          }}
           {...props}
         />
       </PopoverContext.Provider>

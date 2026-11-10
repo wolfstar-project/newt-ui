@@ -96,7 +96,29 @@ const Calendar = React.forwardRef<HTMLDivElement | null, CalendarProps>(
     const [today, setToday] = React.useState<string | undefined>(undefined)
     const [cursor, setCursor] = React.useState(selected)
     const moveFocus = React.useRef(false)
-    const focused = cursor ?? today
+
+    /* A controlled value changed from outside turns the page to it. */
+    const [seenValue, setSeenValue] = React.useState(value)
+    if (value !== seenValue) {
+      setSeenValue(value)
+      if (value !== undefined) setCursor(value)
+    }
+
+    /* The nearest day that can be chosen; a month jump lands on it too. */
+    const clamp = (iso: string) =>
+      min !== undefined && iso < min
+        ? min
+        : max !== undefined && iso > max
+          ? max
+          : iso
+
+    /*
+     * The one tab stop. It is clamped because a disabled day cannot take
+     * focus: with today or the value outside the range, the grid would
+     * otherwise have no way in from the keyboard.
+     */
+    const anchorDay = cursor ?? today
+    const focused = anchorDay === undefined ? undefined : clamp(anchorDay)
 
     React.useEffect(() => setToday(localToday()), [])
 
@@ -110,14 +132,6 @@ const Calendar = React.forwardRef<HTMLDivElement | null, CalendarProps>(
 
     const allowed = (iso: string) =>
       (min === undefined || iso >= min) && (max === undefined || iso <= max)
-
-    /* A month jump lands on the nearest day that can be chosen. */
-    const clamp = (iso: string) =>
-      min !== undefined && iso < min
-        ? min
-        : max !== undefined && iso > max
-          ? max
-          : iso
 
     const goTo = (iso: string, withFocus: boolean) => {
       moveFocus.current = withFocus

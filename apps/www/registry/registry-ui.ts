@@ -170,7 +170,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Calendar",
     description:
-      "A month grid for picking one day, with keyboard navigation and a selectable range of dates.",
+      "A month grid for picking one day, with keyboard navigation and optional first and last selectable dates.",
     files: [
       {
         path: "ui/calendar.tsx",

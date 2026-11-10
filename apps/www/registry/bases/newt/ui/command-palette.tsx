@@ -130,8 +130,15 @@ const CommandPalette = React.forwardRef<
     const current = flat[Math.min(active, flat.length - 1)]
     const optionId = (item: CommandItem) => `${id}-${item.id}`
 
+    /*
+     * The highlighted row is scrolled into view only when the keyboard moved
+     * it. The pointer moves the highlight too, and scrolling then would slide
+     * the list under the pointer and make it jitter.
+     */
+    const scrollToCurrent = React.useRef(false)
     React.useEffect(() => {
-      if (current === undefined) return
+      if (!scrollToCurrent.current || current === undefined) return
+      scrollToCurrent.current = false
       document
         .getElementById(`${id}-${current.id}`)
         ?.scrollIntoView({ block: "nearest" })
@@ -185,14 +192,18 @@ const CommandPalette = React.forwardRef<
             setActive(0)
           }}
           onKeyDown={(event) => {
+            /* While an input method is composing, Enter confirms a candidate. */
+            if (event.nativeEvent.isComposing) return
             if (event.key === "Enter") {
               event.preventDefault()
               if (current !== undefined) choose(current)
             } else if (event.key === "ArrowDown" && flat.length > 0) {
               event.preventDefault()
+              scrollToCurrent.current = true
               setActive((flat.indexOf(current ?? flat[0]) + 1) % flat.length)
             } else if (event.key === "ArrowUp" && flat.length > 0) {
               event.preventDefault()
+              scrollToCurrent.current = true
               setActive(
                 (flat.indexOf(current ?? flat[0]) - 1 + flat.length) %
                   flat.length

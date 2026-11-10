@@ -20,12 +20,6 @@ const htmlSources = import.meta.glob<string>(
  */
 const IMAGE = /<img\b([^>]*)>/g
 
-/*
- * A browser does not paint an open `<dialog>` inside an inert subtree, and a
- * thumbnail is inert. The dialog-based examples are drawn as a plain box that
- * keeps the `open` attribute their stylesheets key on.
- */
-
 /**
  * A component's reference markup, or `undefined` for one that only exists as
  * a composition (the blocks). Ids are dropped: a thumbnail is inert, and a
@@ -36,18 +30,25 @@ export function htmlExample(name: string): string | undefined {
     key.endsWith(`/${name}.html`)
   )
   if (path === undefined) return undefined
-  return htmlSources[path]
-    ?.replace(
-      /\s(?:id|for|aria-labelledby|aria-describedby|aria-controls)="[^"]*"/g,
-      ""
-    )
-    .replace(IMAGE, (_tag, attributes: string) => {
-      const kept = attributes.replace(/\s(?:src|alt|srcset)="[^"]*"/g, "")
-      return `<span data-thumb-image${kept.replace(/\s*\/\s*$/, "")}></span>`
-    })
-    .replace(/<dialog\b/g, "<div data-thumb-dialog")
-    .replace(/<\/dialog>/g, "</div>")
-    .trim()
+  return (
+    htmlSources[path]
+      ?.replace(
+        /\s(?:id|for|aria-labelledby|aria-describedby|aria-controls)="[^"]*"/g,
+        ""
+      )
+      .replace(IMAGE, (_tag, attributes: string) => {
+        const kept = attributes.replace(/\s(?:src|alt|srcset)="[^"]*"/g, "")
+        return `<span data-thumb-image${kept.replace(/\s*\/\s*$/, "")}></span>`
+      })
+      /*
+       * A browser does not paint an open `<dialog>` inside an inert subtree,
+       * and a thumbnail is inert. The dialog-based examples are drawn as a
+       * plain box that keeps the `open` attribute their stylesheets key on.
+       */
+      .replace(/<dialog\b/g, "<div data-thumb-dialog")
+      .replace(/<\/dialog>/g, "</div>")
+      .trim()
+  )
 }
 
 const cssSources = import.meta.glob<string>(
