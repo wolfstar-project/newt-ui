@@ -94,7 +94,9 @@ function clamp(iso: string): string {
  * way in from the keyboard.
  */
 const focused = computed(() => {
-  const anchorDay = cursor.value ?? today.value
+  /* An empty string is how a form says "no date yet"; it is not a day. */
+  const anchorDay =
+    cursor.value === "" ? today.value : (cursor.value ?? today.value)
   return anchorDay === undefined ? undefined : clamp(anchorDay)
 })
 
