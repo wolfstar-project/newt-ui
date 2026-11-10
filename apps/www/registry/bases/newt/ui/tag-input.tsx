@@ -121,7 +121,11 @@ const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
           onChange={(event) => setText(event.target.value)}
           onKeyDown={(event) => {
             onKeyDown?.(event)
-            if (event.defaultPrevented) return
+            /*
+             * While an input method is composing, Enter confirms a candidate
+             * and is not the reader committing a tag.
+             */
+            if (event.defaultPrevented || event.nativeEvent.isComposing) return
             if (event.key === "Enter" || event.key === ",") {
               event.preventDefault()
               add([text])

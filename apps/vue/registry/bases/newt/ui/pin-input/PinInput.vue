@@ -117,6 +117,27 @@ function onInput(index: number, event: Event) {
   focus(at + chars.length)
 }
 
+/*
+ * A paste is handled on its own event. Read from the input's value it cannot
+ * be told apart from typing, and a pasted code that begins with the box's
+ * current character would lose that character.
+ */
+function onPaste(index: number, event: ClipboardEvent) {
+  event.preventDefault()
+  const chars =
+    event.clipboardData?.getData("text").match(ACCEPT[props.type]) ?? []
+  if (chars.length === 0) return
+  const at = Math.min(index, code.value.length)
+  commit(
+    (
+      code.value.slice(0, at) +
+      chars.join("") +
+      code.value.slice(at + chars.length)
+    ).slice(0, props.length)
+  )
+  focus(at + chars.length)
+}
+
 function onKeydown(index: number, event: KeyboardEvent) {
   if (!(event.target instanceof HTMLInputElement)) return
   const forward = getComputedStyle(event.target).direction === "rtl" ? -1 : 1
@@ -171,6 +192,7 @@ function onFocus(event: FocusEvent) {
         class="h-[52px] w-11 rounded-sm border border-newt-border bg-newt-bg-input p-0 text-center font-mono text-xl font-semibold text-newt-text-primary caret-newt-brand transition-colors duration-fast ease-newt focus:border-newt-brand focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 group-data-[invalid]/pin:border-newt-danger"
         @input="onInput(index - 1, $event)"
         @keydown="onKeydown(index - 1, $event)"
+        @paste="onPaste(index - 1, $event)"
         @focus="onFocus"
       />
     </template>

@@ -1,7 +1,7 @@
 /*
  * The trigger toggles the panel. Escape and a press anywhere outside close
- * it, and closing with the keyboard hands focus back to the trigger, so a
- * reader is never left on a control that has just disappeared.
+ * it. If focus was inside when Escape closed it, focus goes back to the
+ * trigger, so a reader is never left on a control that has just disappeared.
  */
 document.querySelectorAll("[data-newt-popover]").forEach((popover) => {
   const trigger = popover.querySelector(".newt-popover__trigger")
@@ -18,11 +18,19 @@ document.querySelectorAll("[data-newt-popover]").forEach((popover) => {
 
   trigger.addEventListener("click", () => setOpen(content.hidden))
 
-  popover.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape" || content.hidden) return
-    event.stopPropagation()
+  /*
+   * On the document, not the popover: Escape has to work wherever focus is,
+   * since some browsers do not focus a button on click. Handling it here also
+   * keeps an enclosing dialog from closing on the same key.
+   */
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || content.hidden || event.defaultPrevented) {
+      return
+    }
+    event.preventDefault()
+    const focusInside = popover.contains(document.activeElement)
     setOpen(false)
-    trigger.focus()
+    if (focusInside) trigger.focus()
   })
 
   document.addEventListener("pointerdown", (event) => {
