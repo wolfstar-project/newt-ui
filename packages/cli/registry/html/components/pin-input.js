@@ -25,9 +25,14 @@ document.querySelectorAll("[data-newt-pin]").forEach((group) => {
     }
   }
 
-  /* Deal characters out from `start`, then rest on the next empty box. */
-  function fill(start, chars) {
+  /*
+   * Deal characters out from `from`, or from the first empty box when that
+   * comes sooner, so the code never has a gap; then rest on the next box.
+   */
+  function fill(from, chars) {
     const all = cells()
+    const empty = all.findIndex((cell) => cell.value === "")
+    const start = empty === -1 ? from : Math.min(from, empty)
     chars.slice(0, all.length - start).forEach((char, offset) => {
       all[start + offset].value = char
     })

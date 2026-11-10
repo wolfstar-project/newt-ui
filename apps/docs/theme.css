@@ -1223,12 +1223,19 @@
     outline-offset: 2px;
   }
 
-  /* The first dot is the token's shipped value, which the page root never overrides. */
+  /*
+   * The stock brand, resolved above the element the switch repaints, so the
+   * first dot keeps showing it whichever brand is picked.
+   */
+  body {
+    --home-stock-brand: var(--newt-brand);
+  }
+
   .brand-switch-dot {
     width: 0.65rem;
     height: 0.65rem;
     border-radius: 50%;
-    background: var(--swatch, #5865f2);
+    background: var(--swatch, var(--home-stock-brand));
   }
 
   .brand-switch a {
