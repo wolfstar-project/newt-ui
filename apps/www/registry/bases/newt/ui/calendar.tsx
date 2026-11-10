@@ -117,7 +117,8 @@ const Calendar = React.forwardRef<HTMLDivElement | null, CalendarProps>(
      * focus: with today or the value outside the range, the grid would
      * otherwise have no way in from the keyboard.
      */
-    const anchorDay = cursor ?? today
+    /* An empty string is how a form says "no date yet"; it is not a day. */
+    const anchorDay = cursor === "" ? today : (cursor ?? today)
     const focused = anchorDay === undefined ? undefined : clamp(anchorDay)
 
     React.useEffect(() => setToday(localToday()), [])
