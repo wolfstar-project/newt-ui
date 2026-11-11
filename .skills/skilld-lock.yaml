@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "transactionId": "1794392751536130672-12",
+  "transactionId": "1794392992115810615-0",
   "skills": {
     "accessibility": {
       "source": {
@@ -64,31 +64,6 @@
         "artifact_id": "sha256:55c58f2b008cad4e38db2463eccbb8cff503a0f657fb86ff4b86e619a8eb8f7b",
         "content_sha256": "55c58f2b008cad4e38db2463eccbb8cff503a0f657fb86ff4b86e619a8eb8f7b",
         "installed_sha256": "fd14eb2fcb59fde11d9e75501995f1a08f21beaedf0ec407c4d44a954dd0eef3",
-        "attestation_key_id": "skilld-production-2026-08"
-      },
-      "targets": [
-        {
-          "agent": "claude-code",
-          "mode": "symlink"
-        },
-        {
-          "agent": "codex",
-          "mode": "symlink"
-        }
-      ]
-    },
-    "nuxt": {
-      "source": {
-        "type": "remote",
-        "source": "onmax/nuxt-skills/nuxt#commit:2e74504f3151b18bf81e8a62cb7f1fa9edb532a4",
-        "commit_sha": "2e74504f3151b18bf81e8a62cb7f1fa9edb532a4",
-        "skill_path": "skills/nuxt"
-      },
-      "sourceStatus": {
-        "type": "verified",
-        "artifact_id": "sha256:1a6b9c985ea2e766c9c335979c157397e62662b5456ace29db5c848f2e46fab7",
-        "content_sha256": "1a6b9c985ea2e766c9c335979c157397e62662b5456ace29db5c848f2e46fab7",
-        "installed_sha256": "c7ca2942943b03986907a6e5a41c539a010ff3f3900d622ef5c4da5c3ee5c4b6",
         "attestation_key_id": "skilld-production-2026-08"
       },
       "targets": [
