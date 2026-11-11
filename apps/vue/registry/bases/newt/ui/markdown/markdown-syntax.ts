@@ -26,6 +26,9 @@ export const TIMESTAMP_FORMATS = {
 
 export type TimestampLetter = keyof typeof TIMESTAMP_FORMATS
 
+/** The largest instant a `Date` can hold, in seconds either side of 1970. */
+const MAX_TIMESTAMP_SECONDS = 8_640_000_000_000
+
 export type MarkdownMentionKind = "user" | "role" | "channel"
 
 export type MarkdownInline =
@@ -154,11 +157,10 @@ const INLINE_RULES: readonly InlineRule[] = [
         Object.entries(TIMESTAMP_FORMATS).find(
           ([key]) => key === letter
         )?.[1] ?? TIMESTAMP_FORMATS.f
-      return {
-        type: "timestamp",
-        value: Number(group(match, 1)),
-        format,
-      }
+      const value = Number(group(match, 1))
+      // Beyond this a `Date` is invalid, and formatting it throws.
+      if (Math.abs(value) > MAX_TIMESTAMP_SECONDS) return null
+      return { type: "timestamp", value, format }
     },
   },
   {
@@ -247,12 +249,17 @@ const INLINE_RULES: readonly InlineRule[] = [
     parse: wrap("underline"),
   },
   {
-    pattern: /\*(?!\s)((?:\*\*[^]+?\*\*|[^*])+?)\*(?!\*)/y,
+    /*
+     * The two alternatives start differently and a bold run cannot hold a
+     * `*`, so every input has one way through: an unclosed marker costs
+     * linear time, not exponential.
+     */
+    pattern: /\*(?!\s)((?:[^*]|\*\*[^*]+\*\*)+?)\*(?!\*)/y,
     starts: "*",
     parse: wrap("em"),
   },
   {
-    pattern: /_((?:__[^]+?__|[^_])+?)_(?![\p{L}\p{N}_])/uy,
+    pattern: /_((?:[^_]|__[^_]+__)+?)_(?![\p{L}\p{N}_])/uy,
     starts: "_",
     after: isNotWord,
     parse: wrap("em"),
@@ -485,6 +492,14 @@ export function parseMarkdown(
   return blocks
 }
 
+/*
+ * Pictographs and what joins or modifies them: zero-width joiner, variation
+ * selector, skin tones, and the regional indicators that pair into flags.
+ * Not `Emoji_Component`, which also holds the digits, `#` and `*`.
+ */
+const EMOJI_ONLY =
+  /^(?:\p{Extended_Pictographic}|\p{Emoji_Modifier}|\p{Regional_Indicator}|\u200d|\ufe0f)+$/u
+
 /**
  * Whether a message is nothing but emoji — custom ones, or a few characters
  * of Unicode pictographs — which the client renders large.
@@ -499,14 +514,9 @@ export function isEmojiOnly(blocks: readonly MarkdownBlock[]): boolean {
     else if (node.type === "text") {
       const stripped = node.content.replace(/\s+/g, "")
       if (stripped.length === 0) continue
-      if (
-        !/^(?:\p{Extended_Pictographic}|\p{Emoji_Component}|‍|️)+$/u.test(
-          stripped
-        )
-      ) {
-        return false
-      }
+      if (!EMOJI_ONLY.test(stripped)) return false
       count += [...stripped.matchAll(/\p{Extended_Pictographic}/gu)].length
+      count += [...stripped.matchAll(/\p{Regional_Indicator}/gu)].length / 2
     } else return false
   }
   return count > 0 && count <= 30

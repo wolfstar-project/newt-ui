@@ -143,12 +143,26 @@ const Reaction = React.forwardRef<HTMLElement, ReactionProps>(
     )
 
     /*
-     * Read-only renders a `<span>` that only carries the name and state: no
-     * button attributes and no handlers, so nothing about it is pressable.
+     * Read-only renders a `<span>`: it keeps every attribute a caller passes
+     * (`style`, `data-*`, `aria-describedby`, handlers other than `onClick`)
+     * but drops the ones only a button understands, and never toggles.
      */
     const Tag = asElementType(readonly ? "span" : "button")
+    const {
+      type: _type,
+      disabled: _disabled,
+      form: _form,
+      formAction: _formAction,
+      formEncType: _formEncType,
+      formMethod: _formMethod,
+      formNoValidate: _formNoValidate,
+      formTarget: _formTarget,
+      name: _name,
+      value: _value,
+      ...shared
+    } = props
     const elementProps = readonly
-      ? { role: "img", id: props.id, title: props.title }
+      ? { role: "img", ...shared }
       : {
           type: "button",
           "aria-pressed": active,

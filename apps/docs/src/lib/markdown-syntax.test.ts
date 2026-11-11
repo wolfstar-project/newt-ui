@@ -134,6 +134,40 @@ describe("parseInline", () => {
     ])
   })
 
+  it("parses an unclosed marker before nested runs in linear time", () => {
+    const adversarial = [
+      "*a" + "**a**a".repeat(400),
+      "_a" + "__a__a".repeat(400),
+    ]
+    for (const source of adversarial) {
+      const started = performance.now()
+      parseInline(source)
+      expect(performance.now() - started).toBeLessThan(250)
+    }
+  })
+
+  it("keeps a bold run inside italic text", () => {
+    expect(parseInline("*a **b** c*")).toEqual([
+      {
+        type: "em",
+        children: [
+          { type: "text", content: "a " },
+          { type: "strong", children: [{ type: "text", content: "b" }] },
+          { type: "text", content: " c" },
+        ],
+      },
+    ])
+  })
+
+  it("leaves a timestamp outside the range of a date as text", () => {
+    expect(parseInline("<t:9999999999999:R>")).toEqual([
+      { type: "text", content: "<t:9999999999999:R>" },
+    ])
+    expect(parseInline("<t:8640000000000>")).toEqual([
+      { type: "timestamp", value: 8640000000000, format: "shortDateTime" },
+    ])
+  })
+
   it("honours backslash escapes and turns newlines into breaks", () => {
     expect(parseInline("\\*not italic\\*\nnext")).toEqual([
       { type: "text", content: "*not italic*" },
@@ -216,5 +250,9 @@ describe("isEmojiOnly", () => {
   it("is true for a message of emoji and false once there is a word", () => {
     expect(isEmojiOnly(parseMarkdown("<:wolf:1> 🐺"))).toBe(true)
     expect(isEmojiOnly(parseMarkdown("<:wolf:1> hi"))).toBe(false)
+    expect(isEmojiOnly(parseMarkdown("100 🔥"))).toBe(false)
+    expect(isEmojiOnly(parseMarkdown("1 😀"))).toBe(false)
+    expect(isEmojiOnly(parseMarkdown("# 😀"))).toBe(false)
+    expect(isEmojiOnly(parseMarkdown("👋🏽 🇮🇹 ❤️"))).toBe(true)
   })
 })
