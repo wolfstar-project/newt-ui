@@ -1,0 +1,59 @@
+---
+title: "Breadcrumb"
+description: "The path from the top of a section to the current page, as a row of links."
+---
+
+Use it on pages that sit more than one level deep, such as a role inside the roles list inside server settings. It shows where the page is and gives a one-click way back up. It is not a history of where the reader has been.
+
+<ComponentPreview name="breadcrumb" />
+
+## Installation
+
+<Installation name="breadcrumb" />
+
+## Usage
+
+<Usage name="breadcrumb" />
+
+## API reference
+
+<PropsTable
+  of="Breadcrumb"
+  rows={[
+    {
+      name: "label",
+      type: "string",
+      description: "Accessible name of the navigation landmark.",
+      default: '"Breadcrumb"',
+    },
+  ]}
+/>
+
+<PropsTable
+  of="BreadcrumbItem"
+  rows={[
+    {
+      name: "href",
+      type: "string",
+      description:
+        "Where this level leads. Omit it and pass your router's link component as the child instead.",
+    },
+    {
+      name: "current",
+      type: "boolean",
+      description:
+        "Marks the page the reader is on. It renders as text, not a link.",
+      default: "false",
+    },
+  ]}
+/>
+
+A link passed as the child of an item with no `href` is styled by the item, so a Next.js `Link` or a `NuxtLink` looks the same as the built-in anchor.
+
+## Accessibility
+
+The trail is an ordered list inside a `<nav>` named by `label`, so it appears in a screen reader's list of landmarks. The last item carries `aria-current="page"`. The slash between items is drawn by the stylesheet and is never read out. Keep the trail short: on a narrow screen it wraps, and the current page truncates before it pushes the layout wide.
+
+## Tokens
+
+<TokensNote name="breadcrumb" />

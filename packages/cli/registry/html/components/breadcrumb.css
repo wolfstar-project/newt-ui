@@ -1,0 +1,49 @@
+/* newt-ui · Breadcrumb */
+
+/*
+ * Where the page sits, as an ordered list inside a named `<nav>`. The
+ * separator is drawn by the stylesheet, so it is never read out and never
+ * copied with the text; a slash reads the same in either direction.
+ */
+.newt-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  line-height: 20px;
+}
+.newt-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-inline-size: 0;
+}
+.newt-breadcrumb__item + .newt-breadcrumb__item::before {
+  content: "/";
+  color: var(--newt-text-muted);
+}
+.newt-breadcrumb__link {
+  border-radius: var(--newt-radius-sm);
+  color: var(--newt-text-secondary);
+  text-decoration: none;
+  transition: color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-breadcrumb__link:hover {
+  color: var(--newt-text-primary);
+  text-decoration: underline;
+}
+.newt-breadcrumb__link:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-breadcrumb__current {
+  overflow: hidden;
+  color: var(--newt-text-primary);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

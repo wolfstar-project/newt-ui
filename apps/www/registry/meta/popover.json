@@ -1,0 +1,13 @@
+{
+  "name": "popover",
+  "title": "Popover",
+  "description": "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+  "vueFiles": [
+    "Popover.vue",
+    "PopoverTrigger.vue",
+    "PopoverContent.vue",
+    "index.ts"
+  ],
+  "reactDemo": "popover-demo",
+  "vueDemo": "PopoverDemo"
+}

@@ -1,0 +1,240 @@
+<!-- Load tokens.css and expressions-picker.css; load expressions-picker.js with defer.
+     The script draws the sections from the JSON in data-newt-expressions-data. -->
+<div class="newt-expressions-picker" data-newt-expressions-picker>
+  <button
+    type="button"
+    class="newt-expressions-picker__trigger"
+    data-newt-trigger
+    aria-haspopup="dialog"
+    aria-expanded="false"
+  >
+    Choose an expression
+  </button>
+  <dialog
+    class="newt-expressions-picker__panel"
+    data-newt-dialog
+    aria-label="Choose an expression"
+  >
+    <div class="newt-expressions-picker__header">
+      <div
+        role="tablist"
+        aria-label="Expression type"
+        class="newt-expressions-picker__tabs"
+      >
+        <button
+          type="button"
+          role="tab"
+          class="newt-expressions-picker__control"
+          data-newt-kind="gif"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          GIFs</button
+        ><button
+          type="button"
+          role="tab"
+          class="newt-expressions-picker__control"
+          data-newt-kind="sticker"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          Stickers</button
+        ><button
+          type="button"
+          role="tab"
+          class="newt-expressions-picker__control"
+          data-newt-kind="emoji"
+          aria-selected="true"
+          tabindex="0"
+        >
+          Emoji
+        </button>
+      </div>
+    </div>
+    <div class="newt-expressions-picker__toolbar">
+      <div class="newt-expressions-picker__search-field">
+        <input
+          type="text"
+          class="newt-expressions-picker__search"
+          data-newt-search
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Search expressions"
+          placeholder="Search by name or keyword"
+        />
+        <svg
+          class="newt-expressions-picker__search-icon"
+          aria-hidden="true"
+          viewBox="0 0 16 16"
+        >
+          <circle cx="7" cy="7" r="5" />
+          <path d="m11 11 4 4" stroke-linecap="round" />
+        </svg>
+        <button
+          type="button"
+          class="newt-expressions-picker__control newt-expressions-picker__clear"
+          data-newt-clear
+          aria-label="Clear search"
+          hidden
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="newt-expressions-picker__tone" data-newt-tone>
+        <button
+          type="button"
+          class="newt-expressions-picker__control newt-expressions-picker__tone-button"
+          data-newt-tone-button
+          aria-expanded="false"
+          aria-label="Skin tone: Default skin tone"
+        >
+          <span aria-hidden="true" class="newt-expressions-picker__glyph"
+            >👋</span
+          >
+        </button>
+        <div
+          class="newt-expressions-picker__tones"
+          data-newt-tones
+          role="group"
+          aria-label="Skin tone"
+          hidden
+        ></div>
+      </div>
+    </div>
+    <div class="newt-expressions-picker__body" role="tabpanel" data-newt-panel>
+      <nav
+        class="newt-expressions-picker__rail"
+        data-newt-rail
+        aria-label="Categories"
+      ></nav>
+      <div class="newt-expressions-picker__scroll" data-newt-scroll></div>
+    </div>
+    <div class="newt-expressions-picker__footer" data-newt-footer></div>
+  </dialog>
+  <script type="application/json" data-newt-expressions-data>
+    {
+      "categories": [
+        {
+          "id": "lab",
+          "kind": "emoji",
+          "label": "Newt Lab",
+          "iconSrc": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%2216%22%20fill%3D%22%235865f2%22%2F%3E%3Cpath%20d%3D%22M12%208h8M14%208v6l-5%209a2%202%200%200%200%202%203h10a2%202%200%200%200%202-3l-5-9V8%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E"
+        },
+        {
+          "id": "smileys",
+          "kind": "emoji",
+          "label": "Smileys & Emotion",
+          "glyph": "😀"
+        },
+        {
+          "id": "people",
+          "kind": "emoji",
+          "label": "People & Body",
+          "glyph": "👋"
+        },
+        {
+          "id": "symbols",
+          "kind": "emoji",
+          "label": "Symbols",
+          "glyph": "❤️"
+        },
+        {
+          "id": "greetings",
+          "kind": "sticker",
+          "label": "Greetings",
+          "glyph": "🎁"
+        },
+        {
+          "id": "trending",
+          "kind": "gif",
+          "label": "Trending",
+          "glyph": "🔥"
+        }
+      ],
+      "items": [
+        {
+          "id": "spark",
+          "kind": "emoji",
+          "category": "lab",
+          "label": "spark",
+          "value": ":spark:",
+          "src": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%2215%22%20fill%3D%22%235865f2%22%2F%3E%3Cpath%20d%3D%22M16%207l2.6%205.6L24%2014l-4%203.9.9%205.6L16%2021l-4.9%202.5.9-5.6-4-3.9%205.4-1.4z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E"
+        },
+        {
+          "id": "grinning",
+          "kind": "emoji",
+          "category": "smileys",
+          "label": "grinning face",
+          "value": "😀",
+          "keywords": ["happy", "smile"]
+        },
+        {
+          "id": "joy",
+          "kind": "emoji",
+          "category": "smileys",
+          "label": "face with tears of joy",
+          "value": "😂",
+          "keywords": ["laugh"]
+        },
+        {
+          "id": "thinking",
+          "kind": "emoji",
+          "category": "smileys",
+          "label": "thinking face",
+          "value": "🤔"
+        },
+        {
+          "id": "wave",
+          "kind": "emoji",
+          "category": "people",
+          "label": "waving hand",
+          "value": "👋",
+          "keywords": ["hello"],
+          "skins": ["👋🏻", "👋🏼", "👋🏽", "👋🏾", "👋🏿"]
+        },
+        {
+          "id": "thumbs-up",
+          "kind": "emoji",
+          "category": "people",
+          "label": "thumbs up",
+          "value": "👍",
+          "keywords": ["yes"],
+          "skins": ["👍🏻", "👍🏼", "👍🏽", "👍🏾", "👍🏿"]
+        },
+        {
+          "id": "moon",
+          "kind": "emoji",
+          "category": "symbols",
+          "label": "crescent moon",
+          "value": "🌙",
+          "disabled": true
+        },
+        {
+          "id": "heart",
+          "kind": "emoji",
+          "category": "symbols",
+          "label": "red heart",
+          "value": "❤️",
+          "keywords": ["love"]
+        },
+        {
+          "id": "hello-sticker",
+          "kind": "sticker",
+          "category": "greetings",
+          "label": "Hello sticker",
+          "value": "hello-sticker",
+          "src": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%2228%22%20height%3D%2220%22%20rx%3D%226%22%20fill%3D%22%23f0b232%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2220%22%20font-family%3D%22sans-serif%22%20font-size%3D%228%22%20font-weight%3D%22700%22%20text-anchor%3D%22middle%22%20fill%3D%22%231e1f22%22%3EHELLO%3C%2Ftext%3E%3C%2Fsvg%3E"
+        },
+        {
+          "id": "applause-gif",
+          "kind": "gif",
+          "category": "trending",
+          "label": "Applause",
+          "value": "applause-gif",
+          "keywords": ["clap"]
+        }
+      ],
+      "recent": ["wave"]
+    }
+  </script>
+</div>

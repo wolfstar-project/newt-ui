@@ -14,16 +14,16 @@
     "lint": "oxlint .",
     "lint:ci": "turbo run //#lint //#format:check",
     "lint:fix": "oxlint --fix .",
-    "prepare": "node .husky/install.mjs && skilld prepare --agent claude-code",
+    "prepare": "node .husky/install.mjs",
     "publish": "turbo run build --filter=./packages/* && changeset publish",
     "publish:snapshot": "node scripts/publish-snapshot.mjs",
     "quality": "turbo run //#lint //#format:check",
     "quality:fix": "turbo run //#lint:fix //#format",
     "registry:build": "turbo run registry:build",
-    "skills:add": "skilld add --agent claude-code",
-    "skills:install": "skilld install --agent claude-code",
+    "skills:add": "skilld install --agent claude-code --agent codex --mode symlink",
+    "skills:install": "skilld install",
     "skills:list": "skilld list",
-    "skills:update": "skilld update --agent claude-code",
+    "skills:update": "skilld update",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
     "version": "node scripts/version.mjs"
@@ -43,7 +43,7 @@
     "oxlint": "^1.91.0",
     "oxlint-tsgolint": "^7.0.2005",
     "pkg-pr-new": "^0.0.93",
-    "skilld": "^2.3.0",
+    "skilld": "^3.6.8",
     "turbo": "^2.11.10",
     "typescript": "^5.9.3"
   },
@@ -54,5 +54,5 @@
   "engines": {
     "node": ">=22.11"
   },
-  "packageManager": "pnpm@11.28.10"
+  "packageManager": "pnpm@12.18.0"
 }

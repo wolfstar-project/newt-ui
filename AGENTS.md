@@ -41,8 +41,8 @@ quick-start and design-token overview.
 
 - **Language:** TypeScript through `typescript-native-bridge` (see Toolchain
   specifics), Node `^22.11 || ^24 || >=26` (the range required by Changesets
-  v3). `mise.toml` pins Node and pnpm for local work; CI runs Node 24.
-- **Package manager:** `pnpm` 11 (pinned via `packageManager` in the root
+  v3). `mise.toml` pins Node and pnpm for local work; CI runs Node 26.
+- **Package manager:** `pnpm` 12 (pinned via `packageManager` in the root
   `package.json`; Renovate bumps it — check that field for the exact pin, don't
   hardcode it here). Workspaces via `pnpm-workspace.yaml`.
 - **Monorepo runner:** `turbo` (`turbo.jsonc`).
@@ -161,7 +161,7 @@ pnpm changeset            # add a changeset (`pnpm changeset add --empty` when n
 
 ## Toolchain specifics
 
-- **Package manager**: pnpm 11. All `.npmrc`-style settings
+- **Package manager**: pnpm 12. All `.npmrc`-style settings
   (`autoInstallPeers`, `strictPeerDependencies`, `shamefullyHoist`) and the
   `typescript` override live in `pnpm-workspace.yaml`, not `.npmrc`.
 - **TypeScript**: `typescript` is overridden to `typescript-native-bridge`
@@ -194,12 +194,16 @@ pnpm changeset            # add a changeset (`pnpm changeset add --empty` when n
   `newt-ui-architecture`, `newt-ui-registry`, `newt-ui-cli`,
   `newt-ui-components`, `newt-ui-trademark`. Read the one that matches what you
   are touching before you start. Third-party skills are managed by
-  [skilld](https://skilld.dev) and pinned by `.skills/skilld-lock.yaml`; the
-  hand-written skills are deliberately not in that lockfile.
-  `pnpm skills:install` restores them from the lock file, `pnpm skills:list`
-  shows what's installed, and `pnpm skills:add <owner/repo> --skill <names>`
-  adds more. The `prepare` script runs `skilld prepare --agent claude-code`
-  automatically after `pnpm install`. Skill sets are aligned with
+  [skilld](https://skilld.dev) v3 and pinned to a source commit by
+  `.skills/skilld-lock.yaml`; the hand-written skills are deliberately not in
+  that lockfile. Every installed skill is committed, so `pnpm install` does not
+  run skilld and a fresh clone needs no network for them.
+  `pnpm skills:install` restores the lock file, `pnpm skills:list` shows what's
+  installed, `pnpm skills:update` moves them to their current source commit,
+  and `pnpm skills:add <owner/repo/skill>` adds one (find the selector with
+  `pnpm exec skilld search <query>`). The first request for a skill can answer
+  `SERVICE_UNAVAILABLE` while skilld.dev prepares it; run it again a minute
+  later. Skill sets are aligned with
   `wolfstar-project/agent-zero` and `wolfstar-project/wolfstar.rocks`.
 
 ## The docs site
@@ -231,11 +235,17 @@ means in practice:
   and `Callout` under `src/components/mdx/`, built on Blume's own `Tabs`,
   `Steps`, `TypeTable`, `Card` and `CodeBlock`. `ReactDemo` and `VueDemo` are
   registered as islands there so Blume wires up both renderers;
-  `ComponentPreview` mounts them itself. The layout slots in
+  `ComponentPreview` mounts them itself.
+  `ComponentIndex` and the home page's wall draw each component from its
+  reference HTML in `packages/cli/registry/html/components/` through
+  `src/lib/html-registry.ts` and `src/components/site/ComponentThumb.astro`
+  (static markup, no island), and `TokensNote` lists the `--newt-*` tokens
+  read out of the same component's stylesheet. The layout slots in
   `src/components/layout/` put back the chrome the site had before the Lotus
   port (commit `b31ac30`): `Header` (wordmark, primary links, Blume's search,
   the React/Vue switch, the theme toggle — it also carries the theme and
-  drawer click handling Blume's header owned), `Sidebar`, `TableOfContents`,
+  drawer click handling Blume's header owned), `Sidebar` (which draws either the guides or the component reference,
+  whichever the current page belongs to), `TableOfContents`,
   `Pagination`, `PageHeader` (the copy-page menu beside the title) and
   `Footer` (with the trademark disclaimer); `Breadcrumbs` is emptied. Blume
   keeps the grid, the drawer, search and the generated routes. Blume reads
@@ -277,6 +287,21 @@ through the `newtPreset` in `tailwind.config.ts` (Tailwind v3), `apps/vue`
 through an `@theme` block in `app/assets/css/main.css` (Tailwind v4). Never
 hardcode a hex value that already exists as a token. See the
 `newt-ui-registry` skill for how one registry serves both majors.
+
+## The Nuxt UI theme
+
+`nuxt-ui-theme` is a Vue-only registry item that restyles Nuxt UI's own
+components from the `--newt-*` tokens. It is hand-written in
+`apps/vue/registry/registry-lib.ts`, not generated from `registry/meta`, and
+has two halves: `apps/vue/app/lib/nuxt-ui.ts`, the `ui` object for a
+consumer's `app.config.ts`, and `apps/vue/registry/registry-nuxt-ui.ts`, the
+`--ui-*` to `--newt-*` variable map that `add` appends to their stylesheet.
+Every value in both must be a token: `packages/cli/src/registry/nuxt-ui-theme.test.ts`
+fails on a `--newt-*` name that `tokens.css` does not declare. The slot and
+variant names follow Nuxt UI 4; check them against its `src/theme/` when
+bumping the major. The guide is `apps/docs/content/docs/nuxt-ui/`, and its
+before/after images in `apps/docs/public/nuxt-ui/` are screenshots of a real
+Nuxt UI build, to be retaken when the theme changes visibly.
 
 ## Adding or changing a component
 

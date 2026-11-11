@@ -37,18 +37,50 @@ const rootClassEntries = [
   ["cooldown-bar", "newt-cooldown"],
   ["pagination", "newt-pagination"],
   ["stage-banner", "newt-stage-banner"],
+  ["direction", "newt-root"],
   ["scrollbar", "newt-scrollbar"],
   ["channel-topic", "newt-channel-topic"],
   ["notif-badge", "newt-notif-badge"],
   ["user-profile", "newt-profile"],
   ["message-group", "newt-message-group"],
+  ["message-list", "newt-message-list"],
+  ["message-composer", "newt-composer"],
+  ["chat", "newt-chat"],
+  ["inline-code", "newt-inline-code"],
+  ["action-row", "newt-action-row"],
+  ["app-launcher", "newt-app-launcher"],
+  ["slash-command-suggestions", "newt-slash-suggestions"],
+  ["v2-container", "newt-v2-container"],
+  ["channel-header", "newt-channel-header"],
+  ["channel-welcome", "newt-channel-welcome"],
+  ["channel-info", "newt-channel-info"],
+  ["invite", "newt-invite"],
   ["select-menu", "newt-select-menu"],
   ["entity-select", "newt-entity-select"],
   ["bot-command-card", "newt-command-card"],
+  ["expressions-picker", "newt-expressions-picker"],
+  ["slider", "newt-slider"],
+  ["pin-input", "newt-pin"],
+  ["tag-input", "newt-tag-input"],
+  ["number-input", "newt-number"],
+  ["color-picker", "newt-color-picker"],
+  ["accordion", "newt-accordion"],
+  ["breadcrumb", "newt-breadcrumb"],
+  ["stepper", "newt-stepper"],
+  ["popover", "newt-popover"],
+  ["drawer", "newt-drawer"],
+  ["command-palette", "newt-command-palette"],
+  ["alert", "newt-alert"],
+  ["avatar-group", "newt-avatar-group"],
+  ["table", "newt-table"],
+  ["tree", "newt-tree"],
+  ["calendar", "newt-calendar"],
+  ["user-panel", "newt-user-panel"],
+  ["side-nav", "newt-side-nav"],
+  ["audit-log", "newt-audit-log"],
 ] as const
 
-// Component names are looked up by arbitrary route params (see
-// apps/docs/src/pages/ComponentPage.tsx), so this stays a genuine open
-// dictionary rather than a closed, literal-keyed type.
+// Component names are looked up by arbitrary route params, so this remains
+// an open dictionary rather than a closed, literal-keyed type.
 export const rootClasses: Record<string, string> =
   Object.fromEntries(rootClassEntries)

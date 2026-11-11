@@ -1,0 +1,8 @@
+{
+  "name": "tree",
+  "title": "Tree",
+  "description": "A collapsible, keyboard-driven list of nested rows, such as categories and their channels.",
+  "vueFiles": ["Tree.vue", "index.ts"],
+  "reactDemo": "tree-demo",
+  "vueDemo": "TreeDemo"
+}

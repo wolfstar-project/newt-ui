@@ -1,0 +1,75 @@
+---
+title: "Side Nav"
+description: "A vertical list of grouped links for the sections of a settings screen."
+---
+
+Use it for the sections of one area that a reader moves between without leaving it: server settings, user settings, an admin panel. For a hierarchy that opens and closes, use a [Tree](/docs/components/tree); for the steps of a task, a [Stepper](/docs/components/stepper).
+
+An entry is a link when it has an `href` and a button when it does not, so the same component serves a routed app and one that swaps the content in place.
+
+<ComponentPreview name="side-nav" />
+
+## Installation
+
+<Installation name="side-nav" />
+
+## Usage
+
+<Usage name="side-nav" />
+
+## API reference
+
+<PropsTable
+  of="SideNavGroup"
+  rows={[
+    {
+      name: "label",
+      type: "string",
+      description:
+        "The small heading over the group. Omit it for an unlabelled group.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="SideNavItem"
+  rows={[
+    {
+      name: "href",
+      type: "string",
+      description: "Makes the entry a link. Without it the entry is a button.",
+    },
+    {
+      name: "current",
+      type: "boolean",
+      description: "Marks the section being shown.",
+      default: "false",
+    },
+    {
+      name: "variant",
+      type: '"default" | "danger"',
+      description: "`danger` is for an entry that destroys something.",
+      default: '"default"',
+    },
+    {
+      name: "badge",
+      type: "number",
+      description: "A count shown at the end of the entry.",
+    },
+    {
+      name: "onClick / @click",
+      type: "(event) => void",
+      description: "Called when the entry is activated.",
+    },
+  ]}
+/>
+
+`SideNav` renders the `<nav>` and takes its attributes. On a `SideNavItem`, the class lands on the list item and every other attribute, such as `target`, `rel` or `disabled`, lands on the link or the button inside it. Put a destructive entry in a group of its own at the end, away from the links it could be mistaken for.
+
+## Accessibility
+
+It is a `<nav>` landmark and needs a name: pass `aria-label` to `SideNav`. Each group is a list labelled by its heading. The current entry carries `aria-current="page"`, which is also what paints it. Entries are ordinary links and buttons, reached with `Tab`. A badge is read as a bare number after the entry's text, so word the entry to make the count make sense ("Audit log 12").
+
+## Tokens
+
+<TokensNote name="side-nav" />

@@ -1,0 +1,52 @@
+---
+import { htmlExample } from "../../lib/html-registry"
+
+/*
+ * The stylesheets the examples are written against, pulled in here so that
+ * only a page that draws a thumbnail carries them. Class names are all
+ * `newt-` prefixed and the tokens are already on the page, so the sheets can
+ * sit beside the docs chrome. `typeset.css` is in `theme.css` already.
+ */
+import.meta.glob(
+  [
+    "../../../../../packages/cli/registry/html/components/*.css",
+    "!../../../../../packages/cli/registry/html/components/typeset.css",
+  ],
+  { eager: true }
+)
+
+/*
+ * A picture of a component, drawn from its reference HTML. It is decoration
+ * beside a link that already names the component, so it is `inert` and hidden
+ * from the accessibility tree: nothing in it can take focus or be announced
+ * twice. The stage is a containing block for the fixed-position examples
+ * (modals, toasts), which is what keeps an overlay inside its own tile.
+ */
+interface Props {
+  readonly name: string
+  /** Scale of the example inside the tile. */
+  readonly scale?: number
+  /**
+   * `tile` is a fixed-height window onto the example, for a grid of equals;
+   * `natural` lets the example set the height, for the home page's wall.
+   */
+  readonly fit?: "tile" | "natural"
+}
+
+const { name, scale = 0.8, fit = "tile" } = Astro.props
+const html = htmlExample(name)
+---
+
+<div class:list={["thumb", fit === "natural" && "thumb-natural"]} aria-hidden="true" inert>
+  {
+    html === undefined ? (
+      <span class="thumb-empty">{name}</span>
+    ) : (
+      <div
+        class="thumb-stage newt-root"
+        style={`--thumb-scale:${fit === "natural" ? 1 : scale}`}
+        set:html={html}
+      />
+    )
+  }
+</div>

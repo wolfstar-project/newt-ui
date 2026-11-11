@@ -1,0 +1,11 @@
+{
+  "name": "onboarding",
+  "type": "registry:block",
+  "title": "Onboarding",
+  "description": "A short setup flow: a stepper, the current step's content and the buttons that move through it.",
+  "registryDependencies": ["stepper", "button"],
+  "reactFiles": ["blocks/onboarding/onboarding.tsx"],
+  "vueFiles": ["Onboarding.vue", "types.ts", "index.ts"],
+  "reactDemo": "onboarding-demo",
+  "vueDemo": "OnboardingDemo"
+}

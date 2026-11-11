@@ -1,0 +1,8 @@
+{
+  "name": "tag-input",
+  "title": "Tag Input",
+  "description": "A text field that keeps what was typed as removable chips.",
+  "vueFiles": ["TagInput.vue", "index.ts"],
+  "reactDemo": "tag-input-demo",
+  "vueDemo": "TagInputDemo"
+}

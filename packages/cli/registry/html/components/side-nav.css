@@ -1,0 +1,85 @@
+/* newt-ui · Side Nav */
+
+/*
+ * The vertical list of sections down the side of a settings screen. It is a
+ * named `<nav>` of ordinary links, grouped under small headings; the section
+ * being shown carries `aria-current="page"`, which is also what paints it.
+ * A destructive entry is worded and coloured as one and sits in a group of
+ * its own, away from the links it could be mistaken for.
+ */
+.newt-side-nav {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+}
+.newt-side-nav__group {
+  padding-block: 8px;
+}
+.newt-side-nav__group + .newt-side-nav__group {
+  border-block-start: 1px solid var(--newt-border);
+}
+.newt-side-nav__heading {
+  padding: 6px 10px;
+  color: var(--newt-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.newt-side-nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.newt-side-nav__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  inline-size: 100%;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  color: var(--newt-text-secondary);
+  font-family: var(--newt-font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-side-nav__item:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+.newt-side-nav__item[aria-current="page"] {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+}
+.newt-side-nav__item:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: -2px;
+}
+.newt-side-nav__item--danger,
+.newt-side-nav__item--danger:hover {
+  color: var(--newt-danger);
+}
+.newt-side-nav__badge {
+  min-inline-size: 16px;
+  padding: 0 5px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-danger);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}

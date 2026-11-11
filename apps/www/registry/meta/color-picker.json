@@ -1,0 +1,8 @@
+{
+  "name": "color-picker",
+  "title": "Color Picker",
+  "description": "A palette of swatches with a custom colour tile, for role and accent colours.",
+  "vueFiles": ["ColorPicker.vue", "index.ts"],
+  "reactDemo": "color-picker-demo",
+  "vueDemo": "ColorPickerDemo"
+}

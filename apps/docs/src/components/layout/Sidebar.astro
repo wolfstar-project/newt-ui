@@ -11,7 +11,14 @@ import FrameworkSwitcher from "../site/FrameworkSwitcher"
  * The drawer around it — fixed on mobile, sticky on desktop — is Blume's.
  * Under 48rem the header has no room for the React/Vue switch, so the drawer
  * carries it at the top.
+ *
+ * The tree holds two books — the guides and the component reference — and a
+ * reader is only ever in one of them. Showing both made the component list
+ * start two screens down, so the sidebar draws the half the current page
+ * belongs to and a two-way switch above it leads to the other. A group is
+ * part of the reference when every page in it is a component page.
  */
+const COMPONENTS_ROOT = "/docs/components"
 type Node =
   | { readonly kind: "page"; readonly label: string; readonly route: string }
   | {
@@ -40,18 +47,61 @@ function pagesOf(nodes: readonly Node[]): { label: string; route: string }[] {
   )
 }
 
-const loose = pagesOf(items.filter((node) => node.kind === "page"))
-const groups = items.flatMap((node) =>
-  node.kind === "group"
-    ? [{ label: node.label, pages: pagesOf(node.children) }]
-    : []
-)
+const inReference =
+  currentRoute === COMPONENTS_ROOT ||
+  currentRoute.startsWith(`${COMPONENTS_ROOT}/`)
+
+const loose = inReference
+  ? []
+  : pagesOf(items.filter((node) => node.kind === "page"))
+const groups = items
+  .flatMap((node) =>
+    node.kind === "group"
+      ? [{ label: node.label, pages: pagesOf(node.children) }]
+      : []
+  )
+  .filter(
+    (group) =>
+      group.pages.every((page) =>
+        page.route.startsWith(`${COMPONENTS_ROOT}/`)
+      ) === inReference
+  )
+
+const sections = [
+  { href: "/docs", label: "Guides", current: !inReference },
+  { href: COMPONENTS_ROOT, label: "Components", current: inReference },
+]
 ---
 
 <div class="sidebar-nav">
   <div class="sidebar-framework">
     <FrameworkSwitcher client:load />
   </div>
+  <nav class="sidebar-sections" aria-label="Documentation sections">
+    {
+      sections.map((section) => (
+        <a href={section.href} aria-current={section.current ? "true" : undefined}>
+          {section.label}
+        </a>
+      ))
+    }
+  </nav>
+  {
+    inReference && (
+      <div class="sidebar-group">
+        <ul>
+          <li>
+            <a
+              href={COMPONENTS_ROOT}
+              aria-current={currentRoute === COMPONENTS_ROOT ? "page" : undefined}
+            >
+              All components
+            </a>
+          </li>
+        </ul>
+      </div>
+    )
+  }
   {
     loose.length > 0 && (
       <div class="sidebar-group">

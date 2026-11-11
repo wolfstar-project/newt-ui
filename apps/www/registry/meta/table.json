@@ -1,0 +1,17 @@
+{
+  "name": "table",
+  "title": "Table",
+  "description": "A bordered data table with sortable headings, selectable rows and a caption.",
+  "vueFiles": [
+    "Table.vue",
+    "TableHeader.vue",
+    "TableBody.vue",
+    "TableRow.vue",
+    "TableHead.vue",
+    "TableCell.vue",
+    "TableCaption.vue",
+    "index.ts"
+  ],
+  "reactDemo": "table-demo",
+  "vueDemo": "TableDemo"
+}

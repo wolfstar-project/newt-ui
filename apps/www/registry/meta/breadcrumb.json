@@ -1,0 +1,8 @@
+{
+  "name": "breadcrumb",
+  "title": "Breadcrumb",
+  "description": "The path from the top of a section to the current page, as a row of links.",
+  "vueFiles": ["Breadcrumb.vue", "BreadcrumbItem.vue", "index.ts"],
+  "reactDemo": "breadcrumb-demo",
+  "vueDemo": "BreadcrumbDemo"
+}

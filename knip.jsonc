@@ -55,6 +55,9 @@
         "registry/bases/newt/**/*.{ts,vue}",
         // Nuxt auto-imports this directory; nothing imports it explicitly.
         "app/utils/**/*.ts",
+        // A registry source: `build-registry.mts` reads it by path to publish
+        // the `nuxt-ui-theme` item, so nothing in the app imports it.
+        "app/lib/nuxt-ui.ts",
         "scripts/build-registry.mts",
       ],
       "project": [

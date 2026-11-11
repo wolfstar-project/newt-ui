@@ -1,0 +1,100 @@
+<dialog
+  class="newt-command-palette"
+  aria-label="Quick switcher"
+  data-newt-command-palette
+  open
+>
+  <input
+    class="newt-command-palette__input"
+    type="text"
+    role="combobox"
+    aria-expanded="true"
+    aria-controls="newt-command-palette-list"
+    aria-activedescendant="newt-command-palette-option-0"
+    aria-autocomplete="list"
+    aria-label="Where would you like to go?"
+    placeholder="Where would you like to go?"
+    autocomplete="off"
+    spellcheck="false"
+  />
+  <div
+    class="newt-command-palette__list"
+    id="newt-command-palette-list"
+    role="listbox"
+    aria-label="Results"
+  >
+    <div
+      class="newt-command-palette__group"
+      role="group"
+      aria-labelledby="newt-command-palette-group-0"
+    >
+      <div
+        class="newt-command-palette__heading"
+        id="newt-command-palette-group-0"
+      >
+        Channels
+      </div>
+      <div
+        class="newt-command-palette__option"
+        id="newt-command-palette-option-0"
+        role="option"
+        aria-selected="true"
+        data-value="general"
+      >
+        <span class="newt-command-palette__prefix" aria-hidden="true">#</span>
+        <span class="newt-command-palette__label">general</span>
+        <span class="newt-command-palette__description">Community</span>
+      </div>
+      <div
+        class="newt-command-palette__option"
+        id="newt-command-palette-option-1"
+        role="option"
+        aria-selected="false"
+        data-value="release-notes"
+      >
+        <span class="newt-command-palette__prefix" aria-hidden="true">#</span>
+        <span class="newt-command-palette__label">release-notes</span>
+        <span class="newt-command-palette__description">Announcements</span>
+      </div>
+    </div>
+    <div
+      class="newt-command-palette__group"
+      role="group"
+      aria-labelledby="newt-command-palette-group-1"
+    >
+      <div
+        class="newt-command-palette__heading"
+        id="newt-command-palette-group-1"
+      >
+        Actions
+      </div>
+      <div
+        class="newt-command-palette__option"
+        id="newt-command-palette-option-2"
+        role="option"
+        aria-selected="false"
+        data-value="server-settings"
+      >
+        <span class="newt-command-palette__prefix" aria-hidden="true">⚙</span>
+        <span class="newt-command-palette__label">Server settings</span>
+        <kbd class="newt-command-palette__shortcut">Ctrl ,</kbd>
+      </div>
+      <div
+        class="newt-command-palette__option"
+        id="newt-command-palette-option-3"
+        role="option"
+        aria-selected="false"
+        data-value="mention-a-member"
+      >
+        <span class="newt-command-palette__prefix" aria-hidden="true">@</span>
+        <span class="newt-command-palette__label">Mention a member</span>
+      </div>
+    </div>
+    <p class="newt-command-palette__empty" hidden>Nothing matches that.</p>
+  </div>
+  <footer class="newt-command-palette__footer" aria-hidden="true">
+    <span><kbd>↑</kbd><kbd>↓</kbd> to move</span>
+    <span><kbd>Enter</kbd> to select</span>
+    <span><kbd>Esc</kbd> to close</span>
+  </footer>
+</dialog>

@@ -1,0 +1,74 @@
+/* newt-ui · Number Input */
+
+/*
+ * A number field with its two steppers drawn as real buttons. The input stays
+ * `type="number"`, so the arrow keys, `min`, `max` and `step` are the
+ * browser's; only its own tiny spinners are hidden, because the buttons
+ * beside it are the ones a finger can hit.
+ */
+.newt-number {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-input);
+  transition: border-color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-number:focus-within {
+  border-color: var(--newt-brand);
+}
+.newt-number__input {
+  inline-size: 64px;
+  padding: 10px 4px;
+  border: 0;
+  background: transparent;
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-sans);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  appearance: textfield;
+}
+.newt-number__input::-webkit-inner-spin-button,
+.newt-number__input::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+.newt-number__input:focus {
+  outline: none;
+}
+.newt-number__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-number__step svg {
+  inline-size: 14px;
+  block-size: 14px;
+}
+.newt-number__step:hover:not(:disabled) {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+.newt-number__step:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: -2px;
+}
+.newt-number__step:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.newt-number--invalid,
+.newt-field[data-invalid] .newt-number {
+  border-color: var(--newt-danger);
+}

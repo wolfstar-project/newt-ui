@@ -1,0 +1,8 @@
+{
+  "name": "stepper",
+  "title": "Stepper",
+  "description": "Progress through a fixed sequence of steps, horizontal or stacked.",
+  "vueFiles": ["Stepper.vue", "index.ts"],
+  "reactDemo": "stepper-demo",
+  "vueDemo": "StepperDemo"
+}

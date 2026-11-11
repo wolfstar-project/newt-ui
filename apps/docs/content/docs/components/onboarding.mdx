@@ -1,0 +1,75 @@
+---
+title: "Onboarding"
+description: "A short setup flow: a stepper, the current step's content and the buttons that move through it."
+---
+
+A wizard for a task with a few fixed stages, assembled from a [Stepper](/docs/components/stepper) and two buttons: creating a server, connecting a bot, a first-run setup. The block owns the order and the navigation; what each step asks is yours.
+
+The content is a function of the step's index in React and a scoped slot in Vue. Set `canContinue` to false while the current step is incomplete and the forward button waits.
+
+<ComponentPreview name="onboarding" size="full" />
+
+## Installation
+
+<Installation name="onboarding" />
+
+## Usage
+
+<Usage name="onboarding" />
+
+## API reference
+
+<PropsTable
+  of="Onboarding"
+  rows={[
+    {
+      name: "steps",
+      type: "{ title: string; description?: string }[]",
+      description:
+        "The stages, in order. The current step's title is the heading above its content.",
+    },
+    {
+      name: "step / v-model:step",
+      type: "number",
+      description:
+        "Index of the step being shown. In React, leave it undefined and pass `defaultStep` to let the block own it.",
+    },
+    {
+      name: "onStepChange",
+      type: "(step: number) => void",
+      description:
+        "React only. Called when the step changes; Vue emits `update:step`.",
+    },
+    {
+      name: "onComplete / @complete",
+      type: "() => void",
+      description: "Called when the last step's button is pressed.",
+    },
+    {
+      name: "canContinue",
+      type: "boolean",
+      description: "Whether the current step may be left.",
+      default: "true",
+    },
+    {
+      name: "labels",
+      type: "{ back: string; next: string; finish: string }",
+      description: "The wording of the buttons.",
+    },
+    {
+      name: "children / default slot",
+      type: "(step: number) => React.ReactNode / scoped slot",
+      description: "The content of the step whose index it is given.",
+    },
+  ]}
+/>
+
+Keep each step's answers in your own state, as the example does, so going back shows what was entered.
+
+## Accessibility
+
+Moving to another step moves focus to that step's heading, so a screen reader starts from the new content instead of staying on a button whose label just changed. The stepper marks the step in progress with `aria-current="step"`. A disabled forward button gives no reason, so say what is missing near the field that needs it. Give the block an `aria-label` naming the task.
+
+## Tokens
+
+<TokensNote name="onboarding" />

@@ -1,4 +1,5 @@
 ---
+import { componentTokens } from "../../lib/html-registry"
 import { findComponent, rootClasses } from "../../lib/registry"
 
 /*
@@ -18,6 +19,22 @@ if (meta === undefined) {
 }
 
 const rootClass = rootClasses[meta.name]
+
+/*
+ * The list is read out of the component's stylesheet, so it is the surface a
+ * reader can actually theme and it cannot go stale. Private custom properties
+ * a component sets for itself (`--newt-dir`, per-instance values) are tokens
+ * only if `tokens.css` declares them, which the colours page settles.
+ */
+const tokens = componentTokens(meta.name)
+
+/*
+ * A swatch is only drawn for a token that is a colour. A radius or a font
+ * used as a `background` is invalid when it is computed, which resets the
+ * property to transparent and leaves an empty box.
+ */
+const COLOUR =
+  /^--newt-(?:bg|text|border|brand|online|idle|dnd|offline|danger|mention)(?:-|$)/
 ---
 
 <p>
@@ -35,3 +52,24 @@ const rootClass = rootClasses[meta.name]
     )
   }
 </p>
+
+{
+  tokens.length > 0 && (
+    <div class="not-prose">
+    <ul class="token-chips" aria-label={`Tokens ${meta.title} reads`}>
+      {tokens.map((token) => (
+        <li>
+          {COLOUR.test(token) && (
+            <span
+              class="token-chip-swatch"
+              style={`background:var(${token})`}
+              aria-hidden="true"
+            />
+          )}
+          <code>{token}</code>
+        </li>
+      ))}
+    </ul>
+    </div>
+  )
+}

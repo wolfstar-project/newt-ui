@@ -3,6 +3,19 @@ import type { Registry } from "@/registry/schema"
 
 export const ui: Registry = [
   {
+    name: "accordion",
+    type: "registry:ui",
+    title: "Accordion",
+    description:
+      "Sections that open and close under their headings, one at a time or independently.",
+    files: [
+      {
+        path: "ui/accordion.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "action-row",
     type: "registry:ui",
     title: "Action Row",
@@ -11,6 +24,20 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/action-row.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "alert",
+    type: "registry:ui",
+    title: "Alert",
+    description:
+      "An inline notice with an icon and a coloured edge, in info, success, warning and danger kinds.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/alert.tsx",
         type: "registry:ui",
       },
     ],
@@ -43,6 +70,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "audit-log",
+    type: "registry:ui",
+    title: "Audit Log",
+    description:
+      "A list of who changed what and when, with entries that open to show each change.",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "ui/audit-log.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "avatar",
     type: "registry:ui",
     title: "Avatar",
@@ -52,6 +93,20 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/avatar.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "avatar-group",
+    type: "registry:ui",
+    title: "Avatar Group",
+    description:
+      "A row of overlapping avatars with a count for the members not shown.",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "ui/avatar-group.tsx",
         type: "registry:ui",
       },
     ],
@@ -84,6 +139,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "breadcrumb",
+    type: "registry:ui",
+    title: "Breadcrumb",
+    description:
+      "The path from the top of a section to the current page, as a row of links.",
+    files: [
+      {
+        path: "ui/breadcrumb.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "button",
     type: "registry:ui",
     title: "Button",
@@ -93,6 +161,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/button.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "calendar",
+    type: "registry:ui",
+    title: "Calendar",
+    description:
+      "A month grid for picking one day, with keyboard navigation and optional first and last selectable dates.",
+    files: [
+      {
+        path: "ui/calendar.tsx",
         type: "registry:ui",
       },
     ],
@@ -133,6 +214,20 @@ export const ui: Registry = [
       {
         path: "ui/channel-info.tsx",
         type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-sidebar",
+    type: "registry:block",
+    title: "Channel sidebar",
+    description:
+      "The column a server is navigated from: its name, its channels as a tree and the user panel at the foot.",
+    registryDependencies: ["tree", "user-panel", "status-indicator", "avatar"],
+    files: [
+      {
+        path: "blocks/channel-sidebar/channel-sidebar.tsx",
+        type: "registry:block",
       },
     ],
   },
@@ -225,6 +320,32 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "color-picker",
+    type: "registry:ui",
+    title: "Color Picker",
+    description:
+      "A palette of swatches with a custom colour tile, for role and accent colours.",
+    files: [
+      {
+        path: "ui/color-picker.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "command-palette",
+    type: "registry:ui",
+    title: "Command Palette",
+    description:
+      "A searchable quick switcher of grouped destinations and actions, driven from the keyboard.",
+    files: [
+      {
+        path: "ui/command-palette.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "command-panel",
     type: "registry:block",
     title: "Command panel",
@@ -307,6 +428,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "drawer",
+    type: "registry:ui",
+    title: "Drawer",
+    description:
+      "A modal panel that slides against an edge of the screen, built on the native dialog element.",
+    files: [
+      {
+        path: "ui/drawer.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "dropdown",
     type: "registry:ui",
     title: "Dropdown Menu",
@@ -354,6 +488,20 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/entity-select.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "expressions-picker",
+    type: "registry:ui",
+    title: "Expressions Picker",
+    description:
+      "A Discord-inspired picker for Unicode emoji and caller-supplied stickers and GIFs.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/expressions-picker.tsx",
         type: "registry:ui",
       },
     ],
@@ -537,6 +685,33 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "number-input",
+    type: "registry:ui",
+    title: "Number Input",
+    description:
+      "A number field with decrement and increment buttons that respect min, max and step.",
+    files: [
+      {
+        path: "ui/number-input.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "onboarding",
+    type: "registry:block",
+    title: "Onboarding",
+    description:
+      "A short setup flow: a stepper, the current step's content and the buttons that move through it.",
+    registryDependencies: ["stepper", "button"],
+    files: [
+      {
+        path: "blocks/onboarding/onboarding.tsx",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
     name: "pagination",
     type: "registry:ui",
     title: "Pagination",
@@ -565,6 +740,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "pin-input",
+    type: "registry:ui",
+    title: "Pin Input",
+    description:
+      "A short code entered one character to a box, for two-factor and verification codes.",
+    files: [
+      {
+        path: "ui/pin-input.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "poll",
     type: "registry:ui",
     title: "Poll",
@@ -573,6 +761,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/poll.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "popover",
+    type: "registry:ui",
+    title: "Popover",
+    description:
+      "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+    files: [
+      {
+        path: "ui/popover.tsx",
         type: "registry:ui",
       },
     ],
@@ -719,6 +920,33 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "settings-layout",
+    type: "registry:block",
+    title: "Settings layout",
+    description:
+      "A settings screen: grouped sections down the side and the chosen section's breadcrumb, heading and content beside them.",
+    registryDependencies: ["side-nav", "breadcrumb"],
+    files: [
+      {
+        path: "blocks/settings-layout/settings-layout.tsx",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
+    name: "side-nav",
+    type: "registry:ui",
+    title: "Side Nav",
+    description:
+      "A vertical list of grouped links for the sections of a settings screen.",
+    files: [
+      {
+        path: "ui/side-nav.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "skeleton",
     type: "registry:ui",
     title: "Skeleton Loader",
@@ -755,6 +983,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/slash-command-suggestions.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "slider",
+    type: "registry:ui",
+    title: "Slider",
+    description:
+      "A range control with a filled track, a grabber and optional labelled marks, for volumes and thresholds.",
+    files: [
+      {
+        path: "ui/slider.tsx",
         type: "registry:ui",
       },
     ],
@@ -802,6 +1043,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "stepper",
+    type: "registry:ui",
+    title: "Stepper",
+    description:
+      "Progress through a fixed sequence of steps, horizontal or stacked.",
+    files: [
+      {
+        path: "ui/stepper.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "system-message",
     type: "registry:ui",
     title: "System Message",
@@ -816,6 +1070,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "table",
+    type: "registry:ui",
+    title: "Table",
+    description:
+      "A bordered data table with sortable headings, selectable rows and a caption.",
+    files: [
+      {
+        path: "ui/table.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "tabs",
     type: "registry:ui",
     title: "Tabs",
@@ -823,6 +1090,18 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/tabs.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "tag-input",
+    type: "registry:ui",
+    title: "Tag Input",
+    description: "A text field that keeps what was typed as removable chips.",
+    files: [
+      {
+        path: "ui/tag-input.tsx",
         type: "registry:ui",
       },
     ],
@@ -909,6 +1188,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "tree",
+    type: "registry:ui",
+    title: "Tree",
+    description:
+      "A collapsible, keyboard-driven list of nested rows, such as categories and their channels.",
+    files: [
+      {
+        path: "ui/tree.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "typeset",
     type: "registry:ui",
     title: "Typeset",
@@ -936,6 +1228,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/typing-indicator.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "user-panel",
+    type: "registry:ui",
+    title: "User Panel",
+    description:
+      "The strip at the foot of a sidebar: the signed-in user and their mute, deafen and settings controls.",
+    files: [
+      {
+        path: "ui/user-panel.tsx",
         type: "registry:ui",
       },
     ],

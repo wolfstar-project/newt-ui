@@ -1,0 +1,13 @@
+{
+  "name": "side-nav",
+  "title": "Side Nav",
+  "description": "A vertical list of grouped links for the sections of a settings screen.",
+  "vueFiles": [
+    "SideNav.vue",
+    "SideNavGroup.vue",
+    "SideNavItem.vue",
+    "index.ts"
+  ],
+  "reactDemo": "side-nav-demo",
+  "vueDemo": "SideNavDemo"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "avatar-group",
+  "title": "Avatar Group",
+  "description": "A row of overlapping avatars with a count for the members not shown.",
+  "registryDependencies": ["avatar"],
+  "vueFiles": ["AvatarGroup.vue", "index.ts"],
+  "reactDemo": "avatar-group-demo",
+  "vueDemo": "AvatarGroupDemo"
+}

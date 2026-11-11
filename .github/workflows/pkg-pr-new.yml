@@ -17,7 +17,7 @@ concurrency:
 jobs:
   publish:
     name: 📦 Publish preview packages
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     timeout-minutes: 15
     if: github.repository_owner == 'wolfstar-project'
 
@@ -30,7 +30,7 @@ jobs:
       - name: Setup pnpm + Node.js v24
         uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
-          runtime: node@24
+          runtime: node@26
           cache: true
           install: false
 

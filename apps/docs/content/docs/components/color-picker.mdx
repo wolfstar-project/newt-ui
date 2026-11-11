@@ -1,0 +1,85 @@
+---
+title: "Color Picker"
+description: "A palette of swatches with a custom colour tile, for role and accent colours."
+---
+
+Use it where somebody gives a thing a colour: a role, a category, an embed's accent. A short palette covers the common choice in one click, and the larger tile opens the browser's own colour dialog for anything else. That tile wears the colour whenever the value is not one of the swatches.
+
+The palette is data, not theme: these are values an application stores, so they are passed as a prop and are not `--newt-*` tokens.
+
+<ComponentPreview name="color-picker" />
+
+## Installation
+
+<Installation name="color-picker" />
+
+## Usage
+
+<Usage name="color-picker" />
+
+## API reference
+
+<PropsTable
+  of="ColorPicker"
+  rows={[
+    {
+      name: "value / v-model",
+      type: "string",
+      description:
+        "The chosen colour. In React, leave it undefined and pass `defaultValue` to let the component own it.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string) => void",
+      description:
+        "React only. Called with the new colour; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "swatches",
+      type: "{ value: string; label: string }[]",
+      description:
+        "The palette. `label` is what a screen reader calls the swatch.",
+      default: "defaultSwatches",
+    },
+    {
+      name: "allowCustom",
+      type: "boolean",
+      description: "Shows the tile that opens the browser's colour dialog.",
+      default: "true",
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "Accessible name of the group.",
+      default: '"Colour"',
+    },
+    {
+      name: "customLabel",
+      type: "string",
+      description: "Accessible name of the custom tile.",
+      default: '"Custom colour"',
+    },
+    {
+      name: "name",
+      type: "string",
+      description:
+        "Shared `name` of the swatch radios. One is generated when it is not given.",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Dims the picker and stops it taking input.",
+      default: "false",
+    },
+  ]}
+/>
+
+`defaultSwatches` is exported beside the component, so a palette can extend it instead of restating it.
+
+## Accessibility
+
+The swatches are a native radio set: `Tab` reaches the chosen one and the arrow keys move between them. A colour is never its own name, so every swatch needs a `label`. The chosen swatch is marked with a check as well as by its position, and the check carries a dark edge so it stays visible on a pale swatch. Show the chosen value somewhere as text or on the thing being coloured, as the example does.
+
+## Tokens
+
+<TokensNote name="color-picker" />
