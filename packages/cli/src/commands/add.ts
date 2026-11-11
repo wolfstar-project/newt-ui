@@ -1,3 +1,5 @@
+import path from "node:path"
+
 import { intro, outro, spinner } from "@clack/prompts"
 
 import { preflightAdd } from "../preflights/preflight-add.js"
@@ -58,6 +60,30 @@ export async function add(options: AddOptions): Promise<void> {
   await runAdd(config, registryUrl, selected, options)
 }
 
+/**
+ * The line that tells the reader where an installed item is imported from.
+ * A component lives under the `ui` alias and a block under `components`; a
+ * library file is named after itself, not after the item that carried it; an
+ * item with no files, such as the token theme, has nothing to import.
+ */
+export function importHint(
+  item: RegistryItem,
+  aliases: Config["aliases"]
+): string | undefined {
+  const [first] = item.files ?? []
+  if (first === undefined) return undefined
+  if (item.type === "registry:lib") {
+    const file = first instanceof Object ? first.path : first
+    const name = path.basename(file).replace(/\.[^.]+$/, "")
+    return `import { ... } from "${aliases.lib ?? "@/lib"}/${name}"`
+  }
+  const base =
+    item.type === "registry:block"
+      ? aliases.components
+      : (aliases.ui ?? `${aliases.components}/ui`)
+  return `import { ... } from "${base}/${item.name}"`
+}
+
 async function runAdd(
   config: Config,
   registryUrl: string,
@@ -98,15 +124,10 @@ async function runAdd(
 
   await updateDependencies(tree, config, options)
 
-  const uiAlias = config.aliases.ui ?? `${config.aliases.components}/ui`
-  logger.log(
-    tree
-      .map((item) =>
-        highlighter.dim(
-          `import { ... } from "${item.type === "registry:block" ? config.aliases.components : uiAlias}/${item.name}"`
-        )
-      )
-      .join("\n")
-  )
+  const hints = tree.flatMap((item) => {
+    const hint = importHint(item, config.aliases)
+    return hint === undefined ? [] : [highlighter.dim(hint)]
+  })
+  if (hints.length > 0) logger.log(hints.join("\n"))
   outro("Done.")
 }
