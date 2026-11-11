@@ -37,6 +37,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "alert",
+    {
+      name: "alert",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/alert.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/alert")),
+    },
+  ],
+  [
     "app-launcher",
     {
       name: "app-launcher",
@@ -61,6 +71,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "audit-log",
+    {
+      name: "audit-log",
+      type: "registry:ui",
+      registryDependencies: ["avatar"],
+      files: ["registry/bases/newt/ui/audit-log.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/audit-log")),
+    },
+  ],
+  [
     "avatar",
     {
       name: "avatar",
@@ -68,6 +88,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: ["registry/bases/newt/ui/avatar.tsx"],
       component: React.lazy(() => import("@/registry/bases/newt/ui/avatar")),
+    },
+  ],
+  [
+    "avatar-group",
+    {
+      name: "avatar-group",
+      type: "registry:ui",
+      registryDependencies: ["avatar"],
+      files: ["registry/bases/newt/ui/avatar-group.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/avatar-group")
+      ),
     },
   ],
   [
@@ -115,6 +147,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "calendar",
+    {
+      name: "calendar",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/calendar.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/calendar")),
+    },
+  ],
+  [
     "card",
     {
       name: "card",
@@ -145,6 +187,24 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/ui/channel-info.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/ui/channel-info")
+      ),
+    },
+  ],
+  [
+    "channel-sidebar",
+    {
+      name: "channel-sidebar",
+      type: "registry:block",
+      registryDependencies: [
+        "tree",
+        "user-panel",
+        "status-indicator",
+        "avatar",
+      ],
+      files: ["registry/bases/newt/blocks/channel-sidebar/channel-sidebar.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/blocks/channel-sidebar/channel-sidebar")
       ),
     },
   ],
@@ -549,6 +609,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "onboarding",
+    {
+      name: "onboarding",
+      type: "registry:block",
+      registryDependencies: ["stepper", "button"],
+      files: ["registry/bases/newt/blocks/onboarding/onboarding.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/blocks/onboarding/onboarding")
+      ),
+    },
+  ],
+  [
     "pagination",
     {
       name: "pagination",
@@ -718,6 +790,29 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "settings-layout",
+    {
+      name: "settings-layout",
+      type: "registry:block",
+      registryDependencies: ["side-nav", "breadcrumb"],
+      files: ["registry/bases/newt/blocks/settings-layout/settings-layout.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/blocks/settings-layout/settings-layout")
+      ),
+    },
+  ],
+  [
+    "side-nav",
+    {
+      name: "side-nav",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/side-nav.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/side-nav")),
+    },
+  ],
+  [
     "skeleton",
     {
       name: "skeleton",
@@ -818,6 +913,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "table",
+    {
+      name: "table",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/table.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/table")),
+    },
+  ],
+  [
     "tabs",
     {
       name: "tabs",
@@ -902,6 +1007,16 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "tree",
+    {
+      name: "tree",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/tree.tsx"],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/tree")),
+    },
+  ],
+  [
     "typeset",
     {
       name: "typeset",
@@ -920,6 +1035,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/ui/typing-indicator.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/ui/typing-indicator")
+      ),
+    },
+  ],
+  [
+    "user-panel",
+    {
+      name: "user-panel",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/user-panel.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/user-panel")
       ),
     },
   ],
@@ -989,6 +1116,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "alert-demo",
+    {
+      name: "alert-demo",
+      type: "registry:example",
+      registryDependencies: ["alert"],
+      files: ["registry/bases/newt/examples/alert-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/alert-demo")
+      ),
+    },
+  ],
+  [
     "app-launcher-demo",
     {
       name: "app-launcher-demo",
@@ -1013,6 +1152,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "audit-log-demo",
+    {
+      name: "audit-log-demo",
+      type: "registry:example",
+      registryDependencies: ["audit-log"],
+      files: ["registry/bases/newt/examples/audit-log-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/audit-log-demo")
+      ),
+    },
+  ],
+  [
     "avatar-demo",
     {
       name: "avatar-demo",
@@ -1021,6 +1172,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/avatar-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/avatar-demo")
+      ),
+    },
+  ],
+  [
+    "avatar-group-demo",
+    {
+      name: "avatar-group-demo",
+      type: "registry:example",
+      registryDependencies: ["avatar-group"],
+      files: ["registry/bases/newt/examples/avatar-group-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/avatar-group-demo")
       ),
     },
   ],
@@ -1073,6 +1236,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "calendar-demo",
+    {
+      name: "calendar-demo",
+      type: "registry:example",
+      registryDependencies: ["calendar"],
+      files: ["registry/bases/newt/examples/calendar-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/calendar-demo")
+      ),
+    },
+  ],
+  [
     "card-demo",
     {
       name: "card-demo",
@@ -1105,6 +1280,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/channel-info-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/channel-info-demo")
+      ),
+    },
+  ],
+  [
+    "channel-sidebar-demo",
+    {
+      name: "channel-sidebar-demo",
+      type: "registry:example",
+      registryDependencies: ["channel-sidebar"],
+      files: ["registry/bases/newt/examples/channel-sidebar-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/channel-sidebar-demo")
       ),
     },
   ],
@@ -1529,6 +1716,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "onboarding-demo",
+    {
+      name: "onboarding-demo",
+      type: "registry:example",
+      registryDependencies: ["onboarding"],
+      files: ["registry/bases/newt/examples/onboarding-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/onboarding-demo")
+      ),
+    },
+  ],
+  [
     "pagination-demo",
     {
       name: "pagination-demo",
@@ -1709,6 +1908,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "settings-layout-demo",
+    {
+      name: "settings-layout-demo",
+      type: "registry:example",
+      registryDependencies: ["settings-layout"],
+      files: ["registry/bases/newt/examples/settings-layout-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/settings-layout-demo")
+      ),
+    },
+  ],
+  [
+    "side-nav-demo",
+    {
+      name: "side-nav-demo",
+      type: "registry:example",
+      registryDependencies: ["side-nav"],
+      files: ["registry/bases/newt/examples/side-nav-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/side-nav-demo")
+      ),
+    },
+  ],
+  [
     "skeleton-demo",
     {
       name: "skeleton-demo",
@@ -1820,6 +2043,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "table-demo",
+    {
+      name: "table-demo",
+      type: "registry:example",
+      registryDependencies: ["table"],
+      files: ["registry/bases/newt/examples/table-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/table-demo")
+      ),
+    },
+  ],
+  [
     "tabs-demo",
     {
       name: "tabs-demo",
@@ -1916,6 +2151,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "tree-demo",
+    {
+      name: "tree-demo",
+      type: "registry:example",
+      registryDependencies: ["tree"],
+      files: ["registry/bases/newt/examples/tree-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/tree-demo")
+      ),
+    },
+  ],
+  [
     "typeset-demo",
     {
       name: "typeset-demo",
@@ -1936,6 +2183,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/typing-indicator-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/typing-indicator-demo")
+      ),
+    },
+  ],
+  [
+    "user-panel-demo",
+    {
+      name: "user-panel-demo",
+      type: "registry:example",
+      registryDependencies: ["user-panel"],
+      files: ["registry/bases/newt/examples/user-panel-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/user-panel-demo")
       ),
     },
   ],

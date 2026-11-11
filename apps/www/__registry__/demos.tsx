@@ -3,16 +3,21 @@ import type * as React from "react"
 
 import AccordionDemo from "@/registry/bases/newt/examples/accordion-demo"
 import ActionRowDemo from "@/registry/bases/newt/examples/action-row-demo"
+import AlertDemo from "@/registry/bases/newt/examples/alert-demo"
 import AppLauncherDemo from "@/registry/bases/newt/examples/app-launcher-demo"
 import AttachmentDemo from "@/registry/bases/newt/examples/attachment-demo"
+import AuditLogDemo from "@/registry/bases/newt/examples/audit-log-demo"
 import AvatarDemo from "@/registry/bases/newt/examples/avatar-demo"
+import AvatarGroupDemo from "@/registry/bases/newt/examples/avatar-group-demo"
 import BadgeDemo from "@/registry/bases/newt/examples/badge-demo"
 import BotCommandCardDemo from "@/registry/bases/newt/examples/bot-command-card-demo"
 import BreadcrumbDemo from "@/registry/bases/newt/examples/breadcrumb-demo"
 import ButtonDemo from "@/registry/bases/newt/examples/button-demo"
+import CalendarDemo from "@/registry/bases/newt/examples/calendar-demo"
 import CardDemo from "@/registry/bases/newt/examples/card-demo"
 import ChannelHeaderDemo from "@/registry/bases/newt/examples/channel-header-demo"
 import ChannelInfoDemo from "@/registry/bases/newt/examples/channel-info-demo"
+import ChannelSidebarDemo from "@/registry/bases/newt/examples/channel-sidebar-demo"
 import ChannelTopicDemo from "@/registry/bases/newt/examples/channel-topic-demo"
 import ChannelWelcomeDemo from "@/registry/bases/newt/examples/channel-welcome-demo"
 import ChatDemo from "@/registry/bases/newt/examples/chat-demo"
@@ -47,6 +52,7 @@ import MessageListDemo from "@/registry/bases/newt/examples/message-list-demo"
 import ModalDemo from "@/registry/bases/newt/examples/modal-demo"
 import NotifBadgeDemo from "@/registry/bases/newt/examples/notif-badge-demo"
 import NumberInputDemo from "@/registry/bases/newt/examples/number-input-demo"
+import OnboardingDemo from "@/registry/bases/newt/examples/onboarding-demo"
 import PaginationDemo from "@/registry/bases/newt/examples/pagination-demo"
 import PermissionDemo from "@/registry/bases/newt/examples/permission-demo"
 import PinInputDemo from "@/registry/bases/newt/examples/pin-input-demo"
@@ -62,6 +68,8 @@ import SectionDemo from "@/registry/bases/newt/examples/section-demo"
 import SelectMenuDemo from "@/registry/bases/newt/examples/select-menu-demo"
 import ServerBannerDemo from "@/registry/bases/newt/examples/server-banner-demo"
 import ServerSidebarDemo from "@/registry/bases/newt/examples/server-sidebar-demo"
+import SettingsLayoutDemo from "@/registry/bases/newt/examples/settings-layout-demo"
+import SideNavDemo from "@/registry/bases/newt/examples/side-nav-demo"
 import SkeletonDemo from "@/registry/bases/newt/examples/skeleton-demo"
 import SlashCommandDemo from "@/registry/bases/newt/examples/slash-command-demo"
 import SlashCommandSuggestionsDemo from "@/registry/bases/newt/examples/slash-command-suggestions-demo"
@@ -71,6 +79,7 @@ import StageBannerDemo from "@/registry/bases/newt/examples/stage-banner-demo"
 import StatusIndicatorDemo from "@/registry/bases/newt/examples/status-indicator-demo"
 import StepperDemo from "@/registry/bases/newt/examples/stepper-demo"
 import SystemMessageDemo from "@/registry/bases/newt/examples/system-message-demo"
+import TableDemo from "@/registry/bases/newt/examples/table-demo"
 import TabsDemo from "@/registry/bases/newt/examples/tabs-demo"
 import TagInputDemo from "@/registry/bases/newt/examples/tag-input-demo"
 import ThreadPreviewDemo from "@/registry/bases/newt/examples/thread-preview-demo"
@@ -79,8 +88,10 @@ import TimestampDemo from "@/registry/bases/newt/examples/timestamp-demo"
 import ToastDemo from "@/registry/bases/newt/examples/toast-demo"
 import TokenFieldDemo from "@/registry/bases/newt/examples/token-field-demo"
 import TooltipDemo from "@/registry/bases/newt/examples/tooltip-demo"
+import TreeDemo from "@/registry/bases/newt/examples/tree-demo"
 import TypesetDemo from "@/registry/bases/newt/examples/typeset-demo"
 import TypingIndicatorDemo from "@/registry/bases/newt/examples/typing-indicator-demo"
+import UserPanelDemo from "@/registry/bases/newt/examples/user-panel-demo"
 import UserProfileDemo from "@/registry/bases/newt/examples/user-profile-demo"
 import V2ContainerDemo from "@/registry/bases/newt/examples/v2-container-demo"
 import VoiceChannelDemo from "@/registry/bases/newt/examples/voice-channel-demo"
@@ -91,16 +102,21 @@ import VoiceChannelDemo from "@/registry/bases/newt/examples/voice-channel-demo"
 const demoEntries: Array<[string, React.ComponentType]> = [
   ["accordion", AccordionDemo],
   ["action-row", ActionRowDemo],
+  ["alert", AlertDemo],
   ["app-launcher", AppLauncherDemo],
   ["attachment", AttachmentDemo],
+  ["audit-log", AuditLogDemo],
   ["avatar", AvatarDemo],
+  ["avatar-group", AvatarGroupDemo],
   ["badge", BadgeDemo],
   ["bot-command-card", BotCommandCardDemo],
   ["breadcrumb", BreadcrumbDemo],
   ["button", ButtonDemo],
+  ["calendar", CalendarDemo],
   ["card", CardDemo],
   ["channel-header", ChannelHeaderDemo],
   ["channel-info", ChannelInfoDemo],
+  ["channel-sidebar", ChannelSidebarDemo],
   ["channel-topic", ChannelTopicDemo],
   ["channel-welcome", ChannelWelcomeDemo],
   ["chat", ChatDemo],
@@ -135,6 +151,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["modal", ModalDemo],
   ["notif-badge", NotifBadgeDemo],
   ["number-input", NumberInputDemo],
+  ["onboarding", OnboardingDemo],
   ["pagination", PaginationDemo],
   ["permission", PermissionDemo],
   ["pin-input", PinInputDemo],
@@ -150,6 +167,8 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["select-menu", SelectMenuDemo],
   ["server-banner", ServerBannerDemo],
   ["server-sidebar", ServerSidebarDemo],
+  ["settings-layout", SettingsLayoutDemo],
+  ["side-nav", SideNavDemo],
   ["skeleton", SkeletonDemo],
   ["slash-command", SlashCommandDemo],
   ["slash-command-suggestions", SlashCommandSuggestionsDemo],
@@ -159,6 +178,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["status-indicator", StatusIndicatorDemo],
   ["stepper", StepperDemo],
   ["system-message", SystemMessageDemo],
+  ["table", TableDemo],
   ["tabs", TabsDemo],
   ["tag-input", TagInputDemo],
   ["thread-preview", ThreadPreviewDemo],
@@ -167,8 +187,10 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["toast", ToastDemo],
   ["token-field", TokenFieldDemo],
   ["tooltip", TooltipDemo],
+  ["tree", TreeDemo],
   ["typeset", TypesetDemo],
   ["typing-indicator", TypingIndicatorDemo],
+  ["user-panel", UserPanelDemo],
   ["user-profile", UserProfileDemo],
   ["v2-container", V2ContainerDemo],
   ["voice-channel", VoiceChannelDemo],

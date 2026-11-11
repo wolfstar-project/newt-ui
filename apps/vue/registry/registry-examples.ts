@@ -25,6 +25,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "AlertDemo",
+    type: "registry:example",
+    registryDependencies: ["alert"],
+    files: [
+      {
+        path: "examples/AlertDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AppLauncherDemo",
     type: "registry:example",
     registryDependencies: ["app-launcher"],
@@ -47,12 +58,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "AuditLogDemo",
+    type: "registry:example",
+    registryDependencies: ["audit-log"],
+    files: [
+      {
+        path: "examples/AuditLogDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AvatarDemo",
     type: "registry:example",
     registryDependencies: ["avatar"],
     files: [
       {
         path: "examples/AvatarDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AvatarGroupDemo",
+    type: "registry:example",
+    registryDependencies: ["avatar-group"],
+    files: [
+      {
+        path: "examples/AvatarGroupDemo.vue",
         type: "registry:example",
       },
     ],
@@ -102,6 +135,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "CalendarDemo",
+    type: "registry:example",
+    registryDependencies: ["calendar"],
+    files: [
+      {
+        path: "examples/CalendarDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "CardDemo",
     type: "registry:example",
     registryDependencies: ["card"],
@@ -130,6 +174,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/ChannelInfoDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ChannelSidebarDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-sidebar"],
+    files: [
+      {
+        path: "examples/ChannelSidebarDemo.vue",
         type: "registry:example",
       },
     ],
@@ -520,6 +575,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "OnboardingDemo",
+    type: "registry:example",
+    registryDependencies: ["onboarding"],
+    files: [
+      {
+        path: "examples/OnboardingDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "PaginationDemo",
     type: "registry:example",
     registryDependencies: ["pagination"],
@@ -685,6 +751,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "SettingsLayoutDemo",
+    type: "registry:example",
+    registryDependencies: ["settings-layout"],
+    files: [
+      {
+        path: "examples/SettingsLayoutDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SideNavDemo",
+    type: "registry:example",
+    registryDependencies: ["side-nav"],
+    files: [
+      {
+        path: "examples/SideNavDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SkeletonDemo",
     type: "registry:example",
     registryDependencies: ["skeleton"],
@@ -784,6 +872,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "TableDemo",
+    type: "registry:example",
+    registryDependencies: ["table"],
+    files: [
+      {
+        path: "examples/TableDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "TabsDemo",
     type: "registry:example",
     registryDependencies: ["tabs"],
@@ -872,6 +971,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "TreeDemo",
+    type: "registry:example",
+    registryDependencies: ["tree"],
+    files: [
+      {
+        path: "examples/TreeDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "TypesetDemo",
     type: "registry:example",
     registryDependencies: ["typeset"],
@@ -889,6 +999,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/TypingIndicatorDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "UserPanelDemo",
+    type: "registry:example",
+    registryDependencies: ["user-panel"],
+    files: [
+      {
+        path: "examples/UserPanelDemo.vue",
         type: "registry:example",
       },
     ],

@@ -29,6 +29,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "alert",
+    type: "registry:ui",
+    title: "Alert",
+    description:
+      "An inline notice with an icon and a coloured edge, in info, success, warning and danger kinds.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/alert.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "app-launcher",
     type: "registry:ui",
     title: "App Launcher",
@@ -56,6 +70,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "audit-log",
+    type: "registry:ui",
+    title: "Audit Log",
+    description:
+      "A list of who changed what and when, with entries that open to show each change.",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "ui/audit-log.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "avatar",
     type: "registry:ui",
     title: "Avatar",
@@ -65,6 +93,20 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/avatar.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "avatar-group",
+    type: "registry:ui",
+    title: "Avatar Group",
+    description:
+      "A row of overlapping avatars with a count for the members not shown.",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "ui/avatar-group.tsx",
         type: "registry:ui",
       },
     ],
@@ -124,6 +166,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "calendar",
+    type: "registry:ui",
+    title: "Calendar",
+    description:
+      "A month grid for picking one day, with keyboard navigation and optional first and last selectable dates.",
+    files: [
+      {
+        path: "ui/calendar.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "card",
     type: "registry:ui",
     title: "Card",
@@ -159,6 +214,20 @@ export const ui: Registry = [
       {
         path: "ui/channel-info.tsx",
         type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-sidebar",
+    type: "registry:block",
+    title: "Channel sidebar",
+    description:
+      "The column a server is navigated from: its name, its channels as a tree and the user panel at the foot.",
+    registryDependencies: ["tree", "user-panel", "status-indicator", "avatar"],
+    files: [
+      {
+        path: "blocks/channel-sidebar/channel-sidebar.tsx",
+        type: "registry:block",
       },
     ],
   },
@@ -629,6 +698,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "onboarding",
+    type: "registry:block",
+    title: "Onboarding",
+    description:
+      "A short setup flow: a stepper, the current step's content and the buttons that move through it.",
+    registryDependencies: ["stepper", "button"],
+    files: [
+      {
+        path: "blocks/onboarding/onboarding.tsx",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
     name: "pagination",
     type: "registry:ui",
     title: "Pagination",
@@ -837,6 +920,33 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "settings-layout",
+    type: "registry:block",
+    title: "Settings layout",
+    description:
+      "A settings screen: grouped sections down the side and the chosen section's breadcrumb, heading and content beside them.",
+    registryDependencies: ["side-nav", "breadcrumb"],
+    files: [
+      {
+        path: "blocks/settings-layout/settings-layout.tsx",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
+    name: "side-nav",
+    type: "registry:ui",
+    title: "Side Nav",
+    description:
+      "A vertical list of grouped links for the sections of a settings screen.",
+    files: [
+      {
+        path: "ui/side-nav.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "skeleton",
     type: "registry:ui",
     title: "Skeleton Loader",
@@ -960,6 +1070,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "table",
+    type: "registry:ui",
+    title: "Table",
+    description:
+      "A bordered data table with sortable headings, selectable rows and a caption.",
+    files: [
+      {
+        path: "ui/table.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "tabs",
     type: "registry:ui",
     title: "Tabs",
@@ -1065,6 +1188,19 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "tree",
+    type: "registry:ui",
+    title: "Tree",
+    description:
+      "A collapsible, keyboard-driven list of nested rows, such as categories and their channels.",
+    files: [
+      {
+        path: "ui/tree.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "typeset",
     type: "registry:ui",
     title: "Typeset",
@@ -1092,6 +1228,19 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/typing-indicator.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "user-panel",
+    type: "registry:ui",
+    title: "User Panel",
+    description:
+      "The strip at the foot of a sidebar: the signed-in user and their mute, deafen and settings controls.",
+    files: [
+      {
+        path: "ui/user-panel.tsx",
         type: "registry:ui",
       },
     ],

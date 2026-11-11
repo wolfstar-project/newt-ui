@@ -48,6 +48,21 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "alert",
+    {
+      name: "alert",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/alert/Alert.vue",
+        "registry/bases/newt/ui/alert/AlertTitle.vue",
+        "registry/bases/newt/ui/alert/AlertDescription.vue",
+        "registry/bases/newt/ui/alert/AlertActions.vue",
+        "registry/bases/newt/ui/alert/index.ts",
+      ],
+    },
+  ],
+  [
     "app-launcher",
     {
       name: "app-launcher",
@@ -91,6 +106,20 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "audit-log",
+    {
+      name: "audit-log",
+      type: "registry:ui",
+      registryDependencies: ["avatar"],
+      files: [
+        "registry/bases/newt/ui/audit-log/AuditLog.vue",
+        "registry/bases/newt/ui/audit-log/AuditLogEntry.vue",
+        "registry/bases/newt/ui/audit-log/AuditLogChange.vue",
+        "registry/bases/newt/ui/audit-log/index.ts",
+      ],
+    },
+  ],
+  [
     "avatar",
     {
       name: "avatar",
@@ -101,6 +130,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/avatar/AvatarImage.vue",
         "registry/bases/newt/ui/avatar/AvatarFallback.vue",
         "registry/bases/newt/ui/avatar/index.ts",
+      ],
+    },
+  ],
+  [
+    "avatar-group",
+    {
+      name: "avatar-group",
+      type: "registry:ui",
+      registryDependencies: ["avatar"],
+      files: [
+        "registry/bases/newt/ui/avatar-group/AvatarGroup.vue",
+        "registry/bases/newt/ui/avatar-group/index.ts",
       ],
     },
   ],
@@ -155,6 +196,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: [
         "registry/bases/newt/ui/button/Button.vue",
         "registry/bases/newt/ui/button/index.ts",
+      ],
+    },
+  ],
+  [
+    "calendar",
+    {
+      name: "calendar",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/calendar/Calendar.vue",
+        "registry/bases/newt/ui/calendar/index.ts",
       ],
     },
   ],
@@ -214,6 +267,24 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/channel-info/ChannelInfoEmptyTitle.vue",
         "registry/bases/newt/ui/channel-info/ChannelInfoEmptyBody.vue",
         "registry/bases/newt/ui/channel-info/index.ts",
+      ],
+    },
+  ],
+  [
+    "channel-sidebar",
+    {
+      name: "channel-sidebar",
+      type: "registry:block",
+      registryDependencies: [
+        "tree",
+        "user-panel",
+        "status-indicator",
+        "avatar",
+      ],
+      files: [
+        "registry/bases/newt/blocks/channel-sidebar/ChannelSidebar.vue",
+        "registry/bases/newt/blocks/channel-sidebar/types.ts",
+        "registry/bases/newt/blocks/channel-sidebar/index.ts",
       ],
     },
   ],
@@ -726,6 +797,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "onboarding",
+    {
+      name: "onboarding",
+      type: "registry:block",
+      registryDependencies: ["stepper", "button"],
+      files: [
+        "registry/bases/newt/blocks/onboarding/Onboarding.vue",
+        "registry/bases/newt/blocks/onboarding/types.ts",
+        "registry/bases/newt/blocks/onboarding/index.ts",
+      ],
+    },
+  ],
+  [
     "pagination",
     {
       name: "pagination",
@@ -945,6 +1029,33 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "settings-layout",
+    {
+      name: "settings-layout",
+      type: "registry:block",
+      registryDependencies: ["side-nav", "breadcrumb"],
+      files: [
+        "registry/bases/newt/blocks/settings-layout/SettingsLayout.vue",
+        "registry/bases/newt/blocks/settings-layout/types.ts",
+        "registry/bases/newt/blocks/settings-layout/index.ts",
+      ],
+    },
+  ],
+  [
+    "side-nav",
+    {
+      name: "side-nav",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/side-nav/SideNav.vue",
+        "registry/bases/newt/ui/side-nav/SideNavGroup.vue",
+        "registry/bases/newt/ui/side-nav/SideNavItem.vue",
+        "registry/bases/newt/ui/side-nav/index.ts",
+      ],
+    },
+  ],
+  [
     "skeleton",
     {
       name: "skeleton",
@@ -1067,6 +1178,24 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "table",
+    {
+      name: "table",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/table/Table.vue",
+        "registry/bases/newt/ui/table/TableHeader.vue",
+        "registry/bases/newt/ui/table/TableBody.vue",
+        "registry/bases/newt/ui/table/TableRow.vue",
+        "registry/bases/newt/ui/table/TableHead.vue",
+        "registry/bases/newt/ui/table/TableCell.vue",
+        "registry/bases/newt/ui/table/TableCaption.vue",
+        "registry/bases/newt/ui/table/index.ts",
+      ],
+    },
+  ],
+  [
     "tabs",
     {
       name: "tabs",
@@ -1181,6 +1310,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "tree",
+    {
+      name: "tree",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/tree/Tree.vue",
+        "registry/bases/newt/ui/tree/index.ts",
+      ],
+    },
+  ],
+  [
     "typeset",
     {
       name: "typeset",
@@ -1202,6 +1343,21 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/typing-indicator/TypingIndicator.vue",
         "registry/bases/newt/ui/typing-indicator/TypingIndicatorDots.vue",
         "registry/bases/newt/ui/typing-indicator/index.ts",
+      ],
+    },
+  ],
+  [
+    "user-panel",
+    {
+      name: "user-panel",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/user-panel/UserPanel.vue",
+        "registry/bases/newt/ui/user-panel/UserPanelInfo.vue",
+        "registry/bases/newt/ui/user-panel/UserPanelActions.vue",
+        "registry/bases/newt/ui/user-panel/UserPanelButton.vue",
+        "registry/bases/newt/ui/user-panel/index.ts",
       ],
     },
   ],
@@ -1287,6 +1443,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "AlertDemo",
+    {
+      name: "AlertDemo",
+      type: "registry:example",
+      registryDependencies: ["alert"],
+      files: ["registry/bases/newt/examples/AlertDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AlertDemo.vue")
+      ),
+    },
+  ],
+  [
     "AppLauncherDemo",
     {
       name: "AppLauncherDemo",
@@ -1311,6 +1479,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "AuditLogDemo",
+    {
+      name: "AuditLogDemo",
+      type: "registry:example",
+      registryDependencies: ["audit-log"],
+      files: ["registry/bases/newt/examples/AuditLogDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AuditLogDemo.vue")
+      ),
+    },
+  ],
+  [
     "AvatarDemo",
     {
       name: "AvatarDemo",
@@ -1319,6 +1499,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/AvatarDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AvatarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AvatarGroupDemo",
+    {
+      name: "AvatarGroupDemo",
+      type: "registry:example",
+      registryDependencies: ["avatar-group"],
+      files: ["registry/bases/newt/examples/AvatarGroupDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AvatarGroupDemo.vue")
       ),
     },
   ],
@@ -1371,6 +1563,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "CalendarDemo",
+    {
+      name: "CalendarDemo",
+      type: "registry:example",
+      registryDependencies: ["calendar"],
+      files: ["registry/bases/newt/examples/CalendarDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/CalendarDemo.vue")
+      ),
+    },
+  ],
+  [
     "CardDemo",
     {
       name: "CardDemo",
@@ -1403,6 +1607,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ChannelInfoDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ChannelInfoDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChannelSidebarDemo",
+    {
+      name: "ChannelSidebarDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-sidebar"],
+      files: ["registry/bases/newt/examples/ChannelSidebarDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/ChannelSidebarDemo.vue")
       ),
     },
   ],
@@ -1829,6 +2045,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "OnboardingDemo",
+    {
+      name: "OnboardingDemo",
+      type: "registry:example",
+      registryDependencies: ["onboarding"],
+      files: ["registry/bases/newt/examples/OnboardingDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/OnboardingDemo.vue")
+      ),
+    },
+  ],
+  [
     "PaginationDemo",
     {
       name: "PaginationDemo",
@@ -2009,6 +2237,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "SettingsLayoutDemo",
+    {
+      name: "SettingsLayoutDemo",
+      type: "registry:example",
+      registryDependencies: ["settings-layout"],
+      files: ["registry/bases/newt/examples/SettingsLayoutDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SettingsLayoutDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SideNavDemo",
+    {
+      name: "SideNavDemo",
+      type: "registry:example",
+      registryDependencies: ["side-nav"],
+      files: ["registry/bases/newt/examples/SideNavDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SideNavDemo.vue")
+      ),
+    },
+  ],
+  [
     "SkeletonDemo",
     {
       name: "SkeletonDemo",
@@ -2118,6 +2370,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "TableDemo",
+    {
+      name: "TableDemo",
+      type: "registry:example",
+      registryDependencies: ["table"],
+      files: ["registry/bases/newt/examples/TableDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TableDemo.vue")
+      ),
+    },
+  ],
+  [
     "TabsDemo",
     {
       name: "TabsDemo",
@@ -2214,6 +2478,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "TreeDemo",
+    {
+      name: "TreeDemo",
+      type: "registry:example",
+      registryDependencies: ["tree"],
+      files: ["registry/bases/newt/examples/TreeDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TreeDemo.vue")
+      ),
+    },
+  ],
+  [
     "TypesetDemo",
     {
       name: "TypesetDemo",
@@ -2234,6 +2510,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/TypingIndicatorDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TypingIndicatorDemo.vue")
+      ),
+    },
+  ],
+  [
+    "UserPanelDemo",
+    {
+      name: "UserPanelDemo",
+      type: "registry:example",
+      registryDependencies: ["user-panel"],
+      files: ["registry/bases/newt/examples/UserPanelDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/UserPanelDemo.vue")
       ),
     },
   ],
