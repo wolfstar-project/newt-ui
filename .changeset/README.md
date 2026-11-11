@@ -70,6 +70,33 @@ For each published package (`newtui`, `@newtui/nuxt`, `@newtui/mcp`), configure 
 - Workflow file: `release.yml`
 - Environment: _(leave empty — this workflow doesn't use a GitHub Environment)_
 
+#### A new package needs a manual first publish
+
+Trusted publishing cannot create a package: npm only lets you add a trusted
+publisher to a package that already exists. The first `release` run that
+includes a new package therefore fails with
+`E404 Not Found - PUT https://registry.npmjs.org/@scope%2fname`, and the
+`@next` snapshot job fails the same way when a pending changeset includes the
+new package. A maintainer publishes the first version once, by hand, then
+registers the trusted publisher:
+
+1. Sign in with `npm login` (an account that can publish to the scope), then
+   build and publish from the package directory:
+
+   ```sh
+   pnpm --filter <name> build
+   cd packages/<dir>
+   pnpm publish --access public --no-git-checks --provenance=false
+   ```
+
+   `--provenance=false` is needed because provenance attestations can only be
+   generated from a CI run with OIDC.
+
+2. Add the trusted publisher described above to the new package.
+3. Re-run the failed **Create Release PR or Publish** job, or trigger
+   **release** manually. `changeset publish` skips the version that is already
+   on npm.
+
 An old `NPM_PUBLISH_TOKEN` secret, if still present from before trusted
 publishing was set up, is unused now and can be removed from repo secrets.
 
