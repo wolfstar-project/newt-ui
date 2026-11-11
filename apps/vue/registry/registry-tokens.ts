@@ -31,6 +31,7 @@ export const newtTokens: NewtTokenMap = {
   "newt-bg-input-elevated": "#383a40",
   "newt-bg-hover": "rgba(78, 80, 88, 0.4)",
   "newt-bg-active": "rgba(78, 80, 88, 0.6)",
+  "newt-bg-message-hover": "rgba(2, 2, 2, 0.06)",
   "newt-border": "#3f4147",
   "newt-text-primary": "#f2f3f5",
   "newt-text-secondary": "#b5bac1",
@@ -47,6 +48,8 @@ export const newtTokens: NewtTokenMap = {
   "newt-danger-hover": "#a12828",
   "newt-mention-text": "#b3baff",
   "newt-mention-role": "#f3b95f",
+  "newt-on-accent": "#ffffff",
+  "newt-overlay": "rgba(0, 0, 0, 0.6)",
   "newt-font-sans":
     '"Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   "newt-font-mono":
@@ -66,9 +69,9 @@ export const newtTokens: NewtTokenMap = {
 }
 
 /**
- * Light-surface overrides. Only the tokens that differ from `newtTokens` are
- * listed; consumers opt in by scoping them to `.newt-light` /
- * `[data-newt-theme="light"]`, so the dark set stays the default.
+ * Light-surface values, mirroring the `.newt-light` block of `tokens.css`.
+ * `newtui init` lays them over `newtTokens` to write one complete light
+ * `:root`, and puts the dark values under the project's dark selector.
  */
 export const newtTokensLight: NewtTokenMap = {
   "newt-bg-base": "#e3e5e8",
@@ -79,15 +82,21 @@ export const newtTokensLight: NewtTokenMap = {
   "newt-bg-input-elevated": "#ffffff",
   "newt-bg-hover": "rgba(6, 6, 7, 0.08)",
   "newt-bg-active": "rgba(6, 6, 7, 0.12)",
+  "newt-bg-message-hover": "rgba(6, 6, 7, 0.03)",
   "newt-border": "#d3d5d9",
   "newt-text-primary": "#060607",
   "newt-text-secondary": "#4e5058",
   "newt-text-muted": "#5c5e66",
   "newt-text-link": "#006ce7",
+  "newt-brand": "#5865f2",
+  "newt-brand-hover": "#4752c4",
+  "newt-brand-active": "#3c45a5",
   "newt-online": "#248046",
   "newt-idle": "#b58500",
   "newt-dnd": "#d83a3e",
+  "newt-offline": "#80848e",
   "newt-danger": "#d83a3e",
+  "newt-danger-hover": "#a12828",
   "newt-mention-text": "#505cdc",
   "newt-mention-role": "#a06a00",
   "newt-shadow-elevation-low":
@@ -105,6 +114,7 @@ const COLORS = [
   "bg-input-elevated",
   "bg-hover",
   "bg-active",
+  "bg-message-hover",
   "border",
   "text-primary",
   "text-secondary",
@@ -121,10 +131,18 @@ const COLORS = [
   "danger-hover",
   "mention-text",
   "mention-role",
+  "on-accent",
+  "overlay",
 ] as const
 
-const RADII = ["sm", "md", "lg", "full"] as const
-const FONTS = ["sans", "mono", "display"] as const
+/*
+ * Only names Tailwind's default theme does not already define. `--radius-md`,
+ * `--font-sans` or `--font-mono` would restyle every page of the app that
+ * installs newt/ui, not just its components, so the radii and the sans/mono
+ * stacks stay raw `--newt-*` variables and the components reach them through
+ * Tailwind's own `rounded-*` / `font-*` scale.
+ */
+const FONTS = ["display"] as const
 const SHADOWS = ["elevation-low", "elevation-high"] as const
 
 /** Owner contract for the `@theme` entries below — same indexable shape as
@@ -143,9 +161,6 @@ export const tailwindV4Theme: TailwindV4Theme = {
     COLORS.map((name) => [`--color-newt-${name}`, `var(--newt-${name})`])
   ),
   ...Object.fromEntries(
-    RADII.map((name) => [`--radius-${name}`, `var(--newt-radius-${name})`])
-  ),
-  ...Object.fromEntries(
     FONTS.map((name) => [`--font-${name}`, `var(--newt-font-${name})`])
   ),
   ...Object.fromEntries(
@@ -162,7 +177,6 @@ export const tailwindV4Theme: TailwindV4Theme = {
 export interface TailwindV3Theme {
   colors: { newt: Record<string, string> }
   fontFamily: Record<string, string>
-  borderRadius: Record<string, string>
   boxShadow: Record<string, string>
   transitionTimingFunction: Record<string, string>
   transitionDuration: Record<string, string>
@@ -183,9 +197,6 @@ export const tailwindV3Theme: TailwindV3Theme = {
   },
   fontFamily: Object.fromEntries(
     FONTS.map((name) => [name, `var(--newt-font-${name})`])
-  ),
-  borderRadius: Object.fromEntries(
-    RADII.map((name) => [name, `var(--newt-radius-${name})`])
   ),
   boxShadow: Object.fromEntries(
     SHADOWS.map((name) => [name, `var(--newt-shadow-${name})`])

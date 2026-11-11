@@ -52,9 +52,14 @@ import {
 } from "../utils/preset.js"
 import { promptConfirm, promptSelect, promptText } from "../utils/prompts.js"
 import {
+  DARK_SELECTOR_PRESETS,
+  DEFAULT_DARK_SELECTOR,
   detectTailwindMajor,
+  findTailwindEntry,
+  loadsTailwind,
   renderItemCss,
   tailwindPreamble,
+  tailwindV3DarkMode,
   type TailwindMajor,
 } from "../utils/tailwind.js"
 import { scaffoldTemplate, templateDefaults } from "../utils/templates.js"
@@ -70,6 +75,8 @@ export interface InitOptions {
   defaults: boolean
   skipInstall: boolean
   css?: string
+  /** `class`, `data-theme`, `media` or a literal selector for dark tokens. */
+  darkSelector?: string
   framework?: Framework
   bundler?: Bundler
   registry?: string
@@ -222,6 +229,7 @@ async function buildDefaults(
       baseColor: "neutral",
       cssVariables: true,
       prefix: "",
+      darkSelector: options.darkSelector ?? DEFAULT_DARK_SELECTOR,
     },
     aliases: {
       components: DEFAULT_COMPONENTS,
@@ -301,6 +309,20 @@ async function promptForConfig(
     `Where is your ${highlighter.info("global CSS")} file?`,
     frameworkDefaults.tailwind.css
   )
+  const darkSelector =
+    options.darkSelector ??
+    (await promptSelect(
+      `How does your app switch to ${highlighter.info("dark mode")}?`,
+      [
+        { value: "class", label: `A class (${DARK_SELECTOR_PRESETS.class})` },
+        {
+          value: "data-theme",
+          label: `An attribute (${DARK_SELECTOR_PRESETS["data-theme"]})`,
+        },
+        { value: "media", label: "The system preference" },
+      ],
+      frameworkDefaults.tailwind.darkSelector ?? DEFAULT_DARK_SELECTOR
+    ))
   const components = await promptText(
     `Configure the import alias for ${highlighter.info("components")}:`,
     frameworkDefaults.aliases.components
@@ -320,6 +342,7 @@ async function promptForConfig(
       ...frameworkDefaults.tailwind,
       config: tailwindConfig,
       css: tailwindCss,
+      darkSelector,
     },
     aliases: {
       ...frameworkDefaults.aliases,
@@ -387,21 +410,47 @@ async function runInit(
     options.registry,
     config.style
   )
+  const darkSelector = config.tailwind.darkSelector
+  /*
+   * A token file of its own (`newt.css` next to an app's `main.css`) must not
+   * load Tailwind a second time: the preamble only goes into a new stylesheet
+   * when nothing else in the project already loads Tailwind.
+   */
+  const tailwindEntry =
+    existingCss.length === 0 || !loadsTailwind(existingCss)
+      ? await findTailwindEntry(cwd, cssPath)
+      : undefined
   if (existingCss.includes(TOKENS_MARKER)) {
     cssSpinner.stop(
       `${relativePath(cwd, cssPath)} already contains newt tokens, skipped.`
     )
   } else {
     const header =
-      existingCss.length === 0 ? tailwindPreamble(major) : existingCss
+      existingCss.length === 0 && tailwindEntry === undefined
+        ? tailwindPreamble(major)
+        : existingCss
+    const tokens = await tokensCssBlock(theme, major, darkSelector)
     await writeFileAt(
       cssPath,
-      header.replace(/\s*$/, "\n") + (await tokensCssBlock(theme, major))
+      header.length === 0
+        ? tokens.replace(/^\n+/, "")
+        : header.replace(/\s*$/, "\n") + tokens
     )
     cssSpinner.stop(
       `Added tokens to ${highlighter.info(relativePath(cwd, cssPath))} (Tailwind v${major}).`
     )
+    if (tailwindEntry !== undefined) {
+      logger.info(
+        `${highlighter.info(relativePath(cwd, tailwindEntry))} already loads Tailwind, so ${relativePath(cwd, cssPath)} does not. Import it from there, after Tailwind: ${highlighter.info(`@import "${importPath(tailwindEntry, cssPath)}";`)}`
+      )
+    }
   }
+
+  /* the stylesheet the app has to load: Tailwind's entry when it is not ours */
+  const stylesheetEntry =
+    tailwindEntry === undefined
+      ? config.tailwind.css
+      : relativePath(cwd, tailwindEntry)
 
   // preset overrides, after the tokens they override
   if (options.preset) {
@@ -424,13 +473,14 @@ async function runInit(
     config.framework,
     config.tailwind.config,
     major,
-    theme
+    theme,
+    darkSelector
   )
   if (config.framework === "vue") {
     if ((config.bundler ?? DEFAULT_BUNDLER) === "nuxt") {
-      printNuxtInstructions(config.tailwind.css)
+      printNuxtInstructions(stylesheetEntry)
     } else {
-      printViteInstructions(config.tailwind.css)
+      printViteInstructions(stylesheetEntry)
     }
   }
 }
@@ -458,11 +508,21 @@ async function fetchTheme(
   }
 }
 
+/** A relative `@import` path from one stylesheet to another. */
+function importPath(from: string, to: string): string {
+  const relative = path
+    .relative(path.dirname(from), to)
+    .split(path.sep)
+    .join("/")
+  return relative.startsWith(".") ? relative : `./${relative}`
+}
+
 async function tokensCssBlock(
   theme: RegistryItem | null,
-  major: TailwindMajor
+  major: TailwindMajor,
+  darkSelector: string | undefined
 ): Promise<string> {
-  const rendered = theme ? renderItemCss(theme, major) : ""
+  const rendered = theme ? renderItemCss(theme, major, darkSelector) : ""
   if (rendered.length > 0) {
     return [
       "",
@@ -471,20 +531,21 @@ async function tokensCssBlock(
     ].join("\n")
   }
   // Offline fallback: the `:root` block shipped inside this package.
-  return getTokensCssBlock()
+  return getTokensCssBlock(darkSelector)
 }
 
 function printTailwindInstructions(
   framework: Framework,
   tailwindConfig: string,
   major: TailwindMajor,
-  theme: RegistryItem | null
+  theme: RegistryItem | null,
+  darkSelector: string | undefined
 ): void {
   logger.log(highlighter.bold("Tailwind setup"))
 
   if (major === 4) {
     logger.log(
-      `Nothing else to configure — Tailwind v4 reads the ${highlighter.info("@theme")} block just written to your stylesheet, which is what generates ${highlighter.info("bg-newt-bg-elevated")}, ${highlighter.info("rounded-md")} and the rest.`
+      `Nothing else to configure — Tailwind v4 reads the ${highlighter.info("@theme")} block just written to your stylesheet, which is what generates ${highlighter.info("bg-newt-bg-elevated")}, ${highlighter.info("shadow-elevation-high")} and the rest. It maps only newt names, so your own ${highlighter.info("rounded-*")} and ${highlighter.info("font-*")} scale is left as it is.`
     )
     if (!theme) {
       logger.warn(
@@ -514,7 +575,7 @@ function printTailwindInstructions(
     highlighter.dim(`  import type { Config } from "tailwindcss"
 
   const newtPreset = {
-    darkMode: ["class"],
+    darkMode: ${tailwindV3DarkMode(darkSelector)},
     theme: { extend: ${JSON.stringify(extend, null, 2).split("\n").join("\n    ")} },
   } satisfies Omit<Config, "content">
 

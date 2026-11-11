@@ -21,17 +21,23 @@ npx newtui@latest init --defaults
 npx newtui@latest init --framework vue --bundler nuxt --css src/assets/css/tailwind.css
 ```
 
-| Flag              | Effect                                              |
-| ----------------- | --------------------------------------------------- |
-| `-d, --defaults`  | Take every default instead of asking.               |
-| `-f, --framework` | `react` or `vue`, when detection would guess wrong. |
-| `-b, --bundler`   | `nuxt` or `vite`, for Vue projects.                 |
-| `--css <path>`    | The stylesheet to write the tokens into.            |
-| `--skip-install`  | Write the files, leave the package manager alone.   |
-| `-y, --yes`       | Skip confirmations.                                 |
+| Flag              | Effect                                                                                  |
+| ----------------- | --------------------------------------------------------------------------------------- |
+| `-d, --defaults`  | Take every default instead of asking.                                                   |
+| `-f, --framework` | `react` or `vue`, when detection would guess wrong.                                     |
+| `-b, --bundler`   | `nuxt` or `vite`, for Vue projects.                                                     |
+| `--css <path>`    | The stylesheet to write the tokens into.                                                |
+| `--dark-selector` | Where dark tokens go: `class` (`.dark`, default), `data-theme`, `media`, or a selector. |
+| `--skip-install`  | Write the files, leave the package manager alone.                                       |
+| `-y, --yes`       | Skip confirmations.                                                                     |
 
 Running it twice does not write the tokens twice: it looks for them in your
 stylesheet first and skips.
+
+The tokens can live in a file of their own. When `--css` names a new file and
+another stylesheet in the project already loads Tailwind, `init` leaves
+`@import "tailwindcss"` out of the new file and prints the `@import` line to
+add to your existing entry, so Tailwind is not loaded twice.
 
 ## add [#add]
 

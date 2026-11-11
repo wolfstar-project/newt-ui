@@ -55,6 +55,7 @@ export const STRING_FLAGS = [
   "client",
   "css",
   "cwd",
+  "dark-selector",
   "framework",
   "path",
   "preset",

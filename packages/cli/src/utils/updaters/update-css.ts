@@ -18,7 +18,7 @@ export async function updateCss(
 
   const additions: string[] = []
   for (const item of styled) {
-    const rendered = renderItemCss(item, major)
+    const rendered = renderItemCss(item, major, config.tailwind.darkSelector)
     if (rendered.length === 0) continue
     if (existing.includes(rendered.trim())) continue
     additions.push(`/* newt/ui — ${item.name} */\n${rendered}`)
