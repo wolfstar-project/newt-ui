@@ -106,6 +106,20 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "audit-log",
+    {
+      name: "audit-log",
+      type: "registry:ui",
+      registryDependencies: ["avatar"],
+      files: [
+        "registry/bases/newt/ui/audit-log/AuditLog.vue",
+        "registry/bases/newt/ui/audit-log/AuditLogEntry.vue",
+        "registry/bases/newt/ui/audit-log/AuditLogChange.vue",
+        "registry/bases/newt/ui/audit-log/index.ts",
+      ],
+    },
+  ],
+  [
     "avatar",
     {
       name: "avatar",
@@ -253,6 +267,24 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/channel-info/ChannelInfoEmptyTitle.vue",
         "registry/bases/newt/ui/channel-info/ChannelInfoEmptyBody.vue",
         "registry/bases/newt/ui/channel-info/index.ts",
+      ],
+    },
+  ],
+  [
+    "channel-sidebar",
+    {
+      name: "channel-sidebar",
+      type: "registry:block",
+      registryDependencies: [
+        "tree",
+        "user-panel",
+        "status-indicator",
+        "avatar",
+      ],
+      files: [
+        "registry/bases/newt/blocks/channel-sidebar/ChannelSidebar.vue",
+        "registry/bases/newt/blocks/channel-sidebar/types.ts",
+        "registry/bases/newt/blocks/channel-sidebar/index.ts",
       ],
     },
   ],
@@ -765,6 +797,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "onboarding",
+    {
+      name: "onboarding",
+      type: "registry:block",
+      registryDependencies: ["stepper", "button"],
+      files: [
+        "registry/bases/newt/blocks/onboarding/Onboarding.vue",
+        "registry/bases/newt/blocks/onboarding/types.ts",
+        "registry/bases/newt/blocks/onboarding/index.ts",
+      ],
+    },
+  ],
+  [
     "pagination",
     {
       name: "pagination",
@@ -980,6 +1025,33 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/blocks/server-sidebar/ServerSidebar.vue",
         "registry/bases/newt/blocks/server-sidebar/types.ts",
         "registry/bases/newt/blocks/server-sidebar/index.ts",
+      ],
+    },
+  ],
+  [
+    "settings-layout",
+    {
+      name: "settings-layout",
+      type: "registry:block",
+      registryDependencies: ["side-nav", "breadcrumb"],
+      files: [
+        "registry/bases/newt/blocks/settings-layout/SettingsLayout.vue",
+        "registry/bases/newt/blocks/settings-layout/types.ts",
+        "registry/bases/newt/blocks/settings-layout/index.ts",
+      ],
+    },
+  ],
+  [
+    "side-nav",
+    {
+      name: "side-nav",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/side-nav/SideNav.vue",
+        "registry/bases/newt/ui/side-nav/SideNavGroup.vue",
+        "registry/bases/newt/ui/side-nav/SideNavItem.vue",
+        "registry/bases/newt/ui/side-nav/index.ts",
       ],
     },
   ],
@@ -1275,6 +1347,21 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "user-panel",
+    {
+      name: "user-panel",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/user-panel/UserPanel.vue",
+        "registry/bases/newt/ui/user-panel/UserPanelInfo.vue",
+        "registry/bases/newt/ui/user-panel/UserPanelActions.vue",
+        "registry/bases/newt/ui/user-panel/UserPanelButton.vue",
+        "registry/bases/newt/ui/user-panel/index.ts",
+      ],
+    },
+  ],
+  [
     "user-profile",
     {
       name: "user-profile",
@@ -1388,6 +1475,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/AttachmentDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AttachmentDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AuditLogDemo",
+    {
+      name: "AuditLogDemo",
+      type: "registry:example",
+      registryDependencies: ["audit-log"],
+      files: ["registry/bases/newt/examples/AuditLogDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AuditLogDemo.vue")
       ),
     },
   ],
@@ -1508,6 +1607,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ChannelInfoDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ChannelInfoDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChannelSidebarDemo",
+    {
+      name: "ChannelSidebarDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-sidebar"],
+      files: ["registry/bases/newt/examples/ChannelSidebarDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/ChannelSidebarDemo.vue")
       ),
     },
   ],
@@ -1934,6 +2045,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "OnboardingDemo",
+    {
+      name: "OnboardingDemo",
+      type: "registry:example",
+      registryDependencies: ["onboarding"],
+      files: ["registry/bases/newt/examples/OnboardingDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/OnboardingDemo.vue")
+      ),
+    },
+  ],
+  [
     "PaginationDemo",
     {
       name: "PaginationDemo",
@@ -2110,6 +2233,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ServerSidebarDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ServerSidebarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SettingsLayoutDemo",
+    {
+      name: "SettingsLayoutDemo",
+      type: "registry:example",
+      registryDependencies: ["settings-layout"],
+      files: ["registry/bases/newt/examples/SettingsLayoutDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SettingsLayoutDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SideNavDemo",
+    {
+      name: "SideNavDemo",
+      type: "registry:example",
+      registryDependencies: ["side-nav"],
+      files: ["registry/bases/newt/examples/SideNavDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SideNavDemo.vue")
       ),
     },
   ],
@@ -2363,6 +2510,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/TypingIndicatorDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TypingIndicatorDemo.vue")
+      ),
+    },
+  ],
+  [
+    "UserPanelDemo",
+    {
+      name: "UserPanelDemo",
+      type: "registry:example",
+      registryDependencies: ["user-panel"],
+      files: ["registry/bases/newt/examples/UserPanelDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/UserPanelDemo.vue")
       ),
     },
   ],

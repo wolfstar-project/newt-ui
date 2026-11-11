@@ -1,0 +1,85 @@
+/* newt-ui · User Panel */
+
+/*
+ * The strip at the foot of a sidebar: who you are signed in as, and the two
+ * or three controls that follow you everywhere. A control that is a switch
+ * says so with `aria-pressed`; when it is on, the icon is struck through as
+ * well as recoloured, so the state does not rest on colour.
+ */
+.newt-user-panel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  inline-size: 100%;
+  padding: 8px;
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-base);
+}
+.newt-user-panel__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+.newt-user-panel__name {
+  overflow: hidden;
+  color: var(--newt-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.newt-user-panel__status {
+  overflow: hidden;
+  color: var(--newt-text-muted);
+  font-size: 12px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.newt-user-panel__actions {
+  display: flex;
+  flex-shrink: 0;
+}
+.newt-user-panel__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 32px;
+  block-size: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  color: var(--newt-text-secondary);
+  cursor: pointer;
+  transition:
+    background var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-user-panel__button svg {
+  inline-size: 18px;
+  block-size: 18px;
+}
+.newt-user-panel__button:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+.newt-user-panel__button:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 1px;
+}
+.newt-user-panel__button[aria-pressed="true"] {
+  color: var(--newt-danger);
+}
+.newt-user-panel__slash {
+  display: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+}
+.newt-user-panel__button[aria-pressed="true"] .newt-user-panel__slash {
+  display: inline;
+}

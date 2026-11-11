@@ -1,0 +1,88 @@
+---
+title: "Customising the Nuxt UI theme"
+description: "Change a token, replace one component's overrides, or use the theme in a Vue project without Nuxt."
+---
+
+The theme is a file in your project, so there is no configuration surface
+between you and it. These are the three changes people make.
+
+## Change a token [#token]
+
+This is the first thing to reach for, because it changes newt/ui and Nuxt UI
+together and it survives the next `add`:
+
+```css title="app/assets/css/main.css"
+:root {
+  --newt-brand: #7a5af8;
+  --newt-brand-hover: #6b4ce0;
+  --newt-brand-active: #5a3fc0;
+}
+```
+
+`UButton`, a newt/ui `Button`, focus rings and the highlighted row of every
+menu all move. See [Theming](/docs/theming) for the full list of tokens.
+
+## Change one component [#component]
+
+`newtNuxtUi` is a plain object in the shape Nuxt UI's `app.config.ts` takes.
+Spread it and replace the key you want:
+
+```ts title="app/app.config.ts"
+import { newtNuxtUi } from "~/lib/nuxt-ui"
+
+export default defineAppConfig({
+  ui: {
+    ...newtNuxtUi,
+    // Keep Nuxt UI's own switch colour instead of green.
+    switch: { slots: newtNuxtUi.switch.slots },
+    // Theme a component the file does not cover.
+    tabs: { slots: { list: "bg-(--newt-bg-base)" } },
+  },
+})
+```
+
+To change the theme for good, edit `app/lib/nuxt-ui.ts` itself. The classes in
+it are Tailwind utilities that read tokens through Tailwind 4's
+`bg-(--newt-bg-floating)` form; Nuxt UI's
+[theme reference](https://ui.nuxt.com/docs/getting-started/theme/components)
+lists each component's slots and variants.
+
+<Callout type="warning">
+  A later `newtui add nuxt-ui-theme --overwrite` replaces the file. Keep changes
+  you want to survive it in `app.config.ts`, as above.
+</Callout>
+
+## Use it without Nuxt [#vue]
+
+Nuxt UI also runs in a plain Vite and Vue project, and so does the theme. The
+object goes to the Vite plugin instead of `app.config.ts`:
+
+```ts title="vite.config.ts"
+import ui from "@nuxt/ui/vite"
+import vue from "@vitejs/plugin-vue"
+import { defineConfig } from "vite"
+
+import { newtNuxtUi } from "./src/lib/nuxt-ui"
+
+export default defineConfig({
+  plugins: [vue(), ui({ ui: newtNuxtUi })],
+})
+```
+
+Without the colour mode module there is nothing to set `data-newt-theme`, so
+set it yourself beside the class: `<html class="light" data-newt-theme="light">`.
+
+## What it does not do [#limits]
+
+- It themes Nuxt UI; it does not replace it. A `UButton` and a newt/ui
+  `Button` end up looking alike, but they are still two components with two
+  APIs. Use Nuxt UI for what newt/ui does not have, not for both.
+- Components the file does not name are recoloured by the variables and keep
+  Nuxt UI's own shapes and spacing. The dashboard, page, chat and editor
+  families are in that group.
+- Nuxt UI's colour utilities with opacity, such as a subtle badge's tinted
+  background, are computed from the token and so follow it, but they were
+  tuned for Nuxt UI's palette. Check the few you rely on in both palettes.
+- It was written and checked against Nuxt UI 4.12. A later major may rename
+  slots, and an override for a slot that no longer exists is ignored without
+  an error.

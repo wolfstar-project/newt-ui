@@ -17,6 +17,7 @@ export const categories: DocsCategory[] = [
       "command-palette",
       "kbd-tag",
       "tabs",
+      "side-nav",
       "accordion",
       "breadcrumb",
       "stepper",
@@ -49,6 +50,7 @@ export const categories: DocsCategory[] = [
       "member-list",
       "role-tag",
       "voice-channel",
+      "user-panel",
       "server-banner",
       "stage-banner",
       "typing-indicator",
@@ -121,6 +123,7 @@ export const categories: DocsCategory[] = [
       "calendar",
       "permission",
       "timeline",
+      "audit-log",
       "bot-command-card",
     ],
   },
@@ -145,6 +148,13 @@ export const categories: DocsCategory[] = [
   {
     slug: "blocks",
     label: "Blocks",
-    components: ["chat-window", "server-sidebar", "command-panel"],
+    components: [
+      "chat-window",
+      "server-sidebar",
+      "channel-sidebar",
+      "command-panel",
+      "settings-layout",
+      "onboarding",
+    ],
   },
 ]

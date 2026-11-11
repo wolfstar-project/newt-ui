@@ -486,6 +486,27 @@
       "rootClass": "newt-calendar",
       "files": ["calendar.css", "calendar.html"],
       "js": "calendar.js"
+    },
+    {
+      "name": "user-panel",
+      "title": "User Panel",
+      "rootClass": "newt-user-panel",
+      "files": ["user-panel.css", "user-panel.html"],
+      "js": "user-panel.js",
+      "uses": ["avatar", "status-indicator"]
+    },
+    {
+      "name": "side-nav",
+      "title": "Side Nav",
+      "rootClass": "newt-side-nav",
+      "files": ["side-nav.css", "side-nav.html"]
+    },
+    {
+      "name": "audit-log",
+      "title": "Audit Log",
+      "rootClass": "newt-audit-log",
+      "files": ["audit-log.css", "audit-log.html"],
+      "uses": ["avatar"]
     }
   ]
 }

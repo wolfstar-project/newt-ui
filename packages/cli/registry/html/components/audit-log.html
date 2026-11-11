@@ -1,0 +1,62 @@
+<ol class="newt-audit-log" aria-label="Audit log">
+  <li class="newt-audit-log__entry">
+    <details class="newt-audit-log__details" open>
+      <summary class="newt-audit-log__summary">
+        <span class="newt-audit-log__kind newt-audit-log__kind--update">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <circle
+              cx="8"
+              cy="8"
+              r="4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            />
+          </svg>
+          <span class="newt-audit-log__kind-label">Updated</span>
+        </span>
+        <div class="newt-avatar newt-avatar--sm">A</div>
+        <span class="newt-audit-log__text">
+          <strong>ada</strong> updated the role <strong>Moderator</strong>
+        </span>
+        <time class="newt-audit-log__time" datetime="2026-11-10T14:23"
+          >Today at 14:23</time
+        >
+        <svg
+          class="newt-audit-log__chevron"
+          viewBox="0 0 16 16"
+          aria-hidden="true"
+        >
+          <path
+            fill="currentColor"
+            d="M5.3 3.3a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-1.4-1.4L8.6 8 5.3 4.7a1 1 0 0 1 0-1.4Z"
+          />
+        </svg>
+      </summary>
+      <ol class="newt-audit-log__changes">
+        <li>Granted <strong>Manage messages</strong></li>
+        <li>Changed the colour to <strong>#1abc9c</strong></li>
+      </ol>
+    </details>
+  </li>
+  <li class="newt-audit-log__entry">
+    <div class="newt-audit-log__summary">
+      <span class="newt-audit-log__kind newt-audit-log__kind--delete">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M3 7h10a1 1 0 1 1 0 2H3a1 1 0 0 1 0-2Z"
+          />
+        </svg>
+        <span class="newt-audit-log__kind-label">Removed</span>
+      </span>
+      <div class="newt-avatar newt-avatar--sm">K</div>
+      <span class="newt-audit-log__text">
+        <strong>kai</strong> deleted the channel <strong>#old-news</strong>
+      </span>
+      <time class="newt-audit-log__time" datetime="2026-11-09T09:02"
+        >Yesterday at 09:02</time
+      >
+    </div>
+  </li>
+</ol>

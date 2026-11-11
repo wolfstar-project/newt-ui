@@ -8,7 +8,7 @@ import { z } from "zod"
 
 import type { RegistryItem } from "../schema/index.js"
 import { rawConfigSchema, type Framework } from "../utils/get-config.js"
-import { add } from "./add.js"
+import { add, importHint } from "./add.js"
 
 function button(framework: Framework): RegistryItem {
   const root = framework === "vue" ? "~~" : "@"
@@ -80,7 +80,13 @@ describe("add installation pipeline", () => {
     publish(button(framework))
   }
 
-  function run(options: { overwrite?: boolean; path?: string } = {}) {
+  function run(
+    options: {
+      overwrite?: boolean
+      path?: string
+      components?: string[]
+    } = {}
+  ) {
     return add({
       cwd,
       registry,
@@ -131,6 +137,34 @@ describe("add installation pipeline", () => {
     expect(await readFile(target, "utf8")).toBe(
       'import { Icon } from "@/components/ui/icon"'
     )
+  })
+
+  it("writes a lib item to the lib directory and appends its stylesheet", async () => {
+    await configure("vue")
+    publish({
+      name: "nuxt-ui-theme",
+      type: "registry:lib",
+      files: [
+        {
+          path: "lib/nuxt-ui.ts",
+          type: "registry:lib",
+          content: "export const newtNuxtUi = {}",
+        },
+      ],
+      css: {
+        ":root, .light, .dark": { "--ui-primary": "var(--newt-brand)" },
+      },
+    })
+    await run({ components: ["nuxt-ui-theme"] })
+    expect(await readFile(path.join(cwd, "lib/nuxt-ui.ts"), "utf8")).toBe(
+      "export const newtNuxtUi = {}"
+    )
+    const css = await readFile(path.join(cwd, "styles.css"), "utf8")
+    expect(css).toContain(":root, .light, .dark {")
+    expect(css).toContain("--ui-primary: var(--newt-brand);")
+    /* A second run must not append the same rules again. */
+    await run({ components: ["nuxt-ui-theme"], overwrite: true })
+    expect(await readFile(path.join(cwd, "styles.css"), "utf8")).toBe(css)
   })
 
   it("honors an explicit registry target ahead of --path", async () => {
@@ -201,5 +235,48 @@ describe("add installation pipeline", () => {
     expect(
       await readFile(path.join(cwd, "components/ui/button.tsx"), "utf8")
     ).toBe('import { Icon } from "@/components/ui/icon"')
+  })
+})
+
+describe("importHint", () => {
+  const aliases = rawConfigSchema.parse({
+    framework: "vue",
+    tailwind: { css: "styles.css" },
+    aliases: {
+      components: "@/components",
+      utils: "@/lib/utils",
+      lib: "~/lib",
+    },
+  }).aliases
+
+  it("points a component at the ui alias and a block at components", () => {
+    expect(
+      importHint({ name: "button", type: "registry:ui", files: ["a"] }, aliases)
+    ).toBe('import { ... } from "@/components/ui/button"')
+    expect(
+      importHint(
+        { name: "chat-window", type: "registry:block", files: ["a"] },
+        aliases
+      )
+    ).toBe('import { ... } from "@/components/chat-window"')
+  })
+
+  it("names a lib item after its file, under the lib alias", () => {
+    expect(
+      importHint(
+        {
+          name: "nuxt-ui-theme",
+          type: "registry:lib",
+          files: [{ path: "lib/nuxt-ui.ts", type: "registry:lib" }],
+        },
+        aliases
+      )
+    ).toBe('import { ... } from "~/lib/nuxt-ui"')
+  })
+
+  it("says nothing for an item with no files", () => {
+    expect(
+      importHint({ name: "theme-newt", type: "registry:theme" }, aliases)
+    ).toBeUndefined()
   })
 })

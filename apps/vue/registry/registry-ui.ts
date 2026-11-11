@@ -182,6 +182,32 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "audit-log",
+    type: "registry:ui",
+    title: "Audit Log",
+    description:
+      "A list of who changed what and when, with entries that open to show each change.",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "ui/audit-log/AuditLog.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/audit-log/AuditLogEntry.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/audit-log/AuditLogChange.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/audit-log/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "avatar",
     type: "registry:ui",
     title: "Avatar",
@@ -476,6 +502,28 @@ export const ui: Registry = [
       {
         path: "ui/channel-info/index.ts",
         type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-sidebar",
+    type: "registry:block",
+    title: "Channel sidebar",
+    description:
+      "The column a server is navigated from: its name, its channels as a tree and the user panel at the foot.",
+    registryDependencies: ["tree", "user-panel", "status-indicator", "avatar"],
+    files: [
+      {
+        path: "blocks/channel-sidebar/ChannelSidebar.vue",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/channel-sidebar/types.ts",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/channel-sidebar/index.ts",
+        type: "registry:block",
       },
     ],
   },
@@ -1434,6 +1482,28 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "onboarding",
+    type: "registry:block",
+    title: "Onboarding",
+    description:
+      "A short setup flow: a stepper, the current step's content and the buttons that move through it.",
+    registryDependencies: ["stepper", "button"],
+    files: [
+      {
+        path: "blocks/onboarding/Onboarding.vue",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/onboarding/types.ts",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/onboarding/index.ts",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
     name: "pagination",
     type: "registry:ui",
     title: "Pagination",
@@ -1830,6 +1900,53 @@ export const ui: Registry = [
       {
         path: "blocks/server-sidebar/index.ts",
         type: "registry:block",
+      },
+    ],
+  },
+  {
+    name: "settings-layout",
+    type: "registry:block",
+    title: "Settings layout",
+    description:
+      "A settings screen: grouped sections down the side and the chosen section's breadcrumb, heading and content beside them.",
+    registryDependencies: ["side-nav", "breadcrumb"],
+    files: [
+      {
+        path: "blocks/settings-layout/SettingsLayout.vue",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/settings-layout/types.ts",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/settings-layout/index.ts",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
+    name: "side-nav",
+    type: "registry:ui",
+    title: "Side Nav",
+    description:
+      "A vertical list of grouped links for the sections of a settings screen.",
+    files: [
+      {
+        path: "ui/side-nav/SideNav.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/side-nav/SideNavGroup.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/side-nav/SideNavItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/side-nav/index.ts",
+        type: "registry:ui",
       },
     ],
   },
@@ -2355,6 +2472,35 @@ export const ui: Registry = [
       },
       {
         path: "ui/typing-indicator/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "user-panel",
+    type: "registry:ui",
+    title: "User Panel",
+    description:
+      "The strip at the foot of a sidebar: the signed-in user and their mute, deafen and settings controls.",
+    files: [
+      {
+        path: "ui/user-panel/UserPanel.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/user-panel/UserPanelInfo.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/user-panel/UserPanelActions.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/user-panel/UserPanelButton.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/user-panel/index.ts",
         type: "registry:ui",
       },
     ],
