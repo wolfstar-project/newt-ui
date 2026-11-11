@@ -530,7 +530,7 @@ const EntitySelect = React.forwardRef<HTMLDivElement, EntitySelectProps>(
                           )}
 
                           {option.badge === undefined ? null : (
-                            <span className="shrink-0 rounded-sm bg-newt-brand px-1 py-0.5 text-[10px] font-bold uppercase leading-none text-white">
+                            <span className="shrink-0 rounded-sm bg-newt-brand px-1 py-0.5 text-[10px] font-bold uppercase leading-none text-newt-on-accent">
                               {option.badge}
                             </span>
                           )}

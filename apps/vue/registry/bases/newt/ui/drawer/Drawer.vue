@@ -66,7 +66,7 @@ provide(drawerKey, { close, titleId })
     :data-side="props.side"
     :class="
       cn(
-        'fixed m-0 max-h-none flex-col border-newt-border bg-newt-bg-elevated p-0 text-newt-text-primary shadow-elevation-high backdrop:bg-black/60 open:flex',
+        'fixed m-0 max-h-none flex-col border-newt-border bg-newt-bg-elevated p-0 text-newt-text-primary shadow-elevation-high backdrop:bg-newt-overlay open:flex',
         SIDE[props.side],
         props.class
       )

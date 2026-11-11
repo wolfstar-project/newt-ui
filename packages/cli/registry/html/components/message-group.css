@@ -6,7 +6,7 @@
   padding: 4px 0;
 }
 .newt-message-group:hover {
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--newt-bg-message-hover);
 }
 
 /*
@@ -68,7 +68,7 @@
   font-size: 10px;
   font-weight: 600;
   background: var(--newt-brand);
-  color: #fff;
+  color: var(--newt-on-accent);
   padding: 1px 4px;
   border-radius: 3px;
   text-transform: uppercase;

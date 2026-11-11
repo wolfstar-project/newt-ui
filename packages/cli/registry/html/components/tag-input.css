@@ -55,7 +55,7 @@
 }
 .newt-tag-input__remove:hover {
   background: var(--newt-danger);
-  color: #fff;
+  color: var(--newt-on-accent);
 }
 .newt-tag-input__remove:focus-visible {
   outline: 2px solid var(--newt-text-link);

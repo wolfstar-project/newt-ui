@@ -7,16 +7,24 @@ const props = defineProps<{
   class?: HTMLAttributes["class"]
   /** Add the check Discord puts on verified applications. */
   verified?: boolean
+  /**
+   * Accessible name. Defaults to "Application", or "Verified application"
+   * with `verified`; pass a translation here.
+   */
+  ariaLabel?: string
 }>()
 </script>
 
 <template>
   <span
     role="img"
-    :aria-label="props.verified ? 'Verified application' : 'Application'"
+    :aria-label="
+      props.ariaLabel ??
+      (props.verified ? 'Verified application' : 'Application')
+    "
     :class="
       cn(
-        'inline-flex items-center gap-0.5 rounded-[3px] bg-newt-brand px-1 py-px text-[10px] font-semibold uppercase tracking-[0.02em] text-white',
+        'inline-flex items-center gap-0.5 rounded-[3px] bg-newt-brand px-1 py-px text-[10px] font-semibold uppercase tracking-[0.02em] text-newt-on-accent',
         props.class
       )
     "

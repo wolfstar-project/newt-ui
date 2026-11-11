@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ButtonHTMLAttributes, HTMLAttributes } from "vue"
+import type { ButtonHTMLAttributes, Component, HTMLAttributes } from "vue"
 import { computed } from "vue"
 
 import { cn } from "@/lib/utils"
@@ -8,6 +8,14 @@ import { type ButtonVariants, buttonVariants } from "."
 
 const props = withDefaults(
   defineProps<{
+    /**
+     * The element or component to render. Defaults to `button`, or to `a`
+     * when `href` is set; pass `NuxtLink` or `RouterLink` to keep client
+     * navigation.
+     */
+    as?: string | Component
+    /** Render a link to this URL. */
+    href?: string
     variant?: ButtonVariants["variant"]
     size?: ButtonVariants["size"]
     type?: ButtonHTMLAttributes["type"]
@@ -31,12 +39,23 @@ const props = withDefaults(
 )
 
 const showLaunch = computed(() => props.launchIcon ?? props.variant === "link")
+const tag = computed(
+  () => props.as ?? (props.href === undefined ? "button" : "a")
+)
+/*
+ * A link has no `disabled`: it loses its `href` instead, which takes it out of
+ * the tab order, and says so with `aria-disabled`.
+ */
+const isButton = computed(() => tag.value === "button")
 </script>
 
 <template>
-  <button
-    :type="props.type"
-    :disabled="props.disabled"
+  <component
+    :is="tag"
+    :type="isButton ? props.type : undefined"
+    :href="props.disabled ? undefined : props.href"
+    :disabled="isButton ? props.disabled : undefined"
+    :aria-disabled="!isButton && props.disabled ? true : undefined"
     :class="
       cn(
         buttonVariants({ variant: props.variant, size: props.size }),
@@ -66,5 +85,5 @@ const showLaunch = computed(() => props.launchIcon ?? props.variant === "link")
         d="M10 5a1 1 0 0 0 0 2h6.59L4.3 19.3a1 1 0 1 0 1.4 1.4L18 8.42V15a1 1 0 1 0 2 0V6a1 1 0 0 0-1-1h-9Z"
       />
     </svg>
-  </button>
+  </component>
 </template>

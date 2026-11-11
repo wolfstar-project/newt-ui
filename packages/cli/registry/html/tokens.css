@@ -21,6 +21,7 @@
   --newt-bg-input-elevated: #383a40;
   --newt-bg-hover: rgba(78, 80, 88, 0.4);
   --newt-bg-active: rgba(78, 80, 88, 0.6);
+  --newt-bg-message-hover: rgba(2, 2, 2, 0.06);
   --newt-border: #3f4147;
 
   /* Text */
@@ -45,6 +46,8 @@
   /* Accents */
   --newt-mention-text: #b3baff;
   --newt-mention-role: #f3b95f;
+  --newt-on-accent: #ffffff;
+  --newt-overlay: rgba(0, 0, 0, 0.6);
 
   /* Type */
   --newt-font-sans:
@@ -98,6 +101,7 @@
   --newt-bg-input-elevated: #ffffff;
   --newt-bg-hover: rgba(6, 6, 7, 0.08);
   --newt-bg-active: rgba(6, 6, 7, 0.12);
+  --newt-bg-message-hover: rgba(6, 6, 7, 0.03);
   --newt-border: #d3d5d9;
 
   /* Text */

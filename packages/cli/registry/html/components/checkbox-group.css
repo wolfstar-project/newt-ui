@@ -47,7 +47,7 @@
 .newt-checkgroup__check {
   inline-size: 14px;
   block-size: 14px;
-  color: #fff;
+  color: var(--newt-on-accent);
   transform: scale(0);
   transition: transform var(--newt-duration-fast) var(--newt-ease);
 }

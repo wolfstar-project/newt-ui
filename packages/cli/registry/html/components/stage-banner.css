@@ -5,7 +5,7 @@
   align-items: center;
   gap: 12px;
   background: var(--newt-brand);
-  color: #fff;
+  color: var(--newt-on-accent);
   padding: 10px 16px;
   font-size: 13px;
   font-weight: 500;
@@ -14,13 +14,13 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--newt-on-accent);
   flex-shrink: 0;
 }
 .newt-stage-banner__action {
   margin-inline-start: auto;
   background: rgba(0, 0, 0, 0.2);
-  color: #fff;
+  color: var(--newt-on-accent);
   border: none;
   border-radius: var(--newt-radius-sm);
   padding: 4px 10px;
@@ -42,5 +42,5 @@
   flex-shrink: 0;
 }
 .newt-stage-banner__close:hover {
-  color: #fff;
+  color: var(--newt-on-accent);
 }

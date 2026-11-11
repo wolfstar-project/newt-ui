@@ -58,7 +58,7 @@ provide(MODAL_CONTEXT_KEY, { close, titleId })
   <div
     v-if="open"
     data-state="open"
-    class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60"
+    class="fixed inset-0 z-[100] flex items-center justify-center bg-newt-overlay"
     @click="onOverlayClick"
   >
     <div

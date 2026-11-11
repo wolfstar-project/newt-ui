@@ -24,7 +24,7 @@ export const toastVariants = cva(
 )
 
 export const toastIconVariants = cva(
-  "flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs text-white",
+  "flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs text-newt-on-accent",
   {
     variants: {
       variant: {

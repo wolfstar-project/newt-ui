@@ -4,16 +4,16 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap border-0 font-sans font-medium leading-4 transition-[background-color,color,box-shadow] duration-fast ease-newt active:translate-y-[0.5px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50",
+  "inline-flex cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap border-0 font-sans font-medium leading-4 transition-[background-color,color,box-shadow] duration-fast ease-newt active:translate-y-[0.5px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50 no-underline",
   {
     variants: {
       variant: {
         primary:
-          "bg-newt-brand text-white hover:bg-newt-brand-hover active:bg-newt-brand-active",
+          "bg-newt-brand text-newt-on-accent hover:bg-newt-brand-hover active:bg-newt-brand-active",
         secondary:
           "bg-newt-bg-elevated text-newt-text-primary hover:bg-newt-bg-hover",
-        danger: "bg-newt-danger text-white hover:bg-newt-danger-hover",
-        success: "bg-newt-online text-white hover:brightness-90",
+        danger: "bg-newt-danger text-newt-on-accent hover:bg-newt-danger-hover",
+        success: "bg-newt-online text-newt-on-accent hover:brightness-90",
         link: "bg-transparent text-newt-text-link hover:underline",
       },
       size: {
@@ -54,6 +54,17 @@ export interface ButtonProps
   extends
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
+  /**
+   * The element or component to render. Defaults to `button`, or to `a` when
+   * `href` is set; pass a router link component to keep client navigation.
+   */
+  as?: React.ElementType
+  /** Render a link to this URL. */
+  href?: string
+  /** Link target, with `href`. */
+  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"]
+  /** Link relationship, with `href`. */
+  rel?: string
   /** Emoji image URL, rendered before the label. */
   emoji?: string
   /** Accessible name for `emoji`; empty (the default) hides it from readers. */
@@ -62,13 +73,16 @@ export interface ButtonProps
   launchIcon?: boolean
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<HTMLElement, ButtonProps>(
   (
     {
+      as,
       className,
       variant,
       size,
       type = "button",
+      href,
+      disabled,
       emoji,
       emojiAlt = "",
       launchIcon,
@@ -77,11 +91,20 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
+    const Tag: React.ElementType = as ?? (href === undefined ? "button" : "a")
+    const isButton = Tag === "button"
     const showLaunch = launchIcon ?? variant === "link"
     return (
-      <button
+      <Tag
         ref={ref}
-        type={type}
+        type={isButton ? type : undefined}
+        /*
+         * A link has no `disabled`: it loses its `href` instead, which takes
+         * it out of the tab order, and says so with `aria-disabled`.
+         */
+        href={disabled ? undefined : href}
+        disabled={isButton ? disabled : undefined}
+        aria-disabled={!isButton && disabled ? true : undefined}
         className={cn(buttonVariants({ variant, size }), className)}
         {...props}
       >
@@ -96,7 +119,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : null}
         <span className="truncate">{children}</span>
         {showLaunch ? <LaunchIcon /> : null}
-      </button>
+      </Tag>
     )
   }
 )

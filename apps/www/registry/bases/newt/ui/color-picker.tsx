@@ -104,7 +104,7 @@ const ColorPicker = React.forwardRef<HTMLDivElement, ColorPickerProps>(
         {allowCustom ? (
           <label
             data-active={isCustom || undefined}
-            className="relative flex min-h-[54px] w-[66px] cursor-pointer items-start justify-end rounded-sm border border-newt-border bg-newt-bg-input p-1 text-white focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-newt-text-link data-[active]:border-newt-text-primary data-[active]:ring-1 data-[active]:ring-newt-text-primary"
+            className="relative flex min-h-[54px] w-[66px] cursor-pointer items-start justify-end rounded-sm border border-newt-border bg-newt-bg-input p-1 text-newt-on-accent focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-newt-text-link data-[active]:border-newt-text-primary data-[active]:ring-1 data-[active]:ring-newt-text-primary"
             style={isCustom ? { backgroundColor: current } : undefined}
           >
             <input
@@ -144,7 +144,7 @@ const ColorPicker = React.forwardRef<HTMLDivElement, ColorPickerProps>(
               />
               <span
                 aria-hidden="true"
-                className="flex h-6 w-6 items-center justify-center rounded-sm text-white transition-transform duration-fast ease-newt group-hover:scale-110 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-newt-text-link"
+                className="flex h-6 w-6 items-center justify-center rounded-sm text-newt-on-accent transition-transform duration-fast ease-newt group-hover:scale-110 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-newt-text-link"
                 style={{ backgroundColor: swatch.value }}
               >
                 <svg

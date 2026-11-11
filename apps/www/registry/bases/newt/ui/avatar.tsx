@@ -4,7 +4,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const avatarVariants = cva(
-  "relative flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-newt-brand font-semibold text-white",
+  "relative flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-newt-brand font-semibold text-newt-on-accent",
   {
     variants: {
       size: {

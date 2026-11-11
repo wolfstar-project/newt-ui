@@ -30,7 +30,7 @@
 
 .newt-btn--primary {
   background: var(--newt-brand);
-  color: #fff;
+  color: var(--newt-on-accent);
 }
 .newt-btn--primary:hover {
   background: var(--newt-brand-hover);
@@ -49,7 +49,7 @@
 
 .newt-btn--danger {
   background: var(--newt-danger);
-  color: #fff;
+  color: var(--newt-on-accent);
 }
 .newt-btn--danger:hover {
   background: var(--newt-danger-hover);
@@ -57,7 +57,7 @@
 
 .newt-btn--success {
   background: var(--newt-online);
-  color: #fff;
+  color: var(--newt-on-accent);
 }
 .newt-btn--success:hover {
   filter: brightness(0.9);

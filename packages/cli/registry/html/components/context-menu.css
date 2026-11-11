@@ -23,14 +23,14 @@
 }
 .newt-context-menu__item:hover {
   background: var(--newt-brand);
-  color: #fff;
+  color: var(--newt-on-accent);
 }
 .newt-context-menu__item--danger {
   color: var(--newt-dnd);
 }
 .newt-context-menu__item--danger:hover {
   background: var(--newt-dnd);
-  color: #fff;
+  color: var(--newt-on-accent);
 }
 .newt-context-menu__shortcut {
   font-size: 11px;

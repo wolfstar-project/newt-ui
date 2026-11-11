@@ -62,7 +62,7 @@
 .newt-stepper__step--complete .newt-stepper__marker {
   border-color: var(--newt-brand);
   background: var(--newt-brand);
-  color: #fff;
+  color: var(--newt-on-accent);
 }
 .newt-stepper__text {
   display: flex;

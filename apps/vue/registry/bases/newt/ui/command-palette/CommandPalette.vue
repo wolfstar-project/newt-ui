@@ -159,7 +159,7 @@ onMounted(() => {
     :aria-label="props.label"
     :class="
       cn(
-        'fixed top-[15vh] mx-auto my-0 max-h-[70vh] w-[560px] max-w-[92vw] flex-col overflow-hidden rounded-lg border border-newt-border bg-newt-bg-elevated p-0 text-newt-text-primary shadow-elevation-high backdrop:bg-black/60 open:flex',
+        'fixed top-[15vh] mx-auto my-0 max-h-[70vh] w-[560px] max-w-[92vw] flex-col overflow-hidden rounded-lg border border-newt-border bg-newt-bg-elevated p-0 text-newt-text-primary shadow-elevation-high backdrop:bg-newt-overlay open:flex',
         props.class
       )
     "

@@ -64,7 +64,7 @@
   width: 8px;
   height: 8px;
   border-radius: var(--newt-radius-full);
-  background: #fff;
+  background: var(--newt-on-accent);
   transform: translate(calc(var(--newt-dir) * -50%), -50%) scale(0);
 }
 

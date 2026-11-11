@@ -157,7 +157,7 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
           aria-hidden="true"
           className={cn(
             "absolute start-0.5 top-0.5 h-[18px] w-[18px] rounded-full bg-newt-text-muted transition-[transform,background-color] duration-base ease-newt",
-            on && "translate-x-[calc(var(--newt-dir)*1rem)] bg-white"
+            on && "translate-x-[calc(var(--newt-dir)*1rem)] bg-newt-on-accent"
           )}
         />
       </button>
@@ -210,7 +210,7 @@ const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
         disabled={disabled}
         onClick={toggle}
         className={cn(
-          "inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-newt-border bg-newt-bg-input text-white transition-colors duration-fast ease-newt focus-visible:border-newt-brand focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+          "inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-newt-border bg-newt-bg-input text-newt-on-accent transition-colors duration-fast ease-newt focus-visible:border-newt-brand focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
           on && "border-newt-brand bg-newt-brand",
           className
         )}

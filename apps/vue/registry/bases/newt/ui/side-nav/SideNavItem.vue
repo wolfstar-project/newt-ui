@@ -47,7 +47,7 @@ const itemClassName = computed(() =>
       <slot />
       <span
         v-if="props.badge !== undefined"
-        class="min-w-4 rounded-full bg-newt-danger px-[5px] text-center text-[11px] font-bold leading-4 text-white"
+        class="min-w-4 rounded-full bg-newt-danger px-[5px] text-center text-[11px] font-bold leading-4 text-newt-on-accent"
       >
         {{ props.badge }}
       </span>

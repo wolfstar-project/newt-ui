@@ -181,7 +181,7 @@
   font-weight: 700;
   line-height: 1;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--newt-on-accent);
   background: var(--newt-brand);
   border-radius: var(--newt-radius-sm);
 }
@@ -206,7 +206,7 @@
 .newt-entity-select__box svg {
   inline-size: 14px;
   block-size: 14px;
-  color: #fff;
+  color: var(--newt-on-accent);
   display: none;
 }
 .newt-entity-select__option[aria-selected="true"] .newt-entity-select__box svg {

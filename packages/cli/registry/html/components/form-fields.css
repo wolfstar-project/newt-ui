@@ -81,7 +81,7 @@
 }
 .newt-switch--on .newt-switch__thumb {
   transform: translateX(calc(var(--newt-dir) * 16px));
-  background: #fff;
+  background: var(--newt-on-accent);
 }
 
 /*

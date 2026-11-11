@@ -87,7 +87,7 @@ const Stepper = React.forwardRef<HTMLOListElement, StepperProps>(
                 className={cn(
                   "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 text-[13px] font-bold",
                   complete
-                    ? "border-newt-brand bg-newt-brand text-white"
+                    ? "border-newt-brand bg-newt-brand text-newt-on-accent"
                     : current
                       ? "border-newt-brand bg-newt-bg-surface text-newt-text-primary"
                       : "border-newt-bg-active bg-newt-bg-surface text-newt-text-muted"

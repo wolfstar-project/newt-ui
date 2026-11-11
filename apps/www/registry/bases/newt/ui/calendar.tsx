@@ -315,7 +315,7 @@ const Calendar = React.forwardRef<HTMLDivElement | null, CalendarProps>(
                         className={cn(
                           "flex h-[34px] w-[34px] items-center justify-center rounded-sm p-0 font-sans text-[13px] tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-35",
                           iso === selected
-                            ? "bg-newt-brand font-bold text-white"
+                            ? "bg-newt-brand font-bold text-newt-on-accent"
                             : "text-newt-text-secondary enabled:hover:bg-newt-bg-hover enabled:hover:text-newt-text-primary",
                           iso === today &&
                             iso !== selected &&

@@ -316,7 +316,7 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
                   "flex cursor-pointer items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm text-newt-text-secondary",
                   index === active &&
                     !option.disabled &&
-                    "bg-newt-brand text-white",
+                    "bg-newt-brand text-newt-on-accent",
                   option.value === selected && "text-newt-text-primary",
                   option.disabled &&
                     "cursor-not-allowed bg-transparent text-newt-text-muted opacity-50"
@@ -327,7 +327,9 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
                     aria-hidden="true"
                     className={cn(
                       "flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary",
-                      index === active && !option.disabled && "text-white"
+                      index === active &&
+                        !option.disabled &&
+                        "text-newt-on-accent"
                     )}
                   >
                     {option.icon}
@@ -339,7 +341,9 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
                     <span
                       className={cn(
                         "truncate text-xs text-newt-text-muted",
-                        index === active && !option.disabled && "text-white"
+                        index === active &&
+                          !option.disabled &&
+                          "text-newt-on-accent"
                       )}
                     >
                       {option.description}
@@ -360,8 +364,8 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
                       // On the highlighted row the disc would dissolve into the
                       // background, so it swaps with the tick.
                       index === active && !option.disabled
-                        ? "bg-white text-newt-brand"
-                        : "bg-newt-brand text-white"
+                        ? "bg-newt-on-accent text-newt-brand"
+                        : "bg-newt-brand text-newt-on-accent"
                     )}
                   >
                     <svg viewBox="0 0 24 24" className="h-3.5 w-3.5">

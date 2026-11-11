@@ -86,7 +86,7 @@
   padding: 0 5px;
   border-radius: var(--newt-radius-full);
   background: var(--newt-danger);
-  color: #fff;
+  color: var(--newt-on-accent);
   font-size: 11px;
   font-weight: 700;
   line-height: 16px;

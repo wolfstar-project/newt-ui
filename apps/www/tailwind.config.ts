@@ -20,6 +20,7 @@ export const newtPreset: Omit<Config, "content"> = {
           "bg-input-elevated": "var(--newt-bg-input-elevated)",
           "bg-hover": "var(--newt-bg-hover)",
           "bg-active": "var(--newt-bg-active)",
+          "bg-message-hover": "var(--newt-bg-message-hover)",
           border: "var(--newt-border)",
           "text-primary": "var(--newt-text-primary)",
           "text-secondary": "var(--newt-text-secondary)",
@@ -36,6 +37,8 @@ export const newtPreset: Omit<Config, "content"> = {
           "danger-hover": "var(--newt-danger-hover)",
           "mention-text": "var(--newt-mention-text)",
           "mention-role": "var(--newt-mention-role)",
+          "on-accent": "var(--newt-on-accent)",
+          overlay: "var(--newt-overlay)",
         },
       },
       fontFamily: {

@@ -8,7 +8,7 @@
   height: 16px;
   padding: 0 4px;
   background: var(--newt-dnd);
-  color: #fff;
+  color: var(--newt-on-accent);
   font-size: 11px;
   font-weight: 700;
   border-radius: var(--newt-radius-full);

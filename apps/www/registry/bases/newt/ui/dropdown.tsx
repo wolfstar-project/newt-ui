@@ -48,7 +48,7 @@ const DropdownIcon = React.forwardRef<
     ref={ref}
     aria-hidden="true"
     className={cn(
-      "w-5 shrink-0 text-center text-newt-text-muted group-hover:text-white group-data-[active]:text-white",
+      "w-5 shrink-0 text-center text-newt-text-muted group-hover:text-newt-on-accent group-data-[active]:text-newt-on-accent",
       className
     )}
     {...props}
@@ -79,7 +79,7 @@ const DropdownDescription = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "text-xs text-newt-text-muted group-hover:text-white/75 group-data-[active]:text-white/75",
+      "text-xs text-newt-text-muted group-hover:text-[color-mix(in_srgb,var(--newt-on-accent)_75%,transparent)] group-data-[active]:text-[color-mix(in_srgb,var(--newt-on-accent)_75%,transparent)]",
       className
     )}
     {...props}

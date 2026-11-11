@@ -5,7 +5,7 @@
   height: 40px;
   border-radius: 50%;
   background: var(--newt-brand);
-  color: #fff;
+  color: var(--newt-on-accent);
   display: flex;
   align-items: center;
   justify-content: center;

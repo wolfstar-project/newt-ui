@@ -55,7 +55,7 @@
   block-size: 24px;
   border: 1px solid var(--newt-border);
   border-radius: var(--newt-radius-sm);
-  background: #fff;
+  background: var(--newt-on-accent);
   box-shadow: var(--newt-shadow-elevation-low);
   pointer-events: none;
 }

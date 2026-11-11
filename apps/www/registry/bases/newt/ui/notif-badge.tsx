@@ -4,7 +4,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const notifBadgeVariants = cva(
-  "inline-flex items-center justify-center rounded-full border-2 border-newt-bg-base text-[11px] font-bold leading-none text-white",
+  "inline-flex items-center justify-center rounded-full border-2 border-newt-bg-base text-[11px] font-bold leading-none text-newt-on-accent",
   {
     variants: {
       variant: {
