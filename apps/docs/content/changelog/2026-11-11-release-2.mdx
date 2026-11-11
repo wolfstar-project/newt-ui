@@ -1,0 +1,45 @@
+---
+title: "November 2026 — newtui 2.5.0, @newtui/mcp 0.1.1, @newtui/nuxt 1.0.2"
+description: "fix(deps): update all non-major dependencies"
+type: changelog
+slug: changelog/2026-11-11-release-2
+date: 2026-11-11
+---
+
+## `newtui` 2.5.0
+
+- fix(deps): update all non-major dependencies
+
+- Components a message feed needs can now be read-only, translated and themed.
+
+  - `Mention` takes `as="span"` for a mention that opens nothing (not focusable, no hover), and `as="a"` or `href` for one that navigates.
+  - `Reaction` takes `readonly` to show a count without a toggle, `emojiSrc` for a server emoji image with `emojiAlt` for its name, and `formatLabel` to translate its accessible name.
+  - `MessageGroupBotTag` takes `aria-label` (React) / `ariaLabel` (Vue) to replace "Application".
+  - `Button` renders a link with `href`, or any element or router link with `as`. A disabled link drops its `href` and sets `aria-disabled`.
+  - `MessageGroup` takes `as`, so a post can be an `<article>` or an `<li>`.
+  - Fixed colours are tokens now: `--newt-on-accent` (text and marks on brand fills), `--newt-overlay` (the modal scrim) and `--newt-bg-message-hover` (a message row on hover) replace `text-white`, `bg-white`, `bg-black/60` and `bg-black/[0.06]`, so these parts follow a light theme and token overrides.
+
+- `newtui init` no longer restyles the app it is added to, and its light theme now applies.
+
+  - The stylesheet gets one complete light `:root`, and the dark values go under a selector you choose with `--dark-selector`: `class` (`.dark`, the default), `data-theme` (`[data-theme="dark"]`), `media` (the system preference) or any selector. The choice is saved as `tailwind.darkSelector` in `components.json`, and the printed Tailwind v3 preset sets `darkMode` to match. Before this, two `:root` blocks were written and the dark one won on every page.
+  - The `@theme` block maps only `newt` names. It no longer redefines `--radius-sm/md/lg/full`, `--font-sans` or `--font-mono`, so an existing app keeps its own radii and fonts. Components now use Tailwind's own `rounded-*` and `font-*` scale; the raw `--newt-radius-*` and `--newt-font-*` variables are still written.
+  - When `--css` names a new token file and another stylesheet already loads Tailwind, `init` leaves `@import "tailwindcss"` out and prints the line to import the token file from that entry.
+
+- New `markdown` item: renders a message written in chat markdown with the library's own parts.
+
+  ```tsx
+  <Markdown
+    content="**Deploy** done — ping <@1001> in <#2002> ||tomorrow|| at <t:1767225600:t>"
+    resolveMention={(kind, id) => names.get(`${kind}:${id}`)}
+  />
+  ```
+
+  It reads bold, italic, underline, strike, spoilers, inline and fenced code, `#`–`###` headings, `-#` subtext, lists, `>` and `>>>` quotes, links, and the `<@id>`, `<@&id>`, `<#id>`, `</command:id>`, `<:emoji:id>` and `<t:…>` tokens, and renders them as `Mention`, `InlineCode`, `CodeBlock`, `Spoiler`, `CustomEmoji` and `Timestamp`. The source is parsed into a tree, never injected as HTML, and only `http(s)` addresses become links. A masked link (`[text](url)`) shows its address in a dialog before it opens. Mention names and server emoji images come from the `resolveMention` and `resolveEmoji` callbacks; every label can be translated through `labels`. The parser is exported as `markdown-syntax` for code that wants the tree without rendering it.
+
+## `@newtui/mcp` 0.1.1
+
+- fix(deps): update all non-major dependencies
+
+## `@newtui/nuxt` 1.0.2
+
+- fix(deps): update all non-major dependencies

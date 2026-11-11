@@ -1,5 +1,11 @@
 # @newtui/mcp
 
+## 0.1.1
+
+### Patch Changes
+
+- [#29](https://github.com/wolfstar-project/newt-ui/pull/29) [`c509c7e`](https://github.com/wolfstar-project/newt-ui/commit/c509c7e6c5b2e8e2eff42947053e7e3096f62410) - fix(deps): update all non-major dependencies Thanks [@renovate](https://github.com/apps/renovate)!
+
 ## 0.1.0
 
 ### Minor Changes
