@@ -476,6 +476,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "markdown-demo",
+    type: "registry:example",
+    registryDependencies: ["markdown"],
+    files: [
+      {
+        path: "examples/markdown-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "media-gallery-demo",
     type: "registry:example",
     registryDependencies: ["media-gallery"],

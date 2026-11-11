@@ -500,6 +500,28 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "markdown",
+    {
+      name: "markdown",
+      type: "registry:ui",
+      registryDependencies: [
+        "button",
+        "code-block",
+        "custom-emoji",
+        "inline-code",
+        "mention",
+        "modal",
+        "spoiler",
+        "timestamp",
+      ],
+      files: [
+        "registry/bases/newt/ui/markdown.tsx",
+        "registry/bases/newt/ui/markdown-syntax.ts",
+      ],
+      component: React.lazy(() => import("@/registry/bases/newt/ui/markdown")),
+    },
+  ],
+  [
     "media-gallery",
     {
       name: "media-gallery",
@@ -1604,6 +1626,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/kbd-tag-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/kbd-tag-demo")
+      ),
+    },
+  ],
+  [
+    "markdown-demo",
+    {
+      name: "markdown-demo",
+      type: "registry:example",
+      registryDependencies: ["markdown"],
+      files: ["registry/bases/newt/examples/markdown-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/markdown-demo")
       ),
     },
   ],

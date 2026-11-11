@@ -660,6 +660,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "markdown",
+    {
+      name: "markdown",
+      type: "registry:ui",
+      registryDependencies: [
+        "button",
+        "code-block",
+        "custom-emoji",
+        "inline-code",
+        "mention",
+        "modal",
+        "spoiler",
+        "timestamp",
+      ],
+      files: [
+        "registry/bases/newt/ui/markdown/Markdown.vue",
+        "registry/bases/newt/ui/markdown/MarkdownBlocks.vue",
+        "registry/bases/newt/ui/markdown/MarkdownInline.vue",
+        "registry/bases/newt/ui/markdown/markdown-syntax.ts",
+        "registry/bases/newt/ui/markdown/index.ts",
+      ],
+    },
+  ],
+  [
     "media-gallery",
     {
       name: "media-gallery",
@@ -1933,6 +1957,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/KbdTagDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/KbdTagDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MarkdownDemo",
+    {
+      name: "MarkdownDemo",
+      type: "registry:example",
+      registryDependencies: ["markdown"],
+      files: ["registry/bases/newt/examples/MarkdownDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/MarkdownDemo.vue")
       ),
     },
   ],

@@ -1,0 +1,120 @@
+---
+title: "Markdown"
+description: "Renders a message written in chat markdown — formatting, mentions, timestamps, spoilers, code blocks — with the library's own parts."
+---
+
+`Markdown` takes a message as a string and renders it the way a Discord-inspired
+chat client does: `**bold**`, `*italic*`, `__underline__`, `~~strike~~`,
+`||spoilers||`, inline and fenced code, `#`/`##`/`###` headings, `-#` subtext,
+lists, `>` and `>>>` quotes, links, and the angle-bracket tokens — `<@id>`,
+`<@&id>`, `<#id>`, `</command:id>`, `<:emoji:id>` and `<t:1700000000:R>`.
+
+Each piece renders through a part you already have: mentions are `Mention`,
+code is `InlineCode` and `CodeBlock`, spoilers are `Spoiler`, timestamps are
+`Timestamp`, server emoji are `CustomEmoji`. A general Markdown library would
+give you HTML; this gives you the same components as the rest of the feed.
+
+The source is parsed into a tree and rendered as components. It is never
+injected as HTML, and only `http` and `https` addresses become links.
+
+<ComponentPreview name="markdown" />
+
+## Installation
+
+<Installation name="markdown" />
+
+## Usage
+
+<Usage name="markdown" />
+
+Mentions, roles and channels arrive as ids. Pass `resolveMention` to turn an
+id into a name (and a role colour, or a user avatar); an id it does not know
+renders as `unknown-user`, `unknown-role` or `unknown-channel`. A token that
+carries a name instead of an id, such as `<@username>`, renders as written.
+
+Server emoji render as their `:name:` text until you pass `resolveEmoji`,
+which returns the image URL for an emoji's id. newt/ui never fetches an image
+on its own. A message made only of emoji renders them large.
+
+The parser is exported too, from `markdown-syntax.ts`, for code that needs the
+tree without rendering it — a search index, a plain-text preview:
+
+```ts
+import { parseMarkdown } from "@/components/ui/markdown-syntax"
+
+parseMarkdown("**hi** <@1001>")
+// [{ type: "paragraph", children: [{ type: "strong", … }, …] }]
+```
+
+## API reference
+
+<PropsTable
+  of="Markdown"
+  rows={[
+    {
+      name: "content",
+      type: "string",
+      description: "The message source, in chat markdown.",
+    },
+    {
+      name: "resolveMention",
+      type: "(kind, id) => MarkdownMentionTarget | undefined",
+      description:
+        "`kind` is user, role or channel; returns `{ name, color?, avatar? }`: name, role colour and avatar for a mention id. Unknown numeric ids show the unknown label; names show as written.",
+    },
+    {
+      name: "resolveEmoji",
+      type: "(emoji) => string | undefined",
+      description:
+        "`emoji` is `{ id, name, animated }`. Returns the image URL for a server emoji. Without it the emoji shows as :name: text.",
+    },
+    {
+      name: "onMentionClick / @mention-click",
+      type: "(mention: { kind; id }) => void",
+      description:
+        "Makes mentions buttons. In Vue, also set `interactiveMentions`. Without it they are read-only text, out of the tab order.",
+    },
+    {
+      name: "headingOffset",
+      type: "number",
+      default: "2",
+      description:
+        "Added to a heading's level to pick its element, so # renders an <h3> and a message never outranks the page.",
+    },
+    {
+      name: "locale",
+      type: "string",
+      description: "Locale for timestamps. Defaults to the reader's.",
+    },
+    {
+      name: "linkWarning",
+      type: "boolean",
+      default: "true",
+      description:
+        "Ask before opening a masked link ([text](url)), whose text hides its address.",
+    },
+    {
+      name: "labels",
+      type: "Partial<MarkdownLabels>",
+      description:
+        "Translations for the words the renderer writes itself: the unknown-mention labels and the link warning.",
+    },
+  ]}
+/>
+
+The registry exports `Markdown`, `defaultMarkdownLabels` and, from
+`markdown-syntax`, `parseMarkdown`, `parseInline` and `isEmojiOnly`.
+
+## Accessibility
+
+Headings start two levels down by default, so a `#` inside a message is an
+`<h3>` under the page's own headings; change `headingOffset` to fit your
+outline. Read-only mentions are text rather than buttons, so a feed of
+messages does not add a tab stop per mention. A masked link opens a dialog
+that shows the full address before leaving the page, and the dialog closes on
+Escape. Translate every label through `labels` when the page is not in
+English.
+
+## Tokens
+
+<TokensNote name="markdown" />

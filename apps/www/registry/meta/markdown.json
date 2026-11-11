@@ -1,0 +1,25 @@
+{
+  "name": "markdown",
+  "title": "Markdown",
+  "description": "Renders a message written in chat markdown — formatting, mentions, timestamps, spoilers, code blocks — with the library's own parts.",
+  "registryDependencies": [
+    "button",
+    "code-block",
+    "custom-emoji",
+    "inline-code",
+    "mention",
+    "modal",
+    "spoiler",
+    "timestamp"
+  ],
+  "reactFiles": ["ui/markdown.tsx", "ui/markdown-syntax.ts"],
+  "vueFiles": [
+    "Markdown.vue",
+    "MarkdownBlocks.vue",
+    "MarkdownInline.vue",
+    "markdown-syntax.ts",
+    "index.ts"
+  ],
+  "reactDemo": "markdown-demo",
+  "vueDemo": "MarkdownDemo"
+}
