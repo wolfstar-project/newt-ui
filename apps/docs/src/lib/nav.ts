@@ -62,6 +62,21 @@ export const GUIDES: readonly NavGroup[] = [
       })
     ),
   },
+  /*
+   * Its own group rather than a line under Installation: it is not a way to
+   * install newt/ui, it is what joins it to another library.
+   */
+  {
+    label: "Nuxt UI",
+    items: [
+      { href: "/docs/nuxt-ui", label: "Theme", labelDiffers: true },
+      {
+        href: "/docs/nuxt-ui/customizing",
+        label: "Customising",
+        labelDiffers: true,
+      },
+    ],
+  },
   {
     label: "Design",
     items: [

@@ -1,0 +1,67 @@
+---
+title: "Drawer"
+description: "A modal panel that slides against an edge of the screen, built on the native dialog element."
+---
+
+Use it to show or edit the details of something while keeping the page it came from in view: a member's profile from the member list, a filter panel, a settings form. When the content is short and needs a decision, use a [Modal](/docs/components/modal).
+
+It is a native `<dialog>` opened with `showModal()`. The browser holds focus inside it, makes the page behind it inert and closes it on `Escape`, so the component ships no focus-trap code.
+
+<ComponentPreview name="drawer" />
+
+## Installation
+
+<Installation name="drawer" />
+
+## Usage
+
+<Usage name="drawer" />
+
+## API reference
+
+<PropsTable
+  of="Drawer"
+  rows={[
+    {
+      name: "open / v-model:open",
+      type: "boolean",
+      description: "Whether the drawer is shown.",
+      default: "false",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description:
+        "React only. Called with `false` on Escape, a press of the backdrop or a close control; Vue emits `update:open`.",
+    },
+    {
+      name: "side",
+      type: '"end" | "start" | "bottom"',
+      description:
+        "The edge it sits against. `end` is the right in left-to-right text and the left in right-to-left.",
+      default: '"end"',
+    },
+  ]}
+/>
+
+<PropsTable
+  of="DrawerHeader"
+  rows={[
+    {
+      name: "closeLabel",
+      type: "string",
+      description: "Accessible name of the close button in the header.",
+      default: '"Close"',
+    },
+  ]}
+/>
+
+`DrawerBody` scrolls when the content is taller than the screen, while the header and `DrawerFooter` stay in place. `DrawerClose` is a plain button that closes the drawer; like the popover's trigger it takes the classes of the button it should be.
+
+## Accessibility
+
+The dialog is named by the text of `DrawerHeader`, so always render one. Opening moves focus to the first focusable control inside, and closing returns it to the control that opened the drawer. `Escape` closes it, as does a press on the dimmed page behind. Use `side="bottom"` on a phone, where a side panel would cover the whole screen anyway.
+
+## Tokens
+
+<TokensNote name="drawer" />

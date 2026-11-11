@@ -1,0 +1,94 @@
+/* newt-ui · Tree */
+
+/*
+ * A nested list drawn flat: every row is a sibling, and `aria-level` says how
+ * deep it sits. That is a tree to a screen reader all the same, and it makes
+ * "the next row down" the next element, which is what the arrow keys need.
+ * A row with children is a branch; closing it hides the rows beneath it.
+ */
+.newt-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  inline-size: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.newt-tree__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-block-size: 32px;
+  padding-block: 4px;
+  padding-inline: calc(8px + (var(--newt-tree-level, 1) - 1) * 16px) 8px;
+  border-radius: var(--newt-radius-sm);
+  color: var(--newt-text-muted);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+.newt-tree__item[hidden] {
+  display: none;
+}
+.newt-tree__item[aria-level="2"] {
+  --newt-tree-level: 2;
+}
+.newt-tree__item[aria-level="3"] {
+  --newt-tree-level: 3;
+}
+.newt-tree__item[aria-level="4"] {
+  --newt-tree-level: 4;
+}
+.newt-tree__item:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-secondary);
+}
+.newt-tree__item[aria-selected="true"] {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+}
+.newt-tree__item:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: -2px;
+}
+.newt-tree__item--branch {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.newt-tree__chevron {
+  inline-size: 12px;
+  block-size: 12px;
+  flex-shrink: 0;
+  transform: scaleX(var(--newt-dir));
+}
+.newt-tree__item[aria-expanded="true"] .newt-tree__chevron {
+  transform: rotate(90deg);
+}
+.newt-tree__prefix {
+  inline-size: 20px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.newt-tree__label {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.newt-tree__badge {
+  min-inline-size: 16px;
+  padding: 0 5px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-danger);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}

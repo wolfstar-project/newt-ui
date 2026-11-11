@@ -1,0 +1,66 @@
+---
+title: "Accordion"
+description: "Sections that open and close under their headings, one at a time or independently."
+---
+
+Use it for content a reader wants one piece of at a time: a short FAQ, the groups of a settings page, the optional details of a form. If every section should be read, plain headings serve better than making the reader open each one.
+
+Every section is a native `<details>` element. The browser keeps one open at a time, opens a closed section when find-in-page matches inside it, and needs no script for any of it.
+
+<ComponentPreview name="accordion" />
+
+## Installation
+
+<Installation name="accordion" />
+
+## Usage
+
+<Usage name="accordion" />
+
+## API reference
+
+<PropsTable
+  of="Accordion"
+  rows={[
+    {
+      name: "type",
+      type: '"single" | "multiple"',
+      description:
+        "`single` closes the open section when another opens. `multiple` lets them open independently.",
+      default: '"single"',
+    },
+  ]}
+/>
+
+<PropsTable
+  of="AccordionItem"
+  rows={[
+    {
+      name: "title",
+      type: "React.ReactNode / string",
+      description:
+        "The always-visible line that opens the section. In Vue a `title` slot overrides the prop.",
+    },
+    {
+      name: "defaultOpen",
+      type: "boolean",
+      description: "Start open. From there the reader owns the state.",
+      default: "false",
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "The content of the section.",
+    },
+  ]}
+/>
+
+Both parts take the native attributes of the element they render: a `<div>` for the group and a `<details>` for each section, so a `toggle` listener on an item reports it opening and closing.
+
+## Accessibility
+
+Each title is a `<summary>`, which browsers expose as a button with an expanded state; `Enter` and `Space` toggle it and `Tab` moves between titles. Write a title that makes sense alone, because a screen reader user moves through the titles before opening any. The chevron is decoration, turns a quarter when the section is open, and is mirrored in right-to-left text.
+
+## Tokens
+
+<TokensNote name="accordion" />

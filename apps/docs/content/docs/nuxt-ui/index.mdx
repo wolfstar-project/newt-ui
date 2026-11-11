@@ -1,0 +1,121 @@
+---
+title: "Nuxt UI theme"
+description: "Make Nuxt UI's own components follow the newt/ui tokens, so UButton and a newt/ui Button sit side by side in one look."
+---
+
+[Nuxt UI](https://ui.nuxt.com) has the general-purpose components: tables,
+forms, calendars, overlays. newt/ui has the chat-shaped ones: messages, embeds,
+member lists. A project that uses both should not look like two libraries, and
+this theme is what joins them. It restyles Nuxt UI's components from the
+`--newt-*` tokens, so they follow the same colours, radius and font as every
+newt/ui component, in both palettes.
+
+It is one registry item, `nuxt-ui-theme`. Like everything else here it is
+copied into your project and is yours to edit: there is no package to depend
+on and no module option to learn.
+
+![Nuxt UI components in their default dark theme](/nuxt-ui/before-dark.png)
+
+![The same components with the newt/ui theme applied](/nuxt-ui/after-dark.png)
+
+The first image is Nuxt UI as it installs. The second is the same page after
+the three steps below, with nothing changed in the page itself.
+
+## Install [#install]
+
+It needs a Nuxt project with [Nuxt UI](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
+4 or later and newt/ui [initialised](/docs/installation/nuxt), which is what
+puts the `--newt-*` tokens in your stylesheet.
+
+<Steps>
+
+<Step title="Add the theme">
+
+<PmTabs cmd="newtui@latest add nuxt-ui-theme" />
+
+It writes `app/lib/nuxt-ui.ts`, and appends a block of `--ui-*` variables to
+the stylesheet named in `components.json`.
+
+</Step>
+
+<Step title="Hand it to Nuxt UI">
+
+```ts title="app/app.config.ts"
+import { newtNuxtUi } from "~/lib/nuxt-ui"
+
+export default defineAppConfig({
+  ui: newtNuxtUi,
+})
+```
+
+</Step>
+
+<Step title="Let the two share a colour mode">
+
+Nuxt UI switches palette with a `light` or `dark` class; newt/ui reads a
+`data-newt-theme` attribute. One line makes the colour mode set both, so the
+toggle you already have moves both libraries:
+
+```ts title="nuxt.config.ts"
+export default defineNuxtConfig({
+  colorMode: { dataValue: "newt-theme" },
+})
+```
+
+</Step>
+
+</Steps>
+
+<Callout type="info">
+  The stylesheet must import Nuxt UI before the appended block: `@import
+  "tailwindcss";` then `@import "@nuxt/ui";`. `add` appends to the end of the
+  file, so an existing Nuxt UI setup is already in the right order.
+</Callout>
+
+## What it changes [#changes]
+
+The theme has two layers, and most of the work is done by the first.
+
+**The variables.** Nuxt UI draws its colours, its levels of text and surface,
+its borders and its radius from `--ui-*` custom properties. The appended block
+points each of them at the token that plays the same part:
+
+| Nuxt UI                              | newt/ui                                        |
+| ------------------------------------ | ---------------------------------------------- |
+| `--ui-primary`                       | `--newt-brand`                                 |
+| `--ui-success`, `--ui-warning`       | `--newt-online`, `--newt-idle`                 |
+| `--ui-error`                         | `--newt-danger`                                |
+| `--ui-info`, `--ui-secondary`        | `--newt-text-link`                             |
+| `--ui-bg`, `-muted`, `-elevated`     | `--newt-bg-base`, `-surface`, `-elevated`      |
+| `--ui-text-highlighted`, `--ui-text` | `--newt-text-primary`, `--newt-text-secondary` |
+| `--ui-text-muted`, `-dimmed`         | `--newt-text-muted`                            |
+| `--ui-border`                        | `--newt-border`                                |
+| `--ui-radius`                        | from `--newt-radius-sm`                        |
+| `--font-sans`, `--font-mono`         | `--newt-font-sans`, `--newt-font-mono`         |
+
+That alone recolours every Nuxt UI component, including the ones this page
+never mentions.
+
+**The component overrides.** `newtNuxtUi` then adjusts the components whose
+newt/ui counterpart differs in more than colour:
+
+| Component                           | What changes                                                                         |
+| ----------------------------------- | ------------------------------------------------------------------------------------ |
+| `UButton`                           | Brand hover and active shades; the neutral button is a raised surface, not inverted. |
+| `UInput`, `UTextarea`, `USelect`    | The input surface, a hairline border and the 4px control radius.                     |
+| `USelectMenu`, `USelect` options    | The highlighted row is the brand colour with white text.                             |
+| `UDropdownMenu`, `UContextMenu`     | A floating panel; rows light up in the brand colour.                                 |
+| `UPopover`, `UTooltip`, `UToast`    | The floating surface and the high elevation shadow; the tooltip is always dark.      |
+| `UModal`, `USlideover`              | A raised panel over a black scrim, with a darker footer strip.                       |
+| `USwitch`                           | Green when on.                                                                       |
+| `UCard`, `UAlert`, `UBadge`, `UKbd` | Surface and radius.                                                                  |
+
+Because every value in both layers is a token, overriding `--newt-brand`, or
+applying a [preset](/docs/create), restyles Nuxt UI along with newt/ui.
+
+## Light palette [#light]
+
+![The newt/ui theme on Nuxt UI components in the light palette](/nuxt-ui/after-light.png)
+
+The light palette comes from the tokens too. With the colour mode set up as in
+step three, Nuxt UI's `UColorModeButton` switches both libraries at once.

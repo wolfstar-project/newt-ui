@@ -1,0 +1,8 @@
+{
+  "name": "number-input",
+  "title": "Number Input",
+  "description": "A number field with decrement and increment buttons that respect min, max and step.",
+  "vueFiles": ["NumberInput.vue", "index.ts"],
+  "reactDemo": "number-input-demo",
+  "vueDemo": "NumberInputDemo"
+}

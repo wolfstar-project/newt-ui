@@ -1,0 +1,114 @@
+/* newt-ui · Calendar */
+
+/*
+ * One month as a grid of days. The days are real buttons inside a table with
+ * `role="grid"`, so a screen reader announces the weekday column as it moves,
+ * and only one day at a time is a tab stop: the arrow keys do the rest.
+ * Today is marked by an outline and the chosen day by a fill, so the two can
+ * be told apart without relying on hue.
+ */
+.newt-calendar {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-primary);
+}
+.newt-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.newt-calendar__title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.newt-calendar__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 28px;
+  block-size: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  color: var(--newt-text-muted);
+  cursor: pointer;
+}
+.newt-calendar__nav svg {
+  inline-size: 14px;
+  block-size: 14px;
+  transform: scaleX(var(--newt-dir));
+}
+.newt-calendar__nav--previous svg {
+  transform: scaleX(calc(var(--newt-dir) * -1));
+}
+.newt-calendar__nav:hover:not(:disabled) {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+.newt-calendar__nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.newt-calendar__grid {
+  border-collapse: collapse;
+}
+.newt-calendar__grid th {
+  inline-size: 36px;
+  block-size: 28px;
+  padding: 0;
+  color: var(--newt-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+}
+.newt-calendar__cell {
+  padding: 1px;
+}
+.newt-calendar__day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 34px;
+  block-size: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  color: var(--newt-text-secondary);
+  font-family: var(--newt-font-sans);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.newt-calendar__day:hover:not(:disabled) {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+.newt-calendar__day[aria-current="date"] {
+  box-shadow: inset 0 0 0 1px var(--newt-text-muted);
+  color: var(--newt-text-primary);
+}
+.newt-calendar__cell[aria-selected="true"] .newt-calendar__day {
+  background: var(--newt-brand);
+  box-shadow: none;
+  color: #fff;
+  font-weight: 700;
+}
+.newt-calendar__day:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.newt-calendar__day:focus-visible,
+.newt-calendar__nav:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 1px;
+}

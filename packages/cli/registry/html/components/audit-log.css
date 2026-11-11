@@ -1,0 +1,113 @@
+/* newt-ui · Audit Log */
+
+/*
+ * A record of who changed what, newest first, as an ordered list. An entry
+ * with details is a native `<details>`, so it opens with Enter or Space and
+ * needs no script; one without is a plain row. The kind of change is drawn
+ * as a shape (plus, ring, minus) and named for screen readers, because three
+ * colours alone would not tell them apart.
+ */
+.newt-audit-log {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  inline-size: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.newt-audit-log__entry {
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-surface);
+  overflow: hidden;
+}
+.newt-audit-log__summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  color: var(--newt-text-secondary);
+  font-size: 14px;
+  line-height: 20px;
+  list-style: none;
+}
+.newt-audit-log__summary::-webkit-details-marker {
+  display: none;
+}
+summary.newt-audit-log__summary {
+  cursor: pointer;
+}
+summary.newt-audit-log__summary:hover {
+  background: var(--newt-bg-hover);
+}
+summary.newt-audit-log__summary:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: -2px;
+}
+.newt-audit-log__kind {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.newt-audit-log__kind svg {
+  inline-size: 16px;
+  block-size: 16px;
+}
+.newt-audit-log__kind--create {
+  color: var(--newt-online);
+}
+.newt-audit-log__kind--update {
+  color: var(--newt-idle);
+}
+.newt-audit-log__kind--delete {
+  color: var(--newt-danger);
+}
+.newt-audit-log__kind-label {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.newt-audit-log__text {
+  flex: 1;
+  min-inline-size: 0;
+}
+.newt-audit-log__text strong,
+.newt-audit-log__changes strong {
+  color: var(--newt-text-primary);
+  font-weight: 600;
+}
+.newt-audit-log__time {
+  flex-shrink: 0;
+  color: var(--newt-text-muted);
+  font-size: 12px;
+}
+.newt-audit-log__chevron {
+  inline-size: 14px;
+  block-size: 14px;
+  flex-shrink: 0;
+  color: var(--newt-text-muted);
+  transform: scaleX(var(--newt-dir));
+}
+.newt-audit-log__details[open] .newt-audit-log__chevron {
+  transform: rotate(90deg);
+}
+.newt-audit-log__changes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding-block: 4px 12px;
+  padding-inline: 48px 12px;
+  color: var(--newt-text-secondary);
+  font-size: 13px;
+  line-height: 18px;
+  list-style: decimal-leading-zero inside;
+}
+.newt-audit-log__changes li::marker {
+  color: var(--newt-text-muted);
+  font-family: var(--newt-font-mono);
+  font-size: 12px;
+}

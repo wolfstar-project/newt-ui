@@ -1,0 +1,72 @@
+---
+title: "Tag Input"
+description: "A text field that keeps what was typed as removable chips."
+---
+
+Use it for a short, free-form list: tags on a server listing, blocked words, allowed domains. `Enter` or a comma turns the text into a chip, `Backspace` in an empty field takes the last chip back, and a pasted list is split on commas and new lines. A duplicate is dropped.
+
+When the choices come from a known set, use a [Select Menu](/docs/components/select-menu) or an [Entity Select](/docs/components/entity-select) instead.
+
+<ComponentPreview name="tag-input" />
+
+## Installation
+
+<Installation name="tag-input" />
+
+## Usage
+
+<Usage name="tag-input" />
+
+## API reference
+
+<PropsTable
+  of="TagInput"
+  rows={[
+    {
+      name: "value / v-model",
+      type: "string[]",
+      description:
+        "The list of tags. In React, leave it undefined and pass `defaultValue` to let the component own it.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string[]) => void",
+      description:
+        "React only. Called when a tag is added or removed; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "max",
+      type: "number",
+      description: "Stops accepting tags once the list is this long.",
+    },
+    {
+      name: "invalid",
+      type: "boolean",
+      description:
+        "Turns the border to the danger colour and sets `aria-invalid` on the input.",
+      default: "false",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Stops the field and the remove buttons taking input.",
+      default: "false",
+    },
+    {
+      name: "removeLabel",
+      type: "(tag: string) => string",
+      description: "Accessible name of a tag's remove button.",
+      default: "(tag) => `Remove ${tag}`",
+    },
+  ]}
+/>
+
+Every other attribute is passed to the text input, so `placeholder`, `id` and `aria-describedby` go where a label expects them. Inside a `Field` marked `invalid`, the border follows the field without the prop.
+
+## Accessibility
+
+The text input is the field a label points at; give it an `id` and a `<label>`, or an `aria-label`. Each chip's remove button is a real button with its own name, reached with `Tab` before the input. Tell the reader how to commit a tag in the helper text, because nothing on screen says that `Enter` does it.
+
+## Tokens
+
+<TokensNote name="tag-input" />
