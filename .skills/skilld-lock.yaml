@@ -1,225 +1,331 @@
-skills:
-  frontend-design:
-    repo: anthropics/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/frontend-design
-    ref: main
-  skill-creator:
-    repo: anthropics/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/skill-creator
-    ref: main
-  webapp-testing:
-    repo: anthropics/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/webapp-testing
-    ref: main
-  accessibility:
-    repo: addyosmani/web-quality-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/accessibility
-    ref: main
-  best-practices:
-    repo: addyosmani/web-quality-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/best-practices
-    ref: main
-  core-web-vitals:
-    repo: addyosmani/web-quality-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/core-web-vitals
-    ref: main
-  performance:
-    repo: addyosmani/web-quality-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/performance
-    ref: main
-  seo:
-    repo: addyosmani/web-quality-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/seo
-    ref: main
-  web-quality-audit:
-    repo: addyosmani/web-quality-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/web-quality-audit
-    ref: main
-  nuxt:
-    repo: onmax/nuxt-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/nuxt
-    ref: main
-  nuxt-content:
-    repo: onmax/nuxt-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/nuxt-content
-    ref: main
-  nuxt-modules:
-    repo: onmax/nuxt-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/nuxt-modules
-    ref: main
-  nuxt-seo:
-    repo: onmax/nuxt-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/nuxt-seo
-    ref: main
-  vue:
-    repo: antfu/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/vue
-    ref: main
-  vue-best-practices:
-    repo: vuejs-ai/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/vue-best-practices
-    ref: main
-  vue-testing-best-practices:
-    repo: vuejs-ai/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/vue-testing-best-practices
-    ref: main
-  baseline-ui:
-    repo: ibelick/ui-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/baseline-ui
-    ref: main
-  fixing-motion-performance:
-    repo: ibelick/ui-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/fixing-motion-performance
-    ref: main
-  animation-vocabulary:
-    repo: emilkowalski/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/animation-vocabulary
-    ref: main
-  emil-design-eng:
-    repo: emilkowalski/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/emil-design-eng
-    ref: main
-  find-animation-opportunities:
-    repo: emilkowalski/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/find-animation-opportunities
-    ref: main
-  improve-animations:
-    repo: emilkowalski/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/improve-animations
-    ref: main
-  review-animations:
-    repo: emilkowalski/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/review-animations
-    ref: main
-  web-design-guidelines:
-    repo: vercel-labs/agent-skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/web-design-guidelines
-    ref: main
-  systematic-debugging:
-    repo: obra/superpowers
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/systematic-debugging
-    ref: main
-  writing-plans:
-    repo: obra/superpowers
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/writing-plans
-    ref: main
-  improve-codebase-architecture:
-    repo: mattpocock/skills
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/engineering/improve-codebase-architecture
-    ref: main
-  git-commit:
-    repo: github/awesome-copilot
-    source: github
-    syncedAt: 2026-08-21
-    generator: external
-    path: skills/git-commit
-    ref: main
-  vercel-composition-patterns:
-    repo: vercel-labs/agent-skills
-    source: github
-    syncedAt: 2026-09-08
-    generator: external
-    path: skills/composition-patterns
-    ref: main
-  vercel-react-best-practices:
-    repo: vercel-labs/agent-skills
-    source: github
-    syncedAt: 2026-09-08
-    generator: external
-    path: skills/react-best-practices
-    ref: main
-  mcp-builder:
-    repo: anthropics/skills
-    source: github
-    syncedAt: 2026-10-15
-    generator: external
-    path: skills/mcp-builder
-    ref: main
-  turborepo:
-    repo: vercel/turborepo
-    source: github
-    syncedAt: 2026-10-15
-    generator: external
-    path: skills/turborepo
-    ref: main
+{
+  "version": 1,
+  "transactionId": "1794392751536130672-12",
+  "skills": {
+    "accessibility": {
+      "source": {
+        "type": "remote",
+        "source": "addyosmani/web-quality-skills/accessibility#commit:c6b06ad1285cd6b129b58455b2eec96ab6b67fa7",
+        "commit_sha": "c6b06ad1285cd6b129b58455b2eec96ab6b67fa7",
+        "skill_path": "skills/accessibility"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:09acf90959508b2acaa7d1572ebb9ca92175e78b342cbf1cfc8939473c041430",
+        "content_sha256": "09acf90959508b2acaa7d1572ebb9ca92175e78b342cbf1cfc8939473c041430",
+        "installed_sha256": "be6cf267e1c40c05311428d2e0d6e631cf812234e72d7922e72d711346064579",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "emil-design-eng": {
+      "source": {
+        "type": "remote",
+        "source": "emilkowalski/skills/emil-design-eng#commit:f1090bec277140d02ed202440185ad9d02ac1490",
+        "commit_sha": "f1090bec277140d02ed202440185ad9d02ac1490",
+        "skill_path": "skills/emil-design-eng"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:c93bb38ec4c3204e6b3097c2763ef236a1f9b7a4be36631c6af9f4509fe91bb7",
+        "content_sha256": "c93bb38ec4c3204e6b3097c2763ef236a1f9b7a4be36631c6af9f4509fe91bb7",
+        "installed_sha256": "85d9c559f760c8a28fa47979c78c667511c0e03f7e14ac1cbbb02486dc50186d",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "frontend-design": {
+      "source": {
+        "type": "remote",
+        "source": "anthropics/skills/frontend-design#commit:41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f",
+        "commit_sha": "41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f",
+        "skill_path": "skills/frontend-design"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:55c58f2b008cad4e38db2463eccbb8cff503a0f657fb86ff4b86e619a8eb8f7b",
+        "content_sha256": "55c58f2b008cad4e38db2463eccbb8cff503a0f657fb86ff4b86e619a8eb8f7b",
+        "installed_sha256": "fd14eb2fcb59fde11d9e75501995f1a08f21beaedf0ec407c4d44a954dd0eef3",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "nuxt": {
+      "source": {
+        "type": "remote",
+        "source": "onmax/nuxt-skills/nuxt#commit:2e74504f3151b18bf81e8a62cb7f1fa9edb532a4",
+        "commit_sha": "2e74504f3151b18bf81e8a62cb7f1fa9edb532a4",
+        "skill_path": "skills/nuxt"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:1a6b9c985ea2e766c9c335979c157397e62662b5456ace29db5c848f2e46fab7",
+        "content_sha256": "1a6b9c985ea2e766c9c335979c157397e62662b5456ace29db5c848f2e46fab7",
+        "installed_sha256": "c7ca2942943b03986907a6e5a41c539a010ff3f3900d622ef5c4da5c3ee5c4b6",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "nuxt-content": {
+      "source": {
+        "type": "remote",
+        "source": "onmax/nuxt-skills/nuxt-content#commit:932061ae39751aa5e6c70855b8af230e2df15357",
+        "commit_sha": "932061ae39751aa5e6c70855b8af230e2df15357",
+        "skill_path": "skills/nuxt-content"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:3513d072cd30ce1856536e0721ab4adad7bcaabb6835ae85bd0799f24e83649e",
+        "content_sha256": "3513d072cd30ce1856536e0721ab4adad7bcaabb6835ae85bd0799f24e83649e",
+        "installed_sha256": "953e6782f1809a9dbac843923083080437208d4e76206be07dfd15e7ab315f8f",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "nuxt-seo": {
+      "source": {
+        "type": "remote",
+        "source": "onmax/nuxt-skills/nuxt-seo#commit:504c965ca089b83cbe13c4c3f705c53adca537da",
+        "commit_sha": "504c965ca089b83cbe13c4c3f705c53adca537da",
+        "skill_path": "skills/nuxt-seo"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:7b986d61d5d932a302f4a59efe4b003de4d06404dfd04935bf46bb0b62fee804",
+        "content_sha256": "7b986d61d5d932a302f4a59efe4b003de4d06404dfd04935bf46bb0b62fee804",
+        "installed_sha256": "bd1d38e961de09cb363eb18163a9d713ef90f2a6d7cdf44845c9e6600f78b18a",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "review-animations": {
+      "source": {
+        "type": "remote",
+        "source": "emilkowalski/skills/review-animations#commit:f1090bec277140d02ed202440185ad9d02ac1490",
+        "commit_sha": "f1090bec277140d02ed202440185ad9d02ac1490",
+        "skill_path": "skills/review-animations"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:86235f1c0f13065feb56b745a78eabc2273995af73d4883378d05c5d56e44a19",
+        "content_sha256": "86235f1c0f13065feb56b745a78eabc2273995af73d4883378d05c5d56e44a19",
+        "installed_sha256": "91f3fd90a032d21c9bdec8fecf5742fd8f856ac2b07f51bb07d88c345f38225b",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "seo": {
+      "source": {
+        "type": "remote",
+        "source": "addyosmani/web-quality-skills/seo#commit:c6b06ad1285cd6b129b58455b2eec96ab6b67fa7",
+        "commit_sha": "c6b06ad1285cd6b129b58455b2eec96ab6b67fa7",
+        "skill_path": "skills/seo"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:2c0b14a93ffe025569fcb64ea12043b89a4d33eb20e0fd8df8106d3a41e68e03",
+        "content_sha256": "2c0b14a93ffe025569fcb64ea12043b89a4d33eb20e0fd8df8106d3a41e68e03",
+        "installed_sha256": "4d35ff8dc3da10c74d302675517f04335a16c9052d5aff6ffb34189e3e84c360",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "systematic-debugging": {
+      "source": {
+        "type": "remote",
+        "source": "obra/superpowers/systematic-debugging#commit:bb92a77741419a4ab5f06e711a283343f1ada0c3",
+        "commit_sha": "bb92a77741419a4ab5f06e711a283343f1ada0c3",
+        "skill_path": "skills/systematic-debugging"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:27a011b37267bdcf8350d5f3dc482169fb2ee5772e11bb4a06ae69d3ccbdfc23",
+        "content_sha256": "27a011b37267bdcf8350d5f3dc482169fb2ee5772e11bb4a06ae69d3ccbdfc23",
+        "installed_sha256": "a6a0f1051a12abbf06fa94f900d0e41278d257efe537fd4b9eeb4c6b385a20cf",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "vue": {
+      "source": {
+        "type": "remote",
+        "source": "antfu/skills/vue#commit:d02c48452d782231e4c32d7069cde731a4c7db42",
+        "commit_sha": "d02c48452d782231e4c32d7069cde731a4c7db42",
+        "skill_path": "skills/vue"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:b5eb7ca8af27cc292d33892fa692a5a43bf252a6c143d7ac982f423d007d97b2",
+        "content_sha256": "b5eb7ca8af27cc292d33892fa692a5a43bf252a6c143d7ac982f423d007d97b2",
+        "installed_sha256": "6b1c0efbe5620a4968ee9a7973f04bb880033c5e5bd9f01770921c5db349e674",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "vue-best-practices": {
+      "source": {
+        "type": "remote",
+        "source": "vuejs-ai/skills/vue-best-practices#commit:813b79c1344cb89f350a5019fc2f8329fa1b4223",
+        "commit_sha": "813b79c1344cb89f350a5019fc2f8329fa1b4223",
+        "skill_path": "skills/vue-best-practices"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:0ef225a34c7b934ad1068f39a8248d0712679b48291bbd852282c04496e89a0e",
+        "content_sha256": "0ef225a34c7b934ad1068f39a8248d0712679b48291bbd852282c04496e89a0e",
+        "installed_sha256": "b8eae75d30954d6a46f59019717289e5b399dacf233c7ee65e990421172cf9c3",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "web-design-guidelines": {
+      "source": {
+        "type": "remote",
+        "source": "vercel-labs/agent-skills/web-design-guidelines#commit:ba46938889d4e58635362fb8f618e1178ac3ec46",
+        "commit_sha": "ba46938889d4e58635362fb8f618e1178ac3ec46",
+        "skill_path": "skills/web-design-guidelines"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:4db4e0d105979ec7c778ad4dcbea1ed0f813c8e3193fb3350fce85bffd2cd7ac",
+        "content_sha256": "4db4e0d105979ec7c778ad4dcbea1ed0f813c8e3193fb3350fce85bffd2cd7ac",
+        "installed_sha256": "43dd4bccf0d365a2817fb47d7c71ff2297a71495d0ec302a33997adcc5201dba",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    },
+    "writing-plans": {
+      "source": {
+        "type": "remote",
+        "source": "obra/superpowers/writing-plans#commit:8ca22dba9a94f28898bbce59f2537ff4d87c747d",
+        "commit_sha": "8ca22dba9a94f28898bbce59f2537ff4d87c747d",
+        "skill_path": "skills/writing-plans"
+      },
+      "sourceStatus": {
+        "type": "verified",
+        "artifact_id": "sha256:5a3d06b07ed6ab7bcb37098b63adec2ffd54cdfdb9d7239aa70c3df6eb36277e",
+        "content_sha256": "5a3d06b07ed6ab7bcb37098b63adec2ffd54cdfdb9d7239aa70c3df6eb36277e",
+        "installed_sha256": "0122dae21aaed079cbfd4f307b75577016aaaa4da7d7dd2373fa13df3b67ed5e",
+        "attestation_key_id": "skilld-production-2026-08"
+      },
+      "targets": [
+        {
+          "agent": "claude-code",
+          "mode": "symlink"
+        },
+        {
+          "agent": "codex",
+          "mode": "symlink"
+        }
+      ]
+    }
+  }
+}

@@ -80,8 +80,8 @@ Frontmatter fields: `ogImage`, `sitemap`, `robots`, `schemaOrg`.
 
 ## Links
 
-- Documentation
-- GitHub
+- [Documentation](https://nuxtseo.com)
+- [GitHub](https://github.com/harlan-zw/nuxt-seo)
 
 ## Token Efficiency
 
