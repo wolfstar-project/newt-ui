@@ -1,0 +1,14 @@
+{
+  "name": "audit-log",
+  "title": "Audit Log",
+  "description": "A list of who changed what and when, with entries that open to show each change.",
+  "registryDependencies": ["avatar"],
+  "vueFiles": [
+    "AuditLog.vue",
+    "AuditLogEntry.vue",
+    "AuditLogChange.vue",
+    "index.ts"
+  ],
+  "reactDemo": "audit-log-demo",
+  "vueDemo": "AuditLogDemo"
+}

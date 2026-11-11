@@ -3,6 +3,27 @@ import type { Registry } from "./schema"
 
 export const ui: Registry = [
   {
+    name: "accordion",
+    type: "registry:ui",
+    title: "Accordion",
+    description:
+      "Sections that open and close under their headings, one at a time or independently.",
+    files: [
+      {
+        path: "ui/accordion/Accordion.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/accordion/AccordionItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/accordion/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "action-row",
     type: "registry:ui",
     title: "Action Row",
@@ -15,6 +36,36 @@ export const ui: Registry = [
       },
       {
         path: "ui/action-row/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "alert",
+    type: "registry:ui",
+    title: "Alert",
+    description:
+      "An inline notice with an icon and a coloured edge, in info, success, warning and danger kinds.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/alert/Alert.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/alert/AlertTitle.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/alert/AlertDescription.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/alert/AlertActions.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/alert/index.ts",
         type: "registry:ui",
       },
     ],
@@ -131,6 +182,32 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "audit-log",
+    type: "registry:ui",
+    title: "Audit Log",
+    description:
+      "A list of who changed what and when, with entries that open to show each change.",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "ui/audit-log/AuditLog.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/audit-log/AuditLogEntry.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/audit-log/AuditLogChange.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/audit-log/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "avatar",
     type: "registry:ui",
     title: "Avatar",
@@ -152,6 +229,24 @@ export const ui: Registry = [
       },
       {
         path: "ui/avatar/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "avatar-group",
+    type: "registry:ui",
+    title: "Avatar Group",
+    description:
+      "A row of overlapping avatars with a count for the members not shown.",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "ui/avatar-group/AvatarGroup.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/avatar-group/index.ts",
         type: "registry:ui",
       },
     ],
@@ -212,6 +307,27 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "breadcrumb",
+    type: "registry:ui",
+    title: "Breadcrumb",
+    description:
+      "The path from the top of a section to the current page, as a row of links.",
+    files: [
+      {
+        path: "ui/breadcrumb/Breadcrumb.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/breadcrumb/BreadcrumbItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/breadcrumb/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "button",
     type: "registry:ui",
     title: "Button",
@@ -225,6 +341,23 @@ export const ui: Registry = [
       },
       {
         path: "ui/button/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "calendar",
+    type: "registry:ui",
+    title: "Calendar",
+    description:
+      "A month grid for picking one day, with keyboard navigation and optional first and last selectable dates.",
+    files: [
+      {
+        path: "ui/calendar/Calendar.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/calendar/index.ts",
         type: "registry:ui",
       },
     ],
@@ -369,6 +502,28 @@ export const ui: Registry = [
       {
         path: "ui/channel-info/index.ts",
         type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "channel-sidebar",
+    type: "registry:block",
+    title: "Channel sidebar",
+    description:
+      "The column a server is navigated from: its name, its channels as a tree and the user panel at the foot.",
+    registryDependencies: ["tree", "user-panel", "status-indicator", "avatar"],
+    files: [
+      {
+        path: "blocks/channel-sidebar/ChannelSidebar.vue",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/channel-sidebar/types.ts",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/channel-sidebar/index.ts",
+        type: "registry:block",
       },
     ],
   },
@@ -558,6 +713,23 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "command-palette",
+    type: "registry:ui",
+    title: "Command Palette",
+    description:
+      "A searchable quick switcher of grouped destinations and actions, driven from the keyboard.",
+    files: [
+      {
+        path: "ui/command-palette/CommandPalette.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/command-palette/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "command-panel",
     type: "registry:block",
     title: "Command panel",
@@ -691,6 +863,39 @@ export const ui: Registry = [
       },
       {
         path: "ui/divider/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "drawer",
+    type: "registry:ui",
+    title: "Drawer",
+    description:
+      "A modal panel that slides against an edge of the screen, built on the native dialog element.",
+    files: [
+      {
+        path: "ui/drawer/Drawer.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerBody.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerFooter.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerClose.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/index.ts",
         type: "registry:ui",
       },
     ],
@@ -1277,6 +1482,28 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "onboarding",
+    type: "registry:block",
+    title: "Onboarding",
+    description:
+      "A short setup flow: a stepper, the current step's content and the buttons that move through it.",
+    registryDependencies: ["stepper", "button"],
+    files: [
+      {
+        path: "blocks/onboarding/Onboarding.vue",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/onboarding/types.ts",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/onboarding/index.ts",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
     name: "pagination",
     type: "registry:ui",
     title: "Pagination",
@@ -1386,6 +1613,31 @@ export const ui: Registry = [
       },
       {
         path: "ui/poll/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "popover",
+    type: "registry:ui",
+    title: "Popover",
+    description:
+      "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+    files: [
+      {
+        path: "ui/popover/Popover.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/popover/PopoverTrigger.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/popover/PopoverContent.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/popover/index.ts",
         type: "registry:ui",
       },
     ],
@@ -1652,6 +1904,53 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "settings-layout",
+    type: "registry:block",
+    title: "Settings layout",
+    description:
+      "A settings screen: grouped sections down the side and the chosen section's breadcrumb, heading and content beside them.",
+    registryDependencies: ["side-nav", "breadcrumb"],
+    files: [
+      {
+        path: "blocks/settings-layout/SettingsLayout.vue",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/settings-layout/types.ts",
+        type: "registry:block",
+      },
+      {
+        path: "blocks/settings-layout/index.ts",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
+    name: "side-nav",
+    type: "registry:ui",
+    title: "Side Nav",
+    description:
+      "A vertical list of grouped links for the sections of a settings screen.",
+    files: [
+      {
+        path: "ui/side-nav/SideNav.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/side-nav/SideNavGroup.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/side-nav/SideNavItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/side-nav/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "skeleton",
     type: "registry:ui",
     title: "Skeleton Loader",
@@ -1824,6 +2123,23 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "stepper",
+    type: "registry:ui",
+    title: "Stepper",
+    description:
+      "Progress through a fixed sequence of steps, horizontal or stacked.",
+    files: [
+      {
+        path: "ui/stepper/Stepper.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/stepper/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "system-message",
     type: "registry:ui",
     title: "System Message",
@@ -1845,6 +2161,47 @@ export const ui: Registry = [
       },
       {
         path: "ui/system-message/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "table",
+    type: "registry:ui",
+    title: "Table",
+    description:
+      "A bordered data table with sortable headings, selectable rows and a caption.",
+    files: [
+      {
+        path: "ui/table/Table.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableBody.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableRow.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableHead.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableCell.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/TableCaption.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/table/index.ts",
         type: "registry:ui",
       },
     ],
@@ -2059,6 +2416,23 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "tree",
+    type: "registry:ui",
+    title: "Tree",
+    description:
+      "A collapsible, keyboard-driven list of nested rows, such as categories and their channels.",
+    files: [
+      {
+        path: "ui/tree/Tree.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/tree/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "typeset",
     type: "registry:ui",
     title: "Typeset",
@@ -2098,6 +2472,35 @@ export const ui: Registry = [
       },
       {
         path: "ui/typing-indicator/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "user-panel",
+    type: "registry:ui",
+    title: "User Panel",
+    description:
+      "The strip at the foot of a sidebar: the signed-in user and their mute, deafen and settings controls.",
+    files: [
+      {
+        path: "ui/user-panel/UserPanel.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/user-panel/UserPanelInfo.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/user-panel/UserPanelActions.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/user-panel/UserPanelButton.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/user-panel/index.ts",
         type: "registry:ui",
       },
     ],

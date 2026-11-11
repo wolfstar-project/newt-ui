@@ -1,0 +1,98 @@
+---
+title: "Tree"
+description: "A collapsible, keyboard-driven list of nested rows, such as categories and their channels."
+---
+
+Use it for a hierarchy the reader navigates: categories and their channels, folders and files, a settings outline. A row with children is a branch that opens and closes; a row without is a leaf that can be selected.
+
+The tree is described by data and drawn flat, each row carrying its depth. That keeps the keyboard model simple, and it means the component works the same in React and Vue without recursive slots.
+
+<ComponentPreview name="tree" />
+
+## Installation
+
+<Installation name="tree" />
+
+## Usage
+
+<Usage name="tree" />
+
+## API reference
+
+<PropsTable
+  of="Tree"
+  rows={[
+    {
+      name: "items",
+      type: "TreeNode[]",
+      description:
+        "The top-level rows. A node's `children` are the rows under it.",
+    },
+    {
+      name: "value / v-model",
+      type: "string",
+      description:
+        "The id of the selected leaf. In React, leave it undefined and pass `defaultValue` to let the tree own it.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string) => void",
+      description:
+        "React only. Called with the id of the leaf that was selected; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "defaultExpanded",
+      type: "string[]",
+      description: "Ids of the branches that start open.",
+      default: "[]",
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "Accessible name of the tree.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="TreeNode"
+  rows={[
+    {
+      name: "id",
+      type: "string",
+      description: "Unique across the whole tree.",
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "The row's text.",
+    },
+    {
+      name: "prefix",
+      type: "string",
+      description: "A short sign before a leaf's label, such as `#`.",
+    },
+    {
+      name: "badge",
+      type: "number",
+      description:
+        "A count shown at the end of the row, such as unread messages.",
+    },
+    {
+      name: "children",
+      type: "TreeNode[]",
+      description:
+        "The rows under this one. Its presence makes the row a branch.",
+    },
+  ]}
+/>
+
+Which branches are open is the tree's own state after the first render. Selecting a branch is not possible: activating one toggles it.
+
+## Accessibility
+
+The list is a `role="tree"` and each row a `role="treeitem"` with its level, its position among its siblings and, for a branch, whether it is expanded. The whole tree is one tab stop. `Up` and `Down` move through the visible rows, `Right` opens a branch or steps into it, `Left` closes one or steps out to its parent, and `Home` and `End` jump to the ends. `Enter` or `Space` selects a leaf and toggles a branch. Give the tree a `label`. A badge is read as a bare number, so put what it counts in the row's label when that is not obvious.
+
+## Tokens
+
+<TokensNote name="tree" />

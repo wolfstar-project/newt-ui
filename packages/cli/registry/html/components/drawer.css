@@ -1,0 +1,103 @@
+/* newt-ui · Drawer */
+
+/*
+ * A panel that comes in from the edge and keeps the page behind it in view.
+ * It is a native `<dialog>`: opened with `showModal()` it sits in the top
+ * layer, holds focus inside itself, makes the page behind it inert and closes
+ * on Escape, all without a script. It sits at the inline end unless a
+ * modifier moves it.
+ */
+.newt-drawer {
+  position: fixed;
+  inset-block: 0;
+  inset-inline: auto 0;
+  flex-direction: column;
+  inline-size: 380px;
+  max-inline-size: 90vw;
+  block-size: 100%;
+  max-block-size: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-inline-start: 1px solid var(--newt-border);
+  background: var(--newt-bg-elevated);
+  box-shadow: var(--newt-shadow-elevation-high);
+  color: var(--newt-text-primary);
+}
+/* A closed dialog is `display: none` by the browser; only an open one lays out. */
+.newt-drawer[open] {
+  display: flex;
+}
+.newt-drawer::backdrop {
+  background: rgb(0 0 0 / 0.6);
+}
+.newt-drawer--start {
+  inset-inline: 0 auto;
+  border-inline-start: 0;
+  border-inline-end: 1px solid var(--newt-border);
+}
+.newt-drawer--bottom {
+  inset-block: auto 0;
+  inset-inline: 0;
+  inline-size: 100%;
+  max-inline-size: none;
+  block-size: auto;
+  max-block-size: 85vh;
+  border-inline-start: 0;
+  border-block-start: 1px solid var(--newt-border);
+}
+.newt-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-block-end: 1px solid var(--newt-border);
+}
+.newt-drawer__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.newt-drawer__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 28px;
+  block-size: 28px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  color: var(--newt-text-muted);
+  cursor: pointer;
+}
+.newt-drawer__close svg {
+  inline-size: 16px;
+  block-size: 16px;
+}
+.newt-drawer__close:hover {
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+.newt-drawer__close:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+.newt-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  color: var(--newt-text-secondary);
+  font-size: 14px;
+  line-height: 20px;
+}
+.newt-drawer__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px;
+  background: var(--newt-bg-surface);
+}

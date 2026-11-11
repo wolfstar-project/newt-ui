@@ -1,0 +1,98 @@
+/* newt-ui · Table */
+
+/*
+ * A real `<table>`, so rows, columns and headers are announced as what they
+ * are. The wrapper is what scrolls sideways on a narrow screen, which keeps
+ * the table itself from pushing the page wide.
+ */
+.newt-table-wrap {
+  inline-size: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-surface);
+}
+.newt-table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  color: var(--newt-text-secondary);
+  font-size: 14px;
+  line-height: 20px;
+}
+.newt-table__caption {
+  padding: 10px 16px;
+  color: var(--newt-text-muted);
+  font-size: 12px;
+  text-align: start;
+  caption-side: bottom;
+  border-block-start: 1px solid var(--newt-border);
+}
+.newt-table th,
+.newt-table td {
+  padding: 10px 16px;
+  text-align: start;
+  white-space: nowrap;
+}
+.newt-table th {
+  border-block-end: 1px solid var(--newt-border);
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.newt-table tbody tr + tr td {
+  border-block-start: 1px solid var(--newt-border);
+}
+.newt-table tbody tr:hover {
+  background: var(--newt-bg-hover);
+}
+.newt-table tbody tr[aria-selected="true"] {
+  background: var(--newt-bg-active);
+  color: var(--newt-text-primary);
+}
+.newt-table .newt-table__cell--end {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A sortable heading is a button that fills its cell and keeps the label's look. */
+.newt-table__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: -4px -6px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+.newt-table__sort:hover {
+  color: var(--newt-text-primary);
+}
+.newt-table__sort:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 1px;
+}
+.newt-table__sort svg {
+  inline-size: 12px;
+  block-size: 12px;
+  opacity: 0;
+}
+th[aria-sort="ascending"] .newt-table__sort,
+th[aria-sort="descending"] .newt-table__sort {
+  color: var(--newt-text-primary);
+}
+th[aria-sort="ascending"] .newt-table__sort svg,
+th[aria-sort="descending"] .newt-table__sort svg {
+  opacity: 1;
+}
+th[aria-sort="descending"] .newt-table__sort svg {
+  transform: rotate(180deg);
+}

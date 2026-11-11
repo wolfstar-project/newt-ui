@@ -4,6 +4,19 @@
   "homepage": "https://newtui.dev",
   "items": [
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Sections that open and close under their headings, one at a time or independently.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "action-row",
       "type": "registry:ui",
       "title": "Action Row",
@@ -12,6 +25,20 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/action-row.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "An inline notice with an icon and a coloured edge, in info, success, warning and danger kinds.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/alert.tsx",
           "type": "registry:ui"
         }
       ],
@@ -45,6 +72,20 @@
       "framework": "react"
     },
     {
+      "name": "audit-log",
+      "type": "registry:ui",
+      "title": "Audit Log",
+      "description": "A list of who changed what and when, with entries that open to show each change.",
+      "registryDependencies": ["avatar"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/audit-log.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
@@ -53,6 +94,20 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "avatar-group",
+      "type": "registry:ui",
+      "title": "Avatar Group",
+      "description": "A row of overlapping avatars with a count for the members not shown.",
+      "registryDependencies": ["avatar"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/avatar-group.tsx",
           "type": "registry:ui"
         }
       ],
@@ -87,6 +142,19 @@
       "framework": "react"
     },
     {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "The path from the top of a section to the current page, as a row of links.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
@@ -95,6 +163,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "A month grid for picking one day, with keyboard navigation and optional first and last selectable dates.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/calendar.tsx",
           "type": "registry:ui"
         }
       ],
@@ -136,6 +217,25 @@
         {
           "path": "registry/bases/newt/ui/channel-info.tsx",
           "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "channel-sidebar",
+      "type": "registry:block",
+      "title": "Channel sidebar",
+      "description": "The column a server is navigated from: its name, its channels as a tree and the user panel at the foot.",
+      "registryDependencies": [
+        "tree",
+        "user-panel",
+        "status-indicator",
+        "avatar"
+      ],
+      "files": [
+        {
+          "path": "registry/bases/newt/blocks/channel-sidebar/channel-sidebar.tsx",
+          "type": "registry:block"
         }
       ],
       "framework": "react"
@@ -242,6 +342,19 @@
       "framework": "react"
     },
     {
+      "name": "command-palette",
+      "type": "registry:ui",
+      "title": "Command Palette",
+      "description": "A searchable quick switcher of grouped destinations and actions, driven from the keyboard.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/command-palette.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "command-panel",
       "type": "registry:block",
       "title": "Command panel",
@@ -318,6 +431,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/divider.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A modal panel that slides against an edge of the screen, built on the native dialog element.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/drawer.tsx",
           "type": "registry:ui"
         }
       ],
@@ -585,6 +711,20 @@
       "framework": "react"
     },
     {
+      "name": "onboarding",
+      "type": "registry:block",
+      "title": "Onboarding",
+      "description": "A short setup flow: a stepper, the current step's content and the buttons that move through it.",
+      "registryDependencies": ["stepper", "button"],
+      "files": [
+        {
+          "path": "registry/bases/newt/blocks/onboarding/onboarding.tsx",
+          "type": "registry:block"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
@@ -633,6 +773,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/poll.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/popover.tsx",
           "type": "registry:ui"
         }
       ],
@@ -780,6 +933,33 @@
       "framework": "react"
     },
     {
+      "name": "settings-layout",
+      "type": "registry:block",
+      "title": "Settings layout",
+      "description": "A settings screen: grouped sections down the side and the chosen section's breadcrumb, heading and content beside them.",
+      "registryDependencies": ["side-nav", "breadcrumb"],
+      "files": [
+        {
+          "path": "registry/bases/newt/blocks/settings-layout/settings-layout.tsx",
+          "type": "registry:block"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "side-nav",
+      "type": "registry:ui",
+      "title": "Side Nav",
+      "description": "A vertical list of grouped links for the sections of a settings screen.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/side-nav.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "skeleton",
       "type": "registry:ui",
       "title": "Skeleton Loader",
@@ -877,6 +1057,19 @@
       "framework": "react"
     },
     {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Progress through a fixed sequence of steps, horizontal or stacked.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/stepper.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "system-message",
       "type": "registry:ui",
       "title": "System Message",
@@ -885,6 +1078,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/system-message.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A bordered data table with sortable headings, selectable rows and a caption.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/table.tsx",
           "type": "registry:ui"
         }
       ],
@@ -998,6 +1204,19 @@
       "framework": "react"
     },
     {
+      "name": "tree",
+      "type": "registry:ui",
+      "title": "Tree",
+      "description": "A collapsible, keyboard-driven list of nested rows, such as categories and their channels.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/tree.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "typeset",
       "type": "registry:ui",
       "title": "Typeset",
@@ -1023,6 +1242,19 @@
       "files": [
         {
           "path": "registry/bases/newt/ui/typing-indicator.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
+      "name": "user-panel",
+      "type": "registry:ui",
+      "title": "User Panel",
+      "description": "The strip at the foot of a sidebar: the signed-in user and their mute, deafen and settings controls.",
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/user-panel.tsx",
           "type": "registry:ui"
         }
       ],

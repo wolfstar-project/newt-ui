@@ -284,6 +284,21 @@ through an `@theme` block in `app/assets/css/main.css` (Tailwind v4). Never
 hardcode a hex value that already exists as a token. See the
 `newt-ui-registry` skill for how one registry serves both majors.
 
+## The Nuxt UI theme
+
+`nuxt-ui-theme` is a Vue-only registry item that restyles Nuxt UI's own
+components from the `--newt-*` tokens. It is hand-written in
+`apps/vue/registry/registry-lib.ts`, not generated from `registry/meta`, and
+has two halves: `apps/vue/app/lib/nuxt-ui.ts`, the `ui` object for a
+consumer's `app.config.ts`, and `apps/vue/registry/registry-nuxt-ui.ts`, the
+`--ui-*` to `--newt-*` variable map that `add` appends to their stylesheet.
+Every value in both must be a token: `packages/cli/src/registry/nuxt-ui-theme.test.ts`
+fails on a `--newt-*` name that `tokens.css` does not declare. The slot and
+variant names follow Nuxt UI 4; check them against its `src/theme/` when
+bumping the major. The guide is `apps/docs/content/docs/nuxt-ui/`, and its
+before/after images in `apps/docs/public/nuxt-ui/` are screenshots of a real
+Nuxt UI build, to be retaken when the theme changes visibly.
+
 ## Adding or changing a component
 
 Read `AGENT_GUIDE.md` first — it documents naming conventions, the token

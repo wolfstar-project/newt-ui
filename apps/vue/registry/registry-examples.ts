@@ -3,12 +3,34 @@ import type { Registry } from "./schema"
 
 export const examples: Registry = [
   {
+    name: "AccordionDemo",
+    type: "registry:example",
+    registryDependencies: ["accordion"],
+    files: [
+      {
+        path: "examples/AccordionDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ActionRowDemo",
     type: "registry:example",
     registryDependencies: ["action-row"],
     files: [
       {
         path: "examples/ActionRowDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AlertDemo",
+    type: "registry:example",
+    registryDependencies: ["alert"],
+    files: [
+      {
+        path: "examples/AlertDemo.vue",
         type: "registry:example",
       },
     ],
@@ -36,12 +58,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "AuditLogDemo",
+    type: "registry:example",
+    registryDependencies: ["audit-log"],
+    files: [
+      {
+        path: "examples/AuditLogDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AvatarDemo",
     type: "registry:example",
     registryDependencies: ["avatar"],
     files: [
       {
         path: "examples/AvatarDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AvatarGroupDemo",
+    type: "registry:example",
+    registryDependencies: ["avatar-group"],
+    files: [
+      {
+        path: "examples/AvatarGroupDemo.vue",
         type: "registry:example",
       },
     ],
@@ -69,12 +113,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "BreadcrumbDemo",
+    type: "registry:example",
+    registryDependencies: ["breadcrumb"],
+    files: [
+      {
+        path: "examples/BreadcrumbDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ButtonDemo",
     type: "registry:example",
     registryDependencies: ["button"],
     files: [
       {
         path: "examples/ButtonDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "CalendarDemo",
+    type: "registry:example",
+    registryDependencies: ["calendar"],
+    files: [
+      {
+        path: "examples/CalendarDemo.vue",
         type: "registry:example",
       },
     ],
@@ -108,6 +174,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/ChannelInfoDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ChannelSidebarDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-sidebar"],
+    files: [
+      {
+        path: "examples/ChannelSidebarDemo.vue",
         type: "registry:example",
       },
     ],
@@ -190,6 +267,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "CommandPaletteDemo",
+    type: "registry:example",
+    registryDependencies: ["command-palette"],
+    files: [
+      {
+        path: "examples/CommandPaletteDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "CommandPanelDemo",
     type: "registry:example",
     registryDependencies: ["command-panel"],
@@ -251,6 +339,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/DividerDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "DrawerDemo",
+    type: "registry:example",
+    registryDependencies: ["drawer"],
+    files: [
+      {
+        path: "examples/DrawerDemo.vue",
         type: "registry:example",
       },
     ],
@@ -476,6 +575,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "OnboardingDemo",
+    type: "registry:example",
+    registryDependencies: ["onboarding"],
+    files: [
+      {
+        path: "examples/OnboardingDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "PaginationDemo",
     type: "registry:example",
     registryDependencies: ["pagination"],
@@ -515,6 +625,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/PollDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "PopoverDemo",
+    type: "registry:example",
+    registryDependencies: ["popover"],
+    files: [
+      {
+        path: "examples/PopoverDemo.vue",
         type: "registry:example",
       },
     ],
@@ -630,6 +751,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "SettingsLayoutDemo",
+    type: "registry:example",
+    registryDependencies: ["settings-layout"],
+    files: [
+      {
+        path: "examples/SettingsLayoutDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SideNavDemo",
+    type: "registry:example",
+    registryDependencies: ["side-nav"],
+    files: [
+      {
+        path: "examples/SideNavDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SkeletonDemo",
     type: "registry:example",
     registryDependencies: ["skeleton"],
@@ -707,12 +850,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "StepperDemo",
+    type: "registry:example",
+    registryDependencies: ["stepper"],
+    files: [
+      {
+        path: "examples/StepperDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SystemMessageDemo",
     type: "registry:example",
     registryDependencies: ["system-message"],
     files: [
       {
         path: "examples/SystemMessageDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TableDemo",
+    type: "registry:example",
+    registryDependencies: ["table"],
+    files: [
+      {
+        path: "examples/TableDemo.vue",
         type: "registry:example",
       },
     ],
@@ -806,6 +971,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "TreeDemo",
+    type: "registry:example",
+    registryDependencies: ["tree"],
+    files: [
+      {
+        path: "examples/TreeDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "TypesetDemo",
     type: "registry:example",
     registryDependencies: ["typeset"],
@@ -823,6 +999,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/TypingIndicatorDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "UserPanelDemo",
+    type: "registry:example",
+    registryDependencies: ["user-panel"],
+    files: [
+      {
+        path: "examples/UserPanelDemo.vue",
         type: "registry:example",
       },
     ],

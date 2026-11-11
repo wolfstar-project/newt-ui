@@ -1,0 +1,120 @@
+/* newt-ui · Stepper */
+
+/*
+ * Progress through a fixed sequence, as an ordered list. A step's state is
+ * said three ways, so it never rests on colour: the marker's fill, a check
+ * in place of the number, and `aria-current="step"` on the one in progress.
+ */
+.newt-stepper {
+  display: flex;
+  gap: 8px;
+  inline-size: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.newt-stepper__step {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-inline-size: 0;
+  text-align: center;
+}
+/* The line to the next step, drawn from this marker's edge to the next one's. */
+.newt-stepper__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 13px;
+  inset-inline-start: calc(50% + 20px);
+  inline-size: calc(100% - 32px);
+  block-size: 2px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-active);
+}
+.newt-stepper__step--complete:not(:last-child)::after {
+  background: var(--newt-brand);
+}
+.newt-stepper__marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 28px;
+  block-size: 28px;
+  flex-shrink: 0;
+  border: 2px solid var(--newt-bg-active);
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+.newt-stepper__marker svg {
+  inline-size: 16px;
+  block-size: 16px;
+}
+.newt-stepper__step--current .newt-stepper__marker {
+  border-color: var(--newt-brand);
+  color: var(--newt-text-primary);
+}
+.newt-stepper__step--complete .newt-stepper__marker {
+  border-color: var(--newt-brand);
+  background: var(--newt-brand);
+  color: #fff;
+}
+.newt-stepper__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+}
+.newt-stepper__title {
+  color: var(--newt-text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+}
+.newt-stepper__step--current .newt-stepper__title,
+.newt-stepper__step--complete .newt-stepper__title {
+  color: var(--newt-text-primary);
+}
+.newt-stepper__description {
+  color: var(--newt-text-muted);
+  font-size: 12px;
+  line-height: 16px;
+}
+.newt-stepper__status {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Stacked: the marker beside the text, the line running down. */
+.newt-stepper--vertical {
+  flex-direction: column;
+  gap: 0;
+}
+.newt-stepper--vertical .newt-stepper__step {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  padding-block-end: 20px;
+  text-align: start;
+}
+.newt-stepper--vertical .newt-stepper__step:last-child {
+  padding-block-end: 0;
+}
+.newt-stepper--vertical .newt-stepper__step:not(:last-child)::after {
+  inset-block-start: 32px;
+  inset-inline-start: 13px;
+  inline-size: 2px;
+  block-size: calc(100% - 36px);
+}
+.newt-stepper--vertical .newt-stepper__text {
+  padding-block-start: 4px;
+}
