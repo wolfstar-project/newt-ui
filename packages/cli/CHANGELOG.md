@@ -1,5 +1,21 @@
 # newtui
 
+## 2.4.0
+
+### Minor Changes
+
+- [#42](https://github.com/wolfstar-project/newt-ui/pull/42) [`a541f84`](https://github.com/wolfstar-project/newt-ui/commit/a541f848308376b49b31d492cbecb552b1fbcec5) - Add three components to the HTML and CSS distribution: `user-panel`, `side-nav` and `audit-log`. The React and Vue registries carry them under the same names, together with three new blocks built from them: `channel-sidebar`, `settings-layout` and `onboarding`.
+
+- [#42](https://github.com/wolfstar-project/newt-ui/pull/42) [`a541f84`](https://github.com/wolfstar-project/newt-ui/commit/a541f848308376b49b31d492cbecb552b1fbcec5) - Add five components to the HTML and CSS distribution: `alert`, `avatar-group`, `table`, `tree` and `calendar`. The tree and the calendar ship a script for keyboard navigation, and the calendar reads and reports dates as `YYYY-MM-DD` strings. The React and Vue versions are in the registry under the same names.
+
+- [#42](https://github.com/wolfstar-project/newt-ui/pull/42) [`a541f84`](https://github.com/wolfstar-project/newt-ui/commit/a541f848308376b49b31d492cbecb552b1fbcec5) - Add five form controls to the HTML and CSS distribution: `slider`, `pin-input`, `tag-input`, `number-input` and `color-picker`, each with its stylesheet, reference markup and a small script. The React and Vue versions are in the registry under the same names.
+
+- [#42](https://github.com/wolfstar-project/newt-ui/pull/42) [`a541f84`](https://github.com/wolfstar-project/newt-ui/commit/a541f848308376b49b31d492cbecb552b1fbcec5) - Add six components to the HTML and CSS distribution: `accordion`, `breadcrumb`, `stepper`, `popover`, `drawer` and `command-palette`. The drawer and the command palette are built on the native `<dialog>` element and the accordion on `<details>`, so focus trapping, Escape and single-open behaviour come from the browser. The React and Vue versions are in the registry under the same names.
+
+### Patch Changes
+
+- [#42](https://github.com/wolfstar-project/newt-ui/pull/42) [`a541f84`](https://github.com/wolfstar-project/newt-ui/commit/a541f848308376b49b31d492cbecb552b1fbcec5) - `add` now prints the right import line for a library item: it names the file under the `lib` alias instead of a path under `components/ui`, and prints nothing for an item that installs no files. This is what `newtui add nuxt-ui-theme`, the new Nuxt UI theme in the Vue registry, relies on.
+
 ## 2.3.0
 
 ### Minor Changes
