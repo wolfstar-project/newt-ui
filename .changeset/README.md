@@ -76,8 +76,9 @@ Trusted publishing cannot create a package: npm only lets you add a trusted
 publisher to a package that already exists. The first `release` run that
 includes a new package therefore fails with
 `E404 Not Found - PUT https://registry.npmjs.org/@scope%2fname`, and the
-`@next` snapshot job skips it for the same reason. A maintainer publishes the
-first version once, by hand, then registers the trusted publisher:
+`@next` snapshot job fails the same way when a pending changeset includes the
+new package. A maintainer publishes the first version once, by hand, then
+registers the trusted publisher:
 
 1. Sign in with `npm login` (an account that can publish to the scope), then
    build and publish from the package directory:
