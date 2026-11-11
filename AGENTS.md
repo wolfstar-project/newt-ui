@@ -41,8 +41,8 @@ quick-start and design-token overview.
 
 - **Language:** TypeScript through `typescript-native-bridge` (see Toolchain
   specifics), Node `^22.11 || ^24 || >=26` (the range required by Changesets
-  v3). `mise.toml` pins Node and pnpm for local work; CI runs Node 24.
-- **Package manager:** `pnpm` 11 (pinned via `packageManager` in the root
+  v3). `mise.toml` pins Node and pnpm for local work; CI runs Node 26.
+- **Package manager:** `pnpm` 12 (pinned via `packageManager` in the root
   `package.json`; Renovate bumps it — check that field for the exact pin, don't
   hardcode it here). Workspaces via `pnpm-workspace.yaml`.
 - **Monorepo runner:** `turbo` (`turbo.jsonc`).
@@ -161,7 +161,7 @@ pnpm changeset            # add a changeset (`pnpm changeset add --empty` when n
 
 ## Toolchain specifics
 
-- **Package manager**: pnpm 11. All `.npmrc`-style settings
+- **Package manager**: pnpm 12. All `.npmrc`-style settings
   (`autoInstallPeers`, `strictPeerDependencies`, `shamefullyHoist`) and the
   `typescript` override live in `pnpm-workspace.yaml`, not `.npmrc`.
 - **TypeScript**: `typescript` is overridden to `typescript-native-bridge`
