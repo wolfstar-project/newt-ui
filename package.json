@@ -43,7 +43,7 @@
     "oxlint": "^1.88.0",
     "oxlint-tsgolint": "^7.0.2004",
     "pkg-pr-new": "^0.0.91",
-    "skilld": "^2.3.0",
+    "skilld": "^3.6.8",
     "turbo": "^2.11.8",
     "typescript": "^5.9.3"
   },
