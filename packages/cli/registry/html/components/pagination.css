@@ -26,7 +26,7 @@
 }
 .newt-pagination__btn--active {
   background: var(--newt-brand);
-  color: #fff;
+  color: var(--newt-on-accent);
   border-color: var(--newt-brand);
 }
 .newt-pagination__btn:disabled {

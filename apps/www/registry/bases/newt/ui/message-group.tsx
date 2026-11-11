@@ -2,7 +2,12 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-export interface MessageGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MessageGroupProps extends React.HTMLAttributes<HTMLElement> {
+  /**
+   * The element to render. `div` by default; `article` when each message is a
+   * self-contained post, `li` inside a list of messages.
+   */
+  as?: React.ElementType
   /**
    * Lay the row out as a 2x2 grid so a `MessageGroupReply` can hook over the
    * avatar, the way the client stacks a reply above the message it answers.
@@ -12,9 +17,18 @@ export interface MessageGroupProps extends React.HTMLAttributes<HTMLDivElement> 
   ephemeral?: boolean
 }
 
-const MessageGroup = React.forwardRef<HTMLDivElement, MessageGroupProps>(
-  ({ className, withReply = false, ephemeral = false, ...props }, ref) => (
-    <div
+const MessageGroup = React.forwardRef<HTMLElement, MessageGroupProps>(
+  (
+    {
+      as: Tag = "div",
+      className,
+      withReply = false,
+      ephemeral = false,
+      ...props
+    },
+    ref
+  ) => (
+    <Tag
       ref={ref}
       data-slot="message-row"
       data-ephemeral={ephemeral || undefined}
@@ -25,7 +39,7 @@ const MessageGroup = React.forwardRef<HTMLDivElement, MessageGroupProps>(
           : "flex",
         ephemeral
           ? "border-s-2 border-[color-mix(in_srgb,var(--newt-text-link)_40%,transparent)] bg-[color-mix(in_srgb,var(--newt-text-link)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--newt-text-link)_15%,transparent)]"
-          : "hover:bg-black/[0.06]",
+          : "hover:bg-newt-bg-message-hover",
         className
       )}
       {...props}
@@ -103,38 +117,56 @@ MessageGroupAuthor.displayName = "MessageGroupAuthor"
 export interface MessageGroupBotTagProps extends React.HTMLAttributes<HTMLSpanElement> {
   /** Add the check Discord puts on verified applications. */
   verified?: boolean
+  /**
+   * Accessible name. Defaults to "Application", or "Verified application"
+   * with `verified`; pass a translation here.
+   */
+  "aria-label"?: string
 }
 
 const MessageGroupBotTag = React.forwardRef<
   HTMLSpanElement,
   MessageGroupBotTagProps
->(({ className, verified = false, children = "BOT", ...props }, ref) => (
-  <span
-    ref={ref}
-    role="img"
-    aria-label={verified ? "Verified application" : "Application"}
-    className={cn(
-      "inline-flex items-center gap-0.5 rounded-[3px] bg-newt-brand px-1 py-px text-[10px] font-semibold uppercase tracking-[0.02em] text-white",
-      className
-    )}
-    {...props}
-  >
-    {verified ? (
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        focusable="false"
-        className="h-2.5 w-2.5"
-      >
-        <path
-          fill="currentColor"
-          d="M9.55 17.6 4.4 12.45l1.4-1.4 3.75 3.75 8.65-8.65 1.4 1.4z"
-        />
-      </svg>
-    ) : null}
-    {children}
-  </span>
-))
+>(
+  (
+    {
+      className,
+      verified = false,
+      children = "BOT",
+      "aria-label": ariaLabel,
+      ...props
+    },
+    ref
+  ) => (
+    <span
+      ref={ref}
+      role="img"
+      aria-label={
+        ariaLabel ?? (verified ? "Verified application" : "Application")
+      }
+      className={cn(
+        "inline-flex items-center gap-0.5 rounded-[3px] bg-newt-brand px-1 py-px text-[10px] font-semibold uppercase tracking-[0.02em] text-newt-on-accent",
+        className
+      )}
+      {...props}
+    >
+      {verified ? (
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+          className="h-2.5 w-2.5"
+        >
+          <path
+            fill="currentColor"
+            d="M9.55 17.6 4.4 12.45l1.4-1.4 3.75 3.75 8.65-8.65 1.4 1.4z"
+          />
+        </svg>
+      ) : null}
+      {children}
+    </span>
+  )
+)
 MessageGroupBotTag.displayName = "MessageGroupBotTag"
 
 /* A real `<time>`: the timestamp is machine-readable, not just small text. */

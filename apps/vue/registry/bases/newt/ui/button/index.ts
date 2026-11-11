@@ -3,16 +3,16 @@ import { cva, type VariantProps } from "class-variance-authority"
 export { default as Button } from "./Button.vue"
 
 export const buttonVariants = cva(
-  "inline-flex cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap border-0 font-sans font-medium leading-4 transition-[background-color,color,box-shadow] duration-fast ease-newt active:translate-y-[0.5px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50",
+  "inline-flex cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap border-0 font-sans font-medium leading-4 transition-[background-color,color,box-shadow] duration-fast ease-newt active:translate-y-[0.5px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50 no-underline",
   {
     variants: {
       variant: {
         primary:
-          "bg-newt-brand text-white hover:bg-newt-brand-hover active:bg-newt-brand-active",
+          "bg-newt-brand text-newt-on-accent hover:bg-newt-brand-hover active:bg-newt-brand-active",
         secondary:
           "bg-newt-bg-elevated text-newt-text-primary hover:bg-newt-bg-hover",
-        danger: "bg-newt-danger text-white hover:bg-newt-danger-hover",
-        success: "bg-newt-online text-white hover:brightness-90",
+        danger: "bg-newt-danger text-newt-on-accent hover:bg-newt-danger-hover",
+        success: "bg-newt-online text-newt-on-accent hover:brightness-90",
         link: "bg-transparent text-newt-text-link hover:underline",
       },
       size: {

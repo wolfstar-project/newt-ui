@@ -99,7 +99,7 @@ function onInput(event: Event) {
         />
       </div>
       <div
-        class="pointer-events-none absolute top-0 h-6 rounded-sm border border-newt-border bg-white shadow-elevation-low peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-newt-text-link"
+        class="pointer-events-none absolute top-0 h-6 rounded-sm border border-newt-border bg-newt-on-accent shadow-elevation-low peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-newt-text-link"
         :style="{
           width: `${THUMB}px`,
           insetInlineStart: `calc((100% - ${THUMB}px) * ${ratio})`,

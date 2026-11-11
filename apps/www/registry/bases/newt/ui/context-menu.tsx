@@ -20,7 +20,7 @@ const ContextMenu = React.forwardRef<
 ContextMenu.displayName = "ContextMenu"
 
 const contextMenuItemVariants = cva(
-  "group flex cursor-pointer items-center justify-between rounded-sm px-2 py-1.5 text-[13px] transition-colors duration-fast ease-newt hover:text-white",
+  "group flex cursor-pointer items-center justify-between rounded-sm px-2 py-1.5 text-[13px] transition-colors duration-fast ease-newt hover:text-newt-on-accent",
   {
     variants: {
       variant: {
@@ -59,7 +59,7 @@ const ContextMenuShortcut = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "text-[11px] text-newt-text-muted group-hover:text-white/70",
+      "text-[11px] text-newt-text-muted group-hover:text-[color-mix(in_srgb,var(--newt-on-accent)_70%,transparent)]",
       className
     )}
     {...props}

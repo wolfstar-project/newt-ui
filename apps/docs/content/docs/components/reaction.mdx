@@ -22,8 +22,20 @@ A toggleable emoji reaction pill, plus the group that rows them under a message.
   rows={[
     {
       name: "emoji",
-      type: "React.ReactNode",
-      description: "Emoji or icon rendered on the left.",
+      type: "React.ReactNode (React) / string (Vue)",
+      description:
+        "Emoji or icon rendered on the left. Optional with `emojiSrc`.",
+    },
+    {
+      name: "emojiSrc",
+      type: "string | undefined",
+      description:
+        "Image URL of a server (custom) emoji, rendered instead of `emoji`.",
+    },
+    {
+      name: "emojiAlt",
+      type: "string | undefined",
+      description: "Name of the emoji for the accessible name, such as `wolf`.",
     },
     {
       name: "count",
@@ -45,6 +57,19 @@ A toggleable emoji reaction pill, plus the group that rows them under a message.
       type: "(active: boolean) => void | undefined",
       description: "Called with the next active state when toggled.",
     },
+    {
+      name: "readonly",
+      type: "boolean",
+      default: "false",
+      description:
+        "Show the count without a toggle: a `<span>` that is not focusable and ignores clicks.",
+    },
+    {
+      name: "formatLabel",
+      type: "(state: { emoji: string; count: number; active: boolean }) => string",
+      description:
+        'Builds the accessible name. The English default reads "wolf reaction, 3 people"; pass a translation here. `aria-label` still wins when both are set.',
+    },
   ]}
 />
 
@@ -52,7 +77,7 @@ The registry exports `Reaction`, `ReactionGroup`. Parts without a table accept t
 
 ## Accessibility
 
-The reaction is a real button and publishes its toggled state through `aria-pressed`. Keep the emoji name and count understandable to screen readers.
+The reaction is a real button and publishes its toggled state through `aria-pressed`. A `readonly` reaction is an image with the same accessible name instead, so a feed that only shows counts adds no tab stops. Translate the name with `formatLabel` when the page is not in English. Keep the emoji name and count understandable to screen readers.
 
 ## Tokens
 

@@ -11,7 +11,7 @@ export const stageBannerVariants = cva(
   {
     variants: {
       variant: {
-        brand: "bg-newt-brand text-white",
+        brand: "bg-newt-brand text-newt-on-accent",
         neutral:
           "border border-newt-border bg-newt-bg-elevated text-newt-text-primary",
       },
@@ -25,7 +25,7 @@ export const stageBannerVariants = cva(
 export const stageBannerDotVariants = cva("h-2 w-2 shrink-0 rounded-full", {
   variants: {
     status: {
-      white: "bg-white",
+      white: "bg-newt-on-accent",
       online: "bg-newt-online",
       idle: "bg-newt-idle",
       dnd: "bg-newt-dnd",

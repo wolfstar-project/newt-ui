@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 export { default as NotifBadge } from "./NotifBadge.vue"
 
 export const notifBadgeVariants = cva(
-  "inline-flex items-center justify-center rounded-full border-2 border-newt-bg-base text-[11px] font-bold leading-none text-white",
+  "inline-flex items-center justify-center rounded-full border-2 border-newt-bg-base text-[11px] font-bold leading-none text-newt-on-accent",
   {
     variants: {
       variant: {

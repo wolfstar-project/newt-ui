@@ -1,22 +1,31 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import type { Component, HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-const props = defineProps<{
-  class?: HTMLAttributes["class"]
-  /**
-   * Lay the row out as a 2x2 grid so a `MessageGroupReply` can hook over the
-   * avatar, the way the client stacks a reply above the message it answers.
-   */
-  withReply?: boolean
-  /** Tint the row as an ephemeral (visible-to-you-only) response. */
-  ephemeral?: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    class?: HTMLAttributes["class"]
+    /**
+     * The element to render. `div` by default; `article` when each message is a
+     * self-contained post, `li` inside a list of messages.
+     */
+    as?: string | Component
+    /**
+     * Lay the row out as a 2x2 grid so a `MessageGroupReply` can hook over the
+     * avatar, the way the client stacks a reply above the message it answers.
+     */
+    withReply?: boolean
+    /** Tint the row as an ephemeral (visible-to-you-only) response. */
+    ephemeral?: boolean
+  }>(),
+  { as: "div" }
+)
 </script>
 
 <template>
-  <div
+  <component
+    :is="props.as"
     data-slot="message-row"
     :data-ephemeral="props.ephemeral || undefined"
     :class="
@@ -27,11 +36,11 @@ const props = defineProps<{
           : 'flex',
         props.ephemeral
           ? 'border-s-2 border-[color-mix(in_srgb,var(--newt-text-link)_40%,transparent)] bg-[color-mix(in_srgb,var(--newt-text-link)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--newt-text-link)_15%,transparent)]'
-          : 'hover:bg-black/[0.06]',
+          : 'hover:bg-newt-bg-message-hover',
         props.class
       )
     "
   >
     <slot />
-  </div>
+  </component>
 </template>

@@ -15,17 +15,26 @@
     background var(--newt-duration-fast) var(--newt-ease),
     border-color var(--newt-duration-fast) var(--newt-ease);
 }
-.newt-reaction:hover {
+button.newt-reaction:hover {
   background: var(--newt-bg-hover);
 }
 .newt-reaction--active {
-  background: rgba(88, 101, 242, 0.15);
+  background: color-mix(in srgb, var(--newt-brand) 15%, transparent);
   border-color: var(--newt-brand);
   color: var(--newt-mention-text);
 }
 .newt-reaction:focus-visible {
   outline: 2px solid var(--newt-text-link);
   outline-offset: 2px;
+}
+/* A read-only count, shown on a `<span>`: nothing to press. */
+span.newt-reaction {
+  cursor: inherit;
+}
+.newt-reaction__emoji-image {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 .newt-reaction__count {
   font-weight: 600;

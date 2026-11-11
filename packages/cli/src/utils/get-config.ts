@@ -66,6 +66,13 @@ export const rawConfigSchema = z
       baseColor: z.string().default(DEFAULT_TAILWIND_BASE_COLOR),
       cssVariables: z.boolean().default(true),
       prefix: z.string().default("").optional(),
+      /**
+       * Where the dark token values go: `class` (`.dark`, the default),
+       * `data-theme` (`[data-theme="dark"]`), `media` (the system preference)
+       * or a literal selector. Read by `init` and by `add` for items that
+       * carry light and dark variables.
+       */
+      darkSelector: z.string().optional(),
     }),
     aliases: z.object({
       components: z.string().default(DEFAULT_COMPONENTS),

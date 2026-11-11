@@ -117,6 +117,8 @@ function printHelp(): void {
                              vite-react, vite-vue, nuxt
         --preset <code>      a newt/create code, nt1.… (init, apply)
         --css <path>         path to your global css file (init)
+        --dark-selector <s>  where dark tokens go: class, data-theme, media
+                             or a selector (init; default class)
         --skip-install       skip installing dependencies (init, add)
     -o, --overwrite          overwrite existing files (add)
     -a, --all                add every available component (add)
@@ -232,6 +234,7 @@ async function main(): Promise<void> {
         defaults: flagBoolean(args.defaults),
         skipInstall,
         css: flagString(args.css),
+        darkSelector: flagString(args["dark-selector"]),
         framework,
         bundler,
         registry,

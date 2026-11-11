@@ -192,7 +192,7 @@
 .newt-select-menu__option:hover,
 .newt-select-menu__option--active {
   background: var(--newt-brand);
-  color: #fff;
+  color: var(--newt-on-accent);
 }
 .newt-select-menu__option--selected {
   color: var(--newt-text-primary);
@@ -217,7 +217,7 @@
  */
 .newt-select-menu__option--selected:hover::after,
 .newt-select-menu__option--selected.newt-select-menu__option--active::after {
-  background-color: #fff;
+  background-color: var(--newt-on-accent);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%235865f2' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E");
 }
 .newt-select-menu__option[aria-disabled="true"] {
@@ -249,7 +249,7 @@
 }
 .newt-select-menu__option--active .newt-select-menu__option-description,
 .newt-select-menu__option:hover .newt-select-menu__option-description {
-  color: #fff;
+  color: var(--newt-on-accent);
 }
 
 .newt-select-menu__divider {

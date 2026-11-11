@@ -15,7 +15,7 @@
   height: 36px;
   border-radius: var(--newt-radius-sm);
   background: var(--newt-brand);
-  color: #fff;
+  color: var(--newt-on-accent);
   display: flex;
   align-items: center;
   justify-content: center;

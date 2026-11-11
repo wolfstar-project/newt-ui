@@ -100,7 +100,7 @@
 .newt-calendar__cell[aria-selected="true"] .newt-calendar__day {
   background: var(--newt-brand);
   box-shadow: none;
-  color: #fff;
+  color: var(--newt-on-accent);
   font-weight: 700;
 }
 .newt-calendar__day:disabled {

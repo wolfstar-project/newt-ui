@@ -33,7 +33,7 @@
 }
 .newt-dropdown__item:hover .newt-dropdown__icon,
 .newt-dropdown__item--active .newt-dropdown__icon {
-  color: #fff;
+  color: var(--newt-on-accent);
 }
 .newt-dropdown__label {
   font-size: 14px;

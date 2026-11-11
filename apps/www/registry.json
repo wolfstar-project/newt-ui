@@ -582,6 +582,33 @@
       "framework": "react"
     },
     {
+      "name": "markdown",
+      "type": "registry:ui",
+      "title": "Markdown",
+      "description": "Renders a message written in chat markdown — formatting, mentions, timestamps, spoilers, code blocks — with the library's own parts.",
+      "registryDependencies": [
+        "button",
+        "code-block",
+        "custom-emoji",
+        "inline-code",
+        "mention",
+        "modal",
+        "spoiler",
+        "timestamp"
+      ],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/markdown.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/markdown-syntax.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "react"
+    },
+    {
       "name": "media-gallery",
       "type": "registry:ui",
       "title": "Media Gallery",

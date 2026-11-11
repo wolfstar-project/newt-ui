@@ -63,7 +63,7 @@ const checked = computed(() => group.values.value.includes(props.value))
     >
       <svg
         viewBox="0 0 16 16"
-        class="h-3.5 w-3.5 scale-0 text-white transition-transform duration-fast ease-newt group-has-[:checked]:scale-100"
+        class="h-3.5 w-3.5 scale-0 text-newt-on-accent transition-transform duration-fast ease-newt group-has-[:checked]:scale-100"
       >
         <path
           fill="currentColor"

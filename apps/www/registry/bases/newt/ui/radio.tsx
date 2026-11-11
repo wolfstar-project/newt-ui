@@ -187,7 +187,7 @@ const Radio = React.forwardRef<HTMLButtonElement, RadioProps>(
           data-checked={checked || undefined}
           className={cn(
             "relative h-5 w-5 shrink-0 rounded-full border-2 border-newt-text-muted transition-colors duration-fast ease-newt",
-            "after:absolute after:top-1/2 after:start-1/2 after:h-2 after:w-2 after:rounded-full after:bg-white after:content-['']",
+            "after:absolute after:top-1/2 after:start-1/2 after:h-2 after:w-2 after:rounded-full after:bg-newt-on-accent after:content-['']",
             // Centring, and the dot's grow — both carry the writing direction.
             "after:[transform:translate(calc(var(--newt-dir)*-50%),-50%)_scale(0)]",
             "data-[checked]:border-newt-brand data-[checked]:bg-newt-brand",

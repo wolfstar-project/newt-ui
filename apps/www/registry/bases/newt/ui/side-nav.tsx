@@ -101,7 +101,7 @@ const SideNavItem = React.forwardRef<HTMLLIElement, SideNavItemProps>(
       <>
         {children}
         {badge === undefined ? null : (
-          <span className="min-w-4 rounded-full bg-newt-danger px-[5px] text-center text-[11px] font-bold leading-4 text-white">
+          <span className="min-w-4 rounded-full bg-newt-danger px-[5px] text-center text-[11px] font-bold leading-4 text-newt-on-accent">
             {badge}
           </span>
         )}

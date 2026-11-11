@@ -476,6 +476,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "MarkdownDemo",
+    type: "registry:example",
+    registryDependencies: ["markdown"],
+    files: [
+      {
+        path: "examples/MarkdownDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "MediaGalleryDemo",
     type: "registry:example",
     registryDependencies: ["media-gallery"],

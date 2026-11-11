@@ -23,9 +23,20 @@
     },
     // The docs site bundles both registries into its own `dist/`, so it needs
     // the two registry builds rather than a build of the apps that own them.
+    // It also reads `apps/vue/tsconfig.json`, which extends the generated
+    // `.nuxt/tsconfig.json`. `postinstall` writes that file, but an install
+    // restored from a cache skips lifecycle scripts, so the docs build asks
+    // for it explicitly.
     "docs#build": {
-      "dependsOn": ["www#registry:build", "vue-www#registry:build"],
+      "dependsOn": [
+        "www#registry:build",
+        "vue-www#registry:build",
+        "vue-www#nuxt:prepare",
+      ],
       "outputs": ["dist/**"],
+    },
+    "vue-www#nuxt:prepare": {
+      "outputs": [".nuxt/**"],
     },
     "dev": { "cache": false, "persistent": true },
 

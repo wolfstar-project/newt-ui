@@ -1,0 +1,36 @@
+<script setup lang="ts">
+import {
+  Markdown,
+  type MarkdownMentionKind,
+  type MarkdownMentionTarget,
+} from "~~/registry/bases/newt/ui/markdown"
+
+const MESSAGE = `## Release notes
+The **new build** is out — read the [changelog](https://example.com/changelog) or ping <@1001> in <#2002>.
+- Fixed the *reconnect* loop
+- Added \`/ban\` options for <@&3003>
+> Rolling out ||tonight|| at <t:1767225600:t>.
+\`\`\`ts
+const shard = await connect({ id: 3 })
+\`\`\`
+-# Posted by the release bot`
+
+/* Mentions carry ids; the page that renders them knows the names. */
+const NAMES = new Map<string, MarkdownMentionTarget>([
+  ["user:1001", { name: "username" }],
+  ["channel:2002", { name: "announcements" }],
+  ["role:3003", { name: "Moderator", color: "#f0b232" }],
+])
+
+function resolveMention(kind: MarkdownMentionKind, id: string) {
+  return NAMES.get(`${kind}:${id}`)
+}
+</script>
+
+<template>
+  <Markdown
+    class="max-w-xl text-[15px] leading-[1.375] text-newt-text-secondary"
+    :content="MESSAGE"
+    :resolve-mention="resolveMention"
+  />
+</template>

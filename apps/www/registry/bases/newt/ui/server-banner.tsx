@@ -26,7 +26,7 @@ const ServerBannerIcon = React.forwardRef<
     ref={ref}
     aria-hidden="true"
     className={cn(
-      "flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-newt-brand text-[22px] font-bold text-white",
+      "flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-newt-brand text-[22px] font-bold text-newt-on-accent",
       className
     )}
     {...props}

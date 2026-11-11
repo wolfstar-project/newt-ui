@@ -25,7 +25,7 @@ const AttachmentIcon = React.forwardRef<
     ref={ref}
     aria-hidden="true"
     className={cn(
-      "flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-newt-brand font-mono text-xs font-bold text-white",
+      "flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-newt-brand font-mono text-xs font-bold text-newt-on-accent",
       className
     )}
     {...props}

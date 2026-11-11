@@ -73,7 +73,7 @@ const vertical = computed(() => props.orientation === "vertical")
           cn(
             'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 text-[13px] font-bold',
             index < props.value
-              ? 'border-newt-brand bg-newt-brand text-white'
+              ? 'border-newt-brand bg-newt-brand text-newt-on-accent'
               : index === props.value
                 ? 'border-newt-brand bg-newt-bg-surface text-newt-text-primary'
                 : 'border-newt-bg-active bg-newt-bg-surface text-newt-text-muted'

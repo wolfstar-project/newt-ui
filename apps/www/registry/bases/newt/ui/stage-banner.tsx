@@ -10,7 +10,7 @@ const stageBannerVariants = cva(
   {
     variants: {
       variant: {
-        brand: "bg-newt-brand text-white",
+        brand: "bg-newt-brand text-newt-on-accent",
         neutral:
           "border border-newt-border bg-newt-bg-elevated text-newt-text-primary",
       },
@@ -68,7 +68,7 @@ StageBanner.displayName = "StageBanner"
 const stageBannerDotVariants = cva("h-2 w-2 shrink-0 rounded-full", {
   variants: {
     status: {
-      white: "bg-white",
+      white: "bg-newt-on-accent",
       online: "bg-newt-online",
       idle: "bg-newt-idle",
       dnd: "bg-newt-dnd",
@@ -105,7 +105,7 @@ const StageBannerAction = React.forwardRef<
     ref={ref}
     type={type}
     className={cn(
-      "ms-auto shrink-0 cursor-pointer rounded-sm border-0 bg-black/20 px-2.5 py-1 text-xs font-semibold text-white transition-colors duration-fast ease-newt hover:bg-black/[0.32]",
+      "ms-auto shrink-0 cursor-pointer rounded-sm border-0 bg-[color-mix(in_srgb,var(--newt-overlay)_33%,transparent)] px-2.5 py-1 text-xs font-semibold text-newt-on-accent transition-colors duration-fast ease-newt hover:bg-[color-mix(in_srgb,var(--newt-overlay)_53%,transparent)]",
       className
     )}
     {...props}
@@ -124,7 +124,7 @@ const StageBannerClose = React.forwardRef<
       type={type}
       aria-label="Dismiss"
       className={cn(
-        "ms-auto shrink-0 cursor-pointer border-0 bg-transparent p-0 text-base leading-none text-white/80 transition-colors duration-fast ease-newt hover:text-white",
+        "ms-auto shrink-0 cursor-pointer border-0 bg-transparent p-0 text-base leading-none text-[color-mix(in_srgb,var(--newt-on-accent)_80%,transparent)] transition-colors duration-fast ease-newt hover:text-newt-on-accent",
         "group-data-[variant=neutral]:text-newt-text-muted group-data-[variant=neutral]:hover:text-newt-text-primary",
         className
       )}

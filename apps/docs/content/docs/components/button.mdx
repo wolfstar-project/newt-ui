@@ -50,6 +50,19 @@ The button carries six intents and four sizes. Which one you reach for is a stat
       description: "Link-out glyph after the label.",
       default: 'variant === "link"',
     },
+    {
+      name: "href",
+      type: "string | undefined",
+      description:
+        "Render a link (`<a href>`) instead of a button. A disabled link drops its `href` and sets `aria-disabled`.",
+    },
+    {
+      name: "as",
+      type: "React.ElementType (React) / string | Component (Vue)",
+      default: '"button", or "a" with `href`',
+      description:
+        "The element or component to render, such as a router link, to keep client-side navigation.",
+    },
   ]}
 />
 

@@ -569,6 +569,33 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "markdown",
+    type: "registry:ui",
+    title: "Markdown",
+    description:
+      "Renders a message written in chat markdown — formatting, mentions, timestamps, spoilers, code blocks — with the library's own parts.",
+    registryDependencies: [
+      "button",
+      "code-block",
+      "custom-emoji",
+      "inline-code",
+      "mention",
+      "modal",
+      "spoiler",
+      "timestamp",
+    ],
+    files: [
+      {
+        path: "ui/markdown.tsx",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/markdown-syntax.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "media-gallery",
     type: "registry:ui",
     title: "Media Gallery",

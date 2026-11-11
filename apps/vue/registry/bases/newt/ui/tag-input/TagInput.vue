@@ -106,7 +106,7 @@ function onWrapperClick(event: MouseEvent) {
         type="button"
         :disabled="props.disabled"
         :aria-label="props.removeLabel(tag)"
-        class="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-newt-text-muted hover:bg-newt-danger hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link"
+        class="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-newt-text-muted hover:bg-newt-danger hover:text-newt-on-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link"
         @click="remove(tag)"
       >
         <svg viewBox="0 0 16 16" aria-hidden="true" class="h-3 w-3">

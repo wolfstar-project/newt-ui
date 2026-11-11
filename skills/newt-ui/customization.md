@@ -39,13 +39,19 @@ same token names, which is why no component has to know a palette changed.
 `.newt-light` on any wrapper does the same for a subtree. Set `color-scheme`
 alongside it so form controls and scrollbars follow.
 
+That is the HTML/CSS distribution. A project set up with `newtui init` gets
+light values in `:root` and the dark ones under its own selector, chosen with
+`--dark-selector` (`class` for `.dark`, `data-theme`, `media`, or any selector)
+and saved as `tailwind.darkSelector` in `components.json`.
+
 ## Tailwind
 
 The token layer is projected into both majors: a preset for v3, an `@theme`
 block for v4. `init` writes whichever the project needs. Either way the
 utilities are the same — `bg-newt-brand`, `text-newt-text-muted`,
-`border-newt-border`, `rounded-md`, `shadow-elevation-high`, `duration-fast`,
-`ease-newt`.
+`border-newt-border`, `shadow-elevation-high`, `duration-fast`, `ease-newt`.
+The `@theme` block maps only `newt` names, never `--radius-*`, `--font-sans` or
+`--font-mono`, so installing newt/ui does not restyle the rest of the app.
 
 ## A preset is the short way to the same place
 

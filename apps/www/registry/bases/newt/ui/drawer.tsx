@@ -84,7 +84,7 @@ const Drawer = React.forwardRef<HTMLDialogElement | null, DrawerProps>(
           aria-labelledby={titleId}
           data-side={side}
           className={cn(
-            "fixed m-0 max-h-none flex-col border-newt-border bg-newt-bg-elevated p-0 text-newt-text-primary shadow-elevation-high backdrop:bg-black/60 open:flex",
+            "fixed m-0 max-h-none flex-col border-newt-border bg-newt-bg-elevated p-0 text-newt-text-primary shadow-elevation-high backdrop:bg-newt-overlay open:flex",
             SIDE[side],
             className
           )}

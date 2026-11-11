@@ -46,7 +46,7 @@ const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
       <ModalContext.Provider value={{ close, titleId }}>
         <div
           data-state="open"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-newt-overlay"
           onClick={(e) => {
             if (e.target === e.currentTarget) close()
           }}

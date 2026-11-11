@@ -2,6 +2,7 @@
 
 .newt-mention {
   display: inline-flex;
+  text-decoration: none;
   align-items: center;
   gap: 2px;
   min-height: 22px;
@@ -48,15 +49,20 @@
  * would stick after a tap.
  */
 @media (hover: hover) and (pointer: fine) {
-  .newt-mention:hover {
+  .newt-mention:is(button, a):hover {
     background: var(--newt-mention-solid);
-    color: #fff;
+    color: var(--newt-on-accent);
   }
 }
 
 .newt-mention:focus-visible {
   outline: 2px solid var(--newt-text-link);
   outline-offset: 2px;
+}
+
+/* A mention that opens nothing is text: no pointer, no hover fill. */
+span.newt-mention {
+  cursor: inherit;
 }
 
 .newt-mention__avatar {

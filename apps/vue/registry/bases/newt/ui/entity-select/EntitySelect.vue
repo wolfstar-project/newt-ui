@@ -447,7 +447,7 @@ function onChipMouseDown(event: MouseEvent, entity: string) {
 
             <span
               v-if="option.badge"
-              class="shrink-0 rounded-sm bg-newt-brand px-1 py-0.5 text-[10px] font-bold uppercase leading-none text-white"
+              class="shrink-0 rounded-sm bg-newt-brand px-1 py-0.5 text-[10px] font-bold uppercase leading-none text-newt-on-accent"
             >
               {{ option.badge }}
             </span>

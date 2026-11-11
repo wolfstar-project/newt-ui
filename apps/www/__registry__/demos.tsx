@@ -43,6 +43,7 @@ import FormFieldsDemo from "@/registry/bases/newt/examples/form-fields-demo"
 import InlineCodeDemo from "@/registry/bases/newt/examples/inline-code-demo"
 import InviteDemo from "@/registry/bases/newt/examples/invite-demo"
 import KbdTagDemo from "@/registry/bases/newt/examples/kbd-tag-demo"
+import MarkdownDemo from "@/registry/bases/newt/examples/markdown-demo"
 import MediaGalleryDemo from "@/registry/bases/newt/examples/media-gallery-demo"
 import MemberListDemo from "@/registry/bases/newt/examples/member-list-demo"
 import MentionDemo from "@/registry/bases/newt/examples/mention-demo"
@@ -142,6 +143,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["inline-code", InlineCodeDemo],
   ["invite", InviteDemo],
   ["kbd-tag", KbdTagDemo],
+  ["markdown", MarkdownDemo],
   ["media-gallery", MediaGalleryDemo],
   ["member-list", MemberListDemo],
   ["mention", MentionDemo],

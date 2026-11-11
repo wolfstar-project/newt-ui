@@ -8,6 +8,32 @@ Discord-inspired system. The light palette is an override on the same token
 names, selected by `data-newt-theme="light"` or the `.newt-light` class, so no
 component has to know which one is active.
 
+## Projects set up with init [#init]
+
+`newtui init` writes the tokens the way an existing app expects a theme: one
+complete `:root` with the light values, and the dark values under the selector
+your app already switches on. Pick it with `--dark-selector`, or at the
+prompt:
+
+| Value                 | Dark values go under                              |
+| --------------------- | ------------------------------------------------- |
+| `class` (the default) | `.dark`                                           |
+| `data-theme`          | `[data-theme="dark"]`                             |
+| `media`               | `@media (prefers-color-scheme: dark)`             |
+| any other text        | that selector, such as `[data-newt-theme="dark"]` |
+
+```bash
+npx newtui@latest init --dark-selector data-theme
+```
+
+The choice is saved in `components.json` as `tailwind.darkSelector`, so `add`
+writes any later light and dark variables to the same place. On Tailwind v3 the
+printed preset sets `darkMode` to match, so `dark:` utilities follow the same
+switch.
+
+The rest of this page covers the plain HTML/CSS distribution, whose
+`tokens.css` stays dark by default with an opt-in light set.
+
 ## The attribute [#attribute]
 
 ```html

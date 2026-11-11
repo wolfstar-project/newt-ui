@@ -118,8 +118,14 @@ utilities are generated from the namespaced properties in it:
 </div>
 
 Either way the utilities are the same: `bg-newt-brand`, `text-newt-text-muted`,
-`border-newt-border`, `rounded-md`, `shadow-elevation-high`, `duration-fast`,
-`ease-newt`.
+`border-newt-border`, `shadow-elevation-high`, `duration-fast`, `ease-newt`.
+
+The theme `newtui init` writes maps only names Tailwind does not already use:
+the `newt-*` colours, `font-display`, the `elevation-*` shadows and the `newt`
+easing. It never redefines `--radius-*`, `--font-sans` or `--font-mono`, which
+would restyle every page of the app that installs it. Components reach the
+radii and type through Tailwind's own `rounded-*` and `font-*` scale, and the
+raw `--newt-radius-*` and `--newt-font-*` values stay available to your CSS.
 
 ## Adding a token [#adding]
 

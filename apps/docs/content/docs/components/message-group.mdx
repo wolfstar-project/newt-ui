@@ -21,6 +21,13 @@ A grouped chat message with author, timestamp, reply preview, reactions and an e
   of="MessageGroup"
   rows={[
     {
+      name: "as",
+      type: "React.ElementType (React) / string | Component (Vue)",
+      default: '"div"',
+      description:
+        "The element to render: `article` when each message is a self-contained post, `li` inside a list.",
+    },
+    {
       name: "withReply",
       type: "boolean | undefined",
       description:
@@ -42,6 +49,12 @@ A grouped chat message with author, timestamp, reply preview, reactions and an e
       name: "verified",
       type: "boolean | undefined",
       description: "Add the check Discord puts on verified applications.",
+    },
+    {
+      name: "aria-label (React) / ariaLabel (Vue)",
+      type: "string | undefined",
+      default: '"Application" or "Verified application"',
+      description: "Accessible name of the tag. Pass a translation here.",
     },
   ]}
 />

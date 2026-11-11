@@ -10,7 +10,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <span
     :class="
       cn(
-        'text-[11px] text-newt-text-muted group-hover:text-white/70',
+        'text-[11px] text-newt-text-muted group-hover:text-[color-mix(in_srgb,var(--newt-on-accent)_70%,transparent)]',
         props.class
       )
     "

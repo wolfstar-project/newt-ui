@@ -21,6 +21,18 @@ An inline chip for user, channel, role and app mentions, with an optional avatar
   of="Mention"
   rows={[
     {
+      name: "as",
+      type: '"button" | "a" | "span"',
+      default: '"button", or "a" with `href`',
+      description:
+        "`button` opens something in place, `a` navigates, `span` is a read-only mention: not focusable, no hover fill.",
+    },
+    {
+      name: "href",
+      type: "string | undefined",
+      description: "Link target. Passing it without `as` renders a link.",
+    },
+    {
       name: "avatar",
       type: "string | undefined",
       description:

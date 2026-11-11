@@ -16,7 +16,7 @@ const props = defineProps<{
     :aria-label="props.verified ? 'Verified application' : 'Application'"
     :class="
       cn(
-        'inline-flex shrink-0 items-center gap-0.5 rounded-sm bg-newt-brand px-1 py-px text-[9px] font-bold leading-none text-white',
+        'inline-flex shrink-0 items-center gap-0.5 rounded-sm bg-newt-brand px-1 py-px text-[9px] font-bold leading-none text-newt-on-accent',
         props.class
       )
     "

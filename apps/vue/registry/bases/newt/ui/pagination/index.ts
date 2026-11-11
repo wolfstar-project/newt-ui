@@ -12,7 +12,7 @@ export const paginationButtonVariants = cva(
       active: {
         false:
           "border-newt-border bg-newt-bg-elevated text-newt-text-secondary hover:bg-newt-bg-hover hover:text-newt-text-primary",
-        true: "border-newt-brand bg-newt-brand text-white",
+        true: "border-newt-brand bg-newt-brand text-newt-on-accent",
       },
     },
     defaultVariants: {
