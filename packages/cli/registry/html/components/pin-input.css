@@ -1,0 +1,45 @@
+/* newt-ui · Pin Input */
+
+/*
+ * A short code, one character to a box. Each box is its own `<input>`, so a
+ * screen reader can say which digit it is on and a password manager can still
+ * fill the first one with the whole code.
+ */
+.newt-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.newt-pin__cell {
+  inline-size: 44px;
+  block-size: 52px;
+  padding: 0;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-input);
+  color: var(--newt-text-primary);
+  font-family: var(--newt-font-mono);
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  caret-color: var(--newt-brand);
+  transition: border-color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-pin__cell:focus {
+  outline: none;
+  border-color: var(--newt-brand);
+}
+.newt-pin__cell:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.newt-pin__separator {
+  inline-size: 8px;
+  block-size: 2px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-text-muted);
+}
+.newt-pin--invalid .newt-pin__cell,
+.newt-pin__cell[aria-invalid="true"] {
+  border-color: var(--newt-danger);
+}

@@ -1,0 +1,102 @@
+/* newt-ui · Color Picker */
+
+/*
+ * A short palette and one way out of it. The swatches are a real radio set,
+ * so the arrow keys move between them and a form posts the chosen value; the
+ * larger tile is the browser's own colour dialog for anything the palette
+ * does not hold. Each swatch paints itself from `--newt-swatch`.
+ */
+.newt-color-picker {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 10px;
+}
+.newt-color-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 24px);
+  gap: 6px;
+  align-content: center;
+}
+.newt-color-picker__swatch {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+.newt-color-picker__input,
+.newt-color-picker__name {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.newt-color-picker__chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 24px;
+  block-size: 24px;
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-swatch);
+  color: #fff;
+  transition: transform var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-color-picker__chip svg {
+  inline-size: 16px;
+  block-size: 16px;
+  transform: scale(0);
+  filter: drop-shadow(0 0 1px rgb(0 0 0 / 0.7));
+  transition: transform var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-color-picker__input:checked + .newt-color-picker__chip svg {
+  transform: scale(1);
+}
+.newt-color-picker__swatch:hover .newt-color-picker__chip {
+  transform: scale(1.1);
+}
+.newt-color-picker__input:focus-visible + .newt-color-picker__chip,
+.newt-color-picker__custom:focus-within {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.newt-color-picker__custom {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  inline-size: 66px;
+  min-block-size: 54px;
+  padding: 4px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-swatch, var(--newt-bg-input));
+  color: #fff;
+  cursor: pointer;
+}
+.newt-color-picker__native {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.newt-color-picker__dropper {
+  inline-size: 14px;
+  block-size: 14px;
+  filter: drop-shadow(0 0 1px rgb(0 0 0 / 0.7));
+}
+/* Chosen through the dialog rather than the palette. */
+.newt-color-picker__custom--active {
+  border-color: var(--newt-text-primary);
+  box-shadow: 0 0 0 1px var(--newt-text-primary);
+}
+.newt-color-picker--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

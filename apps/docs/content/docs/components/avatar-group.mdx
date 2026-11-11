@@ -1,0 +1,55 @@
+---
+title: "Avatar Group"
+description: "A row of overlapping avatars with a count for the members not shown."
+---
+
+Use it to say "these people, and some more" in little room: who is in a voice channel, who reacted, who is typing. Show three to five avatars and put the rest in the count.
+
+The count is a prop and not derived from the children, because the total usually comes from the server while only the first few members are loaded.
+
+<ComponentPreview name="avatar-group" />
+
+## Installation
+
+<Installation name="avatar-group" />
+
+## Usage
+
+<Usage name="avatar-group" />
+
+## API reference
+
+<PropsTable
+  of="AvatarGroup"
+  rows={[
+    {
+      name: "overflow",
+      type: "number",
+      description:
+        'How many members are not shown. Above zero it adds a final "+N" chip.',
+      default: "0",
+    },
+    {
+      name: "size",
+      type: '"sm" | "default" | "lg"',
+      description: "Size of the chip. Give the avatars inside the same size.",
+      default: '"default"',
+    },
+    {
+      name: "overflowLabel",
+      type: "(count: number) => string",
+      description: "What a screen reader says for the chip.",
+      default: "(count) => `${count} more`",
+    },
+  ]}
+/>
+
+Each avatar is ringed in the colour of the surface behind it, so the overlap reads as a cut-out. The ring defaults to `--newt-bg-surface`; on another background set `--newt-avatar-group-ring` on the group or any ancestor.
+
+## Accessibility
+
+The group is a `role="group"` and needs a name that says what the people have in common: pass `aria-label`, such as "In voice: 5 members". Initials alone do not identify anybody, so give each avatar an accessible name when who they are matters, or list the names in the label. The chip shows "+2" and is read as "2 more".
+
+## Tokens
+
+<TokensNote name="avatar-group" />

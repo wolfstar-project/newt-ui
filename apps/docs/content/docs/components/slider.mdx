@@ -1,0 +1,78 @@
+---
+title: "Slider"
+description: "A range control with a filled track, a grabber and optional labelled marks, for volumes and thresholds."
+---
+
+A slider is for a value the reader feels their way to, such as a volume or a sensitivity threshold. When the exact number matters more than its position on a scale, use a [Number Input](/docs/components/number-input) instead.
+
+The value lives in a real `<input type="range">` laid over the drawing, so the keyboard, touch dragging and the announced value are the browser's own.
+
+<ComponentPreview name="slider" />
+
+## Installation
+
+<Installation name="slider" />
+
+## Usage
+
+<Usage name="slider" />
+
+## API reference
+
+<PropsTable
+  of="Slider"
+  rows={[
+    {
+      name: "value / v-model",
+      type: "number",
+      description:
+        "The current value. In React, leave it undefined and pass `defaultValue` to let the slider own it.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: number) => void",
+      description:
+        "React only. Called on every change; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "min",
+      type: "number",
+      description: "The low end of the range.",
+      default: "0",
+    },
+    {
+      name: "max",
+      type: "number",
+      description: "The high end of the range.",
+      default: "100",
+    },
+    {
+      name: "step",
+      type: "number",
+      description: "The distance between two values.",
+      default: "1",
+    },
+    {
+      name: "marks",
+      type: "{ value: number; label?: string }[]",
+      description:
+        "Labelled points drawn above the track. A mark without a label shows its number.",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Dims the control and stops it taking input.",
+      default: "false",
+    },
+  ]}
+/>
+
+Every other attribute is passed to the range input, so `aria-label`, `name` and `id` go where a label and a form expect them. `className` (React) or `class` (Vue) lands on the wrapper.
+
+## Accessibility
+
+The control is a native range input, so the arrow keys move it by one step, `Page Up` and `Page Down` by a larger one, and `Home` and `End` jump to the ends. Give it a name with `aria-label` or a `<label>` pointing at its `id`: the marks are decoration and are hidden from assistive technology. The grabber shows a 2px `--newt-text-link` outline while the input has keyboard focus.
+
+## Tokens
+
+<TokensNote name="slider" />

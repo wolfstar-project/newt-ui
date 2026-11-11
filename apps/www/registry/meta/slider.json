@@ -1,0 +1,8 @@
+{
+  "name": "slider",
+  "title": "Slider",
+  "description": "A range control with a filled track, a grabber and optional labelled marks, for volumes and thresholds.",
+  "vueFiles": ["Slider.vue", "index.ts"],
+  "reactDemo": "slider-demo",
+  "vueDemo": "SliderDemo"
+}

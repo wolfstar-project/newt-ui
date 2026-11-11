@@ -1,0 +1,15 @@
+{
+  "name": "drawer",
+  "title": "Drawer",
+  "description": "A modal panel that slides against an edge of the screen, built on the native dialog element.",
+  "vueFiles": [
+    "Drawer.vue",
+    "DrawerHeader.vue",
+    "DrawerBody.vue",
+    "DrawerFooter.vue",
+    "DrawerClose.vue",
+    "index.ts"
+  ],
+  "reactDemo": "drawer-demo",
+  "vueDemo": "DrawerDemo"
+}

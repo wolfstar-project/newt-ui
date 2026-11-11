@@ -1,0 +1,8 @@
+{
+  "name": "command-palette",
+  "title": "Command Palette",
+  "description": "A searchable quick switcher of grouped destinations and actions, driven from the keyboard.",
+  "vueFiles": ["CommandPalette.vue", "index.ts"],
+  "reactDemo": "command-palette-demo",
+  "vueDemo": "CommandPaletteDemo"
+}

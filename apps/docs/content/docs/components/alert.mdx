@@ -1,0 +1,49 @@
+---
+title: "Alert"
+description: "An inline notice with an icon and a coloured edge, in info, success, warning and danger kinds."
+---
+
+Use it for a message that belongs to a place on the page and stays until the situation changes: a channel in slowmode, a bot that has gone offline, a form that saved. For something that happened a moment ago and can fade, use a [Toast](/docs/components/toast).
+
+Pick the variant for what the message means. `danger` is for something broken or about to be lost, and `warning` for something the reader should know before going on.
+
+<ComponentPreview name="alert" />
+
+## Installation
+
+<Installation name="alert" />
+
+## Usage
+
+<Usage name="alert" />
+
+## API reference
+
+<PropsTable
+  of="Alert"
+  rows={[
+    {
+      name: "variant",
+      type: '"info" | "success" | "warning" | "danger"',
+      description:
+        "What kind of notice it is. Sets the edge colour, the icon and the default role.",
+      default: '"info"',
+    },
+    {
+      name: "role",
+      type: "string",
+      description:
+        "Overrides the role the variant picks: `alert` for `danger`, `status` for the others.",
+    },
+  ]}
+/>
+
+`AlertTitle`, `AlertDescription` and `AlertActions` are the parts inside it. A title alone is a complete alert; the actions row holds one or two buttons.
+
+## Accessibility
+
+A `danger` alert is `role="alert"` and interrupts a screen reader the moment it appears; the others are `role="status"` and are read when the reader is idle. Only render an alert when it applies, because one that is on the page from the start is not announced at all. The kind is carried by the icon's shape and by the words as well as the colour, so write a title that says what happened.
+
+## Tokens
+
+<TokensNote name="alert" />

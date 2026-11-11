@@ -1,0 +1,90 @@
+---
+title: "Number Input"
+description: "A number field with decrement and increment buttons that respect min, max and step."
+---
+
+Use it when the number itself is what the reader is setting: a slowmode in seconds, a member limit, a retry count. The steppers are real buttons large enough for a finger, and the field between them still takes typing.
+
+What is typed is kept as text until it reads as a number, so the field can be cleared on the way to a new value. A value outside the range is pulled back in when the field is left.
+
+<ComponentPreview name="number-input" />
+
+## Installation
+
+<Installation name="number-input" />
+
+## Usage
+
+<Usage name="number-input" />
+
+## API reference
+
+<PropsTable
+  of="NumberInput"
+  rows={[
+    {
+      name: "value / v-model",
+      type: "number",
+      description:
+        "The current value. In React, leave it undefined and pass `defaultValue` to let the component own it.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: number) => void",
+      description:
+        "React only. Called whenever the text reads as a number; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "min",
+      type: "number",
+      description: "The lowest value. The decrement button is disabled there.",
+    },
+    {
+      name: "max",
+      type: "number",
+      description: "The highest value. The increment button is disabled there.",
+    },
+    {
+      name: "step",
+      type: "number",
+      description:
+        "How far one press moves the value. A fractional step sets how many decimals are kept.",
+      default: "1",
+    },
+    {
+      name: "invalid",
+      type: "boolean",
+      description:
+        "Turns the border to the danger colour and sets `aria-invalid` on the input.",
+      default: "false",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Stops the field and both buttons taking input.",
+      default: "false",
+    },
+    {
+      name: "decrementLabel",
+      type: "string",
+      description: "Accessible name of the minus button.",
+      default: '"Decrease"',
+    },
+    {
+      name: "incrementLabel",
+      type: "string",
+      description: "Accessible name of the plus button.",
+      default: '"Increase"',
+    },
+  ]}
+/>
+
+Every other attribute is passed to the number input. `className` (React) or `class` (Vue) lands on the wrapper, which is where a width belongs.
+
+## Accessibility
+
+The field is a native `<input type="number">`, so it is announced as a spin button with its range, and `Up` and `Down` step it without the buttons. The two buttons are named by `decrementLabel` and `incrementLabel`; translate them with the rest of the interface. Name the field itself with a `<label>` or `aria-label`, and say the unit in the label or the helper text, because "15" alone does not say seconds.
+
+## Tokens
+
+<TokensNote name="number-input" />

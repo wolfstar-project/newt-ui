@@ -1,0 +1,95 @@
+---
+title: "Table"
+description: "A bordered data table with sortable headings, selectable rows and a caption."
+---
+
+Use it for records that share the same fields and that a reader compares down a column: an audit log, a member list with roles and join dates, command usage. For a handful of label and value pairs, a list reads better.
+
+It styles a native `<table>` and adds nothing between you and the markup. Sorting is yours: a heading reports that it was pressed and shows the order you tell it, and the rows are whatever you render.
+
+<ComponentPreview name="table" />
+
+## Installation
+
+<Installation name="table" />
+
+## Usage
+
+<Usage name="table" />
+
+## API reference
+
+<PropsTable
+  of="Table"
+  rows={[
+    {
+      name: "wrapperClassName / wrapperClass",
+      type: "string",
+      description:
+        "Classes for the scrolling wrapper, which is where a width or a max-height belongs.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="TableHead"
+  rows={[
+    {
+      name: "sort",
+      type: '"ascending" | "descending" | "none"',
+      description:
+        "Makes the heading a button and sets `aria-sort`. `none` is a sortable column the table is not currently sorted by.",
+    },
+    {
+      name: "onSort / @sort",
+      type: "() => void",
+      description: "Called when the sortable heading is activated.",
+    },
+    {
+      name: "align",
+      type: '"start" | "end"',
+      description: "`end` aligns the heading with a column of numbers.",
+      default: '"start"',
+    },
+    {
+      name: "scope",
+      type: '"col" | "row"',
+      description: "Which cells the heading labels.",
+      default: '"col"',
+    },
+  ]}
+/>
+
+<PropsTable
+  of="TableCell"
+  rows={[
+    {
+      name: "align",
+      type: '"start" | "end"',
+      description:
+        "`end` right-aligns the cell in left-to-right text and sets tabular figures.",
+      default: '"start"',
+    },
+  ]}
+/>
+
+<PropsTable
+  of="TableRow"
+  rows={[
+    {
+      name: "selected",
+      type: "boolean",
+      description: "Marks the row as chosen and sets `aria-selected`.",
+    },
+  ]}
+/>
+
+`TableHeader`, `TableBody` and `TableCaption` render `<thead>`, `<tbody>` and `<caption>`. Put a plain `<tr>` inside the header; `TableRow` is for body rows.
+
+## Accessibility
+
+Because it is a real table, a screen reader announces the column heading with each cell and lets the reader move by row and column. Every `TableHead` has a `scope`. Give the table a `TableCaption`, which names it, or an `aria-label`. A sortable heading is a button inside the `<th>`, and the `<th>` carries `aria-sort`, so the current order is announced and not only shown by the arrow. On a narrow screen the wrapper scrolls sideways and the cells do not wrap.
+
+## Tokens
+
+<TokensNote name="table" />

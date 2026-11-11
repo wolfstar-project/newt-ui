@@ -1,0 +1,55 @@
+/* newt-ui · Popover */
+
+/*
+ * A small panel that hangs off the button that opened it. The wrapper is the
+ * positioning context, so the panel follows its trigger without any
+ * measuring; it opens below and start-aligned unless a modifier says
+ * otherwise. Closed is the `hidden` attribute, nothing more.
+ */
+.newt-popover {
+  position: relative;
+  display: inline-flex;
+}
+.newt-popover__content {
+  position: absolute;
+  inset-block-start: calc(100% + 8px);
+  inset-inline-start: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  inline-size: 280px;
+  max-inline-size: 90vw;
+  padding: 12px;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-floating);
+  box-shadow: var(--newt-shadow-elevation-high);
+  color: var(--newt-text-secondary);
+  font-size: 14px;
+  line-height: 20px;
+}
+.newt-popover__content[hidden] {
+  display: none;
+}
+.newt-popover__content--top {
+  inset-block-start: auto;
+  inset-block-end: calc(100% + 8px);
+}
+.newt-popover__content--end {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+}
+.newt-popover__content--center {
+  inset-inline-start: 50%;
+  transform: translateX(calc(var(--newt-dir) * -50%));
+}
+.newt-popover__title {
+  margin: 0;
+  color: var(--newt-text-primary);
+  font-weight: 600;
+}
+.newt-popover__text {
+  margin: 0;
+}

@@ -1,0 +1,75 @@
+---
+title: "User Panel"
+description: "The strip at the foot of a sidebar: the signed-in user and their mute, deafen and settings controls."
+---
+
+Use it once per screen, pinned to the bottom of the navigation column, for the controls that belong to the person and not to the page: mute, deafen, open settings. It is the place a reader looks to check which account they are in.
+
+Compose it from an avatar, `UserPanelInfo` and a `UserPanelActions` row of `UserPanelButton`s.
+
+<ComponentPreview name="user-panel" />
+
+## Installation
+
+<Installation name="user-panel" />
+
+## Usage
+
+<Usage name="user-panel" />
+
+## API reference
+
+<PropsTable
+  of="UserPanelInfo"
+  rows={[
+    {
+      name: "name",
+      type: "string",
+      description: "The account's display name.",
+    },
+    {
+      name: "status",
+      type: "string",
+      description:
+        "The quieter line under the name: a status, a tag, an activity.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="UserPanelButton"
+  rows={[
+    {
+      name: "icon",
+      type: '"microphone" | "headphones" | "settings"',
+      description: "Which drawing the button carries.",
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "The button's accessible name. It has no visible text.",
+    },
+    {
+      name: "pressed / v-model:pressed",
+      type: "boolean",
+      description:
+        "Makes the button a switch and sets its state. Leave it out for a plain button.",
+    },
+    {
+      name: "onPressedChange",
+      type: "(pressed: boolean) => void",
+      description:
+        "React only. Called with the new state; Vue emits `update:pressed`.",
+    },
+  ]}
+/>
+
+`UserPanel` is a labelled region and `UserPanelActions` a plain row. Both take the attributes of the element they render.
+
+## Accessibility
+
+The panel is a `<section>` named "User controls"; pass `aria-label` to rename or translate it. Every button is named by its `label`, since an icon alone says nothing to a screen reader. A switch carries `aria-pressed`, and when it is on the icon is struck through as well as turned red, so muted and unmuted differ in shape. Name a switch for what it does ("Mute") and let the pressed state say whether it is on; do not swap the label to "Unmute".
+
+## Tokens
+
+<TokensNote name="user-panel" />

@@ -1,0 +1,36 @@
+<dialog
+  class="newt-drawer"
+  aria-labelledby="newt-drawer-title"
+  data-newt-drawer
+  open
+>
+  <header class="newt-drawer__header">
+    <h2 class="newt-drawer__title" id="newt-drawer-title">Member details</h2>
+    <button
+      class="newt-drawer__close"
+      type="button"
+      aria-label="Close"
+      data-newt-drawer-close
+    >
+      <svg viewBox="0 0 16 16" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M4.3 4.3a1 1 0 0 1 1.4 0L8 6.6l2.3-2.3a1 1 0 1 1 1.4 1.4L9.4 8l2.3 2.3a1 1 0 0 1-1.4 1.4L8 9.4l-2.3 2.3a1 1 0 0 1-1.4-1.4L6.6 8 4.3 5.7a1 1 0 0 1 0-1.4Z"
+        />
+      </svg>
+    </button>
+  </header>
+  <div class="newt-drawer__body">
+    Joined 14 March. Three roles, no warnings on record.
+  </div>
+  <footer class="newt-drawer__footer">
+    <button
+      class="newt-btn newt-btn--secondary"
+      type="button"
+      data-newt-drawer-close
+    >
+      Close
+    </button>
+    <button class="newt-btn newt-btn--primary" type="button">Edit roles</button>
+  </footer>
+</dialog>
