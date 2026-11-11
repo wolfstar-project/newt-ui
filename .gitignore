@@ -63,3 +63,6 @@ pnpm-lock.yaml.bak
 # Blume generates its hidden Astro runtime on every dev/build.
 apps/docs/.blume/
 apps/docs/.blume-verify/
+
+# skilld v3 takes this lock while it writes .skills
+.skills/.skilld-store-lock

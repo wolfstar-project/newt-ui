@@ -194,12 +194,16 @@ pnpm changeset            # add a changeset (`pnpm changeset add --empty` when n
   `newt-ui-architecture`, `newt-ui-registry`, `newt-ui-cli`,
   `newt-ui-components`, `newt-ui-trademark`. Read the one that matches what you
   are touching before you start. Third-party skills are managed by
-  [skilld](https://skilld.dev) and pinned by `.skills/skilld-lock.yaml`; the
-  hand-written skills are deliberately not in that lockfile.
-  `pnpm skills:install` restores them from the lock file, `pnpm skills:list`
-  shows what's installed, and `pnpm skills:add <owner/repo> --skill <names>`
-  adds more. The `prepare` script runs `skilld prepare --agent claude-code`
-  automatically after `pnpm install`. Skill sets are aligned with
+  [skilld](https://skilld.dev) v3 and pinned to a source commit by
+  `.skills/skilld-lock.yaml`; the hand-written skills are deliberately not in
+  that lockfile. Every installed skill is committed, so `pnpm install` does not
+  run skilld and a fresh clone needs no network for them.
+  `pnpm skills:install` restores the lock file, `pnpm skills:list` shows what's
+  installed, `pnpm skills:update` moves them to their current source commit,
+  and `pnpm skills:add <owner/repo/skill>` adds one (find the selector with
+  `pnpm exec skilld search <query>`). The first request for a skill can answer
+  `SERVICE_UNAVAILABLE` while skilld.dev prepares it; run it again a minute
+  later. Skill sets are aligned with
   `wolfstar-project/agent-zero` and `wolfstar-project/wolfstar.rocks`.
 
 ## The docs site
