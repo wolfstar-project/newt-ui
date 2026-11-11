@@ -15,7 +15,7 @@ overrides:
   # Two @nuxt/schema instances mean two nominally different `DefineNuxtConfig`
   # types, so `defineNuxtConfig(...)` type-checks as "not callable" wherever the
   # older one wins resolution. Everything here runs Nuxt 4.
-  "@nuxt/schema": npm:@nuxt/schema@4.6.1
+  "@nuxt/schema": npm:@nuxt/schema@4.6.4
   # The rolldown wasm binding pins the emnapi 2.0 beta, and pnpm then hands that
   # runtime to Astro's language server as a peer beside emnapi core 1.x. The two
   # do not fit together: `blume check` crashes with "setLastError is not a

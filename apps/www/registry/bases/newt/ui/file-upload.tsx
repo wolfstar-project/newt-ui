@@ -87,7 +87,8 @@ const FileUpload = React.forwardRef<HTMLDivElement, FileUploadProps>(
         </svg>
 
         <p className="text-sm text-newt-text-secondary">
-          Drop files here or {/*
+          Drop files here or{" "}
+          {/*
            * The label is the control: clicking the word opens the picker, and
            * the input keeps the focus ring and the keyboard behaviour it was
            * born with.
