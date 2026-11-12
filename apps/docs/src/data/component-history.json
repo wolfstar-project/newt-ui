@@ -1,0 +1,1538 @@
+{
+  "accordion": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "action-row": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "ai-chat": [],
+  "alert": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "app-invite": [
+    {
+      "hash": "20b5d6262d171a96f5d6463a58a04facfd754334",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "add app-invite component",
+      "pr": 56
+    }
+  ],
+  "app-launcher": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "attachment": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "audit-log": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "avatar-group": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "avatar": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "badge": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "bot-command-card": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "breadcrumb": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "button": [
+    {
+      "hash": "20b5d6262d171a96f5d6463a58a04facfd754334",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "add app-invite component",
+      "pr": 56
+    },
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "calendar": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "card": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "channel-header": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "channel-info": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "channel-sidebar": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "channel-topic": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "channel-welcome": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "chat-window": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "chat": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "checkbox-group": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "code-block": [
+    {
+      "hash": "3aa8e2df7ad523c34ab37b22040f98de13c8d497",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "accessible and themed Spoiler, Modal and CodeBlock",
+      "pr": 57
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "color-picker": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "command-palette": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "command-panel": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "context-menu": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "cooldown-bar": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "custom-emoji": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "direction": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "divider": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "drawer": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "dropdown": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "embed": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "empty-state": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "entity-select": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "expressions-picker": [
+    {
+      "hash": "d4e631899e83f9e251ded138da18cf4fd488ce31",
+      "date": "2026-11-07",
+      "type": "feat",
+      "subject": "add expressions picker across all targets",
+      "pr": 31
+    }
+  ],
+  "file-upload": [
+    {
+      "hash": "c509c7e6c5b2e8e2eff42947053e7e3096f62410",
+      "date": "2026-11-11",
+      "type": "fix",
+      "subject": "update all non-major dependencies",
+      "pr": 29
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "form-fields": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "inline-code": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "invite": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "kbd-tag": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "markdown": [
+    {
+      "hash": "3aa8e2df7ad523c34ab37b22040f98de13c8d497",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "accessible and themed Spoiler, Modal and CodeBlock",
+      "pr": 57
+    },
+    {
+      "hash": "18b3d835e9469dd6cc19f1a270abee41f5bc1e32",
+      "date": "2026-11-12",
+      "type": "fix",
+      "subject": "lay out markdown messages the way Discord does",
+      "pr": 58
+    },
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    }
+  ],
+  "media-gallery": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "member-list": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "mention": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "message-composer": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "message-group": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "message-list": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "modal": [
+    {
+      "hash": "3aa8e2df7ad523c34ab37b22040f98de13c8d497",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "accessible and themed Spoiler, Modal and CodeBlock",
+      "pr": 57
+    },
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "notif-badge": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "number-input": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "onboarding": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "pagination": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "permission": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "pin-input": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "poll": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "popover": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "progress": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "radio": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "reaction": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "reply-preview": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "role-tag": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "scrollbar": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "section": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "select-menu": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "server-banner": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "server-sidebar": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "settings-layout": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "side-nav": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "skeleton": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "slash-command-suggestions": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "slash-command": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "slider": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "spoiler": [
+    {
+      "hash": "3aa8e2df7ad523c34ab37b22040f98de13c8d497",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "accessible and themed Spoiler, Modal and CodeBlock",
+      "pr": 57
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "stage-banner": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "status-indicator": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "stepper": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "system-message": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "table": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "tabs": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "tag-input": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "thread-preview": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "timeline": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "timestamp": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "toast": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "token-field": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "tooltip": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "tree": [
+    {
+      "hash": "9ba77fcdec5805525ab841b62950ea4b52d45adc",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "close the gaps found adopting newt/ui in an existing app",
+      "pr": 54
+    },
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "typeset": [
+    {
+      "hash": "07b11aa9633585a20a833b26d031b6a0b6033a7e",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "scope typeset to CommonMark and GFM output",
+      "pr": 60
+    },
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    }
+  ],
+  "typing-indicator": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "user-panel": [
+    {
+      "hash": "a541f848308376b49b31d492cbecb552b1fbcec5",
+      "date": "2026-11-11",
+      "type": "feat",
+      "subject": "redesign the home page, the component index and the docs chrome",
+      "pr": 42
+    }
+  ],
+  "user-profile": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ],
+  "v2-container": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "06f4a304812b5f508d310ed9226e0d4290fd4aef",
+      "date": "2026-09-07",
+      "type": "feat",
+      "subject": "rework Discord-inspired components against wolfstar.rocks originals",
+      "pr": 12
+    }
+  ],
+  "voice-channel": [
+    {
+      "hash": "c7e6a0996cb528da3cdfdd9d92e2ad61f4a00da3",
+      "date": "2026-09-10",
+      "type": "feat",
+      "subject": "rebuild docs on Astro, add MCP and RTL support",
+      "pr": 16
+    },
+    {
+      "hash": "44e5dceade44741090499004ad007e85ec2d6dac",
+      "date": "2026-08-21",
+      "type": "chore",
+      "subject": "initialize the project"
+    }
+  ]
+}

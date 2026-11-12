@@ -246,8 +246,10 @@ means in practice:
   the React/Vue switch, the theme toggle — it also carries the theme and
   drawer click handling Blume's header owned), `Sidebar` (which draws either the guides or the component reference,
   whichever the current page belongs to), `TableOfContents`,
-  `Pagination`, `PageHeader` (the copy-page menu beside the title) and
-  `Footer` (with the trademark disclaimer); `Breadcrumbs` is emptied. Blume
+  `Pagination`, `PageHeader` (the row above the title: the sidebar group the
+  page belongs to, the link to a component's source, the copy-page menu),
+  `PageFooter` (a component page's changelog) and `Footer` (with the
+  trademark disclaimer); `Breadcrumbs` is emptied. Blume
   keeps the grid, the drawer, search and the generated routes. Blume reads
   this file statically — every entry is a path string or an object literal.
 - **Pages that are not documents live in `pages/`**: the home page, `/blocks`,
@@ -277,6 +279,12 @@ means in practice:
   one (same URLs, same head tags), reading the title and description back
   from the built page and the colours from `tokens.css`. `blume dev` still
   serves Blume's cards.
+- **A component page's changelog is a snapshot.**
+  `src/data/component-history.json` is written by
+  `pnpm --filter docs history:sync` from `git log` over each item's sources
+  and committed, because the hosts that build the site clone one commit deep.
+  `PageFooter.astro` draws it and `Toc.astro` lists it; run the sync before a
+  release.
 - **`/create` is a customizer beside a canvas.** `CreateApp` (one React
   island) writes the preset onto `[data-create-preview]` as custom properties;
   the canvas is `CreateCard.astro` tiles of live registry demos. That only

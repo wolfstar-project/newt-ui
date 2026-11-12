@@ -1,21 +1,24 @@
 ---
-import { existsSync } from "node:fs"
-import { resolve } from "node:path"
-
+import {
+  componentSources,
+  pageSourcePath,
+  routeComponent,
+} from "../../lib/page-source"
+import { NAV } from "../../lib/nav"
 import CopyPage from "../site/CopyPage.astro"
 
 /*
- * Blume's `PageHeader` layout slot: what sits just above the article. The site
- * put its copy-page menu beside the title before the Lotus port, so it goes
- * here and `theme.css` lifts it level with the `<h1>` that opens the article.
- * Blume's own page actions in the rail are hidden in its place.
+ * Blume's `PageHeader` layout slot: the row that sits just above the article.
+ * It says where the page is — the sidebar group it belongs to — and carries
+ * what a reader does with a page as a whole: go to the component's source,
+ * and the copy-page menu. Blume's own page actions in the rail are hidden in
+ * its place.
  *
- * The menu needs three things the slot is not handed directly: the page's
- * Markdown twin (Blume serves `<route>.md` for every content page), the file
- * the page is written in, for the edit link, and the registry item a
- * component page documents. The source file is looked up rather than derived,
- * because a folder's index page and a single page differ only on disk; a
- * route with no file behind it — a generated index — gets no menu at all.
+ * The slot is handed a route and nothing else, so the rest is looked up: the
+ * page's Markdown twin (Blume serves `<route>.md` for every content page),
+ * the file the page is written in, for the edit link, and the registry item a
+ * component page documents. A route with no file behind it — a generated
+ * index — gets the row without the menu.
  */
 interface Props {
   readonly route: string
@@ -23,26 +26,61 @@ interface Props {
 
 const { route } = Astro.props
 
-/* `/docs/forms` → `content/docs/forms.mdx` or `content/docs/forms/index.mdx`. */
-const stem = route.replace(/^\/+|\/+$/g, "")
-const sourcePath = [`content/${stem}.mdx`, `content/${stem}/index.mdx`].find(
-  (candidate) => existsSync(resolve(process.cwd(), candidate))
+const sourcePath = pageSourcePath(route)
+const meta = routeComponent(route)
+
+const group = NAV.find((entry) =>
+  entry.items.some((item) => item.href === route)
 )
 
-const prefix = "/docs/components/"
-const registryItem = route.startsWith(prefix)
-  ? route.slice(prefix.length)
-  : undefined
+/* Only the two framework files: the header follows the React/Vue switch. */
+const sources =
+  meta === undefined
+    ? []
+    : componentSources(meta).filter((source) => source.id !== "html")
 ---
 
-{
-  sourcePath !== undefined && (
-    <div class="docs-copy-page">
-      <CopyPage
-        markdownPath={`${route}.md`}
-        sourcePath={`apps/docs/${sourcePath}`}
-        registryItem={registryItem}
-      />
-    </div>
-  )
-}
+<div class="docs-page-top">
+  {
+    group !== undefined &&
+      (meta === undefined ? (
+        <p class="docs-eyebrow">{group.label}</p>
+      ) : (
+        <p class="docs-eyebrow">
+          <a href="/docs/components">Components</a>
+          <span aria-hidden="true">/</span>
+          {group.label}
+        </p>
+      ))
+  }
+  <div class="docs-page-actions">
+    {
+      sources.map((source) => (
+        <a
+          class="docs-page-action"
+          href={source.href}
+          target="_blank"
+          rel="noreferrer"
+          data-framework={source.id}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"
+            />
+          </svg>
+          Source
+        </a>
+      ))
+    }
+    {
+      sourcePath !== undefined && (
+        <CopyPage
+          markdownPath={`${route}.md`}
+          sourcePath={`apps/docs/${sourcePath}`}
+          registryItem={meta?.name}
+        />
+      )
+    }
+  </div>
+</div>

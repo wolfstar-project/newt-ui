@@ -1,13 +1,21 @@
 ---
-import { htmlExample } from "../../lib/html-registry"
-import { findComponent } from "../../lib/registry-meta"
+import { componentHistory } from "../../lib/component-history"
+import {
+  componentSources,
+  pageSourcePath,
+  routeComponent,
+} from "../../lib/page-source"
 import { SITE } from "../../lib/site"
 
 /*
- * Blume's `TableOfContents` layout slot, as the site drew it before the Lotus
- * port: an "On this page" label and a plain list in the right rail, the
- * current section brightened as the reader scrolls. Blume already filters the
- * headings to depths 2 and 3.
+ * Blume's `TableOfContents` layout slot: an "On this page" label over the
+ * page's sections, set against a hairline rail. The sub-sections step in from
+ * it, and the section being read is marked on the rail itself as the reader
+ * scrolls. Blume already filters the headings to depths 2 and 3.
+ *
+ * Under the outline the rail says where the page comes from: the file it is
+ * written in, its Markdown twin, and — on a component page — one link per
+ * flavour to the component's own source.
  *
  * The rail is desktop only, as it always was. Blume also renders this slot as
  * a `mobile` dropdown above the content on narrow screens; the old site had
@@ -25,70 +33,100 @@ interface Props {
 
 const { headings, variant } = Astro.props
 
+/* The slot is not handed the route, so it is read off the URL. */
+const route = Astro.url.pathname.replace(/\/$/, "")
+const meta = routeComponent(route)
+const sourcePath = pageSourcePath(route)
+const sources = meta === undefined ? [] : componentSources(meta)
+
 /*
- * On a component page the rail also says where the thing lives: one link per
- * flavour to the file a reader would otherwise have to go and find. The slot
- * is not handed the route, so it is read off the URL; the links are skipped by
- * the scroll observer below, which only follows in-page anchors.
+ * The changelog under a component page is drawn by the `PageFooter` slot, not
+ * written in the page, so Blume does not know it as a heading. It is a
+ * section of the page all the same, and it goes last.
  */
-const REPO_TREE = `${SITE.github}/blob/main`
-const prefix = "/docs/components/"
-const pathname = Astro.url.pathname.replace(/\/$/, "")
-const meta = pathname.startsWith(prefix)
-  ? findComponent(pathname.slice(prefix.length))
-  : undefined
-const isBlock = meta?.type === "registry:block"
-const sources =
-  meta === undefined
-    ? []
-    : [
-        {
-          label: "React",
-          href: `${REPO_TREE}/apps/www/registry/bases/newt/${meta.reactFiles[0]}`,
-        },
-        {
-          label: "Vue",
-          href: `${SITE.github}/tree/main/apps/vue/registry/bases/newt/${isBlock ? "blocks" : "ui"}/${meta.name}`,
-        },
-        ...(htmlExample(meta.name) === undefined
-          ? []
-          : [
-              {
-                label: "HTML & CSS",
-                href: `${REPO_TREE}/packages/cli/registry/html/components/${meta.name}.css`,
-              },
-            ]),
-      ]
+const sections =
+  meta !== undefined && componentHistory(meta.name).length > 0
+    ? [...headings, { depth: 2, slug: "changelog", text: "Changelog" }]
+    : headings
 ---
 
 {
-  variant === "desktop" && headings.length > 0 && (
+  variant === "desktop" && sections.length > 0 && (
     <nav class="toc" aria-labelledby="toc-title" data-toc>
       <p class="toc-title" id="toc-title">
         On this page
       </p>
-      <ul>
-        {headings.map((heading) => (
+      <ul class="toc-list">
+        {sections.map((heading) => (
           <li data-depth={heading.depth}>
             <a href={`#${heading.slug}`}>{heading.text}</a>
           </li>
         ))}
       </ul>
-      {sources.length > 0 && (
-        <div class="toc-sources">
-          <p class="toc-title">Source</p>
+      <div class="toc-links">
+        {sourcePath !== undefined && (
           <ul>
-            {sources.map((source) => (
-              <li>
-                <a href={source.href} target="_blank" rel="noreferrer">
-                  {source.label}
-                  <span aria-hidden="true">↗</span>
-                </a>
-              </li>
-            ))}
+            <li>
+              <a
+                href={`${SITE.github}/edit/main/apps/docs/${sourcePath}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M4 20h4L19 9l-4-4L4 16v4Zm10-14 4 4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                Edit this page
+              </a>
+            </li>
+            <li>
+              <a href={`${route}.md`}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M4 6h16v12H4V6Zm3 9V9l2.5 3L12 9v6m5-6v5m0 0-2-2m2 2 2-2"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                View as Markdown
+              </a>
+            </li>
           </ul>
-        </div>
-      )}
+        )}
+        {sources.length > 0 && (
+          <>
+            <p class="toc-title">Source</p>
+            <ul>
+              {sources.map((source) => (
+                <li>
+                  <a href={source.href} target="_blank" rel="noreferrer">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="m9 8-4 4 4 4m6-8 4 4-4 4"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    {source.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
     </nav>
   )
 }
@@ -106,7 +144,7 @@ const sources =
     const toc = document.querySelector<HTMLElement>("[data-toc]")
     if (!toc) return
     const links = [
-      ...toc.querySelectorAll<HTMLAnchorElement>("a[href^='#']"),
+      ...toc.querySelectorAll<HTMLAnchorElement>(".toc-list a[href^='#']"),
     ]
     /*
      * The top band of the viewport is what counts as "here": a heading that
