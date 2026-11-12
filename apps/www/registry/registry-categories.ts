@@ -67,6 +67,7 @@ export const categories: DocsCategory[] = [
       "message-group",
       "markdown",
       "invite",
+      "app-invite",
       "reaction",
       "expressions-picker",
       "reply-preview",

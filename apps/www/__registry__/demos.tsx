@@ -4,6 +4,7 @@ import type * as React from "react"
 import AccordionDemo from "@/registry/bases/newt/examples/accordion-demo"
 import ActionRowDemo from "@/registry/bases/newt/examples/action-row-demo"
 import AlertDemo from "@/registry/bases/newt/examples/alert-demo"
+import AppInviteDemo from "@/registry/bases/newt/examples/app-invite-demo"
 import AppLauncherDemo from "@/registry/bases/newt/examples/app-launcher-demo"
 import AttachmentDemo from "@/registry/bases/newt/examples/attachment-demo"
 import AuditLogDemo from "@/registry/bases/newt/examples/audit-log-demo"
@@ -104,6 +105,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["accordion", AccordionDemo],
   ["action-row", ActionRowDemo],
   ["alert", AlertDemo],
+  ["app-invite", AppInviteDemo],
   ["app-launcher", AppLauncherDemo],
   ["attachment", AttachmentDemo],
   ["audit-log", AuditLogDemo],

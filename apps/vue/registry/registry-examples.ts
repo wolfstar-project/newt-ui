@@ -36,6 +36,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "AppInviteDemo",
+    type: "registry:example",
+    registryDependencies: ["app-invite"],
+    files: [
+      {
+        path: "examples/AppInviteDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AppLauncherDemo",
     type: "registry:example",
     registryDependencies: ["app-launcher"],

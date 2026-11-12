@@ -1,0 +1,45 @@
+---
+title: "App Invite"
+description: "The app directory card a link to an app unfurls into inside a message: cover banner, icon, name and a call to action."
+---
+
+The card a link to an app's directory page unfurls into inside a message: the app's cover art across the top, its icon and name, an optional one-line pitch and a full-width call to action. Where [Invite](/docs/components/invite) points at a server to join, App Invite points at an app to learn about or add.
+
+<ComponentPreview name="app-invite" />
+
+## Installation
+
+<Installation name="app-invite" />
+
+## Usage
+
+<Usage name="app-invite" />
+
+Put the action in `AppInviteBody`, after `AppInviteHeader`, and give it `w-full` so it spans the card. Any [Button](/docs/components/button) variant works; `secondary` keeps the card quiet in a busy feed, `primary` makes adding the app the main step.
+
+## API reference
+
+<PropsTable
+  of="AppInviteName"
+  rows={[
+    {
+      name: "href",
+      type: "string | undefined",
+      description:
+        "Link to the app's page. Without it the name renders as plain text.",
+    },
+  ]}
+/>
+
+The registry exports `AppInvite`, `AppInviteBanner`, `AppInviteBody`, `AppInviteHeader`, `AppInviteIcon`, `AppInviteInfo`, `AppInviteName` and `AppInviteDescription`. `AppInvite` renders an `<article>`; `AppInviteBanner` and `AppInviteIcon` render an `<img>` and take `src` and `alt`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+- Label the card with its name: give `AppInviteName` an `id` and point `aria-labelledby` on `AppInvite` at it, so a screen reader announces "Newt Helper, article".
+- The banner and the icon are decorative next to the name, so they default to an empty `alt` and are hidden from assistive technology. Pass `alt` only when the image carries information the text does not.
+- Name the action for what it does ("Learn More", "Add App"). When several app cards sit in the same feed, add an `aria-label` that includes the app name, so the links are distinguishable out of context.
+- The description is clamped to two lines visually; the full text is still read out.
+
+## Tokens
+
+<TokensNote name="app-invite" />
