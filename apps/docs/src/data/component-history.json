@@ -1,0 +1,185 @@
+{
+  "accordion": [],
+  "action-row": [],
+  "alert": [],
+  "app-invite": [
+    {
+      "hash": "20b5d6262d171a96f5d6463a58a04facfd754334",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "add app-invite component",
+      "pr": 56
+    }
+  ],
+  "app-launcher": [],
+  "attachment": [],
+  "audit-log": [],
+  "avatar-group": [],
+  "avatar": [],
+  "badge": [],
+  "bot-command-card": [],
+  "breadcrumb": [],
+  "button": [
+    {
+      "hash": "20b5d6262d171a96f5d6463a58a04facfd754334",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "add app-invite component",
+      "pr": 56
+    }
+  ],
+  "calendar": [],
+  "card": [],
+  "channel-header": [],
+  "channel-info": [],
+  "channel-sidebar": [],
+  "channel-topic": [],
+  "channel-welcome": [],
+  "chat-window": [],
+  "chat": [],
+  "checkbox-group": [],
+  "code-block": [
+    {
+      "hash": "3aa8e2df7ad523c34ab37b22040f98de13c8d497",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "accessible and themed Spoiler, Modal and CodeBlock",
+      "pr": 57
+    }
+  ],
+  "color-picker": [],
+  "command-palette": [],
+  "command-panel": [],
+  "context-menu": [],
+  "cooldown-bar": [],
+  "custom-emoji": [],
+  "direction": [],
+  "divider": [],
+  "drawer": [],
+  "dropdown": [],
+  "embed": [
+    {
+      "hash": "1370df54439f2f824446a765da5ece943e07c174",
+      "date": "2026-11-12",
+      "type": "fix",
+      "subject": "match the embed surface and accent bar to the reference",
+      "pr": 65
+    }
+  ],
+  "empty-state": [],
+  "entity-select": [],
+  "expressions-picker": [
+    {
+      "hash": "d4e631899e83f9e251ded138da18cf4fd488ce31",
+      "date": "2026-11-07",
+      "type": "feat",
+      "subject": "add expressions picker across all targets",
+      "pr": 31
+    }
+  ],
+  "file-upload": [
+    {
+      "hash": "c509c7e6c5b2e8e2eff42947053e7e3096f62410",
+      "date": "2026-11-11",
+      "type": "fix",
+      "subject": "update all non-major dependencies",
+      "pr": 29
+    }
+  ],
+  "form-fields": [],
+  "inline-code": [],
+  "invite": [],
+  "kbd-tag": [],
+  "markdown": [
+    {
+      "hash": "3aa8e2df7ad523c34ab37b22040f98de13c8d497",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "accessible and themed Spoiler, Modal and CodeBlock",
+      "pr": 57
+    },
+    {
+      "hash": "18b3d835e9469dd6cc19f1a270abee41f5bc1e32",
+      "date": "2026-11-12",
+      "type": "fix",
+      "subject": "lay out markdown messages the way Discord does",
+      "pr": 58
+    }
+  ],
+  "media-gallery": [],
+  "member-list": [],
+  "mention": [],
+  "message-composer": [],
+  "message-group": [],
+  "message-list": [],
+  "modal": [
+    {
+      "hash": "3aa8e2df7ad523c34ab37b22040f98de13c8d497",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "accessible and themed Spoiler, Modal and CodeBlock",
+      "pr": 57
+    }
+  ],
+  "notif-badge": [],
+  "number-input": [],
+  "onboarding": [],
+  "pagination": [],
+  "permission": [],
+  "pin-input": [],
+  "poll": [],
+  "popover": [],
+  "progress": [],
+  "radio": [],
+  "reaction": [],
+  "reply-preview": [],
+  "role-tag": [],
+  "scrollbar": [],
+  "section": [],
+  "select-menu": [],
+  "server-banner": [],
+  "server-sidebar": [],
+  "settings-layout": [],
+  "side-nav": [],
+  "skeleton": [],
+  "slash-command-suggestions": [],
+  "slash-command": [],
+  "slider": [],
+  "spoiler": [
+    {
+      "hash": "3aa8e2df7ad523c34ab37b22040f98de13c8d497",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "accessible and themed Spoiler, Modal and CodeBlock",
+      "pr": 57
+    }
+  ],
+  "stage-banner": [],
+  "status-indicator": [],
+  "stepper": [],
+  "system-message": [],
+  "table": [],
+  "tabs": [],
+  "tag-input": [],
+  "thread-preview": [],
+  "timeline": [],
+  "timestamp": [],
+  "toast": [],
+  "token-field": [],
+  "tooltip": [],
+  "tree": [],
+  "typeset": [
+    {
+      "hash": "07b11aa9633585a20a833b26d031b6a0b6033a7e",
+      "date": "2026-11-12",
+      "type": "feat",
+      "subject": "scope typeset to CommonMark and GFM output",
+      "pr": 60
+    }
+  ],
+  "typing-indicator": [],
+  "user-panel": [],
+  "user-profile": [],
+  "v2-container": [],
+  "voice-channel": []
+}

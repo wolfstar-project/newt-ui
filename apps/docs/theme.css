@@ -2695,7 +2695,6 @@ html[data-theme="light"] .theme-icon-light {
 
 #blume-content > article > h1:first-of-type {
   margin: 0;
-  padding-inline-end: 9rem;
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.25;
@@ -2711,20 +2710,153 @@ html[data-theme="light"] .theme-icon-light {
 }
 
 /*
- * The menu renders above the article and is lifted level with its `<h1>`:
- * a zero-height box the width of the measure, the menu pinned to its end.
+ * The row above the title: where the page is on one side, what to do with the
+ * page on the other. It shares the article's measure so the actions end where
+ * the text does.
  */
-.docs-copy-page {
-  position: relative;
+.docs-page-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
   max-width: 46rem;
-  height: 0;
+  min-height: 1.9rem;
+  margin-bottom: 0.6rem;
 }
 
-.docs-copy-page > .copy-page {
-  position: absolute;
-  top: 0.15rem;
-  inset-inline-end: 0;
-  z-index: 10;
+.docs-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  color: var(--newt-brand);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* The brand hue is too dark for small type on the dark surfaces. */
+:root:not([data-theme="light"]) .docs-eyebrow {
+  color: color-mix(in oklab, var(--newt-brand) 70%, var(--newt-text-primary));
+}
+
+.docs-eyebrow a {
+  color: var(--newt-text-muted);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.docs-eyebrow a:hover {
+  color: var(--newt-text-primary);
+}
+
+.docs-eyebrow span {
+  color: var(--newt-text-muted);
+  font-weight: 400;
+}
+
+.docs-page-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-inline-start: auto;
+}
+
+.docs-page-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-secondary);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.docs-page-action:hover {
+  border-color: var(--newt-text-muted);
+  color: var(--newt-text-primary);
+}
+
+.docs-page-action svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+/* --- the component changelog under the article ----------------------- */
+
+.component-changelog {
+  max-width: 46rem;
+  margin-top: 3rem;
+}
+
+.component-changelog h2 {
+  margin: 0 0 1rem;
+  scroll-margin-top: 5rem;
+  color: var(--newt-text-primary);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.component-changelog ol {
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  list-style: none;
+}
+
+.component-changelog li {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.88rem;
+}
+
+.component-changelog li + li {
+  border-top: 1px solid var(--newt-border);
+}
+
+.component-changelog-type {
+  color: var(--newt-text-muted);
+  font-family: var(--newt-font-mono);
+  font-size: 0.72rem;
+}
+
+.component-changelog-type[data-type="feat"] {
+  color: var(--newt-online);
+}
+
+.component-changelog-type[data-type="fix"] {
+  color: var(--newt-idle);
+}
+
+.component-changelog a {
+  color: var(--newt-text-primary);
+  text-decoration: none;
+}
+
+.component-changelog a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.component-changelog-ref {
+  margin-inline-start: 0.4rem;
+  color: var(--newt-text-muted);
+  font-family: var(--newt-font-mono);
+  font-size: 0.75rem;
+}
+
+.component-changelog time {
+  color: var(--newt-text-muted);
+  font-size: 0.78rem;
+  white-space: nowrap;
 }
 
 .copy-page {
@@ -2895,12 +3027,10 @@ html[data-theme="light"] .theme-icon-light {
 }
 
 .toc-title {
-  margin: 0 0 0.5rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--newt-text-muted);
+  margin: 0 0 0.6rem;
+  color: var(--newt-text-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
 .toc ul {
@@ -2909,32 +3039,84 @@ html[data-theme="light"] .theme-icon-light {
   list-style: none;
 }
 
-.toc li[data-depth="3"] {
-  padding-inline-start: 0.75rem;
+/*
+ * The outline hangs off a hairline. Each link carries its own stretch of that
+ * line as its inline-start border, so marking the section being read is a
+ * matter of recolouring one stretch rather than moving a separate indicator.
+ */
+.toc-list a {
+  display: block;
+  overflow: hidden;
+  margin-inline-start: 0;
+  padding: 0.28rem 0 0.28rem 0.9rem;
+  border-inline-start: 1px solid var(--newt-border);
+  color: var(--newt-text-muted);
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition:
+    color var(--newt-duration-fast) var(--newt-ease),
+    border-color var(--newt-duration-fast) var(--newt-ease);
 }
 
-.toc a {
-  display: block;
-  padding: 0.2rem 0;
+.toc-list li[data-depth="3"] a {
+  padding-inline-start: 1.75rem;
+}
+
+.toc-list a:hover {
+  color: var(--newt-text-primary);
+}
+
+.toc-list a[data-active] {
+  border-inline-start-color: var(--newt-brand);
+  box-shadow: inset 1px 0 0 var(--newt-brand);
+  color: var(--newt-text-primary);
+  font-weight: 500;
+}
+
+[dir="rtl"] .toc-list a[data-active] {
+  box-shadow: inset -1px 0 0 var(--newt-brand);
+}
+
+.toc-links {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--newt-border);
+}
+
+.toc-links .toc-title {
+  margin-top: 1.25rem;
+}
+
+.toc-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
   color: var(--newt-text-muted);
   text-decoration: none;
 }
 
-.toc a:hover,
-.toc a[data-active] {
+.toc-links a:hover {
   color: var(--newt-text-primary);
 }
 
-.toc-sources {
-  margin-top: 1.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--newt-border);
+.toc-links svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
 }
 
-.toc-sources a {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
+/*
+ * A block's source sits in a panel that already draws the frame, and the file
+ * list beside it already names the file, so Blume's code block gives up its
+ * own margin, border and corners there.
+ */
+.block-viewer-source .prose > *,
+.block-viewer-source pre.astro-code {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
 }
 
 /* --- pager ------------------------------------------------------------ */

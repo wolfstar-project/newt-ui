@@ -1,0 +1,56 @@
+---
+import { changeUrl, componentHistory } from "../../lib/component-history"
+import { routeComponent } from "../../lib/page-source"
+
+/*
+ * Blume's `PageFooter` layout slot: what follows the article. On a component
+ * page that is the component's own changelog — the commits that touched its
+ * source in any flavour — so a reader who installed it a while ago can see
+ * what has moved since without leaving the page that documents it.
+ *
+ * It is drawn here rather than written into each page because it is the same
+ * list for every component and none of it is prose. The right rail lists it
+ * with the page's own sections (`Toc.astro` appends the entry).
+ */
+interface Props {
+  readonly route: string
+}
+
+const { route } = Astro.props
+
+const meta = routeComponent(route)
+const changes = meta === undefined ? [] : componentHistory(meta.name)
+
+const day = new Intl.DateTimeFormat("en", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC",
+})
+---
+
+{
+  changes.length > 0 && (
+    <section class="component-changelog" aria-labelledby="changelog">
+      <h2 id="changelog">Changelog</h2>
+      <ol>
+        {changes.map((change) => (
+          <li>
+            <span class="component-changelog-type" data-type={change.type}>
+              {change.type}
+            </span>
+            <a href={changeUrl(change)} target="_blank" rel="noreferrer">
+              {change.subject}
+              {change.pr !== undefined && (
+                <span class="component-changelog-ref">#{change.pr}</span>
+              )}
+            </a>
+            <time datetime={change.date}>
+              {day.format(new Date(`${change.date}T00:00:00Z`))}
+            </time>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}

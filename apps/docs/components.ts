@@ -14,8 +14,9 @@ import { defineComponents } from "blume"
  *
  * The `layout` slots put back the chrome the site had before the Lotus port:
  * its header (wordmark, primary links, search, the React/Vue switch, the
- * theme toggle), its sidebar, its table of contents, its pager, the
- * copy-page menu beside the title, and its footer with the trademark
+ * theme toggle), its sidebar, its table of contents, its pager, the row
+ * above the title (where the page is, its source and the copy-page menu), the
+ * component changelog under the article, and its footer with the trademark
  * disclaimer. The breadcrumb trail it never had is emptied. Blume keeps the
  * document head, the grid, the drawer, search and every generated route.
  *
@@ -46,6 +47,7 @@ export default defineComponents({
     Breadcrumbs: "./src/components/layout/NoBreadcrumbs.astro",
     Footer: "./src/components/layout/Footer.astro",
     Header: "./src/components/layout/Header.astro",
+    PageFooter: "./src/components/layout/PageFooter.astro",
     PageHeader: "./src/components/layout/PageHeader.astro",
     Pagination: "./src/components/layout/Pager.astro",
     Sidebar: "./src/components/layout/Sidebar.astro",

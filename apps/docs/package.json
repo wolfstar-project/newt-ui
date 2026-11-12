@@ -8,6 +8,7 @@
     "dev": "blume dev",
     "directory:sync": "node scripts/sync-directory.mjs",
     "docs:gen": "node scripts/gen-component-docs.mjs",
+    "history:sync": "node scripts/sync-history.mjs",
     "preview": "blume preview",
     "test": "vitest run",
     "typecheck": "blume check"
