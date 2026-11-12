@@ -36,6 +36,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "app-invite-demo",
+    type: "registry:example",
+    registryDependencies: ["app-invite"],
+    files: [
+      {
+        path: "examples/app-invite-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "app-launcher-demo",
     type: "registry:example",
     registryDependencies: ["app-launcher"],

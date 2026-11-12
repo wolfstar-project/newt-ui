@@ -43,6 +43,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "app-invite",
+    type: "registry:ui",
+    title: "App Invite",
+    description:
+      "The app directory card a link to an app unfurls into inside a message: cover banner, icon, name and a call to action.",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "ui/app-invite.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "app-launcher",
     type: "registry:ui",
     title: "App Launcher",
