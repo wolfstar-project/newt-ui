@@ -170,7 +170,7 @@ describe("the axes added after the first codes", () => {
   it("follows the project's dark selector", () => {
     const css = presetToCss(
       { ...DEFAULT_PRESET, n: "stone" },
-      "@media (prefers-color-scheme: dark)"
+      { darkSelector: "@media (prefers-color-scheme: dark)" }
     )
     expect(css).toContain("@media (prefers-color-scheme: dark) {\n  :root {")
     expect(css).toContain("    --newt-bg-base: #201e1c;")
@@ -199,6 +199,16 @@ describe("the axes added after the first codes", () => {
       /\[data-newt-theme="light"\] \{\n  --newt-bg-base: #e9e6e1;/
     )
     expect(css).not.toContain(".dark")
+  })
+
+  it("writes the installed layout for an html preset when asked, as init and apply do", () => {
+    const css = presetToCss(
+      { ...DEFAULT_PRESET, t: "html", n: "stone" },
+      { layout: "installed" }
+    )
+    expect(css).toMatch(/:root \{[^}]*--newt-bg-base: #e9e6e1;/)
+    expect(css).toMatch(/\.dark \{\n  --newt-bg-base: #201e1c;/)
+    expect(css).not.toContain("data-newt-theme")
   })
 
   it("sets the heading font apart from the body only when one is chosen", () => {
