@@ -1,0 +1,325 @@
+---
+import CodeBlock from "blume/components/content/CodeBlock.astro"
+
+import { findComponent, registryFiles, type ComponentMeta } from "../../lib/registry"
+import { SITE } from "../../lib/site"
+
+/*
+ * One block of the gallery: a toolbar, and under it either the block itself
+ * or the files that make it.
+ *
+ * The preview is a frame onto `/blocks/view/<name>` rather than the demo
+ * mounted in place, so the three widths in the toolbar are real viewports and
+ * the block answers them with its own breakpoints. The code view lists the
+ * files `add` writes, for both frameworks; which set shows follows the
+ * `data-framework` attribute like every other piece of source on the site.
+ *
+ * Nothing here is an island. The state — which view, which width, which file —
+ * is three attributes on the root, written by one delegated listener.
+ */
+interface Props {
+  readonly block: ComponentMeta
+}
+
+const { block } = Astro.props
+
+const FRAMEWORKS = ["react", "vue"] as const
+/* The three kinds of file a registry item is made of are their own grammar. */
+const LANGS = new Set(["tsx", "ts", "vue"])
+
+function langOf(path: string): string {
+  const extension = path.slice(path.lastIndexOf(".") + 1)
+  return LANGS.has(extension) ? extension : "txt"
+}
+
+const files = FRAMEWORKS.map((framework) => ({
+  framework,
+  files: registryFiles(framework, block),
+}))
+
+const parts = block.registryDependencies.flatMap((name) => {
+  const part = findComponent(name)
+  return part === undefined ? [] : [part]
+})
+
+const command = `${SITE.cli} add ${block.name}`
+/* The frame shows the block at its own size; a new tab shows it enlarged. */
+const frameUrl = `/blocks/view/${block.name}`
+const zoomUrl = `/view/${block.name}`
+
+const VIEWPORTS = [
+  {
+    id: "desktop",
+    label: "Desktop",
+    path: "M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm4 15h8m-4-3v3",
+  },
+  {
+    id: "tablet",
+    label: "Tablet",
+    path: "M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm4 15h2",
+  },
+  {
+    id: "mobile",
+    label: "Mobile",
+    path: "M9 3h6a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm2 15h2",
+  },
+] as const
+---
+
+<section
+  class="block-viewer"
+  id={block.name}
+  data-block-viewer
+  data-view="preview"
+  data-viewport="desktop"
+  data-categories={block.categories.join(" ")}
+>
+  <header class="block-viewer-head">
+    <div>
+      <h2><a href={`#${block.name}`}>{block.title}</a></h2>
+      <p>{block.description}</p>
+    </div>
+    <a class="block-viewer-docs" href={`/docs/components/${block.name}`}>
+      Documentation
+      <span aria-hidden="true">→</span>
+    </a>
+  </header>
+
+  <div class="block-viewer-bar">
+    <div class="segmented" role="group" aria-label={`${block.title}: view`}>
+      <button
+        type="button"
+        class="segmented-option"
+        data-block-view="preview"
+        aria-pressed="true">Preview</button
+      >
+      <button
+        type="button"
+        class="segmented-option"
+        data-block-view="code"
+        aria-pressed="false">Code</button
+      >
+    </div>
+
+    <div
+      class="block-viewer-viewports"
+      role="group"
+      aria-label={`${block.title}: preview width`}
+    >
+      {
+        VIEWPORTS.map((viewport) => (
+          <button
+            type="button"
+            class="block-viewer-icon"
+            data-block-viewport={viewport.id}
+            aria-pressed={viewport.id === "desktop" ? "true" : "false"}
+            title={viewport.label}
+          >
+            <span class="sr-only">{viewport.label}</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d={viewport.path}
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        ))
+      }
+      <a
+        class="block-viewer-icon"
+        href={zoomUrl}
+        target="_blank"
+        rel="noreferrer"
+        title="Open enlarged in a new tab"
+      >
+        <span class="sr-only">Open {block.title} in a new tab</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M14 4h6v6m0-6-9 9M10 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </a>
+    </div>
+
+    <button
+      type="button"
+      class="block-viewer-command"
+      data-block-copy={command}
+      title="Copy the install command"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="m6 8 4 4-4 4m6 0h6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      <code>{command}</code>
+      <span class="block-viewer-copied" data-block-copy-label aria-live="polite"
+      ></span>
+    </button>
+  </div>
+
+  <div class="block-viewer-preview" data-block-panel="preview">
+    <div class="block-viewer-stage">
+      <iframe
+        src={frameUrl}
+        title={`${block.title} preview`}
+        loading="lazy"
+        data-block-frame></iframe>
+    </div>
+  </div>
+
+  <div class="block-viewer-code" data-block-panel="code" hidden>
+    {
+      files.map(({ framework, files: list }) => (
+        <div class="block-viewer-files" data-framework={framework}>
+          <ul class="block-viewer-tree" aria-label="Files">
+            {list.map((file, index) => (
+              <li>
+                <button
+                  type="button"
+                  data-block-file={`${framework}-${index}`}
+                  aria-pressed={index === 0 ? "true" : "false"}
+                  title={file.path}
+                >
+                  <span>{file.path.slice(0, file.path.lastIndexOf("/") + 1)}</span>
+                  {file.path.slice(file.path.lastIndexOf("/") + 1)}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div class="block-viewer-source">
+            {list.map((file, index) => (
+              <div
+                data-block-source={`${framework}-${index}`}
+                hidden={index !== 0}
+              >
+                {file.source === undefined ? (
+                  <p class="demo-error">No source for {file.path}.</p>
+                ) : (
+                  <CodeBlock code={file.source} lang={langOf(file.path)} />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    parts.length > 0 && (
+      <p class="block-viewer-parts">
+        <span>Built from</span>
+        {parts.map((part) => (
+          <a href={`/docs/components/${part.name}`}>{part.title}</a>
+        ))}
+      </p>
+    )
+  }
+</section>
+
+<script>
+  /*
+   * Delegated from the document: a module script runs once per real load, so
+   * the one listener also serves a gallery Blume's client router swaps in.
+   */
+  function press(group: Iterable<Element>, chosen: Element): void {
+    for (const button of group) {
+      button.setAttribute("aria-pressed", String(button === chosen))
+    }
+  }
+
+  /*
+   * A frame has no height of its own, and a block is as tall as it is. The
+   * frame is same-origin, so its document is measured directly and the frame
+   * follows it — also when the demo hydrates, or reflows at a narrower width.
+   */
+  function fit(frame: HTMLIFrameElement): void {
+    const body = frame.contentDocument?.body
+    if (!body) return
+    const measure = () => {
+      frame.style.height = `${Math.max(body.scrollHeight, 320)}px`
+    }
+    new ResizeObserver(measure).observe(body)
+    measure()
+  }
+
+  function watchFrames(): void {
+    for (const frame of document.querySelectorAll<HTMLIFrameElement>(
+      "[data-block-frame]"
+    )) {
+      if (frame.dataset.fitted === "true") continue
+      frame.dataset.fitted = "true"
+      frame.addEventListener("load", () => fit(frame))
+      if (frame.contentDocument?.readyState === "complete") fit(frame)
+    }
+  }
+
+  document.addEventListener("click", (event) => {
+      const target = event.target instanceof Element ? event.target : null
+      const viewer = target?.closest<HTMLElement>("[data-block-viewer]")
+      if (!target || !viewer) return
+
+      const view = target.closest<HTMLElement>("[data-block-view]")
+      if (view) {
+        const name = view.dataset.blockView ?? "preview"
+        viewer.dataset.view = name
+        press(viewer.querySelectorAll("[data-block-view]"), view)
+        for (const panel of viewer.querySelectorAll<HTMLElement>(
+          "[data-block-panel]"
+        )) {
+          panel.hidden = panel.dataset.blockPanel !== name
+        }
+        return
+      }
+
+      const viewport = target.closest<HTMLElement>("[data-block-viewport]")
+      if (viewport) {
+        viewer.dataset.viewport = viewport.dataset.blockViewport
+        press(viewer.querySelectorAll("[data-block-viewport]"), viewport)
+        return
+      }
+
+      const file = target.closest<HTMLElement>("[data-block-file]")
+      if (file) {
+        const list = file.closest(".block-viewer-files")
+        if (!list) return
+        press(list.querySelectorAll("[data-block-file]"), file)
+        for (const source of list.querySelectorAll<HTMLElement>(
+          "[data-block-source]"
+        )) {
+          source.hidden = source.dataset.blockSource !== file.dataset.blockFile
+        }
+        return
+      }
+
+      const copy = target.closest<HTMLElement>("[data-block-copy]")
+      if (copy) {
+        const label = copy.querySelector<HTMLElement>("[data-block-copy-label]")
+        void navigator.clipboard
+          .writeText(copy.dataset.blockCopy ?? "")
+          .then(() => {
+            if (!label) return
+            label.textContent = "Copied"
+            window.setTimeout(() => {
+              label.textContent = ""
+            }, 1600)
+          })
+      }
+  })
+
+  document.addEventListener("astro:page-load", watchFrames)
+  watchFrames()
+</script>

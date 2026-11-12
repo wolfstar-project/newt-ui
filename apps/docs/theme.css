@@ -1546,33 +1546,431 @@
     color: var(--newt-text-link);
   }
 
-  .block-entry {
-    margin-top: 3.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--newt-border);
+  .blocks {
+    max-width: 88rem;
   }
 
-  .block-entry-head {
+  .blocks-header {
+    padding-block: 1.5rem 0.5rem;
+  }
+
+  .blocks-actions {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
   }
 
-  .block-entry h2 {
-    margin: 0 0 0.35rem;
-    font-size: 1.35rem;
-    font-weight: 700;
+  /*
+   * The category row. It sticks under the header, because the gallery is long
+   * and the filter is the only way to shorten it.
+   */
+  .blocks-filter {
+    position: sticky;
+    top: 3.5rem;
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 2rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--newt-border);
+    background: var(--newt-bg-base);
+  }
+
+  .blocks-filter button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    border: 0;
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    color: var(--newt-text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      background-color var(--newt-duration-fast) var(--newt-ease),
+      color var(--newt-duration-fast) var(--newt-ease);
+  }
+
+  .blocks-filter button span {
+    color: var(--newt-text-muted);
+    font-family: var(--newt-font-mono);
+    font-size: 0.7rem;
+  }
+
+  .blocks-filter button:hover {
     color: var(--newt-text-primary);
   }
 
-  .block-entry p {
-    max-width: 42rem;
+  .blocks-filter button[aria-pressed="true"] {
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-primary);
+  }
+
+  .blocks-filter-hint {
+    display: none;
+    margin-inline-start: auto;
+    color: var(--newt-text-muted);
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+  }
+
+  .blocks-list {
+    /* A block linked by its anchor lands under the header and the filter. */
+    scroll-margin-top: 7rem;
+  }
+
+  /* --- one block --------------------------------------------------------- */
+
+  .block-viewer {
+    margin-top: 3rem;
+    scroll-margin-top: 7.5rem;
+  }
+
+  .block-viewer[hidden] {
+    display: none;
+  }
+
+  .block-viewer-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .block-viewer-head h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .block-viewer-head h2 a {
+    color: var(--newt-text-primary);
+    text-decoration: none;
+  }
+
+  .block-viewer-head h2 a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .block-viewer-head p {
+    max-width: 46rem;
     margin: 0;
     color: var(--newt-text-secondary);
     font-size: 0.9rem;
     line-height: 1.6;
+  }
+
+  .block-viewer-docs {
+    flex-shrink: 0;
+    color: var(--newt-text-secondary);
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .block-viewer-docs:hover {
+    color: var(--newt-text-primary);
+  }
+
+  .block-viewer-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .block-viewer-bar .segmented {
+    display: inline-flex;
+  }
+
+  .block-viewer-viewports {
+    display: none;
+    align-items: center;
+    gap: 0.125rem;
+    margin-inline-start: auto;
+    padding: 0.125rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+  }
+
+  .block-viewer-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.6rem;
+    border: 0;
+    border-radius: calc(var(--newt-radius-sm) - 1px);
+    background: transparent;
+    color: var(--newt-text-muted);
+    cursor: pointer;
+    transition:
+      background-color var(--newt-duration-fast) var(--newt-ease),
+      color var(--newt-duration-fast) var(--newt-ease);
+  }
+
+  .block-viewer-icon svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .block-viewer-icon:hover {
+    color: var(--newt-text-primary);
+  }
+
+  .block-viewer-icon[aria-pressed="true"] {
+    background: var(--newt-bg-elevated);
+    color: var(--newt-text-primary);
+  }
+
+  /* The widths are a property of the preview, so they leave with it. */
+  .block-viewer[data-view="code"] [data-block-viewport] {
+    display: none;
+  }
+
+  .block-viewer-command {
+    position: relative;
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.5rem;
+    height: 1.95rem;
+    padding-inline: 0.6rem 0.75rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-secondary);
+    cursor: pointer;
+    transition:
+      border-color var(--newt-duration-fast) var(--newt-ease),
+      color var(--newt-duration-fast) var(--newt-ease);
+  }
+
+  .block-viewer-command:hover {
+    border-color: var(--newt-text-muted);
+    color: var(--newt-text-primary);
+  }
+
+  .block-viewer-command svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    flex-shrink: 0;
+    color: var(--newt-text-muted);
+  }
+
+  .block-viewer-command code {
+    overflow: hidden;
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* "Copied" covers the command rather than widening the row. */
+  .block-viewer-copied:not(:empty) {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    border-radius: inherit;
+    background: var(--newt-bg-surface);
+    color: var(--newt-text-primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .block-viewer-icon:focus-visible,
+  .block-viewer-command:focus-visible,
+  .blocks-filter button:focus-visible,
+  .block-viewer-tree button:focus-visible {
+    outline: 2px solid var(--newt-brand);
+    outline-offset: 1px;
+  }
+
+  /*
+   * The stage is the desk the frame sits on: a dotted ground wider than the
+   * frame, so a tablet or a phone width reads as a device and not as a gap.
+   */
+  .block-viewer-preview,
+  .block-viewer-code {
+    margin-top: 0.75rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    overflow: hidden;
+  }
+
+  .block-viewer-preview {
+    background-color: var(--newt-bg-surface);
+    background-image: radial-gradient(var(--newt-border) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  .block-viewer-stage {
+    width: 100%;
+    max-width: 100%;
+    margin-inline: auto;
+    background: var(--newt-bg-base);
+    transition: width var(--newt-duration-base) var(--newt-ease);
+  }
+
+  .block-viewer[data-viewport="tablet"] .block-viewer-stage {
+    width: 48rem;
+    border-inline: 1px solid var(--newt-border);
+  }
+
+  .block-viewer[data-viewport="mobile"] .block-viewer-stage {
+    width: 23.4375rem;
+    border-inline: 1px solid var(--newt-border);
+  }
+
+  .block-viewer-stage iframe {
+    display: block;
+    width: 100%;
+    height: 26rem;
+    border: 0;
+  }
+
+  .block-viewer-files {
+    display: grid;
+    max-height: 40rem;
+    background: var(--newt-bg-surface);
+  }
+
+  .block-viewer-tree {
+    display: flex;
+    gap: 0.125rem;
+    margin: 0;
+    padding: 0.5rem;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--newt-border);
+    list-style: none;
+  }
+
+  .block-viewer-tree button {
+    width: 100%;
+    padding: 0.35rem 0.6rem;
+    border: 0;
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    color: var(--newt-text-secondary);
+    overflow: hidden;
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  /* The directory over the name: the name is what tells the files apart. */
+  .block-viewer-tree button span {
+    display: block;
+    overflow: hidden;
+    color: var(--newt-text-muted);
+    font-size: 0.68rem;
+    text-overflow: ellipsis;
+  }
+
+  .block-viewer-tree button:hover {
+    color: var(--newt-text-primary);
+  }
+
+  .block-viewer-tree button[aria-pressed="true"] {
+    background: var(--newt-bg-elevated);
+    color: var(--newt-text-primary);
+  }
+
+  .block-viewer-source {
+    min-width: 0;
+    overflow: auto;
+  }
+
+  .block-viewer-parts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.75rem 0 0;
+    color: var(--newt-text-muted);
+    font-size: 0.78rem;
+  }
+
+  .block-viewer-parts a {
+    padding: 0.1rem 0.5rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    color: var(--newt-text-secondary);
+    text-decoration: none;
+  }
+
+  .block-viewer-parts a:hover {
+    border-color: var(--newt-text-muted);
+    color: var(--newt-text-primary);
+  }
+
+  /*
+   * The block enlarged to fill a tab. The stage is as wide as the block wants
+   * to be (most ask for `w-full` up to a maximum, so it is offered a measure
+   * to fill) and is scaled from its centre by the page's script.
+   */
+  .block-zoom {
+    display: grid;
+    min-height: 100dvh;
+    place-items: center;
+    overflow: auto;
+    background: var(--newt-bg-base);
+  }
+
+  .block-zoom-stage {
+    display: flex;
+    width: 32rem;
+    max-width: 100%;
+    justify-content: center;
+    transform-origin: center;
+  }
+
+  /* The block alone at its own size, inside a frame. */
+  .block-view {
+    display: flex;
+    min-height: 20rem;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  @media (min-width: 48rem) {
+    .blocks-filter-hint {
+      display: block;
+    }
+
+    .block-viewer-viewports {
+      display: inline-flex;
+    }
+
+    .block-viewer-files {
+      grid-template-columns: 16rem minmax(0, 1fr);
+    }
+
+    .block-viewer-tree {
+      flex-direction: column;
+      overflow-x: visible;
+      border-bottom: 0;
+      border-inline-end: 1px solid var(--newt-border);
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .block-viewer-command {
+      flex: 1 1 100%;
+    }
   }
 
   /* --- newt/create ------------------------------------------------------ */
@@ -1629,7 +2027,117 @@
 
   .create-pickers {
     display: grid;
+    gap: 0.5rem;
+  }
+
+  /* Related choices sit together, a hairline between one kind and the next. */
+  .create-group {
+    display: grid;
     gap: 0.25rem;
+  }
+
+  .create-group + .create-group {
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  /*
+   * The menu shares the head's first line with the title. Its list opens over
+   * the panel like a picker's, and sideways from 64rem up.
+   */
+  .create-panel-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.5rem;
+  }
+
+  .create-panel-head p {
+    grid-column: 1 / -1;
+  }
+
+  .create-menu {
+    position: relative;
+  }
+
+  .create-menu-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: var(--newt-bg-elevated);
+    color: var(--newt-text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .create-menu-trigger:hover,
+  .create-menu[data-open="true"] .create-menu-trigger {
+    color: var(--newt-text-primary);
+  }
+
+  .create-menu-trigger svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  .create-menu-popup {
+    position: absolute;
+    inset-block-start: calc(100% + 0.4rem);
+    inset-inline-end: 0;
+    z-index: 20;
+    display: grid;
+    width: 13.5rem;
+    padding: 0.3rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-floating);
+    box-shadow: var(--newt-shadow-elevation-high);
+  }
+
+  .create-menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.4rem 0.55rem;
+    border: 0;
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    color: var(--newt-text-secondary);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .create-menu-item:hover,
+  .create-menu-item:focus-visible {
+    background: var(--newt-bg-hover);
+    color: var(--newt-text-primary);
+    outline: none;
+  }
+
+  .create-menu-item[data-separated="true"] {
+    margin-top: 0.3rem;
+    border-top: 1px solid var(--newt-border);
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+    padding-top: 0.55rem;
+  }
+
+  .create-menu-item kbd {
+    color: var(--newt-text-muted);
+    font-family: var(--newt-font-mono);
+    font-size: 0.7rem;
+  }
+
+  .create-menu-trigger:focus-visible {
+    outline: 2px solid var(--newt-brand);
+    outline-offset: 1px;
   }
 
   .picker {

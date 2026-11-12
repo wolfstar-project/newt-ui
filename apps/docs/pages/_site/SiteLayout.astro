@@ -4,6 +4,8 @@ import data from "blume:data"
 
 import Footer from "../../src/components/layout/Footer.astro"
 import Header from "../../src/components/layout/Header.astro"
+import Blank from "../../src/components/layout/NoBreadcrumbs.astro"
+import FrameworkPrePaint from "../../src/components/site/FrameworkPrePaint.astro"
 import { SITE } from "../../src/lib/site"
 
 /*
@@ -30,15 +32,28 @@ interface Props {
   readonly route: string
   /** Off on pages that are a tool rather than reading, like the preview frame. */
   readonly noindex?: boolean
+  /**
+   * No header and no footer: a page that is only ever shown inside a frame on
+   * another page, like one block at the width a reader picked for it.
+   */
+  readonly bare?: boolean
 }
 
-const { title, description = SITE.tagline, route, noindex = false } = Astro.props
+const {
+  title,
+  description = SITE.tagline,
+  route,
+  noindex = false,
+  bare = false,
+} = Astro.props
 const { config } = data
 
 const site = config.site ?? SITE.url
 const canonical = new URL(route, site).href
 const card = route === "/" ? "/og/index.png" : `/og${route}.png`
-const ogImage = config.og.enabled ? new URL(card, site).href : null
+/* Blume renders no card for a dynamic route, which every bare page is. */
+const ogImage =
+  config.og.enabled && !bare ? new URL(card, site).href : null
 ---
 
 <RootLayout
@@ -62,10 +77,14 @@ const ogImage = config.og.enabled ? new URL(card, site).href : null
   indexable={!noindex}
   noindex={noindex}
   pageMode="custom"
-  layout={{ Header }}
+  layout={{ Header: bare ? Blank : Header }}
 >
+  {
+    /* The header runs this on every other page; a bare one has no header. */
+    bare && <FrameworkPrePaint />
+  }
   <div class="not-prose site-page">
     <slot />
   </div>
-  <Footer />
+  {!bare && <Footer />}
 </RootLayout>

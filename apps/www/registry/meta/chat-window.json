@@ -3,6 +3,7 @@
   "type": "registry:block",
   "title": "Chat window",
   "description": "A whole channel view: header, scrolling message list and composer, composed from the registry.",
+  "categories": ["chat"],
   "registryDependencies": [
     "channel-header",
     "chat",

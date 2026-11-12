@@ -1,15 +1,21 @@
 ---
-import ComponentPreview from "../../src/components/mdx/ComponentPreview.astro"
-import PmTabs from "../../src/components/mdx/PmTabs.astro"
+import BlockViewer from "../../src/components/site/BlockViewer.astro"
 import { COMPONENTS } from "../../src/lib/registry"
+import { SITE } from "../../src/lib/site"
 import SiteLayout from "../_site/SiteLayout.astro"
 
 /*
  * Blocks are registry items like any other — `newtui add chat-window` writes
  * them — so this gallery reads the same meta the component pages do rather
- * than keeping a list of its own.
+ * than keeping a list of its own. The filter is the `categories` each block's
+ * meta file declares, in the order they first appear.
  */
-const blocks = COMPONENTS.filter((component) => component.categorySlug === "blocks")
+const blocks = COMPONENTS.filter((item) => item.type === "registry:block")
+const categories = [...new Set(blocks.flatMap((block) => block.categories))]
+
+function label(category: string): string {
+  return category.charAt(0).toUpperCase() + category.slice(1)
+}
 ---
 
 <SiteLayout
@@ -19,31 +25,67 @@ const blocks = COMPONENTS.filter((component) => component.categorySlug === "bloc
 >
   <div class="blocks">
     <header class="blocks-header">
-      <h1>Blocks</h1>
+      <h1>Building blocks for a chat app</h1>
       <p>
-        A block is an arrangement of components, not new markup: the parts are the
-        ones documented under Components, and restyling one is still a matter of
-        overriding a token. Install a block and you get every component it is built
-        from.
+        Whole sections, already assembled. A block is an arrangement of
+        components, not new markup: the parts are the ones documented under
+        Components, and restyling one is still a matter of overriding a token.
+        Install a block and you get every component it is built from.
       </p>
+      <div class="blocks-actions">
+        <a class="button-primary" href="#blocks">Browse blocks</a>
+        <a class="button-secondary" href="/docs/registry">Publish your own</a>
+      </div>
     </header>
 
-    {
-      blocks.map((block) => (
-        <section class="block-entry" id={block.name}>
-          <div class="block-entry-head">
-            <div>
-              <h2>{block.title}</h2>
-              <p>{block.description}</p>
-            </div>
-            <a class="button-secondary" href={`/docs/components/${block.name}`}>
-              Read the docs
-            </a>
-          </div>
-          <PmTabs cmd={`newtui@latest add ${block.name}`} />
-          <ComponentPreview name={block.name} size="full" />
-        </section>
-      ))
-    }
+    <nav class="blocks-filter" aria-label="Block categories" data-blocks-filter>
+      <button type="button" data-blocks-category="" aria-pressed="true">
+        All
+        <span>{blocks.length}</span>
+      </button>
+      {
+        categories.map((category) => (
+          <button
+            type="button"
+            data-blocks-category={category}
+            aria-pressed="false"
+          >
+            {label(category)}
+            <span>
+              {
+                blocks.filter((block) => block.categories.includes(category))
+                  .length
+              }
+            </span>
+          </button>
+        ))
+      }
+      <code class="blocks-filter-hint">{SITE.cli} add &lt;block&gt;</code>
+    </nav>
+
+    <div class="blocks-list" id="blocks">
+      {blocks.map((block) => <BlockViewer block={block} />)}
+    </div>
   </div>
 </SiteLayout>
+
+<script>
+  /* Delegated, so it also serves the page when the client router swaps it in. */
+  document.addEventListener("click", (event) => {
+    const button =
+      event.target instanceof Element
+        ? event.target.closest<HTMLElement>("[data-blocks-category]")
+        : null
+    if (!button) return
+    const category = button.dataset.blocksCategory ?? ""
+    for (const other of document.querySelectorAll("[data-blocks-category]")) {
+      other.setAttribute("aria-pressed", String(other === button))
+    }
+    for (const viewer of document.querySelectorAll<HTMLElement>(
+      "[data-block-viewer]"
+    )) {
+      const own = (viewer.dataset.categories ?? "").split(" ")
+      viewer.hidden = category !== "" && !own.includes(category)
+    }
+  })
+</script>

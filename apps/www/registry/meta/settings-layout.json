@@ -3,6 +3,7 @@
   "type": "registry:block",
   "title": "Settings layout",
   "description": "A settings screen: grouped sections down the side and the chosen section's breadcrumb, heading and content beside them.",
+  "categories": ["settings"],
   "registryDependencies": ["side-nav", "breadcrumb"],
   "reactFiles": ["blocks/settings-layout/settings-layout.tsx"],
   "vueFiles": ["SettingsLayout.vue", "types.ts", "index.ts"],

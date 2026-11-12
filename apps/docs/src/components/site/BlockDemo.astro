@@ -1,0 +1,38 @@
+---
+import type { ComponentMeta } from "../../lib/registry"
+import ReactDemo from "../demo/ReactDemo"
+import VueDemo from "../demo/VueDemo.vue"
+
+/*
+ * A block's live demo on a page that has no header: both framework islands,
+ * and the listener that stands in for the switches the header would carry.
+ * The page follows the two `localStorage` keys the rest of the site writes —
+ * the `storage` event fires in every other document of the origin, so a frame
+ * on `/blocks`, or a tab opened from it, changes with the page it came from.
+ */
+interface Props {
+  readonly block: ComponentMeta
+}
+
+const { block } = Astro.props
+---
+
+<ReactDemo client:only="react" demo={block.reactDemo} />
+<VueDemo client:only="vue" demo={block.vueDemo} />
+
+<script>
+  import {
+    $framework,
+    FRAMEWORK_STORAGE_KEY,
+    isFramework,
+  } from "../../stores/framework"
+
+  window.addEventListener("storage", (event) => {
+    if (event.key === FRAMEWORK_STORAGE_KEY && isFramework(event.newValue)) {
+      $framework.set(event.newValue)
+    }
+    if (event.key === "blume-theme" && event.newValue !== null) {
+      document.documentElement.dataset.theme = event.newValue
+    }
+  })
+</script>

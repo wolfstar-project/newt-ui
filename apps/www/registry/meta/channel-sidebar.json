@@ -3,6 +3,7 @@
   "type": "registry:block",
   "title": "Channel sidebar",
   "description": "The column a server is navigated from: its name, its channels as a tree and the user panel at the foot.",
+  "categories": ["navigation"],
   "registryDependencies": ["tree", "user-panel", "status-indicator", "avatar"],
   "reactFiles": ["blocks/channel-sidebar/channel-sidebar.tsx"],
   "vueFiles": ["ChannelSidebar.vue", "types.ts", "index.ts"],
