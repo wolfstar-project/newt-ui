@@ -357,6 +357,16 @@ function darkRule(selector: string, lines: readonly string[]): string[] {
   return [`${selector} {`, ...lines, "}"]
 }
 
+/** Which of the two token layouts the overrides are written for. */
+export type PresetLayout = "installed" | "tokens"
+
+export interface PresetCssOptions {
+  /** The project's dark selector (`.dark` when it has not chosen another). */
+  readonly darkSelector?: string
+  /** Defaults to `tokens` for an `html` preset and `installed` for the rest. */
+  readonly layout?: PresetLayout
+}
+
 /** Declaration groups as one block, a blank line between one group and the next. */
 function joined(groups: string[][]): string[] {
   return groups.flatMap((group, index) =>
@@ -374,12 +384,18 @@ function joined(groups: string[][]): string[] {
  * project's dark selector, so the surfaces and shadows a preset restates follow
  * the same layout: light in `:root`, dark under `darkSelector`. The HTML/CSS
  * distribution is laid out the other way (`tokens.css`: dark in `:root`, light
- * under `.newt-light`), so a preset whose target is `html` follows that.
+ * under `.newt-light`), so printed CSS for an `html` preset follows that unless
+ * the caller says otherwise. `init` and `apply` always ask for the installed
+ * layout: they write after the tokens `init` installed, whatever the target.
  */
 export function presetToCss(
   preset: Preset,
-  darkSelector: string = DEFAULT_DARK_SELECTOR
+  options: PresetCssOptions = {}
 ): string {
+  const {
+    darkSelector = DEFAULT_DARK_SELECTOR,
+    layout = preset.t === "html" ? "tokens" : "installed",
+  } = options
   const code = encodePreset(preset)
   const radius = RADIUS_SCALES[preset.r]
   const font = FONT_STACKS[preset.f]
@@ -421,7 +437,7 @@ export function presetToCss(
    * The HTML distribution keeps the dark set in `:root` and opts into the
    * light one; every installed project (`init`) is the other way round.
    */
-  const html = preset.t === "html"
+  const html = layout === "tokens"
   const rootSet = joined(sets(html ? "dark" : "light"))
   const otherSet = joined(sets(html ? "light" : "dark"))
 
