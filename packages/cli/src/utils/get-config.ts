@@ -2,6 +2,7 @@ import path from "node:path"
 
 import { z } from "zod"
 
+import { registriesSchema } from "../registry/namespaces.js"
 import { pathExists, readFileIfExists } from "./fileSystem.js"
 import {
   BUNDLERS,
@@ -84,6 +85,13 @@ export const rawConfigSchema = z
     }),
     iconLibrary: z.string().optional(),
     registry: z.string().optional(),
+    /**
+     * Third-party registries by namespace: `"@acme": "https://acme.dev/r/{name}.json"`,
+     * or the object form with `headers` and `params` for a private one. A
+     * namespace missing from here is looked up in the framework's public
+     * directory, so this is only needed for registries that are not listed.
+     */
+    registries: registriesSchema.optional(),
   })
   .strict()
 

@@ -65,6 +65,21 @@ whole tree and installed in one pass.
 A file already on disk is kept, not replaced: you are asked, and with `--yes` it
 is skipped and reported.
 
+### Third-party registries [#add-third-party]
+
+A name written `@registry/item` installs from somebody else's registry:
+
+```bash
+npx newtui@latest add @magicui/marquee      # React: the shadcn/ui directory
+npx newtui@latest add @ai-elements/message  # Vue: the shadcn-vue directory
+npx newtui@latest view @magicui/marquee     # read it first
+```
+
+The namespace resolves through `registries` in
+[`components.json`](/docs/components-json#registries), then through the
+community directory of your framework. The [directory](/docs/directory) lists
+them and says what the install does to your stylesheet.
+
 ## list [#list]
 
 Prints the registry.

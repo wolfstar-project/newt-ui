@@ -11,6 +11,28 @@ import {
   transformContent,
 } from "../transformers/imports.js"
 
+/*
+ * A registry names its own paths, and a third-party one is not ours to vouch
+ * for: nothing it serves may climb out of the directory it was given. `--path`
+ * and the aliases are the reader's own and stay free to point anywhere.
+ */
+function assertContainedPaths(items: RegistryItem[]): void {
+  for (const item of items) {
+    for (const rawFile of item.files ?? []) {
+      const file = normalizeFile(rawFile, item.type)
+      if (!file) continue
+      for (const served of [file.path, file.target]) {
+        if (served === undefined) continue
+        if (path.isAbsolute(served) || served.split(/[/\\]/).includes("..")) {
+          throw new Error(
+            `Refusing to write "${served}" from "${item.name}": a registry path may not be absolute or contain "..".`
+          )
+        }
+      }
+    }
+  }
+}
+
 export async function updateFiles(
   items: RegistryItem[],
   config: Config,
@@ -18,6 +40,9 @@ export async function updateFiles(
 ): Promise<{ written: string[]; skipped: string[] }> {
   const written: string[] = []
   const skipped: string[] = []
+
+  /* Every path first: a refusal halfway through would leave half a tree. */
+  assertContainedPaths(items)
 
   for (const item of items) {
     for (const rawFile of item.files ?? []) {

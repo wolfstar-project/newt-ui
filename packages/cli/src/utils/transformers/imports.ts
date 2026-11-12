@@ -66,6 +66,20 @@ function transformImports(content: string, config: Config): string {
       `${config.aliases.components}/`
     )
   }
+  /*
+   * A third-party registry keeps its sources under its own style directory —
+   * `@/registry/new-york-v4/ui/button` — and means the same four places.
+   */
+  out = out.replace(/@\/registry\/[\w.-]+\/ui\//g, `${uiAlias}/`)
+  out = out.replace(
+    /@\/registry\/[\w.-]+\/(?:hooks|composables)\//g,
+    `${hooksAlias}/`
+  )
+  out = out.replace(/@\/registry\/[\w.-]+\/lib\//g, `${libAlias}/`)
+  out = out.replace(
+    /@\/registry\/[\w.-]+\/(?:blocks|examples|components)\//g,
+    `${config.aliases.components}/`
+  )
   out = out.replace(/(["'])@\/lib\/utils\1/g, `$1${config.aliases.utils}$1`)
   return out
 }
@@ -127,6 +141,21 @@ function relativeToRoot(
 }
 
 /**
+ * A multi-file component from another registry says where its files sit under
+ * the components directory — `components/ai-elements/message/Message.vue` —
+ * and flattening that would pile every part of every component into one
+ * folder. A path with no `components/` segment has nothing to keep.
+ */
+function belowComponents(filePath: string): string {
+  const normalized = filePath.replace(/^\.?\//, "")
+  const index = normalized.lastIndexOf("components/")
+  const atSegment = index === 0 || normalized[index - 1] === "/"
+  return index !== -1 && atSegment
+    ? normalized.slice(index + "components/".length)
+    : path.basename(normalized)
+}
+
+/**
  * Resolve where a registry file should be written based on its type and the user's aliases.
  */
 export function resolveTargetPath(
@@ -135,7 +164,11 @@ export function resolveTargetPath(
   config: Config
 ): string {
   if (file.target) {
-    return path.resolve(config.resolvedPaths.cwd, file.target)
+    /* shadcn registries write `~/` for "the project root". */
+    return path.resolve(
+      config.resolvedPaths.cwd,
+      file.target.replace(/^~\//, "")
+    )
   }
   const type = file.type ?? item.type
   switch (type) {
@@ -177,7 +210,7 @@ export function resolveTargetPath(
     case "registry:example":
       return path.resolve(
         config.resolvedPaths.components,
-        transformFileName(path.basename(file.path), config)
+        transformFileName(belowComponents(file.path), config)
       )
     case "registry:page":
     case "registry:file":

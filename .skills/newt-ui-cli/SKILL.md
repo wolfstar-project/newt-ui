@@ -44,6 +44,12 @@ compatibility shim belongs there, not spread across the commands.
   exercised through `InMemoryTransport.createLinkedPair()`.
 - `src/schema/index.ts` — re-exports the registry wire contracts.
 - `src/registry/` — wire schemas, fetching and dependency-tree resolution.
+- `src/registry/namespaces.ts` — third-party registries. `@registry/item`
+  resolves through `registries` in `components.json`, the built-in `@shadcn`
+  entry, then the framework's community directory (shadcn/ui for React,
+  shadcn-vue for Vue; the two publish different JSON shapes and both are
+  parsed). It also holds the shadcn colour bridge `add` appends on Tailwind v4,
+  which `shadcn-bridge.test.ts` pins to tokens that exist.
 - `src/utils/get-config.ts` — `components.json` schemas, migration and path resolution.
 - `src/utils/preset.ts` — the newt/create codec (`nt1.…`), the token overrides
   it renders, and `templateFor()`. It is duplicated in `apps/docs/src/lib/preset.ts`
@@ -71,6 +77,11 @@ compatibility shim belongs there, not spread across the commands.
   `src/registry/schema.ts` before writing a file.
 - The registry URL resolves as `--registry` > `NEWT_REGISTRY_URL` > the
   package default. Never hardcode a URL at a call site.
+- A third-party item is somebody else's payload: parse it with
+  `thirdPartyRegistryItemSchema`, resolve its bare dependencies from `@shadcn`
+  rather than from newt/ui, and never let a path it names leave the project.
+  Tests point `registries` or `NEWT_REGISTRY_DIRECTORY_URL` at the local
+  server; none may reach the live directories.
 - Resolve write targets through the user's `components.json` aliases, not by
   guessing. A `src/`-prefixed css path means the project uses a `src`
   directory, and `init` must resolve `@/lib/utils` into `src/lib/` even

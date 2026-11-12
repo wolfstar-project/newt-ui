@@ -8,10 +8,12 @@ import {
   getRegistryUrl,
   resolveTree,
 } from "../registry/api.js"
+import { isNamespaced, SHADCN_BRIDGE_ITEM } from "../registry/namespaces.js"
 import type { RegistryItem } from "../schema/index.js"
 import type { Config } from "../utils/get-config.js"
 import { highlighter, logger } from "../utils/logger.js"
 import { promptConfirm, promptMultiselect } from "../utils/prompts.js"
+import { detectTailwindMajor } from "../utils/tailwind.js"
 import { updateCss } from "../utils/updaters/update-css.js"
 import { updateDependencies } from "../utils/updaters/update-dependencies.js"
 import { updateFiles } from "../utils/updaters/update-files.js"
@@ -84,6 +86,28 @@ export function importHint(
   return `import { ... } from "${base}/${item.name}"`
 }
 
+/**
+ * A third-party component is written against shadcn's colour names. On
+ * Tailwind v4 those are bridged to the project's tokens in one `@theme` block;
+ * v3 has no stylesheet-level equivalent, so the reader is told instead.
+ */
+async function withShadcnBridge(
+  tree: RegistryItem[],
+  names: string[],
+  config: Config
+): Promise<RegistryItem[]> {
+  if (!names.some(isNamespaced)) return tree
+  const major = await detectTailwindMajor(
+    config.resolvedPaths.cwd,
+    config.resolvedPaths.tailwindCss
+  )
+  if (major === 4) return [SHADCN_BRIDGE_ITEM, ...tree]
+  logger.warn(
+    "Third-party components use shadcn's colour names (bg-primary, text-muted-foreground, ...). On Tailwind v3 add them to the theme in tailwind.config yourself; on v4 newtui maps them to your tokens."
+  )
+  return tree
+}
+
 async function runAdd(
   config: Config,
   registryUrl: string,
@@ -99,7 +123,15 @@ async function runAdd(
   resolveSpinner.start("Resolving registry dependencies...")
   let tree: RegistryItem[]
   try {
-    tree = await resolveTree(registryUrl, config.style, names)
+    tree = await resolveTree(
+      {
+        registryUrl,
+        style: config.style,
+        framework: config.framework,
+        registries: config.registries,
+      },
+      names
+    )
   } catch (error) {
     resolveSpinner.stop("Failed to resolve components.")
     throw error
@@ -116,7 +148,7 @@ async function runAdd(
   }
 
   const { written, skipped } = await updateFiles(tree, config, options)
-  await updateCss(tree, config)
+  await updateCss(await withShadcnBridge(tree, names, config), config)
 
   for (const file of written) logger.success(`+ ${file}`)
   for (const file of skipped)
