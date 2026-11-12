@@ -186,9 +186,19 @@ describe("the axes added after the first codes", () => {
     )
   })
 
-  it("writes a shadow both sets share once", () => {
+  it("writes a shadow both sets share under both, so no selector overrides it", () => {
     const css = presetToCss({ ...DEFAULT_PRESET, s: "flat" })
-    expect(css.match(/--newt-shadow-elevation-high/g)).toHaveLength(1)
+    expect(css.match(/--newt-shadow-elevation-high/g)).toHaveLength(2)
+    expect(css).toMatch(/\.dark \{\n  --newt-shadow-elevation-low: none;/)
+  })
+
+  it("lays the HTML target out the way tokens.css is: dark in :root, light opt-in", () => {
+    const css = presetToCss({ ...DEFAULT_PRESET, t: "html", n: "stone" })
+    expect(css).toMatch(/:root \{[^}]*--newt-bg-base: #201e1c;/)
+    expect(css).toMatch(
+      /\[data-newt-theme="light"\] \{\n  --newt-bg-base: #e9e6e1;/
+    )
+    expect(css).not.toContain(".dark")
   })
 
   it("sets the heading font apart from the body only when one is chosen", () => {
