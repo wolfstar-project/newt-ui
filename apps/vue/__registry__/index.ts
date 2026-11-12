@@ -48,6 +48,28 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ai-chat",
+    {
+      name: "ai-chat",
+      type: "registry:block",
+      registryDependencies: [
+        "chat",
+        "message-list",
+        "message-group",
+        "message-composer",
+        "markdown",
+        "typing-indicator",
+        "avatar",
+        "button",
+      ],
+      files: [
+        "registry/bases/newt/blocks/ai-chat/AiChat.vue",
+        "registry/bases/newt/blocks/ai-chat/types.ts",
+        "registry/bases/newt/blocks/ai-chat/index.ts",
+      ],
+    },
+  ],
+  [
     "alert",
     {
       name: "alert",
@@ -1483,6 +1505,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ActionRowDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ActionRowDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AiChatDemo",
+    {
+      name: "AiChatDemo",
+      type: "registry:example",
+      registryDependencies: ["ai-chat"],
+      files: ["registry/bases/newt/examples/AiChatDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AiChatDemo.vue")
       ),
     },
   ],

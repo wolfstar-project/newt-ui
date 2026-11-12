@@ -25,6 +25,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "AiChatDemo",
+    type: "registry:example",
+    registryDependencies: ["ai-chat"],
+    files: [
+      {
+        path: "examples/AiChatDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AlertDemo",
     type: "registry:example",
     registryDependencies: ["alert"],

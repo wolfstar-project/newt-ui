@@ -29,6 +29,29 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "ai-chat",
+    type: "registry:block",
+    title: "AI chat",
+    description:
+      "A conversation with an assistant: starter prompts, markdown replies, a typing state and the composer, composed from the registry.",
+    registryDependencies: [
+      "chat",
+      "message-list",
+      "message-group",
+      "message-composer",
+      "markdown",
+      "typing-indicator",
+      "avatar",
+      "button",
+    ],
+    files: [
+      {
+        path: "blocks/ai-chat/ai-chat.tsx",
+        type: "registry:block",
+      },
+    ],
+  },
+  {
     name: "alert",
     type: "registry:ui",
     title: "Alert",

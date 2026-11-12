@@ -1,0 +1,124 @@
+---
+title: "AI chat"
+description: "A conversation with an assistant: starter prompts, markdown replies, a typing state and the composer, composed from the registry."
+---
+
+A whole assistant conversation, ready to wire to a model: who you are talking to, the exchange so far, and the composer. Before the first message the list gives way to a greeting and a few prompts to start from, and while a reply is on its way the assistant is shown writing.
+
+The block is the arrangement, not a client. It calls no model and knows no transport: it draws the `messages` you give it and tells you what was sent. Calling the model, appending the reply (or growing it as it streams) and setting `pending` stay in your application, so it works with any SDK or none.
+
+Send a message in the preview: the reply is canned and arrives after a pause.
+
+<ComponentPreview name="ai-chat" size="full" />
+
+## Installation
+
+<Installation name="ai-chat" />
+
+## Usage
+
+<Usage name="ai-chat" />
+
+Keep the conversation in state, append the user's message when the block reports it, and set `pending` while your model answers. To stream, append the assistant's message once and replace its `body` as the text arrives; the block renders whatever the array holds.
+
+## API reference
+
+<PropsTable
+  of="AiChat"
+  rows={[
+    {
+      name: "assistantName",
+      type: "string",
+      description:
+        "The assistant's name. It labels the header, the assistant's messages, the composer and the conversation for screen readers.",
+    },
+    {
+      name: "messages",
+      type: "readonly AiChatMessage[]",
+      description:
+        "The conversation, oldest first. An empty array shows the greeting and the prompts.",
+    },
+    {
+      name: "caption",
+      type: "string",
+      description:
+        "A quiet line under the name: the model in use, or what the assistant is for.",
+    },
+    {
+      name: "userName",
+      type: "string",
+      default: '"You"',
+      description: "The name shown on the user's messages.",
+    },
+    {
+      name: "pending",
+      type: "boolean",
+      default: "false",
+      description:
+        "A reply is being written. Shows the assistant writing above the composer.",
+    },
+    {
+      name: "greeting",
+      type: "string",
+      default: '"How can I help?"',
+      description: "The line above the prompts, before the first message.",
+    },
+    {
+      name: "suggestions",
+      type: "readonly string[]",
+      default: "[]",
+      description:
+        "Prompts offered before the first message. Choosing one sends it as written.",
+    },
+    {
+      name: "onSend / @send",
+      type: "(message: string) => void",
+      description:
+        "Called with the text when the user submits the composer or chooses a prompt.",
+    },
+    {
+      name: "onAttach / @attach",
+      type: "() => void",
+      description:
+        "Called when the add button in the composer is pressed. The composer always draws that button, so without a handler it does nothing: open your own file picker here.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="AiChatMessage"
+  rows={[
+    {
+      name: "id",
+      type: "string",
+      description: "A stable key for the message.",
+    },
+    {
+      name: "role",
+      type: '"user" | "assistant"',
+      description:
+        "Who wrote it. An assistant's message carries the AI tag and its body is rendered as chat markdown; a user's body is shown as written.",
+    },
+    { name: "body", type: "string", description: "The text of the message." },
+    {
+      name: "sentAt",
+      type: "string",
+      description: "ISO timestamp, for the `<time>` element.",
+    },
+    {
+      name: "displayTime",
+      type: "string",
+      description: "The timestamp as the reader sees it.",
+    },
+  ]}
+/>
+
+The root takes the native attributes of the `<div>` it renders; React uses `className`, Vue uses `class`.
+
+## Accessibility
+
+The conversation is a labelled, focusable scrolling region, so a keyboard user can reach it and scroll back through it. The writing state is a `role="status"` region that is always in the page, so the "is writing" text appearing is announced without moving focus. The composer is named "Message" plus the assistant's name. The list follows new text while the reader is at the bottom and stays put once they have scrolled up; sending a message scrolls to the bottom again. In React pass a new `messages` array as a reply streams in; in Vue a deep change to it is enough. The AI tag has an accessible name of its own ("AI assistant") rather than relying on the two letters. Say plainly somewhere in your product that the replies are generated: the tag marks who is speaking, it does not explain what that means.
+
+## Tokens
+
+<TokensNote name="ai-chat" />

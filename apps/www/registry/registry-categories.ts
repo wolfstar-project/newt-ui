@@ -152,6 +152,7 @@ export const categories: DocsCategory[] = [
     label: "Blocks",
     components: [
       "chat-window",
+      "ai-chat",
       "server-sidebar",
       "channel-sidebar",
       "command-panel",
