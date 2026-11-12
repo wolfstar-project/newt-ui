@@ -54,6 +54,11 @@ export interface AiChatProps extends React.ComponentProps<"div"> {
   /** Prompts offered before the first message; choosing one sends it. */
   suggestions?: readonly string[]
   onSend?: (message: string) => void
+  /**
+   * Called when the composer's add button is pressed. The composer always
+   * draws that button, so without this it does nothing: open your own picker.
+   */
+  onAttach?: () => void
 }
 
 function initial(name: string): string {
@@ -69,6 +74,7 @@ export function AiChat({
   greeting = "How can I help?",
   suggestions = [],
   onSend,
+  onAttach,
   className,
   ...props
 }: AiChatProps) {
@@ -197,6 +203,7 @@ export function AiChat({
           <MessageComposer
             channelName={assistantName}
             aria-label={`Message ${assistantName}`}
+            onAdd={onAttach}
             placeholder={`Ask ${assistantName} anything`}
             value={value}
             onValueChange={setValue}
