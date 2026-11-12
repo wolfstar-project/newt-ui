@@ -8,6 +8,7 @@ import {
 import { getConfig } from "../utils/get-config.js"
 import { highlighter, logger } from "../utils/logger.js"
 import { decodePreset, presetToCss } from "../utils/preset.js"
+import { resolveDarkSelector } from "../utils/tailwind.js"
 import {
   presetWriteKind,
   updatePresetCss,
@@ -58,7 +59,11 @@ export async function apply(options: ApplyOptions): Promise<void> {
   }
 
   const kind = presetWriteKind(existing)
-  await updatePresetCss(cssPath, preset)
+  await updatePresetCss(
+    cssPath,
+    preset,
+    resolveDarkSelector(config.tailwind.darkSelector)
+  )
 
   outro(
     `${kind === "replaced" ? "Replaced" : "Added"} the preset block in ${highlighter.info(relativePath(cwd, cssPath))}.`
