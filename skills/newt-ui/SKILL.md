@@ -51,6 +51,13 @@ reach for, `add typeset` is the answer rather than a stylesheet of your own.
 A chat message written in chat markdown (mentions, timestamps, spoilers) is the
 opposite case: `add markdown` parses it and renders the library's components.
 
+`add @registry/item` installs from a third-party shadcn-compatible registry —
+the shadcn/ui directory in a React project, the shadcn-vue one in a Vue
+project, or a namespace declared under `registries` in `components.json`. Reach
+for it only when newt/ui has no component for the job, and `view` it first:
+that code is not this library's. On Tailwind v4 its shadcn colour names are
+mapped onto the `--newt-*` tokens automatically.
+
 If the editor has the MCP server configured (`npx newtui@latest mcp init
 --client claude`), prefer its tools over the shell: they answer the same
 questions without spawning a process. See `mcp.md`.

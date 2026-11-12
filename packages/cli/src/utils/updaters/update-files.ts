@@ -24,6 +24,21 @@ export async function updateFiles(
       const file = normalizeFile(rawFile, item.type)
       if (!file) continue
 
+      /*
+       * A registry names its own paths, and a third-party one is not ours to
+       * vouch for: nothing it serves may climb out of the directory it was
+       * given. `--path` and the aliases are the reader's own and stay free to
+       * point anywhere.
+       */
+      for (const served of [file.path, file.target]) {
+        if (served === undefined) continue
+        if (path.isAbsolute(served) || served.split(/[/\\]/).includes("..")) {
+          throw new Error(
+            `Refusing to write "${served}" from "${item.name}": a registry path may not be absolute or contain "..".`
+          )
+        }
+      }
+
       // Preserve Vue component directories when installing to a custom path.
       // Explicit registry targets take precedence over the command's --path.
       let target = resolveTargetPath(file, item, config)

@@ -37,6 +37,7 @@ export const GUIDES: readonly NavGroup[] = [
       { href: "/docs/dark-mode", label: "Dark mode" },
       { href: "/docs/rtl", label: "RTL" },
       { href: "/docs/cli", label: "CLI" },
+      { href: "/docs/directory", label: "Directory", labelDiffers: true },
       { href: "/docs/javascript", label: "JavaScript" },
       { href: "/docs/html-css", label: "HTML & CSS" },
       { href: "/docs/using-with-ai", label: "Using with AI" },

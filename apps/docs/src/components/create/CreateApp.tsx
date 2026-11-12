@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { INSTALL_TARGETS } from "@/lib/install-targets"
 import {
@@ -11,14 +11,17 @@ import {
   PRESET_MODES,
   PRESET_RADII,
   type Preset,
+  type PresetFont,
+  type PresetRadius,
 } from "@/lib/preset"
 
 import FrameworkGlyph from "./FrameworkGlyph"
-import PresetOutput from "./PresetOutput"
+import Picker, { type PickerOption } from "./Picker"
+import PresetOutput, { CopyButton } from "./PresetOutput"
 
 /*
  * The brand hues the library ships as examples. Anything else is the colour
- * input beside them — the point of the picker is that one hue is three tokens,
+ * input under them — the point of the picker is that one hue is three tokens,
  * not that there are five approved answers.
  */
 const HUES = [
@@ -36,7 +39,69 @@ const LABELS = {
   direction: { ltr: "Left to right", rtl: "Right to left" },
 } as const
 
-/** The preview element lives in the Astro page; this island only drives it. */
+/* What each choice looks like, small enough to sit at the end of a row. */
+const RADIUS_CORNERS = {
+  sm: "2px",
+  md: "5px",
+  lg: "9px",
+} as const satisfies Record<PresetRadius, string>
+
+const FONT_SAMPLES = {
+  inter: '"Inter", sans-serif',
+  system: "system-ui, sans-serif",
+  "mono-first": '"JetBrains Mono", ui-monospace, monospace',
+} as const satisfies Record<PresetFont, string>
+
+function Swatch({ color }: { readonly color: string }) {
+  return <span className="theme-swatch" style={{ background: color }} />
+}
+
+const FRAMEWORK_OPTIONS = INSTALL_TARGETS.map((target) => ({
+  value: target.id,
+  label: target.title,
+  mark: <FrameworkGlyph id={target.id} />,
+}))
+
+const HUE_OPTIONS: readonly PickerOption<string>[] = HUES.map((hue) => ({
+  value: hue.value,
+  label: hue.name,
+  mark: <Swatch color={hue.value} />,
+}))
+
+const RADIUS_OPTIONS = PRESET_RADII.map((radius) => ({
+  value: radius,
+  label: LABELS.radius[radius],
+  mark: (
+    <span
+      className="picker-corner"
+      style={{ borderStartStartRadius: RADIUS_CORNERS[radius] }}
+    />
+  ),
+}))
+
+const FONT_OPTIONS = PRESET_FONTS.map((font) => ({
+  value: font,
+  label: LABELS.font[font],
+  mark: (
+    <span className="picker-sample" style={{ fontFamily: FONT_SAMPLES[font] }}>
+      Aa
+    </span>
+  ),
+}))
+
+const MODE_OPTIONS = PRESET_MODES.map((mode) => ({
+  value: mode,
+  label: LABELS.mode[mode],
+  mark: <span className="picker-mode" data-mode={mode} />,
+}))
+
+const DIRECTION_OPTIONS = PRESET_DIRECTIONS.map((direction) => ({
+  value: direction,
+  label: LABELS.direction[direction],
+  mark: <span className="picker-sample">{direction.toUpperCase()}</span>,
+}))
+
+/** The canvas lives in the Astro page; this island only drives it. */
 const PREVIEW_SELECTOR = "[data-create-preview]"
 
 /* Only ever called from an effect, so `window` is there by construction. */
@@ -51,49 +116,23 @@ function readLocation(): Preset {
   }
 }
 
-function Segmented<T extends string>({
-  legend,
-  options,
-  value,
-  labels,
-  onChange,
-}: {
-  readonly legend: string
-  readonly options: readonly T[]
-  readonly value: T
-  readonly labels: Readonly<Record<T, string>>
-  readonly onChange: (next: T) => void
-}) {
-  return (
-    <fieldset className="create-field">
-      <legend>{legend}</legend>
-      <div className="segmented">
-        {options.map((option) => (
-          <button
-            key={option}
-            type="button"
-            className="segmented-option"
-            aria-pressed={option === value}
-            onClick={() => onChange(option)}
-          >
-            {labels[option]}
-          </button>
-        ))}
-      </div>
-    </fieldset>
-  )
+function pick<T>(options: readonly T[], current: T): T {
+  const others = options.filter((option) => option !== current)
+  return others[Math.floor(Math.random() * others.length)] ?? current
 }
 
 /**
- * newt/create. Six choices, a live preview of real components, and a code the
- * CLI can read back — the whole point being that the answer leaves this page
- * as a command rather than as a stylesheet the reader has to keep in step.
+ * newt/create. Six choices, a canvas of real components that follows them,
+ * and a code the CLI can read back — the whole point being that the answer
+ * leaves this page as a command rather than as a stylesheet the reader has to
+ * keep in step.
  *
  * The URL is the only persistence: a preset worth keeping is a preset worth
  * sending to someone, and `localStorage` cannot be sent.
  */
 export default function CreateApp() {
   const [preset, setPreset] = useState<Preset>(DEFAULT_PRESET)
+  const dialog = useRef<HTMLDialogElement>(null)
 
   /* Hydration renders the defaults; the shared link is read straight after. */
   useEffect(() => setPreset(readLocation()), [])
@@ -112,45 +151,32 @@ export default function CreateApp() {
     preview.dataset.newtTheme = preset.m
   }, [preset])
 
-  return (
-    <div className="create-panel">
-      <fieldset className="create-field">
-        <legend>Framework</legend>
-        <div className="create-frameworks">
-          {INSTALL_TARGETS.map((target) => (
-            <button
-              key={target.id}
-              type="button"
-              className="create-framework"
-              aria-pressed={target.id === preset.t}
-              onClick={() => setPreset({ ...preset, t: target.id })}
-            >
-              <FrameworkGlyph id={target.id} />
-              {target.title}
-            </button>
-          ))}
-        </div>
-      </fieldset>
+  const code = encodePreset(preset)
 
-      <fieldset className="create-field">
-        <legend>Brand</legend>
-        <div className="create-hues">
-          {HUES.map((hue) => (
-            <button
-              key={hue.value}
-              type="button"
-              className="create-hue"
-              aria-pressed={hue.value === preset.b}
-              onClick={() => setPreset({ ...preset, b: hue.value })}
-            >
-              <span
-                className="theme-swatch"
-                style={{ background: hue.value }}
-                aria-hidden="true"
-              />
-              {hue.name}
-            </button>
-          ))}
+  return (
+    <aside className="create-panel" aria-label="Customize">
+      <header className="create-panel-head">
+        <h1>newt/create</h1>
+        <p>
+          Six choices, one code. Paste it into <code>init</code> and the project
+          comes out already wearing it.
+        </p>
+      </header>
+
+      <div className="create-pickers">
+        <Picker
+          label="Framework"
+          options={FRAMEWORK_OPTIONS}
+          value={preset.t}
+          onChange={(t) => setPreset({ ...preset, t })}
+        />
+        <Picker
+          label="Brand"
+          options={HUE_OPTIONS}
+          value={preset.b}
+          mark={<Swatch color={preset.b} />}
+          onChange={(b) => setPreset({ ...preset, b })}
+        >
           <label className="theme-custom">
             <span>Custom</span>
             <input
@@ -161,47 +187,96 @@ export default function CreateApp() {
               }
             />
           </label>
+        </Picker>
+        <Picker
+          label="Radius"
+          options={RADIUS_OPTIONS}
+          value={preset.r}
+          onChange={(r) => setPreset({ ...preset, r })}
+        />
+        <Picker
+          label="Font"
+          options={FONT_OPTIONS}
+          value={preset.f}
+          onChange={(f) => setPreset({ ...preset, f })}
+        />
+        <Picker
+          label="Surfaces"
+          options={MODE_OPTIONS}
+          value={preset.m}
+          onChange={(m) => setPreset({ ...preset, m })}
+        />
+        <Picker
+          label="Direction"
+          options={DIRECTION_OPTIONS}
+          value={preset.d}
+          onChange={(d) => setPreset({ ...preset, d })}
+        />
+      </div>
+
+      <footer className="create-panel-foot">
+        <div className="create-preset">
+          <code>--preset {code}</code>
+          <CopyButton value={code} label="Copy" />
         </div>
-      </fieldset>
+        <div className="create-panel-actions">
+          <button
+            type="button"
+            className="button-secondary"
+            onClick={() =>
+              setPreset({
+                ...preset,
+                b: pick(
+                  HUES.map((hue) => hue.value),
+                  preset.b
+                ),
+                r: pick(PRESET_RADII, preset.r),
+                f: pick(PRESET_FONTS, preset.f),
+              })
+            }
+          >
+            Shuffle
+          </button>
+          <button
+            type="button"
+            className="button-secondary"
+            onClick={() => setPreset(DEFAULT_PRESET)}
+          >
+            Reset
+          </button>
+        </div>
+        <button
+          type="button"
+          className="button-primary create-submit"
+          onClick={() => dialog.current?.showModal()}
+        >
+          Create project
+        </button>
+      </footer>
 
-      <Segmented
-        legend="Radius"
-        options={PRESET_RADII}
-        value={preset.r}
-        labels={LABELS.radius}
-        onChange={(r) => setPreset({ ...preset, r })}
-      />
-      <Segmented
-        legend="Font"
-        options={PRESET_FONTS}
-        value={preset.f}
-        labels={LABELS.font}
-        onChange={(f) => setPreset({ ...preset, f })}
-      />
-      <Segmented
-        legend="Surfaces"
-        options={PRESET_MODES}
-        value={preset.m}
-        labels={LABELS.mode}
-        onChange={(m) => setPreset({ ...preset, m })}
-      />
-      <Segmented
-        legend="Direction"
-        options={PRESET_DIRECTIONS}
-        value={preset.d}
-        labels={LABELS.direction}
-        onChange={(d) => setPreset({ ...preset, d })}
-      />
-
-      <button
-        type="button"
-        className="button-secondary create-reset"
-        onClick={() => setPreset(DEFAULT_PRESET)}
+      <dialog
+        ref={dialog}
+        className="create-dialog"
+        aria-labelledby="create-dialog-title"
+        onClick={(event) => {
+          /* The backdrop is the dialog element itself; its content is not. */
+          if (event.target === dialog.current) dialog.current.close()
+        }}
       >
-        Reset
-      </button>
-
-      <PresetOutput preset={preset} />
-    </div>
+        <div className="create-dialog-body">
+          <div className="create-output-row">
+            <h2 id="create-dialog-title">Create project</h2>
+            <button
+              type="button"
+              className="create-copy"
+              onClick={() => dialog.current?.close()}
+            >
+              Close
+            </button>
+          </div>
+          <PresetOutput preset={preset} />
+        </div>
+      </dialog>
+    </aside>
   )
 }

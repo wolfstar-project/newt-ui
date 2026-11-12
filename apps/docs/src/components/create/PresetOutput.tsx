@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 
 import {
   applyCommand,
-  encodePreset,
   presetCommands,
   presetToCss,
   templateFor,
@@ -24,7 +23,7 @@ function isPackageManager(value: string | null): value is PackageManager {
   return PACKAGE_MANAGERS.some((candidate) => candidate === value)
 }
 
-function CopyButton({
+export function CopyButton({
   value,
   label,
 }: {
@@ -53,8 +52,8 @@ function CopyButton({
 }
 
 /**
- * What the reader leaves with: the code, the commands that consume it, and a
- * link that restores the whole thing. The CSS block is folded away because it
+ * What the reader leaves with: the commands that consume the code, and a link
+ * that restores the whole thing. The CSS block is folded away because it
  * is the answer to a different question — what if I do not use the CLI.
  */
 export default function PresetOutput({ preset }: { readonly preset: Preset }) {
@@ -73,18 +72,11 @@ export default function PresetOutput({ preset }: { readonly preset: Preset }) {
     return () => clearTimeout(timer)
   }, [shareCopied])
 
-  const code = encodePreset(preset)
   const commands = presetCommands(preset, packageManager)
   const template = templateFor(preset)
 
   return (
     <section className="create-output" aria-label="What to run">
-      <div className="create-output-row">
-        <h2>Your preset</h2>
-        <CopyButton value={code} label="Copy code" />
-      </div>
-      <p className="create-code">{code}</p>
-
       <fieldset className="segmented create-pm">
         <legend className="sr-only">Package manager</legend>
         {PACKAGE_MANAGERS.map((candidate) => (

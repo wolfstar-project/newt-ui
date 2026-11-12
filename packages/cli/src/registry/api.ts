@@ -2,8 +2,16 @@ import { z } from "zod"
 
 import type { Framework } from "../utils/get-config.js"
 import {
+  buildRegistryRequest,
+  parseNamespaced,
+  resolveRegistryEntry,
+  SHADCN_NAMESPACE,
+  type Registries,
+} from "./namespaces.js"
+import {
   registryIndexSchema,
   registryItemSchema,
+  thirdPartyRegistryItemSchema,
   type RegistryIndex,
   type RegistryItem,
 } from "./schema.js"
@@ -31,8 +39,12 @@ export function getRegistryUrl(
 }
 
 /** Fetch `url` as JSON and parse it against `schema`, the I/O boundary for all registry reads. */
-async function fetchJson<T>(url: string, schema: z.ZodType<T>): Promise<T> {
-  const response = await fetch(url)
+async function fetchJson<T>(
+  url: string,
+  schema: z.ZodType<T, z.ZodTypeDef, unknown>,
+  headers?: Readonly<Record<string, string>>
+): Promise<T> {
+  const response = await fetch(url, headers ? { headers } : undefined)
   if (!response.ok) {
     throw new Error(
       `Failed to fetch ${url} (${response.status} ${response.statusText}).`
@@ -74,31 +86,98 @@ export async function getRegistryItem(
   }
 }
 
+/** Everything needed to turn a name on the command line into a registry item. */
+export interface RegistrySource {
+  /** The newt/ui registry this project installs from. */
+  readonly registryUrl: string
+  readonly style: string
+  readonly framework: Framework
+  /** `registries` from `components.json`, when the project declares any. */
+  readonly registries?: Registries
+}
+
+/** Fetch `@namespace/item` from the registry that namespace resolves to. */
+async function getThirdPartyItem(
+  source: RegistrySource,
+  namespace: string,
+  item: string
+): Promise<RegistryItem> {
+  const entry = await resolveRegistryEntry(
+    namespace,
+    source.framework,
+    source.registries
+  )
+  const request = buildRegistryRequest(namespace, entry, item)
+  try {
+    return await fetchJson(
+      request.url,
+      thirdPartyRegistryItemSchema,
+      request.headers
+    )
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(
+        `Invalid registry item "${namespace}/${item}": ${error.message}`,
+        { cause: error }
+      )
+    }
+    const detail = error instanceof Error ? error.message : String(error)
+    throw new Error(
+      `"${item}" was not found in the ${namespace} registry.\n${detail}`,
+      { cause: error }
+    )
+  }
+}
+
+/**
+ * Fetch one item by the name a person typed: a newt/ui component, a full URL,
+ * or `@namespace/item` from a third-party registry.
+ */
+export async function getSourceItem(
+  source: RegistrySource,
+  name: string
+): Promise<RegistryItem> {
+  const namespaced = parseNamespaced(name)
+  return namespaced === undefined
+    ? getRegistryItem(source.registryUrl, source.style, name)
+    : getThirdPartyItem(source, namespaced.namespace, namespaced.item)
+}
+
 /**
  * Resolve the full dependency tree for the given names (including transitive
  * `registryDependencies`) and return items in install order (deps first).
+ *
+ * A bare dependency belongs to the registry of the item that named it: inside
+ * a newt/ui item it is another newt/ui item, and inside a third-party item it
+ * is the shadcn component that registry was written against.
  */
 export async function resolveTree(
-  registryUrl: string,
-  style: string,
+  source: RegistrySource,
   names: string[]
 ): Promise<RegistryItem[]> {
   const resolved = new Map<string, RegistryItem>()
   const visiting = new Set<string>()
 
-  async function visit(name: string): Promise<void> {
-    if (resolved.has(name) || visiting.has(name)) return
-    visiting.add(name)
-    const item = await getRegistryItem(registryUrl, style, name)
+  async function visit(name: string, thirdParty: boolean): Promise<void> {
+    const isUrl = /^https?:\/\//.test(name)
+    const qualified =
+      thirdParty && !isUrl && parseNamespaced(name) === undefined
+        ? `${SHADCN_NAMESPACE}/${name}`
+        : name
+    if (resolved.has(qualified) || visiting.has(qualified)) return
+    visiting.add(qualified)
+    const item = await getSourceItem(source, qualified)
+    const fromThirdParty =
+      thirdParty || parseNamespaced(qualified) !== undefined
     for (const dep of item.registryDependencies ?? []) {
-      await visit(dep)
+      await visit(dep, fromThirdParty)
     }
-    visiting.delete(name)
-    resolved.set(name, item)
+    visiting.delete(qualified)
+    resolved.set(qualified, item)
   }
 
   for (const name of names) {
-    await visit(name)
+    await visit(name, false)
   }
   return Array.from(resolved.values())
 }
