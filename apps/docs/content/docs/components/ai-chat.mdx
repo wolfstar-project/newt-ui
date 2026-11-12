@@ -111,7 +111,7 @@ The root takes the native attributes of the `<div>` it renders; React uses `clas
 
 ## Accessibility
 
-The conversation is a labelled, focusable scrolling region, so a keyboard user can reach it and scroll back through it. The writing state is a `role="status"` region named after the assistant, which screen readers announce without moving focus. The AI tag has an accessible name of its own ("AI assistant") rather than relying on the two letters. Say plainly somewhere in your product that the replies are generated: the tag marks who is speaking, it does not explain what that means.
+The conversation is a labelled, focusable scrolling region, so a keyboard user can reach it and scroll back through it. The writing state is a `role="status"` region that is always in the page, so the "is writing" text appearing is announced without moving focus. The composer is named "Message" plus the assistant's name. The list follows new text while the reader is at the bottom and stays put once they have scrolled up; sending a message scrolls to the bottom again. In React pass a new `messages` array as a reply streams in; in Vue a deep change to it is enough. The AI tag has an accessible name of its own ("AI assistant") rather than relying on the two letters. Say plainly somewhere in your product that the replies are generated: the tag marks who is speaking, it does not explain what that means.
 
 ## Tokens
 
