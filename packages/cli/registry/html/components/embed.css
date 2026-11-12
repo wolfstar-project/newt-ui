@@ -4,16 +4,33 @@
   /* Override per embed to carry the bot's accent colour. */
   --newt-embed-color: var(--newt-brand);
 
+  position: relative;
   display: flex;
   max-width: var(--newt-embed-max-width);
+  border: 1px solid var(--newt-embed-border);
+  border-inline-start: 0;
   border-radius: var(--newt-radius-md);
-  border-inline-start: 4px solid var(--newt-embed-color);
-  background: var(--newt-bg-elevated);
+  background: var(--newt-embed-bg);
   overflow: hidden;
 }
 
+/*
+ * The accent bar is a clipped strip rather than a border: a coloured
+ * border-inline-start on a rounded box curves along its inner edge too, while
+ * this keeps the bar straight and lets only the outer corners follow the radius.
+ */
+.newt-embed::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 4px;
+  background: var(--newt-embed-color);
+}
+
 .newt-embed__body {
-  padding: 12px 16px;
+  padding-block: 12px;
+  padding-inline: 20px 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;

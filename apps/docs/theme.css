@@ -80,6 +80,8 @@
   --color-newt-spoiler: var(--newt-spoiler);
   --color-newt-spoiler-hover: var(--newt-spoiler-hover);
   --color-newt-code-bg: var(--newt-code-bg);
+  --color-newt-embed-bg: var(--newt-embed-bg);
+  --color-newt-embed-border: var(--newt-embed-border);
   --color-newt-code-keyword: var(--newt-code-keyword);
   --color-newt-code-string: var(--newt-code-string);
   --color-newt-code-comment: var(--newt-code-comment);
@@ -175,6 +177,8 @@
 
     /* Code block surface and syntax */
     --newt-code-bg: #111214;
+    --newt-embed-bg: rgba(255, 255, 255, 0.05);
+    --newt-embed-border: rgba(255, 255, 255, 0.08);
     --newt-code-keyword: #569cd6;
     --newt-code-string: #ce9178;
     --newt-code-comment: #6a9955;
@@ -265,6 +269,8 @@
 
     /* Code block surface and syntax */
     --newt-code-bg: #f8f9fa;
+    --newt-embed-bg: rgba(6, 6, 7, 0.03);
+    --newt-embed-border: rgba(6, 6, 7, 0.08);
     --newt-code-keyword: #0000ff;
     --newt-code-string: #a31515;
     --newt-code-comment: #008000;

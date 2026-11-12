@@ -43,15 +43,17 @@ const GROUPS = [
   },
   {
     label: "Content",
-    prefixes: ["newt-spoiler", "newt-code-"],
-    /* The syntax colours are text; the spoiler chip and the code surface
-     * are backgrounds. */
+    prefixes: ["newt-spoiler", "newt-code-", "newt-embed-bg", "newt-embed-border"],
+    /* The syntax colours are text, the embed outline is a border; the
+     * spoiler chip and the code and embed surfaces are backgrounds. */
     utility: (name: string) =>
       name.startsWith("newt-code-") && name !== "newt-code-bg"
         ? `text-${name}`
-        : `bg-${name}`,
+        : name === "newt-embed-border"
+          ? `border-${name}`
+          : `bg-${name}`,
   },
-  { label: "Shape", prefixes: ["newt-radius-", "newt-embed-"] },
+  { label: "Shape", prefixes: ["newt-radius-", "newt-embed-max-width"] },
   { label: "Type", prefixes: ["newt-font-"] },
   { label: "Elevation", prefixes: ["newt-shadow-"] },
   { label: "Motion", prefixes: ["newt-ease", "newt-duration-"] },

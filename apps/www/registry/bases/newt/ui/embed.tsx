@@ -22,12 +22,12 @@ const Embed = React.forwardRef<HTMLDivElement, EmbedProps>(
           : style
       }
       className={cn(
-        "flex max-w-[var(--newt-embed-max-width)] overflow-hidden rounded-md border-s-4 border-[var(--newt-embed-color,var(--newt-brand))] bg-newt-bg-elevated",
+        "relative flex max-w-[var(--newt-embed-max-width)] overflow-hidden rounded-md border border-s-0 border-newt-embed-border bg-newt-embed-bg before:absolute before:inset-y-0 before:start-0 before:w-1 before:bg-[var(--newt-embed-color,var(--newt-brand))] before:content-['']",
         className
       )}
       {...props}
     >
-      <div className="flex min-w-0 flex-1 flex-col gap-2 px-4 py-3">
+      <div className="flex min-w-0 flex-1 flex-col gap-2 py-3 ps-5 pe-4">
         {children}
       </div>
     </div>

@@ -42,6 +42,8 @@ export const newtPreset: Omit<Config, "content"> = {
           spoiler: "var(--newt-spoiler)",
           "spoiler-hover": "var(--newt-spoiler-hover)",
           "code-bg": "var(--newt-code-bg)",
+          "embed-bg": "var(--newt-embed-bg)",
+          "embed-border": "var(--newt-embed-border)",
           "code-keyword": "var(--newt-code-keyword)",
           "code-string": "var(--newt-code-string)",
           "code-comment": "var(--newt-code-comment)",
