@@ -4,7 +4,11 @@ import path from "node:path"
 
 import { registry } from "../registry/index"
 import { styles } from "../registry/registry-styles"
-import { registryItemSchema, type Registry } from "../registry/schema"
+import {
+  registryItemSchema,
+  type Registry,
+  type RegistryItem,
+} from "../registry/schema"
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r")
 const APP_LIB = path.join(process.cwd(), "app/lib")
@@ -12,6 +16,25 @@ const REGISTRY_SOURCE = path.join(process.cwd(), "registry/bases/newt")
 // Every item in this app targets Vue; the field is stamped here so a
 // consumer reading a single item JSON knows which framework it belongs to.
 const REGISTRY_FRAMEWORK = "vue" as const
+
+// Registry directories (ui.shadcn.com, shadcn-vue.com) expect a flat registry:
+// `/registry.json` and `/<name>.json` at the root. The default style is
+// published there as well as under `styles/default/`.
+const FLAT_STYLE = styles[0].name
+const RESERVED_NAMES = new Set(["index", "registry", "styles"])
+
+async function writeItem(
+  styleName: string,
+  target: string,
+  name: string,
+  item: RegistryItem
+) {
+  const body = JSON.stringify(item, null, 2)
+  await fs.writeFile(path.join(target, `${name}.json`), body)
+  if (styleName === FLAT_STYLE) {
+    await fs.writeFile(path.join(REGISTRY_PATH, `${name}.json`), body)
+  }
+}
 
 async function buildIndex(allItems: Registry) {
   const items = allItems
@@ -32,22 +55,23 @@ async function buildIndex(allItems: Registry) {
 }
 
 async function buildStyles(allItems: Registry) {
+  const clash = allItems.find((item) => RESERVED_NAMES.has(item.name))
+  if (clash) {
+    throw new Error(
+      `item name "${clash.name}" collides with a flat registry file`
+    )
+  }
   for (const style of styles) {
     const target = path.join(REGISTRY_PATH, "styles", style.name)
     await fs.mkdir(target, { recursive: true })
     for (const item of allItems) {
       // Items without files still ship (the theme carries only tokens).
       if (!item.files) {
-        await fs.writeFile(
-          path.join(target, `${item.name}.json`),
-          JSON.stringify(
-            registryItemSchema.parse({
-              ...item,
-              framework: REGISTRY_FRAMEWORK,
-            }),
-            null,
-            2
-          )
+        await writeItem(
+          style.name,
+          target,
+          item.name,
+          registryItemSchema.parse({ ...item, framework: REGISTRY_FRAMEWORK })
         )
         continue
       }
@@ -65,10 +89,7 @@ async function buildStyles(allItems: Registry) {
         framework: REGISTRY_FRAMEWORK,
         files,
       })
-      await fs.writeFile(
-        path.join(target, `${item.name}.json`),
-        JSON.stringify(payload, null, 2)
-      )
+      await writeItem(style.name, target, item.name, payload)
     }
   }
   await fs.writeFile(
@@ -79,4 +100,10 @@ async function buildStyles(allItems: Registry) {
 
 await buildIndex(registry)
 await buildStyles(registry)
+// The `registry.json` that `scripts/gen-registry.mjs` writes lists every item
+// with file paths only, no `content`, as the directories require.
+await fs.copyFile(
+  path.join(process.cwd(), "registry.json"),
+  path.join(REGISTRY_PATH, "registry.json")
+)
 console.log("✅ Vue registry built to public/r")
