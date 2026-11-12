@@ -245,14 +245,20 @@ const VIEWPORTS = [
    * A frame has no height of its own, and a block is as tall as it is. The
    * frame is same-origin, so its document is measured directly and the frame
    * follows it — also when the demo hydrates, or reflows at a narrower width.
+   *
+   * What is measured is the block's own wrapper, not the document: the body
+   * has a viewport-tall minimum, so once the frame grew the body could never
+   * be shorter than it, and a block that shrank (a form replaced by a short
+   * message) would leave the frame as tall as before.
    */
   function fit(frame: HTMLIFrameElement): void {
-    const body = frame.contentDocument?.body
-    if (!body) return
+    const document = frame.contentDocument
+    const block = document?.querySelector<HTMLElement>("[data-block-page]")
+    if (!block) return
     const measure = () => {
-      frame.style.height = `${Math.max(body.scrollHeight, 320)}px`
+      frame.style.height = `${Math.max(Math.ceil(block.getBoundingClientRect().height), 320)}px`
     }
-    new ResizeObserver(measure).observe(body)
+    new ResizeObserver(measure).observe(block)
     measure()
   }
 
