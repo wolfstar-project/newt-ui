@@ -15,7 +15,7 @@ export default function TypesetDemo() {
         a <strong>parent id</strong> for private threads, which <em>fixes</em>{" "}
         the list that <del>dropped them</del> lost them after a restart
         <sup>
-          <a href="#typeset-demo-fn-1" id="typeset-demo-ref-1">
+          <a href="#typeset-demo-react-fn-1" id="typeset-demo-react-ref-1">
             1
           </a>
         </sup>
@@ -76,10 +76,13 @@ export default function TypesetDemo() {
       </table>
       <section data-footnotes>
         <ol>
-          <li id="typeset-demo-fn-1">
+          <li id="typeset-demo-react-fn-1">
             <p>
               Only threads created before 2.3.0 were affected.{" "}
-              <a href="#typeset-demo-ref-1" aria-label="Back to reference 1">
+              <a
+                href="#typeset-demo-react-ref-1"
+                aria-label="Back to reference 1"
+              >
                 ↩
               </a>
             </p>

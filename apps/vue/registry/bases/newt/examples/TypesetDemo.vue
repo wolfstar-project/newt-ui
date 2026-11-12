@@ -15,7 +15,7 @@ import { Typeset } from "~~/registry/bases/newt/ui/typeset"
       on the first new message. The <code>threads</code> table gained a
       <strong>parent id</strong> for private threads, which <em>fixes</em> the
       list that <del>dropped them</del> lost them after a restart<sup
-        ><a href="#typeset-demo-fn-1" id="typeset-demo-ref-1">1</a></sup
+        ><a href="#typeset-demo-vue-fn-1" id="typeset-demo-vue-ref-1">1</a></sup
       >. See <a href="#typeset-demo">the migration guide</a> for the backfill.
     </p>
     <h2>Upgrading</h2>
@@ -67,10 +67,12 @@ import { Typeset } from "~~/registry/bases/newt/ui/typeset"
     </table>
     <section data-footnotes>
       <ol>
-        <li id="typeset-demo-fn-1">
+        <li id="typeset-demo-vue-fn-1">
           <p>
             Only threads created before 2.3.0 were affected.
-            <a href="#typeset-demo-ref-1" aria-label="Back to reference 1">↩</a>
+            <a href="#typeset-demo-vue-ref-1" aria-label="Back to reference 1"
+              >↩</a
+            >
           </p>
         </li>
       </ol>
