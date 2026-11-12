@@ -1,7 +1,7 @@
 import { intro, outro } from "@clack/prompts"
 import { z } from "zod"
 
-import { getRegistryItem, getRegistryUrl } from "../registry/api.js"
+import { getRegistryUrl, getSourceItem } from "../registry/api.js"
 import type { RegistryItem, RegistryItemFile } from "../schema/index.js"
 import { resolveCwd } from "../utils/fileSystem.js"
 import {
@@ -68,7 +68,12 @@ export async function view(options: ViewOptions): Promise<void> {
 
   const items: RegistryItem[] = []
   for (const name of options.components) {
-    items.push(await getRegistryItem(registryUrl, style, name))
+    items.push(
+      await getSourceItem(
+        { registryUrl, style, framework, registries: config?.registries },
+        name
+      )
+    )
   }
 
   if (options.json) {

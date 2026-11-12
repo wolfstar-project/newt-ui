@@ -6,6 +6,7 @@
   "scripts": {
     "build": "blume build && node scripts/bundle-registry.mjs && node scripts/verify-dist.mjs",
     "dev": "blume dev",
+    "directory:sync": "node scripts/sync-directory.mjs",
     "docs:gen": "node scripts/gen-component-docs.mjs",
     "preview": "blume preview",
     "test": "vitest run",

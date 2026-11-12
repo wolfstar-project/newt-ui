@@ -40,7 +40,7 @@
  * Source of truth for the token values:
  * packages/cli/registry/html/tokens.css
  * ------------------------------------------------------------------ */
-@theme {
+@theme inline {
   /* Surfaces */
   --color-newt-bg-base: var(--newt-bg-base);
   --color-newt-bg-surface: var(--newt-bg-surface);
@@ -102,6 +102,15 @@
   --transition-duration-fast: var(--newt-duration-fast);
   --transition-duration-base: var(--newt-duration-base);
 
+  /*
+   * Fonts. The registry components ask for `font-sans`, `font-mono` and
+   * `font-display`, and both registry apps map those onto the tokens; without
+   * the same three here a demo keeps Blume's stack whatever the tokens say.
+   */
+  --font-sans: var(--newt-font-sans);
+  --font-mono: var(--newt-font-mono);
+  --font-display: var(--newt-font-display);
+
   /* The site's own names for the chrome around a demo. */
   --font-ui: var(--newt-font-sans);
   --font-data: var(--newt-font-mono);
@@ -120,7 +129,12 @@
 
 /* newt/ui design tokens — source of truth: packages/cli/registry/html/tokens.css */
 @layer base {
-  :root {
+  /*
+   * `data-newt-theme="dark"` is the builder's canvas asking for the dark set
+   * while the page around it is light; everywhere else `:root` is enough.
+   */
+  :root,
+  [data-newt-theme="dark"] {
     /* Expressions picker geometry and shared spacing. */
     --newt-space-1: 4px;
     --newt-space-2: 8px;
@@ -700,6 +714,63 @@
   .demo-dir-toggle[aria-pressed="true"] {
     border-color: var(--newt-brand);
     color: var(--newt-text-primary);
+  }
+
+  /* --- registry directory ------------------------------------------------ */
+
+  .registry-directory .component-index-filter {
+    display: block;
+    margin: 1rem 0;
+  }
+
+  .registry-list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .registry-entry {
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-surface);
+  }
+
+  .registry-entry[hidden] {
+    display: none;
+  }
+
+  .registry-entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+  }
+
+  .registry-entry-head a {
+    color: var(--newt-text-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .registry-entry-head a:hover {
+    color: var(--newt-text-link);
+  }
+
+  .registry-entry-head code {
+    font-family: var(--newt-font-mono);
+    font-size: 0.75rem;
+    color: var(--newt-text-muted);
+  }
+
+  .registry-entry p {
+    margin: 0.35rem 0 0;
+    color: var(--newt-text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.55;
   }
 
   /* --- props tables ----------------------------------------------------- */
@@ -1506,12 +1577,357 @@
 
   /* --- newt/create ------------------------------------------------------ */
 
-  .create-layout {
+  /*
+   * A customizer beside a canvas. Below 64rem the panel sits on top and the
+   * canvas runs under it; from there up the panel is a sticky column and its
+   * lists open sideways, over the canvas, so the six rows never move.
+   */
+  .create-shell {
     display: grid;
-    gap: 2.5rem;
-    margin-top: 2.5rem;
+    gap: 1.25rem;
+    max-width: 104rem;
+    margin: 0 auto;
+    padding: 1.25rem 1rem 4rem;
   }
 
+  .create-panel {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-lg);
+    background: var(--newt-bg-surface);
+  }
+
+  .create-panel-head {
+    padding: 0.35rem 0.4rem 0;
+  }
+
+  .create-panel-head h1 {
+    margin: 0 0 0.3rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--newt-text-primary);
+  }
+
+  .create-panel-head p {
+    margin: 0;
+    color: var(--newt-text-muted);
+    font-size: 0.78rem;
+    line-height: 1.55;
+  }
+
+  .create-panel-head code {
+    font-family: var(--newt-font-mono);
+    font-size: 0.95em;
+    color: var(--newt-text-secondary);
+  }
+
+  .create-pickers {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .picker {
+    position: relative;
+  }
+
+  .picker-trigger {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-elevated);
+    color: var(--newt-text-primary);
+    text-align: start;
+    cursor: pointer;
+    transition: background-color var(--newt-duration-fast) var(--newt-ease);
+  }
+
+  .picker-trigger:hover,
+  .picker[data-open="true"] .picker-trigger {
+    background: var(--newt-bg-hover);
+  }
+
+  .picker-trigger:focus-visible,
+  .picker-option:focus-visible {
+    outline: 2px solid var(--newt-brand);
+    outline-offset: 1px;
+  }
+
+  .picker-text {
+    display: grid;
+    min-width: 0;
+  }
+
+  .picker-label {
+    color: var(--newt-text-muted);
+    font-size: 0.7rem;
+    line-height: 1.3;
+  }
+
+  .picker-value {
+    overflow: hidden;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .picker-mark {
+    display: inline-flex;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    color: var(--newt-text-secondary);
+  }
+
+  .picker-mark .framework-glyph {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .picker-corner {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-block-start: 2px solid currentColor;
+    border-inline-start: 2px solid currentColor;
+  }
+
+  .picker-sample {
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .picker-mode {
+    width: 0.85rem;
+    height: 0.85rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-full);
+  }
+
+  /* The two surfaces as they are, whichever theme the page itself is in. */
+  .picker-mode[data-mode="dark"] {
+    background: #1e1f22;
+  }
+
+  .picker-mode[data-mode="light"] {
+    background: #f2f3f5;
+  }
+
+  .picker-popup {
+    position: absolute;
+    inset-block-start: calc(100% + 0.25rem);
+    inset-inline: 0;
+    z-index: 20;
+    max-height: 22rem;
+    overflow-y: auto;
+    padding: 0.25rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-floating);
+    box-shadow: var(--newt-shadow-elevation-high);
+  }
+
+  .picker-option {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    border: 0;
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    color: var(--newt-text-secondary);
+    font-size: 0.82rem;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .picker-option:hover,
+  .picker-option:focus-visible {
+    background: var(--newt-bg-hover);
+    color: var(--newt-text-primary);
+  }
+
+  .picker-option[aria-selected="true"] {
+    background: var(--newt-bg-active);
+    color: var(--newt-text-primary);
+  }
+
+  .theme-swatch {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: var(--newt-radius-full);
+  }
+
+  .theme-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    padding: 0.5rem 0.5rem 0.25rem;
+    border-top: 1px solid var(--newt-border);
+    font-size: 0.82rem;
+    color: var(--newt-text-secondary);
+  }
+
+  .theme-custom input {
+    width: 2.25rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-sm);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .create-panel-foot {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--newt-border);
+  }
+
+  .create-preset {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.35rem 0.35rem 0.6rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-input);
+  }
+
+  .create-preset code {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    font-family: var(--newt-font-mono);
+    font-size: 0.72rem;
+    color: var(--newt-text-secondary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .create-panel-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .create-panel-foot .button-primary,
+  .create-panel-foot .button-secondary {
+    justify-content: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--newt-radius-md);
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+
+  .create-panel-foot .button-secondary {
+    background: transparent;
+  }
+
+  .create-panel-foot .button-primary {
+    border: 0;
+  }
+
+  /*
+   * The canvas is a `.newt-root` the island writes the preset onto, so every
+   * surface below is drawn from the tokens rather than from the chrome's: the
+   * tiles round with the radius scale and turn light with the surface choice.
+   */
+  .create-canvas {
+    min-width: 0;
+    padding: 1rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-lg);
+    background: var(--newt-bg-base);
+  }
+
+  .create-cards {
+    columns: 1;
+    column-gap: 1rem;
+  }
+
+  .create-card {
+    margin: 0 0 1rem;
+    overflow: hidden;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-lg);
+    background: var(--newt-bg-elevated);
+    break-inside: avoid;
+  }
+
+  .create-card-head {
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--newt-border);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .create-card-head a {
+    color: var(--newt-text-muted);
+    text-decoration: none;
+  }
+
+  .create-card-head a:hover {
+    color: var(--newt-text-primary);
+  }
+
+  .create-card-body {
+    display: flex;
+    min-width: 0;
+    min-height: 6rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding: 1.5rem 1.25rem;
+  }
+
+  /* A block brings its own edges; padding would frame it twice. */
+  .create-card-flush .create-card-body {
+    display: block;
+    padding: 0;
+  }
+
+  .create-dialog {
+    /* Preflight zeroes the margin that centres a modal dialog. */
+    margin: auto;
+    width: min(40rem, calc(100vw - 2rem));
+    max-height: 85dvh;
+    padding: 0;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-lg);
+    background: var(--newt-bg-elevated);
+    color: var(--newt-text-primary);
+    box-shadow: var(--newt-shadow-elevation-high);
+  }
+
+  .create-dialog::backdrop {
+    background: var(--newt-overlay);
+  }
+
+  .create-dialog-body {
+    padding: 1.25rem;
+  }
+
+  /* The labelled field the typeset builder draws its controls with. */
   .create-field {
     margin: 0 0 1.5rem;
     padding: 0;
@@ -1532,103 +1948,8 @@
     display: flex;
   }
 
-  .create-frameworks {
-    display: grid;
-    gap: 0.4rem;
-    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
-  }
-
-  .create-framework {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.45rem 0.6rem;
-    border: 1px solid var(--newt-border);
-    border-radius: var(--newt-radius-md);
-    background: var(--newt-bg-surface);
-    color: var(--newt-text-secondary);
-    font-size: 0.82rem;
-    text-align: start;
-    cursor: pointer;
-  }
-
-  .create-framework:hover {
-    color: var(--newt-text-primary);
-  }
-
-  .create-framework[aria-pressed="true"] {
-    border-color: var(--newt-brand);
-    background: var(--newt-bg-elevated);
-    color: var(--newt-text-primary);
-  }
-
-  .create-framework .framework-glyph {
-    width: 1.1rem;
-    height: 1.1rem;
-    flex-shrink: 0;
-  }
-
-  .create-hues {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .create-hue {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.3rem 0.6rem;
-    border: 1px solid transparent;
-    border-radius: var(--newt-radius-sm);
-    background: transparent;
-    color: var(--newt-text-secondary);
-    font-size: 0.82rem;
-    cursor: pointer;
-  }
-
-  .create-hue[aria-pressed="true"] {
-    border-color: var(--newt-brand);
-    background: var(--newt-bg-elevated);
-    color: var(--newt-text-primary);
-  }
-
-  .theme-swatch {
-    width: 0.85rem;
-    height: 0.85rem;
-    border-radius: var(--newt-radius-full);
-  }
-
-  .theme-custom {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.82rem;
-    color: var(--newt-text-secondary);
-  }
-
-  .theme-custom input {
-    width: 2.25rem;
-    height: 1.75rem;
-    padding: 0;
-    border: 1px solid var(--newt-border);
-    border-radius: var(--newt-radius-sm);
-    background: transparent;
-    cursor: pointer;
-  }
-
-  .create-reset {
-    display: inline-block;
-    margin-bottom: 2rem;
-    border: 1px solid var(--newt-border);
-    background: transparent;
-    cursor: pointer;
-  }
-
   .create-output {
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--newt-border);
+    padding-top: 0.75rem;
   }
 
   .create-output-row {
@@ -1639,6 +1960,10 @@
     margin-bottom: 0.5rem;
   }
 
+  .create-output .create-output-row {
+    margin-top: 1.5rem;
+  }
+
   .create-output h2 {
     margin: 0;
     font-size: 1.1rem;
@@ -1647,13 +1972,15 @@
   }
 
   .create-output h3 {
-    margin: 2rem 0 0;
+    margin: 0;
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--newt-text-primary);
   }
 
   .create-copy {
+    flex-shrink: 0;
+    white-space: nowrap;
     padding: 0.2rem 0.55rem;
     border: 1px solid var(--newt-border);
     border-radius: var(--newt-radius-sm);
@@ -1744,13 +2071,6 @@
     font-size: 0.75rem;
     line-height: 1.6;
     color: var(--newt-text-secondary);
-  }
-
-  .create-preview h2 {
-    margin: 0 0 1rem;
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: var(--newt-text-primary);
   }
 
   /* --- typeset builder --------------------------------------------------- */
@@ -1853,17 +2173,41 @@
   }
 
   @media (min-width: 64rem) {
-    .create-layout,
     .typeset-app {
       grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
       align-items: start;
       gap: 3rem;
     }
 
-    .create-preview,
     .typeset-stage {
       position: sticky;
       top: 5rem;
+    }
+
+    .create-shell {
+      grid-template-columns: 17rem minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .create-panel {
+      position: sticky;
+      top: 5rem;
+    }
+
+    .picker-popup {
+      inset-block-start: 0;
+      inset-inline: calc(100% + 0.75rem) auto;
+      width: 15rem;
+    }
+
+    .create-cards {
+      columns: 2;
+    }
+  }
+
+  @media (min-width: 96rem) {
+    .create-cards {
+      columns: 3;
     }
   }
 }

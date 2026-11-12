@@ -85,6 +85,43 @@ export const registryItemSchema = z.object({
 })
 
 export type RegistryItem = z.infer<typeof registryItemSchema>
+
+/**
+ * Another registry's vocabulary is wider than this one's — `registry:item`,
+ * `registry:font`, `registry:base` — and grows without notice. An unknown type
+ * is read as a plain component rather than refused: the files still say where
+ * they go, and a type this CLI has no directory for lands beside the
+ * components.
+ */
+function toKnownType(value: string | undefined): RegistryItemType {
+  const known = registryItemTypeSchema.safeParse(value)
+  return known.success ? known.data : "registry:component"
+}
+
+/** A registry item served by a third-party (shadcn-compatible) registry. */
+export const thirdPartyRegistryItemSchema = registryItemSchema
+  .extend({
+    type: z.string().transform(toKnownType),
+    files: z
+      .array(
+        z.object({
+          path: z.string(),
+          content: z.string().optional(),
+          type: z.string().optional(),
+          target: z.string().optional(),
+        })
+      )
+      .optional(),
+  })
+  /* A file that names no type of its own is the same kind as its item. */
+  .transform((item): RegistryItem => ({
+    ...item,
+    files: item.files?.map((file) => ({
+      ...file,
+      type: file.type === undefined ? item.type : toKnownType(file.type),
+    })),
+  }))
+
 export type RegistryItemFramework = z.infer<typeof registryItemFrameworkSchema>
 export type RegistryItemFile = z.infer<typeof registryItemFileSchema>
 export type RegistryItemType = z.infer<typeof registryItemTypeSchema>

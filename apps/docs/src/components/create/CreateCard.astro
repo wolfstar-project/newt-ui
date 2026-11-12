@@ -1,0 +1,34 @@
+---
+import { findComponent } from "../../lib/registry"
+import ReactDemo from "../demo/ReactDemo"
+import VueDemo from "../demo/VueDemo.vue"
+
+/*
+ * One tile of the builder's canvas: a live demo and its name, nothing else.
+ * `ComponentPreview` is the documentation's frame — tabs, source, the RTL
+ * switch — and a wall of twelve of those reads as twelve pages. Here the
+ * components are the page, and each tile links to the one that explains it.
+ */
+interface Props {
+  readonly name: string
+  /** A block that draws its own frame, shown edge to edge. */
+  readonly flush?: boolean
+}
+
+const { name, flush = false } = Astro.props
+
+const meta = findComponent(name)
+if (meta === undefined) {
+  throw new Error(`<CreateCard name="${name}"> — no registry meta for that component.`)
+}
+---
+
+<article class:list={["create-card", flush && "create-card-flush"]}>
+  <header class="create-card-head">
+    <a href={`/docs/components/${name}`}>{meta.title}</a>
+  </header>
+  <div class="create-card-body newt-root not-prose" data-demo={name}>
+    <ReactDemo client:only="react" demo={meta.reactDemo} />
+    <VueDemo client:only="vue" demo={meta.vueDemo} />
+  </div>
+</article>

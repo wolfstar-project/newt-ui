@@ -94,7 +94,8 @@ function printHelp(): void {
 
   ${highlighter.bold("Commands")}
     init                     initialize your project and install dependencies
-    add [components...]      add components to your project
+    add [components...]      add components to your project; @registry/item
+                             installs from a third-party registry
     list                     list available components in the registry
     search [query]           search the registry by name or description
     view <components...>     print a component's source without installing it
