@@ -1,7 +1,7 @@
 <!--
   Typeset is two class names on a wrapper: the system, and the preset. What is
-  inside is ordinary rendered markup — whatever your markdown pipeline emits —
-  and none of it carries a class of its own.
+  inside is ordinary rendered markup — whatever your CommonMark or GFM pipeline
+  emits — and none of it carries a class of its own.
 -->
 <article class="typeset typeset-docs typeset-measure">
   <h2>Threads</h2>
@@ -9,9 +9,10 @@
   <p>
     A thread keeps a side conversation out of the channel it started in, and
     disappears from the list once it goes quiet. Anyone who can read the parent
-    channel can read the thread. The name is <strong>bold</strong> in the list,
-    an archived one is <s>struck through</s>, and <em>every</em> member can
-    still <u>search</u> it.
+    channel can read the thread<sup
+      ><a href="#typeset-fn-1" id="typeset-ref-1">1</a></sup
+    >. The name is <strong>bold</strong> in the list, an archived one is
+    <s>struck through</s>, and <em>every</em> member can still <u>search</u> it.
   </p>
 
   <h3>Starting one</h3>
@@ -49,39 +50,44 @@
     <thead>
       <tr>
         <th>Type</th>
-        <th>Visible to</th>
-        <th>Archives after</th>
+        <th align="center">Visible to</th>
+        <th align="right">Archives after</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>Public</td>
-        <td>Everyone in the channel</td>
-        <td>24 hours</td>
+        <td align="center">Everyone in the channel</td>
+        <td align="right">24 hours</td>
       </tr>
       <tr>
         <td>Private</td>
-        <td>Invited members</td>
-        <td>72 hours</td>
+        <td align="center">Invited members</td>
+        <td align="right">72 hours</td>
       </tr>
     </tbody>
   </table>
 
+  <h3>Before you archive</h3>
+
+  <ul>
+    <li><input type="checkbox" checked disabled /> Pin the summary</li>
+    <li><input type="checkbox" disabled /> Link it from the channel topic</li>
+  </ul>
+
   <p>
     Threads are covered in full in the
-    <a href="#">channel documentation</a>. The release date is
-    <span
-      class="newt-spoiler"
-      tabindex="0"
-      role="button"
-      aria-label="Spoiler, click to reveal"
-      onclick="this.classList.toggle('newt-spoiler--revealed')"
-      >still under wraps</span
-    >.
+    <a href="#">channel documentation</a>.
   </p>
 
-  <small>
-    Subtext: the aside under a message, smaller and quieter — it still holds an
-    element, like <a href="#">a dismiss link</a>, at the same size.
-  </small>
+  <section data-footnotes>
+    <ol>
+      <li id="typeset-fn-1">
+        <p>
+          Private threads are the exception: only invited members see them.
+          <a href="#typeset-ref-1" aria-label="Back to reference 1">↩</a>
+        </p>
+      </li>
+    </ol>
+  </section>
 </article>

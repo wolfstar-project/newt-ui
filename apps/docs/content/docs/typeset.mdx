@@ -1,12 +1,17 @@
 ---
 title: "Typeset"
-description: "Three controls — size, leading and flow — for every place the library renders markdown."
+description: "Three controls — size, leading and flow — for the HTML a markdown renderer emits."
 ---
 
 Rendered markdown is the one thing a component library cannot style with
 components. What arrives is whatever the renderer emitted: a heading, three
 paragraphs, a list, a table, sometimes a code block, none of them carrying a
 class you chose. Typeset styles that markup from the outside.
+
+It is for HTML a general renderer produced — CommonMark and GFM through remark,
+markdown-it, marked, MDX or a CMS. A chat message written in chat markdown,
+with mentions, timestamps and spoilers, is the
+[Markdown](/docs/components/markdown) component's job instead.
 
 <ComponentPreview name="typeset" />
 
@@ -59,7 +64,7 @@ Three combinations cover the surfaces this library renders into:
 | Class             | Size       | Leading | Flow     | For                                      |
 | ----------------- | ---------- | ------- | -------- | ---------------------------------------- |
 | `typeset-docs`    | `1em`      | `1.75`  | `1.25em` | Long-form reading — guides, changelogs   |
-| `typeset-chat`    | `0.9375em` | `1.375` | `0.5em`  | Conversation, where the turn is the unit |
+| `typeset-chat`    | `0.9375em` | `1.375` | `0.5em`  | Assistant replies, comments, transcripts |
 | `typeset-article` | `1.0625em` | `1.8`   | `1.5em`  | Editorial text somebody sat down to read |
 
 ```html
@@ -94,9 +99,8 @@ named. That is the whole extension mechanism.
 ## Measure [#measure]
 
 Line length belongs to the column, not to the type, so it is a separate class:
-`typeset-measure` caps the block at `68ch`. It is on by default in the React
-and Vue wrappers through the `measure` prop, and off in the bare class list
-until you add it.
+`typeset-measure` caps the block at `68ch`. It is off by default: pass the
+`measure` prop to the React or Vue wrapper, or add the class yourself.
 
 A block inside a fixed-width column — a sidebar, an embed — usually wants it
 off, because the column already decided.

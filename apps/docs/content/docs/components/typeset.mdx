@@ -1,6 +1,6 @@
 ---
 title: "Typeset"
-description: "Styles rendered markdown with three variables — size, leading and flow — over the --newt-* tokens."
+description: "Styles the HTML a markdown renderer emits — CommonMark and GFM — with three variables: size, leading and flow."
 ---
 
 Rendered markdown is the one thing a component library cannot style with
@@ -21,38 +21,52 @@ explains what each one does.
 
 <Usage name="typeset" />
 
+## Typeset or Markdown [#which]
+
+Both deal with markdown, at different ends of it.
+
+- **Typeset** styles HTML that something else produced: a remark or
+  markdown-it pipeline, MDX, a CMS field, an assistant reply run through a
+  markdown library. You keep your renderer; Typeset gives its output the
+  library's rhythm.
+- **[Markdown](/docs/components/markdown)** takes a chat message as a string,
+  parses chat markdown — `<@id>` mentions, `<t:…>` timestamps, `||spoilers||`,
+  `-#` subtext — and renders it with the library's own components. Nothing to
+  style afterwards, and no Typeset around it.
+
 ## What it styles [#markdown]
 
 Typeset never sees markdown — it sees whatever a renderer emitted from it. The
-left column is the syntax a chat client accepts, the middle is the element that
-reaches the wrapper, and everything in it is styled by the stylesheet without a
-class of its own.
+left column is CommonMark and GFM, the middle is the element that reaches the
+wrapper, and everything in it is styled by the stylesheet without a class of
+its own.
 
-| Markdown                 | Element              | Notes                                                    |
-| ------------------------ | -------------------- | -------------------------------------------------------- |
-| `# H1` `## H2` `### H3`  | `<h1>` `<h2>` `<h3>` | `h4`–`h6` are styled too, for renderers that go deeper.  |
-| `**bold**`               | `<strong>`           | Weight 600 and the primary text colour.                  |
-| `*italic*`               | `<em>`               |                                                          |
-| `__underline__`          | `<u>`                | Same underline offset as a link, so the two agree.       |
-| `~~strikethrough~~`      | `<s>`                | Falls back to the muted colour.                          |
-| `***bold italics***`     | `<strong><em>`       | The marks nest, and so do the elements they produce.     |
-| `__**underline bold**__` | `<u><strong>`        | Any combination of the four, in any order.               |
-| `` `inline code` ``      | `<code>`             | Monospace on the surface colour.                         |
-| ` ```lang ` fenced block | `<pre><code>`        | Scrolls sideways rather than widening the column.        |
-| `[label](url)`           | `<a>`                | Link colour, underlined.                                 |
-| `> quote` / `>>> quote`  | `<blockquote>`       | Rule on the inline start edge. Holds several paragraphs. |
-| `- item` / `1. item`     | `<ul>` / `<ol>`      | Nested lists keep their own counter and a tighter gap.   |
-| `-# subtext`             | `<small>`            | Smaller and quieter, on the same rhythm.                 |
-| `\|\|spoiler\|\|`        | `<Spoiler>`          | Interface, not styling — see below.                      |
+| Markdown                  | Element                       | Notes                                                    |
+| ------------------------- | ----------------------------- | -------------------------------------------------------- |
+| `#` … `######`            | `<h1>` … `<h6>`               | One display face; sizes are `em` of the base.            |
+| `**bold**` / `*italic*`   | `<strong>` / `<em>`           | Bold takes the primary text colour.                      |
+| `~~strikethrough~~` (GFM) | `<del>`                       | Falls back to the muted colour.                          |
+| `` `inline code` ``       | `<code>`                      | Monospace on the surface colour.                         |
+| ` ```lang ` fenced block  | `<pre><code>`                 | Scrolls sideways rather than widening the column.        |
+| `[label](url)`, autolinks | `<a>`                         | Link colour, underlined.                                 |
+| `![alt](src)`             | `<img>`                       | Never wider than the column.                             |
+| `> quote`                 | `<blockquote>`                | Rule on the inline start edge. Holds several paragraphs. |
+| `- item` / `1. item`      | `<ul>` / `<ol>`               | Nested lists keep their own counter and a tighter gap.   |
+| `- [x] task` (GFM)        | `<li><input type="checkbox">` | The box takes the bullet's place.                        |
+| `\| a \| b \|` (GFM)      | `<table>`                     | `:-:` and `--:` columns keep their alignment.            |
+| `[^1]` (GFM)              | `<sup>` + `<section>`         | The reference keeps the line; the notes sit apart.       |
+| `---`                     | `<hr>`                        | One border-coloured rule.                                |
+
+Raw HTML a renderer passes through is covered too: `<u>`, `<s>`, `<small>`,
+`<mark>`, `<kbd>`, `<sub>`/`<sup>`, `<dl>`, `<details>` and `<figure>`.
 
 <Callout>
-  A spoiler is not text styling: it hides content until clicked, which a class
-  cannot do. It stays the [Spoiler](/docs/components/spoiler) component, dropped
-  inline into the prose — `add typeset` installs it too. Mentions and timestamps
-  are the same story: their own components, not this stylesheet. Anything
-  block-level dropped into a typeset body — a card, a form, a wider widget —
-  should carry `not-typeset` so it keeps its own spacing rather than the
-  surrounding rhythm.
+  Chat syntax is not here on purpose. `||spoiler||` hides content until it is
+  clicked, which a class cannot do; a mention or a timestamp is an id that has
+  to be resolved. A general renderer does not know any of them — that is what
+  [Markdown](/docs/components/markdown) is for. Anything block-level dropped
+  into a typeset body — a card, a form, a wider widget — should carry
+  `not-typeset` so it keeps its own spacing rather than the surrounding rhythm.
 </Callout>
 
 ## API reference

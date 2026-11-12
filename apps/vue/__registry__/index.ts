@@ -1370,7 +1370,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "typeset",
       type: "registry:ui",
-      registryDependencies: ["spoiler"],
+      registryDependencies: [],
       files: [
         "registry/bases/newt/ui/typeset/Typeset.vue",
         "registry/bases/newt/ui/typeset/index.ts",

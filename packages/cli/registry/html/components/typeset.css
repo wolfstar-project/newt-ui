@@ -1,9 +1,9 @@
 /* newt-ui · Typeset */
 
 /*
- * Typeset styles rendered markdown — a message body, an embed description, a
- * changelog entry, a documentation page — with three variables rather than a
- * rule per element:
+ * Typeset styles the HTML a general markdown renderer emits — CommonMark and
+ * GitHub-flavoured markdown through remark, markdown-it, marked, MDX or a CMS —
+ * with three variables rather than a rule per element:
  *
  *   --typeset-size     the base font size everything else is an `em` of
  *   --typeset-leading  the line height
@@ -11,6 +11,10 @@
  *
  * Everything else resolves to a --newt-* token, so a typeset block follows the
  * palette, the light surfaces and a preset without knowing they exist.
+ *
+ * A chat message written in chat markdown — mentions, timestamps, spoilers —
+ * is not this stylesheet's job: the Markdown component parses that source and
+ * renders it with the library's own parts.
  */
 
 .typeset {
@@ -92,10 +96,10 @@
 }
 
 /*
- * The rest of the inline set a chat markdown parser emits. Emphasis and
- * strikethrough would inherit the browser's defaults, but they are stated here
- * so the offset under an underline is the one the links use rather than the
- * one the font happens to suggest.
+ * The rest of the inline set. Emphasis and strikethrough would inherit the
+ * browser's defaults, but they are stated here so the offset under an
+ * underline — raw `<u>` is valid in markdown — is the one the links use rather
+ * than the one the font happens to suggest.
  */
 .typeset :where(em) {
   font-style: italic;
@@ -112,12 +116,26 @@
 }
 
 /*
- * Subtext: the aside under a message. Smaller and quieter, and `em` so it
- * shrinks against whatever it sits in rather than against the root.
+ * Fine print. Smaller and quieter, and `em` so it shrinks against whatever it
+ * sits in rather than against the root.
  */
 .typeset :where(small) {
   font-size: 0.8125em;
   color: var(--newt-text-muted);
+}
+
+/* Highlighted text: the brand hue, thinned so the words stay readable on it. */
+.typeset :where(mark) {
+  padding-inline: 0.15em;
+  border-radius: var(--newt-radius-sm);
+  background: color-mix(in oklab, var(--newt-brand) 30%, transparent);
+  color: var(--newt-text-primary);
+}
+
+/* A footnote reference must not push its line away from the one above. */
+.typeset :where(sup, sub) {
+  font-size: 0.75em;
+  line-height: 0;
 }
 
 .typeset :where(a) {
@@ -146,12 +164,39 @@
   margin-block-end: calc(var(--typeset-flow) * 0.35);
 }
 
+.typeset :where(li)::marker {
+  color: var(--newt-text-muted);
+}
+
+/*
+ * GFM task lists: the renderer puts a checkbox first in the item, or first in
+ * the item's paragraph when the list is loose. The box takes the bullet's
+ * place in the indent, so the text lines up with the items around it.
+ */
+.typeset
+  :where(
+    li:has(
+      > input[type="checkbox"]:first-child,
+      > p:first-child > input[type="checkbox"]:first-child
+    )
+  ) {
+  list-style: none;
+}
+
+.typeset :where(li input[type="checkbox"]:first-child) {
+  margin-block: 0;
+  margin-inline: -1.35em 0.5em;
+  vertical-align: -0.1em;
+  accent-color: var(--newt-brand);
+}
+
 /* A nested list belongs to its item, so it does not restate the block gap. */
 .typeset :where(li > ul, li > ol) {
   margin-block: calc(var(--typeset-flow) * 0.35);
 }
 
 .typeset :where(blockquote) {
+  margin-inline: 0;
   padding-inline-start: 1em;
   border-inline-start: 4px solid var(--newt-border);
   color: var(--newt-text-muted);
@@ -197,6 +242,41 @@
   font-size: 0.8em;
 }
 
+/* Definition lists: the term reads as a label, the description hangs under it. */
+.typeset :where(dt) {
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.typeset :where(dd) {
+  margin-inline-start: 1.5em;
+}
+
+.typeset :where(dd + dt) {
+  margin-block-start: calc(var(--typeset-flow) * 0.5);
+}
+
+/* A disclosure: the summary is the control, so it says so. */
+.typeset :where(summary) {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--newt-text-primary);
+}
+
+.typeset :where(details[open] > summary) {
+  margin-block-end: calc(var(--typeset-flow) * 0.5);
+}
+
+.typeset :where(figure) {
+  margin-inline: 0;
+}
+
+.typeset :where(figcaption) {
+  margin-block-start: 0.5em;
+  font-size: 0.875em;
+  color: var(--newt-text-muted);
+}
+
 .typeset :where(img, video) {
   max-inline-size: 100%;
   height: auto;
@@ -212,8 +292,16 @@
 .typeset :where(th, td) {
   padding: 0.5em 0.7em;
   border-block-end: 1px solid var(--newt-border);
-  text-align: start;
   vertical-align: top;
+}
+
+/*
+ * A GFM column written `:-:` or `--:` arrives as `align` on its cells. That
+ * attribute loses to any author rule, so `start` only applies where none was
+ * asked for.
+ */
+.typeset :where(th:not([align]), td:not([align])) {
+  text-align: start;
 }
 
 .typeset :where(th) {
@@ -233,6 +321,17 @@
   }
 }
 
+/*
+ * Footnotes, as GFM renderers emit them: a section at the end of the body,
+ * set apart and a step quieter than the text that cites them.
+ */
+.typeset > :where([data-footnotes], .footnotes) {
+  padding-block-start: var(--typeset-flow);
+  border-block-start: 1px solid var(--newt-border);
+  font-size: 0.875em;
+  color: var(--newt-text-muted);
+}
+
 /* --- presets ------------------------------------------------------------ */
 
 /* Long-form reading: the defaults, stated so a preset is always explicit. */
@@ -242,7 +341,10 @@
   --typeset-flow: 1.25em;
 }
 
-/* Conversation: tighter, because the turn is the unit and it is short. */
+/*
+ * Conversation: tighter, because the turn is the unit and it is short — an
+ * assistant reply, a comment thread, a support transcript.
+ */
 .typeset-chat {
   --typeset-size: 0.9375em;
   --typeset-leading: 1.375;
