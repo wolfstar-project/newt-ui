@@ -83,12 +83,12 @@ deleted in one selection:
 /* end newt/ui preset */
 ```
 
-A base colour other than `slate` restates the seven surface tokens, once in
-that block for the dark set and once under `.newt-light,
-[data-newt-theme="light"]` for the light one, so the choice holds in both
-modes. A shadow choice other than `soft` adds the two
-`--newt-shadow-elevation-*` tokens, and a heading font sets
-`--newt-font-display` apart from `--newt-font-sans`.
+A base colour other than `slate` restates the seven surface tokens the way
+`init` lays them out: the light set in `:root` and the dark set under your dark
+selector (`.dark` unless you chose another), so the choice holds in both modes.
+A shadow choice other than `soft` does the same for the two
+`--newt-shadow-elevation-*` tokens, with a lighter shadow for the light set, and
+a heading font sets `--newt-font-display` apart from `--newt-font-sans`.
 
 Light surfaces and right-to-left add a line each — `color-scheme` and
 `--newt-dir` — because the rest of those two features is an attribute on
