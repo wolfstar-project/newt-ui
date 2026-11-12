@@ -25,7 +25,7 @@ Hold the active tab yourself with `value` and `onValueChange` in React, or `v-mo
 
 ### With panels
 
-Each `TabsContent` renders only while its trigger is active. The panels read the active tab from `Tabs`, so they go inside it: `flex-wrap` on the list and `basis-full` on each panel drop them onto their own row.
+Each `TabsContent` renders only while its trigger is active. The panels read the active tab from `Tabs`, so they go inside it. `Tabs` is the tablist by default, so give it `role="none"` and wrap the triggers in a `role="tablist"` element of their own: the panels then sit beside the list of tab controls, not inside it.
 
 <ComponentPreview name="tabs" variant="panels" />
 
