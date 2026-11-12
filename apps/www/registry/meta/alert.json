@@ -11,5 +11,6 @@
     "index.ts"
   ],
   "reactDemo": "alert-demo",
-  "vueDemo": "AlertDemo"
+  "vueDemo": "AlertDemo",
+  "examples": ["actions", "dismissible"]
 }

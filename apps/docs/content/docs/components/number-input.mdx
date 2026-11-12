@@ -17,6 +17,26 @@ What is typed is kept as text until it reads as a number, so the field can be cl
 
 <Usage name="number-input" />
 
+## Examples
+
+### Decimal step
+
+A fractional `step` switches the field to a decimal keyboard. The stepper buttons round the value to the step's precision; a typed value is not rounded unless it has to be corrected to fit the range. `decrementLabel` and `incrementLabel` rename the two buttons for screen readers.
+
+<ComponentPreview name="number-input" variant="decimal" />
+
+### Invalid
+
+`min` and `max` already clamp the value, so keep `invalid` for a rule the control cannot know. Raise the limit to 12 to clear the error.
+
+<ComponentPreview name="number-input" variant="invalid" />
+
+### Disabled
+
+`disabled` locks the field and both steppers at once, for a value that is shown but set somewhere else.
+
+<ComponentPreview name="number-input" variant="disabled" />
+
 ## API reference
 
 <PropsTable

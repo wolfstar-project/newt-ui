@@ -14,5 +14,6 @@
     "index.ts"
   ],
   "reactDemo": "form-fields-demo",
-  "vueDemo": "FormFieldsDemo"
+  "vueDemo": "FormFieldsDemo",
+  "examples": ["error", "textarea", "select", "toggles"]
 }

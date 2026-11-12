@@ -5,5 +5,6 @@
   "dependencies": ["class-variance-authority"],
   "vueFiles": ["Skeleton.vue", "index.ts"],
   "reactDemo": "skeleton-demo",
-  "vueDemo": "SkeletonDemo"
+  "vueDemo": "SkeletonDemo",
+  "examples": ["variants", "card", "loading"]
 }

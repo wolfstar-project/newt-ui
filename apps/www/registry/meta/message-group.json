@@ -24,5 +24,6 @@
     "index.ts"
   ],
   "reactDemo": "message-group-demo",
-  "vueDemo": "MessageGroupDemo"
+  "vueDemo": "MessageGroupDemo",
+  "examples": ["list", "app"]
 }

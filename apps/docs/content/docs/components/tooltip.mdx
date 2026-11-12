@@ -15,6 +15,26 @@ A hover bubble. It is a hint, never the only place information lives — a contr
 
 <Usage name="tooltip" />
 
+## Examples
+
+### Icon buttons
+
+The usual place for a tooltip: a button that shows only an icon. Point the button's `aria-labelledby` at the tooltip, so the label a sighted reader sees on hover is also the name a screen reader announces.
+
+<ComponentPreview name="tooltip" variant="toolbar" />
+
+### With a shortcut
+
+`TooltipContent` is a slot. Add `Kbd` after the label to teach the keys that do the same thing.
+
+<ComponentPreview name="tooltip" variant="shortcut" />
+
+### Below the trigger
+
+The label opens above its trigger. Pass `bottom-auto top-[calc(100%+8px)]` to `TooltipContent` to open it underneath, for a trigger at the top edge of the window.
+
+<ComponentPreview name="tooltip" variant="below" />
+
 ## API reference
 
 <PropsTable

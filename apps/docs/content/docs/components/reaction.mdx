@@ -15,6 +15,26 @@ A toggleable emoji reaction pill, plus the group that rows them under a message.
 
 <Usage name="reaction" />
 
+## Examples
+
+### Controlled
+
+Bind `active` to own the toggle. The pill never changes `count` by itself, so add the reader's reaction to the number you pass.
+
+<ComponentPreview name="reaction" variant="controlled" />
+
+### Custom emoji
+
+`emojiSrc` draws an image in place of the `emoji` text, for a server's own emoji. Give it an `emojiAlt` so the accessible name says which one it is.
+
+<ComponentPreview name="reaction" variant="custom-emoji" />
+
+### Read-only
+
+`readonly` renders a tally that cannot be toggled or focused. Use it in feeds and previews where the reader cannot react.
+
+<ComponentPreview name="reaction" variant="readonly" />
+
 ## API reference
 
 <PropsTable

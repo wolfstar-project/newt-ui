@@ -4,5 +4,6 @@
   "description": "A pill-style tab list that switches the active tab on click.",
   "vueFiles": ["Tabs.vue", "TabsTrigger.vue", "TabsContent.vue", "index.ts"],
   "reactDemo": "tabs-demo",
-  "vueDemo": "TabsDemo"
+  "vueDemo": "TabsDemo",
+  "examples": ["controlled", "panels", "disabled"]
 }

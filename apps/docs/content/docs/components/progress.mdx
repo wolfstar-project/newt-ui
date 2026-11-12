@@ -15,6 +15,26 @@ A gradient progress bar for boosts, uploads and other long-running tasks. Compos
 
 <Usage name="progress" />
 
+## Examples
+
+### Variants
+
+`success` for something that finished and `danger` for a limit about to be reached; the default gradient is for work still going on. The visible label sits outside the bar, so each bar repeats it as its `aria-label`.
+
+<ComponentPreview name="progress" variant="variants" />
+
+### A custom maximum
+
+Set `max` to count in the thing's own unit, such as 3 boosts of 7, instead of working out a percentage by hand.
+
+<ComponentPreview name="progress" variant="max" />
+
+### Controlled
+
+The bar holds no state: it draws the `value` it is given and eases to the next one. Here the variant changes to `success` when the value reaches the end.
+
+<ComponentPreview name="progress" variant="controlled" />
+
 ## API reference
 
 <PropsTable

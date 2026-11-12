@@ -15,6 +15,26 @@ A complete combobox: a trigger, a search field, a keyboard-driven listbox and a 
 
 <Usage name="select-menu" />
 
+## Examples
+
+### Placeholder
+
+With no value, the trigger shows the `placeholder` in muted text until an option is picked. Options need only a `value` and a `label`.
+
+<ComponentPreview name="select-menu" variant="placeholder" />
+
+### Message variant
+
+`variant="message"` is the select attached to a message: the list is capped at 25 options, its scrollbar is always visible, and no row keeps a tick, because the choice is submitted and not kept.
+
+<ComponentPreview name="select-menu" variant="message" />
+
+### Disabled
+
+`disabled` locks the trigger while still showing the option in force, including its `note`.
+
+<ComponentPreview name="select-menu" variant="disabled" />
+
 ## API reference
 
 <PropsTable

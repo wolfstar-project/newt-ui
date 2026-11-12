@@ -12,5 +12,6 @@
     "index.ts"
   ],
   "reactDemo": "pagination-demo",
-  "vueDemo": "PaginationDemo"
+  "vueDemo": "PaginationDemo",
+  "examples": ["ellipsis", "prev-next", "load-more"]
 }

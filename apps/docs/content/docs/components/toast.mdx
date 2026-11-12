@@ -15,6 +15,26 @@ A transient notification with a status icon that auto-dismisses after a timeout 
 
 <Usage name="toast" />
 
+## Examples
+
+### Variants
+
+`variant` is `success` or `error`, and changes the icon's colour and glyph. Both toasts here set `duration` to `0` and leave out `ToastClose`, so they stay on screen.
+
+<ComponentPreview name="toast" variant="variants" />
+
+### Controlled
+
+Hold `open` yourself to raise a toast in answer to an action. The timer and the close button both report `false` through `onOpenChange` in React, or `update:open` in Vue, which `v-model:open` handles.
+
+<ComponentPreview name="toast" variant="controlled" />
+
+### With an action
+
+Put a `Button` in `ToastContent` to offer a way back. Set `duration` to `0` on a toast like this one: an undo that disappears after five seconds is one most readers miss.
+
+<ComponentPreview name="toast" variant="action" />
+
 ## API reference
 
 <PropsTable

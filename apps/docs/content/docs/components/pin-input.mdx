@@ -17,6 +17,26 @@ The value is a single string with no gaps, so a character typed in a later box l
 
 <Usage name="pin-input" />
 
+## Examples
+
+### Masked
+
+`mask` draws every character as a dot, for a PIN that should not be read over a shoulder. `length` sets the number of boxes.
+
+<ComponentPreview name="pin-input" variant="mask" />
+
+### Alphanumeric
+
+`type="alphanumeric"` accepts letters as well as digits, and `groupSize` draws a separator after every four boxes so a long backup code is easier to copy.
+
+<ComponentPreview name="pin-input" variant="alphanumeric" />
+
+### Invalid
+
+`invalid` turns every box's border to the danger colour. Pair it with an error message, and clear it as soon as the code changes: edit the last two digits to `16` to see it pass.
+
+<ComponentPreview name="pin-input" variant="invalid" />
+
 ## API reference
 
 <PropsTable

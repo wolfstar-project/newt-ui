@@ -115,11 +115,39 @@ function vueDemoNames(m) {
   ]
 }
 
+const metaNames = new Set(metas.map((m) => m.name))
+const REACT_IMPORT = /@\/registry\/bases\/newt\/(?:ui|blocks)\/([\w-]+)/g
+const VUE_IMPORT = /~~\/registry\/bases\/newt\/(?:ui|blocks)\/([\w-]+)/g
+
+/**
+ * What installing a demo has to bring: the component it demonstrates, then
+ * every other registry item its source imports. `add` follows only what is
+ * declared, so an example that uses a Button or an Avatar and does not say so
+ * installs into a project that cannot compile it.
+ */
+function demoDependencies(owner, file, pattern) {
+  const source = existsSync(file) ? readFileSync(file, "utf8") : ""
+  const used = new Set()
+  for (const [, stem] of source.matchAll(pattern)) {
+    if (stem === owner) continue
+    if (metaNames.has(stem)) used.add(stem)
+    else
+      console.warn(
+        `${file.replace(ROOT + "/", "")} imports ${stem}, which is not a registry item`
+      )
+  }
+  return [owner, ...[...used].toSorted((a, b) => a.localeCompare(b))]
+}
+
 const reactExamples = metas.flatMap((m) =>
   reactDemoNames(m).map((name) => ({
     name,
     type: "registry:example",
-    registryDependencies: [m.name],
+    registryDependencies: demoDependencies(
+      m.name,
+      join(WWW, `${REGISTRY_BASE}/examples/${name}.tsx`),
+      REACT_IMPORT
+    ),
     files: [{ path: `examples/${name}.tsx`, type: "registry:example" }],
   }))
 )
@@ -193,7 +221,11 @@ const vueExamples = metas.flatMap((m) =>
   vueDemoNames(m).map((name) => ({
     name,
     type: "registry:example",
-    registryDependencies: [m.name],
+    registryDependencies: demoDependencies(
+      m.name,
+      join(VUE, `${REGISTRY_BASE}/examples/${name}.vue`),
+      VUE_IMPORT
+    ),
     files: [{ path: `examples/${name}.vue`, type: "registry:example" }],
   }))
 )

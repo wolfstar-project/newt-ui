@@ -15,6 +15,26 @@ Numbered page buttons with previous/next controls, plus a divider-style load-mor
 
 <Usage name="pagination" />
 
+## Examples
+
+### With an ellipsis
+
+When the pages do not fit in a row, show the first, the last, the current one and its neighbours, and put a `PaginationEllipsis` where pages are left out.
+
+<ComponentPreview name="pagination" variant="ellipsis" />
+
+### Previous and next
+
+When nobody needs to jump to a page, two labelled buttons and the position are enough. `disabled` stops each button at its end of the range.
+
+<ComponentPreview name="pagination" variant="prev-next" />
+
+### Load more
+
+`LoadMore` is a row between two rules, not a button. Give it the control while there is more to fetch, and a closing line once the list has reached its end.
+
+<ComponentPreview name="pagination" variant="load-more" />
+
 ## API reference
 
 <PropsTable

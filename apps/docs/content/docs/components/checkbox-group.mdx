@@ -15,6 +15,26 @@ Several answers out of a visible list, each with an optional description. Compos
 
 <Usage name="checkbox-group" />
 
+## Examples
+
+### With descriptions
+
+Give every option a `description` when the labels alone do not say what ticking them will do. This group is uncontrolled: it starts from `defaultValue` and keeps its own state.
+
+<ComponentPreview name="checkbox-group" variant="descriptions" />
+
+### Controlled
+
+Hold the value yourself when something outside the group has to read or replace it. Here a count follows the selection and two [Button](/docs/components/button)s rewrite it in one step.
+
+<ComponentPreview name="checkbox-group" variant="controlled" />
+
+### Inline
+
+The group is a flex column by default. For a few short labels, pass layout classes to lay the options out in a row that wraps.
+
+<ComponentPreview name="checkbox-group" variant="inline" />
+
 ## API reference
 
 <PropsTable

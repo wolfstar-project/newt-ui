@@ -13,5 +13,6 @@
     "index.ts"
   ],
   "reactDemo": "dropdown-demo",
-  "vueDemo": "DropdownDemo"
+  "vueDemo": "DropdownDemo",
+  "examples": ["simple", "status", "trigger"]
 }

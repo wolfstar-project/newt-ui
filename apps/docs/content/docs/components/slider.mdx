@@ -17,6 +17,26 @@ The value lives in a real `<input type="range">` laid over the drawing, so the k
 
 <Usage name="slider" />
 
+## Examples
+
+### Named steps
+
+With a small `max` and a mark at every stop, the slider becomes a short scale of named levels. Pass `aria-valuetext` so a screen reader hears the name and not the number.
+
+<ComponentPreview name="slider" variant="steps" />
+
+### Custom range
+
+`min`, `max` and `step` set the scale: this one runs from 8 to 96 in steps of 8. Without `marks` the track is drawn alone, so show the current value beside it.
+
+<ComponentPreview name="slider" variant="range" />
+
+### Disabled
+
+`disabled` dims the whole control and takes it out of the tab order. Say why nearby, because the slider itself cannot.
+
+<ComponentPreview name="slider" variant="disabled" />
+
 ## API reference
 
 <PropsTable

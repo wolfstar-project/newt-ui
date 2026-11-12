@@ -6,5 +6,6 @@
   "registryDependencies": ["avatar"],
   "vueFiles": ["StatusIndicator.vue", "StatusDot.vue", "index.ts"],
   "reactDemo": "status-indicator-demo",
-  "vueDemo": "StatusIndicatorDemo"
+  "vueDemo": "StatusIndicatorDemo",
+  "examples": ["streaming", "members"]
 }

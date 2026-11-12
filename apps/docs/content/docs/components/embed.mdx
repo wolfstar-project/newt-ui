@@ -15,6 +15,26 @@ A Discord-inspired rich message embed with an accent bar, author, title, descrip
 
 <Usage name="embed" />
 
+## Examples
+
+### Accent colors
+
+The `color` prop sets the bar on the leading edge. It takes any CSS colour, so passing a `--newt-*` token lets an embed signal success, a warning or a failure and still follow the theme.
+
+<ComponentPreview name="embed" variant="colors" />
+
+### Fields
+
+`EmbedFields` lays its `EmbedField` children out in a grid that fits as many columns as the width allows. Use it for short name and value pairs, such as stats or settings.
+
+<ComponentPreview name="embed" variant="fields" />
+
+### Minimal
+
+Every part of an embed is optional. A lone `EmbedDescription` is enough for a short confirmation, and with no `color` the bar takes the brand colour.
+
+<ComponentPreview name="embed" variant="minimal" />
+
 ## API reference
 
 <PropsTable

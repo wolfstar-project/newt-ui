@@ -10,5 +10,6 @@
     "index.ts"
   ],
   "reactDemo": "avatar-demo",
-  "vueDemo": "AvatarDemo"
+  "vueDemo": "AvatarDemo",
+  "examples": ["image", "fallback", "with-name"]
 }

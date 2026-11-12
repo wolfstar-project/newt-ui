@@ -4,5 +4,6 @@
   "description": "Sections that open and close under their headings, one at a time or independently.",
   "vueFiles": ["Accordion.vue", "AccordionItem.vue", "index.ts"],
   "reactDemo": "accordion-demo",
-  "vueDemo": "AccordionDemo"
+  "vueDemo": "AccordionDemo",
+  "examples": ["multiple", "custom-title"]
 }

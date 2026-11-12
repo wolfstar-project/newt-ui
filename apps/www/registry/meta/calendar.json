@@ -4,5 +4,6 @@
   "description": "A month grid for picking one day, with keyboard navigation and optional first and last selectable dates.",
   "vueFiles": ["Calendar.vue", "index.ts"],
   "reactDemo": "calendar-demo",
-  "vueDemo": "CalendarDemo"
+  "vueDemo": "CalendarDemo",
+  "examples": ["range", "locale"]
 }
