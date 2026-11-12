@@ -240,6 +240,18 @@ function isTyping(target: EventTarget | null): boolean {
   )
 }
 
+/*
+ * A dialog on the page owns the keyboard while focus is in it. The canvas draws
+ * a Modal demo of its own, so "a modal exists" cannot be the test (it always
+ * does); "focus is inside one" is.
+ */
+function inDialog(target: EventTarget | null): boolean {
+  return (
+    target instanceof Element &&
+    target.closest('dialog, [role="dialog"], [role="alertdialog"]') !== null
+  )
+}
+
 interface MenuAction {
   readonly label: string
   readonly keys: string
@@ -482,7 +494,11 @@ export default function CreateApp() {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return
-      if (isTyping(event.target) || document.querySelector("dialog[open]")) {
+      if (
+        isTyping(event.target) ||
+        inDialog(event.target) ||
+        document.querySelector("dialog[open]")
+      ) {
         return
       }
       const key = event.key.toLowerCase()
