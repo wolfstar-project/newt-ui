@@ -1,9 +1,9 @@
 ---
 title: "Spoiler"
-description: "Inline text hidden behind a dark block until the reader clicks to reveal it."
+description: "Inline text hidden behind a solid block until the reader clicks to reveal it."
 ---
 
-Inline text hidden behind a dark block until the reader clicks to reveal it. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+Inline text hidden behind a solid block until the reader clicks to reveal it. Everything inside is hidden while it is closed, links, inline code, mentions and emoji images included, and none of it can be clicked or reached with Tab until the reader reveals it. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
 
 <ComponentPreview name="spoiler" />
 
@@ -35,6 +35,12 @@ Inline text hidden behind a dark block until the reader clicks to reveal it. Com
       type: "(revealed: boolean) => void | undefined",
       description: "Called with the next revealed state when toggled.",
     },
+    {
+      name: "label",
+      type: "string | undefined",
+      description:
+        'Accessible name while hidden, read in place of the content. Defaults to "Spoiler, click to reveal".',
+    },
   ]}
 />
 
@@ -42,7 +48,9 @@ The registry exports `Spoiler`. Parts without a table accept the native attribut
 
 ## Accessibility
 
-The reveal control must be keyboard operable and expose its expanded state. Do not place essential instructions only inside hidden spoiler content.
+Hidden, the spoiler is a button in the tab order: Enter or Space reveals it, and `aria-expanded` reports its state. Its accessible name is `label`, so a screen reader announces the spoiler without reading what it hides; pass a translated `label` when the page is not in English. The content inside is `inert` and invisible until revealed, so a link in it cannot be followed by accident. Do not place essential instructions only inside hidden spoiler content.
+
+The hidden chip is `--newt-spoiler`, and `--newt-spoiler-hover` under the pointer, each with a light and a dark value.
 
 ## Tokens
 

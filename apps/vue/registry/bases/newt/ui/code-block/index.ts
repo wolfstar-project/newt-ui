@@ -6,10 +6,10 @@ export { default as CodeToken } from "./CodeToken.vue"
 export const codeTokenVariants = cva("", {
   variants: {
     kind: {
-      keyword: "text-[#569cd6]",
-      string: "text-[#ce9178]",
-      comment: "text-[#6a9955]",
-      function: "text-[#dcdcaa]",
+      keyword: "text-newt-code-keyword",
+      string: "text-newt-code-string",
+      comment: "text-newt-code-comment",
+      function: "text-newt-code-function",
     },
   },
 })

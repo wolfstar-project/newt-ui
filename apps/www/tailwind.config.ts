@@ -39,6 +39,13 @@ export const newtPreset: Omit<Config, "content"> = {
           "mention-role": "var(--newt-mention-role)",
           "on-accent": "var(--newt-on-accent)",
           overlay: "var(--newt-overlay)",
+          spoiler: "var(--newt-spoiler)",
+          "spoiler-hover": "var(--newt-spoiler-hover)",
+          "code-bg": "var(--newt-code-bg)",
+          "code-keyword": "var(--newt-code-keyword)",
+          "code-string": "var(--newt-code-string)",
+          "code-comment": "var(--newt-code-comment)",
+          "code-function": "var(--newt-code-function)",
         },
       },
       fontFamily: {

@@ -33,6 +33,8 @@ export interface MarkdownLabels {
   linkWarningBody: string
   linkWarningCancel: string
   linkWarningConfirm: string
+  /** Accessible name of a hidden spoiler, read in place of its content. */
+  spoiler: string
 }
 
 export const defaultMarkdownLabels: MarkdownLabels = {
@@ -43,6 +45,7 @@ export const defaultMarkdownLabels: MarkdownLabels = {
   linkWarningBody: "This link's text does not show where it goes. It opens:",
   linkWarningCancel: "Go back",
   linkWarningConfirm: "Visit site",
+  spoiler: "Spoiler, click to reveal",
 }
 
 export type MarkdownResolveMention = (

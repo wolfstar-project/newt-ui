@@ -41,6 +41,16 @@ const GROUPS = [
     ],
     utility: (name: string) => `bg-${name}`,
   },
+  {
+    label: "Content",
+    prefixes: ["newt-spoiler", "newt-code-"],
+    /* The syntax colours are text; the spoiler chip and the code surface
+     * are backgrounds. */
+    utility: (name: string) =>
+      name.startsWith("newt-code-") && name !== "newt-code-bg"
+        ? `text-${name}`
+        : `bg-${name}`,
+  },
   { label: "Shape", prefixes: ["newt-radius-", "newt-embed-"] },
   { label: "Type", prefixes: ["newt-font-"] },
   { label: "Elevation", prefixes: ["newt-shadow-"] },

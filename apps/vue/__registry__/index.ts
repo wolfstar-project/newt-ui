@@ -792,6 +792,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/modal/ModalBody.vue",
         "registry/bases/newt/ui/modal/ModalFooter.vue",
         "registry/bases/newt/ui/modal/ModalClose.vue",
+        "registry/bases/newt/ui/modal/focus.ts",
         "registry/bases/newt/ui/modal/index.ts",
       ],
     },

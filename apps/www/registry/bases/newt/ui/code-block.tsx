@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils"
 const codeTokenVariants = cva("", {
   variants: {
     kind: {
-      keyword: "text-[#569cd6]",
-      string: "text-[#ce9178]",
-      comment: "text-[#6a9955]",
-      function: "text-[#dcdcaa]",
+      keyword: "text-newt-code-keyword",
+      string: "text-newt-code-string",
+      comment: "text-newt-code-comment",
+      function: "text-newt-code-function",
     },
   },
 })
@@ -338,7 +338,7 @@ const CodeBlock = React.forwardRef<HTMLPreElement, CodeBlockProps>(
       <pre
         ref={ref}
         className={cn(
-          "overflow-x-auto rounded-md border border-newt-border bg-[#111214] p-4 font-mono text-[13px] leading-[1.6] text-newt-text-secondary",
+          "overflow-x-auto rounded-md border border-newt-border bg-newt-code-bg p-4 font-mono text-[13px] leading-[1.6] text-newt-text-secondary",
           className
         )}
         {...rest}
