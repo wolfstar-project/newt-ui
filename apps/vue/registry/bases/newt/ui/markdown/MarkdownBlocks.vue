@@ -11,7 +11,21 @@ import { HEADING_SIZES, HIGHLIGHTED_LANGUAGES, MARKDOWN_CONTEXT_KEY } from "."
 import type { MarkdownBlock } from "./markdown-syntax"
 import MarkdownInline from "./MarkdownInline.vue"
 
-const props = defineProps<{ blocks: readonly MarkdownBlock[] }>()
+const props = withDefaults(
+  defineProps<{
+    blocks: readonly MarkdownBlock[]
+    /** How many lists hold these blocks; picks the bullet. */
+    depth?: number
+  }>(),
+  { depth: 0 }
+)
+
+/* The client's bullets by depth: disc, then circle, then square. */
+const BULLETS = ["list-disc", "list-[circle]", "list-[square]"] as const
+
+function bullet(depth: number): string {
+  return BULLETS[Math.min(depth, BULLETS.length - 1)] ?? "list-disc"
+}
 
 const useContext = inject(MARKDOWN_CONTEXT_KEY)
 const context = computed(() => useContext?.())
@@ -32,7 +46,12 @@ function language(value: string | undefined): CodeLanguage | undefined {
   <template v-for="(block, index) in props.blocks" :key="index">
     <p
       v-if="block.type === 'paragraph'"
-      :class="cn('m-0', context?.jumbo && 'text-5xl leading-tight')"
+      :class="
+        cn(
+          'm-0 whitespace-pre-wrap',
+          context?.jumbo && 'text-5xl leading-tight'
+        )
+      "
     >
       <MarkdownInline :nodes="block.children" />
     </p>
@@ -41,7 +60,7 @@ function language(value: string | undefined): CodeLanguage | undefined {
       v-else-if="block.type === 'heading'"
       :class="
         cn(
-          'mb-1 mt-2 font-bold leading-[1.375] text-newt-text-primary first:mt-0',
+          'mb-1 mt-2 whitespace-pre-wrap font-bold leading-[1.375] text-newt-text-primary first:mt-0',
           HEADING_SIZES[block.level]
         )
       "
@@ -50,7 +69,7 @@ function language(value: string | undefined): CodeLanguage | undefined {
     </component>
     <p
       v-else-if="block.type === 'subtext'"
-      class="m-0 text-[13px] leading-[1.3] text-newt-text-muted"
+      class="m-0 whitespace-pre-wrap text-[13px] leading-[1.3] text-newt-text-muted"
     >
       <MarkdownInline :nodes="block.children" />
     </p>
@@ -60,23 +79,27 @@ function language(value: string | undefined): CodeLanguage | undefined {
     >
       <MarkdownBlocks :blocks="block.children" />
     </blockquote>
-    <ol
-      v-else-if="block.type === 'list' && block.ordered"
-      :start="block.start === 1 ? undefined : block.start"
-      class="my-1 list-decimal ps-6 marker:text-newt-text-muted"
-    >
-      <li v-for="(item, itemIndex) in block.items" :key="itemIndex">
-        <MarkdownInline :nodes="item.children" />
-      </li>
-    </ol>
-    <ul
+    <component
+      :is="block.ordered ? 'ol' : 'ul'"
       v-else-if="block.type === 'list'"
-      class="my-1 list-disc ps-6 marker:text-newt-text-muted"
+      :start="block.ordered && block.start !== 1 ? block.start : undefined"
+      :class="
+        cn('mb-0 mt-1 ps-4', block.ordered ? 'list-decimal' : bullet(depth))
+      "
     >
-      <li v-for="(item, itemIndex) in block.items" :key="itemIndex">
+      <li
+        v-for="(item, itemIndex) in block.items"
+        :key="itemIndex"
+        class="mb-1 whitespace-pre-wrap"
+      >
         <MarkdownInline :nodes="item.children" />
+        <MarkdownBlocks
+          v-if="item.sublist"
+          :blocks="[item.sublist]"
+          :depth="depth + 1"
+        />
       </li>
-    </ul>
+    </component>
     <template v-else-if="block.type === 'codeBlock'">
       <CodeBlock
         v-if="language(block.language)"

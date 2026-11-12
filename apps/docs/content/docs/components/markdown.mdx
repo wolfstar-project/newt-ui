@@ -9,6 +9,11 @@ chat client does: `**bold**`, `*italic*`, `__underline__`, `~~strike~~`,
 lists, `>` and `>>>` quotes, links, and the angle-bracket tokens — `<@id>`,
 `<@&id>`, `<#id>`, `</command:id>`, `<:emoji:id>` and `<t:1700000000:R>`.
 
+Line breaks follow the client too. Every newline is a line break and a blank
+line stays an empty line, before and after a list as well as between
+paragraphs; `_ _` is an empty line written on purpose. A list item indented
+under another one nests, with a circle bullet and then a square one.
+
 Each piece renders through a part you already have: mentions are `Mention`,
 code is `InlineCode` and `CodeBlock`, spoilers are `Spoiler`, timestamps are
 `Timestamp`, server emoji are `CustomEmoji`. A general Markdown library would
