@@ -271,6 +271,12 @@ means in practice:
   `@newt-html/*` path alias in `tsconfig.json`, which Blume hands to Vite along
   with every other `paths` entry — that is also what lets the registry demos
   import `@/registry/...` unchanged from inside `.blume/`.
+- **Open Graph cards are redrawn after the build.** Blume renders one card
+  per route into `dist/og/**` with a fixed layout; `scripts/render-og.mjs`
+  runs straight after `blume build` and draws the site's own card over each
+  one (same URLs, same head tags), reading the title and description back
+  from the built page and the colours from `tokens.css`. `blume dev` still
+  serves Blume's cards.
 - **`/create` is a customizer beside a canvas.** `CreateApp` (one React
   island) writes the preset onto `[data-create-preview]` as custom properties;
   the canvas is `CreateCard.astro` tiles of live registry demos. That only
