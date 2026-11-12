@@ -18,6 +18,7 @@
     color var(--newt-duration-fast) var(--newt-ease),
     box-shadow var(--newt-duration-fast) var(--newt-ease);
   white-space: nowrap;
+  text-decoration: none;
   user-select: none;
 }
 .newt-btn:active {

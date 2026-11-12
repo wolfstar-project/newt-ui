@@ -1,0 +1,19 @@
+{
+  "name": "app-invite",
+  "title": "App Invite",
+  "description": "The app directory card a link to an app unfurls into inside a message: cover banner, icon, name and a call to action.",
+  "registryDependencies": ["button"],
+  "vueFiles": [
+    "AppInvite.vue",
+    "AppInviteBanner.vue",
+    "AppInviteBody.vue",
+    "AppInviteHeader.vue",
+    "AppInviteIcon.vue",
+    "AppInviteInfo.vue",
+    "AppInviteName.vue",
+    "AppInviteDescription.vue",
+    "index.ts"
+  ],
+  "reactDemo": "app-invite-demo",
+  "vueDemo": "AppInviteDemo"
+}

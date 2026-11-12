@@ -71,6 +71,52 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "app-invite",
+    type: "registry:ui",
+    title: "App Invite",
+    description:
+      "The app directory card a link to an app unfurls into inside a message: cover banner, icon, name and a call to action.",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "ui/app-invite/AppInvite.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-invite/AppInviteBanner.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-invite/AppInviteBody.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-invite/AppInviteHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-invite/AppInviteIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-invite/AppInviteInfo.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-invite/AppInviteName.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-invite/AppInviteDescription.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-invite/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "app-launcher",
     type: "registry:ui",
     title: "App Launcher",

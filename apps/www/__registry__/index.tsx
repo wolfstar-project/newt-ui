@@ -47,6 +47,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "app-invite",
+    {
+      name: "app-invite",
+      type: "registry:ui",
+      registryDependencies: ["button"],
+      files: ["registry/bases/newt/ui/app-invite.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/app-invite")
+      ),
+    },
+  ],
+  [
     "app-launcher",
     {
       name: "app-launcher",
@@ -1146,6 +1158,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/alert-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/alert-demo")
+      ),
+    },
+  ],
+  [
+    "app-invite-demo",
+    {
+      name: "app-invite-demo",
+      type: "registry:example",
+      registryDependencies: ["app-invite"],
+      files: ["registry/bases/newt/examples/app-invite-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/app-invite-demo")
       ),
     },
   ],

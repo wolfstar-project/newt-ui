@@ -1,0 +1,76 @@
+/* newt-ui · App Invite (app directory card a link unfurls into in a message) */
+
+.newt-app-invite {
+  display: flex;
+  flex-direction: column;
+  max-width: 432px;
+  overflow: hidden;
+  border-radius: var(--newt-radius-lg);
+  background: var(--newt-bg-surface);
+  color: var(--newt-text-primary);
+}
+
+/* Cover art across the top; a flat surface stands in until it loads. */
+.newt-app-invite__banner {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 1;
+  object-fit: cover;
+  background: var(--newt-bg-base);
+}
+
+.newt-app-invite__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.newt-app-invite__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.newt-app-invite__icon {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--newt-radius-lg);
+  object-fit: cover;
+  background: var(--newt-bg-base);
+}
+
+.newt-app-invite__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.newt-app-invite__name {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--newt-text-primary);
+  text-decoration: none;
+}
+a.newt-app-invite__name:hover {
+  text-decoration: underline;
+}
+
+.newt-app-invite__description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--newt-text-secondary);
+}
+
+/* The call to action spans the card. */
+.newt-app-invite__action {
+  width: 100%;
+}

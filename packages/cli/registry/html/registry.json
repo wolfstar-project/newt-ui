@@ -352,6 +352,13 @@
       "uses": ["button"]
     },
     {
+      "name": "app-invite",
+      "title": "App Invite",
+      "rootClass": "newt-app-invite",
+      "files": ["app-invite.css", "app-invite.html"],
+      "uses": ["button"]
+    },
+    {
       "name": "select-menu",
       "title": "Select Menu",
       "rootClass": "newt-select-menu",

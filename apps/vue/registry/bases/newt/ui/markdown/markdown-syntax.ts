@@ -4,7 +4,8 @@
  * `InlineCode`, `Timestamp`, `Spoiler`, `CodeBlock`, `CustomEmoji`.
  *
  * It is a parser for one dialect, not for CommonMark: single newlines are line
- * breaks, `__` underlines, `||` hides a spoiler, `-#` is subtext, and the
+ * breaks, blank lines stay blank, `__` underlines, `||` hides a spoiler, `-#`
+ * is subtext, an indented list item nests under the one above it, and the
  * angle-bracket tokens (`<@id>`, `<#id>`, `<t:1700000000:R>`) are mentions,
  * channels and timestamps. Anything it does not recognise stays text, and no
  * HTML in the source is ever interpreted — the output is data, not markup.
@@ -59,6 +60,16 @@ export type MarkdownInline =
 
 export interface MarkdownListItem {
   children: MarkdownInline[]
+  /** The items written indented under this one. */
+  sublist?: MarkdownList
+}
+
+export interface MarkdownList {
+  type: "list"
+  ordered: boolean
+  /** The first number of an ordered list. */
+  start: number
+  items: MarkdownListItem[]
 }
 
 export type MarkdownBlock =
@@ -66,13 +77,7 @@ export type MarkdownBlock =
   | { type: "heading"; level: 1 | 2 | 3; children: MarkdownInline[] }
   | { type: "subtext"; children: MarkdownInline[] }
   | { type: "quote"; children: MarkdownBlock[] }
-  | {
-      type: "list"
-      ordered: boolean
-      /** The first number of an ordered list. */
-      start: number
-      items: MarkdownListItem[]
-    }
+  | MarkdownList
   | { type: "codeBlock"; language?: string; content: string }
 
 /* ------------------------------------------------------------------------ */
@@ -112,7 +117,9 @@ function wrap(
 ): InlineRule["parse"] {
   return (match, context) => {
     const inner = group(match, 1)
-    if (inner.trim().length === 0) return null
+    // `_ _` is kept: a run of nothing but spaces is how a message writes an
+    // empty line. An empty spoiler would be a control with nothing to reveal.
+    if (type === "spoiler" && inner.trim().length === 0) return null
     return { type, children: parseInline(inner, context) }
   }
 }
@@ -348,7 +355,13 @@ const HEADING = /^(#{1,3}) +(\S.*)$/
 const SUBTEXT = /^-# +(\S.*)$/
 const QUOTE_LINE = /^> (.*)$|^>$/
 const QUOTE_REST = /^>>> /
-const LIST_ITEM = /^\s*(?:([-*])|(\d{1,9})\.) +(\S.*)$/
+const LIST_ITEM = /^([^\S\n]*)(?:[-*]|(\d{1,9})\.) +(\S.*)$/
+/** How deep an indented item can nest; deeper ones join the last level. */
+const MAX_LIST_DEPTH = 10
+
+function isBlank(line: string): boolean {
+  return line.trim().length === 0
+}
 
 function headingLevel(marks: number | undefined): 1 | 2 | 3 {
   if (marks === 3) return 3
@@ -361,11 +374,64 @@ interface BlockContext {
   inQuote: boolean
 }
 
-/** Strip the blank lines around a paragraph and drop it if nothing is left. */
+/*
+ * Every line of a paragraph is a line on screen, blank ones included, as in
+ * the client: a blank line before or after a list is a gap. A break at the
+ * very end of a block draws nothing, so an empty last line takes a second one.
+ */
 function paragraph(lines: string[]): MarkdownBlock | null {
-  const body = lines.join("\n").replace(/^\n+|\n+$/g, "")
-  if (body.trim().length === 0) return null
+  if (lines.length === 0) return null
+  const body = lines.join("\n") + (lines.at(-1) === "" ? "\n" : "")
   return { type: "paragraph", children: parseInline(body) }
+}
+
+function emptyList(item: RegExpExecArray): MarkdownList {
+  const ordered = item[2] !== undefined
+  return {
+    type: "list",
+    ordered,
+    start: ordered ? Number(item[2]) : 1,
+    items: [],
+  }
+}
+
+/*
+ * One list, and the lists indented inside it: an item indented further than
+ * the one above nests under it, one indented less closes the levels it left.
+ * At the top level a change between `-` and `1.` starts a new list.
+ */
+function parseList(
+  first: RegExpExecArray,
+  peek: () => string,
+  advance: () => void,
+  more: () => boolean
+): MarkdownList {
+  const root = emptyList(first)
+  const levels = [{ indent: group(first, 1).length, list: root }]
+  while (more()) {
+    const item = LIST_ITEM.exec(peek())
+    if (!item) break
+    const indent = group(item, 1).length
+    while (levels.length > 1 && indent < (levels.at(-1)?.indent ?? 0)) {
+      levels.pop()
+    }
+    const level = levels.at(-1) ?? levels[0]
+    if (!level) break
+    const parent = level.list.items.at(-1)
+    const node: MarkdownListItem = { children: parseInline(group(item, 3)) }
+    if (indent > level.indent && parent && levels.length < MAX_LIST_DEPTH) {
+      parent.sublist ??= emptyList(item)
+      parent.sublist.items.push(node)
+      levels.push({ indent, list: parent.sublist })
+    } else {
+      if (levels.length === 1 && (item[2] !== undefined) !== root.ordered) {
+        break
+      }
+      level.list.items.push(node)
+    }
+    advance()
+  }
+  return root
 }
 
 /** Parse a whole message into blocks. */
@@ -381,7 +447,11 @@ export function parseMarkdown(
     pending = []
   }
 
-  let rest = source.replace(/\r\n?/g, "\n")
+  // The client trims a message, so blank lines at either end draw nothing.
+  let rest = source
+    .replace(/\r\n?/g, "\n")
+    .replace(/^(?:[^\S\n]*\n)+/, "")
+    .replace(/(?:\n[^\S\n]*)+$/, "")
   /** The current line, without its newline. */
   const peek = () => {
     const end = rest.indexOf("\n")
@@ -445,6 +515,8 @@ export function parseMarkdown(
         children: parseInline(heading[2] ?? ""),
       })
       advance()
+      // A heading takes the blank lines after it, as the client does.
+      while (rest.length > 0 && isBlank(peek())) advance()
       continue
     }
 
@@ -459,20 +531,7 @@ export function parseMarkdown(
     const item = LIST_ITEM.exec(line)
     if (item) {
       flush()
-      const ordered = item[2] !== undefined
-      const items: MarkdownListItem[] = []
-      while (rest.length > 0) {
-        const next = LIST_ITEM.exec(peek())
-        if (!next || (next[2] !== undefined) !== ordered) break
-        items.push({ children: parseInline(next[3] ?? "") })
-        advance()
-      }
-      blocks.push({
-        type: "list",
-        ordered,
-        start: ordered ? Number(item[2]) : 1,
-        items,
-      })
+      blocks.push(parseList(item, peek, advance, () => rest.length > 0))
       continue
     }
 

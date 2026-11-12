@@ -55,6 +55,7 @@ const rootClassEntries = [
   ["channel-welcome", "newt-channel-welcome"],
   ["channel-info", "newt-channel-info"],
   ["invite", "newt-invite"],
+  ["app-invite", "newt-app-invite"],
   ["select-menu", "newt-select-menu"],
   ["entity-select", "newt-entity-select"],
   ["bot-command-card", "newt-command-card"],

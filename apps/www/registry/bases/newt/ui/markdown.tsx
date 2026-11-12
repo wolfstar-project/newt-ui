@@ -15,6 +15,7 @@ import {
   parseMarkdown,
   type MarkdownBlock,
   type MarkdownInline,
+  type MarkdownList,
   type MarkdownMentionKind,
 } from "@/registry/bases/newt/ui/markdown-syntax"
 import { Mention } from "@/registry/bases/newt/ui/mention"
@@ -267,6 +268,40 @@ const HEADING_SIZES = {
   3: "text-base",
 } as const
 
+/* The client's bullets by depth: disc, then circle, then square. */
+const BULLETS = ["list-disc", "list-[circle]", "list-[square]"] as const
+
+function renderList(
+  list: MarkdownList,
+  context: RenderContext,
+  depth: number,
+  key?: React.Key
+): React.ReactNode {
+  const items = list.items.map((item, itemIndex) => (
+    <li key={itemIndex} className="mb-1 whitespace-pre-wrap">
+      {renderInline(item.children, context)}
+      {item.sublist && renderList(item.sublist, context, depth + 1)}
+    </li>
+  ))
+  const className = "mb-0 mt-1 ps-4"
+  return list.ordered ? (
+    <ol
+      key={key}
+      start={list.start === 1 ? undefined : list.start}
+      className={cn(className, "list-decimal")}
+    >
+      {items}
+    </ol>
+  ) : (
+    <ul
+      key={key}
+      className={cn(className, BULLETS[Math.min(depth, BULLETS.length - 1)])}
+    >
+      {items}
+    </ul>
+  )
+}
+
 function renderBlocks(
   blocks: readonly MarkdownBlock[],
   context: RenderContext
@@ -278,7 +313,10 @@ function renderBlocks(
         return (
           <p
             key={key}
-            className={cn("m-0", context.jumbo && "text-5xl leading-tight")}
+            className={cn(
+              "m-0 whitespace-pre-wrap",
+              context.jumbo && "text-5xl leading-tight"
+            )}
           >
             {renderInline(block.children, context)}
           </p>
@@ -293,7 +331,7 @@ function renderBlocks(
           <Tag
             key={key}
             className={cn(
-              "mb-1 mt-2 font-bold leading-[1.375] text-newt-text-primary first:mt-0",
+              "mb-1 mt-2 whitespace-pre-wrap font-bold leading-[1.375] text-newt-text-primary first:mt-0",
               HEADING_SIZES[block.level]
             )}
           >
@@ -305,7 +343,7 @@ function renderBlocks(
         return (
           <p
             key={key}
-            className="m-0 text-[13px] leading-[1.3] text-newt-text-muted"
+            className="m-0 whitespace-pre-wrap text-[13px] leading-[1.3] text-newt-text-muted"
           >
             {renderInline(block.children, context)}
           </p>
@@ -319,27 +357,8 @@ function renderBlocks(
             {renderBlocks(block.children, context)}
           </blockquote>
         )
-      case "list": {
-        const items = block.items.map((item, itemIndex) => (
-          <li key={itemIndex}>{renderInline(item.children, context)}</li>
-        ))
-        return block.ordered ? (
-          <ol
-            key={key}
-            start={block.start === 1 ? undefined : block.start}
-            className="my-1 list-decimal ps-6 marker:text-newt-text-muted"
-          >
-            {items}
-          </ol>
-        ) : (
-          <ul
-            key={key}
-            className="my-1 list-disc ps-6 marker:text-newt-text-muted"
-          >
-            {items}
-          </ul>
-        )
-      }
+      case "list":
+        return renderList(block, context, 0, key)
       case "codeBlock":
         return isHighlighted(block.language) ? (
           <CodeBlock

@@ -239,6 +239,94 @@ describe("parseMarkdown", () => {
     expect(rest[1]).toMatchObject({ type: "quote" })
   })
 
+  it("nests an indented list item under the one above it", () => {
+    expect(
+      parseMarkdown("- one\n  - one.a\n    1. deep\n  - one.b\n- two")
+    ).toEqual([
+      {
+        type: "list",
+        ordered: false,
+        start: 1,
+        items: [
+          {
+            children: [{ type: "text", content: "one" }],
+            sublist: {
+              type: "list",
+              ordered: false,
+              start: 1,
+              items: [
+                {
+                  children: [{ type: "text", content: "one.a" }],
+                  sublist: {
+                    type: "list",
+                    ordered: true,
+                    start: 1,
+                    items: [{ children: [{ type: "text", content: "deep" }] }],
+                  },
+                },
+                { children: [{ type: "text", content: "one.b" }] },
+              ],
+            },
+          },
+          { children: [{ type: "text", content: "two" }] },
+        ],
+      },
+    ])
+  })
+
+  it("keeps the blank lines around a list as empty lines", () => {
+    expect(parseMarkdown("intro\n\n- item\n\nafter")).toEqual([
+      {
+        type: "paragraph",
+        children: [
+          { type: "text", content: "intro" },
+          { type: "br" },
+          { type: "br" },
+        ],
+      },
+      {
+        type: "list",
+        ordered: false,
+        start: 1,
+        items: [{ children: [{ type: "text", content: "item" }] }],
+      },
+      {
+        type: "paragraph",
+        children: [{ type: "br" }, { type: "text", content: "after" }],
+      },
+    ])
+  })
+
+  it("lets a heading take the blank lines after it, and trims the message", () => {
+    expect(parseMarkdown("\n\n## Title\n\n\nbody\n\n")).toEqual([
+      {
+        type: "heading",
+        level: 2,
+        children: [{ type: "text", content: "Title" }],
+      },
+      { type: "paragraph", children: [{ type: "text", content: "body" }] },
+    ])
+  })
+
+  it("reads `_ _` as an empty line, not as text", () => {
+    expect(parseMarkdown("top\n_ _\nbottom")).toEqual([
+      {
+        type: "paragraph",
+        children: [
+          { type: "text", content: "top" },
+          { type: "br" },
+          { type: "em", children: [{ type: "text", content: " " }] },
+          { type: "br" },
+          { type: "text", content: "bottom" },
+        ],
+      },
+    ])
+  })
+
+  it("keeps a spoiler of nothing but spaces as text", () => {
+    expect(parseInline("|| ||")).toEqual([{ type: "text", content: "|| ||" }])
+  })
+
   it("treats a heading marker without a space as text", () => {
     expect(parseMarkdown("#hashtag")).toEqual([
       { type: "paragraph", children: [{ type: "text", content: "#hashtag" }] },

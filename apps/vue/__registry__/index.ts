@@ -63,6 +63,25 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "app-invite",
+    {
+      name: "app-invite",
+      type: "registry:ui",
+      registryDependencies: ["button"],
+      files: [
+        "registry/bases/newt/ui/app-invite/AppInvite.vue",
+        "registry/bases/newt/ui/app-invite/AppInviteBanner.vue",
+        "registry/bases/newt/ui/app-invite/AppInviteBody.vue",
+        "registry/bases/newt/ui/app-invite/AppInviteHeader.vue",
+        "registry/bases/newt/ui/app-invite/AppInviteIcon.vue",
+        "registry/bases/newt/ui/app-invite/AppInviteInfo.vue",
+        "registry/bases/newt/ui/app-invite/AppInviteName.vue",
+        "registry/bases/newt/ui/app-invite/AppInviteDescription.vue",
+        "registry/bases/newt/ui/app-invite/index.ts",
+      ],
+    },
+  ],
+  [
     "app-launcher",
     {
       name: "app-launcher",
@@ -1476,6 +1495,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/AlertDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AlertDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AppInviteDemo",
+    {
+      name: "AppInviteDemo",
+      type: "registry:example",
+      registryDependencies: ["app-invite"],
+      files: ["registry/bases/newt/examples/AppInviteDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AppInviteDemo.vue")
       ),
     },
   ],
