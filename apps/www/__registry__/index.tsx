@@ -1055,7 +1055,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "typeset",
       type: "registry:ui",
-      registryDependencies: ["spoiler"],
+      registryDependencies: [],
       files: ["registry/bases/newt/ui/typeset.tsx"],
       component: React.lazy(() => import("@/registry/bases/newt/ui/typeset")),
     },

@@ -1,61 +1,79 @@
 <script setup lang="ts">
 /*
- * One of every element a chat markdown parser emits, because that is what the
- * component has to survive: Typeset never sees the source, only the markup a
- * renderer produced from it.
+ * What a CommonMark + GFM renderer (remark-gfm, markdown-it, marked) emits for
+ * a typical release note, element for element: Typeset never sees the source,
+ * only the markup a renderer produced from it, and none of it carries a class.
  */
-import { Spoiler } from "~~/registry/bases/newt/ui/spoiler"
 import { Typeset } from "~~/registry/bases/newt/ui/typeset"
 </script>
 
 <template>
   <Typeset as="article" preset="docs" measure>
-    <h1>Heading one</h1>
-    <h2>Heading two</h2>
-    <h3>Heading three</h3>
+    <h1>Release 2.4.0</h1>
     <p>
-      A message body is <strong>bold</strong>, <em>italic</em>,
-      <u>underlined</u>, <s>struck through</s>, and carries
-      <code>inline code</code>. Links are
-      <a href="#typeset-demo">written with a label</a> or pasted bare.
+      Threads can now be started from the composer, and an archived one reopens
+      on the first new message. The <code>threads</code> table gained a
+      <strong>parent id</strong> for private threads, which <em>fixes</em> the
+      list that <del>dropped them</del> lost them after a restart<sup
+        ><a href="#typeset-demo-fn-1" id="typeset-demo-ref-1">1</a></sup
+      >. See <a href="#typeset-demo">the migration guide</a> for the backfill.
     </p>
-    <p>
-      The marks nest, so <strong><em>bold italics</em></strong
-      >, <u><strong>underlined bold</strong></u> and
-      <u
-        ><strong><em>all three at once</em></strong></u
-      >
-      each arrive as elements inside elements.
-    </p>
-    <p>
-      <code>||spoiler||</code> is not text styling — it is interface, so it
-      stays a component rather than a class: <Spoiler>hidden text</Spoiler>
-      until it is clicked.
-    </p>
+    <h2>Upgrading</h2>
     <blockquote>
-      <p>One chevron quotes a single line.</p>
       <p>
-        Three of them quote everything after, to the end of the message — so a
-        quote is a block of paragraphs, not one long line.
+        Breaking: <code>channel.threads.create</code> now requires a
+        <code>type</code>.
       </p>
     </blockquote>
-    <ul>
-      <li>A dash, an asterisk or a plus opens a bullet.</li>
+    <ol>
+      <li>Update the client.</li>
       <li>
-        A number and a dot open an ordered list:
-        <ol>
-          <li>which nests</li>
-          <li>and keeps its own counter</li>
-        </ol>
+        Run the backfill:
+        <ul>
+          <li>once per database,</li>
+          <li>before the first deploy.</li>
+        </ul>
       </li>
-    </ul>
-    <pre><code>const thread = await message.startThread({
+    </ol>
+    <pre><code>await channel.threads.create({
   name: "release-notes",
+  type: ChannelType.PublicThread,
 })</code></pre>
-    <small>
-      Subtext is the aside under a message: smaller, quieter, same rhythm — and
-      it still holds an element, like
-      <a href="#typeset-demo">a dismiss link</a>, at the same size.
-    </small>
+    <h3>Checklist</h3>
+    <ul>
+      <li><input type="checkbox" checked disabled /> Backfill parent ids</li>
+      <li><input type="checkbox" disabled /> Announce in the changelog</li>
+    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Thread</th>
+          <th align="center">Visible to</th>
+          <th align="right">Archives after</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Public</td>
+          <td align="center">Everyone in the channel</td>
+          <td align="right">24 h</td>
+        </tr>
+        <tr>
+          <td>Private</td>
+          <td align="center">Invited members</td>
+          <td align="right">72 h</td>
+        </tr>
+      </tbody>
+    </table>
+    <section data-footnotes>
+      <ol>
+        <li id="typeset-demo-fn-1">
+          <p>
+            Only threads created before 2.3.0 were affected.
+            <a href="#typeset-demo-ref-1" aria-label="Back to reference 1">↩</a>
+          </p>
+        </li>
+      </ol>
+    </section>
   </Typeset>
 </template>

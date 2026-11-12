@@ -70,6 +70,11 @@ wrapper: put `typeset` plus one of `typeset-docs`, `typeset-chat` or
 rhythm. Three variables tune it — `--typeset-size`, `--typeset-leading`,
 `--typeset-flow` — and `not-typeset` takes an island of interface back out.
 
+That is for HTML a general renderer produced (CommonMark, GFM, MDX, a CMS). A
+chat message in chat markdown — `<@id>`, `<t:…>`, `||spoiler||`, `-#` — goes
+through the `markdown` component instead, which parses it and renders mentions,
+timestamps and spoilers as the library's own components.
+
 ## Adding a token
 
 If a value has no token, add the token rather than the value. In this

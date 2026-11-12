@@ -18,6 +18,8 @@ Each piece renders through a part you already have: mentions are `Mention`,
 code is `InlineCode` and `CodeBlock`, spoilers are `Spoiler`, timestamps are
 `Timestamp`, server emoji are `CustomEmoji`. A general Markdown library would
 give you HTML; this gives you the same components as the rest of the feed.
+For HTML a general renderer already produced — docs, articles, a CMS field —
+use [Typeset](/docs/components/typeset) instead.
 
 The source is parsed into a tree and rendered as components. It is never
 injected as HTML, and only `http` and `https` addresses become links.

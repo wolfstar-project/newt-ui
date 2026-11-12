@@ -1,9 +1,8 @@
 {
   "name": "typeset",
   "title": "Typeset",
-  "description": "Styles rendered markdown with three variables — size, leading and flow — over the --newt-* tokens.",
+  "description": "Styles the HTML a markdown renderer emits — CommonMark and GFM — with three variables: size, leading and flow.",
   "dependencies": ["class-variance-authority"],
-  "registryDependencies": ["spoiler"],
   "vueFiles": ["Typeset.vue", "index.ts"],
   "cssFile": "typeset.css",
   "reactDemo": "typeset-demo",

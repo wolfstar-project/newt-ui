@@ -14,8 +14,12 @@
  * typeset` copies into a consumer's project. Reached through the
  * `@newt-html/*` path alias in `tsconfig.json`, which Blume hands to Vite,
  * because a relative path would be read from the generated entry's directory.
+ *
+ * It goes into `components`, the layer `add typeset` writes it to. Unlayered,
+ * it lost to the `revert-layer` hand-back in section (e) inside every
+ * `not-prose` demo frame, and the preview showed bare preflight instead.
  */
-@import "@newt-html/components/typeset.css";
+@import "@newt-html/components/typeset.css" layer(components);
 
 /*
  * The two registries live outside this app and both are scanned: a demo
