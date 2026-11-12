@@ -11,8 +11,11 @@ import {
   Modal,
   ModalBody,
   ModalClose,
+  ModalContent,
   ModalFooter,
   ModalHeader,
+  ModalTitle,
+  ModalTrigger,
 } from "~~/registry/bases/newt/ui/modal"
 
 /*
@@ -29,27 +32,33 @@ function create() {
 </script>
 
 <template>
-  <Button variant="primary" @click="open = true">Create channel</Button>
   <Modal v-model:open="open">
-    <ModalHeader>Create channel</ModalHeader>
-    <form @submit.prevent="create">
-      <ModalBody>
-        <Field>
-          <Label for="modal-form-channel-name">Channel name</Label>
-          <Input
-            id="modal-form-channel-name"
-            v-model="name"
-            placeholder="new-channel"
-          />
-          <FieldHelp>Lowercase, with dashes instead of spaces.</FieldHelp>
-        </Field>
-      </ModalBody>
-      <ModalFooter>
-        <ModalClose>
-          <Button variant="secondary">Cancel</Button>
-        </ModalClose>
-        <Button type="submit" :disabled="name.trim() === ''">Create</Button>
-      </ModalFooter>
-    </form>
+    <ModalTrigger as-child>
+      <Button variant="primary">Create channel</Button>
+    </ModalTrigger>
+    <ModalContent :aria-describedby="undefined">
+      <ModalHeader>
+        <ModalTitle>Create channel</ModalTitle>
+      </ModalHeader>
+      <form @submit.prevent="create">
+        <ModalBody>
+          <Field>
+            <Label for="modal-form-channel-name">Channel name</Label>
+            <Input
+              id="modal-form-channel-name"
+              v-model="name"
+              placeholder="new-channel"
+            />
+            <FieldHelp>Lowercase, with dashes instead of spaces.</FieldHelp>
+          </Field>
+        </ModalBody>
+        <ModalFooter>
+          <ModalClose as-child>
+            <Button variant="secondary">Cancel</Button>
+          </ModalClose>
+          <Button type="submit" :disabled="name.trim() === ''">Create</Button>
+        </ModalFooter>
+      </form>
+    </ModalContent>
   </Modal>
 </template>

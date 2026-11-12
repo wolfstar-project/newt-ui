@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { ref } from "vue"
 import { Button } from "~~/registry/bases/newt/ui/button"
 import {
   Modal,
   ModalBody,
   ModalClose,
+  ModalContent,
   ModalFooter,
   ModalHeader,
+  ModalTitle,
+  ModalTrigger,
 } from "~~/registry/bases/newt/ui/modal"
 
 /*
  * Cap the body and let it scroll: the title and the actions stay where they
  * are however long the text gets.
  */
-const open = ref(false)
-
 const rules = [
   "Be kind. Disagree with the idea, not with the person.",
   "Keep each channel on its topic; off-topic talk goes in the lounge.",
@@ -28,19 +28,27 @@ const rules = [
 </script>
 
 <template>
-  <Button variant="secondary" @click="open = true">Read the rules</Button>
-  <Modal v-model:open="open">
-    <ModalHeader>Server rules</ModalHeader>
-    <ModalBody class="max-h-48 overflow-y-auto">
-      <ol class="flex list-decimal flex-col gap-3 ps-5">
-        <li v-for="rule in rules" :key="rule">{{ rule }}</li>
-      </ol>
-    </ModalBody>
-    <ModalFooter>
-      <ModalClose>
-        <Button variant="secondary">Not now</Button>
-      </ModalClose>
-      <Button @click="open = false">I agree</Button>
-    </ModalFooter>
+  <Modal>
+    <ModalTrigger as-child>
+      <Button variant="secondary">Read the rules</Button>
+    </ModalTrigger>
+    <ModalContent :aria-describedby="undefined">
+      <ModalHeader>
+        <ModalTitle>Server rules</ModalTitle>
+      </ModalHeader>
+      <ModalBody class="max-h-48 overflow-y-auto">
+        <ol class="flex list-decimal flex-col gap-3 ps-5">
+          <li v-for="rule in rules" :key="rule">{{ rule }}</li>
+        </ol>
+      </ModalBody>
+      <ModalFooter>
+        <ModalClose as-child>
+          <Button variant="secondary">Not now</Button>
+        </ModalClose>
+        <ModalClose as-child>
+          <Button>I agree</Button>
+        </ModalClose>
+      </ModalFooter>
+    </ModalContent>
   </Modal>
 </template>
