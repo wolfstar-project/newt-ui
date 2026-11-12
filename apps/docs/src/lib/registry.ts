@@ -1,6 +1,12 @@
 import { rootClasses } from "@/registry/registry-root-classes"
 
-import { findComponent } from "./registry-meta"
+import {
+  buildComponentPrompt,
+  registryClosure,
+  type PromptItem,
+} from "./component-prompt"
+import { findComponent, targetPaths, type ComponentMeta } from "./registry-meta"
+import { SITE } from "./site"
 
 /*
  * The source text the component pages show: the demo for the Code tab and the
@@ -12,13 +18,9 @@ import { findComponent } from "./registry-meta"
  * text is inlined into the HTML rather than fetched by the reader. The demo
  * loaders live in `registry-client.ts` because islands import those.
  */
+
 export type { ComponentMeta } from "./registry-meta"
-export {
-  categories,
-  COMPONENTS,
-  findComponent,
-  targetPaths,
-} from "./registry-meta"
+export { categories, COMPONENTS, findComponent } from "./registry-meta"
 export { rootClasses }
 
 const reactDemoSources = import.meta.glob<string>(
@@ -31,23 +33,13 @@ const vueDemoSources = import.meta.glob<string>(
   { query: "?raw", import: "default", eager: true }
 )
 
-const reactUiSources = import.meta.glob<string>(
-  "../../../www/registry/bases/newt/ui/*.tsx",
+const reactSources = import.meta.glob<string>(
+  "../../../www/registry/bases/newt/{ui,blocks}/**/*.{ts,tsx}",
   { query: "?raw", import: "default", eager: true }
 )
 
-const reactBlockSources = import.meta.glob<string>(
-  "../../../www/registry/bases/newt/blocks/**/*.tsx",
-  { query: "?raw", import: "default", eager: true }
-)
-
-const vueUiSources = import.meta.glob<string>(
-  "../../../vue/registry/bases/newt/ui/*/*.{vue,ts}",
-  { query: "?raw", import: "default", eager: true }
-)
-
-const vueBlockSources = import.meta.glob<string>(
-  "../../../vue/registry/bases/newt/blocks/**/*.{vue,ts}",
+const vueSources = import.meta.glob<string>(
+  "../../../vue/registry/bases/newt/{ui,blocks}/**/*.{vue,ts}",
   { query: "?raw", import: "default", eager: true }
 )
 
@@ -72,26 +64,77 @@ export function demoSource(
     : findSource(vueDemoSources, `/${demo}.vue`)
 }
 
+/** One file of a registry item, at the path `newtui add` writes it to. */
+export interface RegistryFile {
+  readonly path: string
+  /** `undefined` when the meta file names a source that does not exist. */
+  readonly source: string | undefined
+}
+
 /**
- * A registry UI file's source, for the Manual installation tab. `file` is the
- * React `<name>.tsx` or, for Vue, the `<name>/<File>.vue` pair.
+ * Every file a registry item installs, for the Manual installation tab and the
+ * copyable prompt. React lists its files in `reactFiles` (`ui/markdown.tsx`,
+ * `ui/markdown-syntax.ts`); Vue names them inside the item's own directory.
  */
-export function uiSource(
+export function registryFiles(
   framework: "react" | "vue",
-  name: string,
-  file?: string
-): string | undefined {
-  const meta = findComponent(name)
+  meta: ComponentMeta
+): readonly RegistryFile[] {
+  const paths = targetPaths(framework, meta)
   if (framework === "react") {
-    const sources =
-      meta?.type === "registry:block" ? reactBlockSources : reactUiSources
-    const sourceFile = meta?.reactFiles[0]?.split("/").at(-1) ?? `${name}.tsx`
-    return (
-      findSource(sources, `/${name}/${sourceFile}`) ??
-      findSource(sources, `/${sourceFile}`)
-    )
+    return meta.reactFiles.map((file, index) => ({
+      path: paths[index] ?? file,
+      source: findSource(reactSources, `/bases/newt/${file}`),
+    }))
   }
-  const sources =
-    meta?.type === "registry:block" ? vueBlockSources : vueUiSources
-  return findSource(sources, `/${name}/${file}`)
+  const root = meta.type === "registry:block" ? "blocks" : "ui"
+  return meta.vueFiles.map((file, index) => ({
+    path: paths[index] ?? file,
+    source: findSource(vueSources, `/bases/newt/${root}/${meta.name}/${file}`),
+  }))
+}
+
+function promptItem(
+  framework: "react" | "vue",
+  meta: ComponentMeta
+): PromptItem {
+  return {
+    name: meta.name,
+    title: meta.title,
+    files: registryFiles(framework, meta).map(({ path, source }) => {
+      /* A meta file naming a missing source is a registry bug; fail loudly. */
+      if (source === undefined) {
+        throw new Error(`${meta.name}: no ${framework} source for ${path}.`)
+      }
+      return { path, source }
+    }),
+  }
+}
+
+/**
+ * The "copy prompt" text of a component page: the component, every registry
+ * item it builds on and the npm packages all of them need, for an assistant
+ * to install without the CLI.
+ */
+export function componentPrompt(
+  framework: "react" | "vue",
+  meta: ComponentMeta
+): string {
+  const dependencies = registryClosure(
+    meta.name,
+    (name) => findComponent(name)?.registryDependencies,
+    findComponent
+  )
+  const packages = [
+    ...new Set([meta, ...dependencies].flatMap((item) => item.dependencies)),
+  ]
+  return buildComponentPrompt({
+    framework,
+    item: { ...promptItem(framework, meta), description: meta.description },
+    dependencies: dependencies.map((item) => promptItem(framework, item)),
+    packages,
+    siteUrl: SITE.url,
+    siteName: SITE.name,
+    utilsAlias: SITE.utilsAlias,
+  })
 }

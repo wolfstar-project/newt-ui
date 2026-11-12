@@ -2201,6 +2201,63 @@ html[data-theme="light"] .theme-icon-light {
   flex-shrink: 0;
 }
 
+/* Installation → Prompt: the copy button that stands in for the CLI. */
+.install-prompt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.install-prompt > p {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--newt-text-secondary);
+}
+
+.install-prompt-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-brand);
+  color: var(--newt-on-accent);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--newt-duration-fast) var(--newt-ease);
+}
+
+.install-prompt-copy:hover {
+  background: var(--newt-brand-hover);
+}
+
+.install-prompt-copy:active {
+  background: var(--newt-brand-active);
+}
+
+.install-prompt-copy:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.install-prompt-copy svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.install-prompt-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .copy-page-trigger {
   display: inline-flex;
   align-items: center;

@@ -115,6 +115,6 @@ export function targetPaths(
       : meta.vueFiles.map((file) => `components/${meta.name}/${file}`)
   }
   return framework === "react"
-    ? [`components/ui/${meta.name}.tsx`]
+    ? meta.reactFiles.map((file) => `components/ui/${file.split("/").at(-1)}`)
     : meta.vueFiles.map((file) => `components/ui/${meta.name}/${file}`)
 }
