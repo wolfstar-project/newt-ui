@@ -77,8 +77,25 @@ npx newtui@latest view @magicui/marquee     # read it first
 
 The namespace resolves through `registries` in
 [`components.json`](/docs/components-json#registries), then through the
-community directory of your framework. The [directory](/docs/directory) lists
-them and says what the install does to your stylesheet.
+community directory of your framework: the
+[shadcn/ui directory](https://ui.shadcn.com/docs/directory) for React, the
+[shadcn-vue directory](https://www.shadcn-vue.com/docs/directory) for Vue.
+
+These registries are other people's code. newt/ui does not review, host or
+endorse them: read what a component does before you install it.
+
+- **The item and what it depends on.** A third-party component names its
+  dependencies bare, such as `button` or `card`, and means the shadcn component
+  of that name. Those come from `@shadcn`, not from newt/ui. A file that already
+  exists is kept, so your newt/ui `button` stays unless you pass `--overwrite`.
+- **Imports.** `@/registry/<style>/ui/…` and its siblings are rewritten to your
+  aliases.
+- **Colours.** These components use shadcn's colour names, such as `bg-primary`.
+  On Tailwind v4 the first install appends one `@theme inline` block that maps
+  each name to the `--newt-*` token with the same role. On Tailwind v3 the CLI
+  says so and leaves the theme to your `tailwind.config`.
+- **Nothing outside the project.** A path that is absolute or climbs with `..`
+  is refused.
 
 ## list [#list]
 
