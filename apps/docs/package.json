@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "blume build && node scripts/bundle-registry.mjs && node scripts/verify-dist.mjs",
+    "build": "blume build && node scripts/render-og.mjs && node scripts/bundle-registry.mjs && node scripts/verify-dist.mjs",
     "dev": "blume dev",
     "directory:sync": "node scripts/sync-directory.mjs",
     "docs:gen": "node scripts/gen-component-docs.mjs",
@@ -26,6 +26,7 @@
   "devDependencies": {
     "@types/react": "^19.3.0",
     "astro": "^7.4.5",
+    "takumi-js": "2.17.1",
     "typescript": "^5.7.2",
     "vitest": "^5.1.0"
   }
