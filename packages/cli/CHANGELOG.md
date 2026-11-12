@@ -1,5 +1,15 @@
 # newtui
 
+## 2.7.0
+
+### Minor Changes
+
+- [#63](https://github.com/wolfstar-project/newt-ui/pull/63) [`883e3e1`](https://github.com/wolfstar-project/newt-ui/commit/883e3e1459dc82c3f960c757aeeaaadb594e6611) - `add` and `view` accept `@registry/item` and install from third-party registries. A namespace resolves through `registries` in `components.json`, then through the community directory of the project's framework — shadcn/ui's for React, shadcn-vue's for Vue — so `newtui add @magicui/marquee` needs no configuration. On Tailwind v4 the first third-party install also maps shadcn's colour names onto the `--newt-*` tokens.
+
+### Patch Changes
+
+- [#65](https://github.com/wolfstar-project/newt-ui/pull/65) [`1370df5`](https://github.com/wolfstar-project/newt-ui/commit/1370df54439f2f824446a765da5ece943e07c174) - The embed sits on a translucent surface with a hairline outline and a straight accent bar, so it stands out on any background instead of matching `--newt-bg-elevated`. Two new tokens with light and dark values carry it: `--newt-embed-bg` and `--newt-embed-border`. `newtui init` leaves a stylesheet that already holds the tokens untouched, so an existing project adds the two variables by hand.
+
 ## 2.6.0
 
 ### Minor Changes
