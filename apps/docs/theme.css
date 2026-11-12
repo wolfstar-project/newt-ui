@@ -1692,7 +1692,7 @@
   }
 
   .block-viewer-viewports {
-    display: none;
+    display: inline-flex;
     align-items: center;
     gap: 0.125rem;
     margin-inline-start: auto;
@@ -1700,6 +1700,11 @@
     border: 1px solid var(--newt-border);
     border-radius: var(--newt-radius-sm);
     background: var(--newt-bg-surface);
+  }
+
+  /* A phone has no use for a tablet width, but keeps the link to the enlarged view. */
+  .block-viewer-viewports [data-block-viewport] {
+    display: none;
   }
 
   .block-viewer-icon {
@@ -1951,8 +1956,8 @@
       display: block;
     }
 
-    .block-viewer-viewports {
-      display: inline-flex;
+    .block-viewer-viewports [data-block-viewport] {
+      display: inline-grid;
     }
 
     .block-viewer-files {

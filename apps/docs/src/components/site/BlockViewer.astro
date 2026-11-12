@@ -308,15 +308,20 @@ const VIEWPORTS = [
       const copy = target.closest<HTMLElement>("[data-block-copy]")
       if (copy) {
         const label = copy.querySelector<HTMLElement>("[data-block-copy-label]")
+        /* Denied permission or an unfocused document rejects: say so on the button. */
+        const say = (message: string) => {
+          if (!label) return
+          label.textContent = message
+          window.setTimeout(() => {
+            label.textContent = ""
+          }, 1600)
+        }
         void navigator.clipboard
           .writeText(copy.dataset.blockCopy ?? "")
-          .then(() => {
-            if (!label) return
-            label.textContent = "Copied"
-            window.setTimeout(() => {
-              label.textContent = ""
-            }, 1600)
-          })
+          .then(
+            () => say("Copied"),
+            () => say("Copy failed")
+          )
       }
   })
 
