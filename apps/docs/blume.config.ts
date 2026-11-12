@@ -3,7 +3,6 @@ import type { ComponentMarkdown } from "blume"
 import { z } from "zod"
 
 import { newtTokens, newtTokensLight } from "../www/registry/registry-tokens"
-import { DIRECTORY, DIRECTORY_SOURCES } from "./src/lib/directory"
 import { INSTALL_TARGETS } from "./src/lib/install-targets"
 import { NAV, type NavGroup, type NavItem } from "./src/lib/nav"
 import {
@@ -203,20 +202,6 @@ const componentIndex: ComponentMarkdown = () =>
     .filter(Boolean)
     .join("\n\n")
 
-const registryDirectory: ComponentMarkdown = () =>
-  (["react", "vue"] as const)
-    .map((framework) =>
-      [
-        `## ${DIRECTORY_SOURCES[framework].label}`,
-        "",
-        ...DIRECTORY[framework].map(
-          (entry) =>
-            `- [${entry.name}](${entry.homepage})${entry.description === undefined ? "" : `: ${entry.description}`}`
-        ),
-      ].join("\n")
-    )
-    .join("\n\n")
-
 export default defineConfig({
   title: SITE.name,
   description: SITE.tagline,
@@ -274,7 +259,6 @@ export default defineConfig({
       PathTabs: pathTabs,
       PmTabs: pmTabs,
       PropsTable: propsTable,
-      RegistryDirectory: registryDirectory,
       TokenReference: tokenReference,
       TokensNote: tokensNote,
       Usage: usage,
@@ -308,6 +292,7 @@ export default defineConfig({
   redirects: [
     { from: "/colors", to: "/docs/colors" },
     { from: "/docs/changelog", to: "/changelog" },
+    { from: "/docs/directory", to: "/docs/cli#add-third-party" },
     {
       from: "/docs/changelog/2026-08-components-rework",
       to: "/changelog/2026-08-components-rework",

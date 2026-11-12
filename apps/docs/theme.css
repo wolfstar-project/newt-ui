@@ -716,63 +716,6 @@
     color: var(--newt-text-primary);
   }
 
-  /* --- registry directory ------------------------------------------------ */
-
-  .registry-directory .component-index-filter {
-    display: block;
-    margin: 1rem 0;
-  }
-
-  .registry-list {
-    display: grid;
-    gap: 0.5rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .registry-entry {
-    padding: 0.75rem 0.9rem;
-    border: 1px solid var(--newt-border);
-    border-radius: var(--newt-radius-md);
-    background: var(--newt-bg-surface);
-  }
-
-  .registry-entry[hidden] {
-    display: none;
-  }
-
-  .registry-entry-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.25rem 1rem;
-  }
-
-  .registry-entry-head a {
-    color: var(--newt-text-primary);
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .registry-entry-head a:hover {
-    color: var(--newt-text-link);
-  }
-
-  .registry-entry-head code {
-    font-family: var(--newt-font-mono);
-    font-size: 0.75rem;
-    color: var(--newt-text-muted);
-  }
-
-  .registry-entry p {
-    margin: 0.35rem 0 0;
-    color: var(--newt-text-secondary);
-    font-size: 0.85rem;
-    line-height: 1.55;
-  }
-
   /* --- props tables ----------------------------------------------------- */
 
   .props-table {

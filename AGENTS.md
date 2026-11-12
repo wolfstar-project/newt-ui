@@ -299,10 +299,6 @@ means in practice:
   works because the token bridge is `@theme inline`: a plain `@theme` resolves
   `--color-newt-brand` on `:root`, and an override on a wrapper never reaches
   the utilities.
-- **`/docs/directory` is a snapshot.** `src/data/directory.json` is written by
-  `pnpm --filter docs directory:sync` from the shadcn/ui and shadcn-vue
-  registry directories and committed, so a build never fetches them; the CLI
-  reads the live ones (`packages/cli/src/registry/namespaces.ts`).
 - **`pnpm typecheck` is `blume check`**, which regenerates the runtime, syncs
   Astro's types into `.blume/.astro/types.d.ts` (listed in `tsconfig.json`)
   and runs `astro check` over the project. `scripts/verify-dist.mjs` still

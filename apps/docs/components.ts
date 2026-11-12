@@ -33,7 +33,6 @@ export default defineComponents({
     PathTabs: "./src/components/mdx/PathTabs.astro",
     PmTabs: "./src/components/mdx/PmTabs.astro",
     PropsTable: "./src/components/mdx/PropsTable.astro",
-    RegistryDirectory: "./src/components/mdx/RegistryDirectory.astro",
     TokenReference: "./src/components/mdx/TokenReference.astro",
     TokensNote: "./src/components/mdx/TokensNote.astro",
     Usage: "./src/components/mdx/Usage.astro",
