@@ -37,7 +37,7 @@ export async function apply(options: ApplyOptions): Promise<void> {
   const cwd = resolveCwd(options.cwd)
 
   if (options.dryRun) {
-    console.log(presetToCss(preset))
+    console.log(presetToCss(preset, { layout: "installed" }))
     return
   }
 
