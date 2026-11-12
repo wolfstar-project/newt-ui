@@ -1,5 +1,15 @@
 # newtui
 
+## 2.8.0
+
+### Minor Changes
+
+- [#66](https://github.com/wolfstar-project/newt-ui/pull/66) [`8144443`](https://github.com/wolfstar-project/newt-ui/commit/81444431b5c93ab081f02e6e5085d49f5623af5d) - Presets carry three more choices from newt/create: the base colour the surfaces are mixed from (`slate`, `neutral`, `stone`, `ink`), a heading font of its own, and the elevation shadows (`soft`, `flat`, `deep`). The radius scale gains `none` and `xl`, and the font stacks gain `serif` and `rounded`. `init --preset`, `apply --preset` and `preset css` write the matching `--newt-*` overrides, including both surface sets for a base colour: the light one in `:root` and the dark one under the project's dark selector, the way `init` lays the tokens out (`preset css` prints the other layout for an `html` preset, dark in `:root` and light under `.newt-light`, as `tokens.css` does; `init` and `apply` always write the installed one). Codes made before this release decode and encode exactly as they did.
+
+### Patch Changes
+
+- [#78](https://github.com/wolfstar-project/newt-ui/pull/78) [`b55af41`](https://github.com/wolfstar-project/newt-ui/commit/b55af41fe4be0175f8606928510f7b3494a848b2) - Read a `@newtui/<name>` dependency as an item of the registry it came from. The published registry now names its dependencies that way, so the shadcn CLI no longer looks for `chat` or `avatar` in its own default registry.
+
 ## 2.7.0
 
 ### Minor Changes
