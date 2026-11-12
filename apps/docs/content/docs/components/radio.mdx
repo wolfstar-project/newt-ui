@@ -52,6 +52,26 @@ A choice that needs a sentence to explain it takes a `description`, which sits
 under the label in muted text. Use it when the label alone would make somebody
 guess; leave it off when it would only restate the label.
 
+## Examples
+
+### Controlled
+
+Bind the group's value when the choice drives something else on the page, such as the summary under this group.
+
+<ComponentPreview name="radio" variant="controlled" />
+
+### Inline
+
+Two or three short labels can sit in a row: pass layout classes to the group. The arrow keys still walk the options in order.
+
+<ComponentPreview name="radio" variant="inline" />
+
+### Disabled option
+
+A `disabled` radio stays visible, so the reader learns the choice exists, but the pointer and the arrow keys both pass over it. Use the description to say why it is unavailable.
+
+<ComponentPreview name="radio" variant="disabled" />
+
 ## API reference
 
 <PropsTable

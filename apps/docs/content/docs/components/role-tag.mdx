@@ -15,6 +15,20 @@ A compact bordered tag with a coloured dot for displaying a member's role. Compo
 
 <Usage name="role-tag" />
 
+## Examples
+
+### Without a dot
+
+Leave `RoleTagDot` out when the tag works as a plain label. The `color` prop still tints the text.
+
+<ComponentPreview name="role-tag" variant="plain" />
+
+### Role list
+
+Several tags wrap inside a narrow column, such as a member profile. Mark the group up as a list so the number of roles is announced.
+
+<ComponentPreview name="role-tag" variant="list" />
+
 ## API reference
 
 <PropsTable

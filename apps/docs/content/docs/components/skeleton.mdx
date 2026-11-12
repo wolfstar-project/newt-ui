@@ -15,6 +15,26 @@ A shimmering placeholder shown while content is loading. Compose it from the exp
 
 <Usage name="skeleton" />
 
+## Examples
+
+### Variants
+
+`avatar`, `title` and `text` come with a size. `default` has none and takes its shape from the classes you pass, which is how to stand in for an image or a whole block.
+
+<ComponentPreview name="skeleton" variant="variants" />
+
+### In a card
+
+Build the placeholder with the same layout as the content it replaces, so nothing moves when the content arrives.
+
+<ComponentPreview name="skeleton" variant="card" />
+
+### Loading state
+
+Swap the skeleton for the content when it is ready. A skeleton is hidden from screen readers, so set `aria-busy` on the region while it is shown.
+
+<ComponentPreview name="skeleton" variant="loading" />
+
 ## API reference
 
 <PropsTable

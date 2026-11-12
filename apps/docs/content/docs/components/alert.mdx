@@ -17,6 +17,20 @@ Pick the variant for what the message means. `danger` is for something broken or
 
 <Usage name="alert" />
 
+## Examples
+
+### With actions
+
+`AlertActions` holds one or two small buttons under the text. Put the action that resolves the notice first.
+
+<ComponentPreview name="alert" variant="actions" />
+
+### Dismissible
+
+The alert keeps no open state: render it while it applies and stop rendering it when the reader dismisses it. Rendering it again is also what makes a screen reader announce it.
+
+<ComponentPreview name="alert" variant="dismissible" />
+
 ## API reference
 
 <PropsTable

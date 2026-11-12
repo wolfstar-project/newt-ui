@@ -15,6 +15,26 @@ A centred dialog with a header, a body and a footer. It is the settings-panel sh
 
 <Usage name="modal" />
 
+## Examples
+
+### With a form
+
+Wrap the body and the footer in a form, so Enter in a field submits it. The field is the dialog's first control, which is where focus lands when it opens; the submit button stays disabled until there is a name.
+
+<ComponentPreview name="modal" variant="form" />
+
+### Close button
+
+A dialog that only informs needs no footer. Position one `ModalClose` in the corner, outside `ModalHeader`, so its label does not become part of the dialog's accessible name.
+
+<ComponentPreview name="modal" variant="close-button" />
+
+### Long content
+
+Cap `ModalBody` with a `max-h-*` utility and `overflow-y-auto` when the text can run long. The title and the actions then stay in view while the body scrolls.
+
+<ComponentPreview name="modal" variant="long-content" />
+
 ## API reference
 
 <PropsTable

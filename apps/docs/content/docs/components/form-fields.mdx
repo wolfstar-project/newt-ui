@@ -15,6 +15,32 @@ Inputs, textareas, selects, labels, helper text, switches and checkboxes styled 
 
 <Usage name="form-fields" />
 
+## Examples
+
+### Validation error
+
+Set `invalid` on the `Field` and every control inside it takes the danger border; swap the help line to `variant="error"` so the message is announced as well as coloured. Type a valid channel name to see both clear.
+
+<ComponentPreview name="form-fields" variant="error" />
+
+### Textarea
+
+`Textarea` shares the input's styling and resizes vertically. Pair it with a `FieldHelp` when the text has a limit the reader should see coming.
+
+<ComponentPreview name="form-fields" variant="textarea" />
+
+### Native select
+
+`Select` is the browser's own `<select>` in the field's clothes: use it for a short list in a dense form, and reach for [Select Menu](/docs/components/select-menu) when options need icons or descriptions.
+
+<ComponentPreview name="form-fields" variant="select" />
+
+### Switch and checkbox
+
+A `Switch` is for a setting that applies the moment it is flipped, a `Checkbox` for an answer submitted with the rest of the form. Both take `disabled`, and both are buttons that need a name from `aria-labelledby` or `aria-label`.
+
+<ComponentPreview name="form-fields" variant="toggles" />
+
 ## API reference
 
 <PropsTable

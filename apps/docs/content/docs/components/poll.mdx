@@ -15,6 +15,26 @@ A question, its answers, and the share of the vote behind each one. Compose it f
 
 <Usage name="poll" />
 
+## Examples
+
+### Multiple answers
+
+With `multiple`, every answer toggles on its own and a second click takes the vote back. Leave `showResults` off while the poll is still collecting votes.
+
+<ComponentPreview name="poll" variant="multiple" />
+
+### Results after voting
+
+Control the selection to show the results only once the reader has voted. The percentages come from `total` and each answer's `votes`, so add the reader's own vote to both.
+
+<ComponentPreview name="poll" variant="reveal" />
+
+### Closed poll
+
+When a poll has ended, keep `showResults` on and set `disabled` on every answer. The reader's choice keeps its outline.
+
+<ComponentPreview name="poll" variant="closed" />
+
 ## API reference
 
 <PropsTable

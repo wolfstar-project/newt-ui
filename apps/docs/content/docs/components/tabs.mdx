@@ -15,6 +15,26 @@ A pill tab group. The panel is only rendered for the active tab, so a tab whose 
 
 <Usage name="tabs" />
 
+## Examples
+
+### Controlled
+
+Hold the active tab yourself with `value` and `onValueChange` in React, or `v-model` in Vue, when something outside the list has to read it or change it. Here the link below the tabs switches to Pending.
+
+<ComponentPreview name="tabs" variant="controlled" />
+
+### With panels
+
+Each `TabsContent` renders only while its trigger is active. The panels read the active tab from `Tabs`, so they go inside it: `flex-wrap` on the list and `basis-full` on each panel drop them onto their own row.
+
+<ComponentPreview name="tabs" variant="panels" />
+
+### Disabled tab
+
+A trigger is a native button and takes `disabled`. The component has no disabled style of its own, so add the `disabled:` utilities that dim it.
+
+<ComponentPreview name="tabs" variant="disabled" />
+
 ## API reference
 
 <PropsTable

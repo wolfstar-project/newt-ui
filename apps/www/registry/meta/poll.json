@@ -11,5 +11,6 @@
     "index.ts"
   ],
   "reactDemo": "poll-demo",
-  "vueDemo": "PollDemo"
+  "vueDemo": "PollDemo",
+  "examples": ["multiple", "reveal", "closed"]
 }

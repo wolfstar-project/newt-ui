@@ -15,6 +15,26 @@ The button carries six intents and four sizes. Which one you reach for is a stat
 
 <Usage name="button" />
 
+## Examples
+
+### Sizes
+
+`sm`, `default` and `lg` change the padding and the text size; `icon` is a circle for a lone glyph. An icon button has no visible text, so give it an `aria-label`.
+
+<ComponentPreview name="button" variant="sizes" />
+
+### Disabled
+
+`disabled` dims the button and the browser stops it taking clicks or focus. On a link there is nothing native to disable, so the button drops its `href` and sets `aria-disabled` instead.
+
+<ComponentPreview name="button" variant="disabled" />
+
+### As a link
+
+Pass `href` and any variant renders an `<a>`, for an action that goes somewhere. `launchIcon` adds the link-out glyph to a variant that lacks it, and `launchIcon={false}` removes it from `variant="link"` when the destination is on the same site.
+
+<ComponentPreview name="button" variant="link" />
+
 ## API reference
 
 <PropsTable

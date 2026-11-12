@@ -4,5 +4,6 @@
   "description": "A short code entered one character to a box, for two-factor and verification codes.",
   "vueFiles": ["PinInput.vue", "index.ts"],
   "reactDemo": "pin-input-demo",
-  "vueDemo": "PinInputDemo"
+  "vueDemo": "PinInputDemo",
+  "examples": ["mask", "alphanumeric", "invalid"]
 }

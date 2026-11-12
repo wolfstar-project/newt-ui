@@ -15,6 +15,20 @@ Presence, encoded in shape as well as colour: idle is a crescent, do-not-disturb
 
 <Usage name="status-indicator" />
 
+## Examples
+
+### Streaming
+
+The `streaming` status marks a member who is live. Put the state in the `aria-label` of the `StatusIndicator`, because the dot alone says nothing to a screen reader.
+
+<ComponentPreview name="status-indicator" variant="streaming" />
+
+### Member list
+
+In a member list, pair each dot with the status in words so the state does not depend on colour or shape alone.
+
+<ComponentPreview name="status-indicator" variant="members" />
+
 ## API reference
 
 <PropsTable

@@ -15,6 +15,20 @@ A grouped chat message with author, timestamp, reply preview, reactions and an e
 
 <Usage name="message-group" />
 
+## Examples
+
+### Message list
+
+Set `as="li"` to render each row as an item of the list that holds the channel, so assistive technology announces how many messages there are.
+
+<ComponentPreview name="message-group" variant="list" />
+
+### App tags
+
+`MessageGroupBotTag` marks an author as an application. On its own it reads "BOT", `verified` adds a check, and its content and `aria-label` replace the label and the accessible name.
+
+<ComponentPreview name="message-group" variant="app" />
+
 ## API reference
 
 <PropsTable

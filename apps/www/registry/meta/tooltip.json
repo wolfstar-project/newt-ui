@@ -9,5 +9,6 @@
     "index.ts"
   ],
   "reactDemo": "tooltip-demo",
-  "vueDemo": "TooltipDemo"
+  "vueDemo": "TooltipDemo",
+  "examples": ["toolbar", "shortcut", "below"]
 }

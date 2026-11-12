@@ -21,5 +21,6 @@
     "index.ts"
   ],
   "reactDemo": "embed-demo",
-  "vueDemo": "EmbedDemo"
+  "vueDemo": "EmbedDemo",
+  "examples": ["colors", "fields", "minimal"]
 }

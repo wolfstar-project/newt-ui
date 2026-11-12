@@ -17,6 +17,20 @@ Every section is a native `<details>` element. The browser keeps one open at a t
 
 <Usage name="accordion" />
 
+## Examples
+
+### Multiple open
+
+With `type="multiple"` the sections open and close independently, and more than one can set `defaultOpen`. Use it when a reader compares sections; keep the default `single` for a list of questions.
+
+<ComponentPreview name="accordion" variant="multiple" />
+
+### Custom title
+
+The heading takes more than text: pass a node to `title` in React, or fill the `title` slot in Vue. Here each heading carries a `Badge` with a count.
+
+<ComponentPreview name="accordion" variant="custom-title" />
+
 ## API reference
 
 <PropsTable

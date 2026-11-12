@@ -15,6 +15,26 @@ An image, or the initials that stand in for one. Three sizes, all circles, all s
 
 <Usage name="avatar" />
 
+## Examples
+
+### With an image
+
+`AvatarImage` fills the circle at every size and is cropped to it. Give it an `alt` when the avatar stands on its own.
+
+<ComponentPreview name="avatar" variant="image" />
+
+### Initials
+
+`AvatarFallback` centres initials when there is no image. The fill is the brand colour unless a token utility on the avatar says otherwise; a lone avatar takes `role="img"` and an `aria-label`, because initials are not a name.
+
+<ComponentPreview name="avatar" variant="fallback" />
+
+### Beside a name
+
+Next to a visible name the avatar is decoration: the image takes `alt=""` and the initials are hidden from screen readers, so the name is read once.
+
+<ComponentPreview name="avatar" variant="with-name" />
+
 ## API reference
 
 <PropsTable

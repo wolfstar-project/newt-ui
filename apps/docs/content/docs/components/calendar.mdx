@@ -17,6 +17,20 @@ Dates go in and out as `YYYY-MM-DD` strings. They sort as text, survive JSON, an
 
 <Usage name="calendar" />
 
+## Examples
+
+### Date range
+
+Set both `min` and `max` to limit the choice to a window. Days outside it are disabled, and the keyboard never lands on them.
+
+<ComponentPreview name="calendar" variant="range" />
+
+### Locale and week start
+
+`locale` translates the month and weekday names. The first day of the week and the labels of the two month buttons are separate props: set `weekStartsOn`, `previousLabel` and `nextLabel` to match.
+
+<ComponentPreview name="calendar" variant="locale" />
+
 ## API reference
 
 <PropsTable

@@ -14,6 +14,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "AccordionMultipleDemo",
+    type: "registry:example",
+    registryDependencies: ["accordion"],
+    files: [
+      {
+        path: "examples/AccordionMultipleDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AccordionCustomTitleDemo",
+    type: "registry:example",
+    registryDependencies: ["accordion"],
+    files: [
+      {
+        path: "examples/AccordionCustomTitleDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ActionRowDemo",
     type: "registry:example",
     registryDependencies: ["action-row"],
@@ -42,6 +64,28 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/AlertDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AlertActionsDemo",
+    type: "registry:example",
+    registryDependencies: ["alert"],
+    files: [
+      {
+        path: "examples/AlertActionsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AlertDismissibleDemo",
+    type: "registry:example",
+    registryDependencies: ["alert"],
+    files: [
+      {
+        path: "examples/AlertDismissibleDemo.vue",
         type: "registry:example",
       },
     ],
@@ -102,6 +146,39 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "AvatarImageDemo",
+    type: "registry:example",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "examples/AvatarImageDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AvatarFallbackDemo",
+    type: "registry:example",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "examples/AvatarFallbackDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AvatarWithNameDemo",
+    type: "registry:example",
+    registryDependencies: ["avatar"],
+    files: [
+      {
+        path: "examples/AvatarWithNameDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AvatarGroupDemo",
     type: "registry:example",
     registryDependencies: ["avatar-group"],
@@ -119,6 +196,28 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/BadgeDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "BadgeVariantsDemo",
+    type: "registry:example",
+    registryDependencies: ["badge"],
+    files: [
+      {
+        path: "examples/BadgeVariantsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "BadgeCountsDemo",
+    type: "registry:example",
+    registryDependencies: ["badge"],
+    files: [
+      {
+        path: "examples/BadgeCountsDemo.vue",
         type: "registry:example",
       },
     ],
@@ -157,6 +256,39 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ButtonSizesDemo",
+    type: "registry:example",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "examples/ButtonSizesDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ButtonDisabledDemo",
+    type: "registry:example",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "examples/ButtonDisabledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ButtonLinkDemo",
+    type: "registry:example",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "examples/ButtonLinkDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "CalendarDemo",
     type: "registry:example",
     registryDependencies: ["calendar"],
@@ -168,12 +300,56 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "CalendarRangeDemo",
+    type: "registry:example",
+    registryDependencies: ["calendar"],
+    files: [
+      {
+        path: "examples/CalendarRangeDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "CalendarLocaleDemo",
+    type: "registry:example",
+    registryDependencies: ["calendar"],
+    files: [
+      {
+        path: "examples/CalendarLocaleDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "CardDemo",
     type: "registry:example",
     registryDependencies: ["card"],
     files: [
       {
         path: "examples/CardDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "CardActionsDemo",
+    type: "registry:example",
+    registryDependencies: ["card"],
+    files: [
+      {
+        path: "examples/CardActionsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "CardProfileDemo",
+    type: "registry:example",
+    registryDependencies: ["card"],
+    files: [
+      {
+        path: "examples/CardProfileDemo.vue",
         type: "registry:example",
       },
     ],
@@ -262,6 +438,39 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/CheckboxGroupDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "CheckboxGroupDescriptionsDemo",
+    type: "registry:example",
+    registryDependencies: ["checkbox-group"],
+    files: [
+      {
+        path: "examples/CheckboxGroupDescriptionsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "CheckboxGroupControlledDemo",
+    type: "registry:example",
+    registryDependencies: ["checkbox-group"],
+    files: [
+      {
+        path: "examples/CheckboxGroupControlledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "CheckboxGroupInlineDemo",
+    type: "registry:example",
+    registryDependencies: ["checkbox-group"],
+    files: [
+      {
+        path: "examples/CheckboxGroupInlineDemo.vue",
         type: "registry:example",
       },
     ],
@@ -388,12 +597,78 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "DropdownSimpleDemo",
+    type: "registry:example",
+    registryDependencies: ["dropdown"],
+    files: [
+      {
+        path: "examples/DropdownSimpleDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "DropdownStatusDemo",
+    type: "registry:example",
+    registryDependencies: ["dropdown"],
+    files: [
+      {
+        path: "examples/DropdownStatusDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "DropdownTriggerDemo",
+    type: "registry:example",
+    registryDependencies: ["dropdown"],
+    files: [
+      {
+        path: "examples/DropdownTriggerDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "EmbedDemo",
     type: "registry:example",
     registryDependencies: ["embed"],
     files: [
       {
         path: "examples/EmbedDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "EmbedColorsDemo",
+    type: "registry:example",
+    registryDependencies: ["embed"],
+    files: [
+      {
+        path: "examples/EmbedColorsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "EmbedFieldsDemo",
+    type: "registry:example",
+    registryDependencies: ["embed"],
+    files: [
+      {
+        path: "examples/EmbedFieldsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "EmbedMinimalDemo",
+    type: "registry:example",
+    registryDependencies: ["embed"],
+    files: [
+      {
+        path: "examples/EmbedMinimalDemo.vue",
         type: "registry:example",
       },
     ],
@@ -460,6 +735,50 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/FormFieldsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "FormFieldsErrorDemo",
+    type: "registry:example",
+    registryDependencies: ["form-fields"],
+    files: [
+      {
+        path: "examples/FormFieldsErrorDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "FormFieldsTextareaDemo",
+    type: "registry:example",
+    registryDependencies: ["form-fields"],
+    files: [
+      {
+        path: "examples/FormFieldsTextareaDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "FormFieldsSelectDemo",
+    type: "registry:example",
+    registryDependencies: ["form-fields"],
+    files: [
+      {
+        path: "examples/FormFieldsSelectDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "FormFieldsTogglesDemo",
+    type: "registry:example",
+    registryDependencies: ["form-fields"],
+    files: [
+      {
+        path: "examples/FormFieldsTogglesDemo.vue",
         type: "registry:example",
       },
     ],
@@ -564,6 +883,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "MessageGroupListDemo",
+    type: "registry:example",
+    registryDependencies: ["message-group"],
+    files: [
+      {
+        path: "examples/MessageGroupListDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "MessageGroupAppDemo",
+    type: "registry:example",
+    registryDependencies: ["message-group"],
+    files: [
+      {
+        path: "examples/MessageGroupAppDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "MessageListDemo",
     type: "registry:example",
     registryDependencies: ["message-list"],
@@ -581,6 +922,39 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/ModalDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ModalFormDemo",
+    type: "registry:example",
+    registryDependencies: ["modal"],
+    files: [
+      {
+        path: "examples/ModalFormDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ModalCloseButtonDemo",
+    type: "registry:example",
+    registryDependencies: ["modal"],
+    files: [
+      {
+        path: "examples/ModalCloseButtonDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ModalLongContentDemo",
+    type: "registry:example",
+    registryDependencies: ["modal"],
+    files: [
+      {
+        path: "examples/ModalLongContentDemo.vue",
         type: "registry:example",
       },
     ],
@@ -608,6 +982,39 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "NumberInputDecimalDemo",
+    type: "registry:example",
+    registryDependencies: ["number-input"],
+    files: [
+      {
+        path: "examples/NumberInputDecimalDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "NumberInputInvalidDemo",
+    type: "registry:example",
+    registryDependencies: ["number-input"],
+    files: [
+      {
+        path: "examples/NumberInputInvalidDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "NumberInputDisabledDemo",
+    type: "registry:example",
+    registryDependencies: ["number-input"],
+    files: [
+      {
+        path: "examples/NumberInputDisabledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "OnboardingDemo",
     type: "registry:example",
     registryDependencies: ["onboarding"],
@@ -625,6 +1032,39 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/PaginationDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "PaginationEllipsisDemo",
+    type: "registry:example",
+    registryDependencies: ["pagination"],
+    files: [
+      {
+        path: "examples/PaginationEllipsisDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "PaginationPrevNextDemo",
+    type: "registry:example",
+    registryDependencies: ["pagination"],
+    files: [
+      {
+        path: "examples/PaginationPrevNextDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "PaginationLoadMoreDemo",
+    type: "registry:example",
+    registryDependencies: ["pagination"],
+    files: [
+      {
+        path: "examples/PaginationLoadMoreDemo.vue",
         type: "registry:example",
       },
     ],
@@ -652,12 +1092,78 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "PinInputMaskDemo",
+    type: "registry:example",
+    registryDependencies: ["pin-input"],
+    files: [
+      {
+        path: "examples/PinInputMaskDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "PinInputAlphanumericDemo",
+    type: "registry:example",
+    registryDependencies: ["pin-input"],
+    files: [
+      {
+        path: "examples/PinInputAlphanumericDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "PinInputInvalidDemo",
+    type: "registry:example",
+    registryDependencies: ["pin-input"],
+    files: [
+      {
+        path: "examples/PinInputInvalidDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "PollDemo",
     type: "registry:example",
     registryDependencies: ["poll"],
     files: [
       {
         path: "examples/PollDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "PollMultipleDemo",
+    type: "registry:example",
+    registryDependencies: ["poll"],
+    files: [
+      {
+        path: "examples/PollMultipleDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "PollRevealDemo",
+    type: "registry:example",
+    registryDependencies: ["poll"],
+    files: [
+      {
+        path: "examples/PollRevealDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "PollClosedDemo",
+    type: "registry:example",
+    registryDependencies: ["poll"],
+    files: [
+      {
+        path: "examples/PollClosedDemo.vue",
         type: "registry:example",
       },
     ],
@@ -685,6 +1191,39 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ProgressVariantsDemo",
+    type: "registry:example",
+    registryDependencies: ["progress"],
+    files: [
+      {
+        path: "examples/ProgressVariantsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ProgressMaxDemo",
+    type: "registry:example",
+    registryDependencies: ["progress"],
+    files: [
+      {
+        path: "examples/ProgressMaxDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ProgressControlledDemo",
+    type: "registry:example",
+    registryDependencies: ["progress"],
+    files: [
+      {
+        path: "examples/ProgressControlledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "RadioDemo",
     type: "registry:example",
     registryDependencies: ["radio"],
@@ -696,12 +1235,78 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "RadioControlledDemo",
+    type: "registry:example",
+    registryDependencies: ["radio"],
+    files: [
+      {
+        path: "examples/RadioControlledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "RadioInlineDemo",
+    type: "registry:example",
+    registryDependencies: ["radio"],
+    files: [
+      {
+        path: "examples/RadioInlineDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "RadioDisabledDemo",
+    type: "registry:example",
+    registryDependencies: ["radio"],
+    files: [
+      {
+        path: "examples/RadioDisabledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ReactionDemo",
     type: "registry:example",
     registryDependencies: ["reaction"],
     files: [
       {
         path: "examples/ReactionDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ReactionControlledDemo",
+    type: "registry:example",
+    registryDependencies: ["reaction"],
+    files: [
+      {
+        path: "examples/ReactionControlledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ReactionCustomEmojiDemo",
+    type: "registry:example",
+    registryDependencies: ["reaction"],
+    files: [
+      {
+        path: "examples/ReactionCustomEmojiDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ReactionReadonlyDemo",
+    type: "registry:example",
+    registryDependencies: ["reaction"],
+    files: [
+      {
+        path: "examples/ReactionReadonlyDemo.vue",
         type: "registry:example",
       },
     ],
@@ -724,6 +1329,28 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/RoleTagDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "RoleTagPlainDemo",
+    type: "registry:example",
+    registryDependencies: ["role-tag"],
+    files: [
+      {
+        path: "examples/RoleTagPlainDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "RoleTagListDemo",
+    type: "registry:example",
+    registryDependencies: ["role-tag"],
+    files: [
+      {
+        path: "examples/RoleTagListDemo.vue",
         type: "registry:example",
       },
     ],
@@ -757,6 +1384,39 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/SelectMenuDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SelectMenuPlaceholderDemo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/SelectMenuPlaceholderDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SelectMenuMessageDemo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/SelectMenuMessageDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SelectMenuDisabledDemo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/SelectMenuDisabledDemo.vue",
         type: "registry:example",
       },
     ],
@@ -817,6 +1477,39 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "SkeletonVariantsDemo",
+    type: "registry:example",
+    registryDependencies: ["skeleton"],
+    files: [
+      {
+        path: "examples/SkeletonVariantsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SkeletonCardDemo",
+    type: "registry:example",
+    registryDependencies: ["skeleton"],
+    files: [
+      {
+        path: "examples/SkeletonCardDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SkeletonLoadingDemo",
+    type: "registry:example",
+    registryDependencies: ["skeleton"],
+    files: [
+      {
+        path: "examples/SkeletonLoadingDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SlashCommandDemo",
     type: "registry:example",
     registryDependencies: ["slash-command"],
@@ -850,6 +1543,39 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "SliderStepsDemo",
+    type: "registry:example",
+    registryDependencies: ["slider"],
+    files: [
+      {
+        path: "examples/SliderStepsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SliderRangeDemo",
+    type: "registry:example",
+    registryDependencies: ["slider"],
+    files: [
+      {
+        path: "examples/SliderRangeDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SliderDisabledDemo",
+    type: "registry:example",
+    registryDependencies: ["slider"],
+    files: [
+      {
+        path: "examples/SliderDisabledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SpoilerDemo",
     type: "registry:example",
     registryDependencies: ["spoiler"],
@@ -878,6 +1604,28 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/StatusIndicatorDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "StatusIndicatorStreamingDemo",
+    type: "registry:example",
+    registryDependencies: ["status-indicator"],
+    files: [
+      {
+        path: "examples/StatusIndicatorStreamingDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "StatusIndicatorMembersDemo",
+    type: "registry:example",
+    registryDependencies: ["status-indicator"],
+    files: [
+      {
+        path: "examples/StatusIndicatorMembersDemo.vue",
         type: "registry:example",
       },
     ],
@@ -922,6 +1670,39 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/TabsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TabsControlledDemo",
+    type: "registry:example",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "examples/TabsControlledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TabsPanelsDemo",
+    type: "registry:example",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "examples/TabsPanelsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TabsDisabledDemo",
+    type: "registry:example",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "examples/TabsDisabledDemo.vue",
         type: "registry:example",
       },
     ],
@@ -982,6 +1763,39 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ToastVariantsDemo",
+    type: "registry:example",
+    registryDependencies: ["toast"],
+    files: [
+      {
+        path: "examples/ToastVariantsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ToastControlledDemo",
+    type: "registry:example",
+    registryDependencies: ["toast"],
+    files: [
+      {
+        path: "examples/ToastControlledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ToastActionDemo",
+    type: "registry:example",
+    registryDependencies: ["toast"],
+    files: [
+      {
+        path: "examples/ToastActionDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "TokenFieldDemo",
     type: "registry:example",
     registryDependencies: ["token-field"],
@@ -999,6 +1813,39 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/TooltipDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TooltipToolbarDemo",
+    type: "registry:example",
+    registryDependencies: ["tooltip"],
+    files: [
+      {
+        path: "examples/TooltipToolbarDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TooltipShortcutDemo",
+    type: "registry:example",
+    registryDependencies: ["tooltip"],
+    files: [
+      {
+        path: "examples/TooltipShortcutDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TooltipBelowDemo",
+    type: "registry:example",
+    registryDependencies: ["tooltip"],
+    files: [
+      {
+        path: "examples/TooltipBelowDemo.vue",
         type: "registry:example",
       },
     ],

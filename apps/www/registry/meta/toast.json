@@ -13,5 +13,6 @@
     "index.ts"
   ],
   "reactDemo": "toast-demo",
-  "vueDemo": "ToastDemo"
+  "vueDemo": "ToastDemo",
+  "examples": ["variants", "controlled", "action"]
 }
