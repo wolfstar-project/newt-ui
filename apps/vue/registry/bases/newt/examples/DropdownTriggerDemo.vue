@@ -36,6 +36,22 @@ watch(open, async (value) => {
   items()[0]?.focus()
 })
 
+/** Where an arrow key, Home or End moves focus in a menu; `undefined` for any other key. */
+function menuTarget(key: string, at: number, last: number): number | undefined {
+  switch (key) {
+    case "ArrowDown":
+      return at >= last ? 0 : at + 1
+    case "ArrowUp":
+      return at <= 0 ? last : at - 1
+    case "Home":
+      return 0
+    case "End":
+      return last
+    default:
+      return undefined
+  }
+}
+
 function onKeydown(event: KeyboardEvent) {
   if (!open.value) return
   const all = items()
@@ -50,12 +66,7 @@ function onKeydown(event: KeyboardEvent) {
     event.preventDefault()
     all[at]?.click()
   } else {
-    const target = {
-      ArrowDown: at >= last ? 0 : at + 1,
-      ArrowUp: at <= 0 ? last : at - 1,
-      Home: 0,
-      End: last,
-    }[event.key]
+    const target = menuTarget(event.key, at, last)
     if (target !== undefined) {
       event.preventDefault()
       all[target]?.focus()
