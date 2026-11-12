@@ -5,14 +5,19 @@ import Steps from "blume/components/content/Steps.astro"
 import Tab from "blume/components/content/Tab.astro"
 import Tabs from "blume/components/content/Tabs.astro"
 
-import { findComponent, targetPaths, uiSource } from "../../lib/registry"
+import {
+  componentPrompt,
+  findComponent,
+  registryFiles,
+} from "../../lib/registry"
 import { SITE } from "../../lib/site"
 import PmTabs from "./PmTabs.astro"
 
 /*
- * Two ways in: the CLI, which is what almost everyone wants, and the manual
- * route, which spells out every file the CLI would have written. Both are
- * derived from the component's meta file, so neither can drift from what
+ * Three ways in: the CLI, which is what almost everyone wants; the manual
+ * route, which spells out every file the CLI would have written; and a prompt
+ * that hands the same manual route to an AI assistant in one paste. All three
+ * are derived from the component's meta file, so none can drift from what
  * `newtui add` actually does.
  */
 interface Props {
@@ -26,23 +31,25 @@ if (meta === undefined) {
   throw new Error(`<Installation name="${name}"> — no registry meta.`)
 }
 
-function codeProps(path: string, source: string | undefined, lang: string) {
-  return { code: source ?? `// missing source for ${path}`, lang, title: path }
+function langFor(path: string): string {
+  if (path.endsWith(".vue")) return "vue"
+  return path.endsWith(".tsx") ? "tsx" : "ts"
 }
 
-const reactFiles = targetPaths("react", meta).map((path) =>
-  codeProps(path, uiSource("react", meta.name), "tsx")
-)
+const codeProps = (framework: "react" | "vue") =>
+  registryFiles(framework, meta).map(({ path, source }) => ({
+    code: source ?? `// missing source for ${path}`,
+    lang: langFor(path),
+    title: path,
+  }))
 
-const vuePaths = targetPaths("vue", meta)
-const vueFiles = meta.vueFiles.map((file, index) => {
-  const path = vuePaths[index] ?? file
-  return codeProps(
-    path,
-    uiSource("vue", meta.name, file),
-    file.endsWith(".vue") ? "vue" : "ts"
-  )
-})
+const reactFiles = codeProps("react")
+const vueFiles = codeProps("vue")
+
+const prompts = [
+  { framework: "react", label: "React", text: componentPrompt("react", meta) },
+  { framework: "vue", label: "Vue", text: componentPrompt("vue", meta) },
+] as const
 
 const npmDependencies = meta.dependencies.join(" ")
 ---
@@ -99,4 +106,70 @@ const npmDependencies = meta.dependencies.join(" ")
       </Step>
     </Steps>
   </Tab>
+
+  <Tab title="Prompt">
+    {
+      prompts.map((prompt) => (
+        <div data-framework={prompt.framework}>
+          <div class="install-prompt">
+          <p>
+            No CLI, no <code>components.json</code>: paste this into Claude,
+            Cursor, Copilot or any coding assistant and it adds {meta.title} to
+            your {prompt.label} project by hand. The prompt carries the source
+            of every file the CLI would write — this component's and those of
+            the components it builds on — with the imports already pointed at
+            the default aliases.
+          </p>
+          <button
+            type="button"
+            class="install-prompt-copy"
+            data-copy-prompt={prompt.text}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M9 2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V6.4a2 2 0 0 0-.6-1.4l-2.4-2.4A2 2 0 0 0 15.6 2H9Zm0 2h6v3a1 1 0 0 0 1 1h2v6H9V4ZM5 7a1 1 0 0 1 1 1v10h9a1 1 0 1 1 0 2H6a2 2 0 0 1-2-2V8a1 1 0 0 1 1-1Z"
+              />
+            </svg>
+            <span data-copy-prompt-label>Copy prompt</span>
+          </button>
+          <span class="install-prompt-status" role="status" aria-live="polite" />
+          </div>
+        </div>
+      ))
+    }
+  </Tab>
 </Tabs>
+
+<script>
+  /*
+   * One listener on the document, not one per button: a module script runs
+   * once per real load while Blume's client router swaps pages in place, and
+   * a delegated listener keeps working on every page it lands on.
+   */
+  document.addEventListener("click", async (event) => {
+    // SAFETY: a click event's target is always a Node; `closest` lives on
+    // Element, and a text node has no prompt button to find anyway.
+    const target = event.target as Element | null
+    const button = target?.closest?.<HTMLButtonElement>("[data-copy-prompt]")
+    if (!button) return
+
+    const label = button.querySelector<HTMLElement>("[data-copy-prompt-label]")
+    const status = button.parentElement?.querySelector<HTMLElement>(
+      ".install-prompt-status"
+    )
+    let message: string
+    try {
+      await navigator.clipboard.writeText(button.dataset.copyPrompt ?? "")
+      message = "Copied"
+    } catch {
+      message = "Copy failed"
+    }
+    if (label) label.textContent = message
+    if (status) status.textContent = `Prompt ${message.toLowerCase()}`
+    setTimeout(() => {
+      if (label) label.textContent = "Copy prompt"
+      if (status) status.textContent = ""
+    }, 1600)
+  })
+</script>

@@ -96,6 +96,16 @@ exist, and the closest real one should be used instead.
   metadata these pages read.
 </Callout>
 
+## Copy a component without the CLI [#prompt]
+
+Every component page has a **Prompt** tab under Installation. Its **Copy
+prompt** button puts a self-contained prompt on the clipboard for the framework
+selected in the header: the npm packages to install, and the full source of
+the component and of every component it builds on, each under the path the CLI
+would write it to and with its imports already pointed at the default aliases.
+Paste it into an assistant working in a project the CLI cannot read, or one
+you would rather it did not touch.
+
 ## Wire real data to a component [#wiring]
 
 The components carry no data model. An integration is a map from what your bot
