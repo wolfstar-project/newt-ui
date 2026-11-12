@@ -1514,7 +1514,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "AccordionCustomTitleDemo",
       type: "registry:example",
-      registryDependencies: ["accordion"],
+      registryDependencies: ["accordion", "badge"],
       files: ["registry/bases/newt/examples/AccordionCustomTitleDemo.vue"],
       component: defineAsyncComponent(
         () =>
@@ -1527,7 +1527,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ActionRowDemo",
       type: "registry:example",
-      registryDependencies: ["action-row"],
+      registryDependencies: ["action-row", "button"],
       files: ["registry/bases/newt/examples/ActionRowDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ActionRowDemo.vue")
@@ -1551,7 +1551,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "AlertDemo",
       type: "registry:example",
-      registryDependencies: ["alert"],
+      registryDependencies: ["alert", "button"],
       files: ["registry/bases/newt/examples/AlertDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AlertDemo.vue")
@@ -1563,7 +1563,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "AlertActionsDemo",
       type: "registry:example",
-      registryDependencies: ["alert"],
+      registryDependencies: ["alert", "button"],
       files: ["registry/bases/newt/examples/AlertActionsDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AlertActionsDemo.vue")
@@ -1575,7 +1575,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "AlertDismissibleDemo",
       type: "registry:example",
-      registryDependencies: ["alert"],
+      registryDependencies: ["alert", "button"],
       files: ["registry/bases/newt/examples/AlertDismissibleDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AlertDismissibleDemo.vue")
@@ -1587,7 +1587,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "AppInviteDemo",
       type: "registry:example",
-      registryDependencies: ["app-invite"],
+      registryDependencies: ["app-invite", "button"],
       files: ["registry/bases/newt/examples/AppInviteDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AppInviteDemo.vue")
@@ -1611,7 +1611,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "AttachmentDemo",
       type: "registry:example",
-      registryDependencies: ["attachment"],
+      registryDependencies: ["attachment", "button"],
       files: ["registry/bases/newt/examples/AttachmentDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AttachmentDemo.vue")
@@ -1683,7 +1683,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "AvatarGroupDemo",
       type: "registry:example",
-      registryDependencies: ["avatar-group"],
+      registryDependencies: ["avatar-group", "avatar"],
       files: ["registry/bases/newt/examples/AvatarGroupDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AvatarGroupDemo.vue")
@@ -1731,7 +1731,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "BotCommandCardDemo",
       type: "registry:example",
-      registryDependencies: ["bot-command-card"],
+      registryDependencies: ["bot-command-card", "badge"],
       files: ["registry/bases/newt/examples/BotCommandCardDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/BotCommandCardDemo.vue")
@@ -1851,7 +1851,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "CardActionsDemo",
       type: "registry:example",
-      registryDependencies: ["card"],
+      registryDependencies: ["card", "button"],
       files: ["registry/bases/newt/examples/CardActionsDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/CardActionsDemo.vue")
@@ -1863,7 +1863,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "CardProfileDemo",
       type: "registry:example",
-      registryDependencies: ["card"],
+      registryDependencies: ["card", "avatar", "badge"],
       files: ["registry/bases/newt/examples/CardProfileDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/CardProfileDemo.vue")
@@ -1887,7 +1887,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ChannelInfoDemo",
       type: "registry:example",
-      registryDependencies: ["channel-info"],
+      registryDependencies: ["channel-info", "tabs"],
       files: ["registry/bases/newt/examples/ChannelInfoDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ChannelInfoDemo.vue")
@@ -1899,7 +1899,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ChannelSidebarDemo",
       type: "registry:example",
-      registryDependencies: ["channel-sidebar"],
+      registryDependencies: ["channel-sidebar", "tree"],
       files: ["registry/bases/newt/examples/ChannelSidebarDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ChannelSidebarDemo.vue")
@@ -1935,7 +1935,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ChatDemo",
       type: "registry:example",
-      registryDependencies: ["chat"],
+      registryDependencies: [
+        "chat",
+        "avatar",
+        "message-composer",
+        "message-group",
+        "message-list",
+      ],
       files: ["registry/bases/newt/examples/ChatDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ChatDemo.vue")
@@ -1984,7 +1990,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "CheckboxGroupControlledDemo",
       type: "registry:example",
-      registryDependencies: ["checkbox-group"],
+      registryDependencies: ["checkbox-group", "button"],
       files: ["registry/bases/newt/examples/CheckboxGroupControlledDemo.vue"],
       component: defineAsyncComponent(
         () =>
@@ -2022,7 +2028,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ColorPickerDemo",
       type: "registry:example",
-      registryDependencies: ["color-picker"],
+      registryDependencies: ["color-picker", "role-tag"],
       files: ["registry/bases/newt/examples/ColorPickerDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ColorPickerDemo.vue")
@@ -2034,7 +2040,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "CommandPaletteDemo",
       type: "registry:example",
-      registryDependencies: ["command-palette"],
+      registryDependencies: ["command-palette", "button"],
       files: ["registry/bases/newt/examples/CommandPaletteDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/CommandPaletteDemo.vue")
@@ -2094,7 +2100,12 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "DirectionDemo",
       type: "registry:example",
-      registryDependencies: ["direction"],
+      registryDependencies: [
+        "direction",
+        "avatar",
+        "message-composer",
+        "message-group",
+      ],
       files: ["registry/bases/newt/examples/DirectionDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/DirectionDemo.vue")
@@ -2118,7 +2129,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "DrawerDemo",
       type: "registry:example",
-      registryDependencies: ["drawer"],
+      registryDependencies: ["drawer", "button"],
       files: ["registry/bases/newt/examples/DrawerDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/DrawerDemo.vue")
@@ -2166,7 +2177,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "DropdownTriggerDemo",
       type: "registry:example",
-      registryDependencies: ["dropdown"],
+      registryDependencies: ["dropdown", "button"],
       files: ["registry/bases/newt/examples/DropdownTriggerDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/DropdownTriggerDemo.vue")
@@ -2362,7 +2373,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "InviteDemo",
       type: "registry:example",
-      registryDependencies: ["invite"],
+      registryDependencies: ["invite", "button"],
       files: ["registry/bases/newt/examples/InviteDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/InviteDemo.vue")
@@ -2410,7 +2421,12 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "MemberListDemo",
       type: "registry:example",
-      registryDependencies: ["member-list"],
+      registryDependencies: [
+        "member-list",
+        "avatar",
+        "role-tag",
+        "status-indicator",
+      ],
       files: ["registry/bases/newt/examples/MemberListDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/MemberListDemo.vue")
@@ -2446,7 +2462,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "MessageGroupDemo",
       type: "registry:example",
-      registryDependencies: ["message-group"],
+      registryDependencies: [
+        "message-group",
+        "avatar",
+        "reaction",
+        "reply-preview",
+        "status-indicator",
+      ],
       files: ["registry/bases/newt/examples/MessageGroupDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/MessageGroupDemo.vue")
@@ -2458,7 +2480,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "MessageGroupListDemo",
       type: "registry:example",
-      registryDependencies: ["message-group"],
+      registryDependencies: ["message-group", "avatar"],
       files: ["registry/bases/newt/examples/MessageGroupListDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/MessageGroupListDemo.vue")
@@ -2470,7 +2492,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "MessageGroupAppDemo",
       type: "registry:example",
-      registryDependencies: ["message-group"],
+      registryDependencies: ["message-group", "avatar"],
       files: ["registry/bases/newt/examples/MessageGroupAppDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/MessageGroupAppDemo.vue")
@@ -2482,7 +2504,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "MessageListDemo",
       type: "registry:example",
-      registryDependencies: ["message-list"],
+      registryDependencies: ["message-list", "avatar", "message-group"],
       files: ["registry/bases/newt/examples/MessageListDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/MessageListDemo.vue")
@@ -2494,7 +2516,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ModalDemo",
       type: "registry:example",
-      registryDependencies: ["modal"],
+      registryDependencies: ["modal", "button"],
       files: ["registry/bases/newt/examples/ModalDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ModalDemo.vue")
@@ -2506,7 +2528,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ModalFormDemo",
       type: "registry:example",
-      registryDependencies: ["modal"],
+      registryDependencies: ["modal", "button", "form-fields"],
       files: ["registry/bases/newt/examples/ModalFormDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ModalFormDemo.vue")
@@ -2518,7 +2540,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ModalCloseButtonDemo",
       type: "registry:example",
-      registryDependencies: ["modal"],
+      registryDependencies: ["modal", "button"],
       files: ["registry/bases/newt/examples/ModalCloseButtonDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ModalCloseButtonDemo.vue")
@@ -2530,7 +2552,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ModalLongContentDemo",
       type: "registry:example",
-      registryDependencies: ["modal"],
+      registryDependencies: ["modal", "button"],
       files: ["registry/bases/newt/examples/ModalLongContentDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ModalLongContentDemo.vue")
@@ -2542,7 +2564,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "NotifBadgeDemo",
       type: "registry:example",
-      registryDependencies: ["notif-badge"],
+      registryDependencies: ["notif-badge", "avatar"],
       files: ["registry/bases/newt/examples/NotifBadgeDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/NotifBadgeDemo.vue")
@@ -2554,7 +2576,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "NumberInputDemo",
       type: "registry:example",
-      registryDependencies: ["number-input"],
+      registryDependencies: ["number-input", "form-fields"],
       files: ["registry/bases/newt/examples/NumberInputDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/NumberInputDemo.vue")
@@ -2566,7 +2588,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "NumberInputDecimalDemo",
       type: "registry:example",
-      registryDependencies: ["number-input"],
+      registryDependencies: ["number-input", "form-fields"],
       files: ["registry/bases/newt/examples/NumberInputDecimalDemo.vue"],
       component: defineAsyncComponent(
         () =>
@@ -2579,7 +2601,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "NumberInputInvalidDemo",
       type: "registry:example",
-      registryDependencies: ["number-input"],
+      registryDependencies: ["number-input", "form-fields"],
       files: ["registry/bases/newt/examples/NumberInputInvalidDemo.vue"],
       component: defineAsyncComponent(
         () =>
@@ -2592,7 +2614,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "NumberInputDisabledDemo",
       type: "registry:example",
-      registryDependencies: ["number-input"],
+      registryDependencies: ["number-input", "form-fields"],
       files: ["registry/bases/newt/examples/NumberInputDisabledDemo.vue"],
       component: defineAsyncComponent(
         () =>
@@ -2605,7 +2627,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "OnboardingDemo",
       type: "registry:example",
-      registryDependencies: ["onboarding"],
+      registryDependencies: [
+        "onboarding",
+        "alert",
+        "checkbox-group",
+        "form-fields",
+        "radio",
+      ],
       files: ["registry/bases/newt/examples/OnboardingDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/OnboardingDemo.vue")
@@ -2617,7 +2645,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "PaginationDemo",
       type: "registry:example",
-      registryDependencies: ["pagination"],
+      registryDependencies: ["pagination", "button"],
       files: ["registry/bases/newt/examples/PaginationDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/PaginationDemo.vue")
@@ -2655,7 +2683,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "PaginationLoadMoreDemo",
       type: "registry:example",
-      registryDependencies: ["pagination"],
+      registryDependencies: ["pagination", "button"],
       files: ["registry/bases/newt/examples/PaginationLoadMoreDemo.vue"],
       component: defineAsyncComponent(
         () =>
@@ -2717,7 +2745,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "PinInputInvalidDemo",
       type: "registry:example",
-      registryDependencies: ["pin-input"],
+      registryDependencies: ["pin-input", "form-fields"],
       files: ["registry/bases/newt/examples/PinInputInvalidDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/PinInputInvalidDemo.vue")
@@ -2777,7 +2805,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "PopoverDemo",
       type: "registry:example",
-      registryDependencies: ["popover"],
+      registryDependencies: ["popover", "button"],
       files: ["registry/bases/newt/examples/PopoverDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/PopoverDemo.vue")
@@ -2825,7 +2853,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ProgressControlledDemo",
       type: "registry:example",
-      registryDependencies: ["progress"],
+      registryDependencies: ["progress", "button"],
       files: ["registry/bases/newt/examples/ProgressControlledDemo.vue"],
       component: defineAsyncComponent(
         () =>
@@ -3059,7 +3087,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ServerBannerDemo",
       type: "registry:example",
-      registryDependencies: ["server-banner"],
+      registryDependencies: ["server-banner", "button"],
       files: ["registry/bases/newt/examples/ServerBannerDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ServerBannerDemo.vue")
@@ -3083,7 +3111,12 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "SettingsLayoutDemo",
       type: "registry:example",
-      registryDependencies: ["settings-layout"],
+      registryDependencies: [
+        "settings-layout",
+        "alert",
+        "button",
+        "form-fields",
+      ],
       files: ["registry/bases/newt/examples/SettingsLayoutDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/SettingsLayoutDemo.vue")
@@ -3131,7 +3164,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "SkeletonCardDemo",
       type: "registry:example",
-      registryDependencies: ["skeleton"],
+      registryDependencies: ["skeleton", "card"],
       files: ["registry/bases/newt/examples/SkeletonCardDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/SkeletonCardDemo.vue")
@@ -3143,7 +3176,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "SkeletonLoadingDemo",
       type: "registry:example",
-      registryDependencies: ["skeleton"],
+      registryDependencies: ["skeleton", "avatar", "button"],
       files: ["registry/bases/newt/examples/SkeletonLoadingDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/SkeletonLoadingDemo.vue")
@@ -3167,7 +3200,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "SlashCommandSuggestionsDemo",
       type: "registry:example",
-      registryDependencies: ["slash-command-suggestions"],
+      registryDependencies: ["slash-command-suggestions", "slash-command"],
       files: ["registry/bases/newt/examples/SlashCommandSuggestionsDemo.vue"],
       component: defineAsyncComponent(
         () =>
@@ -3252,7 +3285,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "StatusIndicatorDemo",
       type: "registry:example",
-      registryDependencies: ["status-indicator"],
+      registryDependencies: ["status-indicator", "avatar"],
       files: ["registry/bases/newt/examples/StatusIndicatorDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/StatusIndicatorDemo.vue")
@@ -3264,7 +3297,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "StatusIndicatorStreamingDemo",
       type: "registry:example",
-      registryDependencies: ["status-indicator"],
+      registryDependencies: ["status-indicator", "avatar"],
       files: ["registry/bases/newt/examples/StatusIndicatorStreamingDemo.vue"],
       component: defineAsyncComponent(
         () =>
@@ -3277,7 +3310,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "StatusIndicatorMembersDemo",
       type: "registry:example",
-      registryDependencies: ["status-indicator"],
+      registryDependencies: ["status-indicator", "avatar"],
       files: ["registry/bases/newt/examples/StatusIndicatorMembersDemo.vue"],
       component: defineAsyncComponent(
         () =>
@@ -3290,7 +3323,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "StepperDemo",
       type: "registry:example",
-      registryDependencies: ["stepper"],
+      registryDependencies: ["stepper", "button"],
       files: ["registry/bases/newt/examples/StepperDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/StepperDemo.vue")
@@ -3374,7 +3407,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "TagInputDemo",
       type: "registry:example",
-      registryDependencies: ["tag-input"],
+      registryDependencies: ["tag-input", "form-fields"],
       files: ["registry/bases/newt/examples/TagInputDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TagInputDemo.vue")
@@ -3446,7 +3479,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ToastControlledDemo",
       type: "registry:example",
-      registryDependencies: ["toast"],
+      registryDependencies: ["toast", "button"],
       files: ["registry/bases/newt/examples/ToastControlledDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ToastControlledDemo.vue")
@@ -3458,7 +3491,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "ToastActionDemo",
       type: "registry:example",
-      registryDependencies: ["toast"],
+      registryDependencies: ["toast", "button"],
       files: ["registry/bases/newt/examples/ToastActionDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ToastActionDemo.vue")
@@ -3470,7 +3503,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "TokenFieldDemo",
       type: "registry:example",
-      registryDependencies: ["token-field"],
+      registryDependencies: ["token-field", "form-fields"],
       files: ["registry/bases/newt/examples/TokenFieldDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TokenFieldDemo.vue")
@@ -3506,7 +3539,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "TooltipShortcutDemo",
       type: "registry:example",
-      registryDependencies: ["tooltip"],
+      registryDependencies: ["tooltip", "button", "kbd-tag"],
       files: ["registry/bases/newt/examples/TooltipShortcutDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TooltipShortcutDemo.vue")
@@ -3518,7 +3551,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "TooltipBelowDemo",
       type: "registry:example",
-      registryDependencies: ["tooltip"],
+      registryDependencies: ["tooltip", "button"],
       files: ["registry/bases/newt/examples/TooltipBelowDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TooltipBelowDemo.vue")
@@ -3566,7 +3599,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "UserPanelDemo",
       type: "registry:example",
-      registryDependencies: ["user-panel"],
+      registryDependencies: ["user-panel", "avatar", "status-indicator"],
       files: ["registry/bases/newt/examples/UserPanelDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/UserPanelDemo.vue")
@@ -3578,7 +3611,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "UserProfileDemo",
       type: "registry:example",
-      registryDependencies: ["user-profile"],
+      registryDependencies: [
+        "user-profile",
+        "avatar",
+        "button",
+        "role-tag",
+        "status-indicator",
+      ],
       files: ["registry/bases/newt/examples/UserProfileDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/UserProfileDemo.vue")
@@ -3590,7 +3629,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "V2ContainerDemo",
       type: "registry:example",
-      registryDependencies: ["v2-container"],
+      registryDependencies: ["v2-container", "action-row", "button", "divider"],
       files: ["registry/bases/newt/examples/V2ContainerDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/V2ContainerDemo.vue")
@@ -3602,7 +3641,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "VoiceChannelDemo",
       type: "registry:example",
-      registryDependencies: ["voice-channel"],
+      registryDependencies: ["voice-channel", "avatar"],
       files: ["registry/bases/newt/examples/VoiceChannelDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/VoiceChannelDemo.vue")

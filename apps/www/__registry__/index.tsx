@@ -1175,7 +1175,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "accordion-custom-title-demo",
       type: "registry:example",
-      registryDependencies: ["accordion"],
+      registryDependencies: ["accordion", "badge"],
       files: ["registry/bases/newt/examples/accordion-custom-title-demo.tsx"],
       component: React.lazy(
         () =>
@@ -1188,7 +1188,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "action-row-demo",
       type: "registry:example",
-      registryDependencies: ["action-row"],
+      registryDependencies: ["action-row", "button"],
       files: ["registry/bases/newt/examples/action-row-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/action-row-demo")
@@ -1212,7 +1212,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "alert-demo",
       type: "registry:example",
-      registryDependencies: ["alert"],
+      registryDependencies: ["alert", "button"],
       files: ["registry/bases/newt/examples/alert-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/alert-demo")
@@ -1224,7 +1224,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "alert-actions-demo",
       type: "registry:example",
-      registryDependencies: ["alert"],
+      registryDependencies: ["alert", "button"],
       files: ["registry/bases/newt/examples/alert-actions-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/alert-actions-demo")
@@ -1236,7 +1236,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "alert-dismissible-demo",
       type: "registry:example",
-      registryDependencies: ["alert"],
+      registryDependencies: ["alert", "button"],
       files: ["registry/bases/newt/examples/alert-dismissible-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/alert-dismissible-demo")
@@ -1248,7 +1248,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "app-invite-demo",
       type: "registry:example",
-      registryDependencies: ["app-invite"],
+      registryDependencies: ["app-invite", "button"],
       files: ["registry/bases/newt/examples/app-invite-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/app-invite-demo")
@@ -1272,7 +1272,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "attachment-demo",
       type: "registry:example",
-      registryDependencies: ["attachment"],
+      registryDependencies: ["attachment", "button"],
       files: ["registry/bases/newt/examples/attachment-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/attachment-demo")
@@ -1344,7 +1344,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "avatar-group-demo",
       type: "registry:example",
-      registryDependencies: ["avatar-group"],
+      registryDependencies: ["avatar-group", "avatar"],
       files: ["registry/bases/newt/examples/avatar-group-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/avatar-group-demo")
@@ -1392,7 +1392,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "bot-command-card-demo",
       type: "registry:example",
-      registryDependencies: ["bot-command-card"],
+      registryDependencies: ["bot-command-card", "badge"],
       files: ["registry/bases/newt/examples/bot-command-card-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/bot-command-card-demo")
@@ -1512,7 +1512,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "card-actions-demo",
       type: "registry:example",
-      registryDependencies: ["card"],
+      registryDependencies: ["card", "button"],
       files: ["registry/bases/newt/examples/card-actions-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/card-actions-demo")
@@ -1524,7 +1524,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "card-profile-demo",
       type: "registry:example",
-      registryDependencies: ["card"],
+      registryDependencies: ["card", "avatar", "badge"],
       files: ["registry/bases/newt/examples/card-profile-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/card-profile-demo")
@@ -1548,7 +1548,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "channel-info-demo",
       type: "registry:example",
-      registryDependencies: ["channel-info"],
+      registryDependencies: ["channel-info", "tabs"],
       files: ["registry/bases/newt/examples/channel-info-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/channel-info-demo")
@@ -1560,7 +1560,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "channel-sidebar-demo",
       type: "registry:example",
-      registryDependencies: ["channel-sidebar"],
+      registryDependencies: ["channel-sidebar", "tree"],
       files: ["registry/bases/newt/examples/channel-sidebar-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/channel-sidebar-demo")
@@ -1596,7 +1596,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "chat-demo",
       type: "registry:example",
-      registryDependencies: ["chat"],
+      registryDependencies: [
+        "chat",
+        "avatar",
+        "message-composer",
+        "message-group",
+        "message-list",
+      ],
       files: ["registry/bases/newt/examples/chat-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/chat-demo")
@@ -1647,7 +1653,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "checkbox-group-controlled-demo",
       type: "registry:example",
-      registryDependencies: ["checkbox-group"],
+      registryDependencies: ["checkbox-group", "button"],
       files: [
         "registry/bases/newt/examples/checkbox-group-controlled-demo.tsx",
       ],
@@ -1687,7 +1693,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "color-picker-demo",
       type: "registry:example",
-      registryDependencies: ["color-picker"],
+      registryDependencies: ["color-picker", "role-tag"],
       files: ["registry/bases/newt/examples/color-picker-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/color-picker-demo")
@@ -1699,7 +1705,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "command-palette-demo",
       type: "registry:example",
-      registryDependencies: ["command-palette"],
+      registryDependencies: ["command-palette", "button"],
       files: ["registry/bases/newt/examples/command-palette-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/command-palette-demo")
@@ -1759,7 +1765,12 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "direction-demo",
       type: "registry:example",
-      registryDependencies: ["direction"],
+      registryDependencies: [
+        "direction",
+        "avatar",
+        "message-composer",
+        "message-group",
+      ],
       files: ["registry/bases/newt/examples/direction-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/direction-demo")
@@ -1783,7 +1794,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "drawer-demo",
       type: "registry:example",
-      registryDependencies: ["drawer"],
+      registryDependencies: ["drawer", "button"],
       files: ["registry/bases/newt/examples/drawer-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/drawer-demo")
@@ -1831,7 +1842,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "dropdown-trigger-demo",
       type: "registry:example",
-      registryDependencies: ["dropdown"],
+      registryDependencies: ["dropdown", "button"],
       files: ["registry/bases/newt/examples/dropdown-trigger-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/dropdown-trigger-demo")
@@ -2023,7 +2034,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "invite-demo",
       type: "registry:example",
-      registryDependencies: ["invite"],
+      registryDependencies: ["invite", "button"],
       files: ["registry/bases/newt/examples/invite-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/invite-demo")
@@ -2071,7 +2082,12 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "member-list-demo",
       type: "registry:example",
-      registryDependencies: ["member-list"],
+      registryDependencies: [
+        "member-list",
+        "avatar",
+        "role-tag",
+        "status-indicator",
+      ],
       files: ["registry/bases/newt/examples/member-list-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/member-list-demo")
@@ -2107,7 +2123,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "message-group-demo",
       type: "registry:example",
-      registryDependencies: ["message-group"],
+      registryDependencies: [
+        "message-group",
+        "avatar",
+        "reaction",
+        "reply-preview",
+        "status-indicator",
+      ],
       files: ["registry/bases/newt/examples/message-group-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/message-group-demo")
@@ -2119,7 +2141,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "message-group-list-demo",
       type: "registry:example",
-      registryDependencies: ["message-group"],
+      registryDependencies: ["message-group", "avatar"],
       files: ["registry/bases/newt/examples/message-group-list-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/message-group-list-demo")
@@ -2131,7 +2153,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "message-group-app-demo",
       type: "registry:example",
-      registryDependencies: ["message-group"],
+      registryDependencies: ["message-group", "avatar"],
       files: ["registry/bases/newt/examples/message-group-app-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/message-group-app-demo")
@@ -2143,7 +2165,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "message-list-demo",
       type: "registry:example",
-      registryDependencies: ["message-list"],
+      registryDependencies: ["message-list", "avatar", "message-group"],
       files: ["registry/bases/newt/examples/message-list-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/message-list-demo")
@@ -2155,7 +2177,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "modal-demo",
       type: "registry:example",
-      registryDependencies: ["modal"],
+      registryDependencies: ["modal", "button"],
       files: ["registry/bases/newt/examples/modal-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/modal-demo")
@@ -2167,7 +2189,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "modal-form-demo",
       type: "registry:example",
-      registryDependencies: ["modal"],
+      registryDependencies: ["modal", "button", "form-fields"],
       files: ["registry/bases/newt/examples/modal-form-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/modal-form-demo")
@@ -2179,7 +2201,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "modal-close-button-demo",
       type: "registry:example",
-      registryDependencies: ["modal"],
+      registryDependencies: ["modal", "button"],
       files: ["registry/bases/newt/examples/modal-close-button-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/modal-close-button-demo")
@@ -2191,7 +2213,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "modal-long-content-demo",
       type: "registry:example",
-      registryDependencies: ["modal"],
+      registryDependencies: ["modal", "button"],
       files: ["registry/bases/newt/examples/modal-long-content-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/modal-long-content-demo")
@@ -2203,7 +2225,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "notif-badge-demo",
       type: "registry:example",
-      registryDependencies: ["notif-badge"],
+      registryDependencies: ["notif-badge", "avatar"],
       files: ["registry/bases/newt/examples/notif-badge-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/notif-badge-demo")
@@ -2215,7 +2237,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "number-input-demo",
       type: "registry:example",
-      registryDependencies: ["number-input"],
+      registryDependencies: ["number-input", "form-fields"],
       files: ["registry/bases/newt/examples/number-input-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/number-input-demo")
@@ -2227,7 +2249,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "number-input-decimal-demo",
       type: "registry:example",
-      registryDependencies: ["number-input"],
+      registryDependencies: ["number-input", "form-fields"],
       files: ["registry/bases/newt/examples/number-input-decimal-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/number-input-decimal-demo")
@@ -2239,7 +2261,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "number-input-invalid-demo",
       type: "registry:example",
-      registryDependencies: ["number-input"],
+      registryDependencies: ["number-input", "form-fields"],
       files: ["registry/bases/newt/examples/number-input-invalid-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/number-input-invalid-demo")
@@ -2251,7 +2273,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "number-input-disabled-demo",
       type: "registry:example",
-      registryDependencies: ["number-input"],
+      registryDependencies: ["number-input", "form-fields"],
       files: ["registry/bases/newt/examples/number-input-disabled-demo.tsx"],
       component: React.lazy(
         () =>
@@ -2264,7 +2286,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "onboarding-demo",
       type: "registry:example",
-      registryDependencies: ["onboarding"],
+      registryDependencies: [
+        "onboarding",
+        "alert",
+        "checkbox-group",
+        "form-fields",
+        "radio",
+      ],
       files: ["registry/bases/newt/examples/onboarding-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/onboarding-demo")
@@ -2276,7 +2304,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "pagination-demo",
       type: "registry:example",
-      registryDependencies: ["pagination"],
+      registryDependencies: ["pagination", "button"],
       files: ["registry/bases/newt/examples/pagination-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/pagination-demo")
@@ -2312,7 +2340,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "pagination-load-more-demo",
       type: "registry:example",
-      registryDependencies: ["pagination"],
+      registryDependencies: ["pagination", "button"],
       files: ["registry/bases/newt/examples/pagination-load-more-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/pagination-load-more-demo")
@@ -2373,7 +2401,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "pin-input-invalid-demo",
       type: "registry:example",
-      registryDependencies: ["pin-input"],
+      registryDependencies: ["pin-input", "form-fields"],
       files: ["registry/bases/newt/examples/pin-input-invalid-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/pin-input-invalid-demo")
@@ -2433,7 +2461,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "popover-demo",
       type: "registry:example",
-      registryDependencies: ["popover"],
+      registryDependencies: ["popover", "button"],
       files: ["registry/bases/newt/examples/popover-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/popover-demo")
@@ -2481,7 +2509,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "progress-controlled-demo",
       type: "registry:example",
-      registryDependencies: ["progress"],
+      registryDependencies: ["progress", "button"],
       files: ["registry/bases/newt/examples/progress-controlled-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/progress-controlled-demo")
@@ -2711,7 +2739,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "server-banner-demo",
       type: "registry:example",
-      registryDependencies: ["server-banner"],
+      registryDependencies: ["server-banner", "button"],
       files: ["registry/bases/newt/examples/server-banner-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/server-banner-demo")
@@ -2735,7 +2763,12 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "settings-layout-demo",
       type: "registry:example",
-      registryDependencies: ["settings-layout"],
+      registryDependencies: [
+        "settings-layout",
+        "alert",
+        "button",
+        "form-fields",
+      ],
       files: ["registry/bases/newt/examples/settings-layout-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/settings-layout-demo")
@@ -2783,7 +2816,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "skeleton-card-demo",
       type: "registry:example",
-      registryDependencies: ["skeleton"],
+      registryDependencies: ["skeleton", "card"],
       files: ["registry/bases/newt/examples/skeleton-card-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/skeleton-card-demo")
@@ -2795,7 +2828,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "skeleton-loading-demo",
       type: "registry:example",
-      registryDependencies: ["skeleton"],
+      registryDependencies: ["skeleton", "avatar", "button"],
       files: ["registry/bases/newt/examples/skeleton-loading-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/skeleton-loading-demo")
@@ -2819,7 +2852,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "slash-command-suggestions-demo",
       type: "registry:example",
-      registryDependencies: ["slash-command-suggestions"],
+      registryDependencies: ["slash-command-suggestions", "slash-command"],
       files: [
         "registry/bases/newt/examples/slash-command-suggestions-demo.tsx",
       ],
@@ -2906,7 +2939,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "status-indicator-demo",
       type: "registry:example",
-      registryDependencies: ["status-indicator"],
+      registryDependencies: ["status-indicator", "avatar"],
       files: ["registry/bases/newt/examples/status-indicator-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/status-indicator-demo")
@@ -2918,7 +2951,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "status-indicator-streaming-demo",
       type: "registry:example",
-      registryDependencies: ["status-indicator"],
+      registryDependencies: ["status-indicator", "avatar"],
       files: [
         "registry/bases/newt/examples/status-indicator-streaming-demo.tsx",
       ],
@@ -2933,7 +2966,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "status-indicator-members-demo",
       type: "registry:example",
-      registryDependencies: ["status-indicator"],
+      registryDependencies: ["status-indicator", "avatar"],
       files: ["registry/bases/newt/examples/status-indicator-members-demo.tsx"],
       component: React.lazy(
         () =>
@@ -2946,7 +2979,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "stepper-demo",
       type: "registry:example",
-      registryDependencies: ["stepper"],
+      registryDependencies: ["stepper", "button"],
       files: ["registry/bases/newt/examples/stepper-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/stepper-demo")
@@ -3030,7 +3063,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "tag-input-demo",
       type: "registry:example",
-      registryDependencies: ["tag-input"],
+      registryDependencies: ["tag-input", "form-fields"],
       files: ["registry/bases/newt/examples/tag-input-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/tag-input-demo")
@@ -3102,7 +3135,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "toast-controlled-demo",
       type: "registry:example",
-      registryDependencies: ["toast"],
+      registryDependencies: ["toast", "button"],
       files: ["registry/bases/newt/examples/toast-controlled-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/toast-controlled-demo")
@@ -3114,7 +3147,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "toast-action-demo",
       type: "registry:example",
-      registryDependencies: ["toast"],
+      registryDependencies: ["toast", "button"],
       files: ["registry/bases/newt/examples/toast-action-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/toast-action-demo")
@@ -3126,7 +3159,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "token-field-demo",
       type: "registry:example",
-      registryDependencies: ["token-field"],
+      registryDependencies: ["token-field", "form-fields"],
       files: ["registry/bases/newt/examples/token-field-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/token-field-demo")
@@ -3162,7 +3195,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "tooltip-shortcut-demo",
       type: "registry:example",
-      registryDependencies: ["tooltip"],
+      registryDependencies: ["tooltip", "button", "kbd-tag"],
       files: ["registry/bases/newt/examples/tooltip-shortcut-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/tooltip-shortcut-demo")
@@ -3174,7 +3207,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "tooltip-below-demo",
       type: "registry:example",
-      registryDependencies: ["tooltip"],
+      registryDependencies: ["tooltip", "button"],
       files: ["registry/bases/newt/examples/tooltip-below-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/tooltip-below-demo")
@@ -3222,7 +3255,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "user-panel-demo",
       type: "registry:example",
-      registryDependencies: ["user-panel"],
+      registryDependencies: ["user-panel", "avatar", "status-indicator"],
       files: ["registry/bases/newt/examples/user-panel-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/user-panel-demo")
@@ -3234,7 +3267,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "user-profile-demo",
       type: "registry:example",
-      registryDependencies: ["user-profile"],
+      registryDependencies: [
+        "user-profile",
+        "avatar",
+        "button",
+        "role-tag",
+        "status-indicator",
+      ],
       files: ["registry/bases/newt/examples/user-profile-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/user-profile-demo")
@@ -3246,7 +3285,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "v2-container-demo",
       type: "registry:example",
-      registryDependencies: ["v2-container"],
+      registryDependencies: ["v2-container", "action-row", "button", "divider"],
       files: ["registry/bases/newt/examples/v2-container-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/v2-container-demo")
@@ -3258,7 +3297,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "voice-channel-demo",
       type: "registry:example",
-      registryDependencies: ["voice-channel"],
+      registryDependencies: ["voice-channel", "avatar"],
       files: ["registry/bases/newt/examples/voice-channel-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/voice-channel-demo")

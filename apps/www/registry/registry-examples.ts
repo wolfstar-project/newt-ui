@@ -27,7 +27,7 @@ export const examples: Registry = [
   {
     name: "accordion-custom-title-demo",
     type: "registry:example",
-    registryDependencies: ["accordion"],
+    registryDependencies: ["accordion", "badge"],
     files: [
       {
         path: "examples/accordion-custom-title-demo.tsx",
@@ -38,7 +38,7 @@ export const examples: Registry = [
   {
     name: "action-row-demo",
     type: "registry:example",
-    registryDependencies: ["action-row"],
+    registryDependencies: ["action-row", "button"],
     files: [
       {
         path: "examples/action-row-demo.tsx",
@@ -60,7 +60,7 @@ export const examples: Registry = [
   {
     name: "alert-demo",
     type: "registry:example",
-    registryDependencies: ["alert"],
+    registryDependencies: ["alert", "button"],
     files: [
       {
         path: "examples/alert-demo.tsx",
@@ -71,7 +71,7 @@ export const examples: Registry = [
   {
     name: "alert-actions-demo",
     type: "registry:example",
-    registryDependencies: ["alert"],
+    registryDependencies: ["alert", "button"],
     files: [
       {
         path: "examples/alert-actions-demo.tsx",
@@ -82,7 +82,7 @@ export const examples: Registry = [
   {
     name: "alert-dismissible-demo",
     type: "registry:example",
-    registryDependencies: ["alert"],
+    registryDependencies: ["alert", "button"],
     files: [
       {
         path: "examples/alert-dismissible-demo.tsx",
@@ -93,7 +93,7 @@ export const examples: Registry = [
   {
     name: "app-invite-demo",
     type: "registry:example",
-    registryDependencies: ["app-invite"],
+    registryDependencies: ["app-invite", "button"],
     files: [
       {
         path: "examples/app-invite-demo.tsx",
@@ -115,7 +115,7 @@ export const examples: Registry = [
   {
     name: "attachment-demo",
     type: "registry:example",
-    registryDependencies: ["attachment"],
+    registryDependencies: ["attachment", "button"],
     files: [
       {
         path: "examples/attachment-demo.tsx",
@@ -181,7 +181,7 @@ export const examples: Registry = [
   {
     name: "avatar-group-demo",
     type: "registry:example",
-    registryDependencies: ["avatar-group"],
+    registryDependencies: ["avatar-group", "avatar"],
     files: [
       {
         path: "examples/avatar-group-demo.tsx",
@@ -225,7 +225,7 @@ export const examples: Registry = [
   {
     name: "bot-command-card-demo",
     type: "registry:example",
-    registryDependencies: ["bot-command-card"],
+    registryDependencies: ["bot-command-card", "badge"],
     files: [
       {
         path: "examples/bot-command-card-demo.tsx",
@@ -335,7 +335,7 @@ export const examples: Registry = [
   {
     name: "card-actions-demo",
     type: "registry:example",
-    registryDependencies: ["card"],
+    registryDependencies: ["card", "button"],
     files: [
       {
         path: "examples/card-actions-demo.tsx",
@@ -346,7 +346,7 @@ export const examples: Registry = [
   {
     name: "card-profile-demo",
     type: "registry:example",
-    registryDependencies: ["card"],
+    registryDependencies: ["card", "avatar", "badge"],
     files: [
       {
         path: "examples/card-profile-demo.tsx",
@@ -368,7 +368,7 @@ export const examples: Registry = [
   {
     name: "channel-info-demo",
     type: "registry:example",
-    registryDependencies: ["channel-info"],
+    registryDependencies: ["channel-info", "tabs"],
     files: [
       {
         path: "examples/channel-info-demo.tsx",
@@ -379,7 +379,7 @@ export const examples: Registry = [
   {
     name: "channel-sidebar-demo",
     type: "registry:example",
-    registryDependencies: ["channel-sidebar"],
+    registryDependencies: ["channel-sidebar", "tree"],
     files: [
       {
         path: "examples/channel-sidebar-demo.tsx",
@@ -412,7 +412,13 @@ export const examples: Registry = [
   {
     name: "chat-demo",
     type: "registry:example",
-    registryDependencies: ["chat"],
+    registryDependencies: [
+      "chat",
+      "avatar",
+      "message-composer",
+      "message-group",
+      "message-list",
+    ],
     files: [
       {
         path: "examples/chat-demo.tsx",
@@ -456,7 +462,7 @@ export const examples: Registry = [
   {
     name: "checkbox-group-controlled-demo",
     type: "registry:example",
-    registryDependencies: ["checkbox-group"],
+    registryDependencies: ["checkbox-group", "button"],
     files: [
       {
         path: "examples/checkbox-group-controlled-demo.tsx",
@@ -489,7 +495,7 @@ export const examples: Registry = [
   {
     name: "color-picker-demo",
     type: "registry:example",
-    registryDependencies: ["color-picker"],
+    registryDependencies: ["color-picker", "role-tag"],
     files: [
       {
         path: "examples/color-picker-demo.tsx",
@@ -500,7 +506,7 @@ export const examples: Registry = [
   {
     name: "command-palette-demo",
     type: "registry:example",
-    registryDependencies: ["command-palette"],
+    registryDependencies: ["command-palette", "button"],
     files: [
       {
         path: "examples/command-palette-demo.tsx",
@@ -555,7 +561,12 @@ export const examples: Registry = [
   {
     name: "direction-demo",
     type: "registry:example",
-    registryDependencies: ["direction"],
+    registryDependencies: [
+      "direction",
+      "avatar",
+      "message-composer",
+      "message-group",
+    ],
     files: [
       {
         path: "examples/direction-demo.tsx",
@@ -577,7 +588,7 @@ export const examples: Registry = [
   {
     name: "drawer-demo",
     type: "registry:example",
-    registryDependencies: ["drawer"],
+    registryDependencies: ["drawer", "button"],
     files: [
       {
         path: "examples/drawer-demo.tsx",
@@ -621,7 +632,7 @@ export const examples: Registry = [
   {
     name: "dropdown-trigger-demo",
     type: "registry:example",
-    registryDependencies: ["dropdown"],
+    registryDependencies: ["dropdown", "button"],
     files: [
       {
         path: "examples/dropdown-trigger-demo.tsx",
@@ -797,7 +808,7 @@ export const examples: Registry = [
   {
     name: "invite-demo",
     type: "registry:example",
-    registryDependencies: ["invite"],
+    registryDependencies: ["invite", "button"],
     files: [
       {
         path: "examples/invite-demo.tsx",
@@ -841,7 +852,12 @@ export const examples: Registry = [
   {
     name: "member-list-demo",
     type: "registry:example",
-    registryDependencies: ["member-list"],
+    registryDependencies: [
+      "member-list",
+      "avatar",
+      "role-tag",
+      "status-indicator",
+    ],
     files: [
       {
         path: "examples/member-list-demo.tsx",
@@ -874,7 +890,13 @@ export const examples: Registry = [
   {
     name: "message-group-demo",
     type: "registry:example",
-    registryDependencies: ["message-group"],
+    registryDependencies: [
+      "message-group",
+      "avatar",
+      "reaction",
+      "reply-preview",
+      "status-indicator",
+    ],
     files: [
       {
         path: "examples/message-group-demo.tsx",
@@ -885,7 +907,7 @@ export const examples: Registry = [
   {
     name: "message-group-list-demo",
     type: "registry:example",
-    registryDependencies: ["message-group"],
+    registryDependencies: ["message-group", "avatar"],
     files: [
       {
         path: "examples/message-group-list-demo.tsx",
@@ -896,7 +918,7 @@ export const examples: Registry = [
   {
     name: "message-group-app-demo",
     type: "registry:example",
-    registryDependencies: ["message-group"],
+    registryDependencies: ["message-group", "avatar"],
     files: [
       {
         path: "examples/message-group-app-demo.tsx",
@@ -907,7 +929,7 @@ export const examples: Registry = [
   {
     name: "message-list-demo",
     type: "registry:example",
-    registryDependencies: ["message-list"],
+    registryDependencies: ["message-list", "avatar", "message-group"],
     files: [
       {
         path: "examples/message-list-demo.tsx",
@@ -918,7 +940,7 @@ export const examples: Registry = [
   {
     name: "modal-demo",
     type: "registry:example",
-    registryDependencies: ["modal"],
+    registryDependencies: ["modal", "button"],
     files: [
       {
         path: "examples/modal-demo.tsx",
@@ -929,7 +951,7 @@ export const examples: Registry = [
   {
     name: "modal-form-demo",
     type: "registry:example",
-    registryDependencies: ["modal"],
+    registryDependencies: ["modal", "button", "form-fields"],
     files: [
       {
         path: "examples/modal-form-demo.tsx",
@@ -940,7 +962,7 @@ export const examples: Registry = [
   {
     name: "modal-close-button-demo",
     type: "registry:example",
-    registryDependencies: ["modal"],
+    registryDependencies: ["modal", "button"],
     files: [
       {
         path: "examples/modal-close-button-demo.tsx",
@@ -951,7 +973,7 @@ export const examples: Registry = [
   {
     name: "modal-long-content-demo",
     type: "registry:example",
-    registryDependencies: ["modal"],
+    registryDependencies: ["modal", "button"],
     files: [
       {
         path: "examples/modal-long-content-demo.tsx",
@@ -962,7 +984,7 @@ export const examples: Registry = [
   {
     name: "notif-badge-demo",
     type: "registry:example",
-    registryDependencies: ["notif-badge"],
+    registryDependencies: ["notif-badge", "avatar"],
     files: [
       {
         path: "examples/notif-badge-demo.tsx",
@@ -973,7 +995,7 @@ export const examples: Registry = [
   {
     name: "number-input-demo",
     type: "registry:example",
-    registryDependencies: ["number-input"],
+    registryDependencies: ["number-input", "form-fields"],
     files: [
       {
         path: "examples/number-input-demo.tsx",
@@ -984,7 +1006,7 @@ export const examples: Registry = [
   {
     name: "number-input-decimal-demo",
     type: "registry:example",
-    registryDependencies: ["number-input"],
+    registryDependencies: ["number-input", "form-fields"],
     files: [
       {
         path: "examples/number-input-decimal-demo.tsx",
@@ -995,7 +1017,7 @@ export const examples: Registry = [
   {
     name: "number-input-invalid-demo",
     type: "registry:example",
-    registryDependencies: ["number-input"],
+    registryDependencies: ["number-input", "form-fields"],
     files: [
       {
         path: "examples/number-input-invalid-demo.tsx",
@@ -1006,7 +1028,7 @@ export const examples: Registry = [
   {
     name: "number-input-disabled-demo",
     type: "registry:example",
-    registryDependencies: ["number-input"],
+    registryDependencies: ["number-input", "form-fields"],
     files: [
       {
         path: "examples/number-input-disabled-demo.tsx",
@@ -1017,7 +1039,13 @@ export const examples: Registry = [
   {
     name: "onboarding-demo",
     type: "registry:example",
-    registryDependencies: ["onboarding"],
+    registryDependencies: [
+      "onboarding",
+      "alert",
+      "checkbox-group",
+      "form-fields",
+      "radio",
+    ],
     files: [
       {
         path: "examples/onboarding-demo.tsx",
@@ -1028,7 +1056,7 @@ export const examples: Registry = [
   {
     name: "pagination-demo",
     type: "registry:example",
-    registryDependencies: ["pagination"],
+    registryDependencies: ["pagination", "button"],
     files: [
       {
         path: "examples/pagination-demo.tsx",
@@ -1061,7 +1089,7 @@ export const examples: Registry = [
   {
     name: "pagination-load-more-demo",
     type: "registry:example",
-    registryDependencies: ["pagination"],
+    registryDependencies: ["pagination", "button"],
     files: [
       {
         path: "examples/pagination-load-more-demo.tsx",
@@ -1116,7 +1144,7 @@ export const examples: Registry = [
   {
     name: "pin-input-invalid-demo",
     type: "registry:example",
-    registryDependencies: ["pin-input"],
+    registryDependencies: ["pin-input", "form-fields"],
     files: [
       {
         path: "examples/pin-input-invalid-demo.tsx",
@@ -1171,7 +1199,7 @@ export const examples: Registry = [
   {
     name: "popover-demo",
     type: "registry:example",
-    registryDependencies: ["popover"],
+    registryDependencies: ["popover", "button"],
     files: [
       {
         path: "examples/popover-demo.tsx",
@@ -1215,7 +1243,7 @@ export const examples: Registry = [
   {
     name: "progress-controlled-demo",
     type: "registry:example",
-    registryDependencies: ["progress"],
+    registryDependencies: ["progress", "button"],
     files: [
       {
         path: "examples/progress-controlled-demo.tsx",
@@ -1424,7 +1452,7 @@ export const examples: Registry = [
   {
     name: "server-banner-demo",
     type: "registry:example",
-    registryDependencies: ["server-banner"],
+    registryDependencies: ["server-banner", "button"],
     files: [
       {
         path: "examples/server-banner-demo.tsx",
@@ -1446,7 +1474,7 @@ export const examples: Registry = [
   {
     name: "settings-layout-demo",
     type: "registry:example",
-    registryDependencies: ["settings-layout"],
+    registryDependencies: ["settings-layout", "alert", "button", "form-fields"],
     files: [
       {
         path: "examples/settings-layout-demo.tsx",
@@ -1490,7 +1518,7 @@ export const examples: Registry = [
   {
     name: "skeleton-card-demo",
     type: "registry:example",
-    registryDependencies: ["skeleton"],
+    registryDependencies: ["skeleton", "card"],
     files: [
       {
         path: "examples/skeleton-card-demo.tsx",
@@ -1501,7 +1529,7 @@ export const examples: Registry = [
   {
     name: "skeleton-loading-demo",
     type: "registry:example",
-    registryDependencies: ["skeleton"],
+    registryDependencies: ["skeleton", "avatar", "button"],
     files: [
       {
         path: "examples/skeleton-loading-demo.tsx",
@@ -1523,7 +1551,7 @@ export const examples: Registry = [
   {
     name: "slash-command-suggestions-demo",
     type: "registry:example",
-    registryDependencies: ["slash-command-suggestions"],
+    registryDependencies: ["slash-command-suggestions", "slash-command"],
     files: [
       {
         path: "examples/slash-command-suggestions-demo.tsx",
@@ -1600,7 +1628,7 @@ export const examples: Registry = [
   {
     name: "status-indicator-demo",
     type: "registry:example",
-    registryDependencies: ["status-indicator"],
+    registryDependencies: ["status-indicator", "avatar"],
     files: [
       {
         path: "examples/status-indicator-demo.tsx",
@@ -1611,7 +1639,7 @@ export const examples: Registry = [
   {
     name: "status-indicator-streaming-demo",
     type: "registry:example",
-    registryDependencies: ["status-indicator"],
+    registryDependencies: ["status-indicator", "avatar"],
     files: [
       {
         path: "examples/status-indicator-streaming-demo.tsx",
@@ -1622,7 +1650,7 @@ export const examples: Registry = [
   {
     name: "status-indicator-members-demo",
     type: "registry:example",
-    registryDependencies: ["status-indicator"],
+    registryDependencies: ["status-indicator", "avatar"],
     files: [
       {
         path: "examples/status-indicator-members-demo.tsx",
@@ -1633,7 +1661,7 @@ export const examples: Registry = [
   {
     name: "stepper-demo",
     type: "registry:example",
-    registryDependencies: ["stepper"],
+    registryDependencies: ["stepper", "button"],
     files: [
       {
         path: "examples/stepper-demo.tsx",
@@ -1710,7 +1738,7 @@ export const examples: Registry = [
   {
     name: "tag-input-demo",
     type: "registry:example",
-    registryDependencies: ["tag-input"],
+    registryDependencies: ["tag-input", "form-fields"],
     files: [
       {
         path: "examples/tag-input-demo.tsx",
@@ -1776,7 +1804,7 @@ export const examples: Registry = [
   {
     name: "toast-controlled-demo",
     type: "registry:example",
-    registryDependencies: ["toast"],
+    registryDependencies: ["toast", "button"],
     files: [
       {
         path: "examples/toast-controlled-demo.tsx",
@@ -1787,7 +1815,7 @@ export const examples: Registry = [
   {
     name: "toast-action-demo",
     type: "registry:example",
-    registryDependencies: ["toast"],
+    registryDependencies: ["toast", "button"],
     files: [
       {
         path: "examples/toast-action-demo.tsx",
@@ -1798,7 +1826,7 @@ export const examples: Registry = [
   {
     name: "token-field-demo",
     type: "registry:example",
-    registryDependencies: ["token-field"],
+    registryDependencies: ["token-field", "form-fields"],
     files: [
       {
         path: "examples/token-field-demo.tsx",
@@ -1831,7 +1859,7 @@ export const examples: Registry = [
   {
     name: "tooltip-shortcut-demo",
     type: "registry:example",
-    registryDependencies: ["tooltip"],
+    registryDependencies: ["tooltip", "button", "kbd-tag"],
     files: [
       {
         path: "examples/tooltip-shortcut-demo.tsx",
@@ -1842,7 +1870,7 @@ export const examples: Registry = [
   {
     name: "tooltip-below-demo",
     type: "registry:example",
-    registryDependencies: ["tooltip"],
+    registryDependencies: ["tooltip", "button"],
     files: [
       {
         path: "examples/tooltip-below-demo.tsx",
@@ -1886,7 +1914,7 @@ export const examples: Registry = [
   {
     name: "user-panel-demo",
     type: "registry:example",
-    registryDependencies: ["user-panel"],
+    registryDependencies: ["user-panel", "avatar", "status-indicator"],
     files: [
       {
         path: "examples/user-panel-demo.tsx",
@@ -1897,7 +1925,13 @@ export const examples: Registry = [
   {
     name: "user-profile-demo",
     type: "registry:example",
-    registryDependencies: ["user-profile"],
+    registryDependencies: [
+      "user-profile",
+      "avatar",
+      "button",
+      "role-tag",
+      "status-indicator",
+    ],
     files: [
       {
         path: "examples/user-profile-demo.tsx",
@@ -1908,7 +1942,7 @@ export const examples: Registry = [
   {
     name: "v2-container-demo",
     type: "registry:example",
-    registryDependencies: ["v2-container"],
+    registryDependencies: ["v2-container", "action-row", "button", "divider"],
     files: [
       {
         path: "examples/v2-container-demo.tsx",
@@ -1919,7 +1953,7 @@ export const examples: Registry = [
   {
     name: "voice-channel-demo",
     type: "registry:example",
-    registryDependencies: ["voice-channel"],
+    registryDependencies: ["voice-channel", "avatar"],
     files: [
       {
         path: "examples/voice-channel-demo.tsx",
