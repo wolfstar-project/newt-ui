@@ -74,9 +74,13 @@ const sections = [
 ---
 
 <div class="sidebar-nav">
-  <div class="sidebar-framework">
-    <FrameworkSwitcher client:load />
-  </div>
+  {
+    inReference && (
+      <div class="sidebar-framework">
+        <FrameworkSwitcher client:load />
+      </div>
+    )
+  }
   <nav class="sidebar-sections" aria-label="Documentation sections">
     {
       sections.map((section) => (
