@@ -1,0 +1,13 @@
+---
+title: "November 2026 — newtui 2.7.0"
+description: "The embed sits on a translucent surface with a hairline outline and a straight accent bar, so it stands out on any background instead of matching --newt-bg-elevated."
+type: changelog
+slug: changelog/2026-11-12-release-2
+date: 2026-11-12
+---
+
+## `newtui` 2.7.0
+
+- The embed sits on a translucent surface with a hairline outline and a straight accent bar, so it stands out on any background instead of matching `--newt-bg-elevated`. Two new tokens with light and dark values carry it: `--newt-embed-bg` and `--newt-embed-border`. `newtui init` leaves a stylesheet that already holds the tokens untouched, so an existing project adds the two variables by hand.
+
+- `add` and `view` accept `@registry/item` and install from third-party registries. A namespace resolves through `registries` in `components.json`, then through the community directory of the project's framework — shadcn/ui's for React, shadcn-vue's for Vue — so `newtui add @magicui/marquee` needs no configuration. On Tailwind v4 the first third-party install also maps shadcn's colour names onto the `--newt-*` tokens.
