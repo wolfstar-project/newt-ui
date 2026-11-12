@@ -255,9 +255,26 @@ interface MenuAction {
 function Menu({ actions }: { readonly actions: readonly MenuAction[] }) {
   const [open, setOpen] = useState(false)
   const root = useRef<HTMLDivElement>(null)
+  const trigger = useRef<HTMLButtonElement>(null)
+  const popup = useRef<HTMLDivElement>(null)
+
+  /* The items, in the order the arrow keys walk them. */
+  const items = () =>
+    Array.from(
+      popup.current?.querySelectorAll<HTMLButtonElement>("[role=menuitem]") ??
+        []
+    )
+
+  /* Closing from the keyboard hands focus back, so the reader keeps their place. */
+  const close = (restoreFocus: boolean) => {
+    setOpen(false)
+    if (restoreFocus) trigger.current?.focus()
+  }
 
   useEffect(() => {
     if (!open) return
+    /* Opening moves focus into the menu, to its first action. */
+    items()[0]?.focus()
     const onPointerDown = (event: PointerEvent) => {
       if (
         event.target instanceof Node &&
@@ -267,7 +284,7 @@ function Menu({ actions }: { readonly actions: readonly MenuAction[] }) {
       }
     }
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false)
+      if (event.key === "Escape") close(true)
     }
     document.addEventListener("pointerdown", onPointerDown)
     document.addEventListener("keydown", onKeyDown)
@@ -282,9 +299,16 @@ function Menu({ actions }: { readonly actions: readonly MenuAction[] }) {
       <button
         type="button"
         className="create-menu-trigger"
+        ref={trigger}
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen(!open)}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowDown" && !open) {
+            event.preventDefault()
+            setOpen(true)
+          }
+        }}
       >
         Menu
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -298,7 +322,28 @@ function Menu({ actions }: { readonly actions: readonly MenuAction[] }) {
         </svg>
       </button>
       {open && (
-        <div className="create-menu-popup" role="menu">
+        <div
+          className="create-menu-popup"
+          role="menu"
+          ref={popup}
+          onKeyDown={(event) => {
+            const all = items()
+            const at = all.findIndex((item) => item === document.activeElement)
+            const last = all.length - 1
+            const target = {
+              ArrowDown: at >= last ? 0 : at + 1,
+              ArrowUp: at <= 0 ? last : at - 1,
+              Home: 0,
+              End: last,
+            }[event.key]
+            if (target !== undefined) {
+              event.preventDefault()
+              all[target]?.focus()
+            } else if (event.key === "Tab") {
+              close(false)
+            }
+          }}
+        >
           {actions.map((action) => (
             <button
               key={action.label}
@@ -307,7 +352,7 @@ function Menu({ actions }: { readonly actions: readonly MenuAction[] }) {
               className="create-menu-item"
               data-separated={action.separated}
               onClick={() => {
-                setOpen(false)
+                close(true)
                 action.run()
               }}
             >

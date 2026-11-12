@@ -58,6 +58,7 @@ import {
   findTailwindEntry,
   loadsTailwind,
   renderItemCss,
+  resolveDarkSelector,
   tailwindPreamble,
   tailwindV3DarkMode,
   type TailwindMajor,
@@ -454,7 +455,11 @@ async function runInit(
 
   // preset overrides, after the tokens they override
   if (options.preset) {
-    const kind = await updatePresetCss(cssPath, options.preset)
+    const kind = await updatePresetCss(
+      cssPath,
+      options.preset,
+      resolveDarkSelector(darkSelector)
+    )
     logger.success(
       `${kind === "replaced" ? "Replaced" : "Added"} the preset block in ${relativePath(cwd, cssPath)}.`
     )

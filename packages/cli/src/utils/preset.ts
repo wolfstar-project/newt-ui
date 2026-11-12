@@ -337,23 +337,38 @@ const NEUTRAL_SURFACES = {
   Record<PresetMode, Surfaces>
 >
 
-/* `soft` is the pair `tokens.css` ships, so it too writes nothing. */
+/*
+ * `soft` is the pair `tokens.css` ships, so it too writes nothing. The alphas
+ * are tuned per surface set: a shadow that reads on a dark surface is a smudge
+ * on a light one.
+ */
 const SHADOW_SCALES = {
-  flat: { low: "none", high: "0 0 0 1px var(--newt-border)" },
+  flat: {
+    dark: { low: "none", high: "0 0 0 1px var(--newt-border)" },
+    light: { low: "none", high: "0 0 0 1px var(--newt-border)" },
+  },
   deep: {
-    low: "0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2)",
-    high: "0 16px 40px rgba(0, 0, 0, 0.45)",
+    dark: {
+      low: "0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2)",
+      high: "0 16px 40px rgba(0, 0, 0, 0.45)",
+    },
+    light: {
+      low: "0 1px 2px rgba(6, 6, 7, 0.12), 0 2px 6px rgba(6, 6, 7, 0.08)",
+      high: "0 16px 40px rgba(6, 6, 7, 0.18)",
+    },
   },
 } as const satisfies Record<
   Exclude<PresetShadow, "soft">,
-  { low: string; high: string }
+  Record<PresetMode, { low: string; high: string }>
 >
 
 function surfacesOf(preset: Preset): Record<PresetMode, Surfaces> | undefined {
   return preset.n === "slate" ? undefined : NEUTRAL_SURFACES[preset.n]
 }
 
-function shadowsOf(preset: Preset): { low: string; high: string } | undefined {
+function shadowsOf(
+  preset: Preset
+): Record<PresetMode, { low: string; high: string }> | undefined {
   return preset.s === "soft" ? undefined : SHADOW_SCALES[preset.s]
 }
 
@@ -374,13 +389,37 @@ function surfaceLines(surfaces: Surfaces): string[] {
 export const PRESET_MARKER = "/* newt/ui preset"
 export const PRESET_END_MARKER = "/* end newt/ui preset */"
 
+/** Where `init` puts the dark surface set unless `--dark-selector` says otherwise. */
+const DEFAULT_DARK_SELECTOR = ".dark"
+
+/** One rule for the dark surface set: a selector, or a media query around `:root`. */
+function darkRule(selector: string, lines: readonly string[]): string[] {
+  if (selector.startsWith("@media")) {
+    return [
+      `${selector} {`,
+      "  :root {",
+      ...lines.map((line) => `  ${line}`),
+      "  }",
+      "}",
+    ]
+  }
+  return [`${selector} {`, ...lines, "}"]
+}
+
 /**
  * The overrides as a CSS block, meant to sit after the token block rather than
  * inside it: the tokens stay the file the registry ships, and the preset is a
  * short list of declarations layered on top that a reader can delete in one
  * selection.
+ *
+ * `init` writes the light surface set to `:root` and the dark one under the
+ * project's dark selector, so the surfaces and shadows a preset restates follow
+ * the same layout: light in `:root`, dark under `darkSelector`.
  */
-export function presetToCss(preset: Preset): string {
+export function presetToCss(
+  preset: Preset,
+  darkSelector: string = DEFAULT_DARK_SELECTOR
+): string {
   const code = encodePreset(preset)
   const radius = RADIUS_SCALES[preset.r]
   const font = FONT_STACKS[preset.f]
@@ -402,24 +441,31 @@ export function presetToCss(preset: Preset): string {
     `  --newt-font-display: ${displayFont(preset)};`,
   ]
 
+  const dark: string[] = []
   if (shadows !== undefined) {
     lines.push(
       "",
-      `  --newt-shadow-elevation-low: ${shadows.low};`,
-      `  --newt-shadow-elevation-high: ${shadows.high};`
+      `  --newt-shadow-elevation-low: ${shadows.light.low};`,
+      `  --newt-shadow-elevation-high: ${shadows.light.high};`
     )
+    if (shadows.dark.low !== shadows.light.low) {
+      dark.push(`  --newt-shadow-elevation-low: ${shadows.dark.low};`)
+    }
+    if (shadows.dark.high !== shadows.light.high) {
+      dark.push(`  --newt-shadow-elevation-high: ${shadows.dark.high};`)
+    }
   }
-  if (surfaces !== undefined) lines.push("", ...surfaceLines(surfaces.dark))
+  if (surfaces !== undefined) {
+    lines.push("", ...surfaceLines(surfaces.light))
+    dark.push(...surfaceLines(surfaces.dark))
+  }
   lines.push("}")
 
-  if (surfaces !== undefined) {
+  if (dark.length > 0) {
     lines.push(
       "",
-      "/* The same neutral, for the light surface set. */",
-      ".newt-light,",
-      '[data-newt-theme="light"] {',
-      ...surfaceLines(surfaces.light),
-      "}"
+      "/* The same choices for the dark surface set. */",
+      ...darkRule(darkSelector, dark)
     )
   }
 
