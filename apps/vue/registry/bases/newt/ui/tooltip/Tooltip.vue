@@ -1,13 +1,26 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import {
+  TooltipProvider,
+  TooltipRoot,
+  useForwardPropsEmits,
+  type TooltipRootEmits,
+  type TooltipRootProps,
+} from "reka-ui"
 
-import { cn } from "@/lib/utils"
+/* Each tooltip brings its own provider, so one needs no setup. */
+const props = withDefaults(
+  defineProps<TooltipRootProps & { delayDuration?: number }>(),
+  { delayDuration: 150 }
+)
+const emits = defineEmits<TooltipRootEmits>()
 
-const props = defineProps<{ class?: HTMLAttributes["class"] }>()
+const forwarded = useForwardPropsEmits(props, emits)
 </script>
 
 <template>
-  <span :class="cn('group relative inline-flex', props.class)">
-    <slot />
-  </span>
+  <TooltipProvider :delay-duration="props.delayDuration">
+    <TooltipRoot v-bind="forwarded">
+      <slot />
+    </TooltipRoot>
+  </TooltipProvider>
 </template>

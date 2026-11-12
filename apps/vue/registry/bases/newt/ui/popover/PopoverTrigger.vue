@@ -1,27 +1,16 @@
 <script setup lang="ts">
-import { inject } from "vue"
-
-import { popoverKey } from "."
+import { PopoverTrigger, type PopoverTriggerProps } from "reka-ui"
 
 /*
- * A plain button that carries the state. It has no look of its own: pass the
- * classes of the button it should be, for example
+ * It has no look of its own. Pass `as-child` to put the state on your own
+ * button, or the classes of the button it should be, for example
  * `:class="buttonVariants({ variant: 'secondary' })"`.
  */
-const popover = inject(popoverKey)
-if (popover === undefined) {
-  throw new Error("<PopoverTrigger> must be used inside a <Popover>.")
-}
+const props = defineProps<PopoverTriggerProps>()
 </script>
 
 <template>
-  <button
-    type="button"
-    data-popover-trigger=""
-    :aria-expanded="popover.open.value"
-    :aria-controls="popover.open.value ? `${popover.id}-content` : undefined"
-    @click="popover.open.value = !popover.open.value"
-  >
+  <PopoverTrigger v-bind="props">
     <slot />
-  </button>
+  </PopoverTrigger>
 </template>

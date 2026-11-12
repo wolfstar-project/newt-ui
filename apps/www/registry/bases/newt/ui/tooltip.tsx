@@ -1,41 +1,49 @@
+"use client"
+
+import { Tooltip as TooltipPrimitive } from "radix-ui"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-const Tooltip = React.forwardRef<
-  HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement>
->(({ className, ...props }, ref) => (
-  <span
-    ref={ref}
-    className={cn("group relative inline-flex", className)}
-    {...props}
-  />
-))
-Tooltip.displayName = "Tooltip"
+/*
+ * Radix owns the behaviour: hover and focus delay, Escape to dismiss, and
+ * collision-aware placement. Only the look is newt/ui's.
+ */
+const TooltipProvider = TooltipPrimitive.Provider
 
-const TooltipTrigger = React.forwardRef<
-  HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement>
->(({ className, ...props }, ref) => (
-  <span ref={ref} className={cn("inline-flex", className)} {...props} />
-))
-TooltipTrigger.displayName = "TooltipTrigger"
+/* Each tooltip brings its own provider, so one needs no setup. */
+function Tooltip({
+  delayDuration = 150,
+  ...props
+}: React.ComponentProps<typeof TooltipPrimitive.Root> & {
+  /** Milliseconds the pointer rests on the trigger before the tooltip opens. */
+  delayDuration?: number
+}) {
+  return (
+    <TooltipPrimitive.Provider delayDuration={delayDuration}>
+      <TooltipPrimitive.Root {...props} />
+    </TooltipPrimitive.Provider>
+  )
+}
+
+const TooltipTrigger = TooltipPrimitive.Trigger
 
 const TooltipContent = React.forwardRef<
-  HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement>
->(({ className, ...props }, ref) => (
-  <span
-    ref={ref}
-    role="tooltip"
-    className={cn(
-      "pointer-events-none absolute bottom-[calc(100%+8px)] start-1/2 -translate-x-1/2 whitespace-nowrap rounded-sm bg-[#111214] px-2.5 py-1.5 text-xs font-medium text-newt-text-primary opacity-0 shadow-elevation-high transition-opacity duration-fast ease-newt group-hover:opacity-100 group-focus-within:opacity-100",
-      className
-    )}
-    {...props}
-  />
+  React.ComponentRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 8, ...props }, ref) => (
+  <TooltipPrimitive.Portal>
+    <TooltipPrimitive.Content
+      ref={ref}
+      sideOffset={sideOffset}
+      className={cn(
+        "z-50 whitespace-nowrap rounded-sm bg-[#111214] px-2.5 py-1.5 text-xs font-medium text-newt-text-primary shadow-elevation-high",
+        className
+      )}
+      {...props}
+    />
+  </TooltipPrimitive.Portal>
 ))
 TooltipContent.displayName = "TooltipContent"
 
-export { Tooltip, TooltipTrigger, TooltipContent }
+export { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent }

@@ -942,6 +942,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "registry/bases/newt/ui/popover/Popover.vue",
+        "registry/bases/newt/ui/popover/PopoverAnchor.vue",
         "registry/bases/newt/ui/popover/PopoverTrigger.vue",
         "registry/bases/newt/ui/popover/PopoverContent.vue",
         "registry/bases/newt/ui/popover/index.ts",
@@ -1269,6 +1270,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "registry/bases/newt/ui/tabs/Tabs.vue",
+        "registry/bases/newt/ui/tabs/TabsList.vue",
         "registry/bases/newt/ui/tabs/TabsTrigger.vue",
         "registry/bases/newt/ui/tabs/TabsContent.vue",
         "registry/bases/newt/ui/tabs/index.ts",

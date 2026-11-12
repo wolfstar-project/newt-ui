@@ -5,7 +5,7 @@ description: "A small panel anchored to the button that opens it, closed by Esca
 
 Use it for a few controls or a short explanation that belong to one button: notification settings for a channel, a filter, a confirmation that does not deserve a modal. For a list of actions use a [Dropdown Menu](/docs/components/dropdown), and for anything the reader must answer before going on use a [Modal](/docs/components/modal).
 
-The panel is positioned against its trigger by CSS alone, below and start-aligned unless `side` and `align` say otherwise. It does not flip when it would leave the viewport, so pick the side that has room.
+It is built on [Radix Popover](https://www.radix-ui.com/primitives/docs/components/popover) in React and [Reka UI Popover](https://reka-ui.com/docs/components/popover) in Vue. The panel opens below its trigger and start-aligned unless `side` and `align` say otherwise, and it flips when it would leave the viewport.
 
 <ComponentPreview name="popover" />
 
@@ -42,8 +42,9 @@ The panel is positioned against its trigger by CSS alone, below and start-aligne
   rows={[
     {
       name: "side",
-      type: '"bottom" | "top"',
-      description: "Which side of the trigger the panel opens on.",
+      type: '"top" | "right" | "bottom" | "left"',
+      description:
+        "Which side of the trigger the panel opens on. It flips when there is no room.",
       default: '"bottom"',
     },
     {
@@ -55,11 +56,11 @@ The panel is positioned against its trigger by CSS alone, below and start-aligne
   ]}
 />
 
-`PopoverTrigger` is a plain button that carries the state and has no look of its own. Give it the classes of the button it should be: `buttonVariants({ variant: "secondary" })` in the example.
+`PopoverTrigger` is a plain button that carries the state and has no look of its own. Give it the classes of the button it should be (`buttonVariants({ variant: "secondary" })` in the example), or use `asChild` (`as-child` in Vue) to put the state on your own button. `PopoverAnchor` places the panel against another element than the trigger.
 
 ## Accessibility
 
-The trigger carries `aria-expanded` and, while the panel is open, `aria-controls` pointing at it. The panel is a `role="dialog"` and needs a name: pass `aria-label` to `PopoverContent`, or `aria-labelledby` naming a heading inside it. It follows the trigger in the document, so `Tab` moves from the button straight into it. `Escape` closes it wherever focus is, and hands focus back to the trigger when focus was inside the popover. A press anywhere outside closes it too. Inside a drawer or a modal, `Escape` closes the popover first and the dialog on the next press.
+The trigger carries `aria-expanded` and, while the panel is open, `aria-controls` pointing at it. The panel is a `role="dialog"` and needs a name: pass `aria-label` to `PopoverContent`, or `aria-labelledby` naming a heading inside it. Focus moves into the panel when it opens and returns to the trigger when it closes. `Escape` closes it, and so does a press anywhere outside. Inside a drawer or a modal, `Escape` closes the popover first and the dialog on the next press.
 
 ## Tokens
 

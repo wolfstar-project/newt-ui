@@ -847,6 +847,7 @@
       "type": "registry:ui",
       "title": "Popover",
       "description": "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+      "dependencies": ["radix-ui"],
       "files": [
         {
           "path": "registry/bases/newt/ui/popover.tsx",
@@ -1165,6 +1166,7 @@
       "type": "registry:ui",
       "title": "Tabs",
       "description": "A pill-style tab list that switches the active tab on click.",
+      "dependencies": ["radix-ui"],
       "files": [
         {
           "path": "registry/bases/newt/ui/tabs.tsx",
@@ -1259,6 +1261,7 @@
       "type": "registry:ui",
       "title": "Tooltip",
       "description": "A small floating label that appears above an element on hover or focus.",
+      "dependencies": ["radix-ui"],
       "files": [
         {
           "path": "registry/bases/newt/ui/tooltip.tsx",

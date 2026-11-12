@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue"
-import { Tabs, TabsTrigger } from "~~/registry/bases/newt/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "~~/registry/bases/newt/ui/tabs"
 
 /*
  * The active tab lives in the parent, so anything else on the page can read it
@@ -22,9 +22,11 @@ const summary = computed(
 <template>
   <div class="flex flex-col items-start gap-3">
     <Tabs v-model="tab">
-      <TabsTrigger v-for="item in tabs" :key="item.value" :value="item.value">
-        {{ item.label }}
-      </TabsTrigger>
+      <TabsList>
+        <TabsTrigger v-for="item in tabs" :key="item.value" :value="item.value">
+          {{ item.label }}
+        </TabsTrigger>
+      </TabsList>
     </Tabs>
     <p class="text-sm text-newt-text-secondary">{{ summary }}</p>
     <button

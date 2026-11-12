@@ -835,6 +835,7 @@ export const ui: Registry = [
     title: "Popover",
     description:
       "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/popover.tsx",
@@ -1151,6 +1152,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Tabs",
     description: "A pill-style tab list that switches the active tab on click.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/tabs.tsx",
@@ -1244,6 +1246,7 @@ export const ui: Registry = [
     title: "Tooltip",
     description:
       "A small floating label that appears above an element on hover or focus.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/tooltip.tsx",

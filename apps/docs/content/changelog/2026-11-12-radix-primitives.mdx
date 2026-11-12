@@ -1,0 +1,15 @@
+---
+title: "November 2026 — Tooltip, Tabs and Popover on Radix and Reka UI"
+description: "Tooltip, Tabs and Popover now sit on Radix UI (React) and Reka UI (Vue), with the same newt/ui look and a shadcn-style API."
+type: changelog
+slug: changelog/2026-11-12-radix-primitives
+date: 2026-11-12
+---
+
+`tooltip`, `tabs` and `popover` now use a headless primitive for behaviour: [Radix UI](https://www.radix-ui.com) in React, [Reka UI](https://reka-ui.com) in Vue. newt/ui keeps the look. The parts and props follow shadcn/ui and shadcn-vue.
+
+- `tabs` gains `TabsList`. `Tabs` is now only the root, so the panels sit beside the list instead of inside it, and arrow keys, `Home` and `End` come from the primitive.
+- `tooltip` opens on hover and focus after a delay, flips when there is no room, and closes on `Escape`. Use `side` on `TooltipContent` instead of positioning utilities. Wrap the trigger with `asChild` (`as-child` in Vue) to keep your own button.
+- `popover` flips and shifts to stay in the viewport, and returns focus to the trigger on close. `PopoverContent` takes `side` and `align` from the primitive, and `PopoverAnchor` is new.
+
+`newtui add` installs `radix-ui` (React) or `reka-ui` (Vue) next to these items. Existing copies keep working until you add the item again.

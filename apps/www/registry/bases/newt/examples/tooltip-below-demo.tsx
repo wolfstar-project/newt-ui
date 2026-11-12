@@ -6,21 +6,17 @@ import {
 } from "@/registry/bases/newt/ui/tooltip"
 
 /*
- * The label sits above its trigger by default. Two utilities on the content
- * move it underneath, for a trigger that is already at the top of the window.
+ * The label opens above its trigger by default. `side="bottom"` puts it
+ * underneath, for a trigger that is already at the top of the window. Radix
+ * flips it by itself when there is no room on the chosen side.
  */
 export default function TooltipBelowDemo() {
   return (
     <Tooltip>
-      <TooltipTrigger>
-        <Button variant="secondary" aria-describedby="tooltip-below">
-          Pinned messages
-        </Button>
+      <TooltipTrigger asChild>
+        <Button variant="secondary">Pinned messages</Button>
       </TooltipTrigger>
-      <TooltipContent
-        id="tooltip-below"
-        className="bottom-auto top-[calc(100%+8px)]"
-      >
+      <TooltipContent side="bottom">
         3 messages pinned in this channel
       </TooltipContent>
     </Tooltip>

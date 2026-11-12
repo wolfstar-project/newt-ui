@@ -3,7 +3,7 @@ title: "Tabs"
 description: "A pill-style tab list that switches the active tab on click."
 ---
 
-A pill tab group. The panel is only rendered for the active tab, so a tab whose content is expensive does not cost anything until it is opened.
+A pill tab group built on [Radix Tabs](https://www.radix-ui.com/primitives/docs/components/tabs) in React and [Reka UI Tabs](https://reka-ui.com/docs/components/tabs) in Vue. The primitive owns the behaviour; newt/ui owns the look. The panel is only rendered for the active tab, so a tab whose content is expensive does not cost anything until it is opened.
 
 <ComponentPreview name="tabs" />
 
@@ -25,13 +25,13 @@ Hold the active tab yourself with `value` and `onValueChange` in React, or `v-mo
 
 ### With panels
 
-Each `TabsContent` renders only while its trigger is active. The panels read the active tab from `Tabs`, so they go inside it. `Tabs` is the tablist by default, so give it `role="none"` and wrap the triggers in a `role="tablist"` element of their own: the panels then sit beside the list of tab controls, not inside it.
+`Tabs` shares the state, `TabsList` holds the triggers, and each `TabsContent` sits beside the list, not inside it. Each `TabsContent` renders only while its trigger is active.
 
 <ComponentPreview name="tabs" variant="panels" />
 
 ### Disabled tab
 
-A trigger is a native button and takes `disabled`. The component has no disabled style of its own, so add the `disabled:` utilities that dim it.
+A trigger is a native button and takes `disabled`. The trigger dims itself and leaves the arrow-key order.
 
 <ComponentPreview name="tabs" variant="disabled" />
 
@@ -54,6 +54,25 @@ A trigger is a native button and takes `disabled`. The component has no disabled
       name: "onValueChange",
       type: "(value: string) => void",
       description: "Called with the tab that was activated.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="Tabs"
+  rows={[
+    {
+      name: "orientation",
+      type: '"horizontal" | "vertical"',
+      description: "Which arrow keys move between triggers.",
+      default: '"horizontal"',
+    },
+    {
+      name: "activationMode",
+      type: '"automatic" | "manual"',
+      description:
+        "`automatic` opens a tab when it takes focus; `manual` waits for Enter or Space.",
+      default: '"automatic"',
     },
   ]}
 />
@@ -90,7 +109,7 @@ Every part also accepts the native attributes of the element it renders, and a `
 
 ## Accessibility
 
-It implements the tabs pattern: `role="tablist"`, `aria-selected` on the triggers, `aria-controls` and `aria-labelledby` linking each pair. Only the active trigger is in the tab order; `Left` and `Right` move between triggers, `Home` and `End` jump to the ends.
+It implements the tabs pattern: `TabsList` is the `role="tablist"`, `aria-selected` on the triggers, `aria-controls` and `aria-labelledby` linking each pair. Only the active trigger is in the tab order; `Left` and `Right` move between triggers, `Home` and `End` jump to the ends.
 
 ## Tokens
 

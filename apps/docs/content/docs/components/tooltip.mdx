@@ -3,7 +3,7 @@ title: "Tooltip"
 description: "A small floating label that appears above an element on hover or focus."
 ---
 
-A hover bubble. It is a hint, never the only place information lives — a control whose meaning is only in its tooltip is a control with no accessible name.
+A hover bubble built on [Radix Tooltip](https://www.radix-ui.com/primitives/docs/components/tooltip) in React and [Reka UI Tooltip](https://reka-ui.com/docs/components/tooltip) in Vue. It is a hint, never the only place information lives — a control whose meaning is only in its tooltip is a control with no accessible name.
 
 <ComponentPreview name="tooltip" />
 
@@ -19,7 +19,7 @@ A hover bubble. It is a hint, never the only place information lives — a contr
 
 ### Icon buttons
 
-The usual place for a tooltip: a button that shows only an icon. Point the button's `aria-labelledby` at the tooltip, so the label a sighted reader sees on hover is also the name a screen reader announces.
+The usual place for a tooltip: a button that shows only an icon. Give the button an `aria-label` with the same words, so the label a sighted reader sees on hover is also the name a screen reader announces. Use `asChild` (`as-child` in Vue) on `TooltipTrigger` to put the tooltip on your own button.
 
 <ComponentPreview name="tooltip" variant="toolbar" />
 
@@ -31,7 +31,7 @@ The usual place for a tooltip: a button that shows only an icon. Point the butto
 
 ### Below the trigger
 
-The label opens above its trigger. Pass `bottom-auto top-[calc(100%+8px)]` to `TooltipContent` to open it underneath, for a trigger at the top edge of the window.
+The label opens above its trigger. Pass `side="bottom"` to `TooltipContent` to open it underneath, for a trigger at the top edge of the window. It flips by itself when there is no room.
 
 <ComponentPreview name="tooltip" variant="below" />
 
@@ -41,15 +41,40 @@ The label opens above its trigger. Pass `bottom-auto top-[calc(100%+8px)]` to `T
   of="Tooltip"
   rows={[
     {
-      name: "content",
-      type: "ReactNode",
-      description: "What the bubble says.",
+      name: "delayDuration",
+      type: "number",
+      description:
+        "Milliseconds the pointer rests on the trigger before it opens.",
+      default: "150",
     },
+    {
+      name: "open / defaultOpen / onOpenChange",
+      type: "boolean",
+      description: "Control the open state yourself. Vue uses `v-model:open`.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="TooltipContent"
+  rows={[
     {
       name: "side",
       type: '"top" | "right" | "bottom" | "left"',
       description: "Preferred side. Flips when there is no room.",
       default: '"top"',
+    },
+    {
+      name: "align",
+      type: '"start" | "center" | "end"',
+      description: "Which edge of the trigger the label lines up with.",
+      default: '"center"',
+    },
+    {
+      name: "sideOffset",
+      type: "number",
+      description: "Gap in pixels between the trigger and the label.",
+      default: "8",
     },
   ]}
 />
@@ -58,7 +83,7 @@ Every part also accepts the native attributes of the element it renders, and a `
 
 ## Accessibility
 
-The bubble is linked to its trigger with `aria-describedby`, so it is read as a description rather than as the name. It opens on focus as well as hover, and `Escape` dismisses it. Do not put a control inside a tooltip: it cannot be reached by keyboard.
+The bubble is linked to its trigger with `aria-describedby` while it is open, so it is read as a description rather than as the name. It opens on focus as well as hover, and `Escape` dismisses it. Do not put a control inside a tooltip: it cannot be reached by keyboard.
 
 ## Tokens
 

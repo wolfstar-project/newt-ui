@@ -2,7 +2,15 @@
   "name": "tabs",
   "title": "Tabs",
   "description": "A pill-style tab list that switches the active tab on click.",
-  "vueFiles": ["Tabs.vue", "TabsTrigger.vue", "TabsContent.vue", "index.ts"],
+  "dependencies": ["radix-ui"],
+  "vueDependencies": ["reka-ui"],
+  "vueFiles": [
+    "Tabs.vue",
+    "TabsList.vue",
+    "TabsTrigger.vue",
+    "TabsContent.vue",
+    "index.ts"
+  ],
   "reactDemo": "tabs-demo",
   "vueDemo": "TabsDemo",
   "examples": ["controlled", "panels", "disabled"]
