@@ -23,6 +23,19 @@ const REGISTRY_FRAMEWORK = "vue" as const
 const FLAT_STYLE = styles[0].name
 const RESERVED_NAMES = new Set(["index", "registry", "styles"])
 
+/**
+ * Dependencies on other items of this registry are written `@newtui/<name>`.
+ * A bare name is read by the shadcn CLI as a component of its default
+ * registry, so `chat-window` would fetch `ui.shadcn.com/.../channel-header`.
+ */
+const OWN_NAMESPACE = "@newtui"
+
+function qualifyDependencies(item: RegistryItem, ownNames: Set<string>) {
+  return item.registryDependencies?.map((dep) =>
+    ownNames.has(dep) ? `${OWN_NAMESPACE}/${dep}` : dep
+  )
+}
+
 async function writeItem(
   styleName: string,
   target: string,
@@ -55,6 +68,7 @@ async function buildIndex(allItems: Registry) {
 }
 
 async function buildStyles(allItems: Registry) {
+  const ownNames = new Set(allItems.map((item) => item.name))
   const clash = allItems.find((item) => RESERVED_NAMES.has(item.name))
   if (clash) {
     throw new Error(
@@ -71,7 +85,11 @@ async function buildStyles(allItems: Registry) {
           style.name,
           target,
           item.name,
-          registryItemSchema.parse({ ...item, framework: REGISTRY_FRAMEWORK })
+          registryItemSchema.parse({
+            ...item,
+            registryDependencies: qualifyDependencies(item, ownNames),
+            framework: REGISTRY_FRAMEWORK,
+          })
         )
         continue
       }
@@ -86,6 +104,7 @@ async function buildStyles(allItems: Registry) {
       )
       const payload = registryItemSchema.parse({
         ...item,
+        registryDependencies: qualifyDependencies(item, ownNames),
         framework: REGISTRY_FRAMEWORK,
         files,
       })

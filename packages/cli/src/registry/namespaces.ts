@@ -75,6 +75,13 @@ const BUILT_IN_REGISTRIES = {
 export const SHADCN_NAMESPACE = "@shadcn"
 
 /**
+ * newt/ui's own namespace. Its payloads name their dependencies `@newtui/chat`
+ * so that another CLI, which reads a bare name as a shadcn component, fetches
+ * the right item. This CLI reads it as the registry the item came from.
+ */
+export const NEWTUI_NAMESPACE = "@newtui"
+
+/**
  * `{style}` in a third-party template. newt/ui's own style name means nothing
  * to another registry, so the one both shadcn ports serve today stands in.
  */
