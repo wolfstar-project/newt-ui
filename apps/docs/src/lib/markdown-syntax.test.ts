@@ -323,6 +323,10 @@ describe("parseMarkdown", () => {
     ])
   })
 
+  it("keeps a spoiler of nothing but spaces as text", () => {
+    expect(parseInline("|| ||")).toEqual([{ type: "text", content: "|| ||" }])
+  })
+
   it("treats a heading marker without a space as text", () => {
     expect(parseMarkdown("#hashtag")).toEqual([
       { type: "paragraph", children: [{ type: "text", content: "#hashtag" }] },

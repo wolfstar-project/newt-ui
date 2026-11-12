@@ -116,9 +116,11 @@ function wrap(
   type: "strong" | "em" | "underline" | "strike" | "spoiler"
 ): InlineRule["parse"] {
   return (match, context) => {
+    const inner = group(match, 1)
     // `_ _` is kept: a run of nothing but spaces is how a message writes an
-    // empty line.
-    return { type, children: parseInline(group(match, 1), context) }
+    // empty line. An empty spoiler would be a control with nothing to reveal.
+    if (type === "spoiler" && inner.trim().length === 0) return null
+    return { type, children: parseInline(inner, context) }
   }
 }
 
