@@ -1,5 +1,25 @@
 # newtui
 
+## 2.6.0
+
+### Minor Changes
+
+- [#57](https://github.com/wolfstar-project/newt-ui/pull/57) [`3aa8e2d`](https://github.com/wolfstar-project/newt-ui/commit/3aa8e2df7ad523c34ab37b22040f98de13c8d497) - `Spoiler`, `Modal` and `CodeBlock` are now accessible, translatable and themed, so the `markdown` item can render user content without patches.
+
+  - `Spoiler` hides all of its content while closed, including links, inline code, mentions and emoji images, and makes it `inert`, so a hidden link cannot be clicked or reached with Tab. A new `label` prop sets its accessible name, and `Markdown` passes it the new `spoiler` entry of `MarkdownLabels`. The plain HTML flavour now needs `spoiler.js`, which handles the reveal by click, Enter or Space; the markup no longer carries an inline `onclick`, so a spoiler copied without the script stays hidden.
+  - `Modal` moves focus to its first control when it opens (or to the dialog itself when it has none), keeps Tab and Shift+Tab inside, and returns focus to the element that opened it when it closes. The HTML flavour's `modal.js` does the same and removes its Escape listener when the modal closes.
+  - New tokens with light and dark values: `--newt-spoiler` and `--newt-spoiler-hover` for the hidden chip, and `--newt-code-bg`, `--newt-code-keyword`, `--newt-code-string`, `--newt-code-comment` and `--newt-code-function` for the code block. They replace fixed hex values, so both parts follow a light theme and token overrides. `newtui init` leaves a stylesheet that already holds the tokens untouched, so an existing project adds the seven variables by hand; the values for both themes are on the colours page.
+
+- [#56](https://github.com/wolfstar-project/newt-ui/pull/56) [`20b5d62`](https://github.com/wolfstar-project/newt-ui/commit/20b5d6262d171a96f5d6463a58a04facfd754334) - New `app-invite` component: the app directory card a link to an app unfurls into inside a message, with a cover banner, the app's icon and name, an optional description and a full-width call to action. Available for React, Vue and HTML/CSS (`newtui add app-invite`).
+
+  The HTML `.newt-btn` no longer underlines when it is an `<a>`, matching the React and Vue buttons.
+
+### Patch Changes
+
+- [#58](https://github.com/wolfstar-project/newt-ui/pull/58) [`18b3d83`](https://github.com/wolfstar-project/newt-ui/commit/18b3d835e9469dd6cc19f1a270abee41f5bc1e32) - `markdown` lays out a message the way the client does. A list item indented under another one nests, with a circle bullet and then a square one. Blank lines stay empty lines, before and after a list as well as between paragraphs, and `_ _` is an empty line written on purpose. A heading takes the blank lines after it, and list spacing and indentation match the client.
+
+- [#60](https://github.com/wolfstar-project/newt-ui/pull/60) [`07b11aa`](https://github.com/wolfstar-project/newt-ui/commit/07b11aa9633585a20a833b26d031b6a0b6033a7e) - Typeset now covers what a CommonMark and GFM renderer emits: task lists, footnotes, aligned table columns, `mark`, definition lists, `details` and `figure`, and a blockquote no longer keeps the browser's 40px indent. It no longer installs `spoiler` — chat markdown with mentions, timestamps and spoilers is the Markdown component's job.
+
 ## 2.5.0
 
 ### Minor Changes
