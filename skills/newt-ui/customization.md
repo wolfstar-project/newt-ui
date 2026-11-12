@@ -55,8 +55,9 @@ The `@theme` block maps only `newt` names, never `--radius-*`, `--font-sans` or
 
 ## A preset is the short way to the same place
 
-`newtui apply --preset nt1.…` writes the brand hue, radius scale, font stack,
-surface mode and direction as one block of `--newt-*` overrides after the
+`newtui apply --preset nt1.…` writes the brand hue, the base colour of the
+surfaces, the radius scale, the body and heading fonts, the shadows, the
+surface mode and the direction as one block of `--newt-*` overrides after the
 tokens. It is the same override you would write by hand — the builder at
 <https://newtui.dev/create> just spares you the arithmetic on the hover and
 active steps. Editing that block afterwards is fine; it is your file.

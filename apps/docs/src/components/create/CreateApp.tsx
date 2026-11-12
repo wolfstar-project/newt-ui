@@ -33,22 +33,38 @@ const HUES = [
 ] as const
 
 const LABELS = {
-  radius: { sm: "Tight", md: "Default", lg: "Round" },
-  font: { inter: "Inter", system: "System", "mono-first": "Mono" },
+  radius: {
+    none: "Square",
+    sm: "Tight",
+    md: "Default",
+    lg: "Round",
+    xl: "Soft",
+  },
+  font: {
+    inter: "Inter",
+    system: "System",
+    serif: "Serif",
+    rounded: "Rounded",
+    "mono-first": "Mono",
+  },
   mode: { dark: "Dark", light: "Light" },
   direction: { ltr: "Left to right", rtl: "Right to left" },
 } as const
 
 /* What each choice looks like, small enough to sit at the end of a row. */
 const RADIUS_CORNERS = {
+  none: "0",
   sm: "2px",
   md: "5px",
   lg: "9px",
+  xl: "14px",
 } as const satisfies Record<PresetRadius, string>
 
 const FONT_SAMPLES = {
   inter: '"Inter", sans-serif',
   system: "system-ui, sans-serif",
+  serif: '"Iowan Old Style", Palatino, Georgia, serif',
+  rounded: 'ui-rounded, "SF Pro Rounded", Quicksand, system-ui, sans-serif',
   "mono-first": '"JetBrains Mono", ui-monospace, monospace',
 } as const satisfies Record<PresetFont, string>
 

@@ -133,3 +133,75 @@ describe("the fixture the docs copy", () => {
     expect(readFileSync(docsFixture, "utf8")).toBe(fixtureText)
   })
 })
+
+describe("the axes added after the first codes", () => {
+  it("leaves a default out of the code, so an older code encodes to itself", () => {
+    const before = encodePreset(DEFAULT_PRESET)
+    expect(atob(before.slice("nt1.".length))).not.toMatch(/"[nhs]":/)
+    expect(encodePreset(decodePreset(before))).toBe(before)
+  })
+
+  it("fills the defaults in when a code predates them", () => {
+    const decoded = decodePreset(encodePreset(DEFAULT_PRESET))
+    expect(decoded).toMatchObject({ n: "slate", h: "same", s: "soft" })
+  })
+
+  it("restates the light surfaces in :root and the dark ones under the dark selector", () => {
+    const css = presetToCss({ ...DEFAULT_PRESET, n: "stone" })
+    expect(css).toMatch(/:root \{[^}]*--newt-bg-base: #e9e6e1;/)
+    expect(css).toMatch(/\.dark \{\n  --newt-bg-base: #201e1c;/)
+    expect(css).not.toContain("data-newt-theme")
+  })
+
+  it("follows the project's dark selector", () => {
+    const css = presetToCss(
+      { ...DEFAULT_PRESET, n: "stone" },
+      { darkSelector: "@media (prefers-color-scheme: dark)" }
+    )
+    expect(css).toContain("@media (prefers-color-scheme: dark) {\n  :root {")
+    expect(css).toContain("    --newt-bg-base: #201e1c;")
+  })
+
+  it("tunes the shadows to each surface set", () => {
+    const css = presetToCss({ ...DEFAULT_PRESET, s: "deep" })
+    expect(css).toMatch(
+      /:root \{[^}]*--newt-shadow-elevation-high: 0 16px 40px rgba\(6, 6, 7, 0\.18\);/
+    )
+    expect(css).toMatch(
+      /\.dark \{\n  --newt-shadow-elevation-low: [^\n]*0\.3\)/
+    )
+  })
+
+  it("writes a shadow both sets share under both, so no selector overrides it", () => {
+    const css = presetToCss({ ...DEFAULT_PRESET, s: "flat" })
+    expect(css.match(/--newt-shadow-elevation-high/g)).toHaveLength(2)
+    expect(css).toMatch(/\.dark \{\n  --newt-shadow-elevation-low: none;/)
+  })
+
+  it("lays the HTML target out the way tokens.css is: dark in :root, light opt-in", () => {
+    const css = presetToCss({ ...DEFAULT_PRESET, t: "html", n: "stone" })
+    expect(css).toMatch(/:root \{[^}]*--newt-bg-base: #201e1c;/)
+    expect(css).toMatch(
+      /\[data-newt-theme="light"\] \{\n  --newt-bg-base: #e9e6e1;/
+    )
+    expect(css).not.toContain(".dark")
+  })
+
+  it("writes the installed layout for an html preset when asked, as init and apply do", () => {
+    const css = presetToCss(
+      { ...DEFAULT_PRESET, t: "html", n: "stone" },
+      { layout: "installed" }
+    )
+    expect(css).toMatch(/:root \{[^}]*--newt-bg-base: #e9e6e1;/)
+    expect(css).toMatch(/\.dark \{\n  --newt-bg-base: #201e1c;/)
+    expect(css).not.toContain("data-newt-theme")
+  })
+
+  it("sets the heading font apart from the body only when one is chosen", () => {
+    const same = presetToCss({ ...DEFAULT_PRESET, f: "system" })
+    const serif = presetToCss({ ...DEFAULT_PRESET, f: "system", h: "serif" })
+    expect(same).toMatch(/--newt-font-display: -apple-system/)
+    expect(serif).toMatch(/--newt-font-display: "Iowan Old Style"/)
+    expect(serif).toMatch(/--newt-font-sans: -apple-system/)
+  })
+})

@@ -14,13 +14,27 @@ import { FRAMEWORK_IDS, INSTALL_TARGETS } from "./install-targets"
 export const PRESET_VERSION = 1
 export const PRESET_PREFIX = `nt${PRESET_VERSION}.`
 
-export const PRESET_RADII = ["sm", "md", "lg"] as const
-export const PRESET_FONTS = ["inter", "system", "mono-first"] as const
+export const PRESET_RADII = ["none", "sm", "md", "lg", "xl"] as const
+export const PRESET_FONTS = [
+  "inter",
+  "system",
+  "serif",
+  "rounded",
+  "mono-first",
+] as const
+/** A heading font of its own, or `same` to follow the body. */
+export const PRESET_HEADINGS = ["same", ...PRESET_FONTS] as const
+/** The grey the surfaces are mixed from. */
+export const PRESET_NEUTRALS = ["slate", "neutral", "stone", "ink"] as const
+export const PRESET_SHADOWS = ["soft", "flat", "deep"] as const
 export const PRESET_MODES = ["dark", "light"] as const
 export const PRESET_DIRECTIONS = ["ltr", "rtl"] as const
 
 export type PresetRadius = (typeof PRESET_RADII)[number]
 export type PresetFont = (typeof PRESET_FONTS)[number]
+export type PresetHeading = (typeof PRESET_HEADINGS)[number]
+export type PresetNeutral = (typeof PRESET_NEUTRALS)[number]
+export type PresetShadow = (typeof PRESET_SHADOWS)[number]
 export type PresetMode = (typeof PRESET_MODES)[number]
 export type PresetDirection = (typeof PRESET_DIRECTIONS)[number]
 
@@ -53,9 +67,16 @@ export const presetSchema = z.object({
   f: z.enum(PRESET_FONTS),
   m: z.enum(PRESET_MODES),
   d: z.enum(PRESET_DIRECTIONS),
+  /* Later axes: defaulted, and left out of a code when they are the default. */
+  n: z.enum(PRESET_NEUTRALS).default("slate"),
+  h: z.enum(PRESET_HEADINGS).default("same"),
+  s: z.enum(PRESET_SHADOWS).default("soft"),
 })
 
 export type Preset = z.infer<typeof presetSchema>
+
+/** A preset as a code carries it: the later axes are there only when chosen. */
+type PresetPayload = z.input<typeof presetSchema>
 
 export const DEFAULT_PRESET: Preset = {
   v: PRESET_VERSION,
@@ -65,6 +86,9 @@ export const DEFAULT_PRESET: Preset = {
   f: "inter",
   m: "dark",
   d: "ltr",
+  n: "slate",
+  h: "same",
+  s: "soft",
 }
 
 function toBase64Url(json: string): string {
@@ -78,7 +102,7 @@ function fromBase64Url(code: string): string {
 /** Key order is fixed, so the same choices always produce the same code. */
 export function encodePreset(preset: Preset): string {
   const parsed = presetSchema.parse(preset)
-  const ordered = {
+  const ordered: PresetPayload = {
     v: parsed.v,
     t: parsed.t,
     b: parsed.b.toLowerCase(),
@@ -87,6 +111,10 @@ export function encodePreset(preset: Preset): string {
     m: parsed.m,
     d: parsed.d,
   }
+  /* A later axis is written only when it was chosen; see the schema. */
+  if (parsed.n !== DEFAULT_PRESET.n) ordered.n = parsed.n
+  if (parsed.h !== DEFAULT_PRESET.h) ordered.h = parsed.h
+  if (parsed.s !== DEFAULT_PRESET.s) ordered.s = parsed.s
   return `${PRESET_PREFIX}${toBase64Url(JSON.stringify(ordered))}`
 }
 
@@ -148,11 +176,14 @@ function darken(hex: string, amount: number): string {
 }
 
 const RADIUS_SCALES = {
+  none: { sm: "0px", md: "0px", lg: "0px" },
   sm: { sm: "2px", md: "4px", lg: "6px" },
   md: { sm: "4px", md: "8px", lg: "12px" },
   lg: { sm: "6px", md: "12px", lg: "18px" },
+  xl: { sm: "8px", md: "16px", lg: "24px" },
 } as const satisfies Record<PresetRadius, Record<"sm" | "md" | "lg", string>>
 
+/* Only `inter` names a webfont; the rest are stacks every system resolves. */
 const FONT_STACKS = {
   inter: {
     sans: '"Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
@@ -163,20 +194,213 @@ const FONT_STACKS = {
     display:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   },
+  serif: {
+    sans: '"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif',
+    display: '"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif',
+  },
+  rounded: {
+    sans: 'ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", Quicksand, Nunito, system-ui, sans-serif',
+    display:
+      'ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", Quicksand, Nunito, system-ui, sans-serif',
+  },
   "mono-first": {
     sans: '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace',
     display: '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace',
   },
 } as const satisfies Record<PresetFont, { sans: string; display: string }>
 
+/** The surface tokens a neutral restates, in the order the block lists them. */
+const SURFACE_TOKENS = [
+  "bg-base",
+  "bg-surface",
+  "bg-elevated",
+  "bg-floating",
+  "bg-input",
+  "bg-input-elevated",
+  "border",
+] as const
+
+type Surfaces = Record<(typeof SURFACE_TOKENS)[number], string>
+
+/*
+ * A neutral is the grey the surfaces are mixed from, for both surface sets.
+ * `slate` is the one `tokens.css` ships, so it has no entry: choosing it
+ * writes nothing.
+ */
+const NEUTRAL_SURFACES = {
+  neutral: {
+    dark: {
+      "bg-base": "#1c1c1c",
+      "bg-surface": "#262626",
+      "bg-elevated": "#2e2e2e",
+      "bg-floating": "#1c1c1c",
+      "bg-input": "#1c1c1c",
+      "bg-input-elevated": "#383838",
+      border: "#404040",
+    },
+    light: {
+      "bg-base": "#e5e5e5",
+      "bg-surface": "#f5f5f5",
+      "bg-elevated": "#ffffff",
+      "bg-floating": "#ffffff",
+      "bg-input": "#ededed",
+      "bg-input-elevated": "#ffffff",
+      border: "#d4d4d4",
+    },
+  },
+  stone: {
+    dark: {
+      "bg-base": "#201e1c",
+      "bg-surface": "#2c2927",
+      "bg-elevated": "#33302d",
+      "bg-floating": "#201e1c",
+      "bg-input": "#201e1c",
+      "bg-input-elevated": "#3b3733",
+      border: "#45403b",
+    },
+    light: {
+      "bg-base": "#e9e6e1",
+      "bg-surface": "#f6f4f0",
+      "bg-elevated": "#ffffff",
+      "bg-floating": "#ffffff",
+      "bg-input": "#efece7",
+      "bg-input-elevated": "#ffffff",
+      border: "#d9d4cc",
+    },
+  },
+  ink: {
+    dark: {
+      "bg-base": "#0b0c0e",
+      "bg-surface": "#121316",
+      "bg-elevated": "#17181c",
+      "bg-floating": "#0b0c0e",
+      "bg-input": "#0b0c0e",
+      "bg-input-elevated": "#1f2126",
+      border: "#2a2c31",
+    },
+    light: {
+      "bg-base": "#f4f4f5",
+      "bg-surface": "#fafafa",
+      "bg-elevated": "#ffffff",
+      "bg-floating": "#ffffff",
+      "bg-input": "#f4f4f5",
+      "bg-input-elevated": "#ffffff",
+      border: "#e4e4e7",
+    },
+  },
+} as const satisfies Record<
+  Exclude<PresetNeutral, "slate">,
+  Record<PresetMode, Surfaces>
+>
+
+/*
+ * `soft` is the pair `tokens.css` ships, so it too writes nothing. The alphas
+ * are tuned per surface set: a shadow that reads on a dark surface is a smudge
+ * on a light one.
+ */
+const SHADOW_SCALES = {
+  flat: {
+    dark: { low: "none", high: "0 0 0 1px var(--newt-border)" },
+    light: { low: "none", high: "0 0 0 1px var(--newt-border)" },
+  },
+  deep: {
+    dark: {
+      low: "0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2)",
+      high: "0 16px 40px rgba(0, 0, 0, 0.45)",
+    },
+    light: {
+      low: "0 1px 2px rgba(6, 6, 7, 0.12), 0 2px 6px rgba(6, 6, 7, 0.08)",
+      high: "0 16px 40px rgba(6, 6, 7, 0.18)",
+    },
+  },
+} as const satisfies Record<
+  Exclude<PresetShadow, "soft">,
+  Record<PresetMode, { low: string; high: string }>
+>
+
+function surfacesOf(preset: Preset): Record<PresetMode, Surfaces> | undefined {
+  return preset.n === "slate" ? undefined : NEUTRAL_SURFACES[preset.n]
+}
+
+function shadowsOf(
+  preset: Preset
+): Record<PresetMode, { low: string; high: string }> | undefined {
+  return preset.s === "soft" ? undefined : SHADOW_SCALES[preset.s]
+}
+
+/** The heading stack: its own font, or the body's when it is `same`. */
+function displayFont(preset: Preset): string {
+  return FONT_STACKS[preset.h === "same" ? preset.f : preset.h].display
+}
+
+function surfaceLines(surfaces: Surfaces): string[] {
+  return SURFACE_TOKENS.map((name) => `  --newt-${name}: ${surfaces[name]};`)
+}
+
 export const PRESET_MARKER = "/* newt/ui preset"
 export const PRESET_END_MARKER = "/* end newt/ui preset */"
 
-/** Byte for byte what `newtui preset css` prints, which the fixture pins. */
-export function presetToCss(preset: Preset): string {
+/** Where `init` puts the dark surface set unless `--dark-selector` says otherwise. */
+const DEFAULT_DARK_SELECTOR = ".dark"
+
+/** One rule for the dark surface set: a selector, or a media query around `:root`. */
+function darkRule(selector: string, lines: readonly string[]): string[] {
+  if (selector.startsWith("@media")) {
+    return [
+      `${selector} {`,
+      "  :root {",
+      ...lines.map((line) => `  ${line}`),
+      "  }",
+      "}",
+    ]
+  }
+  return [`${selector} {`, ...lines, "}"]
+}
+
+/** Which of the two token layouts the overrides are written for. */
+export type PresetLayout = "installed" | "tokens"
+
+export interface PresetCssOptions {
+  /** The project's dark selector (`.dark` when it has not chosen another). */
+  readonly darkSelector?: string
+  /** Defaults to `tokens` for an `html` preset and `installed` for the rest. */
+  readonly layout?: PresetLayout
+}
+
+/** Declaration groups as one block, a blank line between one group and the next. */
+function joined(groups: string[][]): string[] {
+  return groups.flatMap((group, index) =>
+    index === 0 ? group : ["", ...group]
+  )
+}
+
+/**
+ * The overrides as a CSS block, meant to sit after the token block rather than
+ * inside it: the tokens stay the file the registry ships, and the preset is a
+ * short list of declarations layered on top that a reader can delete in one
+ * selection.
+ *
+ * `init` writes the light surface set to `:root` and the dark one under the
+ * project's dark selector, so the surfaces and shadows a preset restates follow
+ * the same layout: light in `:root`, dark under `darkSelector`. The HTML/CSS
+ * distribution is laid out the other way (`tokens.css`: dark in `:root`, light
+ * under `.newt-light`), so printed CSS for an `html` preset follows that unless
+ * the caller says otherwise. `init` and `apply` always ask for the installed
+ * layout: they write after the tokens `init` installed, whatever the target.
+ */
+export function presetToCss(
+  preset: Preset,
+  options: PresetCssOptions = {}
+): string {
+  const {
+    darkSelector = DEFAULT_DARK_SELECTOR,
+    layout = preset.t === "html" ? "tokens" : "installed",
+  } = options
   const code = encodePreset(preset)
   const radius = RADIUS_SCALES[preset.r]
   const font = FONT_STACKS[preset.f]
+  const surfaces = surfacesOf(preset)
+  const shadows = shadowsOf(preset)
 
   const lines = [
     `${PRESET_MARKER} ${code} — newt/create */`,
@@ -190,9 +414,47 @@ export function presetToCss(preset: Preset): string {
     `  --newt-radius-lg: ${radius.lg};`,
     "",
     `  --newt-font-sans: ${font.sans};`,
-    `  --newt-font-display: ${font.display};`,
-    "}",
+    `  --newt-font-display: ${displayFont(preset)};`,
   ]
+
+  /*
+   * The two surface sets, each as its groups of declarations. Both are always
+   * written in full: an override that is only in `:root` loses to a rule with
+   * a more specific selector (`html.dark`) or to one on a nearer wrapper.
+   */
+  const sets = (mode: PresetMode): string[][] => [
+    ...(shadows === undefined
+      ? []
+      : [
+          [
+            `  --newt-shadow-elevation-low: ${shadows[mode].low};`,
+            `  --newt-shadow-elevation-high: ${shadows[mode].high};`,
+          ],
+        ]),
+    ...(surfaces === undefined ? [] : [surfaceLines(surfaces[mode])]),
+  ]
+  /*
+   * The HTML distribution keeps the dark set in `:root` and opts into the
+   * light one; every installed project (`init`) is the other way round.
+   */
+  const html = layout === "tokens"
+  const rootSet = joined(sets(html ? "dark" : "light"))
+  const otherSet = joined(sets(html ? "light" : "dark"))
+
+  if (rootSet.length > 0) lines.push("", ...rootSet)
+  lines.push("}")
+
+  if (otherSet.length > 0) {
+    lines.push(
+      "",
+      html
+        ? "/* The same choices for the light surface set. */"
+        : "/* The same choices for the dark surface set. */",
+      ...(html
+        ? [".newt-light,", '[data-newt-theme="light"] {', ...otherSet, "}"]
+        : darkRule(darkSelector, otherSet))
+    )
+  }
 
   if (preset.m === "light") {
     lines.push(
@@ -224,9 +486,15 @@ export interface PresetVariable {
   readonly value: string
 }
 
+/**
+ * The overrides only: an axis left at its default contributes nothing, so the
+ * caller clears what an earlier preset set and this one no longer does.
+ */
 export function presetVariables(preset: Preset): readonly PresetVariable[] {
   const radius = RADIUS_SCALES[preset.r]
   const font = FONT_STACKS[preset.f]
+  const surfaces = surfacesOf(preset)?.[preset.m]
+  const shadows = shadowsOf(preset)
   return [
     { property: "--newt-brand", value: preset.b },
     { property: "--newt-brand-hover", value: darken(preset.b, 0.15) },
@@ -235,7 +503,25 @@ export function presetVariables(preset: Preset): readonly PresetVariable[] {
     { property: "--newt-radius-md", value: radius.md },
     { property: "--newt-radius-lg", value: radius.lg },
     { property: "--newt-font-sans", value: font.sans },
-    { property: "--newt-font-display", value: font.display },
+    { property: "--newt-font-display", value: displayFont(preset) },
+    ...(shadows === undefined
+      ? []
+      : [
+          {
+            property: "--newt-shadow-elevation-low",
+            value: shadows[preset.m].low,
+          },
+          {
+            property: "--newt-shadow-elevation-high",
+            value: shadows[preset.m].high,
+          },
+        ]),
+    ...(surfaces === undefined
+      ? []
+      : SURFACE_TOKENS.map((name) => ({
+          property: `--newt-${name}`,
+          value: surfaces[name],
+        }))),
   ]
 }
 

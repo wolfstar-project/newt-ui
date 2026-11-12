@@ -12,8 +12,12 @@ export type PresetWrite = "added" | "replaced"
 const PRESET_BLOCK =
   /\/\* newt\/ui preset[\s\S]*?\/\* end newt\/ui preset \*\/\n?/
 
-export function withPreset(existing: string, preset: Preset): string {
-  const block = presetToCss(preset)
+export function withPreset(
+  existing: string,
+  preset: Preset,
+  darkSelector?: string
+): string {
+  const block = presetToCss(preset, { darkSelector, layout: "installed" })
   if (
     existing.includes(PRESET_MARKER) &&
     existing.includes(PRESET_END_MARKER)
@@ -38,10 +42,11 @@ export function presetWriteKind(existing: string): PresetWrite {
  */
 export async function updatePresetCss(
   cssPath: string,
-  preset: Preset
+  preset: Preset,
+  darkSelector?: string
 ): Promise<PresetWrite> {
   const existing = (await readFileIfExists(cssPath)) ?? ""
   const kind = presetWriteKind(existing)
-  await writeFileAt(cssPath, withPreset(existing, preset))
+  await writeFileAt(cssPath, withPreset(existing, preset, darkSelector))
   return kind
 }

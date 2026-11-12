@@ -38,8 +38,11 @@ export async function preset(options: PresetOptions): Promise<void> {
         `${highlighter.bold("template")}   ${template ?? "none — create the project with its own tool"}`
       )
       console.log(`${highlighter.bold("brand")}      ${decoded.b}`)
+      console.log(`${highlighter.bold("base")}       ${decoded.n}`)
       console.log(`${highlighter.bold("radius")}     ${decoded.r}`)
       console.log(`${highlighter.bold("font")}       ${decoded.f}`)
+      console.log(`${highlighter.bold("heading")}    ${decoded.h}`)
+      console.log(`${highlighter.bold("shadows")}    ${decoded.s}`)
       console.log(`${highlighter.bold("mode")}       ${decoded.m}`)
       console.log(`${highlighter.bold("direction")}  ${decoded.d}`)
       break

@@ -21,6 +21,17 @@ describe("withPreset", () => {
     )
   })
 
+  it("writes the layout init installed even when the preset's target is html", () => {
+    const result = withPreset(TOKENS, {
+      ...DEFAULT_PRESET,
+      t: "html",
+      n: "stone",
+    })
+    expect(result).toMatch(/:root \{[^}]*--newt-bg-base: #e9e6e1;/)
+    expect(result).toMatch(/\.dark \{\n  --newt-bg-base: #201e1c;/)
+    expect(result).not.toContain("data-newt-theme")
+  })
+
   it("replaces a block that is already there instead of stacking a second", () => {
     const once = withPreset(TOKENS, DEFAULT_PRESET)
     const twice = withPreset(once, { ...DEFAULT_PRESET, b: "#eb459e" })
