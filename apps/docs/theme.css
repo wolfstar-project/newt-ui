@@ -1710,6 +1710,17 @@
     font-weight: 600;
   }
 
+  .theme-swatch-ring {
+    box-shadow: 0 0 0 1px var(--newt-text-muted);
+  }
+
+  .picker-shadow {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 3px;
+    background: var(--newt-bg-elevated);
+  }
+
   .picker-mode {
     width: 0.85rem;
     height: 0.85rem;
@@ -1869,7 +1880,62 @@
     border: 1px solid var(--newt-border);
     border-radius: var(--newt-radius-lg);
     background: var(--newt-bg-elevated);
+    /* The tiles are raised surfaces, so the shadow choice shows on them. */
+    box-shadow: var(--newt-shadow-elevation-low);
     break-inside: avoid;
+  }
+
+  /* The heading font is a choice too; the tile names are what it sets. */
+  .create-card-head {
+    font-family: var(--newt-font-display);
+  }
+
+  .create-open-field {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    color: var(--newt-text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .create-open-field code {
+    font-family: var(--newt-font-mono);
+    font-size: 0.9em;
+  }
+
+  .create-open-field input {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--newt-border);
+    border-radius: var(--newt-radius-md);
+    background: var(--newt-bg-input);
+    color: var(--newt-text-primary);
+    font-family: var(--newt-font-mono);
+    font-size: 0.8rem;
+  }
+
+  .create-open-field input:focus-visible {
+    border-color: var(--newt-brand);
+    outline: none;
+  }
+
+  .create-open-field input[aria-invalid="true"] {
+    border-color: var(--newt-danger);
+  }
+
+  .create-open-error {
+    margin: 0.5rem 0 0;
+    color: var(--newt-danger);
+    font-size: 0.8rem;
+  }
+
+  .create-dialog-open .create-submit {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+    border: 0;
+    cursor: pointer;
   }
 
   .create-card-head {
@@ -2198,6 +2264,11 @@
       inset-block-start: 0;
       inset-inline: calc(100% + 0.75rem) auto;
       width: 15rem;
+    }
+
+    .create-menu-popup {
+      inset-block-start: 0;
+      inset-inline: calc(100% + 1.4rem) auto;
     }
 
     .create-cards {

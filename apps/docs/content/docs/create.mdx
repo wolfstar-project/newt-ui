@@ -1,6 +1,6 @@
 ---
 title: "Presets"
-description: "One code carries the five things a project actually varies, and the CLI knows how to read it."
+description: "One code carries the things a project actually varies, and the CLI knows how to read it."
 ---
 
 [newt/create](/create) is the builder. This page is what it hands you.
@@ -9,16 +9,25 @@ description: "One code carries the five things a project actually varies, and th
 
 A preset is not a theme file. It is a short list of overrides for tokens that
 already exist, which is why a project without one looks exactly like a project
-whose preset is the defaults. Five axes, plus the framework you chose them for:
+whose preset is the defaults. Eight axes, plus the framework you chose them for:
 
-| Key | Axis             | Values                                                               |
-| --- | ---------------- | -------------------------------------------------------------------- |
-| `t` | Target framework | any of the ten on [Installation](/docs/installation)                 |
-| `b` | Brand hue        | `#rrggbb` — it becomes `--newt-brand` and its hover and active steps |
-| `r` | Radius scale     | `sm`, `md`, `lg`                                                     |
-| `f` | Font stack       | `inter`, `system`, `mono-first`                                      |
-| `m` | Surfaces         | `dark`, `light`                                                      |
-| `d` | Direction        | `ltr`, `rtl`                                                         |
+| Key | Axis             | Values                                                                    |
+| --- | ---------------- | ------------------------------------------------------------------------- |
+| `t` | Target framework | any of the ten on [Installation](/docs/installation)                      |
+| `b` | Brand hue        | `#rrggbb` — it becomes `--newt-brand` and its hover and active steps      |
+| `n` | Base colour      | `slate`, `neutral`, `stone`, `ink` — the grey the surfaces are mixed from |
+| `r` | Radius scale     | `none`, `sm`, `md`, `lg`, `xl`                                            |
+| `f` | Font stack       | `inter`, `system`, `serif`, `rounded`, `mono-first`                       |
+| `h` | Heading font     | `same`, or any of the font stacks                                         |
+| `s` | Shadows          | `soft`, `flat`, `deep`                                                    |
+| `m` | Surfaces         | `dark`, `light`                                                           |
+| `d` | Direction        | `ltr`, `rtl`                                                              |
+
+`n`, `h` and `s` were added after the first codes were shared. Each has a
+default — `slate`, `same`, `soft`, which are what `tokens.css` ships — and is
+left out of a code when it is the default, so a code made before them still
+decodes to exactly what it meant. A code that uses one needs a CLI recent
+enough to know it; `npx newtui@latest` always is.
 
 The code is `nt1.` followed by that payload as base64url. The version is in the
 prefix and in the payload, so a link shared today cannot quietly decode into
@@ -73,6 +82,13 @@ deleted in one selection:
 
 /* end newt/ui preset */
 ```
+
+A base colour other than `slate` restates the seven surface tokens, once in
+that block for the dark set and once under `.newt-light,
+[data-newt-theme="light"]` for the light one, so the choice holds in both
+modes. A shadow choice other than `soft` adds the two
+`--newt-shadow-elevation-*` tokens, and a heading font sets
+`--newt-font-display` apart from `--newt-font-sans`.
 
 Light surfaces and right-to-left add a line each — `color-scheme` and
 `--newt-dir` — because the rest of those two features is an attribute on
