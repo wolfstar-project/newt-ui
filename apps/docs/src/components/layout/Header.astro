@@ -103,7 +103,11 @@ const chromeScript = `(()=>{if(window.__newtChrome)return;window.__newtChrome=tr
           />
         )
       }
-      {isActive("/docs/components") && <FrameworkSwitcher client:load />}
+      {
+        (isActive("/docs/components") || isActive("/blocks")) && (
+          <FrameworkSwitcher client:load />
+        )
+      }
       <button
         type="button"
         class="icon-button"

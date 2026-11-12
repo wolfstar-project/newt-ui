@@ -43,6 +43,8 @@ const REQUIRED = [
   "docs/design/index.html",
   "docs/trademark/index.html",
   "blocks/index.html",
+  "blocks/view/chat-window/index.html",
+  "view/chat-window/index.html",
   "create/index.html",
   "docs/create/index.html",
   "docs/forms/index.html",

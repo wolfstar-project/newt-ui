@@ -35,6 +35,8 @@ const RawMeta = z.object({
   dependencies: z.array(z.string()).default([]),
   /* sibling registry items; absent on the components that stand alone */
   registryDependencies: z.array(z.string()).default([]),
+  /* what a block is for — the filter on `/blocks`; absent on components */
+  categories: z.array(z.string()).default([]),
   vueFiles: z.array(z.string()),
   reactFiles: z.array(z.string()).optional(),
   reactDemo: z.string(),
@@ -51,6 +53,8 @@ export interface ComponentMeta {
   readonly description: string
   readonly dependencies: readonly string[]
   readonly registryDependencies: readonly string[]
+  /** What a block is for, as `/blocks` filters it. Empty on components. */
+  readonly categories: readonly string[]
   readonly vueFiles: readonly string[]
   readonly reactFiles: readonly string[]
   readonly reactDemo: string

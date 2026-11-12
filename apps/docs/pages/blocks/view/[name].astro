@@ -1,0 +1,36 @@
+---
+import BlockDemo from "../../../src/components/site/BlockDemo.astro"
+import { COMPONENTS, type ComponentMeta } from "../../../src/lib/registry"
+import SiteLayout from "../../_site/SiteLayout.astro"
+
+/*
+ * One block at its own size and nothing around it. `/blocks` shows each block
+ * in a frame the reader can narrow to a tablet or a phone, and a frame only
+ * answers "what does this do at 375px" if what is inside it is a document of
+ * its own: the block's breakpoints follow the frame's width, not the
+ * gallery's. `/view/<name>` is the same block enlarged to fill a tab.
+ */
+export function getStaticPaths() {
+  return COMPONENTS.filter((item) => item.type === "registry:block").map(
+    (block) => ({ params: { name: block.name }, props: { block } })
+  )
+}
+
+interface Props {
+  readonly block: ComponentMeta
+}
+
+const { block } = Astro.props
+---
+
+<SiteLayout
+  title={block.title}
+  description={block.description}
+  route={Astro.url.pathname}
+  noindex
+  bare
+>
+  <main class="block-view newt-root" data-block-page data-demo={block.name}>
+    <BlockDemo block={block} />
+  </main>
+</SiteLayout>

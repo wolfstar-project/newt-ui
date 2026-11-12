@@ -253,7 +253,7 @@ means in practice:
   keeps the grid, the drawer, search and the generated routes. Blume reads
   this file statically — every entry is a path string or an object literal.
 - **Pages that are not documents live in `pages/`**: the home page, `/blocks`,
-  `/create`, `/typeset` and `/typeset/preview`, each wrapped in
+  `/blocks/view/<name>`, `/view/<name>`, `/create`, `/typeset` and `/typeset/preview`, each wrapped in
   `pages/_site/SiteLayout.astro`, which renders Blume's `RootLayout` in its
   `custom` page mode with the site's `Header` and `Footer` and the resolved
   config from `blume:data` (`PageLayout` takes no layout slots, so it would
@@ -273,6 +273,14 @@ means in practice:
   `@newt-html/*` path alias in `tsconfig.json`, which Blume hands to Vite along
   with every other `paths` entry — that is also what lets the registry demos
   import `@/registry/...` unchanged from inside `.blume/`.
+- **`/blocks` frames each block.** `BlockViewer.astro` shows a block in an
+  `<iframe>` onto `/blocks/view/<name>` (`SiteLayout` with `bare`: no header,
+  no footer), so the desktop, tablet and mobile widths in its toolbar are real
+  viewports; the code view lists the files `add` writes for both frameworks.
+  The frame follows the framework and theme through the `storage` event.
+  "Open in a new tab" leads to `/view/<name>`, the same block scaled with a
+  transform until it fills the viewport. The
+  category filter reads `categories` from each block's meta file.
 - **Open Graph cards are redrawn after the build.** Blume renders one card
   per route into `dist/og/**` with a fixed layout; `scripts/render-og.mjs`
   runs straight after `blume build` and draws the site's own card over each

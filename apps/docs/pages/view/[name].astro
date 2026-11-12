@@ -1,0 +1,74 @@
+---
+import BlockDemo from "../../src/components/site/BlockDemo.astro"
+import { COMPONENTS, type ComponentMeta } from "../../src/lib/registry"
+import SiteLayout from "../_site/SiteLayout.astro"
+
+/*
+ * One block, enlarged to fill the tab: what "open in a new tab" on `/blocks`
+ * leads to. A block is a fragment — a column, a panel, a window — so at its
+ * own size it would sit small in the middle of an empty page. Here it is
+ * scaled until it meets the edge of the viewport, which is the view for
+ * judging the detail: the type, the spacing, the states.
+ *
+ * It is scaled with a transform rather than laid out wider, so the block
+ * keeps the layout it has at its own width and only its size changes. The
+ * reader's own zoom still works on top of it.
+ */
+export function getStaticPaths() {
+  return COMPONENTS.filter((item) => item.type === "registry:block").map(
+    (block) => ({ params: { name: block.name }, props: { block } })
+  )
+}
+
+interface Props {
+  readonly block: ComponentMeta
+}
+
+const { block } = Astro.props
+---
+
+<SiteLayout
+  title={block.title}
+  description={block.description}
+  route={Astro.url.pathname}
+  noindex
+  bare
+>
+  <main class="block-zoom newt-root" data-block-zoom>
+    <div class="block-zoom-stage" data-block-zoom-stage data-demo={block.name}>
+      <BlockDemo block={block} />
+    </div>
+  </main>
+</SiteLayout>
+
+<script>
+  /* The room left around the block, and how far it may be enlarged. */
+  const MARGIN = 48
+  const MAX_SCALE = 3
+
+  const frame = document.querySelector<HTMLElement>("[data-block-zoom]")
+  const stage = document.querySelector<HTMLElement>("[data-block-zoom-stage]")
+
+  if (frame && stage) {
+    /*
+     * `offsetWidth` and `offsetHeight` are the layout size, which a transform
+     * does not change, so fitting never feeds back into what it measures.
+     */
+    const fit = () => {
+      const { offsetWidth: width, offsetHeight: height } = stage
+      if (width === 0 || height === 0) return
+      const scale = Math.min(
+        (frame.clientWidth - MARGIN) / width,
+        (frame.clientHeight - MARGIN) / height,
+        MAX_SCALE
+      )
+      /* Never below its own size: a small window scrolls instead. */
+      stage.style.transform = `scale(${Math.max(scale, 1)})`
+    }
+
+    /* The demo hydrates after load and a block can grow as it is used. */
+    new ResizeObserver(fit).observe(stage)
+    window.addEventListener("resize", fit)
+    fit()
+  }
+</script>
