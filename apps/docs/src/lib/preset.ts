@@ -357,6 +357,13 @@ function darkRule(selector: string, lines: readonly string[]): string[] {
   return [`${selector} {`, ...lines, "}"]
 }
 
+/** Declaration groups as one block, a blank line between one group and the next. */
+function joined(groups: string[][]): string[] {
+  return groups.flatMap((group, index) =>
+    index === 0 ? group : ["", ...group]
+  )
+}
+
 /**
  * The overrides as a CSS block, meant to sit after the token block rather than
  * inside it: the tokens stay the file the registry ships, and the preset is a
@@ -365,7 +372,9 @@ function darkRule(selector: string, lines: readonly string[]): string[] {
  *
  * `init` writes the light surface set to `:root` and the dark one under the
  * project's dark selector, so the surfaces and shadows a preset restates follow
- * the same layout: light in `:root`, dark under `darkSelector`.
+ * the same layout: light in `:root`, dark under `darkSelector`. The HTML/CSS
+ * distribution is laid out the other way (`tokens.css`: dark in `:root`, light
+ * under `.newt-light`), so a preset whose target is `html` follows that.
  */
 export function presetToCss(
   preset: Preset,
@@ -392,31 +401,42 @@ export function presetToCss(
     `  --newt-font-display: ${displayFont(preset)};`,
   ]
 
-  const dark: string[] = []
-  if (shadows !== undefined) {
-    lines.push(
-      "",
-      `  --newt-shadow-elevation-low: ${shadows.light.low};`,
-      `  --newt-shadow-elevation-high: ${shadows.light.high};`
-    )
-    if (shadows.dark.low !== shadows.light.low) {
-      dark.push(`  --newt-shadow-elevation-low: ${shadows.dark.low};`)
-    }
-    if (shadows.dark.high !== shadows.light.high) {
-      dark.push(`  --newt-shadow-elevation-high: ${shadows.dark.high};`)
-    }
-  }
-  if (surfaces !== undefined) {
-    lines.push("", ...surfaceLines(surfaces.light))
-    dark.push(...surfaceLines(surfaces.dark))
-  }
+  /*
+   * The two surface sets, each as its groups of declarations. Both are always
+   * written in full: an override that is only in `:root` loses to a rule with
+   * a more specific selector (`html.dark`) or to one on a nearer wrapper.
+   */
+  const sets = (mode: PresetMode): string[][] => [
+    ...(shadows === undefined
+      ? []
+      : [
+          [
+            `  --newt-shadow-elevation-low: ${shadows[mode].low};`,
+            `  --newt-shadow-elevation-high: ${shadows[mode].high};`,
+          ],
+        ]),
+    ...(surfaces === undefined ? [] : [surfaceLines(surfaces[mode])]),
+  ]
+  /*
+   * The HTML distribution keeps the dark set in `:root` and opts into the
+   * light one; every installed project (`init`) is the other way round.
+   */
+  const html = preset.t === "html"
+  const rootSet = joined(sets(html ? "dark" : "light"))
+  const otherSet = joined(sets(html ? "light" : "dark"))
+
+  if (rootSet.length > 0) lines.push("", ...rootSet)
   lines.push("}")
 
-  if (dark.length > 0) {
+  if (otherSet.length > 0) {
     lines.push(
       "",
-      "/* The same choices for the dark surface set. */",
-      ...darkRule(darkSelector, dark)
+      html
+        ? "/* The same choices for the light surface set. */"
+        : "/* The same choices for the dark surface set. */",
+      ...(html
+        ? [".newt-light,", '[data-newt-theme="light"] {', ...otherSet, "}"]
+        : darkRule(darkSelector, otherSet))
     )
   }
 
