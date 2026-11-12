@@ -3,6 +3,7 @@ import type * as React from "react"
 
 import AccordionDemo from "@/registry/bases/newt/examples/accordion-demo"
 import ActionRowDemo from "@/registry/bases/newt/examples/action-row-demo"
+import AiChatDemo from "@/registry/bases/newt/examples/ai-chat-demo"
 import AlertDemo from "@/registry/bases/newt/examples/alert-demo"
 import AppInviteDemo from "@/registry/bases/newt/examples/app-invite-demo"
 import AppLauncherDemo from "@/registry/bases/newt/examples/app-launcher-demo"
@@ -104,6 +105,7 @@ import VoiceChannelDemo from "@/registry/bases/newt/examples/voice-channel-demo"
 const demoEntries: Array<[string, React.ComponentType]> = [
   ["accordion", AccordionDemo],
   ["action-row", ActionRowDemo],
+  ["ai-chat", AiChatDemo],
   ["alert", AlertDemo],
   ["app-invite", AppInviteDemo],
   ["app-launcher", AppLauncherDemo],

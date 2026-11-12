@@ -37,6 +37,27 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ai-chat",
+    {
+      name: "ai-chat",
+      type: "registry:block",
+      registryDependencies: [
+        "chat",
+        "message-list",
+        "message-group",
+        "message-composer",
+        "markdown",
+        "typing-indicator",
+        "avatar",
+        "button",
+      ],
+      files: ["registry/bases/newt/blocks/ai-chat/ai-chat.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/blocks/ai-chat/ai-chat")
+      ),
+    },
+  ],
+  [
     "alert",
     {
       name: "alert",
@@ -1146,6 +1167,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/action-row-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/action-row-demo")
+      ),
+    },
+  ],
+  [
+    "ai-chat-demo",
+    {
+      name: "ai-chat-demo",
+      type: "registry:example",
+      registryDependencies: ["ai-chat"],
+      files: ["registry/bases/newt/examples/ai-chat-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/ai-chat-demo")
       ),
     },
   ],

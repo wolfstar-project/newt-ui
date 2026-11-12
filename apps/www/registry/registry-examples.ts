@@ -25,6 +25,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ai-chat-demo",
+    type: "registry:example",
+    registryDependencies: ["ai-chat"],
+    files: [
+      {
+        path: "examples/ai-chat-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "alert-demo",
     type: "registry:example",
     registryDependencies: ["alert"],
