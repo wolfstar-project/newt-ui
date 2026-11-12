@@ -60,7 +60,7 @@ Every part also accepts the native attributes of the element it renders, and a `
 
 ## Accessibility
 
-The dialog carries `role="dialog"` and `aria-modal="true"`, traps focus while it is open, returns focus to whatever opened it, and closes on `Escape`. The content behind it is inert. Give `ModalHeader` real text: it is what a screen reader announces when the dialog opens.
+The dialog carries `role="dialog"` and `aria-modal="true"`, and closes on `Escape`. When it opens, focus moves to its first control, or to the dialog itself when it has none; a child with `autoFocus` keeps the focus it took. While it is open, Tab and Shift+Tab cycle through its controls and never reach the page behind, which the overlay also covers for the pointer. When it closes, focus goes back to the element that held it when the dialog opened. Give `ModalHeader` real text: it is what a screen reader announces when the dialog opens.
 
 ## Tokens
 

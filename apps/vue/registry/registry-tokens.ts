@@ -50,6 +50,13 @@ export const newtTokens: NewtTokenMap = {
   "newt-mention-role": "#f3b95f",
   "newt-on-accent": "#ffffff",
   "newt-overlay": "rgba(0, 0, 0, 0.6)",
+  "newt-spoiler": "#1a1a1e",
+  "newt-spoiler-hover": "#232328",
+  "newt-code-bg": "#111214",
+  "newt-code-keyword": "#569cd6",
+  "newt-code-string": "#ce9178",
+  "newt-code-comment": "#6a9955",
+  "newt-code-function": "#dcdcaa",
   "newt-font-sans":
     '"Inter", "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   "newt-font-mono":
@@ -99,6 +106,13 @@ export const newtTokensLight: NewtTokenMap = {
   "newt-danger-hover": "#a12828",
   "newt-mention-text": "#505cdc",
   "newt-mention-role": "#a06a00",
+  "newt-spoiler": "#d4d7dc",
+  "newt-spoiler-hover": "#c4c9ce",
+  "newt-code-bg": "#f8f9fa",
+  "newt-code-keyword": "#0000ff",
+  "newt-code-string": "#a31515",
+  "newt-code-comment": "#008000",
+  "newt-code-function": "#795e26",
   "newt-shadow-elevation-low":
     "0 1px 0 rgba(6,6,7,0.1), 0 1.5px 0 rgba(6,6,7,0.025), 0 2px 0 rgba(6,6,7,0.025)",
   "newt-shadow-elevation-high": "0 8px 16px rgba(6,6,7,0.16)",
@@ -133,6 +147,13 @@ const COLORS = [
   "mention-role",
   "on-accent",
   "overlay",
+  "spoiler",
+  "spoiler-hover",
+  "code-bg",
+  "code-keyword",
+  "code-string",
+  "code-comment",
+  "code-function",
 ] as const
 
 /*

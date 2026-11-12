@@ -66,6 +66,8 @@ The registry exports `CodeBlock`, `CodeToken` and `tokenizeCode`, the scanner it
 
 Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
 
+The surface is `--newt-code-bg` and the four syntax colours are `--newt-code-keyword`, `--newt-code-string`, `--newt-code-comment` and `--newt-code-function`. Each has a light and a dark value chosen to keep at least 4.5:1 contrast on that surface, so the block follows the theme; override them to retint it.
+
 ## Tokens
 
 <TokensNote name="code-block" />

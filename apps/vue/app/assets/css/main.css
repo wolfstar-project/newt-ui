@@ -57,6 +57,13 @@
   --color-newt-mention-role: var(--newt-mention-role);
   --color-newt-on-accent: var(--newt-on-accent);
   --color-newt-overlay: var(--newt-overlay);
+  --color-newt-spoiler: var(--newt-spoiler);
+  --color-newt-spoiler-hover: var(--newt-spoiler-hover);
+  --color-newt-code-bg: var(--newt-code-bg);
+  --color-newt-code-keyword: var(--newt-code-keyword);
+  --color-newt-code-string: var(--newt-code-string);
+  --color-newt-code-comment: var(--newt-code-comment);
+  --color-newt-code-function: var(--newt-code-function);
 
   /* Type */
   --font-sans: var(--newt-font-sans);
@@ -131,6 +138,17 @@
     --newt-mention-role: #f3b95f;
     --newt-on-accent: #ffffff;
     --newt-overlay: rgba(0, 0, 0, 0.6);
+
+    /* Spoiler (hidden state) */
+    --newt-spoiler: #1a1a1e;
+    --newt-spoiler-hover: #232328;
+
+    /* Code block surface and syntax */
+    --newt-code-bg: #111214;
+    --newt-code-keyword: #569cd6;
+    --newt-code-string: #ce9178;
+    --newt-code-comment: #6a9955;
+    --newt-code-function: #dcdcaa;
 
     /* Type */
     --newt-font-sans:
@@ -207,6 +225,17 @@
     /* Accents */
     --newt-mention-text: #505cdc;
     --newt-mention-role: #a06a00;
+
+    /* Spoiler (hidden state) */
+    --newt-spoiler: #d4d7dc;
+    --newt-spoiler-hover: #c4c9ce;
+
+    /* Code block surface and syntax */
+    --newt-code-bg: #f8f9fa;
+    --newt-code-keyword: #0000ff;
+    --newt-code-string: #a31515;
+    --newt-code-comment: #008000;
+    --newt-code-function: #795e26;
 
     /* Shadows */
     --newt-shadow-elevation-low:

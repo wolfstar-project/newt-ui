@@ -1,15 +1,20 @@
 /* newt-ui · Spoiler */
 
 .newt-spoiler {
-  background: #1a1a1e;
-  color: transparent;
+  background: var(--newt-spoiler);
   border-radius: var(--newt-radius-sm);
   padding: 0 4px;
   cursor: pointer;
-  transition:
-    background var(--newt-duration-fast) var(--newt-ease),
-    color 0s;
+  transition: background var(--newt-duration-fast) var(--newt-ease);
   user-select: none;
+}
+/*
+ * Hidden, the content is invisible rather than painted in the background
+ * colour: a link, an image or a child with its own colour would otherwise show
+ * through. It keeps its box, so the chip keeps the size of what it hides.
+ */
+.newt-spoiler__content {
+  visibility: hidden;
 }
 .newt-spoiler--revealed {
   background: var(--newt-bg-active);
@@ -17,6 +22,9 @@
   user-select: text;
   cursor: text;
 }
+.newt-spoiler--revealed .newt-spoiler__content {
+  visibility: visible;
+}
 .newt-spoiler:not(.newt-spoiler--revealed):hover {
-  background: #232328;
+  background: var(--newt-spoiler-hover);
 }

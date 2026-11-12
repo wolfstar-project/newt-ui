@@ -1,8 +1,16 @@
+<!--
+  `aria-label` names the hidden spoiler; translate it with the page. The inner
+  span is `inert` while hidden, so a link inside cannot be clicked or tabbed
+  to. spoiler.js reveals it on a click, Enter or Space.
+-->
 <span
   class="newt-spoiler"
+  data-newt-spoiler
   tabindex="0"
   role="button"
   aria-label="Spoiler, click to reveal"
-  onclick="this.classList.toggle('newt-spoiler--revealed')"
-  >hidden text</span
+  aria-expanded="false"
+  ><span class="newt-spoiler__content" inert
+    >hidden text with <a href="#">a link</a></span
+  ></span
 >

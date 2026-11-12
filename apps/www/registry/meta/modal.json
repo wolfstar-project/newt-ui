@@ -9,6 +9,7 @@
     "ModalBody.vue",
     "ModalFooter.vue",
     "ModalClose.vue",
+    "focus.ts",
     "index.ts"
   ],
   "reactDemo": "modal-demo",

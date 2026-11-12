@@ -39,7 +39,10 @@ function emojiSrc(node: MarkdownInlineNode): string | undefined {
     <s v-else-if="node.type === 'strike'"
       ><MarkdownInline :nodes="node.children"
     /></s>
-    <Spoiler v-else-if="node.type === 'spoiler'">
+    <Spoiler
+      v-else-if="node.type === 'spoiler'"
+      :label="context?.labels.spoiler"
+    >
       <MarkdownInline :nodes="node.children" />
     </Spoiler>
     <InlineCode v-else-if="node.type === 'code'">{{ node.content }}</InlineCode>

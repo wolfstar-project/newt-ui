@@ -1537,6 +1537,10 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/bases/newt/ui/modal/focus.ts",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/bases/newt/ui/modal/index.ts",
           "type": "registry:ui"
         }
@@ -2155,7 +2159,7 @@
       "name": "spoiler",
       "type": "registry:ui",
       "title": "Spoiler",
-      "description": "Inline text hidden behind a dark block until the reader clicks to reveal it.",
+      "description": "Inline text hidden behind a solid block until the reader clicks to reveal it.",
       "files": [
         {
           "path": "registry/bases/newt/ui/spoiler/Spoiler.vue",

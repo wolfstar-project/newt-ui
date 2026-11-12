@@ -1525,6 +1525,10 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
+        path: "ui/modal/focus.ts",
+        type: "registry:ui",
+      },
+      {
         path: "ui/modal/index.ts",
         type: "registry:ui",
       },
@@ -2142,7 +2146,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Spoiler",
     description:
-      "Inline text hidden behind a dark block until the reader clicks to reveal it.",
+      "Inline text hidden behind a solid block until the reader clicks to reveal it.",
     files: [
       {
         path: "ui/spoiler/Spoiler.vue",

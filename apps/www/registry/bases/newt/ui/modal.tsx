@@ -19,6 +19,60 @@ function useModalContext() {
   return ctx
 }
 
+/* ---------------------------------------------------------------------------
+ * Focus
+ *
+ * A modal dialog owns the keyboard while it is open: focus moves into it,
+ * Tab and Shift+Tab cycle through its controls without reaching the page
+ * behind, and closing hands focus back to whatever held it before.
+ * ------------------------------------------------------------------------ */
+
+const FOCUSABLE = [
+  "a[href]",
+  "area[href]",
+  "button:not([disabled])",
+  "input:not([disabled]):not([type='hidden'])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  "iframe",
+  "audio[controls]",
+  "video[controls]",
+  "[contenteditable]:not([contenteditable='false'])",
+  "[tabindex]:not([tabindex='-1'])",
+].join(",")
+
+/** The controls Tab can reach inside `container`, in tab order. */
+function tabbablesIn(container: HTMLElement): HTMLElement[] {
+  return [...container.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
+    (element) => {
+      if (element.tabIndex < 0 || element.closest("[inert]")) return false
+      const style = getComputedStyle(element)
+      return style.visibility !== "hidden" && style.display !== "none"
+    }
+  )
+}
+
+/** Keeps a Tab press inside `container`, wrapping at either end. */
+function containTab(event: KeyboardEvent, container: HTMLElement) {
+  const tabbables = tabbablesIn(container)
+  const first = tabbables[0]
+  const last = tabbables[tabbables.length - 1]
+  const active = document.activeElement
+  if (first === undefined || last === undefined) {
+    event.preventDefault()
+    container.focus()
+    return
+  }
+  const inside = active instanceof Node && container.contains(active)
+  if (event.shiftKey && (!inside || active === first || active === container)) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && (!inside || active === last)) {
+    event.preventDefault()
+    first.focus()
+  }
+}
+
 export interface ModalProps extends React.ComponentProps<"div"> {
   /** Whether the modal is shown. */
   open?: boolean
@@ -26,19 +80,62 @@ export interface ModalProps extends React.ComponentProps<"div"> {
   onOpenChange?: (open: boolean) => void
 }
 
+/**
+ * A modal dialog. While open it takes focus (its first control, or itself
+ * when it has none), keeps Tab and Shift+Tab inside, and on close returns
+ * focus to the element that held it when it opened.
+ */
 const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
   ({ className, open = false, onOpenChange, children, ...props }, ref) => {
     const titleId = React.useId()
+    const dialog = React.useRef<HTMLDivElement | null>(null)
+    React.useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
+      ref,
+      () => dialog.current
+    )
     const close = React.useCallback(() => onOpenChange?.(false), [onOpenChange])
 
     React.useEffect(() => {
       if (!open) return
       const onKeyDown = (e: KeyboardEvent) => {
         if (e.key === "Escape") close()
+        else if (e.key === "Tab" && dialog.current) {
+          containTab(e, dialog.current)
+        }
       }
       document.addEventListener("keydown", onKeyDown)
       return () => document.removeEventListener("keydown", onKeyDown)
     }, [open, close])
+
+    /*
+     * The element that held focus when the modal opened, read during the
+     * render that opens it: by the time an effect runs, a child with
+     * `autoFocus` has already taken focus and the opener would be lost. This
+     * branch only runs when `open` changes, which a server render never sees.
+     */
+    const [opener, setOpener] = React.useState<HTMLElement | null>(null)
+    const [wasOpen, setWasOpen] = React.useState(open)
+    if (open !== wasOpen) {
+      setWasOpen(open)
+      const active = open ? document.activeElement : null
+      setOpener(active instanceof HTMLElement ? active : null)
+    }
+
+    React.useEffect(() => {
+      const element = dialog.current
+      if (!open || !element) return
+      const active = document.activeElement
+      const inside = active instanceof Node && element.contains(active)
+      /* Mounted already open, there was no opening render to read; the
+       * element holding focus now is the best guess. */
+      const returnTo =
+        opener ?? (active instanceof HTMLElement && !inside ? active : null)
+      /* A child that focused itself keeps focus. */
+      if (!inside) (tabbablesIn(element)[0] ?? element).focus()
+      return () => {
+        if (returnTo?.isConnected) returnTo.focus()
+      }
+    }, [open, opener])
 
     if (!open) return null
 
@@ -52,12 +149,13 @@ const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
           }}
         >
           <div
-            ref={ref}
+            ref={dialog}
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
+            tabIndex={-1}
             className={cn(
-              "w-[440px] max-w-[90vw] rounded-lg bg-newt-bg-elevated shadow-elevation-high",
+              "w-[440px] max-w-[90vw] rounded-lg bg-newt-bg-elevated shadow-elevation-high outline-none",
               className
             )}
             {...props}

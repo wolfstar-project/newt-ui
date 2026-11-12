@@ -102,7 +102,7 @@ parseMarkdown("**hi** <@1001>")
       name: "labels",
       type: "Partial<MarkdownLabels>",
       description:
-        "Translations for the words the renderer writes itself: the unknown-mention labels and the link warning.",
+        "Translations for the words the renderer writes itself: the unknown-mention labels, the link warning and the accessible name of a hidden spoiler (`spoiler`).",
     },
   ]}
 />
@@ -116,8 +116,10 @@ Headings start two levels down by default, so a `#` inside a message is an
 `<h3>` under the page's own headings; change `headingOffset` to fit your
 outline. Read-only mentions are text rather than buttons, so a feed of
 messages does not add a tab stop per mention. A masked link opens a dialog
-that shows the full address before leaving the page, and the dialog closes on
-Escape. Translate every label through `labels` when the page is not in
+that shows the full address before leaving the page. The dialog takes focus
+when it opens, keeps Tab inside it, closes on Escape and hands focus back to
+the link. A hidden spoiler is announced by its `spoiler` label rather than by
+what it hides. Translate every label through `labels` when the page is not in
 English.
 
 ## Tokens

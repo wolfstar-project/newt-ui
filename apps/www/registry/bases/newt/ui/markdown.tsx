@@ -49,6 +49,8 @@ export interface MarkdownLabels {
   linkWarningBody: string
   linkWarningCancel: string
   linkWarningConfirm: string
+  /** Accessible name of a hidden spoiler, read in place of its content. */
+  spoiler: string
 }
 
 export const defaultMarkdownLabels: MarkdownLabels = {
@@ -59,6 +61,7 @@ export const defaultMarkdownLabels: MarkdownLabels = {
   linkWarningBody: "This link's text does not show where it goes. It opens:",
   linkWarningCancel: "Go back",
   linkWarningConfirm: "Visit site",
+  spoiler: "Spoiler, click to reveal",
 }
 
 export interface MarkdownProps extends Omit<
@@ -174,7 +177,9 @@ function renderInline(
         return <s key={key}>{renderInline(node.children, context)}</s>
       case "spoiler":
         return (
-          <Spoiler key={key}>{renderInline(node.children, context)}</Spoiler>
+          <Spoiler key={key} label={context.labels.spoiler}>
+            {renderInline(node.children, context)}
+          </Spoiler>
         )
       case "code":
         return <InlineCode key={key}>{node.content}</InlineCode>

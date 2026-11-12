@@ -1,7 +1,7 @@
 /* newt-ui · Code Block */
 
 .newt-code {
-  background: #111214;
+  background: var(--newt-code-bg);
   border: 1px solid var(--newt-border);
   border-radius: var(--newt-radius-md);
   font-family: var(--newt-font-mono);
@@ -12,14 +12,14 @@
   line-height: 1.6;
 }
 .newt-code .tok-key {
-  color: #569cd6;
+  color: var(--newt-code-keyword);
 }
 .newt-code .tok-str {
-  color: #ce9178;
+  color: var(--newt-code-string);
 }
 .newt-code .tok-com {
-  color: #6a9955;
+  color: var(--newt-code-comment);
 }
 .newt-code .tok-fn {
-  color: #dcdcaa;
+  color: var(--newt-code-function);
 }

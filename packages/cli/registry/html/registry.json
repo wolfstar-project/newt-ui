@@ -138,7 +138,8 @@
       "name": "spoiler",
       "title": "Spoiler",
       "rootClass": "newt-spoiler",
-      "files": ["spoiler.css", "spoiler.html"]
+      "files": ["spoiler.css", "spoiler.html"],
+      "js": "spoiler.js"
     },
     {
       "name": "voice-channel",

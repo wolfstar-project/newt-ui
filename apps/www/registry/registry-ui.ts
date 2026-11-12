@@ -1046,7 +1046,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Spoiler",
     description:
-      "Inline text hidden behind a dark block until the reader clicks to reveal it.",
+      "Inline text hidden behind a solid block until the reader clicks to reveal it.",
     files: [
       {
         path: "ui/spoiler.tsx",

@@ -34,7 +34,9 @@ afterwards goes.
 ```
 
 `add` copies a `.css` and an `.html` file per component, plus a `.js` file for
-the three that need behaviour (tabs, toast, modal). It follows the same
+each one that needs behaviour, such as tabs, toast, modal and spoiler. Load
+that script after the markup: without it the component renders but does not
+respond, and a spoiler stays hidden. It follows the same
 dependency links the framework registries do, so asking for one component brings
 what it is built on.
 

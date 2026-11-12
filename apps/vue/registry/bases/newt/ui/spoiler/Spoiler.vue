@@ -11,8 +11,17 @@ const props = withDefaults(
     revealed?: boolean
     /** Initial revealed state when uncontrolled. */
     defaultRevealed?: boolean
+    /**
+     * Accessible name while hidden, read in place of the content it hides.
+     * Defaults to `"Spoiler, click to reveal"`; pass a translated string.
+     */
+    label?: string
   }>(),
-  { revealed: undefined, defaultRevealed: false }
+  {
+    revealed: undefined,
+    defaultRevealed: false,
+    label: "Spoiler, click to reveal",
+  }
 )
 
 const emit = defineEmits<{ (e: "update:revealed", value: boolean): void }>()
@@ -47,7 +56,7 @@ function onKeydown(event: KeyboardEvent) {
   <span
     :role="isRevealed ? undefined : 'button'"
     :tabindex="isRevealed ? undefined : 0"
-    :aria-label="isRevealed ? undefined : 'Spoiler, click to reveal'"
+    :aria-label="isRevealed ? undefined : props.label"
     :aria-expanded="isRevealed"
     :data-state="isRevealed ? 'revealed' : 'hidden'"
     :class="
@@ -55,13 +64,21 @@ function onKeydown(event: KeyboardEvent) {
         'rounded-sm px-1 transition-[background-color] duration-fast ease-newt',
         isRevealed
           ? 'cursor-text select-text bg-newt-bg-active text-newt-text-primary'
-          : 'cursor-pointer select-none bg-[#1a1a1e] text-transparent hover:bg-[#232328]',
+          : 'cursor-pointer select-none bg-newt-spoiler hover:bg-newt-spoiler-hover',
         props.class
       )
     "
     @click="toggle"
     @keydown="onKeydown"
   >
-    <slot />
+    <!--
+      Hidden, the content is invisible and inert rather than painted in the
+      background colour: a link, an image or a child with its own colour would
+      otherwise show through, and a link could still be clicked or tabbed to.
+      Both keep its box, so the chip keeps the size of what it hides.
+    -->
+    <span :inert="!isRevealed" :class="isRevealed ? undefined : 'invisible'"
+      ><slot
+    /></span>
   </span>
 </template>
