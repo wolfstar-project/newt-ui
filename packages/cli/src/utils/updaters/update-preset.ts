@@ -17,7 +17,7 @@ export function withPreset(
   preset: Preset,
   darkSelector?: string
 ): string {
-  const block = presetToCss(preset, darkSelector)
+  const block = presetToCss(preset, { darkSelector, layout: "installed" })
   if (
     existing.includes(PRESET_MARKER) &&
     existing.includes(PRESET_END_MARKER)
