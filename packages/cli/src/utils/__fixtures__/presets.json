@@ -126,6 +126,140 @@
         "d": "ltr"
       },
       "css": "/* newt/ui preset nt1.eyJ2IjoxLCJ0IjoibGFyYXZlbCIsImIiOiIjZjBiMjMyIiwiciI6InNtIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIn0 — newt/create */\n:root {\n  --newt-brand: #f0b232;\n  --newt-brand-hover: #cc972b;\n  --newt-brand-active: #a87d23;\n\n  --newt-radius-sm: 2px;\n  --newt-radius-md: 4px;\n  --newt-radius-lg: 6px;\n\n  --newt-font-sans: \"Inter\", \"gg sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\n  --newt-font-display: \"Inter\", sans-serif;\n}\n\n/* end newt/ui preset */\n"
+    },
+    {
+      "name": "radius-none",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im5vbmUiLCJmIjoiaW50ZXIiLCJtIjoiZGFyayIsImQiOiJsdHIifQ",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "none",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr"
+      },
+      "css": "/* newt/ui preset nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im5vbmUiLCJmIjoiaW50ZXIiLCJtIjoiZGFyayIsImQiOiJsdHIifQ — newt/create */\n:root {\n  --newt-brand: #5865f2;\n  --newt-brand-hover: #4b56ce;\n  --newt-brand-active: #3e47a9;\n\n  --newt-radius-sm: 0px;\n  --newt-radius-md: 0px;\n  --newt-radius-lg: 0px;\n\n  --newt-font-sans: \"Inter\", \"gg sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\n  --newt-font-display: \"Inter\", sans-serif;\n}\n\n/* end newt/ui preset */\n"
+    },
+    {
+      "name": "radius-xl",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6InhsIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIn0",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "xl",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr"
+      },
+      "css": "/* newt/ui preset nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6InhsIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIn0 — newt/create */\n:root {\n  --newt-brand: #5865f2;\n  --newt-brand-hover: #4b56ce;\n  --newt-brand-active: #3e47a9;\n\n  --newt-radius-sm: 8px;\n  --newt-radius-md: 16px;\n  --newt-radius-lg: 24px;\n\n  --newt-font-sans: \"Inter\", \"gg sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\n  --newt-font-display: \"Inter\", sans-serif;\n}\n\n/* end newt/ui preset */\n"
+    },
+    {
+      "name": "font-rounded",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6InJvdW5kZWQiLCJtIjoiZGFyayIsImQiOiJsdHIifQ",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "rounded",
+        "m": "dark",
+        "d": "ltr"
+      },
+      "css": "/* newt/ui preset nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6InJvdW5kZWQiLCJtIjoiZGFyayIsImQiOiJsdHIifQ — newt/create */\n:root {\n  --newt-brand: #5865f2;\n  --newt-brand-hover: #4b56ce;\n  --newt-brand-active: #3e47a9;\n\n  --newt-radius-sm: 4px;\n  --newt-radius-md: 8px;\n  --newt-radius-lg: 12px;\n\n  --newt-font-sans: ui-rounded, \"SF Pro Rounded\", \"Hiragino Maru Gothic ProN\", Quicksand, Nunito, system-ui, sans-serif;\n  --newt-font-display: ui-rounded, \"SF Pro Rounded\", \"Hiragino Maru Gothic ProN\", Quicksand, Nunito, system-ui, sans-serif;\n}\n\n/* end newt/ui preset */\n"
+    },
+    {
+      "name": "heading-serif",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIiwiaCI6InNlcmlmIn0",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr",
+        "h": "serif"
+      },
+      "css": "/* newt/ui preset nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIiwiaCI6InNlcmlmIn0 — newt/create */\n:root {\n  --newt-brand: #5865f2;\n  --newt-brand-hover: #4b56ce;\n  --newt-brand-active: #3e47a9;\n\n  --newt-radius-sm: 4px;\n  --newt-radius-md: 8px;\n  --newt-radius-lg: 12px;\n\n  --newt-font-sans: \"Inter\", \"gg sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\n  --newt-font-display: \"Iowan Old Style\", \"Palatino Linotype\", Palatino, Georgia, serif;\n}\n\n/* end newt/ui preset */\n"
+    },
+    {
+      "name": "neutral-stone",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIiwibiI6InN0b25lIn0",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr",
+        "n": "stone"
+      },
+      "css": "/* newt/ui preset nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIiwibiI6InN0b25lIn0 — newt/create */\n:root {\n  --newt-brand: #5865f2;\n  --newt-brand-hover: #4b56ce;\n  --newt-brand-active: #3e47a9;\n\n  --newt-radius-sm: 4px;\n  --newt-radius-md: 8px;\n  --newt-radius-lg: 12px;\n\n  --newt-font-sans: \"Inter\", \"gg sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\n  --newt-font-display: \"Inter\", sans-serif;\n\n  --newt-bg-base: #201e1c;\n  --newt-bg-surface: #2c2927;\n  --newt-bg-elevated: #33302d;\n  --newt-bg-floating: #201e1c;\n  --newt-bg-input: #201e1c;\n  --newt-bg-input-elevated: #3b3733;\n  --newt-border: #45403b;\n}\n\n/* The same neutral, for the light surface set. */\n.newt-light,\n[data-newt-theme=\"light\"] {\n  --newt-bg-base: #e9e6e1;\n  --newt-bg-surface: #f6f4f0;\n  --newt-bg-elevated: #ffffff;\n  --newt-bg-floating: #ffffff;\n  --newt-bg-input: #efece7;\n  --newt-bg-input-elevated: #ffffff;\n  --newt-border: #d9d4cc;\n}\n\n/* end newt/ui preset */\n"
+    },
+    {
+      "name": "neutral-ink-light",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImxpZ2h0IiwiZCI6Imx0ciIsIm4iOiJpbmsifQ",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "inter",
+        "m": "light",
+        "d": "ltr",
+        "n": "ink"
+      },
+      "css": "/* newt/ui preset nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImxpZ2h0IiwiZCI6Imx0ciIsIm4iOiJpbmsifQ — newt/create */\n:root {\n  --newt-brand: #5865f2;\n  --newt-brand-hover: #4b56ce;\n  --newt-brand-active: #3e47a9;\n\n  --newt-radius-sm: 4px;\n  --newt-radius-md: 8px;\n  --newt-radius-lg: 12px;\n\n  --newt-font-sans: \"Inter\", \"gg sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\n  --newt-font-display: \"Inter\", sans-serif;\n\n  --newt-bg-base: #0b0c0e;\n  --newt-bg-surface: #121316;\n  --newt-bg-elevated: #17181c;\n  --newt-bg-floating: #0b0c0e;\n  --newt-bg-input: #0b0c0e;\n  --newt-bg-input-elevated: #1f2126;\n  --newt-border: #2a2c31;\n}\n\n/* The same neutral, for the light surface set. */\n.newt-light,\n[data-newt-theme=\"light\"] {\n  --newt-bg-base: #f4f4f5;\n  --newt-bg-surface: #fafafa;\n  --newt-bg-elevated: #ffffff;\n  --newt-bg-floating: #ffffff;\n  --newt-bg-input: #f4f4f5;\n  --newt-bg-input-elevated: #ffffff;\n  --newt-border: #e4e4e7;\n}\n\n/* Light is the default surface set: put data-newt-theme=\"light\" on <html>. */\n:root {\n  color-scheme: light;\n}\n\n/* end newt/ui preset */\n"
+    },
+    {
+      "name": "shadows-flat",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIiwicyI6ImZsYXQifQ",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr",
+        "s": "flat"
+      },
+      "css": "/* newt/ui preset nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIiwicyI6ImZsYXQifQ — newt/create */\n:root {\n  --newt-brand: #5865f2;\n  --newt-brand-hover: #4b56ce;\n  --newt-brand-active: #3e47a9;\n\n  --newt-radius-sm: 4px;\n  --newt-radius-md: 8px;\n  --newt-radius-lg: 12px;\n\n  --newt-font-sans: \"Inter\", \"gg sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\n  --newt-font-display: \"Inter\", sans-serif;\n\n  --newt-shadow-elevation-low: none;\n  --newt-shadow-elevation-high: 0 0 0 1px var(--newt-border);\n}\n\n/* end newt/ui preset */\n"
+    },
+    {
+      "name": "shadows-deep",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIiwicyI6ImRlZXAifQ",
+      "preset": {
+        "v": 1,
+        "t": "next",
+        "b": "#5865f2",
+        "r": "md",
+        "f": "inter",
+        "m": "dark",
+        "d": "ltr",
+        "s": "deep"
+      },
+      "css": "/* newt/ui preset nt1.eyJ2IjoxLCJ0IjoibmV4dCIsImIiOiIjNTg2NWYyIiwiciI6Im1kIiwiZiI6ImludGVyIiwibSI6ImRhcmsiLCJkIjoibHRyIiwicyI6ImRlZXAifQ — newt/create */\n:root {\n  --newt-brand: #5865f2;\n  --newt-brand-hover: #4b56ce;\n  --newt-brand-active: #3e47a9;\n\n  --newt-radius-sm: 4px;\n  --newt-radius-md: 8px;\n  --newt-radius-lg: 12px;\n\n  --newt-font-sans: \"Inter\", \"gg sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\n  --newt-font-display: \"Inter\", sans-serif;\n\n  --newt-shadow-elevation-low: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);\n  --newt-shadow-elevation-high: 0 16px 40px rgba(0, 0, 0, 0.45);\n}\n\n/* end newt/ui preset */\n"
+    },
+    {
+      "name": "everything-new",
+      "code": "nt1.eyJ2IjoxLCJ0IjoibnV4dCIsImIiOiIjMWFiYzljIiwiciI6InhsIiwiZiI6InN5c3RlbSIsIm0iOiJkYXJrIiwiZCI6InJ0bCIsIm4iOiJuZXV0cmFsIiwiaCI6Im1vbm8tZmlyc3QiLCJzIjoiZGVlcCJ9",
+      "preset": {
+        "v": 1,
+        "t": "nuxt",
+        "b": "#1abc9c",
+        "r": "xl",
+        "f": "system",
+        "m": "dark",
+        "d": "rtl",
+        "n": "neutral",
+        "h": "mono-first",
+        "s": "deep"
+      },
+      "css": "/* newt/ui preset nt1.eyJ2IjoxLCJ0IjoibnV4dCIsImIiOiIjMWFiYzljIiwiciI6InhsIiwiZiI6InN5c3RlbSIsIm0iOiJkYXJrIiwiZCI6InJ0bCIsIm4iOiJuZXV0cmFsIiwiaCI6Im1vbm8tZmlyc3QiLCJzIjoiZGVlcCJ9 — newt/create */\n:root {\n  --newt-brand: #1abc9c;\n  --newt-brand-hover: #16a085;\n  --newt-brand-active: #12846d;\n\n  --newt-radius-sm: 8px;\n  --newt-radius-md: 16px;\n  --newt-radius-lg: 24px;\n\n  --newt-font-sans: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;\n  --newt-font-display: \"JetBrains Mono\", ui-monospace, \"SF Mono\", Menlo, monospace;\n\n  --newt-shadow-elevation-low: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);\n  --newt-shadow-elevation-high: 0 16px 40px rgba(0, 0, 0, 0.45);\n\n  --newt-bg-base: #1c1c1c;\n  --newt-bg-surface: #262626;\n  --newt-bg-elevated: #2e2e2e;\n  --newt-bg-floating: #1c1c1c;\n  --newt-bg-input: #1c1c1c;\n  --newt-bg-input-elevated: #383838;\n  --newt-border: #404040;\n}\n\n/* The same neutral, for the light surface set. */\n.newt-light,\n[data-newt-theme=\"light\"] {\n  --newt-bg-base: #e5e5e5;\n  --newt-bg-surface: #f5f5f5;\n  --newt-bg-elevated: #ffffff;\n  --newt-bg-floating: #ffffff;\n  --newt-bg-input: #ededed;\n  --newt-bg-input-elevated: #ffffff;\n  --newt-border: #d4d4d4;\n}\n\n/* Right to left by default: dir=\"rtl\" belongs on <html> as well. */\n:root {\n  --newt-dir: -1;\n}\n\n/* end newt/ui preset */\n"
     }
   ]
 }

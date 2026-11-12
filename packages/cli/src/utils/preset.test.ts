@@ -133,3 +133,31 @@ describe("the fixture the docs copy", () => {
     expect(readFileSync(docsFixture, "utf8")).toBe(fixtureText)
   })
 })
+
+describe("the axes added after the first codes", () => {
+  it("leaves a default out of the code, so an older code encodes to itself", () => {
+    const before = encodePreset(DEFAULT_PRESET)
+    expect(atob(before.slice("nt1.".length))).not.toMatch(/"[nhs]":/)
+    expect(encodePreset(decodePreset(before))).toBe(before)
+  })
+
+  it("fills the defaults in when a code predates them", () => {
+    const decoded = decodePreset(encodePreset(DEFAULT_PRESET))
+    expect(decoded).toMatchObject({ n: "slate", h: "same", s: "soft" })
+  })
+
+  it("restates the surfaces for both sets when the base colour changes", () => {
+    const css = presetToCss({ ...DEFAULT_PRESET, n: "stone" })
+    expect(css).toContain("  --newt-bg-base: #201e1c;")
+    expect(css).toContain('[data-newt-theme="light"] {')
+    expect(css).toContain("  --newt-bg-base: #e9e6e1;")
+  })
+
+  it("sets the heading font apart from the body only when one is chosen", () => {
+    const same = presetToCss({ ...DEFAULT_PRESET, f: "system" })
+    const serif = presetToCss({ ...DEFAULT_PRESET, f: "system", h: "serif" })
+    expect(same).toMatch(/--newt-font-display: -apple-system/)
+    expect(serif).toMatch(/--newt-font-display: "Iowan Old Style"/)
+    expect(serif).toMatch(/--newt-font-sans: -apple-system/)
+  })
+})
