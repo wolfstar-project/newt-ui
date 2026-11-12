@@ -76,6 +76,12 @@ Keep the conversation in state, append the user's message when the block reports
       description:
         "Called with the text when the user submits the composer or chooses a prompt.",
     },
+    {
+      name: "onAttach / @attach",
+      type: "() => void",
+      description:
+        "Called when the add button in the composer is pressed. The composer always draws that button, so without a handler it does nothing: open your own file picker here.",
+    },
   ]}
 />
 

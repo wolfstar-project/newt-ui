@@ -55,7 +55,8 @@ const props = withDefaults(
   }
 )
 
-const emit = defineEmits<{ send: [message: string] }>()
+/** `attach`: the composer's add button was pressed. It always draws that button, so listen for it to open your own picker. */
+const emit = defineEmits<{ send: [message: string]; attach: [] }>()
 
 const value = ref("")
 const empty = computed(() => props.messages.length === 0 && !props.pending)
@@ -212,6 +213,7 @@ function submit(message: string) {
           :aria-label="`Message ${props.assistantName}`"
           :placeholder="`Ask ${props.assistantName} anything`"
           @submit="submit"
+          @add="emit('attach')"
         />
       </ChatFooter>
     </Chat>
