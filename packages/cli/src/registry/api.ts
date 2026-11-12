@@ -5,6 +5,7 @@ import {
   buildRegistryRequest,
   parseNamespaced,
   resolveRegistryEntry,
+  NEWTUI_NAMESPACE,
   SHADCN_NAMESPACE,
   type Registries,
 } from "./namespaces.js"
@@ -158,7 +159,14 @@ export async function resolveTree(
   const resolved = new Map<string, RegistryItem>()
   const visiting = new Set<string>()
 
-  async function visit(name: string, thirdParty: boolean): Promise<void> {
+  async function visit(
+    requested: string,
+    inThirdParty: boolean
+  ): Promise<void> {
+    const own = parseNamespaced(requested)
+    const isOwn = own?.namespace === NEWTUI_NAMESPACE
+    const name = isOwn ? own.item : requested
+    const thirdParty = inThirdParty && !isOwn
     const isUrl = /^https?:\/\//.test(name)
     const qualified =
       thirdParty && !isUrl && parseNamespaced(name) === undefined

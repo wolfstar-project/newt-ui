@@ -223,6 +223,27 @@ describe("add installation pipeline", () => {
     }
   )
 
+  it("reads a @newtui dependency from the registry the item came from", async () => {
+    await configure("react")
+    publish({ ...button("react"), registryDependencies: ["@newtui/icon"] })
+    publish({
+      name: "icon",
+      type: "registry:ui",
+      files: [
+        {
+          path: "registry/bases/newt/ui/icon.tsx",
+          type: "registry:ui",
+          content: "export const Icon = () => null",
+        },
+      ],
+    })
+    await run()
+    expect(requests).toEqual([
+      "/styles/default/button.json",
+      "/styles/default/icon.json",
+    ])
+  })
+
   it("installs registry dependencies before their consumer", async () => {
     await configure("react")
     publish({ ...button("react"), registryDependencies: ["icon"] })
