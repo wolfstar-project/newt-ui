@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, type HTMLAttributes } from "vue"
+import { computed, nextTick, ref, watch, type HTMLAttributes } from "vue"
 import { Avatar } from "~~/registry/bases/newt/ui/avatar"
 import { Button } from "~~/registry/bases/newt/ui/button"
 import { Chat, ChatBody, ChatFooter } from "~~/registry/bases/newt/ui/chat"
@@ -68,7 +68,34 @@ function authorOf(message: AiChatMessage): string {
   return message.role === "assistant" ? props.assistantName : props.userName
 }
 
+/*
+ * New text is followed while the reader is at the bottom and left alone once
+ * they have scrolled up to read something older. Sending always follows.
+ */
+const body = ref<InstanceType<typeof ChatBody> | null>(null)
+let following = true
+
+function onScroll(event: Event) {
+  const element = event.currentTarget
+  if (element instanceof HTMLElement) {
+    following =
+      element.scrollHeight - element.scrollTop - element.clientHeight < 48
+  }
+}
+
+watch(
+  () => [props.messages, props.pending],
+  async () => {
+    if (!following) return
+    await nextTick()
+    const element = body.value?.$el
+    if (element instanceof HTMLElement) element.scrollTop = element.scrollHeight
+  },
+  { deep: true }
+)
+
 function submit(message: string) {
+  following = true
   emit("send", message)
   value.value = ""
 }
@@ -105,8 +132,10 @@ function submit(message: string) {
 
     <Chat :aria-label="`Conversation with ${props.assistantName}`" class="h-96">
       <ChatBody
+        ref="body"
         focusable
         :viewport-label="`Messages with ${props.assistantName}`"
+        @scroll="onScroll"
       >
         <div
           v-if="empty"
@@ -154,17 +183,25 @@ function submit(message: string) {
                   v-if="message.role === 'assistant'"
                   :content="message.body"
                 />
-                <template v-else>{{ message.body }}</template>
+                <span v-else class="whitespace-pre-wrap">{{
+                  message.body
+                }}</span>
               </MessageGroupContent>
             </MessageGroupBody>
           </MessageGroup>
         </MessageList>
       </ChatBody>
       <ChatFooter>
-        <div class="flex h-6 items-center px-1">
+        <!--
+          The status region is always there, so that its text appearing is what
+          a screen reader announces; mounted together with its text, a live
+          region is often missed.
+        -->
+        <div role="status" class="flex h-6 items-center px-1">
           <TypingIndicator
             v-if="props.pending"
-            :label="`${props.assistantName} is writing`"
+            role="none"
+            :aria-label="undefined"
           >
             {{ props.assistantName }} is writing…
           </TypingIndicator>
@@ -172,6 +209,7 @@ function submit(message: string) {
         <MessageComposer
           v-model="value"
           :channel-name="props.assistantName"
+          :aria-label="`Message ${props.assistantName}`"
           :placeholder="`Ask ${props.assistantName} anything`"
           @submit="submit"
         />

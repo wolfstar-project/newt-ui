@@ -75,6 +75,17 @@ export function AiChat({
   const [value, setValue] = React.useState("")
   const empty = messages.length === 0 && !pending
 
+  /*
+   * New text is followed while the reader is at the bottom and left alone once
+   * they have scrolled up to read something older. Sending always follows.
+   */
+  const body = React.useRef<HTMLDivElement>(null)
+  const following = React.useRef(true)
+  React.useEffect(() => {
+    const element = body.current
+    if (following.current && element) element.scrollTop = element.scrollHeight
+  }, [messages, pending])
+
   return (
     <div
       className={cn(
@@ -101,7 +112,16 @@ export function AiChat({
       </header>
 
       <Chat aria-label={`Conversation with ${assistantName}`} className="h-96">
-        <ChatBody focusable viewportLabel={`Messages with ${assistantName}`}>
+        <ChatBody
+          ref={body}
+          focusable
+          viewportLabel={`Messages with ${assistantName}`}
+          onScroll={(event) => {
+            const { scrollHeight, scrollTop, clientHeight } =
+              event.currentTarget
+            following.current = scrollHeight - scrollTop - clientHeight < 48
+          }}
+        >
           {empty ? (
             <div className="flex flex-1 flex-col items-center justify-center gap-4 px-4 py-8 text-center">
               <p className="font-display text-xl font-semibold text-newt-text-primary">
@@ -149,7 +169,9 @@ export function AiChat({
                         {fromAssistant ? (
                           <Markdown content={message.body} />
                         ) : (
-                          message.body
+                          <span className="whitespace-pre-wrap">
+                            {message.body}
+                          </span>
                         )}
                       </MessageGroupContent>
                     </MessageGroupBody>
@@ -160,19 +182,26 @@ export function AiChat({
           )}
         </ChatBody>
         <ChatFooter>
-          <div className="flex h-6 items-center px-1">
+          {/*
+           * The status region is always there, so that its text appearing is
+           * what a screen reader announces; mounted together with its text, a
+           * live region is often missed.
+           */}
+          <div role="status" className="flex h-6 items-center px-1">
             {pending && (
-              <TypingIndicator label={`${assistantName} is writing`}>
+              <TypingIndicator role="none" aria-label={undefined}>
                 {assistantName} is writing…
               </TypingIndicator>
             )}
           </div>
           <MessageComposer
             channelName={assistantName}
+            aria-label={`Message ${assistantName}`}
             placeholder={`Ask ${assistantName} anything`}
             value={value}
             onValueChange={setValue}
             onSubmit={(message) => {
+              following.current = true
               onSend?.(message)
               setValue("")
             }}

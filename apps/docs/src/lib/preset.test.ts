@@ -160,11 +160,35 @@ describe("the axes added after the first codes", () => {
     expect(decoded).toMatchObject({ n: "slate", h: "same", s: "soft" })
   })
 
-  it("restates the surfaces for both sets when the base colour changes", () => {
+  it("restates the light surfaces in :root and the dark ones under the dark selector", () => {
     const css = presetToCss({ ...DEFAULT_PRESET, n: "stone" })
-    expect(css).toContain("  --newt-bg-base: #201e1c;")
-    expect(css).toContain('[data-newt-theme="light"] {')
-    expect(css).toContain("  --newt-bg-base: #e9e6e1;")
+    expect(css).toMatch(/:root \{[^}]*--newt-bg-base: #e9e6e1;/)
+    expect(css).toMatch(/\.dark \{\n  --newt-bg-base: #201e1c;/)
+    expect(css).not.toContain("data-newt-theme")
+  })
+
+  it("follows the project's dark selector", () => {
+    const css = presetToCss(
+      { ...DEFAULT_PRESET, n: "stone" },
+      "@media (prefers-color-scheme: dark)"
+    )
+    expect(css).toContain("@media (prefers-color-scheme: dark) {\n  :root {")
+    expect(css).toContain("    --newt-bg-base: #201e1c;")
+  })
+
+  it("tunes the shadows to each surface set", () => {
+    const css = presetToCss({ ...DEFAULT_PRESET, s: "deep" })
+    expect(css).toMatch(
+      /:root \{[^}]*--newt-shadow-elevation-high: 0 16px 40px rgba\(6, 6, 7, 0\.18\);/
+    )
+    expect(css).toMatch(
+      /\.dark \{\n  --newt-shadow-elevation-low: [^\n]*0\.3\)/
+    )
+  })
+
+  it("writes a shadow both sets share once", () => {
+    const css = presetToCss({ ...DEFAULT_PRESET, s: "flat" })
+    expect(css.match(/--newt-shadow-elevation-high/g)).toHaveLength(1)
   })
 
   it("sets the heading font apart from the body only when one is chosen", () => {

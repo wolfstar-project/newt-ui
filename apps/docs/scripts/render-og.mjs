@@ -1,9 +1,11 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs"
-import { dirname, join, relative, resolve, sep } from "node:path"
+import { dirname, join, relative, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
 import { render } from "takumi-js"
 import { container, image, text } from "takumi-js/helpers"
+
+import { eyebrowOf, metaContent, routeOf, titleOf } from "./og-page.mjs"
 
 /*
  * The social cards, redrawn.
@@ -77,57 +79,15 @@ const meta = new Map(
     })
 )
 
-function decodeEntities(value) {
-  return value
-    .replaceAll("&quot;", '"')
-    .replaceAll("&#39;", "'")
-    .replaceAll("&#x27;", "'")
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&amp;", "&")
-}
-
-function metaContent(html, property) {
-  const match = html.match(
-    new RegExp(`<meta property="${property}" content="([^"]*)"`)
-  )
-  return match === null ? undefined : decodeEntities(match[1])
-}
-
-/** `dist/og/docs/cli.png` → `/docs/cli`; the home page's card is `index.png`. */
-function routeOf(file) {
-  const slug = relative(cards, file).slice(0, -".png".length).split(sep)
-  return slug.length === 1 && slug[0] === "index" ? "/" : `/${slug.join("/")}`
-}
-
-/** Where a page sits, said in a word or two above its title. */
-function eyebrowOf(route) {
-  const component = route.match(/^\/docs\/components\/([^/]+)$/)
-  if (component !== null) {
-    return meta.get(component[1])?.type === "registry:block"
-      ? "Block"
-      : "Component"
-  }
-  if (route === "/") return "React · Vue · HTML & CSS"
-  if (route.startsWith("/docs")) return "Documentation"
-  if (route.startsWith("/changelog")) return "Changelog"
-  if (route.startsWith("/blocks")) return "Blocks"
-  return SITE_NAME
-}
-
 function cardOf(file) {
-  const route = routeOf(file)
+  const route = routeOf(file, cards)
   const page = resolve(dist, `.${route}`, "index.html")
   if (!existsSync(page)) return undefined
   const html = readFileSync(page, "utf8")
-  const suffix = ` - ${SITE_NAME}`
-  const ogTitle = metaContent(html, "og:title") ?? SITE_NAME
   return {
     route,
-    eyebrow: eyebrowOf(route),
-    title: ogTitle.endsWith(suffix)
-      ? ogTitle.slice(0, -suffix.length)
-      : ogTitle,
+    eyebrow: eyebrowOf(route, meta, SITE_NAME),
+    title: titleOf(metaContent(html, "og:title"), SITE_NAME),
     description: metaContent(html, "og:description"),
   }
 }
