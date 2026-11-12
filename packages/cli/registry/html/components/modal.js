@@ -31,7 +31,11 @@
 
   document.querySelectorAll("[data-newt-modal]").forEach((overlay) => {
     const dialog = overlay.querySelector("[role='dialog']") ?? overlay
-    const opener = document.activeElement
+    const active = document.activeElement
+    /* An `autofocus` control inside has focus already: keep it, and there is
+     * no outside element to hand focus back to. */
+    const inside = dialog.contains(active)
+    const opener = inside ? null : active
 
     function close() {
       overlay.remove()
@@ -76,7 +80,9 @@
       }
     })
     document.addEventListener("keydown", onKeyDown)
-    const initial = tabbablesIn(dialog)[0] ?? dialog
-    initial.focus()
+    if (!inside) {
+      const initial = tabbablesIn(dialog)[0] ?? dialog
+      initial.focus()
+    }
   })
 }

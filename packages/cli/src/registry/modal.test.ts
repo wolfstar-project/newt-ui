@@ -74,6 +74,13 @@ describe("modal.js", () => {
     expect(document.activeElement).toBe(opener)
   })
 
+  it("leaves focus on a control inside that already holds it", () => {
+    document.body.innerHTML = markup
+    button("Confirm").focus()
+    runInThisContext(behavior)
+    expect(document.activeElement).toBe(button("Confirm"))
+  })
+
   it("returns focus after a close control too", () => {
     button("Cancel").click()
     expect(document.querySelector("[data-newt-modal]")).toBeNull()

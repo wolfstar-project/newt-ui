@@ -107,21 +107,35 @@ const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
       return () => document.removeEventListener("keydown", onKeyDown)
     }, [open, close])
 
+    /*
+     * The element that held focus when the modal opened, read during the
+     * render that opens it: by the time an effect runs, a child with
+     * `autoFocus` has already taken focus and the opener would be lost. This
+     * branch only runs when `open` changes, which a server render never sees.
+     */
+    const [opener, setOpener] = React.useState<HTMLElement | null>(null)
+    const [wasOpen, setWasOpen] = React.useState(open)
+    if (open !== wasOpen) {
+      setWasOpen(open)
+      const active = open ? document.activeElement : null
+      setOpener(active instanceof HTMLElement ? active : null)
+    }
+
     React.useEffect(() => {
       const element = dialog.current
       if (!open || !element) return
-      const opener = document.activeElement
-      /* An `autoFocus` child has already taken focus by now; leave it there
-       * and, since the opener is lost, skip the return. */
+      const active = document.activeElement
+      const inside = active instanceof Node && element.contains(active)
+      /* Mounted already open, there was no opening render to read; the
+       * element holding focus now is the best guess. */
       const returnTo =
-        opener instanceof HTMLElement && !element.contains(opener)
-          ? opener
-          : null
-      if (returnTo !== null) (tabbablesIn(element)[0] ?? element).focus()
+        opener ?? (active instanceof HTMLElement && !inside ? active : null)
+      /* A child that focused itself keeps focus. */
+      if (!inside) (tabbablesIn(element)[0] ?? element).focus()
       return () => {
         if (returnTo?.isConnected) returnTo.focus()
       }
-    }, [open])
+    }, [open, opener])
 
     if (!open) return null
 

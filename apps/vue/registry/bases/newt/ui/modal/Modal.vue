@@ -31,6 +31,20 @@ const titleId = useId()
 const dialog = ref<HTMLElement | null>(null)
 /** The element focused when the modal opened, focused again on close. */
 let returnTo: HTMLElement | null = null
+/**
+ * The element that held focus as `open` turned true, read before the dialog
+ * mounts: once it has, a child that focuses itself would hide the opener.
+ * A `sync` watcher never runs during SSR, since `open` does not change there.
+ */
+let opener: HTMLElement | null = null
+watch(
+  open,
+  (isOpen) => {
+    const active = isOpen ? document.activeElement : null
+    opener = active instanceof HTMLElement ? active : null
+  },
+  { flush: "sync" }
+)
 
 function close() {
   open.value = false
@@ -44,10 +58,15 @@ function onKeyDown(e: KeyboardEvent) {
 function takeFocus() {
   const element = dialog.value
   if (!element) return
-  const opener = document.activeElement
-  /* A child that focused itself on mount keeps focus; the opener is lost. */
-  if (opener instanceof HTMLElement && !element.contains(opener)) {
-    returnTo = opener
+  const active = document.activeElement
+  const inside = active instanceof Node && element.contains(active)
+  /* Mounted already open, there was no change to read; the element holding
+   * focus now is the best guess. */
+  returnTo =
+    opener ?? (active instanceof HTMLElement && !inside ? active : null)
+  opener = null
+  /* A child that focused itself keeps focus. */
+  if (!inside) {
     const target = tabbablesIn(element)[0] ?? element
     target.focus()
   }

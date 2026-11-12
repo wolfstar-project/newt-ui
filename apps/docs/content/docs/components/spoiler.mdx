@@ -48,7 +48,7 @@ The registry exports `Spoiler`. Parts without a table accept the native attribut
 
 ## Accessibility
 
-Hidden, the spoiler is a button in the tab order: Enter or Space reveals it, and `aria-expanded` reports its state. Its accessible name is `label`, so a screen reader announces the spoiler without reading what it hides; pass a translated `label` when the page is not in English. The content inside is `inert` and invisible until revealed, so a link in it cannot be followed by accident. Do not place essential instructions only inside hidden spoiler content.
+Hidden, the spoiler is a button in the tab order: Enter or Space reveals it, and `aria-expanded` reports its state. Its accessible name is `label`, so a screen reader announces the spoiler without reading what it hides; pass a translated `label` when the page is not in English. The content inside is `inert` and invisible until revealed, so a link in it cannot be followed by accident. Do not place essential instructions only inside hidden spoiler content. In the plain HTML and CSS flavour, load `spoiler.js` with the markup: it does the reveal, the keyboard handling and the `inert` toggle, so without it a spoiler can never be revealed.
 
 The hidden chip is `--newt-spoiler`, and `--newt-spoiler-hover` under the pointer, each with a light and a dark value.
 
