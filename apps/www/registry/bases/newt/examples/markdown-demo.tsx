@@ -6,6 +6,7 @@ import {
 const MESSAGE = `## Release notes
 The **new build** is out — read the [changelog](https://example.com/changelog) or ping <@1001> in <#2002>.
 - Fixed the *reconnect* loop
+  - Sessions resume after a dropped socket
 - Added \`/ban\` options for <@&3003>
 > Rolling out ||tonight|| at <t:1767225600:t>.
 \`\`\`ts
