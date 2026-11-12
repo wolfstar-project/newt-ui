@@ -151,7 +151,13 @@ export function getDirectory(
 }
 
 /** `${NAME}` from the environment — tokens stay out of `components.json`. */
-function expandEnv(value: string, namespace: string): string {
+function expandEnv(value: string, namespace: string, trusted: boolean): string {
+  /*
+   * Only what the reader wrote in `components.json` may read their
+   * environment. A template from a public directory is somebody else's text:
+   * `?k=${GITHUB_TOKEN}` there would send the variable to that host.
+   */
+  if (!trusted) return value
   return value.replaceAll(/\$\{(\w+)\}/g, (_, name: string) => {
     const resolved = process.env[name]
     if (resolved === undefined) {
@@ -163,6 +169,12 @@ function expandEnv(value: string, namespace: string): string {
   })
 }
 
+/** An entry and whether the reader wrote it into their own `components.json`. */
+export interface ResolvedEntry {
+  readonly entry: RegistryEntry
+  readonly trusted: boolean
+}
+
 export interface RegistryRequest {
   readonly url: string
   readonly headers: Readonly<Record<string, string>>
@@ -171,7 +183,7 @@ export interface RegistryRequest {
 /** Fill a registry's URL template in for one item. */
 export function buildRegistryRequest(
   namespace: string,
-  entry: RegistryEntry,
+  { entry, trusted }: ResolvedEntry,
   item: string
 ): RegistryRequest {
   const template = entry instanceof Object ? entry.url : entry
@@ -181,17 +193,17 @@ export function buildRegistryRequest(
     )
   }
   const url = new URL(
-    expandEnv(template, namespace)
+    expandEnv(template, namespace, trusted)
       .replaceAll("{name}", item)
       .replaceAll("{style}", THIRD_PARTY_STYLE)
   )
   const headers: Record<string, string> = {}
   if (entry instanceof Object) {
     for (const [key, value] of Object.entries(entry.params ?? {})) {
-      url.searchParams.set(key, expandEnv(value, namespace))
+      url.searchParams.set(key, expandEnv(value, namespace, trusted))
     }
     for (const [key, value] of Object.entries(entry.headers ?? {})) {
-      headers[key] = expandEnv(value, namespace)
+      headers[key] = expandEnv(value, namespace, trusted)
     }
   }
   return { url: url.toString(), headers }
@@ -202,17 +214,17 @@ export async function resolveRegistryEntry(
   namespace: string,
   framework: Framework,
   registries: Registries | undefined
-): Promise<RegistryEntry> {
+): Promise<ResolvedEntry> {
   const configured = registries?.[namespace]
-  if (configured !== undefined) return configured
+  if (configured !== undefined) return { entry: configured, trusted: true }
 
   const builtIn: Registries = BUILT_IN_REGISTRIES[framework]
   const known = builtIn[namespace]
-  if (known !== undefined) return known
+  if (known !== undefined) return { entry: known, trusted: false }
 
   const directory = await getDirectory(framework)
   const listed = directory.find((entry) => entry.name === namespace)
-  if (listed !== undefined) return listed.url
+  if (listed !== undefined) return { entry: listed.url, trusted: false }
 
   throw new Error(
     `Unknown registry "${namespace}". It is not in the ${framework} directory (${getDirectoryUrl(framework)}); add it to components.json:\n` +

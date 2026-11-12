@@ -99,19 +99,29 @@ function toKnownType(value: string | undefined): RegistryItemType {
 }
 
 /** A registry item served by a third-party (shadcn-compatible) registry. */
-export const thirdPartyRegistryItemSchema = registryItemSchema.extend({
-  type: z.string().transform(toKnownType),
-  files: z
-    .array(
-      z.object({
-        path: z.string(),
-        content: z.string().optional(),
-        type: z.string().optional().transform(toKnownType),
-        target: z.string().optional(),
-      })
-    )
-    .optional(),
-})
+export const thirdPartyRegistryItemSchema = registryItemSchema
+  .extend({
+    type: z.string().transform(toKnownType),
+    files: z
+      .array(
+        z.object({
+          path: z.string(),
+          content: z.string().optional(),
+          type: z.string().optional(),
+          target: z.string().optional(),
+        })
+      )
+      .optional(),
+  })
+  /* A file that names no type of its own is the same kind as its item. */
+  .transform((item): RegistryItem => ({
+    ...item,
+    files: item.files?.map((file) => ({
+      ...file,
+      type: file.type === undefined ? item.type : toKnownType(file.type),
+    })),
+  }))
+
 export type RegistryItemFramework = z.infer<typeof registryItemFrameworkSchema>
 export type RegistryItemFile = z.infer<typeof registryItemFileSchema>
 export type RegistryItemType = z.infer<typeof registryItemTypeSchema>

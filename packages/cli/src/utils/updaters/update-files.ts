@@ -11,25 +11,16 @@ import {
   transformContent,
 } from "../transformers/imports.js"
 
-export async function updateFiles(
-  items: RegistryItem[],
-  config: Config,
-  options: { yes: boolean; overwrite: boolean; path?: string }
-): Promise<{ written: string[]; skipped: string[] }> {
-  const written: string[] = []
-  const skipped: string[] = []
-
+/*
+ * A registry names its own paths, and a third-party one is not ours to vouch
+ * for: nothing it serves may climb out of the directory it was given. `--path`
+ * and the aliases are the reader's own and stay free to point anywhere.
+ */
+function assertContainedPaths(items: RegistryItem[]): void {
   for (const item of items) {
     for (const rawFile of item.files ?? []) {
       const file = normalizeFile(rawFile, item.type)
       if (!file) continue
-
-      /*
-       * A registry names its own paths, and a third-party one is not ours to
-       * vouch for: nothing it serves may climb out of the directory it was
-       * given. `--path` and the aliases are the reader's own and stay free to
-       * point anywhere.
-       */
       for (const served of [file.path, file.target]) {
         if (served === undefined) continue
         if (path.isAbsolute(served) || served.split(/[/\\]/).includes("..")) {
@@ -38,6 +29,25 @@ export async function updateFiles(
           )
         }
       }
+    }
+  }
+}
+
+export async function updateFiles(
+  items: RegistryItem[],
+  config: Config,
+  options: { yes: boolean; overwrite: boolean; path?: string }
+): Promise<{ written: string[]; skipped: string[] }> {
+  const written: string[] = []
+  const skipped: string[] = []
+
+  /* Every path first: a refusal halfway through would leave half a tree. */
+  assertContainedPaths(items)
+
+  for (const item of items) {
+    for (const rawFile of item.files ?? []) {
+      const file = normalizeFile(rawFile, item.type)
+      if (!file) continue
 
       // Preserve Vue component directories when installing to a custom path.
       // Explicit registry targets take precedence over the command's --path.

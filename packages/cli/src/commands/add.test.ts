@@ -398,6 +398,67 @@ describe("add installation pipeline", () => {
       expect(requests).toEqual(["/acme/card.json?version=2"])
     })
 
+    it("never expands ${NAME} in a template that came from a directory", async () => {
+      await configure("react")
+      process.env.ACME_TOKEN = "secret"
+      served.set("/registries.json", {
+        "@listed": `${registry}/listed/{name}.json?k=\${ACME_TOKEN}`,
+      })
+      served.set("/listed/card.json?k=${ACME_TOKEN}", {
+        ...card,
+        registryDependencies: [],
+      })
+      process.env.NEWT_REGISTRY_DIRECTORY_URL = `${registry}/registries.json`
+      await run({ components: ["@listed/card"] })
+      expect(requests.some((url) => url.includes("secret"))).toBe(false)
+      expect(requests.at(-1)).toContain("k=")
+    })
+
+    it("lets a file without its own type take its item's", async () => {
+      await withRegistries({ "@acme": `${registry}/acme/{name}.json` })
+      served.set("/acme/card.json", {
+        name: "card",
+        type: "registry:ui",
+        files: [{ path: "registry/acme/card.tsx", content: "export {}" }],
+      })
+      await run({ components: ["@acme/card"] })
+      expect(
+        await readFile(path.join(cwd, "components/ui/card.tsx"), "utf8")
+      ).toBe("export {}")
+    })
+
+    it("writes nothing when a later item carries a refused path", async () => {
+      await withRegistries({ "@acme": `${registry}/acme/{name}.json` })
+      served.set("/acme/card.json", {
+        name: "card",
+        type: "registry:ui",
+        registryDependencies: ["@acme/bad"],
+        files: [
+          {
+            path: "card.tsx",
+            type: "registry:ui",
+            content: "export {}",
+          },
+        ],
+      })
+      served.set("/acme/bad.json", {
+        name: "bad",
+        type: "registry:file",
+        files: [
+          {
+            path: "bad.ts",
+            type: "registry:file",
+            target: "../escape.ts",
+            content: "",
+          },
+        ],
+      })
+      await expect(run({ components: ["@acme/card"] })).rejects.toThrow(
+        "Refusing to write"
+      )
+      expect(await readdir(cwd)).not.toContain("components")
+    })
+
     it("refuses a file that would land outside the project", async () => {
       await withRegistries({ "@acme": `${registry}/acme/{name}.json` })
       served.set("/acme/card.json", {

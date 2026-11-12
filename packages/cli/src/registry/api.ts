@@ -102,12 +102,12 @@ async function getThirdPartyItem(
   namespace: string,
   item: string
 ): Promise<RegistryItem> {
-  const entry = await resolveRegistryEntry(
+  const resolved = await resolveRegistryEntry(
     namespace,
     source.framework,
     source.registries
   )
-  const request = buildRegistryRequest(namespace, entry, item)
+  const request = buildRegistryRequest(namespace, resolved, item)
   try {
     return await fetchJson(
       request.url,
