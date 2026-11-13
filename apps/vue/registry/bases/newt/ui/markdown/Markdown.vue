@@ -4,8 +4,10 @@ import { Button } from "~~/registry/bases/newt/ui/button"
 import {
   Modal,
   ModalBody,
+  ModalContent,
   ModalFooter,
   ModalHeader,
+  ModalTitle,
 } from "~~/registry/bases/newt/ui/modal"
 
 import { cn } from "@/lib/utils"
@@ -73,6 +75,16 @@ const emit = defineEmits<{
 const blocks = computed(() => parseMarkdown(props.content))
 const labels = computed(() => ({ ...defaultMarkdownLabels, ...props.labels }))
 const pendingUrl = ref<string | null>(null)
+/*
+ * The warning opens from a link, not from a `ModalTrigger`, so focus goes back
+ * to whatever held it when the link was activated.
+ */
+let opener: HTMLElement | null = null
+
+function returnFocus(event: Event) {
+  event.preventDefault()
+  if (opener?.isConnected) opener.focus()
+}
 
 provide(MARKDOWN_CONTEXT_KEY, () => ({
   resolveMention: props.resolveMention,
@@ -85,6 +97,10 @@ provide(MARKDOWN_CONTEXT_KEY, () => ({
   jumbo: isEmojiOnly(blocks.value),
   interceptLink: (url, masked) => {
     if (!masked || !props.linkWarning) return false
+    opener =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null
     pendingUrl.value = url
     return true
   },
@@ -109,23 +125,30 @@ function visit() {
   <div :class="cn('min-w-0 break-words [overflow-wrap:anywhere]', props.class)">
     <MarkdownBlocks :blocks="blocks" />
     <Modal v-model:open="warningOpen">
-      <ModalHeader>{{ labels.linkWarningTitle }}</ModalHeader>
-      <ModalBody>
-        <p class="m-0">{{ labels.linkWarningBody }}</p>
-        <p
-          class="mt-2 break-all rounded-sm bg-newt-bg-base p-2 font-mono text-[13px] text-newt-text-primary"
-        >
-          {{ pendingUrl }}
-        </p>
-      </ModalBody>
-      <ModalFooter>
-        <Button variant="secondary" @click="pendingUrl = null">
-          {{ labels.linkWarningCancel }}
-        </Button>
-        <Button variant="primary" @click="visit">
-          {{ labels.linkWarningConfirm }}
-        </Button>
-      </ModalFooter>
+      <ModalContent
+        :aria-describedby="undefined"
+        @close-auto-focus="returnFocus"
+      >
+        <ModalHeader>
+          <ModalTitle>{{ labels.linkWarningTitle }}</ModalTitle>
+        </ModalHeader>
+        <ModalBody>
+          <p class="m-0">{{ labels.linkWarningBody }}</p>
+          <p
+            class="mt-2 break-all rounded-sm bg-newt-bg-base p-2 font-mono text-[13px] text-newt-text-primary"
+          >
+            {{ pendingUrl }}
+          </p>
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="secondary" @click="pendingUrl = null">
+            {{ labels.linkWarningCancel }}
+          </Button>
+          <Button variant="primary" @click="visit">
+            {{ labels.linkWarningConfirm }}
+          </Button>
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   </div>
 </template>

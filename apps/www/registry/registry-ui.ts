@@ -725,6 +725,7 @@ export const ui: Registry = [
     title: "Modal",
     description:
       "A centered dialog over a dimmed overlay that closes on Escape, overlay click or an explicit close control.",
+    dependencies: ["radix-ui"],
     registryDependencies: ["button"],
     files: [
       {

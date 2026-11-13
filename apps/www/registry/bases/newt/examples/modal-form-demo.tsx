@@ -13,8 +13,11 @@ import {
   Modal,
   ModalBody,
   ModalClose,
+  ModalContent,
   ModalFooter,
   ModalHeader,
+  ModalTitle,
+  ModalTrigger,
 } from "@/registry/bases/newt/ui/modal"
 
 /*
@@ -26,12 +29,14 @@ export default function ModalFormDemo() {
   const [name, setName] = React.useState("")
 
   return (
-    <>
-      <Button variant="primary" onClick={() => setOpen(true)}>
-        Create channel
-      </Button>
-      <Modal open={open} onOpenChange={setOpen}>
-        <ModalHeader>Create channel</ModalHeader>
+    <Modal open={open} onOpenChange={setOpen}>
+      <ModalTrigger asChild>
+        <Button variant="primary">Create channel</Button>
+      </ModalTrigger>
+      <ModalContent aria-describedby={undefined}>
+        <ModalHeader>
+          <ModalTitle>Create channel</ModalTitle>
+        </ModalHeader>
         <form
           onSubmit={(e) => {
             e.preventDefault()
@@ -60,7 +65,7 @@ export default function ModalFormDemo() {
             </Button>
           </ModalFooter>
         </form>
-      </Modal>
-    </>
+      </ModalContent>
+    </Modal>
   )
 }

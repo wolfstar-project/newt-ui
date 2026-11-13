@@ -1545,6 +1545,7 @@
       "type": "registry:ui",
       "title": "Modal",
       "description": "A centered dialog over a dimmed overlay that closes on Escape, overlay click or an explicit close control.",
+      "dependencies": ["reka-ui"],
       "registryDependencies": ["button"],
       "files": [
         {
@@ -1552,7 +1553,23 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/bases/newt/ui/modal/ModalTrigger.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/modal/ModalContent.vue",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/bases/newt/ui/modal/ModalHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/modal/ModalTitle.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/modal/ModalDescription.vue",
           "type": "registry:ui"
         },
         {
@@ -1565,10 +1582,6 @@
         },
         {
           "path": "registry/bases/newt/ui/modal/ModalClose.vue",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/bases/newt/ui/modal/focus.ts",
           "type": "registry:ui"
         },
         {

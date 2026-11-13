@@ -1,21 +1,15 @@
 <script setup lang="ts">
-import { inject } from "vue"
+import { DialogClose, type DialogCloseProps } from "reka-ui"
 
-import { MODAL_CONTEXT_KEY } from "."
-
-/**
- * Closes the enclosing Modal when clicked. Renders a wrapper `<span>` so it can
- * wrap any element: `<ModalClose><Button variant="secondary">Cancel</Button></ModalClose>`
+/*
+ * Closes the modal when activated. Wrap a Button with `as-child` to keep its
+ * styling: `<ModalClose as-child><Button variant="secondary">Cancel</Button></ModalClose>`
  */
-const ctx = inject(MODAL_CONTEXT_KEY, null)
-
-function onClick() {
-  ctx?.close()
-}
+const props = defineProps<DialogCloseProps>()
 </script>
 
 <template>
-  <span class="contents" @click="onClick">
+  <DialogClose v-bind="props">
     <slot />
-  </span>
+  </DialogClose>
 </template>

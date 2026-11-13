@@ -3,7 +3,7 @@ title: "Modal"
 description: "A centered dialog over a dimmed overlay that closes on Escape, overlay click or an explicit close control."
 ---
 
-A centred dialog with a header, a body and a footer. It is the settings-panel shape from the client, so a form inside it looks like it belongs there.
+A centred dialog with a header, a body and a footer, built on [Radix Dialog](https://www.radix-ui.com/primitives/docs/components/dialog) in React and [Reka UI Dialog](https://reka-ui.com/docs/components/dialog) in Vue. The primitive owns the behaviour; newt/ui owns the look. It is the settings-panel shape from the client, so a form inside it looks like it belongs there.
 
 <ComponentPreview name="modal" />
 
@@ -41,26 +41,40 @@ Cap `ModalBody` with a `max-h-*` utility and `overflow-y-auto` when the text can
   of="Modal"
   rows={[
     {
-      name: "open",
+      name: "open / v-model:open",
       type: "boolean",
-      description: "Whether the dialog is shown.",
+      description:
+        "Whether the dialog is shown. Leave it out and pass `defaultOpen` to let the modal own it.",
     },
     {
       name: "onOpenChange",
       type: "(open: boolean) => void",
       description:
-        "Called when the dialog asks to close — the backdrop, the close button, or Escape.",
+        "React only. Called when the dialog asks to open or close; Vue emits `update:open`.",
     },
   ]}
 />
 
 <PropsTable
-  of="ModalHeader"
+  of="ModalContent"
   rows={[
     {
-      name: "children",
-      type: "ReactNode",
-      description: "The title. Becomes the dialog's accessible name.",
+      name: "onCloseAutoFocus",
+      type: "(event: Event) => void",
+      description:
+        "Called when focus is about to return to the trigger. Call `event.preventDefault()` and focus an element yourself when the modal opened without a `ModalTrigger`. Vue emits `close-auto-focus`.",
+    },
+    {
+      name: "aria-describedby",
+      type: "string | undefined",
+      description: "Pass `undefined` when the modal has no `ModalDescription`.",
+    },
+    {
+      name: "container",
+      type: "HTMLElement",
+      description:
+        "Element the overlay and panel are portalled into. A modal below a `DirectionProvider` or a themed wrapper passes that element to keep the direction and the palette.",
+      default: "document.body",
     },
   ]}
 />
@@ -76,11 +90,11 @@ Cap `ModalBody` with a `max-h-*` utility and `overflow-y-auto` when the text can
   ]}
 />
 
-Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+`ModalTrigger` and `ModalClose` render a button. Pass `asChild` (`as-child` in Vue) to put the behaviour on your own element, such as a `Button`. Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
 
 ## Accessibility
 
-The dialog carries `role="dialog"` and `aria-modal="true"`, and closes on `Escape`. When it opens, focus moves to its first control, or to the dialog itself when it has none; a child with `autoFocus` keeps the focus it took. While it is open, Tab and Shift+Tab cycle through its controls and never reach the page behind, which the overlay also covers for the pointer. When it closes, focus goes back to the element that held it when the dialog opened. Give `ModalHeader` real text: it is what a screen reader announces when the dialog opens.
+The dialog carries `role="dialog"` and `aria-modal="true"`, and closes on `Escape`. `ModalTitle` is its accessible name, so give it real text; `ModalDescription` is its accessible description. When it opens, focus moves to its first control, or to the dialog itself when it has none; a child with `autoFocus` keeps the focus it took. While it is open, Tab and Shift+Tab cycle through its controls and never reach the page behind, which the primitive also hides from screen readers and the overlay covers for the pointer. When it closes, focus goes back to the `ModalTrigger`.
 
 ## Tokens
 

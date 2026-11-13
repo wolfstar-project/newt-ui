@@ -75,6 +75,9 @@ export const newtTokens: NewtTokenMap = {
   "newt-ease": "cubic-bezier(0.3, 0.7, 0.4, 1)",
   "newt-duration-fast": "100ms",
   "newt-duration-base": "150ms",
+  // Writing direction as a multiplier: 1 in LTR, -1 under [dir="rtl"]. A
+  // sideways transform multiplies its offset by it instead of branching.
+  "newt-dir": "1",
 }
 
 /**

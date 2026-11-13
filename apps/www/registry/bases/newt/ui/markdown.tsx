@@ -22,8 +22,10 @@ import { Mention } from "@/registry/bases/newt/ui/mention"
 import {
   Modal,
   ModalBody,
+  ModalContent,
   ModalFooter,
   ModalHeader,
+  ModalTitle,
 } from "@/registry/bases/newt/ui/modal"
 import { Spoiler } from "@/registry/bases/newt/ui/spoiler"
 import { Timestamp } from "@/registry/bases/newt/ui/timestamp"
@@ -397,12 +399,21 @@ const Markdown = React.forwardRef<HTMLDivElement, MarkdownProps>(
     const blocks = React.useMemo(() => parseMarkdown(content), [content])
     const labels = { ...defaultMarkdownLabels, ...labelOverrides }
     const [pendingUrl, setPendingUrl] = React.useState<string | null>(null)
+    /*
+     * The warning opens from a link, not from a `ModalTrigger`, so focus
+     * goes back to whatever held it when the link was activated.
+     */
+    const opener = React.useRef<HTMLElement | null>(null)
 
     const context: RenderContext = {
       props,
       labels,
       jumbo: isEmojiOnly(blocks),
-      openWarning: setPendingUrl,
+      openWarning: (url) => {
+        const active = document.activeElement
+        opener.current = active instanceof HTMLElement ? active : null
+        setPendingUrl(url)
+      },
     }
 
     return (
@@ -421,29 +432,39 @@ const Markdown = React.forwardRef<HTMLDivElement, MarkdownProps>(
             if (!open) setPendingUrl(null)
           }}
         >
-          <ModalHeader>{labels.linkWarningTitle}</ModalHeader>
-          <ModalBody>
-            <p className="m-0">{labels.linkWarningBody}</p>
-            <p className="mt-2 break-all rounded-sm bg-newt-bg-base p-2 font-mono text-[13px] text-newt-text-primary">
-              {pendingUrl}
-            </p>
-          </ModalBody>
-          <ModalFooter>
-            <Button variant="secondary" onClick={() => setPendingUrl(null)}>
-              {labels.linkWarningCancel}
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() => {
-                if (pendingUrl) {
-                  window.open(pendingUrl, "_blank", "noopener,noreferrer")
-                }
-                setPendingUrl(null)
-              }}
-            >
-              {labels.linkWarningConfirm}
-            </Button>
-          </ModalFooter>
+          <ModalContent
+            aria-describedby={undefined}
+            onCloseAutoFocus={(event) => {
+              event.preventDefault()
+              if (opener.current?.isConnected) opener.current.focus()
+            }}
+          >
+            <ModalHeader>
+              <ModalTitle>{labels.linkWarningTitle}</ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+              <p className="m-0">{labels.linkWarningBody}</p>
+              <p className="mt-2 break-all rounded-sm bg-newt-bg-base p-2 font-mono text-[13px] text-newt-text-primary">
+                {pendingUrl}
+              </p>
+            </ModalBody>
+            <ModalFooter>
+              <Button variant="secondary" onClick={() => setPendingUrl(null)}>
+                {labels.linkWarningCancel}
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (pendingUrl) {
+                    window.open(pendingUrl, "_blank", "noopener,noreferrer")
+                  }
+                  setPendingUrl(null)
+                }}
+              >
+                {labels.linkWarningConfirm}
+              </Button>
+            </ModalFooter>
+          </ModalContent>
         </Modal>
       </div>
     )

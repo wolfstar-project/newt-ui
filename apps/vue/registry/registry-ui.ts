@@ -1533,6 +1533,7 @@ export const ui: Registry = [
     title: "Modal",
     description:
       "A centered dialog over a dimmed overlay that closes on Escape, overlay click or an explicit close control.",
+    dependencies: ["reka-ui"],
     registryDependencies: ["button"],
     files: [
       {
@@ -1540,7 +1541,23 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
+        path: "ui/modal/ModalTrigger.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/modal/ModalContent.vue",
+        type: "registry:ui",
+      },
+      {
         path: "ui/modal/ModalHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/modal/ModalTitle.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/modal/ModalDescription.vue",
         type: "registry:ui",
       },
       {
@@ -1553,10 +1570,6 @@ export const ui: Registry = [
       },
       {
         path: "ui/modal/ModalClose.vue",
-        type: "registry:ui",
-      },
-      {
-        path: "ui/modal/focus.ts",
         type: "registry:ui",
       },
       {

@@ -1,189 +1,95 @@
 "use client"
 
+import { Dialog as DialogPrimitive } from "radix-ui"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-type ModalContextValue = {
-  close: () => void
-  titleId: string
-}
+/*
+ * Radix owns the behaviour: open state, the focus trap, Escape and outside
+ * press, scroll lock, hiding the page from screen readers, and giving focus
+ * back to the trigger. Only the look is newt/ui's.
+ */
+const Modal = DialogPrimitive.Root
 
-const ModalContext = React.createContext<ModalContextValue | null>(null)
-
-function useModalContext() {
-  const ctx = React.useContext(ModalContext)
-  if (!ctx) {
-    throw new Error("Modal components must be rendered inside <Modal>")
-  }
-  return ctx
-}
-
-/* ---------------------------------------------------------------------------
- * Focus
- *
- * A modal dialog owns the keyboard while it is open: focus moves into it,
- * Tab and Shift+Tab cycle through its controls without reaching the page
- * behind, and closing hands focus back to whatever held it before.
- * ------------------------------------------------------------------------ */
-
-const FOCUSABLE = [
-  "a[href]",
-  "area[href]",
-  "button:not([disabled])",
-  "input:not([disabled]):not([type='hidden'])",
-  "select:not([disabled])",
-  "textarea:not([disabled])",
-  "iframe",
-  "audio[controls]",
-  "video[controls]",
-  "[contenteditable]:not([contenteditable='false'])",
-  "[tabindex]:not([tabindex='-1'])",
-].join(",")
-
-/** The controls Tab can reach inside `container`, in tab order. */
-function tabbablesIn(container: HTMLElement): HTMLElement[] {
-  return [...container.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
-    (element) => {
-      if (element.tabIndex < 0 || element.closest("[inert]")) return false
-      const style = getComputedStyle(element)
-      return style.visibility !== "hidden" && style.display !== "none"
-    }
-  )
-}
-
-/** Keeps a Tab press inside `container`, wrapping at either end. */
-function containTab(event: KeyboardEvent, container: HTMLElement) {
-  const tabbables = tabbablesIn(container)
-  const first = tabbables[0]
-  const last = tabbables[tabbables.length - 1]
-  const active = document.activeElement
-  if (first === undefined || last === undefined) {
-    event.preventDefault()
-    container.focus()
-    return
-  }
-  const inside = active instanceof Node && container.contains(active)
-  if (event.shiftKey && (!inside || active === first || active === container)) {
-    event.preventDefault()
-    last.focus()
-  } else if (!event.shiftKey && (!inside || active === last)) {
-    event.preventDefault()
-    first.focus()
-  }
-}
-
-export interface ModalProps extends React.ComponentProps<"div"> {
-  /** Whether the modal is shown. */
-  open?: boolean
-  /** Called with `false` when the overlay is clicked, Escape is pressed or a ModalClose is activated. */
-  onOpenChange?: (open: boolean) => void
-}
+/*
+ * It has no look of its own. Pass `asChild` to put the state on your own
+ * button: `<ModalTrigger asChild><Button>Open</Button></ModalTrigger>`.
+ * Focus returns to the trigger when the modal closes. A modal opened from
+ * state alone has no trigger, so pass `onCloseAutoFocus` to `ModalContent`
+ * to say where focus goes.
+ */
+const ModalTrigger = DialogPrimitive.Trigger
 
 /**
- * A modal dialog. While open it takes focus (its first control, or itself
- * when it has none), keeps Tab and Shift+Tab inside, and on close returns
- * focus to the element that held it when it opened.
+ * Closes the modal when activated. Wrap a Button with `asChild` to keep its styling:
+ * `<ModalClose asChild><Button variant="secondary">Cancel</Button></ModalClose>`
  */
-const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
-  ({ className, open = false, onOpenChange, children, ...props }, ref) => {
-    const titleId = React.useId()
-    const dialog = React.useRef<HTMLDivElement | null>(null)
-    React.useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
-      ref,
-      () => dialog.current
-    )
-    const close = React.useCallback(() => onOpenChange?.(false), [onOpenChange])
+const ModalClose = DialogPrimitive.Close
 
-    React.useEffect(() => {
-      if (!open) return
-      const onKeyDown = (e: KeyboardEvent) => {
-        if (e.key === "Escape") close()
-        else if (e.key === "Tab" && dialog.current) {
-          containTab(e, dialog.current)
-        }
-      }
-      document.addEventListener("keydown", onKeyDown)
-      return () => document.removeEventListener("keydown", onKeyDown)
-    }, [open, close])
-
-    /*
-     * The element that held focus when the modal opened, read during the
-     * render that opens it: by the time an effect runs, a child with
-     * `autoFocus` has already taken focus and the opener would be lost. This
-     * branch only runs when `open` changes, which a server render never sees.
+const ModalContent = React.forwardRef<
+  React.ComponentRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    /**
+     * The element the overlay and panel are portalled into. Defaults to
+     * `document.body`. A modal opened below a `DirectionProvider` or a themed
+     * wrapper passes that element, so it keeps the direction and the palette.
      */
-    const [opener, setOpener] = React.useState<HTMLElement | null>(null)
-    const [wasOpen, setWasOpen] = React.useState(open)
-    if (open !== wasOpen) {
-      setWasOpen(open)
-      const active = open ? document.activeElement : null
-      setOpener(active instanceof HTMLElement ? active : null)
-    }
-
-    React.useEffect(() => {
-      const element = dialog.current
-      if (!open || !element) return
-      const active = document.activeElement
-      const inside = active instanceof Node && element.contains(active)
-      /* Mounted already open, there was no opening render to read; the
-       * element holding focus now is the best guess. */
-      const returnTo =
-        opener ?? (active instanceof HTMLElement && !inside ? active : null)
-      /* A child that focused itself keeps focus. */
-      if (!inside) (tabbablesIn(element)[0] ?? element).focus()
-      return () => {
-        if (returnTo?.isConnected) returnTo.focus()
-      }
-    }, [open, opener])
-
-    if (!open) return null
-
-    return (
-      <ModalContext.Provider value={{ close, titleId }}>
-        <div
-          data-state="open"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-newt-overlay"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) close()
-          }}
-        >
-          <div
-            ref={dialog}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={titleId}
-            tabIndex={-1}
-            className={cn(
-              "w-[440px] max-w-[90vw] rounded-lg bg-newt-bg-elevated shadow-elevation-high outline-none",
-              className
-            )}
-            {...props}
-          >
-            {children}
-          </div>
-        </div>
-      </ModalContext.Provider>
-    )
+    container?: React.ComponentProps<typeof DialogPrimitive.Portal>["container"]
   }
-)
-Modal.displayName = "Modal"
+>(({ className, children, container, ...props }, ref) => (
+  <DialogPrimitive.Portal container={container}>
+    <DialogPrimitive.Overlay className="fixed inset-0 z-[100] bg-newt-overlay" />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed start-1/2 top-1/2 z-[100] w-[440px] max-w-[90vw] -translate-y-1/2 translate-x-[calc(var(--newt-dir)*-50%)] rounded-lg bg-newt-bg-elevated shadow-elevation-high outline-none",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </DialogPrimitive.Content>
+  </DialogPrimitive.Portal>
+))
+ModalContent.displayName = "ModalContent"
 
 const ModalHeader = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div">
->(({ className, ...props }, ref) => {
-  const { titleId } = useModalContext()
-  return (
-    <div
-      ref={ref}
-      id={titleId}
-      className={cn("px-4 pt-4 text-xl font-semibold", className)}
-      {...props}
-    />
-  )
-})
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("px-4 pt-4", className)} {...props} />
+))
 ModalHeader.displayName = "ModalHeader"
+
+/** The dialog's accessible name. Give it real text. */
+const ModalTitle = React.forwardRef<
+  React.ComponentRef<typeof DialogPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Title
+    ref={ref}
+    className={cn("m-0 text-xl font-semibold", className)}
+    {...props}
+  />
+))
+ModalTitle.displayName = "ModalTitle"
+
+/**
+ * Radix links it to the dialog with `aria-describedby`. A modal without one
+ * passes `aria-describedby={undefined}` to `ModalContent` to say so.
+ */
+const ModalDescription = React.forwardRef<
+  React.ComponentRef<typeof DialogPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Description
+    ref={ref}
+    className={cn("m-0 text-sm leading-5 text-newt-text-secondary", className)}
+    {...props}
+  />
+))
+ModalDescription.displayName = "ModalDescription"
 
 const ModalBody = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
   ({ className, ...props }, ref) => (
@@ -214,45 +120,14 @@ const ModalFooter = React.forwardRef<
 ))
 ModalFooter.displayName = "ModalFooter"
 
-export interface ModalCloseProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Render the child element instead of a button, injecting the click handler. */
-  asChild?: boolean
+export {
+  Modal,
+  ModalTrigger,
+  ModalContent,
+  ModalHeader,
+  ModalTitle,
+  ModalDescription,
+  ModalBody,
+  ModalFooter,
+  ModalClose,
 }
-
-/**
- * Closes the modal when activated. Wrap a Button with `asChild` to keep its styling:
- * `<ModalClose asChild><Button variant="secondary">Cancel</Button></ModalClose>`
- */
-const ModalClose = React.forwardRef<HTMLButtonElement, ModalCloseProps>(
-  ({ asChild, onClick, children, ...props }, ref) => {
-    const { close } = useModalContext()
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      onClick?.(e)
-      if (!e.defaultPrevented) close()
-    }
-    if (asChild && React.isValidElement(children)) {
-      // SAFETY: asChild renders an arbitrary child element and must inject an
-      // onClick handler; React.isValidElement only narrows to
-      // ReactElement<unknown>, so the caller-supplied element's prop shape
-      // can't be verified from ReactNode alone.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      const child = children as React.ReactElement<{
-        onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-      }>
-      return React.cloneElement(child, {
-        onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
-          child.props.onClick?.(e)
-          handleClick(e)
-        },
-      })
-    }
-    return (
-      <button ref={ref} type="button" onClick={handleClick} {...props}>
-        {children}
-      </button>
-    )
-  }
-)
-ModalClose.displayName = "ModalClose"
-
-export { Modal, ModalHeader, ModalBody, ModalFooter, ModalClose }

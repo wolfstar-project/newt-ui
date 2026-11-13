@@ -1,14 +1,13 @@
-"use client"
-
-import * as React from "react"
-
 import { Button } from "@/registry/bases/newt/ui/button"
 import {
   Modal,
   ModalBody,
   ModalClose,
+  ModalContent,
   ModalFooter,
   ModalHeader,
+  ModalTitle,
+  ModalTrigger,
 } from "@/registry/bases/newt/ui/modal"
 
 const RULES = [
@@ -27,15 +26,15 @@ const RULES = [
  * are however long the text gets.
  */
 export default function ModalLongContentDemo() {
-  const [open, setOpen] = React.useState(false)
-
   return (
-    <>
-      <Button variant="secondary" onClick={() => setOpen(true)}>
-        Read the rules
-      </Button>
-      <Modal open={open} onOpenChange={setOpen}>
-        <ModalHeader>Server rules</ModalHeader>
+    <Modal>
+      <ModalTrigger asChild>
+        <Button variant="secondary">Read the rules</Button>
+      </ModalTrigger>
+      <ModalContent aria-describedby={undefined}>
+        <ModalHeader>
+          <ModalTitle>Server rules</ModalTitle>
+        </ModalHeader>
         <ModalBody className="max-h-48 overflow-y-auto">
           <ol className="flex list-decimal flex-col gap-3 ps-5">
             {RULES.map((rule) => (
@@ -47,9 +46,11 @@ export default function ModalLongContentDemo() {
           <ModalClose asChild>
             <Button variant="secondary">Not now</Button>
           </ModalClose>
-          <Button onClick={() => setOpen(false)}>I agree</Button>
+          <ModalClose asChild>
+            <Button>I agree</Button>
+          </ModalClose>
         </ModalFooter>
-      </Modal>
-    </>
+      </ModalContent>
+    </Modal>
   )
 }
