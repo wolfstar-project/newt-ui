@@ -1593,6 +1593,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "slider-min-max-demo",
+    type: "registry:example",
+    registryDependencies: ["slider"],
+    files: [
+      {
+        path: "examples/slider-min-max-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "slider-disabled-demo",
     type: "registry:example",
     registryDependencies: ["slider"],

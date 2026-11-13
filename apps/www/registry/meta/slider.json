@@ -7,5 +7,5 @@
   "vueFiles": ["Slider.vue", "index.ts"],
   "reactDemo": "slider-demo",
   "vueDemo": "SliderDemo",
-  "examples": ["steps", "range", "disabled"]
+  "examples": ["steps", "range", "min-max", "disabled"]
 }

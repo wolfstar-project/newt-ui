@@ -3269,6 +3269,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "SliderMinMaxDemo",
+    {
+      name: "SliderMinMaxDemo",
+      type: "registry:example",
+      registryDependencies: ["slider"],
+      files: ["registry/bases/newt/examples/SliderMinMaxDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SliderMinMaxDemo.vue")
+      ),
+    },
+  ],
+  [
     "SliderDisabledDemo",
     {
       name: "SliderDisabledDemo",

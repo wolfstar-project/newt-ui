@@ -31,6 +31,12 @@ With a small `max` and a mark at every stop, the slider becomes a short scale of
 
 <ComponentPreview name="slider" variant="range" />
 
+### Minimum and maximum
+
+Pass two values to get two grabbers, one for each end of a span. The `aria-label` names the group around them, and each grabber is read as "Minimum" or "Maximum". `minStepsBetweenThumbs` (`min-steps-between-thumbs` in Vue) keeps them at least one step apart.
+
+<ComponentPreview name="slider" variant="min-max" />
+
 ### Disabled
 
 `disabled` dims the whole control and takes it out of the tab order. Say why nearby, because the slider itself cannot.

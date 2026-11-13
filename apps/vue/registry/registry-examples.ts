@@ -1593,6 +1593,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "SliderMinMaxDemo",
+    type: "registry:example",
+    registryDependencies: ["slider"],
+    files: [
+      {
+        path: "examples/SliderMinMaxDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SliderDisabledDemo",
     type: "registry:example",
     registryDependencies: ["slider"],

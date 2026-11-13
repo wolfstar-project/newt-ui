@@ -2899,6 +2899,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "slider-min-max-demo",
+    {
+      name: "slider-min-max-demo",
+      type: "registry:example",
+      registryDependencies: ["slider"],
+      files: ["registry/bases/newt/examples/slider-min-max-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/slider-min-max-demo")
+      ),
+    },
+  ],
+  [
     "slider-disabled-demo",
     {
       name: "slider-disabled-demo",
