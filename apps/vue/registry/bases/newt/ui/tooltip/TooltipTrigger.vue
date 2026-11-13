@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import { TooltipTrigger, type TooltipTriggerProps } from "reka-ui"
 
-import { cn } from "@/lib/utils"
-
-const props = defineProps<{ class?: HTMLAttributes["class"] }>()
+const props = defineProps<TooltipTriggerProps>()
 </script>
 
 <template>
-  <span :class="cn('inline-flex', props.class)">
+  <TooltipTrigger v-bind="props">
     <slot />
-  </span>
+  </TooltipTrigger>
 </template>

@@ -1,54 +1,51 @@
 <script setup lang="ts">
-import { inject, type HTMLAttributes } from "vue"
+import {
+  PopoverContent,
+  PopoverPortal,
+  useForwardPropsEmits,
+  type PopoverContentEmits,
+  type PopoverContentProps,
+} from "reka-ui"
+import { computed, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-import { popoverKey } from "."
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(
-  defineProps<{
-    class?: HTMLAttributes["class"]
-    /** Which side of the trigger the panel opens on. */
-    side?: "bottom" | "top"
-    /** Which edge of the trigger the panel lines up with. */
-    align?: "start" | "center" | "end"
-  }>(),
-  { side: "bottom", align: "start" }
+  defineProps<
+    PopoverContentProps & {
+      class?: HTMLAttributes["class"]
+      /**
+       * The element it is portalled into. Defaults to `body`; pass the
+       * enclosing native `<dialog>` or a themed wrapper to keep it there.
+       */
+      container?: string | HTMLElement
+    }
+  >(),
+  { align: "start", sideOffset: 8 }
 )
+const emits = defineEmits<PopoverContentEmits>()
 
-const popover = inject(popoverKey)
-if (popover === undefined) {
-  throw new Error("<PopoverContent> must be used inside a <Popover>.")
-}
-
-const SIDE = {
-  bottom: "top-[calc(100%+8px)]",
-  top: "bottom-[calc(100%+8px)]",
-} as const
-
-const ALIGN = {
-  start: "start-0",
-  center: "start-1/2 translate-x-[calc(var(--newt-dir)*-50%)]",
-  end: "end-0",
-} as const
+const delegated = computed(() => {
+  const { class: _class, container: _container, ...rest } = props
+  return rest
+})
+const forwarded = useForwardPropsEmits(delegated, emits)
 </script>
 
 <template>
-  <div
-    v-if="popover.open.value"
-    :id="`${popover.id}-content`"
-    role="dialog"
-    :data-side="props.side"
-    :data-align="props.align"
-    :class="
-      cn(
-        'absolute z-50 flex w-[280px] max-w-[90vw] flex-col items-start gap-2 rounded-md border border-newt-border bg-newt-bg-floating p-3 text-sm leading-5 text-newt-text-secondary shadow-elevation-high',
-        SIDE[props.side],
-        ALIGN[props.align],
-        props.class
-      )
-    "
-  >
-    <slot />
-  </div>
+  <PopoverPortal :to="props.container">
+    <PopoverContent
+      v-bind="{ ...forwarded, ...$attrs }"
+      :class="
+        cn(
+          'z-[110] flex w-[280px] max-w-[90vw] flex-col items-start gap-2 rounded-md border border-newt-border bg-newt-bg-floating p-3 text-sm leading-5 text-newt-text-secondary shadow-elevation-high outline-none',
+          props.class
+        )
+      "
+    >
+      <slot />
+    </PopoverContent>
+  </PopoverPortal>
 </template>

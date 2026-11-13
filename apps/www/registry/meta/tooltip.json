@@ -2,8 +2,11 @@
   "name": "tooltip",
   "title": "Tooltip",
   "description": "A small floating label that appears above an element on hover or focus.",
+  "dependencies": ["radix-ui"],
+  "vueDependencies": ["reka-ui"],
   "vueFiles": [
     "Tooltip.vue",
+    "TooltipProvider.vue",
     "TooltipTrigger.vue",
     "TooltipContent.vue",
     "index.ts"

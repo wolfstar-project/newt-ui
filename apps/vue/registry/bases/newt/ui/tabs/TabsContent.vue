@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
-import { computed, inject } from "vue"
+import { TabsContent, type TabsContentProps } from "reka-ui"
+import { computed, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-import { TABS_INJECTION_KEY } from "."
+const props = defineProps<
+  TabsContentProps & { class?: HTMLAttributes["class"] }
+>()
 
-const props = defineProps<{
-  value: string
-  class?: HTMLAttributes["class"]
-}>()
-
-const ctx = inject(TABS_INJECTION_KEY)
-if (!ctx) throw new Error("<TabsContent> must be used within <Tabs>")
-
-const active = computed(() => ctx.value.value === props.value)
+const delegated = computed(() => {
+  const { class: _class, ...rest } = props
+  return rest
+})
 </script>
 
 <template>
-  <div
-    v-if="active"
-    role="tabpanel"
-    data-state="active"
-    :class="cn('mt-2', props.class)"
+  <TabsContent
+    v-bind="delegated"
+    :class="
+      cn(
+        'mt-2 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
+        props.class
+      )
+    "
   >
     <slot />
-  </div>
+  </TabsContent>
 </template>

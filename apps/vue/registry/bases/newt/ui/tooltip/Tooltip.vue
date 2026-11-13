@@ -1,13 +1,29 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import {
+  injectTooltipProviderContext,
+  TooltipProvider,
+  TooltipRoot,
+  useForwardPropsEmits,
+  type TooltipRootEmits,
+  type TooltipRootProps,
+} from "reka-ui"
 
-import { cn } from "@/lib/utils"
+const props = defineProps<TooltipRootProps>()
+const emits = defineEmits<TooltipRootEmits>()
 
-const props = defineProps<{ class?: HTMLAttributes["class"] }>()
+const forwarded = useForwardPropsEmits(props, emits)
+
+/* A tooltip with no `TooltipProvider` above it brings its own. */
+const shared = injectTooltipProviderContext(null)
 </script>
 
 <template>
-  <span :class="cn('group relative inline-flex', props.class)">
+  <TooltipRoot v-if="shared" v-bind="forwarded">
     <slot />
-  </span>
+  </TooltipRoot>
+  <TooltipProvider v-else :delay-duration="props.delayDuration ?? 150">
+    <TooltipRoot v-bind="forwarded">
+      <slot />
+    </TooltipRoot>
+  </TooltipProvider>
 </template>

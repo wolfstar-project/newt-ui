@@ -13,7 +13,12 @@ import {
   ChannelInfoToolbar,
   ChannelInfoType,
 } from "@/registry/bases/newt/ui/channel-info"
-import { Tabs, TabsContent, TabsTrigger } from "@/registry/bases/newt/ui/tabs"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/registry/bases/newt/ui/tabs"
 
 export default function ChannelInfoDemo() {
   return (
@@ -58,17 +63,16 @@ export default function ChannelInfoDemo() {
       </ChannelInfoIdentity>
 
       {/* `contents` lets the tab strip and the panel sit directly in the
-          panel column, so the panel is not nested inside the tablist. */}
-      <Tabs defaultValue="threads" role="presentation" className="contents">
-        <div
-          role="tablist"
+          panel column; the panel is a sibling of the tab list, not inside it. */}
+      <Tabs defaultValue="threads" className="contents">
+        <TabsList
           aria-label="Channel information sections"
-          className="mx-2 flex gap-1 rounded-md bg-newt-bg-base p-1"
+          className="mx-2 w-auto"
         >
           <TabsTrigger value="members">Members</TabsTrigger>
           <TabsTrigger value="pins">Pins</TabsTrigger>
           <TabsTrigger value="threads">Threads</TabsTrigger>
-        </div>
+        </TabsList>
 
         <ChannelInfoPanel>
           <TabsContent value="members">

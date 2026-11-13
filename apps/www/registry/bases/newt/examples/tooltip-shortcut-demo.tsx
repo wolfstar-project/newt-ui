@@ -10,15 +10,10 @@ import {
 export default function TooltipShortcutDemo() {
   return (
     <Tooltip>
-      <TooltipTrigger>
-        <Button variant="secondary" aria-describedby="tooltip-shortcut">
-          Quick switcher
-        </Button>
+      <TooltipTrigger asChild>
+        <Button variant="secondary">Quick switcher</Button>
       </TooltipTrigger>
-      <TooltipContent
-        id="tooltip-shortcut"
-        className="flex items-center gap-1.5"
-      >
+      <TooltipContent className="flex items-center gap-1.5">
         Jump to a channel
         <Kbd>Ctrl</Kbd>
         <Kbd>K</Kbd>

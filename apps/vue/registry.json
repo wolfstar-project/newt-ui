@@ -1755,9 +1755,14 @@
       "type": "registry:ui",
       "title": "Popover",
       "description": "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+      "dependencies": ["reka-ui"],
       "files": [
         {
           "path": "registry/bases/newt/ui/popover/Popover.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/popover/PopoverAnchor.vue",
           "type": "registry:ui"
         },
         {
@@ -2345,9 +2350,14 @@
       "type": "registry:ui",
       "title": "Tabs",
       "description": "A pill-style tab list that switches the active tab on click.",
+      "dependencies": ["reka-ui"],
       "files": [
         {
           "path": "registry/bases/newt/ui/tabs/Tabs.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/tabs/TabsList.vue",
           "type": "registry:ui"
         },
         {
@@ -2531,9 +2541,14 @@
       "type": "registry:ui",
       "title": "Tooltip",
       "description": "A small floating label that appears above an element on hover or focus.",
+      "dependencies": ["reka-ui"],
       "files": [
         {
           "path": "registry/bases/newt/ui/tooltip/Tooltip.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/tooltip/TooltipProvider.vue",
           "type": "registry:ui"
         },
         {

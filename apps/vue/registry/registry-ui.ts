@@ -1743,9 +1743,14 @@ export const ui: Registry = [
     title: "Popover",
     description:
       "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/popover/Popover.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/popover/PopoverAnchor.vue",
         type: "registry:ui",
       },
       {
@@ -2331,9 +2336,14 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Tabs",
     description: "A pill-style tab list that switches the active tab on click.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/tabs/Tabs.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/tabs/TabsList.vue",
         type: "registry:ui",
       },
       {
@@ -2516,9 +2526,14 @@ export const ui: Registry = [
     title: "Tooltip",
     description:
       "A small floating label that appears above an element on hover or focus.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/tooltip/Tooltip.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/tooltip/TooltipProvider.vue",
         type: "registry:ui",
       },
       {

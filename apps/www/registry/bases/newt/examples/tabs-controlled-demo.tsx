@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { Tabs, TabsTrigger } from "@/registry/bases/newt/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/registry/bases/newt/ui/tabs"
 
 const TABS = [
   { value: "online", label: "Online", summary: "4 friends online" },
@@ -20,11 +20,13 @@ export default function TabsControlledDemo() {
   return (
     <div className="flex flex-col items-start gap-3">
       <Tabs value={tab} onValueChange={setTab}>
-        {TABS.map((item) => (
-          <TabsTrigger key={item.value} value={item.value}>
-            {item.label}
-          </TabsTrigger>
-        ))}
+        <TabsList>
+          {TABS.map((item) => (
+            <TabsTrigger key={item.value} value={item.value}>
+              {item.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
       </Tabs>
       <p className="text-sm text-newt-text-secondary">
         {TABS.find((item) => item.value === tab)?.summary}

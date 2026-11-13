@@ -111,6 +111,14 @@ function promptItem(
   }
 }
 
+/** The npm packages one framework's port of a component needs. */
+export function npmPackages(
+  framework: "react" | "vue",
+  meta: ComponentMeta
+): readonly string[] {
+  return framework === "vue" ? meta.vueDependencies : meta.dependencies
+}
+
 /**
  * The "copy prompt" text of a component page: the component, every registry
  * item it builds on and the npm packages all of them need, for an assistant
@@ -126,7 +134,9 @@ export function componentPrompt(
     findComponent
   )
   const packages = [
-    ...new Set([meta, ...dependencies].flatMap((item) => item.dependencies)),
+    ...new Set(
+      [meta, ...dependencies].flatMap((item) => npmPackages(framework, item))
+    ),
   ]
   return buildComponentPrompt({
     framework,

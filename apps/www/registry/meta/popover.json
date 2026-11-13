@@ -2,8 +2,11 @@
   "name": "popover",
   "title": "Popover",
   "description": "A small panel anchored to the button that opens it, closed by Escape or a press outside.",
+  "dependencies": ["radix-ui"],
+  "vueDependencies": ["reka-ui"],
   "vueFiles": [
     "Popover.vue",
+    "PopoverAnchor.vue",
     "PopoverTrigger.vue",
     "PopoverContent.vue",
     "index.ts"

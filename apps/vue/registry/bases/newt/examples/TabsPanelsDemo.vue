@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { Tabs, TabsContent, TabsTrigger } from "~~/registry/bases/newt/ui/tabs"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "~~/registry/bases/newt/ui/tabs"
 
 /*
- * `TabsContent` reads the active tab from `Tabs`, so the panels sit inside it.
- * `Tabs` is the tablist by default, which would put the panels inside the list
- * of tab controls: here it only shares state (`role="none"`, no pill of its
- * own) and the triggers get a tablist wrapper of their own.
+ * `Tabs` shares the state, `TabsList` holds the triggers, and each
+ * `TabsContent` is a sibling of the list. Reka links every trigger to its
+ * panel with `aria-controls` and `aria-labelledby`.
  */
 </script>
 
 <template>
-  <Tabs
-    default-value="overview"
-    role="none"
-    class="block w-full max-w-sm bg-transparent p-0"
-  >
-    <div role="tablist" class="flex w-fit gap-1 rounded-md bg-newt-bg-base p-1">
+  <Tabs default-value="overview" class="w-full max-w-sm">
+    <TabsList>
       <TabsTrigger value="overview">Overview</TabsTrigger>
       <TabsTrigger value="roles">Roles</TabsTrigger>
       <TabsTrigger value="invites">Invites</TabsTrigger>
-    </div>
+    </TabsList>
     <TabsContent
       value="overview"
       class="px-2.5 pt-2 text-sm leading-5 text-newt-text-secondary"

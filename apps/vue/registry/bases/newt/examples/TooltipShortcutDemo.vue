@@ -12,12 +12,10 @@ import {
 
 <template>
   <Tooltip>
-    <TooltipTrigger>
-      <Button variant="secondary" aria-describedby="tooltip-shortcut">
-        Quick switcher
-      </Button>
+    <TooltipTrigger as-child>
+      <Button variant="secondary"> Quick switcher </Button>
     </TooltipTrigger>
-    <TooltipContent id="tooltip-shortcut" class="flex items-center gap-1.5">
+    <TooltipContent class="flex items-center gap-1.5">
       Jump to a channel
       <Kbd>Ctrl</Kbd>
       <Kbd>K</Kbd>
