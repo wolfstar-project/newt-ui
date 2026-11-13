@@ -69,6 +69,13 @@ Cap `ModalBody` with a `max-h-*` utility and `overflow-y-auto` when the text can
       type: "string | undefined",
       description: "Pass `undefined` when the modal has no `ModalDescription`.",
     },
+    {
+      name: "container",
+      type: "HTMLElement",
+      description:
+        "Element the overlay and panel are portalled into. A modal below a `DirectionProvider` or a themed wrapper passes that element to keep the direction and the palette.",
+      default: "document.body",
+    },
   ]}
 />
 

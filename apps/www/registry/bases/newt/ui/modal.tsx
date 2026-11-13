@@ -29,9 +29,16 @@ const ModalClose = DialogPrimitive.Close
 
 const ModalContent = React.forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DialogPrimitive.Portal>
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    /**
+     * The element the overlay and panel are portalled into. Defaults to
+     * `document.body`. A modal opened below a `DirectionProvider` or a themed
+     * wrapper passes that element, so it keeps the direction and the palette.
+     */
+    container?: React.ComponentProps<typeof DialogPrimitive.Portal>["container"]
+  }
+>(({ className, children, container, ...props }, ref) => (
+  <DialogPrimitive.Portal container={container}>
     <DialogPrimitive.Overlay className="fixed inset-0 z-[100] bg-newt-overlay" />
     <DialogPrimitive.Content
       ref={ref}
