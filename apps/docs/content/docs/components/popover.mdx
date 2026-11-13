@@ -53,6 +53,13 @@ It is built on [Radix Popover](https://www.radix-ui.com/primitives/docs/componen
       description: "Which edge of the trigger the panel lines up with.",
       default: '"start"',
     },
+    {
+      name: "container",
+      type: "HTMLElement",
+      description:
+        "Element the panel is portalled into. Pass the enclosing native `<dialog>` or a themed wrapper to keep it there.",
+      default: "document.body",
+    },
   ]}
 />
 

@@ -8,6 +8,7 @@ import Tabs from "blume/components/content/Tabs.astro"
 import {
   componentPrompt,
   findComponent,
+  npmPackages,
   registryFiles,
 } from "../../lib/registry"
 import { SITE } from "../../lib/site"
@@ -51,7 +52,8 @@ const prompts = [
   { framework: "vue", label: "Vue", text: componentPrompt("vue", meta) },
 ] as const
 
-const npmDependencies = meta.dependencies.join(" ")
+const reactPackages = npmPackages("react", meta).join(" ")
+const vuePackages = npmPackages("vue", meta).join(" ")
 ---
 
 <Tabs hash={false} sync={false}>
@@ -62,9 +64,28 @@ const npmDependencies = meta.dependencies.join(" ")
   <Tab title="Manual">
     <Steps>
       {
-        npmDependencies !== "" && (
+        (reactPackages !== "" || vuePackages !== "") && (
           <Step title="Install the dependencies">
-            <PmTabs cmd={`--yes ${npmDependencies}`} />
+            {reactPackages === vuePackages ? (
+              <PmTabs cmd={`--yes ${reactPackages}`} />
+            ) : (
+              <>
+                <div data-framework="react">
+                  {reactPackages === "" ? (
+                    <p>The React port needs no package.</p>
+                  ) : (
+                    <PmTabs cmd={`--yes ${reactPackages}`} />
+                  )}
+                </div>
+                <div data-framework="vue">
+                  {vuePackages === "" ? (
+                    <p>The Vue port needs no package.</p>
+                  ) : (
+                    <PmTabs cmd={`--yes ${vuePackages}`} />
+                  )}
+                </div>
+              </>
+            )}
           </Step>
         )
       }

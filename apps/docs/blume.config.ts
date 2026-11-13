@@ -82,10 +82,13 @@ const installation: ComponentMarkdown = ({ props }) => {
   if (meta === undefined) return null
   const react = targetPaths("react", meta)
   const vue = targetPaths("vue", meta)
+  const reactPackages = meta.dependencies.join(", ")
+  const vuePackages = meta.vueDependencies.join(", ")
+  const perFramework = `React: ${reactPackages || "none"}. Vue: ${vuePackages || "none"}.`
   const dependencies =
-    meta.dependencies.length > 0
-      ? `\n\nnpm dependencies: ${meta.dependencies.join(", ")}.`
-      : ""
+    reactPackages === "" && vuePackages === ""
+      ? ""
+      : `\n\nnpm dependencies: ${reactPackages === vuePackages ? `${reactPackages}.` : perFramework}`
   const registryDependencies =
     meta.registryDependencies.length > 0
       ? ` Registry dependencies, installed with it: ${meta.registryDependencies.join(", ")}.`

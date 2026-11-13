@@ -6,6 +6,7 @@
   "vueDependencies": ["reka-ui"],
   "vueFiles": [
     "Tooltip.vue",
+    "TooltipProvider.vue",
     "TooltipTrigger.vue",
     "TooltipContent.vue",
     "index.ts"

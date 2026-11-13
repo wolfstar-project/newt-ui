@@ -2,12 +2,15 @@
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "~~/registry/bases/newt/ui/tooltip"
 
 /*
  * An icon-only button has no text of its own, so `aria-label` names it and
- * the tooltip shows the same words to sighted users.
+ * the tooltip shows the same words to sighted users. One `TooltipProvider`
+ * around the group shares the delay: after the first tooltip, the next one
+ * opens with no wait.
  */
 const actions = [
   {
@@ -26,27 +29,29 @@ const actions = [
 </script>
 
 <template>
-  <div class="flex gap-1 rounded-md bg-newt-bg-base p-1">
-    <Tooltip v-for="action in actions" :key="action.label">
-      <TooltipTrigger as-child>
-        <button
-          type="button"
-          :aria-label="action.label"
-          class="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-newt-text-secondary transition-colors duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5">
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              :d="action.icon"
-            />
-          </svg>
-        </button>
-      </TooltipTrigger>
-      <TooltipContent>{{ action.label }}</TooltipContent>
-    </Tooltip>
-  </div>
+  <TooltipProvider>
+    <div class="flex gap-1 rounded-md bg-newt-bg-base p-1">
+      <Tooltip v-for="action in actions" :key="action.label">
+        <TooltipTrigger as-child>
+          <button
+            type="button"
+            :aria-label="action.label"
+            class="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-newt-text-secondary transition-colors duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                :d="action.icon"
+              />
+            </svg>
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>{{ action.label }}</TooltipContent>
+      </Tooltip>
+    </div>
+  </TooltipProvider>
 </template>

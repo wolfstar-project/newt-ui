@@ -17,7 +17,12 @@ const delegated = computed(() => {
 <template>
   <TabsContent
     v-bind="delegated"
-    :class="cn('mt-2 focus-visible:outline-none', props.class)"
+    :class="
+      cn(
+        'mt-2 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
+        props.class
+      )
+    "
   >
     <slot />
   </TabsContent>
