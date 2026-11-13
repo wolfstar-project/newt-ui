@@ -8,14 +8,14 @@ date: 2026-11-13
 
 The rest of the interactive components now use a headless primitive for behaviour: [Radix UI](https://www.radix-ui.com) in React, [Reka UI](https://reka-ui.com) in Vue. newt/ui keeps the look. The parts and props follow shadcn/ui and shadcn-vue, so some names change.
 
-- `dropdown` is on DropdownMenu. `Dropdown` is the root. Add `DropdownTrigger` and `DropdownContent`. The item parts are now `DropdownItemText`, `DropdownItemLabel`, `DropdownItemDescription` and `DropdownSeparator`. `DropdownGroup`, `DropdownRadioGroup` and `DropdownRadioItem` are new. The `active` prop is gone; the primitive highlights the item.
+- `dropdown` is on DropdownMenu. Three names now mean something else. `Dropdown` was the panel and is now the root. `DropdownContent` was the text of an item and is now the panel; use `DropdownItemText` for the text. `DropdownLabel` was the label of an item and is now a group heading; use `DropdownItemLabel` for the item label. `DropdownDescription` is now `DropdownItemDescription`, and `DropdownDivider` is now `DropdownSeparator`. Add `DropdownTrigger`. `DropdownGroup`, `DropdownRadioGroup` and `DropdownRadioItem` are new. The `active` prop is gone; the primitive highlights the item.
 - `context-menu` is on ContextMenu. Add `ContextMenuTrigger` and `ContextMenuContent`. `ContextMenuDivider` is now `ContextMenuSeparator`. `ContextMenuGroup` and `ContextMenuLabel` are new.
-- `drawer` is on Dialog. Add `DrawerTrigger`, `DrawerContent`, `DrawerTitle` and `DrawerDescription`. `side` moves to `DrawerContent`.
-- `accordion` gains `AccordionTrigger` and `AccordionContent`. Each item needs a `value`. The root opens one item at a time and can close it. A closed panel is not in the page, so the browser's find does not reach it.
-- `toast` gains `ToastProvider`, `ToastViewport` and `ToastAction`. `duration` of `0` keeps a toast open.
+- `drawer` is on Dialog. Add `DrawerTrigger`, `DrawerContent`, `DrawerTitle` and `DrawerDescription`. `side` moves to `DrawerContent`. The Vue `drawerKey` and `DrawerContext` exports are gone.
+- `accordion` gains `AccordionTrigger` and `AccordionContent`. `AccordionItem` loses `title` and `defaultOpen`: put the title in `AccordionTrigger`, and pass the open item's `value` to the root's `defaultValue`. Each item needs a `value`. The root opens one item at a time and can close it. A closed panel is not in the page, so the browser's find does not reach it.
+- `toast` needs a `ToastProvider` and a `ToastViewport` above every `Toast`. `ToastAction` is new. `duration` of `0` keeps a toast open.
 - `command-palette` keeps its API. The shell is a Dialog, so focus returns to the trigger on close.
-- `checkbox-group`, `radio`, `slider` and `form-fields` use the matching primitive. `slider` takes and emits `number[]`. `radio` arrow keys move the selection.
-- `select-menu` is on Select and keeps its `options` prop. `entity-select` positions its list with Popover.
+- `checkbox-group`, `radio`, `slider` and `form-fields` use the matching primitive. `slider` takes and emits `number[]`. `radio` arrow keys move the selection. The Vue `useRadioGroup`, `RADIO_GROUP_KEY` and `RadioGroupContext` exports are gone. A checkbox with `checked` set to `indeterminate` draws a dash.
+- `select-menu` is on Select and keeps its `options` prop. Picking the option that is already selected no longer calls `onValueChange`. `entity-select` positions its list with Popover.
 - `avatar`, `divider` and `progress` are on Avatar, Separator and Progress. `avatar` renders a `span`. `divider` takes `orientation`.
 - Every portalled part takes `container`, the element it is portalled into.
 

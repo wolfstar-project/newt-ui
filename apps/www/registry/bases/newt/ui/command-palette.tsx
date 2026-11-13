@@ -163,8 +163,9 @@ const CommandPalette = React.forwardRef<
               className
             )}
             onOpenAutoFocus={(event) => {
-              onOpenAutoFocus?.(event)
+              // Save it first: the handler can move focus into the palette.
               previousFocus.current = document.activeElement
+              onOpenAutoFocus?.(event)
             }}
             onCloseAutoFocus={(event) => {
               onCloseAutoFocus?.(event)

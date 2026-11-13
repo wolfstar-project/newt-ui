@@ -142,8 +142,8 @@ const Checkbox = React.forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(
-      "inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-newt-border bg-newt-bg-input text-newt-on-accent transition-colors duration-fast ease-newt focus-visible:border-newt-brand focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
-      "data-[state=checked]:border-newt-brand data-[state=checked]:bg-newt-brand",
+      "group inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-newt-border bg-newt-bg-input text-newt-on-accent transition-colors duration-fast ease-newt focus-visible:border-newt-brand focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+      "data-[state=checked]:border-newt-brand data-[state=checked]:bg-newt-brand data-[state=indeterminate]:border-newt-brand data-[state=indeterminate]:bg-newt-brand",
       className
     )}
     {...props}
@@ -160,7 +160,15 @@ const Checkbox = React.forwardRef<
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M3 8.5 6.5 12 13 4.5" />
+        {/* A mixed state draws a dash, so a partial group does not read as full. */}
+        <path
+          className="group-data-[state=indeterminate]:hidden"
+          d="M3 8.5 6.5 12 13 4.5"
+        />
+        <path
+          className="hidden group-data-[state=indeterminate]:block"
+          d="M4 8h8"
+        />
       </svg>
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>

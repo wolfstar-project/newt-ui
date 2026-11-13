@@ -70,15 +70,22 @@ const id = useId()
  * label of the chosen row: its icon and its note come from the option.
  */
 const model = defineModel<string | undefined>({ default: undefined })
-const uncontrolled = ref(props.defaultValue)
-const selected = computed(() => model.value ?? uncontrolled.value)
+/*
+ * Without a bound v-model, defineModel keeps the pick locally. defaultValue
+ * shows only until the first pick, so a parent that clears its model clears
+ * the trigger too.
+ */
+const picked = ref(false)
+const selected = computed(
+  () => model.value ?? (picked.value ? undefined : props.defaultValue)
+)
 
 const selectedOption = computed(() =>
   options.value.find((option) => option.value === selected.value)
 )
 
 function onValueChange(next: string) {
-  uncontrolled.value = next
+  picked.value = true
   model.value = next
 }
 </script>
