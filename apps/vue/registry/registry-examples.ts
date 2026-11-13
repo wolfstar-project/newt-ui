@@ -599,7 +599,7 @@ export const examples: Registry = [
   {
     name: "DropdownDemo",
     type: "registry:example",
-    registryDependencies: ["dropdown"],
+    registryDependencies: ["dropdown", "button"],
     files: [
       {
         path: "examples/DropdownDemo.vue",
@@ -610,7 +610,7 @@ export const examples: Registry = [
   {
     name: "DropdownSimpleDemo",
     type: "registry:example",
-    registryDependencies: ["dropdown"],
+    registryDependencies: ["dropdown", "button"],
     files: [
       {
         path: "examples/DropdownSimpleDemo.vue",
@@ -621,7 +621,7 @@ export const examples: Registry = [
   {
     name: "DropdownStatusDemo",
     type: "registry:example",
-    registryDependencies: ["dropdown"],
+    registryDependencies: ["dropdown", "button"],
     files: [
       {
         path: "examples/DropdownStatusDemo.vue",

@@ -1,0 +1,24 @@
+---
+title: "November 2026 — Every interactive component on Radix and Reka UI"
+description: "Menus, drawer, accordion, toast, command palette, form controls, select menus and three display components now sit on Radix UI (React) and Reka UI (Vue)."
+type: changelog
+slug: changelog/2026-11-13-radix-components
+date: 2026-11-13
+---
+
+The rest of the interactive components now use a headless primitive for behaviour: [Radix UI](https://www.radix-ui.com) in React, [Reka UI](https://reka-ui.com) in Vue. newt/ui keeps the look. The parts and props follow shadcn/ui and shadcn-vue, so some names change.
+
+- `dropdown` is on DropdownMenu. `Dropdown` is the root. Add `DropdownTrigger` and `DropdownContent`. The item parts are now `DropdownItemText`, `DropdownItemLabel`, `DropdownItemDescription` and `DropdownSeparator`. `DropdownGroup`, `DropdownRadioGroup` and `DropdownRadioItem` are new. The `active` prop is gone; the primitive highlights the item.
+- `context-menu` is on ContextMenu. Add `ContextMenuTrigger` and `ContextMenuContent`. `ContextMenuDivider` is now `ContextMenuSeparator`. `ContextMenuGroup` and `ContextMenuLabel` are new.
+- `drawer` is on Dialog. Add `DrawerTrigger`, `DrawerContent`, `DrawerTitle` and `DrawerDescription`. `side` moves to `DrawerContent`.
+- `accordion` gains `AccordionTrigger` and `AccordionContent`. Each item needs a `value`. The root opens one item at a time and can close it. A closed panel is not in the page, so the browser's find does not reach it.
+- `toast` gains `ToastProvider`, `ToastViewport` and `ToastAction`. `duration` of `0` keeps a toast open.
+- `command-palette` keeps its API. The shell is a Dialog, so focus returns to the trigger on close.
+- `checkbox-group`, `radio`, `slider` and `form-fields` use the matching primitive. `slider` takes and emits `number[]`. `radio` arrow keys move the selection.
+- `select-menu` is on Select and keeps its `options` prop. `entity-select` positions its list with Popover.
+- `avatar`, `divider` and `progress` are on Avatar, Separator and Progress. `avatar` renders a `span`. `divider` takes `orientation`.
+- Every portalled part takes `container`, the element it is portalled into.
+
+`scrollbar` and `reaction` keep their own markup in this release.
+
+`newtui add` installs `radix-ui` (React) or `reka-ui` (Vue) next to these items. Existing copies keep working until you add the item again.

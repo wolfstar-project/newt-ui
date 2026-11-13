@@ -1,36 +1,37 @@
-"use client"
-
-import * as React from "react"
-
-import { Button, buttonVariants } from "@/registry/bases/newt/ui/button"
+import { Button } from "@/registry/bases/newt/ui/button"
 import {
   Drawer,
   DrawerBody,
   DrawerClose,
+  DrawerContent,
   DrawerFooter,
   DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
 } from "@/registry/bases/newt/ui/drawer"
 
 export default function DrawerDemo() {
-  const [open, setOpen] = React.useState(false)
-
   return (
-    <>
-      <Button variant="secondary" onClick={() => setOpen(true)}>
-        Open member details
-      </Button>
-      <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerHeader>Member details</DrawerHeader>
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button variant="secondary">Open member details</Button>
+      </DrawerTrigger>
+      <DrawerContent aria-describedby={undefined}>
+        <DrawerHeader>
+          <DrawerTitle>Member details</DrawerTitle>
+        </DrawerHeader>
         <DrawerBody>
           Joined 14 March. Three roles, no warnings on record.
         </DrawerBody>
         <DrawerFooter>
-          <DrawerClose className={buttonVariants({ variant: "secondary" })}>
-            Close
+          <DrawerClose asChild>
+            <Button variant="secondary">Close</Button>
           </DrawerClose>
-          <Button onClick={() => setOpen(false)}>Edit roles</Button>
+          <DrawerClose asChild>
+            <Button>Edit roles</Button>
+          </DrawerClose>
         </DrawerFooter>
-      </Drawer>
-    </>
+      </DrawerContent>
+    </Drawer>
   )
 }

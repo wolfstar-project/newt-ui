@@ -1,38 +1,47 @@
 <script setup lang="ts">
-import { Accordion, AccordionItem } from "~~/registry/bases/newt/ui/accordion"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~~/registry/bases/newt/ui/accordion"
 import { Badge } from "~~/registry/bases/newt/ui/badge"
 
 /* The heading takes more than text: here each one carries a count. */
 </script>
 
 <template>
-  <Accordion class="max-w-md">
-    <AccordionItem default-open>
-      <template #title>
+  <Accordion default-value="reports" class="max-w-md">
+    <AccordionItem value="reports">
+      <AccordionTrigger>
         <span class="flex items-center gap-2">
           Open reports
           <Badge variant="danger">3</Badge>
         </span>
-      </template>
-      Two for spam in the lounge, one for a display name.
+      </AccordionTrigger>
+      <AccordionContent>
+        Two for spam in the lounge, one for a display name.
+      </AccordionContent>
     </AccordionItem>
-    <AccordionItem>
-      <template #title>
+    <AccordionItem value="requests">
+      <AccordionTrigger>
         <span class="flex items-center gap-2">
           Join requests
           <Badge variant="brand">12</Badge>
         </span>
-      </template>
-      Twelve people are waiting for a moderator to let them in.
+      </AccordionTrigger>
+      <AccordionContent>
+        Twelve people are waiting for a moderator to let them in.
+      </AccordionContent>
     </AccordionItem>
-    <AccordionItem>
-      <template #title>
+    <AccordionItem value="appeals">
+      <AccordionTrigger>
         <span class="flex items-center gap-2">
           Appeals
           <Badge>0</Badge>
         </span>
-      </template>
-      Nobody has appealed a ban this week.
+      </AccordionTrigger>
+      <AccordionContent>Nobody has appealed a ban this week.</AccordionContent>
     </AccordionItem>
   </Accordion>
 </template>

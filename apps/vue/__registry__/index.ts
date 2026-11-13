@@ -31,6 +31,8 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: [
         "registry/bases/newt/ui/accordion/Accordion.vue",
         "registry/bases/newt/ui/accordion/AccordionItem.vue",
+        "registry/bases/newt/ui/accordion/AccordionTrigger.vue",
+        "registry/bases/newt/ui/accordion/AccordionContent.vue",
         "registry/bases/newt/ui/accordion/index.ts",
       ],
     },
@@ -467,9 +469,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "registry/bases/newt/ui/context-menu/ContextMenu.vue",
+        "registry/bases/newt/ui/context-menu/ContextMenuTrigger.vue",
+        "registry/bases/newt/ui/context-menu/ContextMenuContent.vue",
+        "registry/bases/newt/ui/context-menu/ContextMenuGroup.vue",
+        "registry/bases/newt/ui/context-menu/ContextMenuLabel.vue",
         "registry/bases/newt/ui/context-menu/ContextMenuItem.vue",
         "registry/bases/newt/ui/context-menu/ContextMenuShortcut.vue",
-        "registry/bases/newt/ui/context-menu/ContextMenuDivider.vue",
+        "registry/bases/newt/ui/context-menu/ContextMenuSeparator.vue",
         "registry/bases/newt/ui/context-menu/index.ts",
       ],
     },
@@ -534,7 +540,11 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "registry/bases/newt/ui/drawer/Drawer.vue",
+        "registry/bases/newt/ui/drawer/DrawerTrigger.vue",
+        "registry/bases/newt/ui/drawer/DrawerContent.vue",
         "registry/bases/newt/ui/drawer/DrawerHeader.vue",
+        "registry/bases/newt/ui/drawer/DrawerTitle.vue",
+        "registry/bases/newt/ui/drawer/DrawerDescription.vue",
         "registry/bases/newt/ui/drawer/DrawerBody.vue",
         "registry/bases/newt/ui/drawer/DrawerFooter.vue",
         "registry/bases/newt/ui/drawer/DrawerClose.vue",
@@ -550,12 +560,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "registry/bases/newt/ui/dropdown/Dropdown.vue",
-        "registry/bases/newt/ui/dropdown/DropdownItem.vue",
-        "registry/bases/newt/ui/dropdown/DropdownIcon.vue",
+        "registry/bases/newt/ui/dropdown/DropdownTrigger.vue",
         "registry/bases/newt/ui/dropdown/DropdownContent.vue",
+        "registry/bases/newt/ui/dropdown/DropdownGroup.vue",
         "registry/bases/newt/ui/dropdown/DropdownLabel.vue",
-        "registry/bases/newt/ui/dropdown/DropdownDescription.vue",
-        "registry/bases/newt/ui/dropdown/DropdownDivider.vue",
+        "registry/bases/newt/ui/dropdown/DropdownItem.vue",
+        "registry/bases/newt/ui/dropdown/DropdownRadioGroup.vue",
+        "registry/bases/newt/ui/dropdown/DropdownRadioItem.vue",
+        "registry/bases/newt/ui/dropdown/DropdownSeparator.vue",
+        "registry/bases/newt/ui/dropdown/DropdownIcon.vue",
+        "registry/bases/newt/ui/dropdown/DropdownItemText.vue",
+        "registry/bases/newt/ui/dropdown/DropdownItemLabel.vue",
+        "registry/bases/newt/ui/dropdown/DropdownItemDescription.vue",
         "registry/bases/newt/ui/dropdown/index.ts",
       ],
     },
@@ -974,7 +990,6 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: [
         "registry/bases/newt/ui/radio/Radio.vue",
         "registry/bases/newt/ui/radio/RadioGroup.vue",
-        "registry/bases/newt/ui/radio/useRadioGroup.ts",
         "registry/bases/newt/ui/radio/index.ts",
       ],
     },
@@ -1344,11 +1359,14 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       type: "registry:ui",
       registryDependencies: [],
       files: [
+        "registry/bases/newt/ui/toast/ToastProvider.vue",
+        "registry/bases/newt/ui/toast/ToastViewport.vue",
         "registry/bases/newt/ui/toast/Toast.vue",
         "registry/bases/newt/ui/toast/ToastIcon.vue",
         "registry/bases/newt/ui/toast/ToastContent.vue",
         "registry/bases/newt/ui/toast/ToastTitle.vue",
         "registry/bases/newt/ui/toast/ToastDescription.vue",
+        "registry/bases/newt/ui/toast/ToastAction.vue",
         "registry/bases/newt/ui/toast/ToastClose.vue",
         "registry/bases/newt/ui/toast/index.ts",
       ],
@@ -2147,7 +2165,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "DropdownDemo",
       type: "registry:example",
-      registryDependencies: ["dropdown"],
+      registryDependencies: ["dropdown", "button"],
       files: ["registry/bases/newt/examples/DropdownDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/DropdownDemo.vue")
@@ -2159,7 +2177,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "DropdownSimpleDemo",
       type: "registry:example",
-      registryDependencies: ["dropdown"],
+      registryDependencies: ["dropdown", "button"],
       files: ["registry/bases/newt/examples/DropdownSimpleDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/DropdownSimpleDemo.vue")
@@ -2171,7 +2189,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "DropdownStatusDemo",
       type: "registry:example",
-      registryDependencies: ["dropdown"],
+      registryDependencies: ["dropdown", "button"],
       files: ["registry/bases/newt/examples/DropdownStatusDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/DropdownStatusDemo.vue")

@@ -599,7 +599,7 @@ export const examples: Registry = [
   {
     name: "dropdown-demo",
     type: "registry:example",
-    registryDependencies: ["dropdown"],
+    registryDependencies: ["dropdown", "button"],
     files: [
       {
         path: "examples/dropdown-demo.tsx",
@@ -610,7 +610,7 @@ export const examples: Registry = [
   {
     name: "dropdown-simple-demo",
     type: "registry:example",
-    registryDependencies: ["dropdown"],
+    registryDependencies: ["dropdown", "button"],
     files: [
       {
         path: "examples/dropdown-simple-demo.tsx",
@@ -621,7 +621,7 @@ export const examples: Registry = [
   {
     name: "dropdown-status-demo",
     type: "registry:example",
-    registryDependencies: ["dropdown"],
+    registryDependencies: ["dropdown", "button"],
     files: [
       {
         path: "examples/dropdown-status-demo.tsx",

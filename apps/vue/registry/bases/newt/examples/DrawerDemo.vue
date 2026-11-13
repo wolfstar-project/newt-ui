@@ -1,31 +1,37 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import { Button, buttonVariants } from "~~/registry/bases/newt/ui/button"
+import { Button } from "~~/registry/bases/newt/ui/button"
 import {
   Drawer,
   DrawerBody,
   DrawerClose,
+  DrawerContent,
   DrawerFooter,
   DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
 } from "~~/registry/bases/newt/ui/drawer"
-
-const open = ref(false)
 </script>
 
 <template>
-  <Button variant="secondary" @click="open = true">
-    Open member details
-  </Button>
-  <Drawer v-model:open="open">
-    <DrawerHeader>Member details</DrawerHeader>
-    <DrawerBody>
-      Joined 14 March. Three roles, no warnings on record.
-    </DrawerBody>
-    <DrawerFooter>
-      <DrawerClose :class="buttonVariants({ variant: 'secondary' })">
-        Close
-      </DrawerClose>
-      <Button @click="open = false">Edit roles</Button>
-    </DrawerFooter>
+  <Drawer>
+    <DrawerTrigger as-child>
+      <Button variant="secondary">Open member details</Button>
+    </DrawerTrigger>
+    <DrawerContent :aria-describedby="undefined">
+      <DrawerHeader>
+        <DrawerTitle>Member details</DrawerTitle>
+      </DrawerHeader>
+      <DrawerBody>
+        Joined 14 March. Three roles, no warnings on record.
+      </DrawerBody>
+      <DrawerFooter>
+        <DrawerClose as-child>
+          <Button variant="secondary">Close</Button>
+        </DrawerClose>
+        <DrawerClose as-child>
+          <Button>Edit roles</Button>
+        </DrawerClose>
+      </DrawerFooter>
+    </DrawerContent>
   </Drawer>
 </template>

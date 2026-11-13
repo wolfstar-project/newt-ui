@@ -5,7 +5,7 @@ description: "A range control with a filled track, a grabber and optional labell
 
 A slider is for a value the reader feels their way to, such as a volume or a sensitivity threshold. When the exact number matters more than its position on a scale, use a [Number Input](/docs/components/number-input) instead.
 
-The value lives in a real `<input type="range">` laid over the drawing, so the keyboard, touch dragging and the announced value are the browser's own.
+It is built on [Radix Slider](https://www.radix-ui.com/primitives/docs/components/slider) in React and [Reka UI Slider](https://reka-ui.com/docs/components/slider) in Vue. The primitive owns the pointer, the keyboard and the announced value. The value is an array with one number per grabber, so `[40]` draws one grabber and `[20, 80]` draws two.
 
 <ComponentPreview name="slider" />
 
@@ -44,15 +44,27 @@ With a small `max` and a mark at every stop, the slider becomes a short scale of
   rows={[
     {
       name: "value / v-model",
-      type: "number",
+      type: "number[]",
       description:
-        "The current value. In React, leave it undefined and pass `defaultValue` to let the slider own it.",
+        "The current value, one number per grabber. In React, leave it undefined and pass `defaultValue` to let the slider own it.",
+    },
+    {
+      name: "defaultValue",
+      type: "number[]",
+      description: "The value on first render, for an uncontrolled slider.",
+      default: "[min]",
     },
     {
       name: "onValueChange",
-      type: "(value: number) => void",
+      type: "(value: number[]) => void",
       description:
         "React only. Called on every change; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "onValueCommit",
+      type: "(value: number[]) => void",
+      description:
+        "React only. Called when a drag or a key press ends; Vue emits `valueCommit`.",
     },
     {
       name: "min",
@@ -73,10 +85,29 @@ With a small `max` and a mark at every stop, the slider becomes a short scale of
       default: "1",
     },
     {
+      name: "minStepsBetweenThumbs",
+      type: "number",
+      description: "The smallest gap, in steps, between two grabbers.",
+      default: "0",
+    },
+    {
       name: "marks",
       type: "{ value: number; label?: string }[]",
       description:
         "Labelled points drawn above the track. A mark without a label shows its number.",
+    },
+    {
+      name: "name",
+      type: "string",
+      description:
+        "The field name. Inside a `<form>`, the slider submits its value under this name.",
+    },
+    {
+      name: "dir",
+      type: '"ltr" | "rtl"',
+      description:
+        "The direction the value grows in. Set it to `rtl` in a right-to-left layout.",
+      default: '"ltr"',
     },
     {
       name: "disabled",
@@ -87,11 +118,13 @@ With a small `max` and a mark at every stop, the slider becomes a short scale of
   ]}
 />
 
-Every other attribute is passed to the range input, so `aria-label`, `name` and `id` go where a label and a form expect them. `className` (React) or `class` (Vue) lands on the wrapper.
+`Slider` accepts every other prop of the primitive root, such as `inverted`. Other attributes go to the slider root. `className` (React) or `class` (Vue) goes to the wrapper around the marks and the track.
 
 ## Accessibility
 
-The control is a native range input, so the arrow keys move it by one step, `Page Up` and `Page Down` by a larger one, and `Home` and `End` jump to the ends. Give it a name with `aria-label` or a `<label>` pointing at its `id`: the marks are decoration and are hidden from assistive technology. The grabber shows a 2px `--newt-text-link` outline while the input has keyboard focus.
+Each grabber has `role="slider"` and takes keyboard focus. The arrow keys move it by one step. `Page Up`, `Page Down` and `Shift` with an arrow key move it by ten steps. `Home` and `End` go to the ends of the range.
+
+Give the slider a name with `aria-label` or `aria-labelledby`. With one grabber, the name and `aria-valuetext` go to that grabber. With two grabbers, the name goes to a `role="group"` around them, and the grabbers are named "Minimum" and "Maximum". The marks are decoration and are hidden from assistive technology. A grabber shows a 2px `--newt-text-link` outline while it has keyboard focus.
 
 ## Tokens
 

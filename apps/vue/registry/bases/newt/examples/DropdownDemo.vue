@@ -1,31 +1,39 @@
 <script setup lang="ts">
+import { buttonVariants } from "~~/registry/bases/newt/ui/button"
 import {
   Dropdown,
   DropdownContent,
-  DropdownDescription,
-  DropdownDivider,
   DropdownIcon,
   DropdownItem,
-  DropdownLabel,
+  DropdownItemDescription,
+  DropdownItemLabel,
+  DropdownItemText,
+  DropdownSeparator,
+  DropdownTrigger,
 } from "~~/registry/bases/newt/ui/dropdown"
 </script>
 
 <template>
   <Dropdown>
-    <DropdownItem active>
-      <DropdownIcon>&#x26A1;</DropdownIcon>
-      <DropdownContent>
-        <DropdownLabel>Option label</DropdownLabel>
-        <DropdownDescription>Option description</DropdownDescription>
-      </DropdownContent>
-    </DropdownItem>
-    <DropdownDivider />
-    <DropdownItem>
-      <DropdownIcon>&#x2699;</DropdownIcon>
-      <DropdownContent>
-        <DropdownLabel>Another option</DropdownLabel>
-        <DropdownDescription>Description</DropdownDescription>
-      </DropdownContent>
-    </DropdownItem>
+    <DropdownTrigger :class="buttonVariants({ variant: 'secondary' })">
+      Options
+    </DropdownTrigger>
+    <DropdownContent>
+      <DropdownItem>
+        <DropdownIcon>&#x26A1;</DropdownIcon>
+        <DropdownItemText>
+          <DropdownItemLabel>Option label</DropdownItemLabel>
+          <DropdownItemDescription>Option description</DropdownItemDescription>
+        </DropdownItemText>
+      </DropdownItem>
+      <DropdownSeparator />
+      <DropdownItem>
+        <DropdownIcon>&#x2699;</DropdownIcon>
+        <DropdownItemText>
+          <DropdownItemLabel>Another option</DropdownItemLabel>
+          <DropdownItemDescription>Description</DropdownItemDescription>
+        </DropdownItemText>
+      </DropdownItem>
+    </DropdownContent>
   </Dropdown>
 </template>

@@ -7,7 +7,8 @@ export { default as CheckboxOption } from "./CheckboxOption.vue"
 export interface CheckboxGroupContext {
   readonly values: Ref<readonly string[]>
   readonly toggle: (value: string) => void
-  readonly name: Ref<string>
+  readonly name: Ref<string | undefined>
+  readonly disabled: Ref<boolean>
 }
 
 export const checkboxGroupKey: InjectionKey<CheckboxGroupContext> = Symbol(

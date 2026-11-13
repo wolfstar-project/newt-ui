@@ -1,31 +1,41 @@
+import { buttonVariants } from "@/registry/bases/newt/ui/button"
 import {
   Dropdown,
   DropdownContent,
-  DropdownDescription,
-  DropdownDivider,
   DropdownIcon,
   DropdownItem,
-  DropdownLabel,
+  DropdownItemDescription,
+  DropdownItemLabel,
+  DropdownItemText,
+  DropdownSeparator,
+  DropdownTrigger,
 } from "@/registry/bases/newt/ui/dropdown"
 
 export default function DropdownDemo() {
   return (
     <Dropdown>
-      <DropdownItem active>
-        <DropdownIcon>{"⚡"}</DropdownIcon>
-        <DropdownContent>
-          <DropdownLabel>Option label</DropdownLabel>
-          <DropdownDescription>Option description</DropdownDescription>
-        </DropdownContent>
-      </DropdownItem>
-      <DropdownDivider />
-      <DropdownItem>
-        <DropdownIcon>{"⚙"}</DropdownIcon>
-        <DropdownContent>
-          <DropdownLabel>Another option</DropdownLabel>
-          <DropdownDescription>Description</DropdownDescription>
-        </DropdownContent>
-      </DropdownItem>
+      <DropdownTrigger className={buttonVariants({ variant: "secondary" })}>
+        Options
+      </DropdownTrigger>
+      <DropdownContent>
+        <DropdownItem>
+          <DropdownIcon>{"⚡"}</DropdownIcon>
+          <DropdownItemText>
+            <DropdownItemLabel>Option label</DropdownItemLabel>
+            <DropdownItemDescription>
+              Option description
+            </DropdownItemDescription>
+          </DropdownItemText>
+        </DropdownItem>
+        <DropdownSeparator />
+        <DropdownItem>
+          <DropdownIcon>{"⚙"}</DropdownIcon>
+          <DropdownItemText>
+            <DropdownItemLabel>Another option</DropdownItemLabel>
+            <DropdownItemDescription>Description</DropdownItemDescription>
+          </DropdownItemText>
+        </DropdownItem>
+      </DropdownContent>
     </Dropdown>
   )
 }

@@ -3,15 +3,17 @@ title: "Entity Select"
 description: "The picker for a server's own members, roles and channels, with chips when more than one may be chosen."
 ---
 
-The picker for the things a server already knows about: its members, its roles, its channels, or all of them at once. It is a separate control from the [string select](/docs/components/select-menu) rather than a mode of it, because the rows are not strings — a member arrives with a face, a role with a colour and a headcount, a channel with the glyph that says what kind of channel it is.
+The picker for the things a server already knows about: its members, its roles, its channels, or all of them at once. It is a separate control from the [string select](/docs/components/select-menu), because the rows are not strings. A member arrives with a face, a role with a colour and a headcount, and a channel with the glyph of its kind.
+
+The panel is built on [Radix Popover](https://www.radix-ui.com/primitives/docs/components/popover) in React and [Reka UI Popover](https://reka-ui.com/docs/components/popover) in Vue. The primitive owns the placement, the portal, `Escape` and the press outside. The listbox inside the panel is newt/ui's own, because Radix has no listbox that takes more than one value.
 
 <ComponentPreview name="entity-select" />
 
 ## More than one [#multiple]
 
-`max` above one turns the control into chips: the choices leave the list and sit in the trigger, each with a cross, and every row grows a box instead of a tick — the shape is what says whether picking this one un-picks the last. Backspace removes the chip nearest the caret.
+`max` above one turns the control into chips. The choices leave the list and sit in the trigger, each with a cross. Every row shows a box and not a tick: the shape says that a new choice keeps the earlier ones. `Backspace` removes the last chip.
 
-At the limit the list stays open and stops taking more, rather than silently dropping the oldest choice: somebody picked those, and a control that quietly un-picks one is a control that lies.
+At the limit the list stays open and takes no more choices. It does not drop the oldest choice, because somebody picked it.
 
 <ComponentPreview name="entity-select" variant="roles" />
 
@@ -23,27 +25,87 @@ At the limit the list stays open and stops taking more, rather than silently dro
 
 <Usage name="entity-select" />
 
+Pass the entities as `options`. The value is always an array, also when `max` is one. In React, control it with `value` and `onValueChange`, or pass `defaultValue`. In Vue, bind `v-model`.
+
 ## API reference
 
 <PropsTable
   of="EntitySelect"
   rows={[
     {
-      name: "children / default slot",
-      type: "React.ReactNode / Vue slot",
-      description: "Content rendered inside the component.",
+      name: "options",
+      type: "EntityOption[]",
+      description:
+        "The entities: `{ value, label, icon?, count?, badge?, color?, disabled? }`. The list is capped at 25.",
     },
     {
-      name: "className / class",
+      name: "kind",
+      type: '"user" | "role" | "channel" | "mentionable"',
+      description:
+        "What the list holds. It sets the text shown when `options` is empty.",
+      default: '"user"',
+    },
+    {
+      name: "value / v-model",
+      type: "string[]",
+      description: "The selected values, when you control them.",
+    },
+    {
+      name: "defaultValue",
+      type: "string[]",
+      description: "React only. The values selected on first render.",
+      default: "[]",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string[]) => void",
+      description:
+        "React only. Called with the new selection; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "max",
+      type: "number",
+      description:
+        "How many entities can be chosen, up to 25. A value above one shows the choices as chips.",
+      default: "1",
+    },
+    {
+      name: "placeholder",
       type: "string",
-      description: "Additional classes merged with the component defaults.",
+      description: "Shown on the trigger while nothing is selected.",
+      default: '"Make a selection"',
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "The accessible name of the trigger and the listbox.",
+      default: '"Select an option"',
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Makes the trigger inert.",
+      default: "false",
+    },
+    {
+      name: "container",
+      type: "HTMLElement",
+      description:
+        "Element the panel is portalled into. Pass the enclosing native `<dialog>` or a themed wrapper to keep it there.",
+      default: "document.body",
     },
   ]}
 />
 
+In React, `icon` is a node. In Vue, `icon` is a component. The root also accepts the native attributes of a `<div>`, and a `className` (`class` in Vue) that is merged with the defaults.
+
 ## Accessibility
 
-Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+The trigger is a `combobox` with `aria-haspopup="listbox"` and `aria-expanded`. While the panel is open, `aria-controls` points at the `listbox`, which carries `aria-multiselectable` when `max` is above one. Both take their name from `label`. Each option carries `aria-selected`.
+
+Focus stays on the trigger while the list is open. `aria-activedescendant` names the option the keyboard is on. `Enter`, `Space`, `Up` and `Down` open the list. `Up` and `Down` move through the options and skip disabled ones. `Home` and `End` jump to the ends. `Enter` or `Space` picks the active option. With `max` at one the list then closes. `Escape` closes the list, and so does a press outside. Inside a drawer or a modal, `Escape` closes the list first and the dialog on the next press.
+
+A chip is not a button, because it sits inside the trigger. A pointer removes a chip with a press on it. The keyboard removes the last chip with `Backspace` while the list is closed. A role's colour is decoration: the name of the role is always shown as text.
 
 ## Tokens
 

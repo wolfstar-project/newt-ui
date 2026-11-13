@@ -1,9 +1,11 @@
 ---
 title: "Context Menu"
-description: "A floating right-click style menu with items, keyboard shortcuts, dividers and a danger variant."
+description: "A menu that opens on a right click, with items, keyboard shortcuts, separators and a danger variant."
 ---
 
-A floating right-click style menu with items, keyboard shortcuts, dividers and a danger variant. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+Use it for the actions that belong to one thing on the page: a message, a channel, a member. It opens at the pointer on a right click, and on a long press on a touch screen. For a menu that opens from a button use a [Dropdown Menu](/docs/components/dropdown).
+
+It is built on [Radix Context Menu](https://www.radix-ui.com/primitives/docs/components/context-menu) in React and [Reka UI Context Menu](https://reka-ui.com/docs/components/context-menu) in Vue. The primitive owns the behaviour; newt/ui owns the look. The menu moves when it would leave the viewport.
 
 <ComponentPreview name="context-menu" />
 
@@ -15,29 +17,105 @@ A floating right-click style menu with items, keyboard shortcuts, dividers and a
 
 <Usage name="context-menu" />
 
+`ContextMenuTrigger` is the area that answers the right click. It renders a `span` with no look of its own. Use `asChild` (`as-child` in Vue) to put it on your own element, as the example does.
+
+Listen to `onSelect` (`@select` in Vue) on an item for the choice. Put a `ContextMenuShortcut` after the item text to show its key. The shortcut is a hint only; bind the key yourself.
+
 ## API reference
 
 <PropsTable
   of="ContextMenu"
   rows={[
     {
-      name: "children / default slot",
-      type: "React.ReactNode / Vue slot",
-      description: "Content rendered inside the component.",
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description:
+        "React only. Called when the menu opens or closes; Vue emits `update:open`.",
     },
     {
-      name: "className / class",
-      type: "string",
-      description: "Additional classes merged with the component defaults.",
+      name: "modal",
+      type: "boolean",
+      description:
+        "When true, the page outside the menu does not react to the pointer while the menu is open.",
+      default: "true",
     },
   ]}
 />
 
-The registry exports `ContextMenu`, `ContextMenuItem`, `ContextMenuShortcut`, `ContextMenuDivider`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+<PropsTable
+  of="ContextMenuTrigger"
+  rows={[
+    {
+      name: "disabled",
+      type: "boolean",
+      description:
+        "When true, a right click on the area opens the browser menu.",
+      default: "false",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="ContextMenuContent"
+  rows={[
+    {
+      name: "loop",
+      type: "boolean",
+      description:
+        "When true, the arrow keys move from the last item to the first and back.",
+      default: "false",
+    },
+    {
+      name: "container",
+      type: "HTMLElement",
+      description:
+        "Element the menu is portalled into. Pass the enclosing native `<dialog>` or a themed wrapper to keep it there.",
+      default: "document.body",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="ContextMenuItem"
+  rows={[
+    {
+      name: "variant",
+      type: '"default" | "danger"',
+      description: "`danger` marks a destructive action.",
+      default: '"default"',
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description:
+        "Dims the item. The pointer and the arrow keys then skip it.",
+    },
+    {
+      name: "onSelect / @select",
+      type: "(event: Event) => void",
+      description:
+        "Called when the item is chosen. Call `event.preventDefault()` to keep the menu open.",
+    },
+    {
+      name: "textValue",
+      type: "string",
+      description:
+        "The text typeahead matches. Set it when the item content is not plain text.",
+    },
+  ]}
+/>
+
+The registry exports `ContextMenu`, `ContextMenuTrigger`, `ContextMenuContent`, `ContextMenuGroup`, `ContextMenuLabel`, `ContextMenuItem`, `ContextMenuShortcut`, `ContextMenuSeparator` and `contextMenuItemVariants`. Parts without a table accept the props of the primitive part or the native element they render. React uses `className`; Vue uses `class` and fallthrough attributes.
 
 ## Accessibility
 
-Open the menu from both pointer and keyboard input, move focus into it, support arrow-key navigation, and restore focus to the trigger when it closes.
+The panel is a `role="menu"` and its items are `role="menuitem"`. `ContextMenuGroup` is a `role="group"`; put a `ContextMenuLabel` inside it as its heading. Pass `aria-label` to `ContextMenuContent` when the menu needs a name.
+
+A right click on the trigger area opens the menu at the pointer. A long press does the same on a touch screen. With the keyboard, focus an element inside the area and press `Shift+F10` or the menu key. The area itself takes no focus, so put a focusable element inside it, or give it `tabIndex={0}`.
+
+Focus moves into the menu when it opens. The arrow keys, `Home` and `End` move between items. A typed letter moves to the next item that starts with it. `Enter` or `Space` chooses the focused item. `Escape` closes the menu, and so does a press outside.
+
+Do not make a context menu the only way to reach an action. Many people never right click, so offer the same actions in a visible control too.
 
 ## Tokens
 

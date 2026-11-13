@@ -1,13 +1,18 @@
 {
   "name": "context-menu",
   "title": "Context Menu",
-  "description": "A floating right-click style menu with items, keyboard shortcuts, dividers and a danger variant.",
-  "dependencies": ["class-variance-authority"],
+  "description": "A menu that opens on a right click, with items, keyboard shortcuts, separators and a danger variant.",
+  "dependencies": ["class-variance-authority", "radix-ui"],
+  "vueDependencies": ["class-variance-authority", "reka-ui"],
   "vueFiles": [
     "ContextMenu.vue",
+    "ContextMenuTrigger.vue",
+    "ContextMenuContent.vue",
+    "ContextMenuGroup.vue",
+    "ContextMenuLabel.vue",
     "ContextMenuItem.vue",
     "ContextMenuShortcut.vue",
-    "ContextMenuDivider.vue",
+    "ContextMenuSeparator.vue",
     "index.ts"
   ],
   "reactDemo": "context-menu-demo",

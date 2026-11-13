@@ -3,7 +3,7 @@ title: "Toast"
 description: "A transient notification with a status icon that auto-dismisses after a timeout or when closed."
 ---
 
-A transient notification with a status icon that auto-dismisses after a timeout or when closed. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+A transient notification with a status icon, built on [Radix Toast](https://www.radix-ui.com/primitives/docs/components/toast) in React and [Reka UI Toast](https://reka-ui.com/docs/components/toast) in Vue. The primitive owns the behaviour; newt/ui owns the look. It dismisses itself after a timeout, on a swipe, or when the reader closes it.
 
 <ComponentPreview name="toast" />
 
@@ -14,6 +14,10 @@ A transient notification with a status icon that auto-dismisses after a timeout 
 ## Usage
 
 <Usage name="toast" />
+
+Wrap the application in one `ToastProvider` and put one `ToastViewport` inside it. Every `Toast` below the provider is rendered into the viewport, wherever you write the toast. The viewport floats at the bottom inline-end corner of the screen.
+
+The previews on this page pass `static items-start` to `ToastViewport`. Those classes keep the viewport in the page flow, so each toast shows inside its preview.
 
 ## Examples
 
@@ -31,40 +35,110 @@ Hold `open` yourself to raise a toast in answer to an action. The timer and the 
 
 ### With an action
 
-Put a `Button` in `ToastContent` to offer a way back. Set `duration` to `0` on a toast like this one: an undo that disappears after five seconds is one most readers miss.
+Wrap a `Button` in `ToastAction` to offer a way back. The action closes the toast after its own click handler runs. Set `duration` to `0` on a toast like this one: an undo that disappears after five seconds is one most readers miss.
 
 <ComponentPreview name="toast" variant="action" />
 
 ## API reference
 
 <PropsTable
-  of="Toast"
+  of="ToastProvider"
   rows={[
     {
       name: "duration",
-      type: "number | undefined",
-      description:
-        "Auto-dismiss after this many ms. Defaults to 5000. Pass 0 to disable.",
+      type: "number",
+      description: "Time in ms before each toast dismisses itself.",
+      default: "5000",
     },
     {
-      name: "open",
-      type: "boolean | undefined",
-      description: "Controlled open state.",
+      name: "swipeDirection",
+      type: '"right" | "left" | "up" | "down"',
+      description: "The direction of the swipe that dismisses a toast.",
+      default: '"right"',
     },
     {
-      name: "onOpenChange",
-      type: "(open: boolean) => void | undefined",
+      name: "label",
+      type: "string",
       description:
-        "Called when the toast closes, either by timeout or the close button.",
+        "The word a screen reader says before each toast. Translate it.",
+      default: '"Notification"',
     },
   ]}
 />
 
-The registry exports `Toast`, `ToastIcon`, `ToastContent`, `ToastTitle`, `ToastDescription`, `ToastClose`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+<PropsTable
+  of="ToastViewport"
+  rows={[
+    {
+      name: "hotkey",
+      type: "string[]",
+      description: "The keys that move focus to the viewport.",
+      default: '["F8"]',
+    },
+    {
+      name: "label",
+      type: "string",
+      description:
+        "Accessible name of the region. `{hotkey}` is replaced with the keys.",
+      default: '"Notifications ({hotkey})"',
+    },
+  ]}
+/>
+
+<PropsTable
+  of="Toast"
+  rows={[
+    {
+      name: "variant",
+      type: '"success" | "error"',
+      description: "The colour and glyph of `ToastIcon`.",
+      default: '"success"',
+    },
+    {
+      name: "duration",
+      type: "number",
+      description:
+        "Time in ms before the toast dismisses itself. It defaults to the provider's `duration`. Pass 0 to disable.",
+    },
+    {
+      name: "open / v-model:open",
+      type: "boolean",
+      description:
+        "Whether the toast is shown. Leave it out and the toast starts open and owns its state.",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description:
+        "React only. Called when the toast closes by timeout, swipe, Escape, the action or the close button; Vue emits `update:open`.",
+    },
+    {
+      name: "type",
+      type: '"background" | "foreground"',
+      description:
+        "`background` is announced politely. `foreground` interrupts the screen reader; use it only for urgent failures.",
+      default: '"background"',
+    },
+  ]}
+/>
+
+<PropsTable
+  of="ToastAction"
+  rows={[
+    {
+      name: "altText",
+      type: "string",
+      description:
+        "Required. Another way to do the same thing, for a screen reader user who cannot reach the button in time.",
+    },
+  ]}
+/>
+
+`ToastAction` and `ToastClose` render a button. Pass `asChild` (`as-child` in Vue) to put the behaviour on your own element, such as a `Button`. `ToastIcon` and `ToastContent` are plain elements. `ToastTitle` and `ToastDescription` hold the text a screen reader announces. Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
 
 ## Accessibility
 
-Use `role="status"` for routine updates and `role="alert"` only for urgent failures. Do not move focus into a toast, and give its close button an accessible name.
+The primitive announces each toast through a live region, so a screen reader reads the title and the description without a move of focus. The default `type` is `background`, which waits for the screen reader to finish its sentence. The timer pauses while the pointer is over the viewport, while focus is inside it, and while the window is in the background. `F8` moves focus to the viewport, `Tab` then reaches each toast and its buttons, and `Escape` closes the focused toast. A focused toast shows a focus ring. `ToastClose` has the accessible name "Dismiss"; pass `aria-label` to translate it. Do not put the only route to an action in a toast: give `ToastAction` an `altText` that names another route.
 
 ## Tokens
 

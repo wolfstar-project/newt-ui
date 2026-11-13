@@ -7,8 +7,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
 </script>
 
 <template>
-  <div
-    role="separator"
-    :class="cn('mx-1.5 my-1 h-px bg-newt-border', props.class)"
-  />
+  <div :class="cn('min-w-0', props.class)">
+    <slot />
+  </div>
 </template>

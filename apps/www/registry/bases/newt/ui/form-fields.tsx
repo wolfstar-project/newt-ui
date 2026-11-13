@@ -1,5 +1,10 @@
 "use client"
 
+import {
+  Checkbox as CheckboxPrimitive,
+  Label as LabelPrimitive,
+  Switch as SwitchPrimitive,
+} from "radix-ui"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -25,18 +30,23 @@ const Field = React.forwardRef<HTMLDivElement, FieldProps>(
 )
 Field.displayName = "Field"
 
-const Label = React.forwardRef<HTMLLabelElement, React.ComponentProps<"label">>(
-  ({ className, ...props }, ref) => (
-    <label
-      ref={ref}
-      className={cn(
-        "text-xs font-bold uppercase tracking-[0.02em] text-newt-text-secondary",
-        className
-      )}
-      {...props}
-    />
-  )
-)
+/*
+ * Radix Label is a native `<label>` that does not select its text on a
+ * double press, so a quick second press on it only reaches the control.
+ */
+const Label = React.forwardRef<
+  React.ComponentRef<typeof LabelPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <LabelPrimitive.Root
+    ref={ref}
+    className={cn(
+      "text-xs font-bold uppercase tracking-[0.02em] text-newt-text-secondary",
+      className
+    )}
+    {...props}
+  />
+))
 Label.displayName = "Label"
 
 /*
@@ -103,138 +113,58 @@ const FieldHelp = React.forwardRef<HTMLSpanElement, FieldHelpProps>(
 )
 FieldHelp.displayName = "FieldHelp"
 
-export interface SwitchProps extends Omit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "onChange"
-> {
-  checked?: boolean
-  defaultChecked?: boolean
-  onCheckedChange?: (checked: boolean) => void
-}
-
-const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
-  (
-    {
-      className,
-      checked,
-      defaultChecked = false,
-      onCheckedChange,
-      onClick,
-      disabled,
-      ...props
-    },
-    ref
-  ) => {
-    const [internal, setInternal] = React.useState(defaultChecked)
-    const isControlled = checked !== undefined
-    const on = isControlled ? checked : internal
-
-    const toggle = (event: React.MouseEvent<HTMLButtonElement>) => {
-      onClick?.(event)
-      if (event.defaultPrevented || disabled) return
-      const next = !on
-      if (!isControlled) setInternal(next)
-      onCheckedChange?.(next)
-    }
-
-    return (
-      <button
-        ref={ref}
-        type="button"
-        role="switch"
-        aria-checked={on}
-        data-state={on ? "checked" : "unchecked"}
-        disabled={disabled}
-        onClick={toggle}
-        className={cn(
-          "relative inline-flex h-6 w-10 shrink-0 cursor-pointer rounded-full border border-newt-border bg-newt-bg-elevated transition-colors duration-base ease-newt disabled:cursor-not-allowed disabled:opacity-50",
-          on && "border-newt-online bg-newt-online",
-          className
-        )}
-        {...props}
-      >
-        <span
-          aria-hidden="true"
-          className={cn(
-            "absolute start-0.5 top-0.5 h-[18px] w-[18px] rounded-full bg-newt-text-muted transition-[transform,background-color] duration-base ease-newt",
-            on && "translate-x-[calc(var(--newt-dir)*1rem)] bg-newt-on-accent"
-          )}
-        />
-      </button>
-    )
-  }
-)
+/*
+ * Radix owns the behaviour of the two toggles: the role, the checked state,
+ * the space bar and the hidden input a form reads when they carry a `name`.
+ */
+const Switch = React.forwardRef<
+  React.ComponentRef<typeof SwitchPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SwitchPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <SwitchPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative inline-flex h-6 w-10 shrink-0 cursor-pointer rounded-full border border-newt-border bg-newt-bg-elevated transition-colors duration-base ease-newt disabled:cursor-not-allowed disabled:opacity-50",
+      "data-[state=checked]:border-newt-online data-[state=checked]:bg-newt-online",
+      className
+    )}
+    {...props}
+  >
+    <SwitchPrimitive.Thumb className="absolute start-0.5 top-0.5 h-[18px] w-[18px] rounded-full bg-newt-text-muted transition-[transform,background-color] duration-base ease-newt data-[state=checked]:translate-x-[calc(var(--newt-dir)*1rem)] data-[state=checked]:bg-newt-on-accent" />
+  </SwitchPrimitive.Root>
+))
 Switch.displayName = "Switch"
 
-export interface CheckboxProps extends Omit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "onChange"
-> {
-  checked?: boolean
-  defaultChecked?: boolean
-  onCheckedChange?: (checked: boolean) => void
-}
-
-const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
-  (
-    {
-      className,
-      checked,
-      defaultChecked = false,
-      onCheckedChange,
-      onClick,
-      disabled,
-      ...props
-    },
-    ref
-  ) => {
-    const [internal, setInternal] = React.useState(defaultChecked)
-    const isControlled = checked !== undefined
-    const on = isControlled ? checked : internal
-
-    const toggle = (event: React.MouseEvent<HTMLButtonElement>) => {
-      onClick?.(event)
-      if (event.defaultPrevented || disabled) return
-      const next = !on
-      if (!isControlled) setInternal(next)
-      onCheckedChange?.(next)
-    }
-
-    return (
-      <button
-        ref={ref}
-        type="button"
-        role="checkbox"
-        aria-checked={on}
-        data-state={on ? "checked" : "unchecked"}
-        disabled={disabled}
-        onClick={toggle}
-        className={cn(
-          "inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-newt-border bg-newt-bg-input text-newt-on-accent transition-colors duration-fast ease-newt focus-visible:border-newt-brand focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
-          on && "border-newt-brand bg-newt-brand",
-          className
-        )}
-        {...props}
+const Checkbox = React.forwardRef<
+  React.ComponentRef<typeof CheckboxPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <CheckboxPrimitive.Root
+    ref={ref}
+    className={cn(
+      "inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-newt-border bg-newt-bg-input text-newt-on-accent transition-colors duration-fast ease-newt focus-visible:border-newt-brand focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+      "data-[state=checked]:border-newt-brand data-[state=checked]:bg-newt-brand",
+      className
+    )}
+    {...props}
+  >
+    <CheckboxPrimitive.Indicator className="flex">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 16 16"
+        width="12"
+        height="12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
-        {on ? (
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 16 16"
-            width="12"
-            height="12"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M3 8.5 6.5 12 13 4.5" />
-          </svg>
-        ) : null}
-      </button>
-    )
-  }
-)
+        <path d="M3 8.5 6.5 12 13 4.5" />
+      </svg>
+    </CheckboxPrimitive.Indicator>
+  </CheckboxPrimitive.Root>
+))
 Checkbox.displayName = "Checkbox"
 
 export { Field, Label, Input, Textarea, Select, FieldHelp, Switch, Checkbox }

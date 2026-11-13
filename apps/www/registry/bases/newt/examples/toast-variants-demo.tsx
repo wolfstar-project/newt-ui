@@ -3,16 +3,20 @@ import {
   ToastContent,
   ToastDescription,
   ToastIcon,
+  ToastProvider,
   ToastTitle,
+  ToastViewport,
 } from "@/registry/bases/newt/ui/toast"
 
 /*
  * `variant` only changes the icon: its colour and its glyph. `duration={0}`
- * keeps both on screen, and without a `ToastClose` nothing dismisses them.
+ * keeps both on screen, and without a `ToastClose` only a swipe or Escape
+ * dismisses them.
  */
 export default function ToastVariantsDemo() {
   return (
-    <div className="flex flex-col items-start gap-3">
+    <ToastProvider>
+      <ToastViewport className="static items-start" />
       <Toast variant="success" duration={0}>
         <ToastIcon />
         <ToastContent>
@@ -31,6 +35,6 @@ export default function ToastVariantsDemo() {
           </ToastDescription>
         </ToastContent>
       </Toast>
-    </div>
+    </ToastProvider>
   )
 }

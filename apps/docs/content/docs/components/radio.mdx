@@ -3,10 +3,14 @@ title: "Radio"
 description: "One choice out of a short, visible list, with the ring and dot the client's settings panels use."
 ---
 
-A radio group is for a choice that is short enough to show in full. Where a
-[select menu](/docs/components/select-menu) hides its options until asked, this
-shows all of them at once — which is what the client's settings panels do when
-there are two or three and the difference between them matters.
+A radio group is for a choice that is short enough to show in full. A
+[select menu](/docs/components/select-menu) hides its options until asked. A
+radio group shows all of them at once. The client's settings panels use it when
+there are two or three options and the difference between them matters.
+
+It is built on [Radix Radio Group](https://www.radix-ui.com/primitives/docs/components/radio-group)
+in React and [Reka UI Radio Group](https://reka-ui.com/docs/components/radio-group)
+in Vue. The primitive owns the value, the keyboard and the form input.
 
 The state is in the ring and the dot, not in motion: the selected row reads as
 selected in a screenshot, and in greyscale.
@@ -78,10 +82,10 @@ A `disabled` radio stays visible, so the reader learns the choice exists, but th
   of="RadioGroup"
   rows={[
     {
-      name: "value",
+      name: "value / v-model",
       type: "string",
       description:
-        "The selected value, when you control it. Leave it off to let the group manage its own.",
+        "The selected value, when you control it. In React, leave it undefined and pass `defaultValue` to let the group own it.",
     },
     {
       name: "defaultValue",
@@ -90,15 +94,46 @@ A `disabled` radio stays visible, so the reader learns the choice exists, but th
         "The value selected on first render, for an uncontrolled group.",
     },
     {
-      name: "onValueChange / v-model",
+      name: "onValueChange",
       type: "(value: string) => void",
-      description: "Called with the value that was chosen.",
+      description:
+        "React only. Called with the value that was chosen; Vue emits `update:modelValue`.",
     },
     {
       name: "label",
       type: "string",
       description:
         "Accessible name for the group. A radio group without one is announced as an unlabelled set.",
+    },
+    {
+      name: "name",
+      type: "string",
+      description:
+        "The field name. Inside a `<form>`, the group submits the selected value under this name.",
+    },
+    {
+      name: "required",
+      type: "boolean",
+      default: "false",
+      description: "The form does not submit until a row is selected.",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      default: "false",
+      description: "Disables every row.",
+    },
+    {
+      name: "orientation",
+      type: '"horizontal" | "vertical"',
+      description:
+        "Limits the arrow keys to one axis. Without it, all four arrow keys move the selection.",
+    },
+    {
+      name: "loop",
+      type: "boolean",
+      default: "true",
+      description: "The arrow keys wrap from the last row to the first.",
     },
   ]}
 />
@@ -132,24 +167,24 @@ A `disabled` radio stays visible, so the reader learns the choice exists, but th
   ]}
 />
 
-Both parts also accept the native attributes of the element they render, and a
-`className` / `class` that is merged rather than replaced.
+Both parts accept the other props of the primitive part they wrap. They also
+accept a `className` / `class`, which is merged with the defaults.
 
 ## Accessibility
 
-The group is `role="radiogroup"` with an accessible name; each row is
-`role="radio"` with `aria-checked`. That is the contract a screen reader
-announces, and it is why the rows are buttons rather than styled `<input>`
-elements — the ring and dot stay stylable without losing the semantics.
+The group has `role="radiogroup"` and an accessible name. Each row is a button
+with `role="radio"` and `aria-checked`. The label and the description are inside
+the button, so they are its accessible name.
 
-The group is **one tab stop**, not one per option: <kbd>Tab</kbd> reaches the
-selected row, and <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> move the
-selection within it, wrapping at the ends. <kbd>Home</kbd> and <kbd>End</kbd>
-jump to the first and last enabled row. Disabled rows are skipped rather than
-focused and refused.
+The group is **one tab stop**. <kbd>Tab</kbd> moves focus to the selected row,
+or to the first row when nothing is selected. The arrow keys move the selection
+and wrap at the ends. They skip disabled rows.
 
-Give the group a `label`. Without one the set is announced with no indication of
-what is being chosen, which is the most common way this pattern fails.
+<kbd>Home</kbd> and <kbd>End</kbd> move focus to the first and last enabled row,
+and <kbd>Space</kbd> selects the focused row.
+
+Give the group a `label`. Without one, a screen reader does not say what the
+choice is for. A focused row shows a 2px `--newt-text-link` outline.
 
 ## Tokens
 

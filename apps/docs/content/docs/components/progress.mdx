@@ -3,7 +3,9 @@ title: "Progress Bar"
 description: "A gradient progress bar for boosts, uploads and other long-running tasks."
 ---
 
-A gradient progress bar for boosts, uploads and other long-running tasks. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+A bar that fills from the start edge as a task advances. Use it for uploads, server boosts and other work that has a known end.
+
+It is built on [Radix Progress](https://www.radix-ui.com/primitives/docs/components/progress) in React and [Reka UI Progress](https://reka-ui.com/docs/components/progress) in Vue. The primitive sets the role and the value attributes. `ProgressLabel` is a plain row for the text above the bar.
 
 <ComponentPreview name="progress" />
 
@@ -42,27 +44,42 @@ The bar holds no state: it draws the `value` it is given and eases to the next o
   rows={[
     {
       name: "value",
-      type: "number | undefined",
-      description: "Current value, 0–max",
+      type: "number",
+      description:
+        "Current value. A value below 0 or above `max` is clamped to that range.",
+      default: "0",
     },
     {
       name: "max",
-      type: "number | undefined",
-      description: "Optional max value.",
+      type: "number",
+      description: "Value at which the bar is full. It must be above 0.",
+      default: "100",
     },
     {
-      name: "indicatorClassName",
-      type: "string | undefined",
-      description: "Optional indicatorClassName value.",
+      name: "variant",
+      type: '"default" | "success" | "danger"',
+      description: "Gradient of the filled part.",
+      default: '"default"',
+    },
+    {
+      name: "getValueLabel",
+      type: "(value: number, max: number) => string",
+      description:
+        "Builds the text a screen reader says for the value. The default is the rounded percentage.",
+    },
+    {
+      name: "indicatorClassName / indicator-class",
+      type: "string",
+      description: "Additional classes for the filled part.",
     },
   ]}
 />
 
-The registry exports `Progress`, `ProgressLabel`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+`Progress` renders a `<div>` with the filled part inside it. The bar carries `data-state`, which is `loading` below `max` and `complete` at `max`. `ProgressLabel` is a `<div>` and accepts its native attributes. `progressVariants` gives the gradient classes to an element of your own.
 
 ## Accessibility
 
-Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+The bar has `role="progressbar"` with `aria-valuemin`, `aria-valuemax` and `aria-valuenow`. It also has `aria-valuetext`, which is the result of `getValueLabel`. The bar has no name of its own. Give it an `aria-label`, or an `aria-labelledby` that points at the visible label. The variant colour is not announced, so put a failure or a limit in the text too.
 
 ## Tokens
 

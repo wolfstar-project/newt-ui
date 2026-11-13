@@ -2,7 +2,15 @@
   "name": "accordion",
   "title": "Accordion",
   "description": "Sections that open and close under their headings, one at a time or independently.",
-  "vueFiles": ["Accordion.vue", "AccordionItem.vue", "index.ts"],
+  "dependencies": ["radix-ui"],
+  "vueDependencies": ["reka-ui"],
+  "vueFiles": [
+    "Accordion.vue",
+    "AccordionItem.vue",
+    "AccordionTrigger.vue",
+    "AccordionContent.vue",
+    "index.ts"
+  ],
   "reactDemo": "accordion-demo",
   "vueDemo": "AccordionDemo",
   "examples": ["multiple", "custom-title"]

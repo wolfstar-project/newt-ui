@@ -1,65 +1,49 @@
 <script setup lang="ts">
 import {
-  computed,
-  onBeforeUnmount,
-  provide,
-  ref,
-  watch,
-  type HTMLAttributes,
-} from "vue"
+  ToastRoot,
+  useForwardPropsEmits,
+  type ToastRootEmits,
+  type ToastRootProps,
+} from "reka-ui"
+import { computed, provide, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
 import { TOAST_INJECTION_KEY, toastVariants, type ToastVariants } from "."
 
+/*
+ * Use `v-model:open` to control it. `duration` is the time in ms before it
+ * dismisses itself: it defaults to the provider's `duration`, which is 5000,
+ * and 0 disables it. `background` announces politely; `foreground` interrupts.
+ */
 const props = withDefaults(
-  defineProps<{
-    class?: HTMLAttributes["class"]
-    variant?: ToastVariants["variant"]
-    /** Auto-dismiss after this many ms. 0 disables. */
-    duration?: number
-    open?: boolean
-  }>(),
-  { variant: "success", duration: 5000, open: undefined }
+  defineProps<
+    ToastRootProps & {
+      class?: HTMLAttributes["class"]
+      variant?: ToastVariants["variant"]
+    }
+  >(),
+  { variant: "success", type: "background" }
 )
+const emits = defineEmits<ToastRootEmits>()
 
-const emit = defineEmits<{ (e: "update:open", value: boolean): void }>()
-
-const internalOpen = ref(true)
-const isControlled = computed(() => props.open !== undefined)
-const isOpen = computed(() =>
-  isControlled.value ? props.open : internalOpen.value
-)
-
-function close() {
-  if (!isControlled.value) internalOpen.value = false
-  emit("update:open", false)
-}
-
-let timer: ReturnType<typeof setTimeout> | undefined
-function arm() {
-  if (timer) clearTimeout(timer)
-  timer = undefined
-  if (isOpen.value && props.duration > 0)
-    timer = setTimeout(close, props.duration)
-}
-watch([isOpen, () => props.duration], arm, { immediate: true })
-onBeforeUnmount(() => timer && clearTimeout(timer))
+const delegated = computed(() => {
+  const { class: _class, variant: _variant, ...rest } = props
+  return rest
+})
+const forwarded = useForwardPropsEmits(delegated, emits)
 
 provide(TOAST_INJECTION_KEY, {
   variant: computed(() => props.variant ?? "success"),
-  close,
 })
 </script>
 
 <template>
-  <div
-    v-if="isOpen"
-    role="status"
-    aria-live="polite"
-    :data-variant="props.variant"
+  <ToastRoot
+    v-bind="forwarded"
+    :data-variant="props.variant ?? 'success'"
     :class="cn(toastVariants({ variant: props.variant }), props.class)"
   >
     <slot />
-  </div>
+  </ToastRoot>
 </template>

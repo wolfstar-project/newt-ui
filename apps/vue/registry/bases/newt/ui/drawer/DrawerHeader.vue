@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { inject, type HTMLAttributes } from "vue"
+import { DialogClose } from "reka-ui"
+import type { HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-import { drawerKey } from "."
-
-/** The title, which names the dialog, and the button that closes it. */
+/* The row for `DrawerTitle`, with the button that closes the drawer at its end. */
 const props = withDefaults(
   defineProps<{
     class?: HTMLAttributes["class"]
@@ -14,11 +13,6 @@ const props = withDefaults(
   }>(),
   { closeLabel: "Close" }
 )
-
-const drawer = inject(drawerKey)
-if (drawer === undefined) {
-  throw new Error("<DrawerHeader> must be used inside a <Drawer>.")
-}
 </script>
 
 <template>
@@ -30,14 +24,12 @@ if (drawer === undefined) {
       )
     "
   >
-    <h2 :id="drawer.titleId" class="m-0 text-base font-semibold leading-5">
+    <div class="flex min-w-0 flex-col gap-1">
       <slot />
-    </h2>
-    <button
-      type="button"
+    </div>
+    <DialogClose
       :aria-label="props.closeLabel"
       class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-sm text-newt-text-muted hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
-      @click="drawer.close"
     >
       <svg viewBox="0 0 16 16" aria-hidden="true" class="h-4 w-4">
         <path
@@ -45,6 +37,6 @@ if (drawer === undefined) {
           d="M4.3 4.3a1 1 0 0 1 1.4 0L8 6.6l2.3-2.3a1 1 0 1 1 1.4 1.4L9.4 8l2.3 2.3a1 1 0 0 1-1.4 1.4L8 9.4l-2.3 2.3a1 1 0 0 1-1.4-1.4L6.6 8 4.3 5.7a1 1 0 0 1 0-1.4Z"
         />
       </svg>
-    </button>
+    </DialogClose>
   </header>
 </template>

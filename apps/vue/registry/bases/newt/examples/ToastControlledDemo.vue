@@ -6,7 +6,9 @@ import {
   ToastClose,
   ToastContent,
   ToastIcon,
+  ToastProvider,
   ToastTitle,
+  ToastViewport,
 } from "~~/registry/bases/newt/ui/toast"
 
 /*
@@ -17,14 +19,17 @@ const open = ref(false)
 </script>
 
 <template>
-  <div class="flex min-h-28 flex-col items-start gap-4">
-    <Button @click="open = true">Copy invite link</Button>
-    <Toast v-model:open="open" :duration="3000">
-      <ToastIcon />
-      <ToastContent>
-        <ToastTitle>Invite link copied</ToastTitle>
-      </ToastContent>
-      <ToastClose />
-    </Toast>
-  </div>
+  <ToastProvider>
+    <div class="flex min-h-28 flex-col items-start gap-4">
+      <Button @click="open = true">Copy invite link</Button>
+      <ToastViewport class="static items-start" />
+      <Toast v-model:open="open" :duration="3000">
+        <ToastIcon />
+        <ToastContent>
+          <ToastTitle>Invite link copied</ToastTitle>
+        </ToastContent>
+        <ToastClose />
+      </Toast>
+    </div>
+  </ToastProvider>
 </template>

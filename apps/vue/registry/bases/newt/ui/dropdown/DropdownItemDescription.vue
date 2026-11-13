@@ -10,7 +10,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <div
     :class="
       cn(
-        'text-xs text-newt-text-muted group-hover:text-[color-mix(in_srgb,var(--newt-on-accent)_75%,transparent)] group-data-[active]:text-[color-mix(in_srgb,var(--newt-on-accent)_75%,transparent)]',
+        'text-xs text-newt-text-muted group-data-[highlighted]:text-[color-mix(in_srgb,var(--newt-on-accent)_75%,transparent)] group-data-[state=checked]:text-[color-mix(in_srgb,var(--newt-on-accent)_75%,transparent)]',
         props.class
       )
     "

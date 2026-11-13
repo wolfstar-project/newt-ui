@@ -11,7 +11,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
     aria-hidden="true"
     :class="
       cn(
-        'w-5 shrink-0 text-center text-newt-text-muted group-hover:text-newt-on-accent group-data-[active]:text-newt-on-accent',
+        'w-5 shrink-0 text-center text-newt-text-muted group-data-[highlighted]:text-newt-on-accent group-data-[state=checked]:text-newt-on-accent',
         props.class
       )
     "

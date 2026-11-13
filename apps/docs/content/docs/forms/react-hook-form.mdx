@@ -46,7 +46,7 @@ these controls are — so it goes straight on.
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -62,6 +62,7 @@ import { channelSchema, type ChannelValues } from "@/lib/channel-schema"
 
 export function CreateChannelForm() {
   const {
+    control,
     register,
     handleSubmit,
     reset,
@@ -114,7 +115,17 @@ export function CreateChannelForm() {
       </Field>
 
       <Field>
-        <Checkbox id="nsfw" {...register("nsfw")} />
+        <Controller
+          name="nsfw"
+          control={control}
+          render={({ field }) => (
+            <Checkbox
+              id="nsfw"
+              checked={field.value}
+              onCheckedChange={(checked) => field.onChange(checked === true)}
+            />
+          )}
+        />
         <Label htmlFor="nsfw">Age-restricted channel</Label>
       </Field>
 
@@ -138,8 +149,8 @@ useForm({ resolver: zodResolver(channelSchema), mode: "onBlur" })
 
 ## Switch and other controlled parts [#controlled]
 
-`Switch` is a button with `aria-checked`, not an `<input>`, so it goes through
-`Controller`:
+`Switch` and `Checkbox` are buttons with `aria-checked`, not `<input>` elements.
+`register` cannot bind them, so they go through `Controller`:
 
 ```tsx
 import { Controller } from "react-hook-form"

@@ -13,7 +13,7 @@ const LEVELS = [
 
 /* A mark at every stop turns the track into a short list of named levels. */
 export default function SliderStepsDemo() {
-  const [level, setLevel] = React.useState(2)
+  const [level, setLevel] = React.useState([2])
 
   return (
     <div className="flex w-full max-w-sm flex-col gap-3">
@@ -22,7 +22,7 @@ export default function SliderStepsDemo() {
       </span>
       <Slider
         aria-label="Noise suppression"
-        aria-valuetext={LEVELS[level]?.label}
+        aria-valuetext={LEVELS[level[0] ?? 0]?.label}
         min={0}
         max={3}
         step={1}

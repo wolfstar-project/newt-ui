@@ -1,5 +1,6 @@
 "use client"
 
+import { Slider as SliderPrimitive } from "radix-ui"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -11,53 +12,48 @@ export interface SliderMark {
   label?: string
 }
 
-export interface SliderProps extends Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "type" | "value" | "defaultValue" | "onChange" | "min" | "max" | "step"
+export interface SliderProps extends React.ComponentPropsWithoutRef<
+  typeof SliderPrimitive.Root
 > {
-  /** Controlled value. Leave undefined to let the slider own it. */
-  value?: number
-  defaultValue?: number
-  onValueChange?: (value: number) => void
-  min?: number
-  max?: number
-  step?: number
   /** Labelled points along the track. */
   marks?: readonly SliderMark[]
 }
 
-/* The grabber's width; the track is inset by half of it at each end. */
-const THUMB = 10
-
 /*
- * A real `<input type="range">` does the work: arrow keys, Home and End, the
- * announced value and touch dragging are all the browser's. It is laid over
- * the drawing and made transparent, so the track, the fill and the grabber
- * are plain boxes placed by one ratio.
+ * Radix owns the behaviour: pointer and touch dragging, arrow keys, Page Up
+ * and Page Down, Home and End, and the hidden input a form reads. Only the
+ * look is newt/ui's. The value is an array, one entry per grabber.
  */
-const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
+const Slider = React.forwardRef<
+  React.ComponentRef<typeof SliderPrimitive.Root>,
+  SliderProps
+>(
   (
     {
       className,
-      value,
-      defaultValue,
-      onValueChange,
+      marks,
       min = 0,
       max = 100,
-      step = 1,
-      marks,
+      value,
+      defaultValue,
       disabled,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
+      "aria-valuetext": ariaValueText,
       ...props
     },
     ref
   ) => {
-    const [internal, setInternal] = React.useState(defaultValue ?? min)
-    const isControlled = value !== undefined
-    const current = isControlled ? value : internal
     const span = max - min
     const ratioOf = (point: number) =>
       span === 0 ? 0 : Math.min(1, Math.max(0, (point - min) / span))
-    const ratio = ratioOf(current)
+    const thumbs = (value ?? defaultValue ?? [min]).length
+    /*
+     * `role="slider"` is on the grabber, so that is where the name goes. Two
+     * grabbers keep Radix's "Minimum" and "Maximum", and the name moves to a
+     * group around them.
+     */
+    const single = thumbs === 1
 
     return (
       <div
@@ -68,11 +64,8 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         )}
       >
         {marks === undefined || marks.length === 0 ? null : (
-          <div
-            aria-hidden="true"
-            className="relative h-[22px]"
-            style={{ marginInline: THUMB / 2 }}
-          >
+          // Inset by half a grabber, which is where the grabber's centre stops.
+          <div aria-hidden="true" className="relative mx-[5px] h-[22px]">
             {marks.map((mark) => (
               <span
                 key={mark.value}
@@ -84,42 +77,32 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             ))}
           </div>
         )}
-        <div className="relative flex h-6 items-center">
-          <input
-            ref={ref}
-            type="range"
-            min={min}
-            max={max}
-            step={step}
-            value={current}
-            disabled={disabled}
-            onChange={(event) => {
-              const next = Number(event.target.value)
-              if (!isControlled) setInternal(next)
-              onValueChange?.(next)
-            }}
-            className={cn(
-              "peer absolute inset-0 z-[1] m-0 h-full w-full opacity-0",
-              disabled ? "cursor-not-allowed" : "cursor-pointer"
-            )}
-            {...props}
-          />
-          <div className="h-2 w-full overflow-hidden rounded-full bg-newt-bg-active">
-            <div
-              className="h-full bg-newt-brand"
-              style={{
-                width: `calc(${THUMB / 2}px + (100% - ${THUMB}px) * ${ratio})`,
-              }}
+        <SliderPrimitive.Root
+          ref={ref}
+          min={min}
+          max={max}
+          value={value}
+          defaultValue={defaultValue}
+          disabled={disabled}
+          role={single ? undefined : "group"}
+          aria-label={single ? undefined : ariaLabel}
+          aria-labelledby={single ? undefined : ariaLabelledby}
+          className="relative flex h-6 w-full cursor-pointer touch-none select-none items-center data-[disabled]:cursor-not-allowed"
+          {...props}
+        >
+          <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-newt-bg-active">
+            <SliderPrimitive.Range className="absolute h-full bg-newt-brand" />
+          </SliderPrimitive.Track>
+          {Array.from({ length: thumbs }, (_, index) => (
+            <SliderPrimitive.Thumb
+              key={index}
+              aria-label={single ? ariaLabel : undefined}
+              aria-labelledby={single ? ariaLabelledby : undefined}
+              aria-valuetext={single ? ariaValueText : undefined}
+              className="block h-6 w-2.5 rounded-sm border border-newt-border bg-newt-on-accent shadow-elevation-low focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
             />
-          </div>
-          <div
-            className="pointer-events-none absolute top-0 h-6 rounded-sm border border-newt-border bg-newt-on-accent shadow-elevation-low peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-newt-text-link"
-            style={{
-              width: THUMB,
-              insetInlineStart: `calc((100% - ${THUMB}px) * ${ratio})`,
-            }}
-          />
-        </div>
+          ))}
+        </SliderPrimitive.Root>
       </div>
     )
   }

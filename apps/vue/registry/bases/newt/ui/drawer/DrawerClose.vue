@@ -1,18 +1,15 @@
 <script setup lang="ts">
-import { inject } from "vue"
-
-import { drawerKey } from "."
+import { DialogClose, type DialogCloseProps } from "reka-ui"
 
 /*
- * A plain button that closes the drawer. Like the popover's trigger it has no
- * look of its own; give it the classes of the button it should be.
+ * Closes the drawer when activated. Wrap a Button with `as-child` to keep its
+ * styling: `<DrawerClose as-child><Button variant="secondary">Cancel</Button></DrawerClose>`
  */
-const drawer = inject(drawerKey)
-if (drawer === undefined) {
-  throw new Error("<DrawerClose> must be used inside a <Drawer>.")
-}
+const props = defineProps<DialogCloseProps>()
 </script>
 
 <template>
-  <button type="button" @click="drawer.close"><slot /></button>
+  <DialogClose v-bind="props">
+    <slot />
+  </DialogClose>
 </template>
