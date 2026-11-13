@@ -11,7 +11,7 @@ const MARKS = [
 ]
 
 export default function SliderDemo() {
-  const [volume, setVolume] = React.useState(80)
+  const [volume, setVolume] = React.useState([80])
 
   return (
     <div className="flex w-full max-w-sm flex-col gap-3">
@@ -19,7 +19,7 @@ export default function SliderDemo() {
         <span className="font-semibold text-newt-text-primary">
           Output volume
         </span>
-        <span className="font-mono text-newt-text-muted">{volume}%</span>
+        <span className="font-mono text-newt-text-muted">{volume[0]}%</span>
       </div>
       <Slider
         aria-label="Output volume"

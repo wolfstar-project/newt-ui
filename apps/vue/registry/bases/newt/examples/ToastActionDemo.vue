@@ -3,11 +3,14 @@ import { ref } from "vue"
 import { Button } from "~~/registry/bases/newt/ui/button"
 import {
   Toast,
+  ToastAction,
   ToastClose,
   ToastContent,
   ToastDescription,
   ToastIcon,
+  ToastProvider,
   ToastTitle,
+  ToastViewport,
 } from "~~/registry/bases/newt/ui/toast"
 
 /*
@@ -18,25 +21,23 @@ const open = ref(true)
 </script>
 
 <template>
-  <div class="flex min-h-28 flex-col items-start gap-4">
-    <Toast v-model:open="open" :duration="0">
-      <ToastIcon />
-      <ToastContent>
-        <ToastTitle>Message deleted</ToastTitle>
-        <ToastDescription>It is gone for everyone.</ToastDescription>
-        <Button
-          variant="secondary"
-          size="sm"
-          class="mt-2"
-          @click="open = false"
-        >
-          Undo
-        </Button>
-      </ToastContent>
-      <ToastClose />
-    </Toast>
-    <Button v-if="!open" variant="secondary" size="sm" @click="open = true">
-      Delete another message
-    </Button>
-  </div>
+  <ToastProvider>
+    <div class="flex min-h-28 flex-col items-start gap-4">
+      <ToastViewport class="static items-start" />
+      <Toast v-model:open="open" :duration="0">
+        <ToastIcon />
+        <ToastContent>
+          <ToastTitle>Message deleted</ToastTitle>
+          <ToastDescription>It is gone for everyone.</ToastDescription>
+          <ToastAction alt-text="Restore the message from its menu" as-child>
+            <Button variant="secondary" size="sm" class="mt-2">Undo</Button>
+          </ToastAction>
+        </ToastContent>
+        <ToastClose />
+      </Toast>
+      <Button v-if="!open" variant="secondary" size="sm" @click="open = true">
+        Delete another message
+      </Button>
+    </div>
+  </ToastProvider>
 </template>

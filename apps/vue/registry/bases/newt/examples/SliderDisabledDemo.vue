@@ -15,7 +15,7 @@ const MARKS = [
     </div>
     <Slider
       aria-label="Input volume"
-      :model-value="40"
+      :model-value="[40]"
       :marks="MARKS"
       disabled
     />

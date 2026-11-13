@@ -8,14 +8,14 @@ const MARKS = [
   { value: 200, label: "200%" },
 ]
 
-const volume = ref(80)
+const volume = ref([80])
 </script>
 
 <template>
   <div class="flex w-full max-w-sm flex-col gap-3">
     <div class="flex items-baseline justify-between text-sm">
       <span class="font-semibold text-newt-text-primary">Output volume</span>
-      <span class="font-mono text-newt-text-muted">{{ volume }}%</span>
+      <span class="font-mono text-newt-text-muted">{{ volume[0] }}%</span>
     </div>
     <Slider
       v-model="volume"

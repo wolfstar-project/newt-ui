@@ -8,6 +8,7 @@ export const ui: Registry = [
     title: "Accordion",
     description:
       "Sections that open and close under their headings, one at a time or independently.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/accordion.tsx",
@@ -126,7 +127,7 @@ export const ui: Registry = [
     title: "Avatar",
     description:
       "A circular user avatar with image support and initials fallback in three sizes.",
-    dependencies: ["class-variance-authority"],
+    dependencies: ["class-variance-authority", "radix-ui"],
     files: [
       {
         path: "ui/avatar.tsx",
@@ -335,6 +336,7 @@ export const ui: Registry = [
     title: "Checkbox Group",
     description:
       "Several answers out of a visible list, each with an optional description.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/checkbox-group.tsx",
@@ -375,6 +377,7 @@ export const ui: Registry = [
     title: "Command Palette",
     description:
       "A searchable quick switcher of grouped destinations and actions, driven from the keyboard.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/command-palette.tsx",
@@ -401,8 +404,8 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Context Menu",
     description:
-      "A floating right-click style menu with items, keyboard shortcuts, dividers and a danger variant.",
-    dependencies: ["class-variance-authority"],
+      "A menu that opens on a right click, with items, keyboard shortcuts, separators and a danger variant.",
+    dependencies: ["class-variance-authority", "radix-ui"],
     files: [
       {
         path: "ui/context-menu.tsx",
@@ -456,7 +459,7 @@ export const ui: Registry = [
     title: "Divider",
     description:
       "A horizontal rule with an optional centered label, spacing steps and a line-less mode.",
-    dependencies: ["class-variance-authority"],
+    dependencies: ["class-variance-authority", "radix-ui"],
     files: [
       {
         path: "ui/divider.tsx",
@@ -469,7 +472,8 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Drawer",
     description:
-      "A modal panel that slides against an edge of the screen, built on the native dialog element.",
+      "A modal panel that slides against an edge of the screen and closes on Escape, overlay click or an explicit close control.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/drawer.tsx",
@@ -482,7 +486,8 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Dropdown Menu",
     description:
-      "A floating menu panel with icon, label and description items that highlight in brand color.",
+      "A menu that opens from a button, with icon, label and description items that highlight in brand color.",
+    dependencies: ["class-variance-authority", "radix-ui"],
     files: [
       {
         path: "ui/dropdown.tsx",
@@ -522,6 +527,7 @@ export const ui: Registry = [
     title: "Entity Select",
     description:
       "The picker for a server's own members, roles and channels, with chips when more than one may be chosen.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/entity-select.tsx",
@@ -561,6 +567,7 @@ export const ui: Registry = [
     title: "Form Fields",
     description:
       "Inputs, textareas, selects, labels, helper text, switches and checkboxes styled for the newt/ui dark theme.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/form-fields.tsx",
@@ -850,7 +857,7 @@ export const ui: Registry = [
     title: "Progress Bar",
     description:
       "A gradient progress bar for boosts, uploads and other long-running tasks.",
-    dependencies: ["class-variance-authority"],
+    dependencies: ["class-variance-authority", "radix-ui"],
     files: [
       {
         path: "ui/progress.tsx",
@@ -864,6 +871,7 @@ export const ui: Registry = [
     title: "Radio",
     description:
       "One choice out of a short, visible list, with the ring and dot the client's settings panels use.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/radio.tsx",
@@ -943,6 +951,7 @@ export const ui: Registry = [
     title: "Select Menu",
     description:
       "A Discord-inspired string select: combobox trigger, keyboard-driven listbox and a portalled panel.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/select-menu.tsx",
@@ -1059,6 +1068,7 @@ export const ui: Registry = [
     title: "Slider",
     description:
       "A range control with a filled track, a grabber and optional labelled marks, for volumes and thresholds.",
+    dependencies: ["radix-ui"],
     files: [
       {
         path: "ui/slider.tsx",
@@ -1219,7 +1229,7 @@ export const ui: Registry = [
     title: "Toast",
     description:
       "A transient notification with a status icon that auto-dismisses after a timeout or when closed.",
-    dependencies: ["class-variance-authority"],
+    dependencies: ["class-variance-authority", "radix-ui"],
     files: [
       {
         path: "ui/toast.tsx",

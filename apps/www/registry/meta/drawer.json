@@ -1,10 +1,16 @@
 {
   "name": "drawer",
   "title": "Drawer",
-  "description": "A modal panel that slides against an edge of the screen, built on the native dialog element.",
+  "description": "A modal panel that slides against an edge of the screen and closes on Escape, overlay click or an explicit close control.",
+  "dependencies": ["radix-ui"],
+  "vueDependencies": ["reka-ui"],
   "vueFiles": [
     "Drawer.vue",
+    "DrawerTrigger.vue",
+    "DrawerContent.vue",
     "DrawerHeader.vue",
+    "DrawerTitle.vue",
+    "DrawerDescription.vue",
     "DrawerBody.vue",
     "DrawerFooter.vue",
     "DrawerClose.vue",

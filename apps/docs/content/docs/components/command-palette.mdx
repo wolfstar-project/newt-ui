@@ -3,6 +3,8 @@ title: "Command Palette"
 description: "A searchable quick switcher of grouped destinations and actions, driven from the keyboard."
 ---
 
+A search field over a list of destinations and actions. Its dialog shell is built on [Radix Dialog](https://www.radix-ui.com/primitives/docs/components/dialog) in React and [Reka UI Dialog](https://reka-ui.com/docs/components/dialog) in Vue. The search field and the list are newt/ui's own.
+
 Use it to give keyboard users one place to jump anywhere or run anything: switch channel, open settings, mention a member. It complements the visible navigation and never replaces it, because nothing on screen says the palette exists. Bind it to a shortcut and offer a button too.
 
 Typing narrows the list to the rows whose label, description or `keywords` contain the query. The palette filters the rows it is given; for results from a server, pass new `groups` as the query changes.
@@ -32,7 +34,7 @@ Typing narrows the list to the rows whose label, description or `keywords` conta
       name: "onOpenChange",
       type: "(open: boolean) => void",
       description:
-        "React only. Called with `false` on Escape, a press of the backdrop or a selection; Vue emits `update:open`.",
+        "React only. Called with `false` on Escape, a press of the overlay or a selection; Vue emits `update:open`.",
     },
     {
       name: "groups",
@@ -69,6 +71,13 @@ Typing narrows the list to the rows whose label, description or `keywords` conta
       type: "{ move: string; select: string; close: string } | false",
       description:
         "The wording of the footer's key hints. `false` leaves the footer out.",
+    },
+    {
+      name: "container",
+      type: "HTMLElement",
+      description:
+        "Element the overlay and panel are portalled into. A palette below a `DirectionProvider` or a themed wrapper passes that element to keep the direction and the palette.",
+      default: "document.body",
     },
   ]}
 />
@@ -113,7 +122,7 @@ Opening the palette always starts from an empty query with the first row highlig
 
 ## Accessibility
 
-The shell is a native `<dialog>`, so focus is held inside it and `Escape` closes it. The search field is a `role="combobox"` that keeps focus the whole time: `Up` and `Down` move the highlight, wrapping at the ends, and `aria-activedescendant` tells a screen reader which row is highlighted. `Enter` chooses it. Rows are `role="option"` inside a `role="listbox"`, grouped under their headings. The footer hints repeat what the keys do for sighted users and are hidden from assistive technology.
+The shell carries `role="dialog"` and `aria-modal="true"`, and takes its accessible name from `label`. The primitive holds focus inside it and hides the page behind from screen readers. `Escape` closes it, and so does a press on the dimmed page. While an input method composes text, `Escape` cancels the candidate and the palette stays open. When the palette closes, focus goes back to the element that had it before. The search field is a `role="combobox"` that keeps focus the whole time: `Up` and `Down` move the highlight, wrapping at the ends, and `aria-activedescendant` tells a screen reader which row is highlighted. `Enter` chooses it. Rows are `role="option"` inside a `role="listbox"`, grouped under their headings. The footer hints repeat what the keys do for sighted users and are hidden from assistive technology.
 
 ## Tokens
 

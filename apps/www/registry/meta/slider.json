@@ -2,8 +2,10 @@
   "name": "slider",
   "title": "Slider",
   "description": "A range control with a filled track, a grabber and optional labelled marks, for volumes and thresholds.",
+  "dependencies": ["radix-ui"],
+  "vueDependencies": ["reka-ui"],
   "vueFiles": ["Slider.vue", "index.ts"],
   "reactDemo": "slider-demo",
   "vueDemo": "SliderDemo",
-  "examples": ["steps", "range", "disabled"]
+  "examples": ["steps", "range", "min-max", "disabled"]
 }

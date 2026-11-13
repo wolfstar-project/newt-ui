@@ -8,6 +8,7 @@ export const ui: Registry = [
     title: "Accordion",
     description:
       "Sections that open and close under their headings, one at a time or independently.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/accordion/Accordion.vue",
@@ -15,6 +16,14 @@ export const ui: Registry = [
       },
       {
         path: "ui/accordion/AccordionItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/accordion/AccordionTrigger.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/accordion/AccordionContent.vue",
         type: "registry:ui",
       },
       {
@@ -290,7 +299,7 @@ export const ui: Registry = [
     title: "Avatar",
     description:
       "A circular user avatar with image support and initials fallback in three sizes.",
-    dependencies: ["class-variance-authority"],
+    dependencies: ["class-variance-authority", "reka-ui"],
     files: [
       {
         path: "ui/avatar/Avatar.vue",
@@ -735,6 +744,7 @@ export const ui: Registry = [
     title: "Checkbox Group",
     description:
       "Several answers out of a visible list, each with an optional description.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/checkbox-group/CheckboxGroup.vue",
@@ -795,6 +805,7 @@ export const ui: Registry = [
     title: "Command Palette",
     description:
       "A searchable quick switcher of grouped destinations and actions, driven from the keyboard.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/command-palette/CommandPalette.vue",
@@ -833,11 +844,27 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Context Menu",
     description:
-      "A floating right-click style menu with items, keyboard shortcuts, dividers and a danger variant.",
-    dependencies: ["class-variance-authority"],
+      "A menu that opens on a right click, with items, keyboard shortcuts, separators and a danger variant.",
+    dependencies: ["class-variance-authority", "reka-ui"],
     files: [
       {
         path: "ui/context-menu/ContextMenu.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/context-menu/ContextMenuTrigger.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/context-menu/ContextMenuContent.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/context-menu/ContextMenuGroup.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/context-menu/ContextMenuLabel.vue",
         type: "registry:ui",
       },
       {
@@ -849,7 +876,7 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
-        path: "ui/context-menu/ContextMenuDivider.vue",
+        path: "ui/context-menu/ContextMenuSeparator.vue",
         type: "registry:ui",
       },
       {
@@ -932,7 +959,7 @@ export const ui: Registry = [
     title: "Divider",
     description:
       "A horizontal rule with an optional centered label, spacing steps and a line-less mode.",
-    dependencies: ["class-variance-authority"],
+    dependencies: ["class-variance-authority", "reka-ui"],
     files: [
       {
         path: "ui/divider/Divider.vue",
@@ -949,14 +976,31 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Drawer",
     description:
-      "A modal panel that slides against an edge of the screen, built on the native dialog element.",
+      "A modal panel that slides against an edge of the screen and closes on Escape, overlay click or an explicit close control.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/drawer/Drawer.vue",
         type: "registry:ui",
       },
       {
+        path: "ui/drawer/DrawerTrigger.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerContent.vue",
+        type: "registry:ui",
+      },
+      {
         path: "ui/drawer/DrawerHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerTitle.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/drawer/DrawerDescription.vue",
         type: "registry:ui",
       },
       {
@@ -982,18 +1026,15 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Dropdown Menu",
     description:
-      "A floating menu panel with icon, label and description items that highlight in brand color.",
+      "A menu that opens from a button, with icon, label and description items that highlight in brand color.",
+    dependencies: ["class-variance-authority", "reka-ui"],
     files: [
       {
         path: "ui/dropdown/Dropdown.vue",
         type: "registry:ui",
       },
       {
-        path: "ui/dropdown/DropdownItem.vue",
-        type: "registry:ui",
-      },
-      {
-        path: "ui/dropdown/DropdownIcon.vue",
+        path: "ui/dropdown/DropdownTrigger.vue",
         type: "registry:ui",
       },
       {
@@ -1001,15 +1042,43 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
+        path: "ui/dropdown/DropdownGroup.vue",
+        type: "registry:ui",
+      },
+      {
         path: "ui/dropdown/DropdownLabel.vue",
         type: "registry:ui",
       },
       {
-        path: "ui/dropdown/DropdownDescription.vue",
+        path: "ui/dropdown/DropdownItem.vue",
         type: "registry:ui",
       },
       {
-        path: "ui/dropdown/DropdownDivider.vue",
+        path: "ui/dropdown/DropdownRadioGroup.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/dropdown/DropdownRadioItem.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/dropdown/DropdownSeparator.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/dropdown/DropdownIcon.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/dropdown/DropdownItemText.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/dropdown/DropdownItemLabel.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/dropdown/DropdownItemDescription.vue",
         type: "registry:ui",
       },
       {
@@ -1126,6 +1195,7 @@ export const ui: Registry = [
     title: "Entity Select",
     description:
       "The picker for a server's own members, roles and channels, with chips when more than one may be chosen.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/entity-select/EntitySelect.vue",
@@ -1181,6 +1251,7 @@ export const ui: Registry = [
     title: "Form Fields",
     description:
       "Inputs, textareas, selects, labels, helper text, switches and checkboxes styled for the newt/ui dark theme.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/form-fields/Field.vue",
@@ -1786,7 +1857,7 @@ export const ui: Registry = [
     title: "Progress Bar",
     description:
       "A gradient progress bar for boosts, uploads and other long-running tasks.",
-    dependencies: ["class-variance-authority"],
+    dependencies: ["class-variance-authority", "reka-ui"],
     files: [
       {
         path: "ui/progress/Progress.vue",
@@ -1808,6 +1879,7 @@ export const ui: Registry = [
     title: "Radio",
     description:
       "One choice out of a short, visible list, with the ring and dot the client's settings panels use.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/radio/Radio.vue",
@@ -1815,10 +1887,6 @@ export const ui: Registry = [
       },
       {
         path: "ui/radio/RadioGroup.vue",
-        type: "registry:ui",
-      },
-      {
-        path: "ui/radio/useRadioGroup.ts",
         type: "registry:ui",
       },
       {
@@ -1963,6 +2031,7 @@ export const ui: Registry = [
     title: "Select Menu",
     description:
       "A Discord-inspired string select: combobox trigger, keyboard-driven listbox and a portalled panel.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/select-menu/SelectMenu.vue",
@@ -2179,6 +2248,7 @@ export const ui: Registry = [
     title: "Slider",
     description:
       "A range control with a filled track, a grabber and optional labelled marks, for volumes and thresholds.",
+    dependencies: ["reka-ui"],
     files: [
       {
         path: "ui/slider/Slider.vue",
@@ -2483,8 +2553,16 @@ export const ui: Registry = [
     title: "Toast",
     description:
       "A transient notification with a status icon that auto-dismisses after a timeout or when closed.",
-    dependencies: ["class-variance-authority"],
+    dependencies: ["class-variance-authority", "reka-ui"],
     files: [
+      {
+        path: "ui/toast/ToastProvider.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/toast/ToastViewport.vue",
+        type: "registry:ui",
+      },
       {
         path: "ui/toast/Toast.vue",
         type: "registry:ui",
@@ -2503,6 +2581,10 @@ export const ui: Registry = [
       },
       {
         path: "ui/toast/ToastDescription.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/toast/ToastAction.vue",
         type: "registry:ui",
       },
       {

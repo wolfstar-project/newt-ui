@@ -1,7 +1,7 @@
 "use client"
 
+import { Select as SelectPrimitive } from "radix-ui"
 import * as React from "react"
-import { createPortal } from "react-dom"
 
 import { cn } from "@/lib/utils"
 
@@ -54,16 +54,19 @@ export interface SelectMenuProps extends Omit<
   disabled?: boolean
   /** Accessible name of the trigger and the listbox. */
   label?: string
+  /**
+   * The element the panel is portalled into. Defaults to `document.body`;
+   * pass the enclosing native `<dialog>` or a themed wrapper to keep it there.
+   */
+  container?: React.ComponentProps<typeof SelectPrimitive.Portal>["container"]
 }
 
-/** Panel geometry, measured from the trigger each time the menu opens. */
-interface PanelBox {
-  left: number
-  width: number
-  top?: number
-  bottom?: number
-}
-
+/*
+ * Radix Select owns the behaviour: open state, Escape and outside press, focus
+ * moving through the rows and back to the trigger, typeahead, and
+ * collision-aware placement. Only the look, the option model and the cap are
+ * newt/ui's.
+ */
 const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
   (
     {
@@ -76,14 +79,14 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
       placeholder = "Make a selection",
       disabled = false,
       label = "Select an option",
+      container,
       ...props
     },
     ref
   ) => {
     /*
-     * The cap is applied here rather than left to the caller: everything below
-     * — the keyboard, the active index, the ids — counts rows, and a row the
-     * platform would reject should not be one of them.
+     * The cap is applied here rather than left to the caller: a row the
+     * platform would reject should not be one the keyboard can reach.
      */
     const options = React.useMemo(
       () =>
@@ -92,360 +95,174 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
     )
 
     const id = React.useId()
-    const listboxId = `${id}-listbox`
-    const optionId = (index: number) => `${id}-option-${index}`
-
-    const triggerRef = React.useRef<HTMLButtonElement>(null)
-    const panelRef = React.useRef<HTMLDivElement>(null)
-
-    const [open, setOpen] = React.useState(false)
-    const [active, setActive] = React.useState(-1)
-    const [box, setBox] = React.useState<PanelBox | null>(null)
-    const [uncontrolled, setUncontrolled] = React.useState(defaultValue)
-    const selected = value ?? uncontrolled
-
-    const selectable = React.useCallback(
-      (index: number) => Boolean(options[index]) && !options[index].disabled,
-      [options]
-    )
-
-    const firstSelectable = React.useCallback(
-      () => options.findIndex((option) => !option.disabled),
-      [options]
-    )
-
-    const lastSelectable = React.useCallback(() => {
-      for (let i = options.length - 1; i >= 0; i--) {
-        if (!options[i].disabled) return i
-      }
-      return -1
-    }, [options])
-
-    const step = React.useCallback(
-      (from: number, direction: 1 | -1) => {
-        const count = options.length
-        for (let i = 1; i <= count; i++) {
-          const index = (from + direction * i + count * i) % count
-          if (selectable(index)) return index
-        }
-        return from
-      },
-      [options.length, selectable]
-    )
 
     /*
-     * The panel is portalled to the body so an `overflow: hidden` ancestor
-     * cannot clip it, which means it is positioned from measured coordinates
-     * and flipped above the trigger when the space below runs out.
+     * The selection is mirrored here because the trigger draws more than the
+     * label of the chosen row: its icon and its note come from the option.
      */
-    const measure = React.useCallback(() => {
-      const trigger = triggerRef.current
-      if (!trigger) return
-      const rect = trigger.getBoundingClientRect()
-      const below = window.innerHeight - rect.bottom
-      const height = panelRef.current?.offsetHeight ?? 0
-      setBox(
-        height > below && rect.top > below
-          ? {
-              left: rect.left,
-              width: rect.width,
-              bottom: window.innerHeight - rect.top + 4,
-            }
-          : { left: rect.left, width: rect.width, top: rect.bottom + 4 }
-      )
-    }, [])
-
-    React.useLayoutEffect(() => {
-      if (!open) return
-      measure()
-    }, [open, measure])
-
-    React.useEffect(() => {
-      if (!open) return
-      const update = () => measure()
-      /* Capture phase: a nested scroller never fires a window scroll event. */
-      document.addEventListener("scroll", update, {
-        capture: true,
-        passive: true,
-      })
-      window.addEventListener("resize", update)
-      return () => {
-        document.removeEventListener("scroll", update, { capture: true })
-        window.removeEventListener("resize", update)
-      }
-    }, [open, measure])
-
-    React.useEffect(() => {
-      if (!open) return
-      const onPointerDown = (event: MouseEvent) => {
-        const target = event.target
-        if (!(target instanceof Node)) return
-        if (
-          triggerRef.current?.contains(target) ||
-          panelRef.current?.contains(target)
-        ) {
-          return
-        }
-        setOpen(false)
-      }
-      document.addEventListener("mousedown", onPointerDown)
-      return () => document.removeEventListener("mousedown", onPointerDown)
-    }, [open])
-
-    React.useEffect(() => {
-      if (active < 0) return
-      panelRef.current
-        ?.querySelector(`#${CSS.escape(optionId(active))}`)
-        ?.scrollIntoView({ block: "nearest" })
-      // eslint-disable-next-line react-hooks/exhaustive-deps -- optionId is derived from a stable id
-    }, [active])
-
-    const openMenu = () => {
-      if (disabled || open) return
-      setOpen(true)
-      const current = options.findIndex((option) => option.value === selected)
-      setActive(
-        current >= 0 && selectable(current) ? current : firstSelectable()
-      )
-    }
-
-    const closeMenu = () => {
-      setOpen(false)
-      setActive(-1)
-    }
-
-    const select = (index: number) => {
-      const option = options[index]
-      if (!option || option.disabled) return
-      if (value === undefined) setUncontrolled(option.value)
-      onValueChange?.(option.value)
-      closeMenu()
-      triggerRef.current?.focus()
-    }
-
-    const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-      switch (event.key) {
-        case "ArrowDown":
-        case "ArrowUp": {
-          event.preventDefault()
-          if (!open) {
-            openMenu()
-            return
-          }
-          setActive((current) =>
-            step(current, event.key === "ArrowDown" ? 1 : -1)
-          )
-          return
-        }
-        case "Home":
-          if (!open) return
-          event.preventDefault()
-          setActive(firstSelectable())
-          return
-        case "End":
-          if (!open) return
-          event.preventDefault()
-          setActive(lastSelectable())
-          return
-        case "Enter":
-        case " ":
-          event.preventDefault()
-          if (open) select(active)
-          else openMenu()
-          return
-        case "Escape":
-          if (!open) return
-          event.preventDefault()
-          closeMenu()
-      }
-    }
-
+    const [uncontrolled, setUncontrolled] = React.useState(defaultValue)
+    const selected = value ?? uncontrolled
     const selectedOption = options.find((option) => option.value === selected)
 
-    const panel =
-      open && box ? (
+    return (
+      <SelectPrimitive.Root
+        /* An empty string is how Radix spells "nothing chosen". */
+        value={selected ?? ""}
+        onValueChange={(next) => {
+          if (value === undefined) setUncontrolled(next)
+          onValueChange?.(next)
+        }}
+        disabled={disabled}
+      >
         <div
-          ref={panelRef}
-          style={{
-            position: "fixed",
-            left: box.left,
-            width: box.width,
-            top: box.top,
-            bottom: box.bottom,
-            zIndex: 1002,
-          }}
-          /* Keep focus on the trigger: aria-activedescendant drives the list. */
-          onMouseDown={(event) => event.preventDefault()}
-          className="rounded-md border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high"
+          ref={ref}
+          className={cn("relative w-full max-w-[400px]", className)}
+          {...props}
         >
-          <ul
-            id={listboxId}
-            role="listbox"
+          <SelectPrimitive.Trigger
             aria-label={label}
-            className={cn(
-              "m-0 list-none overflow-y-auto p-0",
-              /*
-               * A message select shows its scrollbar rather than hiding it
-               * until the pointer moves: the list is capped, so the bar is
-               * what says there is more of it below the fold.
-               */
-              variant === "message"
-                ? cn(
-                    "max-h-[300px]",
-                    "[scrollbar-width:thin] [scrollbar-color:var(--newt-bg-active)_transparent]",
-                    "[&::-webkit-scrollbar]:w-2",
-                    "[&::-webkit-scrollbar-track]:bg-transparent",
-                    "[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:border-2 [&::-webkit-scrollbar-thumb]:border-solid [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-newt-bg-active [&::-webkit-scrollbar-thumb]:bg-clip-padding",
-                    "[&::-webkit-scrollbar-thumb:hover]:bg-newt-text-muted [&::-webkit-scrollbar-thumb:hover]:bg-clip-padding"
-                  )
-                : "max-h-80"
-            )}
+            className="group flex min-h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-sm border border-newt-border bg-newt-bg-input px-2 font-sans text-sm font-medium text-newt-text-primary hover:border-newt-bg-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {options.map((option, index) => (
-              <li
-                key={option.value}
-                id={optionId(index)}
-                role="option"
-                aria-selected={option.value === selected}
-                aria-disabled={option.disabled || undefined}
-                onMouseEnter={() => {
-                  if (!option.disabled) setActive(index)
-                }}
-                onClick={() => select(index)}
+            <span className="flex min-w-0 flex-1 items-center gap-2">
+              {selectedOption?.icon ? (
+                <span
+                  aria-hidden="true"
+                  className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary"
+                >
+                  {selectedOption.icon}
+                </span>
+              ) : null}
+              <span
                 className={cn(
-                  "flex cursor-pointer items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm text-newt-text-secondary",
-                  index === active &&
-                    !option.disabled &&
-                    "bg-newt-brand text-newt-on-accent",
-                  option.value === selected && "text-newt-text-primary",
-                  option.disabled &&
-                    "cursor-not-allowed bg-transparent text-newt-text-muted opacity-50"
+                  "truncate",
+                  !selectedOption && "text-newt-text-muted"
                 )}
               >
-                {option.icon ? (
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      "flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary",
-                      index === active &&
-                        !option.disabled &&
-                        "text-newt-on-accent"
-                    )}
-                  >
-                    {option.icon}
-                  </span>
-                ) : null}
-                <span className="flex min-w-0 flex-col">
-                  <span className="truncate">{option.label}</span>
-                  {option.description ? (
-                    <span
-                      className={cn(
-                        "truncate text-xs text-newt-text-muted",
-                        index === active &&
-                          !option.disabled &&
-                          "text-newt-on-accent"
-                      )}
-                    >
-                      {option.description}
-                    </span>
-                  ) : null}
-                </span>
-                {/*
-                 * Only the settings menu ticks a row. In a message the choice
-                 * is submitted rather than kept, so there is no standing
-                 * selection for a tick to be about — `aria-selected` still
-                 * carries it for anything that asks.
-                 */}
-                {option.value === selected && variant === "settings" ? (
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      "ms-auto flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full",
-                      // On the highlighted row the disc would dissolve into the
-                      // background, so it swaps with the tick.
-                      index === active && !option.disabled
-                        ? "bg-newt-on-accent text-newt-brand"
-                        : "bg-newt-brand text-newt-on-accent"
-                    )}
-                  >
-                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5">
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m6 12.5 4 4 8-9"
-                      />
-                    </svg>
-                  </span>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null
-
-    return (
-      <div
-        ref={ref}
-        className={cn("relative w-full max-w-[400px]", className)}
-        {...props}
-      >
-        <button
-          ref={triggerRef}
-          type="button"
-          role="combobox"
-          aria-haspopup="listbox"
-          aria-expanded={open}
-          aria-controls={listboxId}
-          aria-activedescendant={
-            open && active >= 0 ? optionId(active) : undefined
-          }
-          aria-label={label}
-          disabled={disabled}
-          onClick={() => (open ? closeMenu() : openMenu())}
-          onKeyDown={onKeyDown}
-          className="flex min-h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-sm border border-newt-border bg-newt-bg-input px-2 font-sans text-sm font-medium text-newt-text-primary hover:border-newt-bg-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <span className="flex min-w-0 flex-1 items-center gap-2">
-            {selectedOption?.icon ? (
-              <span
-                aria-hidden="true"
-                className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary"
-              >
-                {selectedOption.icon}
+                {selectedOption?.label ?? placeholder}
               </span>
-            ) : null}
-            <span
+              {selectedOption?.note ? (
+                <span className="truncate font-normal text-newt-text-muted">
+                  {selectedOption.note}
+                </span>
+              ) : null}
+            </span>
+            {/* Points down when closed, flips when the listbox opens. */}
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+              className="h-[18px] w-[18px] shrink-0 group-data-[state=open]:rotate-180"
+            >
+              <path
+                fill="currentColor"
+                d="M5.3 9.3a1 1 0 0 1 1.4 0l5.3 5.29 5.3-5.3a1 1 0 1 1 1.4 1.42l-6 6a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.42Z"
+              />
+            </svg>
+          </SelectPrimitive.Trigger>
+        </div>
+
+        <SelectPrimitive.Portal container={container}>
+          <SelectPrimitive.Content
+            position="popper"
+            align="start"
+            sideOffset={4}
+            aria-label={label}
+            className="z-[110] w-[var(--radix-select-trigger-width)] rounded-md border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high"
+          >
+            <SelectPrimitive.Viewport
               className={cn(
-                "truncate",
-                !selectedOption && "text-newt-text-muted"
+                /*
+                 * A message select shows its scrollbar: the list is capped, so
+                 * the bar is what says there is more of it below the fold.
+                 * Radix hides the viewport's scrollbar with an attribute
+                 * selector, so the two rules that bring it back repeat that
+                 * attribute to outrank it.
+                 */
+                variant === "message"
+                  ? cn(
+                      "max-h-[300px]",
+                      "[&[data-radix-select-viewport]]:[scrollbar-width:thin] [scrollbar-color:var(--newt-bg-active)_transparent]",
+                      "[&[data-radix-select-viewport]::-webkit-scrollbar]:block [&::-webkit-scrollbar]:w-2",
+                      "[&::-webkit-scrollbar-track]:bg-transparent",
+                      "[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:border-2 [&::-webkit-scrollbar-thumb]:border-solid [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-newt-bg-active [&::-webkit-scrollbar-thumb]:bg-clip-padding",
+                      "[&::-webkit-scrollbar-thumb:hover]:bg-newt-text-muted [&::-webkit-scrollbar-thumb:hover]:bg-clip-padding"
+                    )
+                  : "max-h-80"
               )}
             >
-              {selectedOption?.label ?? placeholder}
-            </span>
-            {selectedOption?.note ? (
-              <span className="truncate font-normal text-newt-text-muted">
-                {selectedOption.note}
-              </span>
-            ) : null}
-          </span>
-          {/* Points down when closed, flips when the listbox opens. */}
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            focusable="false"
-            className={cn("h-[18px] w-[18px] shrink-0", open && "rotate-180")}
-          >
-            <path
-              fill="currentColor"
-              d="M5.3 9.3a1 1 0 0 1 1.4 0l5.3 5.29 5.3-5.3a1 1 0 1 1 1.4 1.42l-6 6a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.42Z"
-            />
-          </svg>
-        </button>
-        {panel ? createPortal(panel, document.body) : null}
-      </div>
+              {options.map((option, index) => {
+                const descriptionId = `${id}-description-${index}`
+                return (
+                  <SelectPrimitive.Item
+                    key={option.value}
+                    value={option.value}
+                    disabled={option.disabled}
+                    /* Typeahead matches the label, not the description. */
+                    textValue={option.label}
+                    aria-describedby={
+                      option.description ? descriptionId : undefined
+                    }
+                    className={cn(
+                      "group/item flex cursor-pointer select-none items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm text-newt-text-secondary outline-none",
+                      "data-[state=checked]:text-newt-text-primary",
+                      "data-[highlighted]:bg-newt-brand data-[highlighted]:data-[state=unchecked]:text-newt-on-accent",
+                      "data-[disabled]:cursor-not-allowed data-[disabled]:text-newt-text-muted data-[disabled]:opacity-50"
+                    )}
+                  >
+                    {option.icon ? (
+                      <span
+                        aria-hidden="true"
+                        className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary group-data-[highlighted]/item:text-newt-on-accent"
+                      >
+                        {option.icon}
+                      </span>
+                    ) : null}
+                    <span className="flex min-w-0 flex-col">
+                      <SelectPrimitive.ItemText className="truncate">
+                        {option.label}
+                      </SelectPrimitive.ItemText>
+                      {option.description ? (
+                        <span
+                          id={descriptionId}
+                          className="truncate text-xs text-newt-text-muted group-data-[highlighted]/item:text-newt-on-accent"
+                        >
+                          {option.description}
+                        </span>
+                      ) : null}
+                    </span>
+                    {/*
+                     * Only the settings menu ticks a row. In a message the
+                     * choice is submitted rather than kept, so there is no
+                     * standing selection for a tick to be about.
+                     */}
+                    {variant === "settings" ? (
+                      <SelectPrimitive.ItemIndicator
+                        className={cn(
+                          "ms-auto flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-newt-brand text-newt-on-accent",
+                          // On the highlighted row the disc would dissolve into
+                          // the background, so it swaps with the tick.
+                          "group-data-[highlighted]/item:bg-newt-on-accent group-data-[highlighted]/item:text-newt-brand"
+                        )}
+                      >
+                        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5">
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m6 12.5 4 4 8-9"
+                          />
+                        </svg>
+                      </SelectPrimitive.ItemIndicator>
+                    ) : null}
+                  </SelectPrimitive.Item>
+                )
+              })}
+            </SelectPrimitive.Viewport>
+          </SelectPrimitive.Content>
+        </SelectPrimitive.Portal>
+      </SelectPrimitive.Root>
     )
   }
 )

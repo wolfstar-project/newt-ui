@@ -14,7 +14,7 @@ export default function SliderDisabledDemo() {
         </span>
         <span className="text-newt-text-muted">No microphone found</span>
       </div>
-      <Slider aria-label="Input volume" value={40} marks={MARKS} disabled />
+      <Slider aria-label="Input volume" value={[40]} marks={MARKS} disabled />
     </div>
   )
 }

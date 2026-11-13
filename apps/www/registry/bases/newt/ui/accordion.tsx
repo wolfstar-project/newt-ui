@@ -1,89 +1,109 @@
 "use client"
 
+import { Accordion as AccordionPrimitive } from "radix-ui"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-/* The shared `name` that makes the browser keep one section open. */
-const AccordionContext = React.createContext<string | undefined>(undefined)
-
-export interface AccordionProps extends React.ComponentProps<"div"> {
-  /**
-   * `single` closes the open section when another opens; `multiple` lets
-   * them open independently.
-   */
-  type?: "single" | "multiple"
-}
+export type AccordionProps =
+  | (Omit<AccordionPrimitive.AccordionSingleProps, "type"> & {
+      /** `single` closes the open section when another opens. */
+      type?: "single"
+    })
+  | AccordionPrimitive.AccordionMultipleProps
 
 /*
- * Each section is a native `<details>`: the summary is already a button, it
- * already answers Enter and Space, and find-in-page already opens a closed
- * section that holds a match. `single` gives the sections one `name`, which
- * is how the browser itself keeps only one of them open.
+ * Radix owns the behaviour: which sections are open, the arrow keys, Home and
+ * End between the headings, and the ids that link each heading to its panel.
+ * Only the look is newt/ui's. Without a `type` it is `single` and
+ * `collapsible`, so the open section also closes on a second press.
  */
-const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
-  ({ className, type = "single", ...props }, ref) => {
-    const name = React.useId()
-    return (
-      <AccordionContext.Provider value={type === "single" ? name : undefined}>
-        <div
-          ref={ref}
-          className={cn(
-            "flex w-full flex-col overflow-hidden rounded-md border border-newt-border bg-newt-bg-surface",
-            className
-          )}
-          {...props}
-        />
-      </AccordionContext.Provider>
-    )
+const Accordion = React.forwardRef<
+  React.ComponentRef<typeof AccordionPrimitive.Root>,
+  AccordionProps
+>(({ className, ...props }, ref) => {
+  const classes = cn(
+    "flex w-full flex-col overflow-hidden rounded-md border border-newt-border bg-newt-bg-surface",
+    className
+  )
+  if (props.type === "multiple") {
+    return <AccordionPrimitive.Root ref={ref} className={classes} {...props} />
   }
-)
+  return (
+    <AccordionPrimitive.Root
+      ref={ref}
+      collapsible
+      className={classes}
+      {...props}
+      type="single"
+    />
+  )
+})
 Accordion.displayName = "Accordion"
 
-export interface AccordionItemProps extends Omit<
-  React.ComponentProps<"details">,
-  "title" | "open"
-> {
-  /** The always-visible line that opens the section. */
-  title: React.ReactNode
-  /** Start open. The reader, not the application, owns it from there. */
-  defaultOpen?: boolean
-}
-
-const AccordionItem = React.forwardRef<HTMLDetailsElement, AccordionItemProps>(
-  ({ className, title, defaultOpen = false, children, ...props }, ref) => {
-    const name = React.useContext(AccordionContext)
-    return (
-      <details
-        ref={ref}
-        name={name}
-        open={defaultOpen || undefined}
-        className={cn(
-          "group border-newt-border [&:not(:first-child)]:border-t",
-          className
-        )}
-        {...props}
-      >
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-[15px] font-semibold leading-5 text-newt-text-primary transition-colors duration-fast ease-newt hover:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link [&::-webkit-details-marker]:hidden">
-          {title}
-          <svg
-            viewBox="0 0 16 16"
-            aria-hidden="true"
-            className="h-4 w-4 shrink-0 text-newt-text-muted group-open:rotate-90 rtl:-scale-x-100 rtl:group-open:scale-x-100"
-          >
-            <path
-              fill="currentColor"
-              d="M5.3 3.3a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-1.4-1.4L8.6 8 5.3 4.7a1 1 0 0 1 0-1.4Z"
-            />
-          </svg>
-        </summary>
-        <div className="px-4 pb-3.5 text-sm leading-5 text-newt-text-secondary">
-          {children}
-        </div>
-      </details>
-    )
-  }
-)
+const AccordionItem = React.forwardRef<
+  React.ComponentRef<typeof AccordionPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
+>(({ className, ...props }, ref) => (
+  <AccordionPrimitive.Item
+    ref={ref}
+    className={cn(
+      "border-newt-border [&:not(:first-child)]:border-t",
+      className
+    )}
+    {...props}
+  />
+))
 AccordionItem.displayName = "AccordionItem"
 
-export { Accordion, AccordionItem }
+/*
+ * The always-visible line that opens the section. It is a button inside a
+ * heading, so a screen reader lists the sections among the page's headings.
+ */
+const AccordionTrigger = React.forwardRef<
+  React.ComponentRef<typeof AccordionPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <AccordionPrimitive.Header className="m-0 flex">
+    <AccordionPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "group flex flex-1 cursor-pointer items-center justify-between gap-3 border-0 bg-transparent px-4 py-3 text-start text-[15px] font-semibold leading-5 text-newt-text-primary transition-colors duration-fast ease-newt hover:bg-newt-bg-hover",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link",
+        "disabled:pointer-events-none disabled:opacity-50",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <svg
+        viewBox="0 0 16 16"
+        aria-hidden="true"
+        className="h-4 w-4 shrink-0 text-newt-text-muted group-data-[state=open]:rotate-90 rtl:-scale-x-100 rtl:group-data-[state=open]:scale-x-100"
+      >
+        <path
+          fill="currentColor"
+          d="M5.3 3.3a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-1.4-1.4L8.6 8 5.3 4.7a1 1 0 0 1 0-1.4Z"
+        />
+      </svg>
+    </AccordionPrimitive.Trigger>
+  </AccordionPrimitive.Header>
+))
+AccordionTrigger.displayName = "AccordionTrigger"
+
+const AccordionContent = React.forwardRef<
+  React.ComponentRef<typeof AccordionPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <AccordionPrimitive.Content
+    ref={ref}
+    className={cn(
+      "px-4 pb-3.5 text-sm leading-5 text-newt-text-secondary",
+      className
+    )}
+    {...props}
+  />
+))
+AccordionContent.displayName = "AccordionContent"
+
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }

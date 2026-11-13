@@ -1806,7 +1806,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "dropdown-demo",
       type: "registry:example",
-      registryDependencies: ["dropdown"],
+      registryDependencies: ["dropdown", "button"],
       files: ["registry/bases/newt/examples/dropdown-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/dropdown-demo")
@@ -1818,7 +1818,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "dropdown-simple-demo",
       type: "registry:example",
-      registryDependencies: ["dropdown"],
+      registryDependencies: ["dropdown", "button"],
       files: ["registry/bases/newt/examples/dropdown-simple-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/dropdown-simple-demo")
@@ -1830,7 +1830,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "dropdown-status-demo",
       type: "registry:example",
-      registryDependencies: ["dropdown"],
+      registryDependencies: ["dropdown", "button"],
       files: ["registry/bases/newt/examples/dropdown-status-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/dropdown-status-demo")
@@ -2895,6 +2895,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/slider-range-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/slider-range-demo")
+      ),
+    },
+  ],
+  [
+    "slider-min-max-demo",
+    {
+      name: "slider-min-max-demo",
+      type: "registry:example",
+      registryDependencies: ["slider"],
+      files: ["registry/bases/newt/examples/slider-min-max-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/slider-min-max-demo")
       ),
     },
   ],

@@ -1,65 +1,61 @@
 <script setup lang="ts">
-import { computed, onMounted, watch } from "vue"
+import {
+  RadioGroupIndicator,
+  RadioGroupItem,
+  useForwardPropsEmits,
+  type RadioGroupItemEmits,
+  type RadioGroupItemProps,
+} from "reka-ui"
+import { computed, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-import { useRadioGroup } from "./useRadioGroup"
-
-const props = withDefaults(
-  defineProps<{
-    class?: string
-    value: string
+const props = defineProps<
+  RadioGroupItemProps & {
+    class?: HTMLAttributes["class"]
     /** A second line, when the choice needs a sentence to explain it. */
     description?: string
-    disabled?: boolean
-  }>(),
-  { disabled: false }
-)
+  }
+>()
+const emits = defineEmits<RadioGroupItemEmits>()
 
-const group = useRadioGroup()
-const checked = computed(() => group.value.value === props.value)
-
-onMounted(() => group.register(props.value, props.disabled))
-watch(
-  () => props.disabled,
-  (disabled) => group.register(props.value, disabled)
-)
-
-function pick() {
-  if (props.disabled) return
-  group.select(props.value)
-}
+const delegated = computed(() => {
+  const { class: _class, description: _description, ...rest } = props
+  return rest
+})
+const forwarded = useForwardPropsEmits(delegated, emits)
 </script>
 
 <template>
-  <button
-    type="button"
-    role="radio"
-    :aria-checked="checked"
-    :aria-disabled="props.disabled || undefined"
-    :tabindex="checked ? 0 : -1"
+  <RadioGroupItem
+    v-bind="forwarded"
     :class="
       cn(
         'group flex cursor-pointer items-center gap-3 border-0 bg-transparent px-1 py-2 text-start font-sans text-[15px] leading-5 text-newt-text-secondary',
         'hover:text-newt-text-primary focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
-        checked && 'text-newt-text-primary',
-        props.disabled && 'cursor-not-allowed opacity-50',
+        'data-[state=checked]:text-newt-text-primary',
+        'disabled:cursor-not-allowed disabled:opacity-50',
         props.class
       )
     "
-    @click="pick"
   >
-    <span
+    <!--
+      The indicator stays mounted so it can be the ring as well as the dot:
+      it carries `data-state`, and the dot grows from nothing. A disabled row
+      does not answer the pointer, checked or not.
+    -->
+    <RadioGroupIndicator
+      force-mount
       aria-hidden="true"
-      :data-checked="checked || undefined"
       :class="
         cn(
           'relative h-5 w-5 shrink-0 rounded-full border-2 border-newt-text-muted transition-colors duration-fast ease-newt',
           'after:absolute after:top-1/2 after:start-1/2 after:h-2 after:w-2 after:rounded-full after:bg-newt-on-accent after:content-[\'\']',
           'after:[transform:translate(calc(var(--newt-dir)*-50%),-50%)_scale(0)]',
-          'data-[checked]:border-newt-brand data-[checked]:bg-newt-brand',
-          'data-[checked]:after:[transform:translate(calc(var(--newt-dir)*-50%),-50%)_scale(1)]',
-          !props.disabled && 'group-hover:border-newt-text-secondary'
+          'data-[state=checked]:border-newt-brand data-[state=checked]:bg-newt-brand',
+          'data-[state=checked]:after:[transform:translate(calc(var(--newt-dir)*-50%),-50%)_scale(1)]',
+          'group-hover:border-newt-text-secondary',
+          'data-[disabled]:data-[state=unchecked]:group-hover:border-newt-text-muted data-[disabled]:data-[state=checked]:group-hover:border-newt-brand'
         )
       "
     />
@@ -70,5 +66,5 @@ function pick() {
       </span>
     </span>
     <slot v-else />
-  </button>
+  </RadioGroupItem>
 </template>

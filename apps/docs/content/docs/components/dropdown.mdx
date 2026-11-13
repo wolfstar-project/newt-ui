@@ -1,9 +1,11 @@
 ---
 title: "Dropdown Menu"
-description: "A floating menu panel with icon, label and description items that highlight in brand color."
+description: "A menu that opens from a button, with icon, label and description items that highlight in brand color."
 ---
 
-A floating menu panel with icon, label and description items that highlight in brand color. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+Use it for a list of actions that belong to one button: a server menu, the actions for a channel, a status picker. For a few controls or a short explanation use a [Popover](/docs/components/popover), and for a menu that opens on a right click use a [Context Menu](/docs/components/context-menu).
+
+It is built on [Radix Dropdown Menu](https://www.radix-ui.com/primitives/docs/components/dropdown-menu) in React and [Reka UI Dropdown Menu](https://reka-ui.com/docs/components/dropdown-menu) in Vue. The primitive owns the behaviour; newt/ui owns the look. The menu opens below its trigger and start-aligned unless `side` and `align` say otherwise, and it flips when it would leave the viewport.
 
 <ComponentPreview name="dropdown" />
 
@@ -15,45 +17,173 @@ A floating menu panel with icon, label and description items that highlight in b
 
 <Usage name="dropdown" />
 
+`DropdownTrigger` is a plain button that carries the state and has no look of its own. Give it the classes of the button it should be (`buttonVariants({ variant: "secondary" })` in the example), or use `asChild` (`as-child` in Vue) to put the state on your own button.
+
+An item holds a `DropdownIcon`, then a `DropdownItemText` with a `DropdownItemLabel` and a `DropdownItemDescription`. Listen to `onSelect` (`@select` in Vue) for the choice. The menu closes after a choice; call `event.preventDefault()` in the handler to keep it open.
+
 ## Examples
 
 ### Labels only
 
-`DropdownIcon` and `DropdownDescription` are optional. A label alone makes a compact action menu; give the destructive action the danger colour and keep it last, below a divider.
+`DropdownIcon` and `DropdownItemDescription` are optional. A label alone makes a compact action menu. Give the destructive action `variant="danger"` and keep it last, below a `DropdownSeparator`.
 
 <ComponentPreview name="dropdown" variant="simple" />
 
-### Selected item
+### One choice
 
-`active` highlights one item. The menu keeps no state, so hold the value yourself and set it from each item's click; `role="menuitemradio"` with `aria-checked` tells a screen reader that one item is chosen.
+`DropdownRadioGroup` holds one value, and each `DropdownRadioItem` names its own. The checked item keeps the brand fill, and a screen reader hears it as a checked radio item.
 
 <ComponentPreview name="dropdown" variant="status" />
 
-### Opened from a button
+### Your own button, groups and controlled state
 
-The panel does not open or position itself. Toggle it from a button that carries `aria-haspopup` and `aria-expanded`, place it against a `relative` wrapper, and close it when an item is chosen or Escape is pressed. The example below also does the keyboard part: opening moves focus to the first item, the arrow keys, Home and End walk the items, Enter or Space chooses one, and closing hands focus back to the button.
+`asChild` puts the menu state on a `Button`. `DropdownGroup` with a `DropdownLabel` names a set of items. Control the menu with `open` and `onOpenChange` in React, or `v-model:open` in Vue.
 
 <ComponentPreview name="dropdown" variant="trigger" />
 
 ## API reference
 
 <PropsTable
-  of="DropdownItem"
+  of="Dropdown"
   rows={[
     {
-      name: "active",
-      type: "boolean | undefined",
+      name: "open / v-model:open",
+      type: "boolean",
       description:
-        "Highlights the item as if hovered (e.g. keyboard focus / selected).",
+        "Whether the menu is shown. In React, leave it undefined and pass `defaultOpen` to let the menu own it.",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description:
+        "React only. Called when the menu opens or closes; Vue emits `update:open`.",
+    },
+    {
+      name: "modal",
+      type: "boolean",
+      description:
+        "When true, the page outside the menu does not react to the pointer while the menu is open.",
+      default: "true",
     },
   ]}
 />
 
-The registry exports `Dropdown`, `DropdownItem`, `DropdownIcon`, `DropdownContent`, `DropdownLabel`, `DropdownDescription`, `DropdownDivider`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+<PropsTable
+  of="DropdownContent"
+  rows={[
+    {
+      name: "side",
+      type: '"top" | "right" | "bottom" | "left"',
+      description:
+        "Which side of the trigger the menu opens on. It flips when there is no room.",
+      default: '"bottom"',
+    },
+    {
+      name: "align",
+      type: '"start" | "center" | "end"',
+      description: "Which edge of the trigger the menu lines up with.",
+      default: '"start"',
+    },
+    {
+      name: "sideOffset",
+      type: "number",
+      description: "The gap between the trigger and the menu, in pixels.",
+      default: "4",
+    },
+    {
+      name: "loop",
+      type: "boolean",
+      description:
+        "When true, the arrow keys move from the last item to the first and back.",
+      default: "false",
+    },
+    {
+      name: "container",
+      type: "HTMLElement",
+      description:
+        "Element the menu is portalled into. Pass the enclosing native `<dialog>` or a themed wrapper to keep it there.",
+      default: "document.body",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="DropdownItem"
+  rows={[
+    {
+      name: "variant",
+      type: '"default" | "danger"',
+      description: "`danger` marks a destructive action.",
+      default: '"default"',
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description:
+        "Dims the item. The pointer and the arrow keys then skip it.",
+    },
+    {
+      name: "onSelect / @select",
+      type: "(event: Event) => void",
+      description:
+        "Called when the item is chosen. Call `event.preventDefault()` to keep the menu open.",
+    },
+    {
+      name: "textValue",
+      type: "string",
+      description:
+        "The text typeahead matches. Set it when the item content is not plain text.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="DropdownRadioGroup"
+  rows={[
+    {
+      name: "value / v-model",
+      type: "string",
+      description: "The value of the checked item.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string) => void",
+      description:
+        "React only. Called when the choice changes; Vue emits `update:modelValue`.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="DropdownRadioItem"
+  rows={[
+    {
+      name: "value",
+      type: "string",
+      description: "The value this item gives to the group. Required.",
+    },
+    {
+      name: "variant",
+      type: '"default" | "danger"',
+      description: "The same variants as `DropdownItem`.",
+      default: '"default"',
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description:
+        "Dims the item. The pointer and the arrow keys then skip it.",
+    },
+  ]}
+/>
+
+The registry exports `Dropdown`, `DropdownTrigger`, `DropdownContent`, `DropdownGroup`, `DropdownLabel`, `DropdownItem`, `DropdownRadioGroup`, `DropdownRadioItem`, `DropdownSeparator`, `DropdownIcon`, `DropdownItemText`, `DropdownItemLabel`, `DropdownItemDescription` and `dropdownItemVariants`. Parts without a table accept the props of the primitive part or the native element they render. React uses `className`; Vue uses `class` and fallthrough attributes.
 
 ## Accessibility
 
-Connect the trigger and menu with `aria-controls` and `aria-expanded`, support arrow keys and `Escape`, and return focus to the trigger on close.
+The trigger carries `aria-haspopup="menu"`, `aria-expanded` and, while the menu is open, `aria-controls` pointing at it. The panel is a `role="menu"` named by its trigger. Items are `role="menuitem"`, and radio items are `role="menuitemradio"` with `aria-checked`. `DropdownGroup` is a `role="group"`; put a `DropdownLabel` inside it as its heading. `DropdownIcon` is hidden from screen readers, so the label must carry the meaning.
+
+`Enter`, `Space` or `ArrowDown` on the trigger opens the menu and moves focus into it. The arrow keys, `Home` and `End` move between items. A typed letter moves to the next item that starts with it. `Enter` or `Space` chooses the focused item. `Escape` closes the menu, and so does a press outside. Focus returns to the trigger when the menu closes.
 
 ## Tokens
 

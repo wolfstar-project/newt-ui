@@ -3,7 +3,9 @@ title: "Form Fields"
 description: "Inputs, textareas, selects, labels, helper text, switches and checkboxes styled for the newt/ui dark theme."
 ---
 
-Inputs, textareas, selects, labels, helper text, switches and checkboxes styled for the newt/ui dark theme. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+Form fields are the inputs, textareas, selects, labels, helper text, switches and checkboxes of a form, styled for the newt/ui dark theme. Compose a form from the exported parts.
+
+Three parts are built on Radix primitives in React and Reka UI primitives in Vue. `Label` is on Label ([Radix](https://www.radix-ui.com/primitives/docs/components/label), [Reka UI](https://reka-ui.com/docs/components/label)). `Switch` is on Switch ([Radix](https://www.radix-ui.com/primitives/docs/components/switch), [Reka UI](https://reka-ui.com/docs/components/switch)). `Checkbox` is on Checkbox ([Radix](https://www.radix-ui.com/primitives/docs/components/checkbox), [Reka UI](https://reka-ui.com/docs/components/checkbox)). `Field`, `Input`, `Textarea`, `Select` and `FieldHelp` are native elements.
 
 <ComponentPreview name="form-fields" />
 
@@ -71,19 +73,46 @@ A `Switch` is for a setting that applies the moment it is flipped, a `Checkbox` 
   of="Switch"
   rows={[
     {
-      name: "checked",
-      type: "boolean | undefined",
-      description: "Optional checked value.",
+      name: "checked / v-model",
+      type: "boolean",
+      description:
+        "Whether the switch is on. In React, leave it undefined and pass `defaultChecked` to let the switch own it.",
     },
     {
-      name: "defaultChecked",
-      type: "boolean | undefined",
-      description: "Optional defaultChecked value.",
+      name: "defaultChecked / default-value",
+      type: "boolean",
+      description: "The state on first render, for an uncontrolled switch.",
+      default: "false",
     },
     {
       name: "onCheckedChange",
-      type: "(checked: boolean) => void | undefined",
-      description: "Optional onCheckedChange value.",
+      type: "(checked: boolean) => void",
+      description:
+        "React only. Called when the switch changes; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "name",
+      type: "string",
+      description:
+        "The field name. Inside a `<form>`, the switch submits `value` under this name while it is on.",
+    },
+    {
+      name: "value",
+      type: "string",
+      description: "The value a form receives while the switch is on.",
+      default: '"on"',
+    },
+    {
+      name: "required",
+      type: "boolean",
+      description: "The form does not submit until the switch is on.",
+      default: "false",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Dims the switch and stops it taking input.",
+      default: "false",
     },
   ]}
 />
@@ -92,28 +121,57 @@ A `Switch` is for a setting that applies the moment it is flipped, a `Checkbox` 
   of="Checkbox"
   rows={[
     {
-      name: "checked",
-      type: "boolean | undefined",
-      description: "Optional checked value.",
+      name: "checked / v-model",
+      type: 'boolean | "indeterminate"',
+      description:
+        "Whether the box is ticked. In React, leave it undefined and pass `defaultChecked` to let the checkbox own it.",
     },
     {
-      name: "defaultChecked",
-      type: "boolean | undefined",
-      description: "Optional defaultChecked value.",
+      name: "defaultChecked / default-value",
+      type: 'boolean | "indeterminate"',
+      description: "The state on first render, for an uncontrolled checkbox.",
+      default: "false",
     },
     {
       name: "onCheckedChange",
-      type: "(checked: boolean) => void | undefined",
-      description: "Optional onCheckedChange value.",
+      type: '(checked: boolean | "indeterminate") => void',
+      description:
+        "React only. Called when the checkbox changes; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "name",
+      type: "string",
+      description:
+        "The field name. Inside a `<form>`, the checkbox submits `value` under this name while it is ticked.",
+    },
+    {
+      name: "value",
+      type: "string",
+      description: "The value a form receives while the box is ticked.",
+      default: '"on"',
+    },
+    {
+      name: "required",
+      type: "boolean",
+      description: "The form does not submit until the box is ticked.",
+      default: "false",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Dims the checkbox and stops it taking input.",
+      default: "false",
     },
   ]}
 />
 
-The registry exports `Field`, `Label`, `Input`, `Textarea`, `Select`, `FieldHelp`, `Switch`, `Checkbox`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+The registry exports `Field`, `Label`, `Input`, `Textarea`, `Select`, `FieldHelp`, `Switch`, `Checkbox`. `Label`, `Switch` and `Checkbox` accept the other props of the primitive they wrap. The other parts accept the native attributes of the element they render. React uses `className`. Vue uses `class` and fallthrough attributes.
 
 ## Accessibility
 
-Associate every control with a visible label. Connect help or error text with `aria-describedby`, and pair invalid styling with `aria-invalid` rather than colour alone.
+Associate every control with a visible label. `Label` renders a native `<label>`: point `htmlFor` (`for` in Vue) at the `id` of the control. Connect help or error text with `aria-describedby`, and pair invalid styling with `aria-invalid` so the state does not depend on colour alone.
+
+`Switch` is a button with `role="switch"`, and `Checkbox` is a button with `role="checkbox"`. Both carry `aria-checked`, and <kbd>Space</kbd> toggles them. Give each one a name with a `Label`, `aria-labelledby` or `aria-label`. A focused `Switch` shows the browser focus ring, and a focused `Checkbox` takes the `--newt-brand` border.
 
 ## Tokens
 

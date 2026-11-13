@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide, ref, useId, watch, type HTMLAttributes } from "vue"
+import { computed, provide, ref, watch, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
@@ -7,9 +7,8 @@ import { checkboxGroupKey } from "."
 
 /*
  * Several answers out of a visible list, where a radio group takes one. The
- * group owns the set of chosen values; each row is a real `<input>`, so the
- * space bar and the label association come for free and only the box is
- * redrawn.
+ * group owns the set of chosen values; each row is a Reka Checkbox, which
+ * owns the role, the space bar and the hidden input a form reads.
  */
 const props = withDefaults(
   defineProps<{
@@ -19,10 +18,12 @@ const props = withDefaults(
     defaultValue?: readonly string[]
     /** Accessible name for the group. */
     label?: string
-    /** Shared `name` for the inputs. One is generated when it is not given. */
+    /** Shared `name` of the rows. A form then receives one entry per checked row. */
     name?: string
+    /** Disables every row. */
+    disabled?: boolean
   }>(),
-  { modelValue: undefined, defaultValue: () => [] }
+  { modelValue: undefined, defaultValue: () => [], disabled: false }
 )
 
 const emit = defineEmits<{
@@ -38,8 +39,8 @@ watch(
 )
 
 const values = computed(() => props.modelValue ?? internal.value)
-const generated = useId()
-const name = computed(() => props.name ?? generated)
+const name = computed(() => props.name)
+const disabled = computed(() => props.disabled)
 
 function toggle(value: string) {
   const next = values.value.includes(value)
@@ -49,7 +50,7 @@ function toggle(value: string) {
   emit("update:modelValue", next)
 }
 
-provide(checkboxGroupKey, { values, toggle, name })
+provide(checkboxGroupKey, { values, toggle, name, disabled })
 </script>
 
 <template>

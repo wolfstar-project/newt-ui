@@ -3,9 +3,9 @@ title: "Accordion"
 description: "Sections that open and close under their headings, one at a time or independently."
 ---
 
-Use it for content a reader wants one piece of at a time: a short FAQ, the groups of a settings page, the optional details of a form. If every section should be read, plain headings serve better than making the reader open each one.
+Stacked sections that open under their headings, built on [Radix Accordion](https://www.radix-ui.com/primitives/docs/components/accordion) in React and [Reka UI Accordion](https://reka-ui.com/docs/components/accordion) in Vue. The primitive owns the behaviour; newt/ui owns the look.
 
-Every section is a native `<details>` element. The browser keeps one open at a time, opens a closed section when find-in-page matches inside it, and needs no script for any of it.
+Use it for content a reader wants one piece of at a time: a short FAQ, the groups of a settings page, the optional details of a form. If every section should be read, plain headings serve better than making the reader open each one.
 
 <ComponentPreview name="accordion" />
 
@@ -17,17 +17,19 @@ Every section is a native `<details>` element. The browser keeps one open at a t
 
 <Usage name="accordion" />
 
+Give each `AccordionItem` a unique `value`. Put an `AccordionTrigger` and an `AccordionContent` inside it. To open a section at the start, pass its value to `defaultValue` on `Accordion`.
+
 ## Examples
 
 ### Multiple open
 
-With `type="multiple"` the sections open and close independently, and more than one can set `defaultOpen`. Use it when a reader compares sections; keep the default `single` for a list of questions.
+With `type="multiple"` the sections open and close independently, and `defaultValue` takes a list of values. Use it when a reader compares sections. Keep the default `single` for a list of questions.
 
 <ComponentPreview name="accordion" variant="multiple" />
 
 ### Custom title
 
-The heading takes more than text: pass a node to `title` in React, or fill the `title` slot in Vue. Here each heading carries a `Badge` with a count.
+`AccordionTrigger` takes more than text. Here each heading carries a `Badge` with a count.
 
 <ComponentPreview name="accordion" variant="custom-title" />
 
@@ -43,6 +45,36 @@ The heading takes more than text: pass a node to `title` in React, or fill the `
         "`single` closes the open section when another opens. `multiple` lets them open independently.",
       default: '"single"',
     },
+    {
+      name: "value / v-model",
+      type: "string | string[]",
+      description:
+        "The open section, or the list of open sections when `type` is `multiple`. Leave it out and pass `defaultValue` to let the accordion own it.",
+    },
+    {
+      name: "defaultValue",
+      type: "string | string[]",
+      description: "The section or sections that start open.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string | string[]) => void",
+      description:
+        "React only. Called when a section opens or closes; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "collapsible",
+      type: "boolean",
+      description:
+        "Only for `single`. When `false`, a press on the open section does not close it.",
+      default: "true",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Stops every section from opening or closing.",
+      default: "false",
+    },
   ]}
 />
 
@@ -50,30 +82,27 @@ The heading takes more than text: pass a node to `title` in React, or fill the `
   of="AccordionItem"
   rows={[
     {
-      name: "title",
-      type: "React.ReactNode / string",
+      name: "value",
+      type: "string",
       description:
-        "The always-visible line that opens the section. In Vue a `title` slot overrides the prop.",
+        "Required. The name of the section, unique in the accordion.",
     },
     {
-      name: "defaultOpen",
+      name: "disabled",
       type: "boolean",
-      description: "Start open. From there the reader owns the state.",
+      description: "Stops this section from opening or closing.",
       default: "false",
-    },
-    {
-      name: "children / default slot",
-      type: "React.ReactNode / Vue slot",
-      description: "The content of the section.",
     },
   ]}
 />
 
-Both parts take the native attributes of the element they render: a `<div>` for the group and a `<details>` for each section, so a `toggle` listener on an item reports it opening and closing.
+`AccordionTrigger` renders a button inside an `<h3>`, followed by the chevron. `AccordionContent` renders the panel, which is removed from the page while the section is closed. Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
 
 ## Accessibility
 
-Each title is a `<summary>`, which browsers expose as a button with an expanded state; `Enter` and `Space` toggle it and `Tab` moves between titles. Write a title that makes sense alone, because a screen reader user moves through the titles before opening any. The chevron is decoration, turns a quarter when the section is open, and is mirrored in right-to-left text.
+Each trigger is a button inside a heading and carries `aria-expanded` and `aria-controls` for its panel. The panel is a `role="region"` named by its trigger. `Enter` and `Space` toggle a section. `Tab` moves between triggers, and so do the Down and Up arrow keys, `Home` and `End`. A disabled trigger is dimmed and takes no focus. Write a title that makes sense alone, because a screen reader user moves through the titles before opening any. The chevron is decoration, turns a quarter when the section is open, and is mirrored in right-to-left text.
+
+A closed panel is not in the page, so find-in-page does not match text inside it. In Vue, pass `:unmount-on-hide="false"` to `Accordion` to keep closed panels in the page; a find-in-page match then opens the section.
 
 ## Tokens
 

@@ -32,7 +32,8 @@ export default function FormFieldsTogglesDemo() {
         <Checkbox
           aria-labelledby="newt-toggle-remember"
           checked={remember}
-          onCheckedChange={setRemember}
+          // Radix also reports "indeterminate"; this box has two states.
+          onCheckedChange={(checked) => setRemember(checked === true)}
         />
         <span id="newt-toggle-remember">Remember this device</span>
       </div>

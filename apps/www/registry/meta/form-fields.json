@@ -2,6 +2,8 @@
   "name": "form-fields",
   "title": "Form Fields",
   "description": "Inputs, textareas, selects, labels, helper text, switches and checkboxes styled for the newt/ui dark theme.",
+  "dependencies": ["radix-ui"],
+  "vueDependencies": ["reka-ui"],
   "vueFiles": [
     "Field.vue",
     "Label.vue",

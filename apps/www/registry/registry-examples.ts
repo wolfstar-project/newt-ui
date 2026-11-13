@@ -599,7 +599,7 @@ export const examples: Registry = [
   {
     name: "dropdown-demo",
     type: "registry:example",
-    registryDependencies: ["dropdown"],
+    registryDependencies: ["dropdown", "button"],
     files: [
       {
         path: "examples/dropdown-demo.tsx",
@@ -610,7 +610,7 @@ export const examples: Registry = [
   {
     name: "dropdown-simple-demo",
     type: "registry:example",
-    registryDependencies: ["dropdown"],
+    registryDependencies: ["dropdown", "button"],
     files: [
       {
         path: "examples/dropdown-simple-demo.tsx",
@@ -621,7 +621,7 @@ export const examples: Registry = [
   {
     name: "dropdown-status-demo",
     type: "registry:example",
-    registryDependencies: ["dropdown"],
+    registryDependencies: ["dropdown", "button"],
     files: [
       {
         path: "examples/dropdown-status-demo.tsx",
@@ -1588,6 +1588,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/slider-range-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "slider-min-max-demo",
+    type: "registry:example",
+    registryDependencies: ["slider"],
+    files: [
+      {
+        path: "examples/slider-min-max-demo.tsx",
         type: "registry:example",
       },
     ],

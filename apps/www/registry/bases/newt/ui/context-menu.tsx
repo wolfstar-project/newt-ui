@@ -1,31 +1,62 @@
+"use client"
+
 import { cva, type VariantProps } from "class-variance-authority"
+import { ContextMenu as ContextMenuPrimitive } from "radix-ui"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-const ContextMenu = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"div">
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    role="menu"
-    className={cn(
-      "w-[188px] rounded-md border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high",
-      className
-    )}
-    {...props}
-  />
-))
-ContextMenu.displayName = "ContextMenu"
+/*
+ * Radix owns the behaviour: it opens at the pointer on a right click, a long
+ * press or the menu key, and handles Escape and outside press, arrow keys,
+ * Home and End, typeahead, and focus return. Only the look is newt/ui's.
+ */
+const ContextMenu = ContextMenuPrimitive.Root
 
+/*
+ * The area that answers the right click. It renders a `span` with no look of
+ * its own; pass `asChild` to put it on your own element.
+ */
+const ContextMenuTrigger = ContextMenuPrimitive.Trigger
+
+const ContextMenuGroup = ContextMenuPrimitive.Group
+
+const ContextMenuContent = React.forwardRef<
+  React.ComponentRef<typeof ContextMenuPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Content> & {
+    /**
+     * The element the menu is portalled into. Defaults to `document.body`;
+     * pass the enclosing native `<dialog>` or a themed wrapper to keep it there.
+     */
+    container?: React.ComponentProps<
+      typeof ContextMenuPrimitive.Portal
+    >["container"]
+  }
+>(({ className, container, ...props }, ref) => (
+  <ContextMenuPrimitive.Portal container={container}>
+    <ContextMenuPrimitive.Content
+      ref={ref}
+      className={cn(
+        "z-[110] w-[188px] rounded-md border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high outline-none",
+        className
+      )}
+      {...props}
+    />
+  </ContextMenuPrimitive.Portal>
+))
+ContextMenuContent.displayName = "ContextMenuContent"
+
+/*
+ * `data-highlighted` is the primitive's one state for the pointer and the
+ * keyboard, so it takes the place of the old `:hover` rule.
+ */
 const contextMenuItemVariants = cva(
-  "group flex cursor-pointer items-center justify-between rounded-sm px-2 py-1.5 text-[13px] transition-colors duration-fast ease-newt hover:text-newt-on-accent",
+  "group flex cursor-pointer select-none items-center justify-between rounded-sm px-2 py-1.5 text-[13px] outline-none transition-colors duration-fast ease-newt data-[highlighted]:text-newt-on-accent data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
   {
     variants: {
       variant: {
-        default: "text-newt-text-secondary hover:bg-newt-brand",
-        danger: "text-newt-dnd hover:bg-newt-dnd",
+        default: "text-newt-text-secondary data-[highlighted]:bg-newt-brand",
+        danger: "text-newt-dnd data-[highlighted]:bg-newt-dnd",
       },
     },
     defaultVariants: {
@@ -36,21 +67,35 @@ const contextMenuItemVariants = cva(
 
 export interface ContextMenuItemProps
   extends
-    React.ComponentProps<"div">,
+    React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Item>,
     VariantProps<typeof contextMenuItemVariants> {}
 
-const ContextMenuItem = React.forwardRef<HTMLDivElement, ContextMenuItemProps>(
-  ({ className, variant, ...props }, ref) => (
-    <div
-      ref={ref}
-      role="menuitem"
-      tabIndex={-1}
-      className={cn(contextMenuItemVariants({ variant }), className)}
-      {...props}
-    />
-  )
-)
+const ContextMenuItem = React.forwardRef<
+  React.ComponentRef<typeof ContextMenuPrimitive.Item>,
+  ContextMenuItemProps
+>(({ className, variant, ...props }, ref) => (
+  <ContextMenuPrimitive.Item
+    ref={ref}
+    className={cn(contextMenuItemVariants({ variant }), className)}
+    {...props}
+  />
+))
 ContextMenuItem.displayName = "ContextMenuItem"
+
+const ContextMenuLabel = React.forwardRef<
+  React.ComponentRef<typeof ContextMenuPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Label>
+>(({ className, ...props }, ref) => (
+  <ContextMenuPrimitive.Label
+    ref={ref}
+    className={cn(
+      "px-2 py-1.5 text-xs font-bold uppercase tracking-[0.02em] text-newt-text-muted",
+      className
+    )}
+    {...props}
+  />
+))
+ContextMenuLabel.displayName = "ContextMenuLabel"
 
 const ContextMenuShortcut = React.forwardRef<
   HTMLSpanElement,
@@ -59,7 +104,7 @@ const ContextMenuShortcut = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "text-[11px] text-newt-text-muted group-hover:text-[color-mix(in_srgb,var(--newt-on-accent)_70%,transparent)]",
+      "text-[11px] text-newt-text-muted group-data-[highlighted]:text-[color-mix(in_srgb,var(--newt-on-accent)_70%,transparent)]",
       className
     )}
     {...props}
@@ -67,23 +112,26 @@ const ContextMenuShortcut = React.forwardRef<
 ))
 ContextMenuShortcut.displayName = "ContextMenuShortcut"
 
-const ContextMenuDivider = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"div">
+const ContextMenuSeparator = React.forwardRef<
+  React.ComponentRef<typeof ContextMenuPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Separator>
 >(({ className, ...props }, ref) => (
-  <div
+  <ContextMenuPrimitive.Separator
     ref={ref}
-    role="separator"
     className={cn("mx-1.5 my-1 h-px bg-newt-border", className)}
     {...props}
   />
 ))
-ContextMenuDivider.displayName = "ContextMenuDivider"
+ContextMenuSeparator.displayName = "ContextMenuSeparator"
 
 export {
   ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuGroup,
+  ContextMenuLabel,
   ContextMenuItem,
   ContextMenuShortcut,
-  ContextMenuDivider,
+  ContextMenuSeparator,
   contextMenuItemVariants,
 }

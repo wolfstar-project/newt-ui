@@ -1,11 +1,11 @@
 ---
 title: "Drawer"
-description: "A modal panel that slides against an edge of the screen, built on the native dialog element."
+description: "A modal panel that slides against an edge of the screen and closes on Escape, overlay click or an explicit close control."
 ---
 
-Use it to show or edit the details of something while keeping the page it came from in view: a member's profile from the member list, a filter panel, a settings form. When the content is short and needs a decision, use a [Modal](/docs/components/modal).
+A panel against an edge of the screen, built on [Radix Dialog](https://www.radix-ui.com/primitives/docs/components/dialog) in React and [Reka UI Dialog](https://reka-ui.com/docs/components/dialog) in Vue. The primitive owns the behaviour; newt/ui owns the look.
 
-It is a native `<dialog>` opened with `showModal()`. The browser holds focus inside it, makes the page behind it inert and closes it on `Escape`, so the component ships no focus-trap code.
+Use it to show or edit the details of something while the page it came from stays in view: a member's profile from the member list, a filter panel, a settings form. When the content is short and needs a decision, use a [Modal](/docs/components/modal).
 
 <ComponentPreview name="drawer" />
 
@@ -17,6 +17,8 @@ It is a native `<dialog>` opened with `showModal()`. The browser holds focus ins
 
 <Usage name="drawer" />
 
+Put `DrawerTrigger` and `DrawerContent` inside `Drawer`. `DrawerContent` holds a `DrawerHeader` with a `DrawerTitle`, then a `DrawerBody`, then an optional `DrawerFooter`. `DrawerBody` scrolls when the content is taller than the screen. The header and the footer stay in place.
+
 ## API reference
 
 <PropsTable
@@ -25,21 +27,46 @@ It is a native `<dialog>` opened with `showModal()`. The browser holds focus ins
     {
       name: "open / v-model:open",
       type: "boolean",
-      description: "Whether the drawer is shown.",
-      default: "false",
+      description:
+        "Whether the drawer is shown. Leave it out and pass `defaultOpen` to let the drawer own it.",
     },
     {
       name: "onOpenChange",
       type: "(open: boolean) => void",
       description:
-        "React only. Called with `false` on Escape, a press of the backdrop or a close control; Vue emits `update:open`.",
+        "React only. Called when the drawer asks to open or close; Vue emits `update:open`.",
     },
+  ]}
+/>
+
+<PropsTable
+  of="DrawerContent"
+  rows={[
     {
       name: "side",
       type: '"end" | "start" | "bottom"',
       description:
         "The edge it sits against. `end` is the right in left-to-right text and the left in right-to-left.",
       default: '"end"',
+    },
+    {
+      name: "onCloseAutoFocus",
+      type: "(event: Event) => void",
+      description:
+        "Called when focus is about to return to the trigger. Call `event.preventDefault()` and focus an element yourself when the drawer opened without a `DrawerTrigger`. Vue emits `close-auto-focus`.",
+    },
+    {
+      name: "aria-describedby",
+      type: "string | undefined",
+      description:
+        "Pass `undefined` when the drawer has no `DrawerDescription`.",
+    },
+    {
+      name: "container",
+      type: "HTMLElement",
+      description:
+        "Element the overlay and panel are portalled into. A drawer below a `DirectionProvider` or a themed wrapper passes that element to keep the direction and the palette.",
+      default: "document.body",
     },
   ]}
 />
@@ -56,11 +83,11 @@ It is a native `<dialog>` opened with `showModal()`. The browser holds focus ins
   ]}
 />
 
-`DrawerBody` scrolls when the content is taller than the screen, while the header and `DrawerFooter` stay in place. `DrawerClose` is a plain button that closes the drawer; like the popover's trigger it takes the classes of the button it should be.
+`DrawerTrigger` and `DrawerClose` render a button. Pass `asChild` (`as-child` in Vue) to put the behaviour on your own element, such as a `Button`. `DrawerTitle` and `DrawerDescription` go inside `DrawerHeader`. Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
 
 ## Accessibility
 
-The dialog is named by the text of `DrawerHeader`, so always render one. Opening moves focus to the first focusable control inside, and closing returns it to the control that opened the drawer. `Escape` closes it, as does a press on the dimmed page behind. Use `side="bottom"` on a phone, where a side panel would cover the whole screen anyway.
+The panel carries `role="dialog"` and `aria-modal="true"`, and closes on `Escape` or a press on the dimmed page. `DrawerTitle` is its accessible name, so always render one with real text. `DrawerDescription` is its accessible description. When the drawer opens, focus moves to its first control. While it is open, Tab and Shift+Tab stay inside the panel, and the primitive hides the page behind from screen readers. When it closes, focus goes back to the `DrawerTrigger`. The close button in the header has a visible focus ring and takes its name from `closeLabel`. Use `side="bottom"` on a phone, where a side panel would cover the whole screen.
 
 ## Tokens
 

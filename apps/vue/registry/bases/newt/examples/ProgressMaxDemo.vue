@@ -9,6 +9,11 @@ import { Progress, ProgressLabel } from "~~/registry/bases/newt/ui/progress"
       <span>Server boosts</span>
       <span>3 of 7</span>
     </ProgressLabel>
-    <Progress :value="3" :max="7" aria-label="Server boosts" />
+    <Progress
+      :value="3"
+      :max="7"
+      :get-value-label="(value: number, max: number) => `${value} of ${max}`"
+      aria-label="Server boosts"
+    />
   </div>
 </template>

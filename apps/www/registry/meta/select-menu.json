@@ -2,6 +2,8 @@
   "name": "select-menu",
   "title": "Select Menu",
   "description": "A Discord-inspired string select: combobox trigger, keyboard-driven listbox and a portalled panel.",
+  "dependencies": ["radix-ui"],
+  "vueDependencies": ["reka-ui"],
   "vueFiles": ["SelectMenu.vue", "index.ts"],
   "reactDemo": "select-menu-demo",
   "vueDemo": "SelectMenuDemo",

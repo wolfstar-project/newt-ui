@@ -1,50 +1,86 @@
 <script setup lang="ts">
-import { computed, type HTMLAttributes } from "vue"
+import {
+  SliderRange,
+  SliderRoot,
+  SliderThumb,
+  SliderTrack,
+  useForwardPropsEmits,
+  type SliderRootEmits,
+  type SliderRootProps,
+} from "reka-ui"
+import { computed, useAttrs, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
 import type { SliderMark } from "."
 
 /*
- * A real `<input type="range">` does the work: arrow keys, Home and End, the
- * announced value and touch dragging are all the browser's. It is laid over
- * the drawing and made transparent, so the track, the fill and the grabber
- * are plain boxes placed by one ratio. Attributes other than `class` land on
- * that input.
+ * Reka owns the behaviour: pointer and touch dragging, arrow keys, Page Up
+ * and Page Down, Home and End, and the hidden input a form reads. Only the
+ * look is newt/ui's. The value is an array, one entry per grabber.
+ * Attributes other than `class` land on the slider root.
  */
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(
-  defineProps<{
-    class?: HTMLAttributes["class"]
-    min?: number
-    max?: number
-    step?: number
-    /** Labelled points along the track. */
-    marks?: readonly SliderMark[]
-    disabled?: boolean
-  }>(),
-  { min: 0, max: 100, step: 1, marks: () => [], disabled: false }
+  defineProps<
+    SliderRootProps & {
+      class?: HTMLAttributes["class"]
+      /** Labelled points along the track. */
+      marks?: readonly SliderMark[]
+    }
+  >(),
+  { min: 0, max: 100, marks: () => [] }
 )
+const emits = defineEmits<SliderRootEmits>()
 
-const model = defineModel<number>()
+const delegated = computed(() => {
+  const {
+    class: _class,
+    marks: _marks,
+    defaultValue: _defaultValue,
+    ...rest
+  } = props
+  return rest
+})
+const forwarded = useForwardPropsEmits(delegated, emits)
 
-/* The grabber's width; the track is inset by half of it at each end. */
-const THUMB = 10
+/* Reka starts an uncontrolled slider at 0; ours starts at `min`. */
+const initial = computed(() => props.defaultValue ?? [props.min])
+const thumbs = computed(() => (props.modelValue ?? initial.value).length)
 
-const current = computed(() => model.value ?? props.min)
+/*
+ * `role="slider"` is on the grabber, so that is where the name goes. Two
+ * grabbers keep Reka's "Minimum" and "Maximum", and the name moves to a
+ * group around them.
+ */
+const THUMB_ATTRS = new Set(["aria-label", "aria-labelledby", "aria-valuetext"])
+const attrs = useAttrs()
+const single = computed(() => thumbs.value === 1)
+
+const rootAttrs = computed(() => {
+  const rest = Object.fromEntries(
+    Object.entries(attrs).filter(([name]) => !THUMB_ATTRS.has(name))
+  )
+  if (single.value) return rest
+  return {
+    ...rest,
+    role: "group",
+    "aria-label": attrs["aria-label"],
+    "aria-labelledby": attrs["aria-labelledby"],
+  }
+})
+const thumbAttrs = computed(() =>
+  single.value
+    ? Object.fromEntries(
+        Object.entries(attrs).filter(([name]) => THUMB_ATTRS.has(name))
+      )
+    : {}
+)
 
 function ratioOf(point: number): number {
   const span = props.max - props.min
   return span === 0 ? 0 : Math.min(1, Math.max(0, (point - props.min) / span))
-}
-
-const ratio = computed(() => ratioOf(current.value))
-
-function onInput(event: Event) {
-  if (event.target instanceof HTMLInputElement) {
-    model.value = Number(event.target.value)
-  }
 }
 </script>
 
@@ -58,11 +94,11 @@ function onInput(event: Event) {
       )
     "
   >
+    <!-- Inset by half a grabber, which is where the grabber's centre stops. -->
     <div
       v-if="props.marks.length > 0"
       aria-hidden="true"
-      class="relative h-[22px]"
-      :style="{ marginInline: `${THUMB / 2}px` }"
+      class="relative mx-[5px] h-[22px]"
     >
       <span
         v-for="mark in props.marks"
@@ -73,38 +109,22 @@ function onInput(event: Event) {
         {{ mark.label ?? mark.value }}
       </span>
     </div>
-    <div class="relative flex h-6 items-center">
-      <input
-        v-bind="$attrs"
-        type="range"
-        :min="props.min"
-        :max="props.max"
-        :step="props.step"
-        :value="current"
-        :disabled="props.disabled"
-        :class="
-          cn(
-            'peer absolute inset-0 z-[1] m-0 h-full w-full opacity-0',
-            props.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
-          )
-        "
-        @input="onInput"
+    <SliderRoot
+      v-bind="{ ...forwarded, ...rootAttrs }"
+      :default-value="initial"
+      class="relative flex h-6 w-full cursor-pointer touch-none select-none items-center data-[disabled]:cursor-not-allowed"
+    >
+      <SliderTrack
+        class="relative h-2 w-full grow overflow-hidden rounded-full bg-newt-bg-active"
+      >
+        <SliderRange class="absolute h-full bg-newt-brand" />
+      </SliderTrack>
+      <SliderThumb
+        v-for="index in thumbs"
+        :key="index"
+        v-bind="thumbAttrs"
+        class="block h-6 w-2.5 rounded-sm border border-newt-border bg-newt-on-accent shadow-elevation-low focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
       />
-      <div class="h-2 w-full overflow-hidden rounded-full bg-newt-bg-active">
-        <div
-          class="h-full bg-newt-brand"
-          :style="{
-            width: `calc(${THUMB / 2}px + (100% - ${THUMB}px) * ${ratio})`,
-          }"
-        />
-      </div>
-      <div
-        class="pointer-events-none absolute top-0 h-6 rounded-sm border border-newt-border bg-newt-on-accent shadow-elevation-low peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-newt-text-link"
-        :style="{
-          width: `${THUMB}px`,
-          insetInlineStart: `calc((100% - ${THUMB}px) * ${ratio})`,
-        }"
-      />
-    </div>
+    </SliderRoot>
   </div>
 </template>

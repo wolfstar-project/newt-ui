@@ -3,7 +3,9 @@ title: "Checkbox Group"
 description: "Several answers out of a visible list, each with an optional description."
 ---
 
-Several answers out of a visible list, each with an optional description. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+A checkbox group is for several answers out of a visible list. Each option can have a description. For one answer out of the list, use a [Radio](/docs/components/radio) group.
+
+Each option is built on [Radix Checkbox](https://www.radix-ui.com/primitives/docs/components/checkbox) in React and [Reka UI Checkbox](https://reka-ui.com/docs/components/checkbox) in Vue. The primitive owns the role, the keyboard and the form input. `CheckboxGroup` holds the list of checked values.
 
 <ComponentPreview name="checkbox-group" />
 
@@ -41,9 +43,40 @@ The group is a flex column by default. For a few short labels, pass layout class
   of="CheckboxGroup"
   rows={[
     {
-      name: "children / default slot",
-      type: "React.ReactNode / Vue slot",
-      description: "Content rendered inside the component.",
+      name: "value / v-model",
+      type: "string[]",
+      description:
+        "The checked values, when you control them. In React, leave it undefined and pass `defaultValue` to let the group own them.",
+    },
+    {
+      name: "defaultValue",
+      type: "string[]",
+      description:
+        "The values checked on first render, for an uncontrolled group.",
+      default: "[]",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string[]) => void",
+      description:
+        "React only. Called with the new list of values; Vue emits `update:modelValue`.",
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "Accessible name for the group.",
+    },
+    {
+      name: "name",
+      type: "string",
+      description:
+        "The field name of every option. Inside a `<form>`, each checked option submits its `value` under this name.",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      default: "false",
+      description: "Disables every option.",
     },
     {
       name: "className / class",
@@ -53,9 +86,47 @@ The group is a flex column by default. For a few short labels, pass layout class
   ]}
 />
 
+<PropsTable
+  of="CheckboxOption"
+  rows={[
+    {
+      name: "value",
+      type: "string",
+      description:
+        "What this option stands for in the group's value. Required, and unique within the group.",
+    },
+    {
+      name: "description",
+      type: "ReactNode / string",
+      description: "A quieter line under the label.",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      default: "false",
+      description: "Dims the option and stops it taking input.",
+    },
+    {
+      name: "required",
+      type: "boolean",
+      default: "false",
+      description: "The form does not submit until this option is checked.",
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "The label.",
+    },
+  ]}
+/>
+
+`className` (React) or `class` (Vue) on `CheckboxOption` goes to the `<label>` around the row. Other attributes go to the checkbox button.
+
 ## Accessibility
 
-Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+The group has `role="group"`. Give it a `label` so a screen reader says what the options are for. Each option is a button with `role="checkbox"` and `aria-checked`. The button is inside a `<label>`, so the label text and the description are its accessible name, and a press on the text toggles it.
+
+Each option is a tab stop. <kbd>Space</kbd> toggles the focused option. A focused option shows a 2px `--newt-text-link` outline. The check mark and the filled box show the state, so it does not depend on colour alone.
 
 ## Tokens
 

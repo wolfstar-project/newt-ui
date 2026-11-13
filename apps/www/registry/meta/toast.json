@@ -2,13 +2,17 @@
   "name": "toast",
   "title": "Toast",
   "description": "A transient notification with a status icon that auto-dismisses after a timeout or when closed.",
-  "dependencies": ["class-variance-authority"],
+  "dependencies": ["class-variance-authority", "radix-ui"],
+  "vueDependencies": ["class-variance-authority", "reka-ui"],
   "vueFiles": [
+    "ToastProvider.vue",
+    "ToastViewport.vue",
     "Toast.vue",
     "ToastIcon.vue",
     "ToastContent.vue",
     "ToastTitle.vue",
     "ToastDescription.vue",
+    "ToastAction.vue",
     "ToastClose.vue",
     "index.ts"
   ],

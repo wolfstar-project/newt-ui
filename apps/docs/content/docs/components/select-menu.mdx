@@ -3,7 +3,9 @@ title: "Select Menu"
 description: "A Discord-inspired string select: combobox trigger, keyboard-driven listbox and a portalled panel."
 ---
 
-A complete combobox: a trigger, a search field, a keyboard-driven listbox and a panel that flips when it runs out of room below. This is the option picker from the client, not a styled `<select>`.
+A select for one value from a list: a trigger, a keyboard-driven listbox and a panel that flips when it runs out of room. This is the option picker from the client, not a styled `<select>`. Each option can carry an icon, a description and a note.
+
+It is built on [Radix Select](https://www.radix-ui.com/primitives/docs/components/select) in React and [Reka UI Select](https://reka-ui.com/docs/components/select) in Vue. The primitive owns the open state, the keyboard, typeahead and the placement. The component adds the look, the option model and the 25-option cap of a message select.
 
 <ComponentPreview name="select-menu" />
 
@@ -15,6 +17,8 @@ A complete combobox: a trigger, a search field, a keyboard-driven listbox and a 
 
 <Usage name="select-menu" />
 
+Pass the choices as `options`. In React, control the value with `value` and `onValueChange`, or pass `defaultValue`. In Vue, bind `v-model`, or pass `default-value`.
+
 ## Examples
 
 ### Placeholder
@@ -25,7 +29,7 @@ With no value, the trigger shows the `placeholder` in muted text until an option
 
 ### Message variant
 
-`variant="message"` is the select attached to a message: the list is capped at 25 options, its scrollbar is always visible, and no row keeps a tick, because the choice is submitted and not kept.
+`variant="message"` is the select attached to a message. The list is capped at 25 options and its scrollbar is always visible. No row keeps a tick, because the choice is submitted and not kept.
 
 <ComponentPreview name="select-menu" variant="message" />
 
@@ -42,12 +46,19 @@ With no value, the trigger shows the `placeholder` in muted text until an option
   rows={[
     {
       name: "options",
-      type: "SelectOption[]",
+      type: "SelectMenuOption[]",
       description:
-        "The choices: `{ value, label, description?, icon?, disabled? }`.",
+        "The choices: `{ value, label, description?, icon?, note?, disabled? }`. A `value` must not be an empty string.",
     },
     {
-      name: "value",
+      name: "variant",
+      type: '"settings" | "message"',
+      description:
+        "Where the menu is. `message` caps the list at 25 options, shows the scrollbar and ticks no row.",
+      default: '"settings"',
+    },
+    {
+      name: "value / v-model",
       type: "string",
       description: "The selected value, when you control it.",
     },
@@ -59,18 +70,20 @@ With no value, the trigger shows the `placeholder` in muted text until an option
     {
       name: "onValueChange",
       type: "(value: string) => void",
-      description: "Called with the chosen value.",
+      description:
+        "React only. Called with the chosen value; Vue emits `update:modelValue`.",
     },
     {
       name: "placeholder",
       type: "string",
       description: "Shown on the trigger while nothing is selected.",
+      default: '"Make a selection"',
     },
     {
-      name: "searchable",
-      type: "boolean",
-      description: "Adds the filter field above the list.",
-      default: "false",
+      name: "label",
+      type: "string",
+      description: "The accessible name of the trigger and the listbox.",
+      default: '"Select an option"',
     },
     {
       name: "disabled",
@@ -78,14 +91,25 @@ With no value, the trigger shows the `placeholder` in muted text until an option
       description: "Makes the trigger inert.",
       default: "false",
     },
+    {
+      name: "container",
+      type: "HTMLElement",
+      description:
+        "Element the panel is portalled into. Pass the enclosing native `<dialog>` or a themed wrapper to keep it there.",
+      default: "document.body",
+    },
   ]}
 />
 
-Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+In React, `icon` is a node. In Vue, `icon` is a component. The root also accepts the native attributes of a `<div>`, and a `className` (`class` in Vue) that is merged with the defaults.
 
 ## Accessibility
 
-The trigger is a `combobox` with `aria-expanded` and `aria-controls`; the panel is a `listbox` whose options carry `aria-selected`. `Up` and `Down` move the active option, `Home` and `End` jump to the ends, `Enter` selects, `Escape` closes and returns focus to the trigger. The active option is tracked with `aria-activedescendant`, so focus never leaves the trigger.
+The trigger is a `combobox` with `aria-expanded` and, while the panel is open, `aria-controls` pointing at it. The panel is a `listbox`, and both take their name from `label`. Each option carries `aria-selected`, and its description is linked with `aria-describedby`.
+
+`Enter`, `Space`, `Up` and `Down` open the list. Focus moves to the selected option, or to the first option. `Up` and `Down` move through the options and skip disabled ones. `Home` and `End` jump to the ends. Typing a letter moves to the next option whose label starts with it. `Enter` or `Space` selects the focused option and returns focus to the trigger. `Escape` closes the list and returns focus to the trigger, and so does a press outside.
+
+While the list is open, the page behind it does not scroll and does not take pointer events. Inside a drawer or a modal, `Escape` closes the list first and the dialog on the next press.
 
 ## Tokens
 

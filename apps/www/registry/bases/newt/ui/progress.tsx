@@ -1,4 +1,7 @@
+"use client"
+
 import { cva, type VariantProps } from "class-variance-authority"
+import { Progress as ProgressPrimitive } from "radix-ui"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -21,39 +24,48 @@ const progressVariants = cva(
 
 export interface ProgressProps
   extends
-    React.HTMLAttributes<HTMLDivElement>,
+    Omit<
+      React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>,
+      "value"
+    >,
     VariantProps<typeof progressVariants> {
   /** Current value, 0–max */
   value?: number
-  max?: number
   indicatorClassName?: string
 }
 
-const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
+/*
+ * Radix owns the semantics: `role="progressbar"`, the `aria-value*`
+ * attributes and `data-state` (`loading` or `complete`). Only the look is
+ * newt/ui's.
+ */
+const Progress = React.forwardRef<
+  React.ComponentRef<typeof ProgressPrimitive.Root>,
+  ProgressProps
+>(
   (
     { className, indicatorClassName, value = 0, max = 100, variant, ...props },
     ref
   ) => {
-    const clamped = Math.min(Math.max(value, 0), max)
-    const percent = max > 0 ? (clamped / max) * 100 : 0
+    /* Radix reads a value outside 0–max as indeterminate, so clamp it first. */
+    const limit = max > 0 ? max : 100
+    const clamped = Math.min(Math.max(value, 0), limit)
     return (
-      <div
+      <ProgressPrimitive.Root
         ref={ref}
-        role="progressbar"
-        aria-valuemin={0}
-        aria-valuemax={max}
-        aria-valuenow={clamped}
+        value={clamped}
+        max={limit}
         className={cn(
           "h-2 w-full overflow-hidden rounded-full bg-newt-bg-base",
           className
         )}
         {...props}
       >
-        <div
+        <ProgressPrimitive.Indicator
           className={cn(progressVariants({ variant }), indicatorClassName)}
-          style={{ width: `${percent}%` }}
+          style={{ width: `${(clamped / limit) * 100}%` }}
         />
-      </div>
+      </ProgressPrimitive.Root>
     )
   }
 )

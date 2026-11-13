@@ -8,7 +8,9 @@ import {
   ToastClose,
   ToastContent,
   ToastIcon,
+  ToastProvider,
   ToastTitle,
+  ToastViewport,
 } from "@/registry/bases/newt/ui/toast"
 
 /*
@@ -19,15 +21,18 @@ export default function ToastControlledDemo() {
   const [open, setOpen] = React.useState(false)
 
   return (
-    <div className="flex min-h-28 flex-col items-start gap-4">
-      <Button onClick={() => setOpen(true)}>Copy invite link</Button>
-      <Toast open={open} onOpenChange={setOpen} duration={3000}>
-        <ToastIcon />
-        <ToastContent>
-          <ToastTitle>Invite link copied</ToastTitle>
-        </ToastContent>
-        <ToastClose />
-      </Toast>
-    </div>
+    <ToastProvider>
+      <div className="flex min-h-28 flex-col items-start gap-4">
+        <Button onClick={() => setOpen(true)}>Copy invite link</Button>
+        <ToastViewport className="static items-start" />
+        <Toast open={open} onOpenChange={setOpen} duration={3000}>
+          <ToastIcon />
+          <ToastContent>
+            <ToastTitle>Invite link copied</ToastTitle>
+          </ToastContent>
+          <ToastClose />
+        </Toast>
+      </div>
+    </ToastProvider>
   )
 }

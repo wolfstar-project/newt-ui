@@ -3,7 +3,9 @@ title: "Divider"
 description: "A horizontal rule with an optional centered label, spacing steps and a line-less mode."
 ---
 
-A horizontal rule with an optional centered label, spacing steps and a line-less mode. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+A rule between two groups of content, with an optional label in its centre. Use it for the date line in a message list or between sections of a dense panel.
+
+It is built on [Radix Separator](https://www.radix-ui.com/primitives/docs/components/separator) in React and [Reka UI Separator](https://reka-ui.com/docs/components/separator) in Vue. The primitive sets the role and the orientation. The look comes from `dividerVariants`.
 
 <ComponentPreview name="divider" />
 
@@ -21,23 +23,51 @@ A horizontal rule with an optional centered label, spacing steps and a line-less
   of="Divider"
   rows={[
     {
-      name: "children / default slot",
-      type: "React.ReactNode / Vue slot",
-      description: "Content rendered inside the component.",
+      name: "spacing",
+      type: '"sm" | "md" | "lg"',
+      description: "Margin around the rule: 4px, 16px or 24px.",
+      default: '"md"',
     },
     {
-      name: "className / class",
-      type: "string",
-      description: "Additional classes merged with the component defaults.",
+      name: "line",
+      type: "boolean",
+      description:
+        "Set it to `false` to keep the spacing and the label and remove the rules.",
+      default: "true",
+    },
+    {
+      name: "orientation",
+      type: '"horizontal" | "vertical"',
+      description:
+        "Direction of the rule. A vertical divider stretches to the height of its flex row.",
+      default: '"horizontal"',
+    },
+    {
+      name: "decorative",
+      type: "boolean",
+      description:
+        "Set it to `true` when the rule is only visual. Assistive technology then ignores it.",
+      default: "false",
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "Optional label in the centre of the rule.",
+    },
+    {
+      name: "asChild / as-child",
+      type: "boolean",
+      description: "Puts the divider classes and role on the child element.",
+      default: "false",
     },
   ]}
 />
 
-The registry exports `Divider`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+`Divider` renders a `<div>` and accepts its native attributes. React uses `className`, while Vue uses `class`. `dividerVariants` gives the same classes to an element of your own.
 
 ## Accessibility
 
-Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+The divider has `role="separator"`. A vertical divider also has `aria-orientation="vertical"`. A screen reader announces the separator and can ignore its content. If the label carries meaning, such as a date, repeat it in an `aria-label` on the divider. Set `decorative` when the rule only adds space, and the divider leaves the accessibility tree.
 
 ## Tokens
 

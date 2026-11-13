@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { computed, provide, useId, type HTMLAttributes } from "vue"
+import {
+  AccordionRoot,
+  useForwardPropsEmits,
+  type AccordionRootEmits,
+  type AccordionRootProps,
+} from "reka-ui"
+import { computed, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-import { accordionKey } from "."
-
 /*
- * Each section is a native `<details>`: the summary is already a button, it
- * already answers Enter and Space, and find-in-page already opens a closed
- * section that holds a match. `single` gives the sections one `name`, which
- * is how the browser itself keeps only one of them open.
+ * Reka owns the behaviour: which sections are open, the arrow keys, Home and
+ * End between the headings, and the ids that link each heading to its panel.
+ * Use `v-model` to control it. Only the look is newt/ui's. Without a `type`
+ * it is `single` and `collapsible`, so the open section also closes on a
+ * second press.
  */
 const props = withDefaults(
-  defineProps<{
-    class?: HTMLAttributes["class"]
-    /**
-     * `single` closes the open section when another opens; `multiple` lets
-     * them open independently.
-     */
-    type?: "single" | "multiple"
-  }>(),
-  { type: "single" }
+  defineProps<AccordionRootProps & { class?: HTMLAttributes["class"] }>(),
+  { type: "single", collapsible: true }
 )
+const emits = defineEmits<AccordionRootEmits>()
 
-const generated = useId()
-provide(
-  accordionKey,
-  computed(() => (props.type === "single" ? generated : undefined))
-)
+const delegated = computed(() => {
+  const { class: _class, ...rest } = props
+  return rest
+})
+const forwarded = useForwardPropsEmits(delegated, emits)
 </script>
 
 <template>
-  <div
+  <AccordionRoot
+    v-bind="forwarded"
     :class="
       cn(
         'flex w-full flex-col overflow-hidden rounded-md border border-newt-border bg-newt-bg-surface',
@@ -40,5 +40,5 @@ provide(
     "
   >
     <slot />
-  </div>
+  </AccordionRoot>
 </template>

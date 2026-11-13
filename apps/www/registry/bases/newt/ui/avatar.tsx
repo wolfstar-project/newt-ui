@@ -1,4 +1,7 @@
+"use client"
+
 import { cva, type VariantProps } from "class-variance-authority"
+import { Avatar as AvatarPrimitive } from "radix-ui"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -21,25 +24,31 @@ const avatarVariants = cva(
 
 export interface AvatarProps
   extends
-    React.HTMLAttributes<HTMLDivElement>,
+    React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>,
     VariantProps<typeof avatarVariants> {}
 
-const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
-  ({ className, size, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(avatarVariants({ size }), className)}
-      {...props}
-    />
-  )
-)
+/*
+ * Radix owns the image state: `AvatarImage` renders once its source has
+ * loaded, and `AvatarFallback` shows until then and when the load fails.
+ * Only the look is newt/ui's.
+ */
+const Avatar = React.forwardRef<
+  React.ComponentRef<typeof AvatarPrimitive.Root>,
+  AvatarProps
+>(({ className, size, ...props }, ref) => (
+  <AvatarPrimitive.Root
+    ref={ref}
+    className={cn(avatarVariants({ size }), className)}
+    {...props}
+  />
+))
 Avatar.displayName = "Avatar"
 
 const AvatarImage = React.forwardRef<
-  HTMLImageElement,
-  React.ImgHTMLAttributes<HTMLImageElement>
+  React.ComponentRef<typeof AvatarPrimitive.Image>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
 >(({ className, alt = "", ...props }, ref) => (
-  <img
+  <AvatarPrimitive.Image
     ref={ref}
     alt={alt}
     className={cn("h-full w-full object-cover", className)}
@@ -49,10 +58,10 @@ const AvatarImage = React.forwardRef<
 AvatarImage.displayName = "AvatarImage"
 
 const AvatarFallback = React.forwardRef<
-  HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement>
+  React.ComponentRef<typeof AvatarPrimitive.Fallback>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
 >(({ className, ...props }, ref) => (
-  <span
+  <AvatarPrimitive.Fallback
     ref={ref}
     className={cn("flex h-full w-full items-center justify-center", className)}
     {...props}

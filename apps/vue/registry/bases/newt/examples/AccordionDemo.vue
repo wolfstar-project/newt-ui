@@ -1,17 +1,31 @@
 <script setup lang="ts">
-import { Accordion, AccordionItem } from "~~/registry/bases/newt/ui/accordion"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~~/registry/bases/newt/ui/accordion"
 </script>
 
 <template>
-  <Accordion class="max-w-md">
-    <AccordionItem title="Who can see this channel?" default-open>
-      Members with the Moderator role, and anyone you add by name.
+  <Accordion default-value="visibility" class="max-w-md">
+    <AccordionItem value="visibility">
+      <AccordionTrigger>Who can see this channel?</AccordionTrigger>
+      <AccordionContent>
+        Members with the Moderator role, and anyone you add by name.
+      </AccordionContent>
     </AccordionItem>
-    <AccordionItem title="Can I undo a ban?">
-      Yes. Open the ban list, find the member and choose Revoke.
+    <AccordionItem value="bans">
+      <AccordionTrigger>Can I undo a ban?</AccordionTrigger>
+      <AccordionContent>
+        Yes. Open the ban list, find the member and choose Revoke.
+      </AccordionContent>
     </AccordionItem>
-    <AccordionItem title="What does slowmode do?">
-      It limits each member to one message per interval in this channel.
+    <AccordionItem value="slowmode">
+      <AccordionTrigger>What does slowmode do?</AccordionTrigger>
+      <AccordionContent>
+        It limits each member to one message per interval in this channel.
+      </AccordionContent>
     </AccordionItem>
   </Accordion>
 </template>

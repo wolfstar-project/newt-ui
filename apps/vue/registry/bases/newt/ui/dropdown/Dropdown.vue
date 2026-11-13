@@ -1,21 +1,25 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import {
+  DropdownMenuRoot,
+  useForwardPropsEmits,
+  type DropdownMenuRootEmits,
+  type DropdownMenuRootProps,
+} from "reka-ui"
 
-import { cn } from "@/lib/utils"
+/*
+ * Reka owns the behaviour: open state, Escape and outside press, focus return
+ * to the trigger, arrow keys, Home and End, typeahead, and collision-aware
+ * placement. Use `v-model:open` to control it; without one the menu owns its
+ * state. Only the look is newt/ui's.
+ */
+const props = defineProps<DropdownMenuRootProps>()
+const emits = defineEmits<DropdownMenuRootEmits>()
 
-const props = defineProps<{ class?: HTMLAttributes["class"] }>()
+const forwarded = useForwardPropsEmits(props, emits)
 </script>
 
 <template>
-  <div
-    role="menu"
-    :class="
-      cn(
-        'w-60 rounded-md border border-newt-border bg-[var(--newt-bg-floating)] p-1.5 text-newt-text-primary shadow-elevation-high',
-        props.class
-      )
-    "
-  >
+  <DropdownMenuRoot v-bind="forwarded">
     <slot />
-  </div>
+  </DropdownMenuRoot>
 </template>

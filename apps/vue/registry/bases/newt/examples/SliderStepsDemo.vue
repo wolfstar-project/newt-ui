@@ -10,7 +10,7 @@ const LEVELS = [
 ]
 
 /* A mark at every stop turns the track into a short list of named levels. */
-const level = ref(2)
+const level = ref([2])
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const level = ref(2)
     <Slider
       v-model="level"
       aria-label="Noise suppression"
-      :aria-valuetext="LEVELS[level]?.label"
+      :aria-valuetext="LEVELS[level[0] ?? 0]?.label"
       :min="0"
       :max="3"
       :step="1"

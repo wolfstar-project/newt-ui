@@ -5,103 +5,53 @@ import * as React from "react"
 import { Button } from "@/registry/bases/newt/ui/button"
 import {
   Dropdown,
-  DropdownDivider,
+  DropdownContent,
+  DropdownGroup,
   DropdownItem,
+  DropdownItemLabel,
   DropdownLabel,
+  DropdownSeparator,
+  DropdownTrigger,
 } from "@/registry/bases/newt/ui/dropdown"
 
 const ACTIONS = ["Invite people", "Create channel", "Server settings"]
 
-/** Where an arrow key, Home or End moves focus in a menu; `undefined` for any other key. */
-function menuTarget(key: string, at: number, last: number): number | undefined {
-  switch (key) {
-    case "ArrowDown":
-      return at >= last ? 0 : at + 1
-    case "ArrowUp":
-      return at <= 0 ? last : at - 1
-    case "Home":
-      return 0
-    case "End":
-      return last
-    default:
-      return undefined
-  }
-}
-
 /*
- * The panel does not open itself. A button owns `open`, a wrapper the size of
- * the button is the positioning context, and the keyboard does what a menu
- * promises: opening moves focus to the first item, the arrows walk the items,
- * Enter or Space chooses one, and Escape closes and hands focus back.
+ * `asChild` puts the menu state on your own button, and `open` with
+ * `onOpenChange` lets the parent own it. `onSelect` reports the chosen item;
+ * the menu then closes and hands focus back to the button by itself.
  */
 export default function DropdownTriggerDemo() {
   const [open, setOpen] = React.useState(false)
-  const root = React.useRef<HTMLDivElement>(null)
-
-  const items = () =>
-    Array.from(
-      root.current?.querySelectorAll<HTMLElement>("[role=menuitem]") ?? []
-    )
-
-  const close = () => {
-    setOpen(false)
-    root.current?.querySelector("button")?.focus()
-  }
-
-  React.useEffect(() => {
-    if (open) items()[0]?.focus()
-  }, [open])
-
-  const onKeyDown = (event: React.KeyboardEvent) => {
-    if (!open) return
-    const all = items()
-    const at = all.findIndex((item) => item === document.activeElement)
-    const last = all.length - 1
-
-    if (event.key === "Escape") {
-      close()
-    } else if (event.key === "Tab") {
-      setOpen(false)
-    } else if ((event.key === "Enter" || event.key === " ") && at !== -1) {
-      event.preventDefault()
-      all[at]?.click()
-    } else {
-      const target = menuTarget(event.key, at, last)
-      if (target !== undefined) {
-        event.preventDefault()
-        all[target]?.focus()
-      }
-    }
-  }
+  const [last, setLast] = React.useState("nothing yet")
 
   return (
-    <div className="min-h-52 w-60">
-      <div className="relative inline-block" ref={root} onKeyDown={onKeyDown}>
-        <Button
-          variant="secondary"
-          aria-haspopup="menu"
-          aria-expanded={open}
-          onClick={() => setOpen((value) => !value)}
-        >
-          Server menu
-        </Button>
-        {open && (
-          <Dropdown className="absolute start-0 top-[calc(100%+4px)] z-10">
+    <div className="flex flex-col items-start gap-3">
+      <Dropdown open={open} onOpenChange={setOpen}>
+        <DropdownTrigger asChild>
+          <Button variant="secondary">Server menu</Button>
+        </DropdownTrigger>
+        <DropdownContent>
+          <DropdownGroup>
+            <DropdownLabel>Server</DropdownLabel>
             {ACTIONS.map((action) => (
-              <DropdownItem key={action} onClick={close}>
-                <DropdownLabel>{action}</DropdownLabel>
+              <DropdownItem key={action} onSelect={() => setLast(action)}>
+                <DropdownItemLabel>{action}</DropdownItemLabel>
               </DropdownItem>
             ))}
-            <DropdownDivider />
-            <DropdownItem
-              className="text-newt-danger hover:bg-newt-danger hover:text-newt-on-accent"
-              onClick={close}
-            >
-              <DropdownLabel>Leave server</DropdownLabel>
-            </DropdownItem>
-          </Dropdown>
-        )}
-      </div>
+          </DropdownGroup>
+          <DropdownSeparator />
+          <DropdownItem
+            variant="danger"
+            onSelect={() => setLast("Leave server")}
+          >
+            <DropdownItemLabel>Leave server</DropdownItemLabel>
+          </DropdownItem>
+        </DropdownContent>
+      </Dropdown>
+      <p className="m-0 text-sm text-newt-text-muted" aria-live="polite">
+        The menu is {open ? "open" : "closed"}. Last choice: {last}.
+      </p>
     </div>
   )
 }
