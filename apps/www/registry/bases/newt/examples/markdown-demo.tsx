@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Markdown,
   type MarkdownMentionTarget,

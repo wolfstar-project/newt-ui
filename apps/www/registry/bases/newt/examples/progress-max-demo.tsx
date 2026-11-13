@@ -1,3 +1,5 @@
+"use client"
+
 import { Progress, ProgressLabel } from "@/registry/bases/newt/ui/progress"
 
 /*
