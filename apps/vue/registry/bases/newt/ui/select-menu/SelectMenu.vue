@@ -65,6 +65,8 @@ const options = computed(() =>
 
 const id = useId()
 
+const emit = defineEmits<{ select: [value: string] }>()
+
 /*
  * The selection is mirrored here because the trigger draws more than the
  * label of the chosen row: its icon and its note come from the option.
@@ -87,6 +89,7 @@ const selectedOption = computed(() =>
 function onValueChange(next: string) {
   picked.value = true
   model.value = next
+  emit("select", next)
 }
 </script>
 
