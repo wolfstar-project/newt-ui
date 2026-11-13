@@ -1,6 +1,7 @@
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/registry/bases/newt/ui/tooltip"
 
@@ -21,34 +22,38 @@ const ACTIONS = [
 
 /*
  * An icon-only button has no text of its own, so `aria-label` names it and
- * the tooltip shows the same words to sighted users.
+ * the tooltip shows the same words to sighted users. One `TooltipProvider`
+ * around the group shares the delay: after the first tooltip, the next one
+ * opens with no wait.
  */
 export default function TooltipToolbarDemo() {
   return (
-    <div className="flex gap-1 rounded-md bg-newt-bg-base p-1">
-      {ACTIONS.map((action) => (
-        <Tooltip key={action.label}>
-          <TooltipTrigger asChild>
-            <button
-              type="button"
-              aria-label={action.label}
-              className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-newt-text-secondary transition-colors duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d={action.icon}
-                />
-              </svg>
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>{action.label}</TooltipContent>
-        </Tooltip>
-      ))}
-    </div>
+    <TooltipProvider>
+      <div className="flex gap-1 rounded-md bg-newt-bg-base p-1">
+        {ACTIONS.map((action) => (
+          <Tooltip key={action.label}>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                aria-label={action.label}
+                className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-newt-text-secondary transition-colors duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d={action.icon}
+                  />
+                </svg>
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>{action.label}</TooltipContent>
+          </Tooltip>
+        ))}
+      </div>
+    </TooltipProvider>
   )
 }

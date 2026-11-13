@@ -2548,6 +2548,10 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/bases/newt/ui/tooltip/TooltipProvider.vue",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/bases/newt/ui/tooltip/TooltipTrigger.vue",
           "type": "registry:ui"
         },

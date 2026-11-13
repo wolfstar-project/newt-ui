@@ -1371,6 +1371,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       registryDependencies: [],
       files: [
         "registry/bases/newt/ui/tooltip/Tooltip.vue",
+        "registry/bases/newt/ui/tooltip/TooltipProvider.vue",
         "registry/bases/newt/ui/tooltip/TooltipTrigger.vue",
         "registry/bases/newt/ui/tooltip/TooltipContent.vue",
         "registry/bases/newt/ui/tooltip/index.ts",

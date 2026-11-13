@@ -33,6 +33,8 @@ const RawMeta = z.object({
   description: z.string(),
   /* npm packages; absent on the components that need none */
   dependencies: z.array(z.string()).default([]),
+  /* npm packages of the Vue port, when they differ from React's */
+  vueDependencies: z.array(z.string()).optional(),
   /* sibling registry items; absent on the components that stand alone */
   registryDependencies: z.array(z.string()).default([]),
   /* what a block is for — the filter on `/blocks`; absent on components */
@@ -51,7 +53,10 @@ export interface ComponentMeta {
   readonly type: "registry:ui" | "registry:block"
   readonly title: string
   readonly description: string
+  /** npm packages the React port needs. */
   readonly dependencies: readonly string[]
+  /** npm packages the Vue port needs; React's list unless the meta says otherwise. */
+  readonly vueDependencies: readonly string[]
   readonly registryDependencies: readonly string[]
   /** What a block is for, as `/blocks` filters it. Empty on components. */
   readonly categories: readonly string[]
@@ -86,6 +91,7 @@ function buildComponents(): readonly ComponentMeta[] {
       if (raw === undefined) continue
       components.push({
         ...raw,
+        vueDependencies: raw.vueDependencies ?? raw.dependencies,
         reactFiles: raw.reactFiles ?? [`ui/${raw.name}.tsx`],
         category: category.label,
         categorySlug: category.slug,

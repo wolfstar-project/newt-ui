@@ -76,8 +76,17 @@ The label opens above its trigger. Pass `side="bottom"` to `TooltipContent` to o
       description: "Gap in pixels between the trigger and the label.",
       default: "8",
     },
+    {
+      name: "container",
+      type: "HTMLElement",
+      description:
+        "Element the label is portalled into. Pass the enclosing native `<dialog>` or a themed wrapper to keep it there.",
+      default: "document.body",
+    },
   ]}
 />
+
+A tooltip needs no setup. To give a group of tooltips one set of delays, wrap the group in `TooltipProvider`. After one tooltip closes, the next one opens with no wait. Set `delayDuration` and `skipDelayDuration` on the provider.
 
 Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
 

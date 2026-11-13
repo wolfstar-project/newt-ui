@@ -2533,6 +2533,10 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
+        path: "ui/tooltip/TooltipProvider.vue",
+        type: "registry:ui",
+      },
+      {
         path: "ui/tooltip/TooltipTrigger.vue",
         type: "registry:ui",
       },
