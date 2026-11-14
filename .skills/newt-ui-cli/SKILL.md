@@ -62,6 +62,10 @@ compatibility shim belongs there, not spread across the commands.
   `utils/transformers/`. `utils/updaters/` writes component files and styles
   and installs dependencies. `src/preflights/` validates the target project
   before `add` fetches or writes registry items.
+- `src/utils/updaters/update-nuxt-config.ts` — on Nuxt, `init` adds the
+  `components` option that keeps the `index.ts` barrels out of Nuxt's component
+  scan (`NUXT_B3011`). The edit is text, so it only happens on a config shape
+  it cannot get wrong; every other shape gets the lines printed instead.
 
 ## Rules
 

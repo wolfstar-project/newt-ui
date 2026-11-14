@@ -17,6 +17,8 @@ npx newtui preset decode nt1.…                   # read what a preset code car
 
 `init` detects whether the project is React or Vue and records the result as `framework` in `components.json`. Override it with `--framework react|vue`. Vue projects also record a `bundler` (`nuxt` or `vite`), which decides where the stylesheet lives and which setup instructions are printed — pass `--bundler nuxt|vite` to force it.
 
+In a Nuxt project, `init` also adds a `components` option to `nuxt.config`. Nuxt reads each `index.ts` barrel under `components/ui` as a second component and warns about the duplicate name (`NUXT_B3011`). The option keeps the barrels out of that scan. If `init` cannot edit the file safely, it prints the lines to add.
+
 Every command reads `framework` back from `components.json`, so `add`, `diff` and `list` all target the right registry without being told again.
 
 ## Registry
