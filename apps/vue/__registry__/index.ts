@@ -110,7 +110,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "app-launcher",
       type: "registry:ui",
-      registryDependencies: [],
+      registryDependencies: ["scrollbar"],
       files: [
         "registry/bases/newt/ui/app-launcher/AppLauncher.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherHandle.vue",
@@ -1169,7 +1169,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "slash-command-suggestions",
       type: "registry:ui",
-      registryDependencies: ["slash-command"],
+      registryDependencies: ["slash-command", "scrollbar"],
       files: [
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestions.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsRail.vue",
@@ -3040,6 +3040,31 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ScrollbarDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ScrollbarDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ScrollbarOverlayDemo",
+    {
+      name: "ScrollbarOverlayDemo",
+      type: "registry:example",
+      registryDependencies: ["scrollbar"],
+      files: ["registry/bases/newt/examples/ScrollbarOverlayDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/ScrollbarOverlayDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ScrollbarAutoHideDemo",
+    {
+      name: "ScrollbarAutoHideDemo",
+      type: "registry:example",
+      registryDependencies: ["scrollbar"],
+      files: ["registry/bases/newt/examples/ScrollbarAutoHideDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/ScrollbarAutoHideDemo.vue")
       ),
     },
   ],

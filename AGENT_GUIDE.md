@@ -217,7 +217,7 @@ and border changes only. This is a deliberate constraint, not an oversight.
 | Cooldown bar          | `.newt-cooldown`                                                               | rate-limit/cooldown progress variant, idle→ready color shift         |
 | Pagination            | `.newt-pagination` / `.newt-load-more`                                         | page-number controls and "load more" divider                         |
 | Stage banner          | `.newt-stage-banner`                                                           | thin announcement bar, optional `--dismissible`                      |
-| Scrollbar utility     | `.newt-scrollbar`                                                              | apply to any scroll container for Discord-style scrollbars           |
+| Scrollbar utility     | `.newt-scrollbar`                                                              | any scroll container; `--overlay` draws the thumb, `--auto-hide`     |
 | Channel topic bar     | `.newt-channel-topic`                                                          | channel name + topic description header                              |
 | Notification badge    | `.newt-notif-badge`                                                            | count bubble or unread dot, positioned on parent                     |
 | User profile popout   | `.newt-profile`                                                                | floating card with banner, avatar, bio, role tags                    |

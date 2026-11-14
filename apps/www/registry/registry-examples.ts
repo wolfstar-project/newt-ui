@@ -1395,6 +1395,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "scrollbar-overlay-demo",
+    type: "registry:example",
+    registryDependencies: ["scrollbar"],
+    files: [
+      {
+        path: "examples/scrollbar-overlay-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "scrollbar-auto-hide-demo",
+    type: "registry:example",
+    registryDependencies: ["scrollbar"],
+    files: [
+      {
+        path: "examples/scrollbar-auto-hide-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "section-demo",
     type: "registry:example",
     registryDependencies: ["section"],

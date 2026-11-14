@@ -1,6 +1,7 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+import { scrollbarClassName } from "@/registry/bases/newt/ui/scrollbar"
 
 /* The Apps popout: search, recents, and the apps installed in a server. */
 const AppLauncher = React.forwardRef<
@@ -130,6 +131,7 @@ const AppLauncherBody = React.forwardRef<
     ref={ref}
     className={cn(
       "flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-4 pb-4",
+      scrollbarClassName,
       className
     )}
     {...props}

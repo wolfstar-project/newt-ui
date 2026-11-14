@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+import { scrollbarClassName } from "@/registry/bases/newt/ui/scrollbar"
 
 /*
  * The picker that opens above the composer once a message starts with `/`.
@@ -71,7 +72,11 @@ const SlashCommandSuggestionsList = React.forwardRef<
   <div
     ref={ref}
     role={role}
-    className={cn("min-w-0 flex-1 overflow-y-auto p-2", className)}
+    className={cn(
+      "min-w-0 flex-1 overflow-y-auto p-2",
+      scrollbarClassName,
+      className
+    )}
     {...props}
   />
 ))

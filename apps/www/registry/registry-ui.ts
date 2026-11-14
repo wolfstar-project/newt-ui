@@ -86,6 +86,7 @@ export const ui: Registry = [
     title: "App Launcher",
     description:
       "The Apps popout, with search, a recents strip and the apps installed in a server.",
+    registryDependencies: ["scrollbar"],
     files: [
       {
         path: "ui/app-launcher.tsx",
@@ -924,7 +925,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Scrollbar Utility",
     description:
-      "Discord-styled scrollbars for any scrollable container, with an optional keyboard-focusable viewport.",
+      "Discord-styled scrollbars for any scrollable container, with an overlay thumb, auto-hide and an optional keyboard-focusable viewport.",
     files: [
       {
         path: "ui/scrollbar.tsx",
@@ -1054,7 +1055,7 @@ export const ui: Registry = [
     description:
       "The command picker that opens above the composer, with an app rail, grouped options and a matched-command preview.",
     dependencies: ["class-variance-authority"],
-    registryDependencies: ["slash-command"],
+    registryDependencies: ["slash-command", "scrollbar"],
     files: [
       {
         path: "ui/slash-command-suggestions.tsx",
