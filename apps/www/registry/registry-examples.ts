@@ -960,6 +960,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "message-group-reply-demo",
+    type: "registry:example",
+    registryDependencies: ["message-group", "avatar", "reply-preview"],
+    files: [
+      {
+        path: "examples/message-group-reply-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "message-list-demo",
     type: "registry:example",
     registryDependencies: ["message-list", "avatar", "message-group"],

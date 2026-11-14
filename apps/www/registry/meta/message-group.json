@@ -25,5 +25,5 @@
   ],
   "reactDemo": "message-group-demo",
   "vueDemo": "MessageGroupDemo",
-  "examples": ["list", "app"]
+  "examples": ["list", "app", "reply"]
 }
