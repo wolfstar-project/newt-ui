@@ -366,12 +366,45 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "channel-header-narrow-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "examples/channel-header-narrow-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "channel-header-decorative-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "examples/channel-header-decorative-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "channel-info-demo",
     type: "registry:example",
     registryDependencies: ["channel-info", "tabs"],
     files: [
       {
         path: "examples/channel-info-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "channel-info-dialog-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-info", "button"],
+    files: [
+      {
+        path: "examples/channel-info-dialog-demo.tsx",
         type: "registry:example",
       },
     ],

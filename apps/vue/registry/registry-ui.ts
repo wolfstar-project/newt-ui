@@ -517,6 +517,14 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
+        path: "ui/channel-header/ChannelHeaderBack.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderTitle.vue",
+        type: "registry:ui",
+      },
+      {
         path: "ui/channel-header/ChannelHeaderOnline.vue",
         type: "registry:ui",
       },
@@ -532,6 +540,7 @@ export const ui: Registry = [
     title: "Channel Info",
     description:
       "The channel detail panel that covers a channel on narrow screens.",
+    dependencies: ["reka-ui"],
     registryDependencies: ["tabs"],
     files: [
       {

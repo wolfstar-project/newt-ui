@@ -284,6 +284,8 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/channel-header/ChannelHeaderToolbar.vue",
         "registry/bases/newt/ui/channel-header/ChannelHeaderAction.vue",
         "registry/bases/newt/ui/channel-header/ChannelHeaderSearch.vue",
+        "registry/bases/newt/ui/channel-header/ChannelHeaderBack.vue",
+        "registry/bases/newt/ui/channel-header/ChannelHeaderTitle.vue",
         "registry/bases/newt/ui/channel-header/ChannelHeaderOnline.vue",
         "registry/bases/newt/ui/channel-header/index.ts",
       ],
@@ -1907,6 +1909,32 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ChannelHeaderNarrowDemo",
+    {
+      name: "ChannelHeaderNarrowDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-header"],
+      files: ["registry/bases/newt/examples/ChannelHeaderNarrowDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/ChannelHeaderNarrowDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChannelHeaderDecorativeDemo",
+    {
+      name: "ChannelHeaderDecorativeDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-header"],
+      files: ["registry/bases/newt/examples/ChannelHeaderDecorativeDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/ChannelHeaderDecorativeDemo.vue")
+      ),
+    },
+  ],
+  [
     "ChannelInfoDemo",
     {
       name: "ChannelInfoDemo",
@@ -1915,6 +1943,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ChannelInfoDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ChannelInfoDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChannelInfoDialogDemo",
+    {
+      name: "ChannelInfoDialogDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-info", "button"],
+      files: ["registry/bases/newt/examples/ChannelInfoDialogDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/ChannelInfoDialogDemo.vue")
       ),
     },
   ],

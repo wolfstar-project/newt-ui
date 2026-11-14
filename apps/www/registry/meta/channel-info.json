@@ -2,6 +2,8 @@
   "name": "channel-info",
   "title": "Channel Info",
   "description": "The channel detail panel that covers a channel on narrow screens.",
+  "dependencies": ["radix-ui"],
+  "vueDependencies": ["reka-ui"],
   "registryDependencies": ["tabs"],
   "vueFiles": [
     "ChannelInfo.vue",
@@ -20,5 +22,6 @@
     "index.ts"
   ],
   "reactDemo": "channel-info-demo",
-  "vueDemo": "ChannelInfoDemo"
+  "vueDemo": "ChannelInfoDemo",
+  "examples": ["dialog"]
 }

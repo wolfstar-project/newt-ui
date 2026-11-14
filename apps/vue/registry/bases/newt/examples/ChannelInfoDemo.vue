@@ -24,7 +24,8 @@ import {
 
 <template>
   <ChannelInfo
-    aria-label="Channel information for #general"
+    inline
+    label="Channel information for #general"
     class="h-[420px] rounded-md"
   >
     <ChannelInfoToolbar>

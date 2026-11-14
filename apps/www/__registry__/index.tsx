@@ -1544,6 +1544,34 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "channel-header-narrow-demo",
+    {
+      name: "channel-header-narrow-demo",
+      type: "registry:example",
+      registryDependencies: ["channel-header"],
+      files: ["registry/bases/newt/examples/channel-header-narrow-demo.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/examples/channel-header-narrow-demo")
+      ),
+    },
+  ],
+  [
+    "channel-header-decorative-demo",
+    {
+      name: "channel-header-decorative-demo",
+      type: "registry:example",
+      registryDependencies: ["channel-header"],
+      files: [
+        "registry/bases/newt/examples/channel-header-decorative-demo.tsx",
+      ],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/examples/channel-header-decorative-demo")
+      ),
+    },
+  ],
+  [
     "channel-info-demo",
     {
       name: "channel-info-demo",
@@ -1552,6 +1580,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/channel-info-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/channel-info-demo")
+      ),
+    },
+  ],
+  [
+    "channel-info-dialog-demo",
+    {
+      name: "channel-info-dialog-demo",
+      type: "registry:example",
+      registryDependencies: ["channel-info", "button"],
+      files: ["registry/bases/newt/examples/channel-info-dialog-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/channel-info-dialog-demo")
       ),
     },
   ],

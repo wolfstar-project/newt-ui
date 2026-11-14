@@ -33,6 +33,12 @@
   color: var(--newt-text-muted);
 }
 
+/*
+ * The action is a `button` or an `a`. The same class on a `span` is the
+ * decorative form, for a read-only view: give it `aria-hidden="true"`. It
+ * keeps the resting look and has no pointer, no hover and no place in the
+ * tab order.
+ */
 .newt-channel-welcome__action {
   display: inline-flex;
   align-items: center;
@@ -44,11 +50,14 @@
   background: var(--newt-bg-elevated);
   font-size: 14px;
   font-weight: 500;
+  text-decoration: none;
   color: var(--newt-text-primary);
+}
+.newt-channel-welcome__action:is(button, a) {
   cursor: pointer;
   transition: background var(--newt-duration-fast) var(--newt-ease);
 }
-.newt-channel-welcome__action:hover {
+.newt-channel-welcome__action:is(button, a):hover {
   background: var(--newt-bg-hover);
 }
 .newt-channel-welcome__action:focus-visible {

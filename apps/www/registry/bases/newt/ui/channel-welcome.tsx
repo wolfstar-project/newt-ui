@@ -56,22 +56,45 @@ const ChannelWelcomeDescription = React.forwardRef<
 ))
 ChannelWelcomeDescription.displayName = "ChannelWelcomeDescription"
 
+export interface ChannelWelcomeActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * The element or component to render. Defaults to `button`, or to `a` when
+   * `href` is set; pass a router link component to keep client navigation.
+   * `span` renders the decorative form: hidden from assistive technology, out
+   * of the tab order, with no pointer and no hover.
+   */
+  as?: React.ElementType
+  /** Render a link to this URL. */
+  href?: string
+  /** Link target, with `href`. */
+  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"]
+  /** Link relationship, with `href`. */
+  rel?: string
+}
+
 const ChannelWelcomeAction = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentProps<"button">
->(({ className, type = "button", ...props }, ref) => (
-  <button
-    ref={ref}
-    type={type}
-    className={cn(
-      "mt-3 inline-flex cursor-pointer items-center gap-2 rounded-sm border-0 bg-newt-bg-elevated px-4 py-1.5 text-sm font-medium text-newt-text-primary transition-colors duration-fast ease-newt",
-      "hover:bg-newt-bg-hover",
-      "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
-      className
-    )}
-    {...props}
-  />
-))
+  HTMLElement,
+  ChannelWelcomeActionProps
+>(({ as, href, className, type = "button", ...props }, ref) => {
+  const Tag: React.ElementType = as ?? (href === undefined ? "button" : "a")
+  const isButton = Tag === "button"
+  const decorative = Tag === "span"
+  return (
+    <Tag
+      ref={ref}
+      type={isButton ? type : undefined}
+      href={decorative ? undefined : href}
+      aria-hidden={decorative ? true : undefined}
+      className={cn(
+        "mt-3 inline-flex items-center gap-2 rounded-sm border-0 bg-newt-bg-elevated px-4 py-1.5 text-sm font-medium text-newt-text-primary no-underline",
+        !decorative &&
+          "cursor-pointer transition-colors duration-fast ease-newt hover:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
+        className
+      )}
+      {...props}
+    />
+  )
+})
 ChannelWelcomeAction.displayName = "ChannelWelcomeAction"
 
 export interface ChannelWelcomeDateProps extends Omit<

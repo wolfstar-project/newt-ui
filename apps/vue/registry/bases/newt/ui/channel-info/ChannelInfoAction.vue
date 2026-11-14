@@ -1,23 +1,44 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import type { Component, HTMLAttributes } from "vue"
+import { computed } from "vue"
 
 import { cn } from "@/lib/utils"
 
-const props = defineProps<{ class?: HTMLAttributes["class"] }>()
+const props = defineProps<{
+  /**
+   * The element or component to render. Defaults to `button`, or to `a`
+   * when `href` is set; pass `NuxtLink` or `RouterLink` to keep client
+   * navigation. `span` renders the decorative form: hidden from assistive
+   * technology, out of the tab order, with no pointer and no hover.
+   */
+  as?: string | Component
+  /** Render a link to this URL. */
+  href?: string
+  class?: HTMLAttributes["class"]
+}>()
+
+const tag = computed(
+  () => props.as ?? (props.href === undefined ? "button" : "a")
+)
+const isButton = computed(() => tag.value === "button")
+const decorative = computed(() => tag.value === "span")
 </script>
 
 <template>
-  <button
-    type="button"
+  <component
+    :is="tag"
+    :type="isButton ? 'button' : undefined"
+    :href="decorative ? undefined : props.href"
+    :aria-hidden="decorative ? true : undefined"
     :class="
       cn(
-        'inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-newt-text-secondary transition-colors duration-fast ease-newt',
-        'hover:bg-newt-bg-hover hover:text-newt-text-primary',
-        'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
+        'inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-0 bg-transparent p-0 text-newt-text-secondary no-underline',
+        !decorative &&
+          'cursor-pointer transition-colors duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
         props.class
       )
     "
   >
     <slot />
-  </button>
+  </component>
 </template>

@@ -248,6 +248,7 @@ export const ui: Registry = [
     title: "Channel Info",
     description:
       "The channel detail panel that covers a channel on narrow screens.",
+    dependencies: ["radix-ui"],
     registryDependencies: ["tabs"],
     files: [
       {

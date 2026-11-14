@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import {
   ChannelHeader,
   ChannelHeaderAction,
@@ -10,6 +11,8 @@ import {
   ChannelHeaderToolbar,
   ChannelHeaderTopic,
 } from "~~/registry/bases/newt/ui/channel-header"
+
+const members = ref(true)
 </script>
 
 <template>
@@ -30,9 +33,9 @@ import {
         </svg>
       </ChannelHeaderAction>
       <ChannelHeaderAction
-        active
-        aria-label="Hide member list"
-        aria-pressed="true"
+        :active="members"
+        aria-label="Member list"
+        @click="members = !members"
       >
         <svg viewBox="0 0 24 24" class="h-6 w-6" fill="currentColor">
           <path
