@@ -4,11 +4,15 @@
  * Focus never leaves the trigger: the open listbox is driven through
  * `aria-activedescendant`, which is what lets Escape, Tab and click-outside
  * stay simple. Keys: Arrow up/down, Home, End, Enter, Space, Escape.
+ *
+ * `data-side="top"` on the root opens the panel above the trigger. Either
+ * side gives way to the other when it has no room.
  */
 document.querySelectorAll("[data-newt-select]").forEach((root) => {
   const trigger = root.querySelector(".newt-select-menu__trigger")
   const panel = root.querySelector(".newt-select-menu__panel")
   const value = root.querySelector(".newt-select-menu__value")
+  const emoji = root.querySelector(".newt-select-menu__emoji")
   const options = [...root.querySelectorAll(".newt-select-menu__option")]
   if (!trigger || !panel || options.length === 0) return
 
@@ -46,12 +50,20 @@ document.querySelectorAll("[data-newt-select]").forEach((root) => {
     return -1
   }
 
-  /* Flip above the trigger when the panel would run past the viewport. */
+  /*
+   * The panel opens on the side the root asks for, and flips when it would
+   * run past the viewport there and the other side has more room.
+   */
   const place = () => {
     const box = trigger.getBoundingClientRect()
+    const above = box.top
     const below = window.innerHeight - box.bottom
-    panel.dataset.placement =
-      below < panel.offsetHeight && box.top > below ? "above" : "below"
+    const height = panel.offsetHeight
+    const opensAbove =
+      root.dataset.side === "top"
+        ? !(above < height && below > above)
+        : below < height && above > below
+    panel.dataset.placement = opensAbove ? "above" : "below"
   }
 
   const open = () => {
@@ -83,8 +95,15 @@ document.querySelectorAll("[data-newt-select]").forEach((root) => {
       other.classList.toggle("newt-select-menu__option--selected", isChosen)
     })
     if (value) {
-      value.textContent = option.textContent.trim()
+      /* A row may hold more than its label, so the label is read by name. */
+      const label = option.querySelector(".newt-select-menu__option-label")
+      value.textContent = (label ?? option).textContent.trim()
       value.classList.remove("newt-select-menu__value--placeholder")
+    }
+    if (emoji) {
+      const chosen = option.querySelector(".newt-select-menu__option-emoji")
+      emoji.textContent = chosen ? chosen.textContent : ""
+      emoji.hidden = !chosen
     }
     root.dispatchEvent(
       new CustomEvent("newt-select", {

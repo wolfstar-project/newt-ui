@@ -1,6 +1,12 @@
+<!--
+  data-side="top" on the root opens the panel above the trigger; it still
+  flips when that side has no room. data-align="center" or "end" on the panel
+  lines up a panel that is not as wide as the trigger.
+-->
 <div class="newt-select-menu" data-newt-select>
   <button
     class="newt-select-menu__trigger"
+    data-slot="select-menu-trigger"
     type="button"
     role="combobox"
     aria-haspopup="listbox"
@@ -34,7 +40,12 @@
       />
     </svg>
   </button>
-  <div class="newt-select-menu__panel" data-placement="below" hidden>
+  <div
+    class="newt-select-menu__panel"
+    data-slot="select-menu-content"
+    data-placement="below"
+    hidden
+  >
     <ul
       class="newt-select-menu__listbox"
       id="select-menu-listbox"
@@ -49,7 +60,7 @@
         data-value="one"
       >
         <span class="newt-select-menu__option-body">
-          <span>Option one</span>
+          <span class="newt-select-menu__option-label">Option one</span>
           <span class="newt-select-menu__option-description">
             What this option does
           </span>
@@ -62,9 +73,13 @@
         aria-selected="false"
         data-value="two"
       >
-        <span class="newt-select-menu__option-body"
-          ><span>Option two</span></span
+        <!-- An emoji stands where an icon would, for an option without one. -->
+        <span class="newt-select-menu__option-emoji" aria-hidden="true"
+          >🎲</span
         >
+        <span class="newt-select-menu__option-body">
+          <span class="newt-select-menu__option-label">Option two</span>
+        </span>
       </li>
       <li
         class="newt-select-menu__option"
@@ -75,7 +90,7 @@
         data-value="three"
       >
         <span class="newt-select-menu__option-body">
-          <span>Option three</span>
+          <span class="newt-select-menu__option-label">Option three</span>
         </span>
       </li>
     </ul>

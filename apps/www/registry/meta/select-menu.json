@@ -7,5 +7,12 @@
   "vueFiles": ["SelectMenu.vue", "index.ts"],
   "reactDemo": "select-menu-demo",
   "vueDemo": "SelectMenuDemo",
-  "examples": ["placeholder", "message", "disabled"]
+  "examples": [
+    "placeholder",
+    "message",
+    "disabled",
+    "above",
+    "description",
+    "item"
+  ]
 }

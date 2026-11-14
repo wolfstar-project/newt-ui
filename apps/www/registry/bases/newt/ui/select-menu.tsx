@@ -17,6 +17,11 @@ export interface SelectMenuOption {
    */
   icon?: React.ReactNode
   /**
+   * A unicode emoji drawn in the place of `icon`, for an option that has no
+   * node to pass. `icon` wins when an option carries both.
+   */
+  emoji?: string
+  /**
    * A muted aside after the label on the trigger, for what the option resolves
    * to. It is the first thing allowed to truncate.
    */
@@ -40,6 +45,21 @@ export const SELECT_MENU_MAX_OPTIONS = 25
  */
 export type SelectMenuVariant = "settings" | "message"
 
+/**
+ * The side of the trigger the panel opens on. The panel flips to the opposite
+ * side when the preferred one has no room.
+ */
+export type SelectMenuSide = "top" | "right" | "bottom" | "left"
+
+/** How the panel lines up with the trigger along its side. */
+export type SelectMenuAlign = "start" | "center" | "end"
+
+/** What a row render prop is told about the option it draws. */
+export interface SelectMenuItemState {
+  index: number
+  selected: boolean
+}
+
 export interface SelectMenuProps extends Omit<
   React.HTMLAttributes<HTMLDivElement>,
   "onSelect" | "defaultValue"
@@ -59,6 +79,34 @@ export interface SelectMenuProps extends Omit<
    * pass the enclosing native `<dialog>` or a themed wrapper to keep it there.
    */
   container?: React.ComponentProps<typeof SelectPrimitive.Portal>["container"]
+  /**
+   * The side of the trigger the panel opens on. It flips to the opposite side
+   * when the preferred one has no room.
+   */
+  side?: SelectMenuSide
+  /** How the panel lines up with the trigger along that side. */
+  align?: SelectMenuAlign
+  /** Classes merged onto the trigger button, to size or restyle it. */
+  triggerClassName?: string
+  /** Classes merged onto the panel. */
+  contentClassName?: string
+  /**
+   * Replaces what a row draws: the icon or emoji, the label and the
+   * description. The row itself and its tick stay the menu's. The Vue port
+   * takes the same content through its `#item` slot.
+   */
+  renderItem?: (
+    option: SelectMenuOption,
+    state: SelectMenuItemState
+  ) => React.ReactNode
+  /**
+   * Replaces the text of the description of an option that has one. The Vue
+   * port takes the same content through its `#item-description` slot.
+   */
+  renderItemDescription?: (
+    option: SelectMenuOption,
+    state: SelectMenuItemState
+  ) => React.ReactNode
 }
 
 /*
@@ -80,6 +128,12 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
       disabled = false,
       label = "Select an option",
       container,
+      side = "bottom",
+      align = "start",
+      triggerClassName,
+      contentClassName,
+      renderItem,
+      renderItemDescription,
       ...props
     },
     ref
@@ -104,6 +158,15 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
     const selected = value ?? uncontrolled
     const selectedOption = options.find((option) => option.value === selected)
 
+    /*
+     * While the list is open, Radix hides everything outside it from assistive
+     * technology, the trigger included. A hidden element that still takes Tab
+     * is what an accessibility audit reports, so the trigger leaves the tab
+     * order until the list closes. Focus is held in the list meanwhile, and it
+     * returns to the trigger by script, which a negative tabindex allows.
+     */
+    const [open, setOpen] = React.useState(false)
+
     return (
       <SelectPrimitive.Root
         /* An empty string is how Radix spells "nothing chosen". */
@@ -112,6 +175,7 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
           if (value === undefined) setUncontrolled(next)
           onValueChange?.(next)
         }}
+        onOpenChange={setOpen}
         disabled={disabled}
       >
         <div
@@ -120,16 +184,22 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
           {...props}
         >
           <SelectPrimitive.Trigger
+            data-slot="select-menu-trigger"
             aria-label={label}
-            className="group flex min-h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-sm border border-newt-border bg-newt-bg-input px-2 font-sans text-sm font-medium text-newt-text-primary hover:border-newt-bg-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50"
+            tabIndex={open ? -1 : undefined}
+            className={cn(
+              "group flex min-h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-sm border border-newt-border bg-newt-bg-input px-2 font-sans text-sm font-medium text-newt-text-primary hover:border-newt-bg-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50",
+              triggerClassName
+            )}
           >
             <span className="flex min-w-0 flex-1 items-center gap-2">
-              {selectedOption?.icon ? (
+              {/* An icon wins over an emoji when an option carries both. */}
+              {selectedOption?.icon || selectedOption?.emoji ? (
                 <span
                   aria-hidden="true"
-                  className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary"
+                  className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-base leading-none text-newt-text-secondary"
                 >
-                  {selectedOption.icon}
+                  {selectedOption.icon || selectedOption.emoji}
                 </span>
               ) : null}
               <span
@@ -163,11 +233,16 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
 
         <SelectPrimitive.Portal container={container}>
           <SelectPrimitive.Content
+            data-slot="select-menu-content"
             position="popper"
-            align="start"
+            side={side}
+            align={align}
             sideOffset={4}
             aria-label={label}
-            className="z-[110] w-[var(--radix-select-trigger-width)] rounded-md border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high"
+            className={cn(
+              "z-[110] w-[var(--radix-select-trigger-width)] rounded-md border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high",
+              contentClassName
+            )}
           >
             <SelectPrimitive.Viewport
               className={cn(
@@ -192,6 +267,7 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
             >
               {options.map((option, index) => {
                 const descriptionId = `${id}-description-${index}`
+                const state = { index, selected: option.value === selected }
                 return (
                   <SelectPrimitive.Item
                     key={option.value}
@@ -200,7 +276,9 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
                     /* Typeahead matches the label, not the description. */
                     textValue={option.label}
                     aria-describedby={
-                      option.description ? descriptionId : undefined
+                      option.description && !renderItem
+                        ? descriptionId
+                        : undefined
                     }
                     className={cn(
                       "group/item flex cursor-pointer select-none items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm text-newt-text-secondary outline-none",
@@ -209,27 +287,44 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(
                       "data-[disabled]:cursor-not-allowed data-[disabled]:text-newt-text-muted data-[disabled]:opacity-50"
                     )}
                   >
-                    {option.icon ? (
-                      <span
-                        aria-hidden="true"
-                        className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary group-data-[highlighted]/item:text-newt-on-accent"
-                      >
-                        {option.icon}
-                      </span>
-                    ) : null}
-                    <span className="flex min-w-0 flex-col">
-                      <SelectPrimitive.ItemText className="truncate">
-                        {option.label}
+                    {renderItem ? (
+                      /*
+                       * A row drawn by the caller is the option's name as a
+                       * whole: the text of everything in it, with no
+                       * description id left dangling.
+                       */
+                      <SelectPrimitive.ItemText asChild>
+                        <div className="flex min-w-0 flex-1 items-center gap-2.5">
+                          {renderItem(option, state)}
+                        </div>
                       </SelectPrimitive.ItemText>
-                      {option.description ? (
-                        <span
-                          id={descriptionId}
-                          className="truncate text-xs text-newt-text-muted group-data-[highlighted]/item:text-newt-on-accent"
-                        >
-                          {option.description}
+                    ) : (
+                      <>
+                        {option.icon || option.emoji ? (
+                          <span
+                            aria-hidden="true"
+                            className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-base leading-none text-newt-text-secondary group-data-[highlighted]/item:text-newt-on-accent"
+                          >
+                            {option.icon || option.emoji}
+                          </span>
+                        ) : null}
+                        <span className="flex min-w-0 flex-col">
+                          <SelectPrimitive.ItemText className="truncate">
+                            {option.label}
+                          </SelectPrimitive.ItemText>
+                          {option.description ? (
+                            <span
+                              id={descriptionId}
+                              className="truncate text-xs text-newt-text-muted group-data-[highlighted]/item:text-newt-on-accent"
+                            >
+                              {renderItemDescription
+                                ? renderItemDescription(option, state)
+                                : option.description}
+                            </span>
+                          ) : null}
                         </span>
-                      ) : null}
-                    </span>
+                      </>
+                    )}
                     {/*
                      * Only the settings menu ticks a row. In a message the
                      * choice is submitted rather than kept, so there is no

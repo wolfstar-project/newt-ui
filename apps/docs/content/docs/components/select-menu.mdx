@@ -3,7 +3,7 @@ title: "Select Menu"
 description: "A Discord-inspired string select: combobox trigger, keyboard-driven listbox and a portalled panel."
 ---
 
-A select for one value from a list: a trigger, a keyboard-driven listbox and a panel that flips when it runs out of room. This is the option picker from the client, not a styled `<select>`. Each option can carry an icon, a description and a note.
+A select for one value from a list: a trigger, a keyboard-driven listbox and a panel that flips when it runs out of room. This is the option picker from the client, not a styled `<select>`. Each option can carry an icon or an emoji, a description and a note.
 
 It is built on [Radix Select](https://www.radix-ui.com/primitives/docs/components/select) in React and [Reka UI Select](https://reka-ui.com/docs/components/select) in Vue. The primitive owns the open state, the keyboard, typeahead and the placement. The component adds the look, the option model and the 25-option cap of a message select.
 
@@ -39,6 +39,30 @@ With no value, the trigger shows the `placeholder` in muted text until an option
 
 <ComponentPreview name="select-menu" variant="disabled" />
 
+### Opening above
+
+`side` names the side of the trigger the panel opens on. A select under a message sits close to the composer, so `side="top"` opens it upwards. The panel still flips when that side has no room. `align` lines up a panel that is not as wide as the trigger.
+
+The trigger here is 40px high. `triggerClassName` (`trigger-class` in Vue) merges classes onto the trigger. `contentClassName` (`content-class` in Vue) merges classes onto the panel.
+
+Each option carries an `emoji`: a unicode character drawn where the icon would be.
+
+<ComponentPreview name="select-menu" variant="above" />
+
+### Rich description
+
+`renderItemDescription` in React and the `#item-description` slot in Vue draw the description of an option. The option still needs a `description`: an option without one has no second line. Both receive the option, its `index` and whether it is `selected`.
+
+<ComponentPreview name="select-menu" variant="description" />
+
+### Custom rows
+
+`renderItem` in React and the `#item` slot in Vue draw the whole content of a row. The menu keeps the row itself, its highlight, its keyboard handling and its tick. The trigger still shows the `label` of the option, and typeahead still matches it.
+
+The highlighted row has the brand colour behind it. Give muted text the class `group-data-[highlighted]/item:text-newt-on-accent` so it stays readable there.
+
+<ComponentPreview name="select-menu" variant="item" />
+
 ## API reference
 
 <PropsTable
@@ -48,7 +72,7 @@ With no value, the trigger shows the `placeholder` in muted text until an option
       name: "options",
       type: "SelectMenuOption[]",
       description:
-        "The choices: `{ value, label, description?, icon?, note?, disabled? }`. A `value` must not be an empty string.",
+        "The choices: `{ value, label, description?, icon?, emoji?, note?, disabled? }`. A `value` must not be an empty string.",
     },
     {
       name: "variant",
@@ -71,7 +95,7 @@ With no value, the trigger shows the `placeholder` in muted text until an option
       name: "onValueChange",
       type: "(value: string) => void",
       description:
-        "React only. Called with the chosen value; Vue emits `update:modelValue`.",
+        "React only. Called with the chosen value. Vue emits `update:modelValue`, and `select` with the same value.",
     },
     {
       name: "placeholder",
@@ -98,10 +122,53 @@ With no value, the trigger shows the `placeholder` in muted text until an option
         "Element the panel is portalled into. Pass the enclosing native `<dialog>` or a themed wrapper to keep it there.",
       default: "document.body",
     },
+    {
+      name: "side",
+      type: '"top" | "right" | "bottom" | "left"',
+      description:
+        "The side of the trigger the panel opens on. The panel flips to the opposite side when this one has no room.",
+      default: '"bottom"',
+    },
+    {
+      name: "align",
+      type: '"start" | "center" | "end"',
+      description: "How the panel lines up with the trigger along that side.",
+      default: '"start"',
+    },
+    {
+      name: "triggerClassName / triggerClass",
+      type: "string",
+      description:
+        "Classes merged onto the trigger button, to size or restyle it.",
+    },
+    {
+      name: "contentClassName / contentClass",
+      type: "string",
+      description: "Classes merged onto the panel.",
+    },
+    {
+      name: "renderItem / #item",
+      type: "(option, { index, selected }) => ReactNode / Vue slot",
+      description:
+        "Draws the content of every row, in place of the icon, the label and the description.",
+    },
+    {
+      name: "renderItemDescription / #item-description",
+      type: "(option, { index, selected }) => ReactNode / Vue slot",
+      description: "Draws the description of every option that has one.",
+    },
   ]}
 />
 
-In React, `icon` is a node. In Vue, `icon` is a component. The root also accepts the native attributes of a `<div>`, and a `className` (`class` in Vue) that is merged with the defaults.
+In React, `icon` is a node. In Vue, `icon` is a component. `emoji` is a unicode character in both, and `icon` wins when an option has both. The root also accepts the native attributes of a `<div>`, and a `className` (`class` in Vue) that is merged with the defaults.
+
+The trigger carries `data-slot="select-menu-trigger"` and the panel carries `data-slot="select-menu-content"`. Use them to find either part from a stylesheet or a test.
+
+## HTML and CSS
+
+Load `tokens.css`, `select-menu.css` and `select-menu.js` with the markup. Set `data-side="top"` on the root to open the panel above the trigger. Set `data-align` to `center` or `end` on the panel when it is not as wide as the trigger.
+
+Draw an emoji with `newt-select-menu__emoji` on the trigger and `newt-select-menu__option-emoji` in a row. Mark the label of a row with `newt-select-menu__option-label`. The script copies that text to the trigger, so a row can hold more than its label.
 
 ## Accessibility
 
@@ -110,6 +177,18 @@ The trigger is a `combobox` with `aria-expanded` and, while the panel is open, `
 `Enter`, `Space`, `Up` and `Down` open the list. Focus moves to the selected option, or to the first option. `Up` and `Down` move through the options and skip disabled ones. `Home` and `End` jump to the ends. Typing a letter moves to the next option whose label starts with it. `Enter` or `Space` selects the focused option and returns focus to the trigger. `Escape` closes the list and returns focus to the trigger, and so does a press outside.
 
 While the list is open, the page behind it does not scroll and does not take pointer events. Inside a drawer or a modal, `Escape` closes the list first and the dialog on the next press.
+
+A row drawn with `renderItem` or `#item` names its option with all of its text, and no description is linked. Hide a decorative glyph in it with `aria-hidden`.
+
+### Auditing an open list
+
+While the list is open, the primitive sets `aria-hidden` on everything outside it. A screen reader then stays inside the list. The trigger is outside the list, so it leaves the tab order with `tabindex="-1"` until the list closes. Focus still returns to it on close.
+
+An axe audit of a page with an open list can still report `aria-hidden-focus`. The rule finds the other links and buttons of the page inside the hidden regions. This finding is expected. The list holds focus, `Tab` does not leave it, and the primitive restores the page when the list closes. Audit the page with the list closed, and audit the open panel on its own.
+
+### Testing
+
+The list opens on `pointerdown`, and on `Enter`, `Space`, `Up` or `Down`. In Vue, a synthetic `click` does not open it. In a test, press a key on the focused trigger, or dispatch `pointerdown`.
 
 ## Tokens
 

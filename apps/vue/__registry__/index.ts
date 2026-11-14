@@ -3132,6 +3132,43 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "SelectMenuAboveDemo",
+    {
+      name: "SelectMenuAboveDemo",
+      type: "registry:example",
+      registryDependencies: ["select-menu"],
+      files: ["registry/bases/newt/examples/SelectMenuAboveDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SelectMenuAboveDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SelectMenuDescriptionDemo",
+    {
+      name: "SelectMenuDescriptionDemo",
+      type: "registry:example",
+      registryDependencies: ["select-menu"],
+      files: ["registry/bases/newt/examples/SelectMenuDescriptionDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/SelectMenuDescriptionDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SelectMenuItemDemo",
+    {
+      name: "SelectMenuItemDemo",
+      type: "registry:example",
+      registryDependencies: ["select-menu"],
+      files: ["registry/bases/newt/examples/SelectMenuItemDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SelectMenuItemDemo.vue")
+      ),
+    },
+  ],
+  [
     "ServerBannerDemo",
     {
       name: "ServerBannerDemo",
