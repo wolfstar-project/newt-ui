@@ -55,7 +55,9 @@
         </svg>
       </span>
       <span class="newt-slash-suggestions__option-body">
-        <span class="newt-slash-suggestions__option-name">/&nbsp;ban</span>
+        <span class="newt-slash-suggestions__option-name"
+          ><span class="newt-slash-suggestions__option-slash">/</span>ban</span
+        >
         <span class="newt-slash-suggestions__option-description">
           Ban a member from the server.
         </span>
@@ -74,7 +76,10 @@
         </svg>
       </span>
       <span class="newt-slash-suggestions__option-body">
-        <span class="newt-slash-suggestions__option-name">/&nbsp;timeout</span>
+        <span class="newt-slash-suggestions__option-name"
+          ><span class="newt-slash-suggestions__option-slash">/</span
+          >timeout</span
+        >
         <span class="newt-slash-suggestions__option-description">
           Mute a member for a set amount of time.
         </span>
@@ -87,18 +92,27 @@
       role="option"
       aria-selected="false"
     >
-      <span
-        class="newt-command"
-        role="group"
-        aria-label="Slash command /ban member"
+      <!-- oxfmt-ignore -->
+      <span class="newt-command" role="group" aria-label="Slash command /ban user: @username"
+        ><span class="newt-command__icon" aria-hidden="true">/</span
+        ><span class="newt-command__name">ban</span
+        > <span class="newt-command__option"
+          ><span class="newt-command__option-name">user:</span
+          ><span class="newt-command__option-value">@username</span></span
+        ></span
       >
-        <span class="newt-command__icon" aria-hidden="true">/</span>
-        <span class="newt-command__name">ban</span>
-        <span class="newt-command__option">
-          <span class="newt-command__option-name">user</span>
-          <span class="newt-command__option-value">@username</span>
-        </span>
-      </span>
     </div>
+  </div>
+
+  <div class="newt-slash-suggestions__footer">
+    <!-- oxfmt-ignore -->
+    <span class="newt-command" role="group" aria-label="Slash command /ban user: the member to ban"
+      ><span class="newt-command__icon" aria-hidden="true">/</span
+      ><span class="newt-command__name">ban</span
+      > <span class="newt-command__option newt-command__option--focused"
+        ><span class="newt-command__option-name">user:</span
+        ><span class="newt-command__option-placeholder">the member to ban</span></span
+      ></span
+    >
   </div>
 </div>

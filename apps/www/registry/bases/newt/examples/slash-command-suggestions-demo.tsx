@@ -5,6 +5,7 @@ import {
   SlashCommandSuggestionGroup,
   SlashCommandSuggestionMatched,
   SlashCommandSuggestions,
+  SlashCommandSuggestionsFooter,
   SlashCommandSuggestionsHeader,
   SlashCommandSuggestionsList,
   SlashCommandSuggestionsRail,
@@ -81,6 +82,15 @@ export default function SlashCommandSuggestionsDemo() {
           />
         </SlashCommandSuggestionMatched>
       </SlashCommandSuggestionsList>
+
+      <SlashCommandSuggestionsFooter>
+        <SlashCommand
+          name="ban"
+          options={[
+            { name: "user", description: "the member to ban", focused: true },
+          ]}
+        />
+      </SlashCommandSuggestionsFooter>
     </SlashCommandSuggestions>
   )
 }

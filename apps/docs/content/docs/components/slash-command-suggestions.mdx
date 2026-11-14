@@ -15,7 +15,53 @@ The command picker that opens above the composer, with an app rail, grouped opti
 
 <Usage name="slash-command-suggestions" />
 
+Put the rail, the list and the footer directly inside `SlashCommandSuggestions`, in any order. The picker is a grid: the rail and the list share the first row, and the footer takes the row under them. Each of the three is optional.
+
+### Width
+
+The picker fills its container up to 640px. Set `--newt-slash-suggestions-max-width` on the picker or on an ancestor to change the cap. Set it to `none` to make the picker as wide as the composer.
+
+```css
+.composer {
+  --newt-slash-suggestions-max-width: none;
+}
+```
+
+The picker is a size container, so its parts follow its own width. Its width must not depend on its content. Keep `w-full` on it, or give it a width.
+
+### Footer
+
+`SlashCommandSuggestionsFooter` is a bar under the rail and the list. It takes any content. The preview shows the command being typed, with the option the caret sits in.
+
+### App icon
+
+`SlashCommandAppIcon` is a circle in three sizes: `header`, `row` and `rail`. An `<img>` inside it fills the circle. Any other first child is drawn at half the size of the circle: an inline SVG, or the `<span>` that an icon component renders.
+
+## Examples
+
+### Narrow picker
+
+The parts follow the width of the picker, not the width of the viewport. In a picker narrower than 480px, the rail becomes a row under the list and the footer. In each suggestion, the app name moves beside the command name. The description takes the full width under them, on up to two lines.
+
+`orientation` on `SlashCommandSuggestionsRail` fixes the rail as `"vertical"` or `"horizontal"` at every width.
+
+The app icons of the rows here hold a `<span>` with a mask, as an icon component in CSS mode renders it.
+
+<ComponentPreview name="slash-command-suggestions" variant="narrow" />
+
 ## API reference
+
+<PropsTable
+  of="SlashCommandSuggestionsRail"
+  rows={[
+    {
+      name: "orientation",
+      type: '"vertical" | "horizontal" | undefined',
+      description:
+        "Lays the rail as a column beside the list, or as a row under it. Without it, the rail is a column, and a row when the picker is narrower than 480px.",
+    },
+  ]}
+/>
 
 <PropsTable
   of="SlashCommandSuggestionsRailItem"
@@ -24,6 +70,19 @@ The command picker that opens above the composer, with an app rail, grouped opti
       name: "active",
       type: "boolean | undefined",
       description: "Optional active value.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="SlashCommandAppIcon"
+  rows={[
+    {
+      name: "size",
+      type: '"header" | "row" | "rail" | undefined',
+      default: '"row"',
+      description:
+        "Diameter of the circle: 16px in a header, 24px in a row, 32px in the rail.",
     },
   ]}
 />
@@ -49,8 +108,8 @@ The command picker that opens above the composer, with an app rail, grouped opti
         "Name of the app the command belongs to, shown on the right.",
     },
     {
-      name: "icon",
-      type: "React.ReactNode | undefined",
+      name: "icon / #icon",
+      type: "React.ReactNode / Vue slot",
       description:
         "Icon for the owning app; pair with `<SlashCommandAppIcon>`.",
     },
@@ -78,11 +137,23 @@ The command picker that opens above the composer, with an app rail, grouped opti
   ]}
 />
 
-The registry exports `SlashCommandSuggestions`, `SlashCommandSuggestionsRail`, `SlashCommandSuggestionsRailItem`, `SlashCommandSuggestionsList`, `SlashCommandSuggestionsHeader`, `SlashCommandSuggestionGroup`, `SlashCommandAppIcon`, `SlashCommandSuggestion`, `SlashCommandSuggestionMatched`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+The registry exports `SlashCommandSuggestions`, `SlashCommandSuggestionsRail`, `SlashCommandSuggestionsRailItem`, `SlashCommandSuggestionsList`, `SlashCommandSuggestionsHeader`, `SlashCommandSuggestionsFooter`, `SlashCommandSuggestionGroup`, `SlashCommandAppIcon`, `SlashCommandSuggestion`, `SlashCommandSuggestionMatched`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+The text of a suggestion is the slash and the name with nothing between them: `/ban`. A margin on the slash draws the gap.
+
+## HTML and CSS
+
+Load `tokens.css`, `scrollbar.css`, `slash-command.css` and `slash-command-suggestions.css` with the markup. Set `data-orientation="vertical"` or `data-orientation="horizontal"` on `newt-slash-suggestions__rail` to fix its direction. Add a `newt-slash-suggestions__footer` element inside the picker for the footer.
+
+Wrap the slash of a suggestion in `newt-slash-suggestions__option-slash`, with no space after it.
 
 ## Accessibility
 
 Keep focus in the composer and point `aria-activedescendant` at the active option. Announce disabled options and label both the app rail and command list.
+
+The footer is outside the list, so it is not an option. Give it `aria-live="polite"` when its content changes as the user types and a screen reader must announce it.
+
+The rail comes first in the markup at every width. Its buttons keep the same place in the tab order when the rail is drawn under the list.
 
 ## Tokens
 

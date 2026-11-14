@@ -3,6 +3,7 @@ export { default as SlashCommandSuggestionsRail } from "./SlashCommandSuggestion
 export { default as SlashCommandSuggestionsRailItem } from "./SlashCommandSuggestionsRailItem.vue"
 export { default as SlashCommandSuggestionsList } from "./SlashCommandSuggestionsList.vue"
 export { default as SlashCommandSuggestionsHeader } from "./SlashCommandSuggestionsHeader.vue"
+export { default as SlashCommandSuggestionsFooter } from "./SlashCommandSuggestionsFooter.vue"
 export { default as SlashCommandSuggestionGroup } from "./SlashCommandSuggestionGroup.vue"
 export { default as SlashCommandAppIcon } from "./SlashCommandAppIcon.vue"
 export { default as SlashCommandSuggestion } from "./SlashCommandSuggestion.vue"

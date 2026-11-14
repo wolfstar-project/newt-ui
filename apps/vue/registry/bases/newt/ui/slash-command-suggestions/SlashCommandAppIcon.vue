@@ -4,8 +4,13 @@ import type { HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
+/*
+ * An image fills the circle. Anything else is a glyph at half its size: an
+ * inline SVG, or the element an icon component renders, which is often a
+ * `<span>`.
+ */
 const appIconVariants = cva(
-  "inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-newt-bg-elevated text-newt-text-muted [&>img]:h-full [&>img]:w-full [&>img]:object-cover [&>svg]:h-1/2 [&>svg]:w-1/2",
+  "inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-newt-bg-elevated text-newt-text-muted [&>img]:h-full [&>img]:w-full [&>img]:object-cover [&>svg]:h-1/2 [&>svg]:w-1/2 [&>:first-child:not(img)]:h-1/2 [&>:first-child:not(img)]:w-1/2",
   {
     variants: {
       size: {

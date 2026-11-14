@@ -1178,6 +1178,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsRailItem.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsList.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsHeader.vue",
+        "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsFooter.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionGroup.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandAppIcon.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestion.vue",
@@ -3332,6 +3333,21 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       component: defineAsyncComponent(
         () =>
           import("~~/registry/bases/newt/examples/SlashCommandSuggestionsDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SlashCommandSuggestionsNarrowDemo",
+    {
+      name: "SlashCommandSuggestionsNarrowDemo",
+      type: "registry:example",
+      registryDependencies: ["slash-command-suggestions", "slash-command"],
+      files: [
+        "registry/bases/newt/examples/SlashCommandSuggestionsNarrowDemo.vue",
+      ],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/SlashCommandSuggestionsNarrowDemo.vue")
       ),
     },
   ],

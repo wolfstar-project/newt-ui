@@ -1648,6 +1648,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "SlashCommandSuggestionsNarrowDemo",
+    type: "registry:example",
+    registryDependencies: ["slash-command-suggestions", "slash-command"],
+    files: [
+      {
+        path: "examples/SlashCommandSuggestionsNarrowDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SliderDemo",
     type: "registry:example",
     registryDependencies: ["slider"],

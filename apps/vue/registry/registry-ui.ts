@@ -2231,6 +2231,10 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
+        path: "ui/slash-command-suggestions/SlashCommandSuggestionsFooter.vue",
+        type: "registry:ui",
+      },
+      {
         path: "ui/slash-command-suggestions/SlashCommandSuggestionGroup.vue",
         type: "registry:ui",
       },

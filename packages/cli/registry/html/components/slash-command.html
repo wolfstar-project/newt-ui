@@ -1,13 +1,31 @@
-<span class="newt-command" role="group" aria-label="Slash command /ban member">
-  <span class="newt-command__icon" aria-hidden="true">/</span>
-  <span class="newt-command__name">ban</span>
-  <span class="newt-command__segment">member</span>
-  <span class="newt-command__option">
-    <span class="newt-command__option-name">user</span>
-    <span class="newt-command__option-value">@username</span>
-  </span>
-  <span class="newt-command__option newt-command__option--focused">
-    <span class="newt-command__option-name">reason</span>
-    <span class="newt-command__option-placeholder">why they were banned</span>
-  </span>
-</span>
+<!--
+  The space between two parts is part of the text, so each one stays a single
+  space: a line that starts with "> " holds one. No space follows the slash or
+  a colon. The text of the first chip is "/ban member user:@username
+  reason:why they were banned". A formatter that moves a part to its own line
+  keeps the picture and changes the text.
+-->
+<!-- oxfmt-ignore -->
+<span class="newt-command" role="group" aria-label="Slash command /ban member"
+  ><span class="newt-command__icon" aria-hidden="true">/</span
+  ><span class="newt-command__name">ban</span
+  > <span class="newt-command__segment">member</span
+  > <span class="newt-command__option"
+    ><span class="newt-command__option-name">user:</span
+    ><span class="newt-command__option-value">@username</span></span
+  > <span class="newt-command__option newt-command__option--focused"
+    ><span class="newt-command__option-name">reason:</span
+    ><span class="newt-command__option-placeholder">why they were banned</span></span
+  ></span
+>
+<!-- oxfmt-ignore -->
+<span class="newt-command" role="group" aria-label="Slash command /conf menu save key: prefix"
+  ><span class="newt-command__icon" aria-hidden="true">/</span
+  ><span class="newt-command__name">conf</span
+  > <span class="newt-command__segment">menu</span
+  > <span class="newt-command__segment">save</span
+  > <span class="newt-command__option"
+    ><span class="newt-command__option-name">key:</span
+    ><span class="newt-command__option-value">prefix</span></span
+  ></span
+>

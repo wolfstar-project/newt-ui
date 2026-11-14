@@ -2964,6 +2964,21 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "slash-command-suggestions-narrow-demo",
+    {
+      name: "slash-command-suggestions-narrow-demo",
+      type: "registry:example",
+      registryDependencies: ["slash-command-suggestions", "slash-command"],
+      files: [
+        "registry/bases/newt/examples/slash-command-suggestions-narrow-demo.tsx",
+      ],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/examples/slash-command-suggestions-narrow-demo")
+      ),
+    },
+  ],
+  [
     "slider-demo",
     {
       name: "slider-demo",
