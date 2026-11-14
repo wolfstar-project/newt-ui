@@ -378,9 +378,17 @@
  * (c) base rules
  * ------------------------------------------------------------------ */
 
-/* Scrollbars, in the client's own idiom */
-* {
+/*
+ * Scrollbars, in the client's own idiom. These rules are unlayered, so they
+ * beat every utility. An element that states its own scrollbar with an
+ * arbitrary property, as the registry's components do, is left out: a demo
+ * of an overlay or auto-hiding scrollbar has to show what it installs.
+ */
+:where(:not([class*="[scrollbar-width:"])) {
   scrollbar-width: thin;
+}
+
+:where(:not([class*="[scrollbar-color:"])) {
   scrollbar-color: var(--newt-bg-active) transparent;
 }
 
