@@ -39,7 +39,10 @@ document.querySelectorAll("[data-newt-tag-input]").forEach((field) => {
     const remove = document.createElement("button")
     remove.type = "button"
     remove.className = "newt-tag-input__remove"
-    remove.setAttribute("aria-label", removeLabel.replaceAll("{tag}", value))
+    remove.setAttribute(
+      "aria-label",
+      removeLabel.replaceAll("{tag}", () => value)
+    )
     remove.innerHTML = REMOVE_ICON
     tag.append(remove)
     input.before(tag)

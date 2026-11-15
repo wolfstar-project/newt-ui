@@ -59,4 +59,10 @@ describe("tag-input.js", () => {
     type("voice")
     expect(removeLabels().at(-1)).toBe("Retirer voice")
   })
+
+  it("writes a tag with replacement patterns into the name as typed", () => {
+    run()
+    type("a$&b$$c$'d")
+    expect(removeLabels().at(-1)).toBe("Remove a$&b$$c$'d")
+  })
 })
