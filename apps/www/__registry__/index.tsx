@@ -3224,6 +3224,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "tabs-overflow-demo",
+    {
+      name: "tabs-overflow-demo",
+      type: "registry:example",
+      registryDependencies: ["tabs"],
+      files: ["registry/bases/newt/examples/tabs-overflow-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/tabs-overflow-demo")
+      ),
+    },
+  ],
+  [
     "tag-input-demo",
     {
       name: "tag-input-demo",

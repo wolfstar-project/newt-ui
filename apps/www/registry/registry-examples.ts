@@ -1879,6 +1879,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "tabs-overflow-demo",
+    type: "registry:example",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "examples/tabs-overflow-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "tag-input-demo",
     type: "registry:example",
     registryDependencies: ["tag-input", "form-fields"],

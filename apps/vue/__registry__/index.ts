@@ -3598,6 +3598,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "TabsOverflowDemo",
+    {
+      name: "TabsOverflowDemo",
+      type: "registry:example",
+      registryDependencies: ["tabs"],
+      files: ["registry/bases/newt/examples/TabsOverflowDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TabsOverflowDemo.vue")
+      ),
+    },
+  ],
+  [
     "TagInputDemo",
     {
       name: "TagInputDemo",

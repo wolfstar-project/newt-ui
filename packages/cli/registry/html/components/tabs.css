@@ -7,8 +7,12 @@
   padding: 4px;
   border-radius: var(--newt-radius-md);
   width: fit-content;
+  /* A row wider than its container scrolls instead of being clipped. */
+  max-width: 100%;
+  overflow-x: auto;
 }
 .newt-tab {
+  flex-shrink: 0;
   padding: 6px 14px;
   border-radius: var(--newt-radius-sm);
   font-size: 13px;

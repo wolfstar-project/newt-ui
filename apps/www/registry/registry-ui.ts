@@ -128,7 +128,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Avatar",
     description:
-      "A circular user avatar with image support and initials fallback in three sizes.",
+      "A circular user avatar with image support and initials fallback in five sizes.",
     dependencies: ["class-variance-authority", "radix-ui"],
     files: [
       {

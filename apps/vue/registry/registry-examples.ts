@@ -1879,6 +1879,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "TabsOverflowDemo",
+    type: "registry:example",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "examples/TabsOverflowDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "TagInputDemo",
     type: "registry:example",
     registryDependencies: ["tag-input", "form-fields"],
