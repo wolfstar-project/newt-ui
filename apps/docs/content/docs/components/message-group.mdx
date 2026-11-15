@@ -76,6 +76,18 @@ With `withReply`, the preview in `MessageGroupReply` sits 2px above the body. It
       default: '"Application" or "Verified application"',
       description: "Accessible name of the tag. Pass a translation here.",
     },
+    {
+      name: "label",
+      type: "string",
+      default: '"Application"',
+      description: "Accessible name of the tag. `aria-label` still wins.",
+    },
+    {
+      name: "verifiedLabel",
+      type: "string",
+      default: '"Verified application"',
+      description: "Accessible name with `verified`. `aria-label` still wins.",
+    },
   ]}
 />
 
@@ -111,6 +123,8 @@ The row sets the colour of the message text from `--newt-text-message`. `Message
 ## Accessibility
 
 Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+The bot tag's name comes from `label` and `verifiedLabel`. Its visible `BOT` is the children or the default slot. [Translating labels](/docs/translating-labels) lists every English default.
 
 ## Tokens
 

@@ -50,12 +50,21 @@ One to ten images in a mosaic, laid out by how many there are. Compose it from t
       description:
         "Blurs the image until it is clicked or activated with `Enter` or `Space`.",
     },
+    {
+      name: "spoilerLabel",
+      type: "string",
+      default: '"Spoiler, click to reveal"',
+      description:
+        "Accessible name of a hidden spoiler, read in place of the image.",
+    },
   ]}
 />
 
 ## Accessibility
 
 Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+A spoilered item takes its name from `spoilerLabel`. [Translating labels](/docs/translating-labels) lists every English default.
 
 ## Tokens
 

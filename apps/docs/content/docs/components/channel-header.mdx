@@ -124,6 +124,8 @@ The registry exports `ChannelHeader`, `ChannelHeaderInfo`, `ChannelHeaderIcon`, 
 
 The bar is a `div`. A `header` element outside `main`, `article`, `aside`, `nav` or `section` is a banner landmark, and a page must have only one. Pass `as="header"` when the bar sits inside one of those elements.
 
+The search control's text, and so its name, comes from `placeholder`. [Translating labels](/docs/translating-labels) lists every English default.
+
 Every icon-only action needs an `aria-label`. `ChannelHeaderBack` has no text either. Put the unread count in its label, for example "Back to channels, 3 unread", because the label replaces the badge for assistive technology.
 
 Set `active` on an action that turns something on and off. The button then reports its state with `aria-pressed`. Keep the label the same in both states, for example "Member list".

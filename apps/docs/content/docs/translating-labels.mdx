@@ -1,0 +1,166 @@
+---
+title: "Translating labels"
+description: "Every name and text a component writes itself is English by default. Each one comes from a prop, so an app can pass its own language."
+---
+
+A component writes some text itself: a button's accessible name, a badge, an
+empty-list line. That text is English by default. Each one comes from a prop,
+so your app can pass a translation. If you pass nothing, the English default
+stays.
+
+## Three kinds of prop [#kinds]
+
+The props follow one pattern per kind of text:
+
+- **A single name** has a prop of its own, such as `label`, `sendLabel` or
+  `promotedLabel`. Pass a string.
+- **Several names** in one component share a `labels` object. Pass only the
+  keys you translate; the others keep their English default.
+- **A text with a value in it**, such as a channel name or a count, takes a
+  function: `formatLabel`, `formatCount` or a function in `labels`. It
+  receives the value and returns the text.
+
+The prop names are the same in React and Vue. In a Vue template, write a
+prop in kebab case: `promoted-label`, `:format-label`.
+
+<div data-framework="react">
+
+```tsx
+<MessageComposer
+  channelName="général"
+  labels={{
+    group: (channel) => `Écrire un message dans #${channel}`,
+    placeholder: (channel) => `Envoyer un message dans #${channel}`,
+    add: "Ajouter une pièce jointe",
+    send: "Envoyer le message",
+  }}
+/>
+```
+
+</div>
+
+<div data-framework="vue">
+
+```vue
+<MessageComposer
+  channel-name="général"
+  :labels="{
+    group: (channel) => `Écrire un message dans #${channel}`,
+    placeholder: (channel) => `Envoyer un message dans #${channel}`,
+    add: 'Ajouter une pièce jointe',
+    send: 'Envoyer le message',
+  }"
+/>
+```
+
+</div>
+
+Keep one `labels` object per component in your translation files. Then pass
+it once, wherever the component renders.
+
+## Every English default [#defaults]
+
+The table lists each component that writes its own text, the prop that
+replaces it, and the English default. A prop marked `aria-label` takes the
+standard attribute on the part's root element.
+
+| Component              | Prop                               | English default                                               |
+| ---------------------- | ---------------------------------- | ------------------------------------------------------------- |
+| `AppLauncherItem`      | `promotedLabel`                    | `Promoted`                                                    |
+| `AuditLogEntry`        | `kindLabel`                        | `Added`, `Updated` or `Removed`                               |
+| `AvatarGroup`          | `overflowLabel`                    | `(count) => "3 more"`                                         |
+| `BotCommandCardOption` | `requiredLabel`                    | `required`                                                    |
+| `Breadcrumb`           | `label`                            | `Breadcrumb`                                                  |
+| `Calendar`             | `locale`                           | `en-US`                                                       |
+| `Calendar`             | `previousLabel`, `nextLabel`       | `Previous month`, `Next month`                                |
+| `ChannelHeaderSearch`  | `placeholder`                      | `Search`                                                      |
+| `ColorPicker`          | `label`, `customLabel`             | `Colour`, `Custom colour`                                     |
+| `CommandPalette`       | `label`                            | `Command palette`                                             |
+| `CommandPalette`       | `placeholder`                      | `Where would you like to go?`                                 |
+| `CommandPalette`       | `emptyText`                        | `Nothing matches that.`                                       |
+| `CommandPalette`       | `hints`                            | `{ move: "to move", select: "to select", close: "to close" }` |
+| `DrawerHeader`         | `closeLabel`                       | `Close`                                                       |
+| `EmbedTimestamp`       | `locale`, `timeZone`, `formatter`  | `en-US`, the runtime's zone, a short date and time            |
+| `EntitySelect`         | `label`, `placeholder`             | `Select an option`, `Make a selection`                        |
+| `EntitySelect`         | `emptyLabel`                       | `No members to show`, or the line for the `kind`              |
+| `ExpressionsPicker`    | `label`                            | `Choose an expression`                                        |
+| `ExpressionsPicker`    | `labels`                           | See `defaultExpressionsPickerLabels`                          |
+| `FileUpload`           | `prompt`, `browseLabel`            | `Drop files here or`, `browse`                                |
+| `Markdown`             | `labels`                           | See `defaultMarkdownLabels`                                   |
+| `MediaGalleryItem`     | `spoilerLabel`                     | `Spoiler, click to reveal`                                    |
+| `MemberListAppTag`     | `label`, `verifiedLabel`           | `Application`, `Verified application`                         |
+| `MemberListAppTag`     | children or the default slot       | `APP`                                                         |
+| `MessageComposer`      | `labels`                           | See `defaultMessageComposerLabels`                            |
+| `MessageGroupBotTag`   | `label`, `verifiedLabel`           | `Application`, `Verified application`                         |
+| `MessageGroupBotTag`   | children or the default slot       | `BOT`                                                         |
+| `NumberInput`          | `decrementLabel`, `incrementLabel` | `Decrease`, `Increase`                                        |
+| `Pagination`           | `aria-label`                       | `Pagination`                                                  |
+| `PermissionStates`     | `labels`                           | `{ deny: "Deny", inherit: "Inherit", allow: "Allow" }`        |
+| `PinInput`             | `label`                            | `Verification code`                                           |
+| `PinInput`             | `formatCellLabel`                  | `Digit 1 of 6`, or `Character 1 of 6`                         |
+| `Reaction`             | `formatLabel`                      | `👍 reaction, 3 people, you reacted`                          |
+| `ScrollArea`           | `viewportLabel`                    | `Scrollable region`                                           |
+| `SectionThumbnail`     | `spoilerLabel`                     | `Spoiler, click to reveal`                                    |
+| `SelectMenu`           | `label`, `placeholder`             | `Select an option`, `Make a selection`                        |
+| `SlashCommand`         | `formatLabel`                      | `Slash command /ban member user: @username`                   |
+| `Spoiler`              | `label`                            | `Spoiler, click to reveal`                                    |
+| `StageBannerClose`     | `aria-label`                       | `Dismiss`                                                     |
+| `Stepper`              | `completedLabel`                   | `completed`                                                   |
+| `TagInput`             | `removeLabel`                      | `(tag) => "Remove moderation"`                                |
+| `ThreadPreviewCount`   | `formatCount`                      | `1 message`, `3 messages`                                     |
+| `ToastClose`           | `aria-label`                       | `Dismiss`                                                     |
+| `TokenField`           | `revealLabel`, `hideLabel`         | `Reveal`, `Hide`                                              |
+| `TokenField`           | `copyLabel`, `copiedLabel`         | `Copy`, `Copied!`                                             |
+| `TypingIndicator`      | `label`                            | `Someone is typing`                                           |
+| `UserPanel`            | `aria-label`                       | `User controls`                                               |
+
+The English defaults of each `labels` object and each function are exported
+next to the component: `defaultExpressionsPickerLabels`,
+`defaultMarkdownLabels`, `defaultMessageComposerLabels`,
+`defaultPermissionStateLabels`, `defaultPinInputCellLabel`,
+`defaultReactionLabel`, `defaultSlashCommandLabel` and
+`defaultThreadPreviewCount`. Call a default function to wrap the English text.
+
+## Dates [#dates]
+
+`Timestamp` and `Calendar` take a `locale`. `EmbedTimestamp` takes a `locale`
+too, and a `formatter` that wins over it.
+
+Pass a fixed locale, such as the one your router chose. Do not read the
+browser's language during the first render. The server and the browser must
+write the same text, or the page fails to hydrate. If the server runs in
+another time zone than your readers, also pass `timeZone` to
+`EmbedTimestamp`.
+
+## HTML and CSS [#html]
+
+In the HTML flavour, the text is in the markup, so you edit it there. A few
+scripts write text while the page runs. Translate that text with an attribute:
+
+| Script                  | Attribute                                        | English default            |
+| ----------------------- | ------------------------------------------------ | -------------------------- |
+| `calendar.js`           | `data-locale` on the calendar                    | `en-US`                    |
+| `entity-select.js`      | `data-placeholder` on the root                   | `Make a selection`         |
+| `expressions-picker.js` | a `labels` object in the JSON data               | see below                  |
+| `spoiler.js`            | the `aria-label` in the markup                   | `Spoiler, click to reveal` |
+| `tag-input.js`          | `data-newt-remove-label` on the field            | `Remove {tag}`             |
+| `token-field.js`        | `data-newt-reveal-label`, `data-newt-hide-label` | `Reveal`, `Hide`           |
+| `token-field.js`        | `data-newt-copied-label` on the copy button      | `Copied!`                  |
+
+In an attribute or in the picker's JSON, `{tag}`, `{tone}` and `{count}` stand
+for the value they name. The picker's script reads these keys from `labels`:
+`toneNames`, `skinTone`, `searchResults`, `recent`, `noResults`,
+`noResultsHelp`, `empty`, `emptyHelp`, `oneResult`, `resultCount`, `from` and
+`hint`. JSON has no functions, so the count takes two keys: `oneResult` for
+one result and `resultCount` for any other number.
+
+```json
+{
+  "labels": {
+    "recent": "Récents",
+    "skinTone": "Teint : {tone}",
+    "oneResult": "1 résultat",
+    "resultCount": "{count} résultats"
+  }
+}
+```

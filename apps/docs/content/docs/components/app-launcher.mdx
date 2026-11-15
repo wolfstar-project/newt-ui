@@ -171,6 +171,13 @@ An `<img>` in `AppLauncherItemIcon` or `AppLauncherRecent` covers the icon and i
       description:
         "Marks a paid placement, as the client does for promoted apps.",
     },
+    {
+      name: "promotedLabel",
+      type: "string",
+      default: '"Promoted"',
+      description:
+        "Text of the `promoted` badge. It is also part of the button's name.",
+    },
   ]}
 />
 
@@ -229,6 +236,8 @@ The registry exports `AppLauncher`, `AppLauncherHandle`, `AppLauncherHeader`, `A
 ## Accessibility
 
 Give the launcher a `label`. A dialog reads it when it opens. An `inline` launcher with a label is a `region` landmark; without one it is a plain `div`.
+
+The `Promoted` badge takes its text from `promotedLabel`. [Translating labels](/docs/translating-labels) lists every English default.
 
 Tab cycles through the controls of a dialog, and Escape leaves it. A dialog that is not `modal` leaves the page beside it in use. Use `modal` for a sheet that covers the page, so focus cannot move to content the user cannot see.
 

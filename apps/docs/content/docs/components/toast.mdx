@@ -140,6 +140,8 @@ Wrap a `Button` in `ToastAction` to offer a way back. The action closes the toas
 
 The primitive announces each toast through a live region, so a screen reader reads the title and the description without a move of focus. The default `type` is `background`, which waits for the screen reader to finish its sentence. The timer pauses while the pointer is over the viewport, while focus is inside it, and while the window is in the background. `F8` moves focus to the viewport, `Tab` then reaches each toast and its buttons, and `Escape` closes the focused toast. A focused toast shows a focus ring. `ToastClose` has the accessible name "Dismiss"; pass `aria-label` to translate it. Do not put the only route to an action in a toast: give `ToastAction` an `altText` that names another route.
 
+[Translating labels](/docs/translating-labels) lists every English default.
+
 ## Tokens
 
 <TokensNote name="toast" />

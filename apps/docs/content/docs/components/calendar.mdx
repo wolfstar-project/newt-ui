@@ -92,6 +92,8 @@ With no value, the calendar opens on the current month once it is running in the
 
 The month is a table with `role="grid"`, named by the month and year, with the full weekday name on each column heading. One day at a time is a tab stop. The arrow keys move by a day or a week, `Home` and `End` go to the ends of the week, `Page Up` and `Page Down` change month, and moving past the edge of the month turns the page. `Enter` or `Space` chooses the focused day. Today is marked with `aria-current="date"` and an outline, the chosen day with `aria-selected` and a fill, so the two differ in shape as well as colour. Say the chosen date in text near the calendar, as the example does.
 
+Pass `locale` for the month and day names, and `previousLabel` and `nextLabel` for the two buttons. [Translating labels](/docs/translating-labels) lists every English default.
+
 ## Tokens
 
 <TokensNote name="calendar" />

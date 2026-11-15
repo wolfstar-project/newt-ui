@@ -174,6 +174,8 @@ Draw an emoji with `newt-select-menu__emoji` on the trigger and `newt-select-men
 
 The trigger is a `combobox` with `aria-expanded` and, while the panel is open, `aria-controls` pointing at it. The panel is a `listbox`, and both take their name from `label`. Each option carries `aria-selected`, and its description is linked with `aria-describedby`.
 
+`label` and `placeholder` default to English. [Translating labels](/docs/translating-labels) lists every English default.
+
 `Enter`, `Space`, `Up` and `Down` open the list. Focus moves to the selected option, or to the first option. `Up` and `Down` move through the options and skip disabled ones. `Home` and `End` jump to the ends. Typing a letter moves to the next option whose label starts with it. `Enter` or `Space` selects the focused option and returns focus to the trigger. `Escape` closes the list and returns focus to the trigger, and so does a press outside.
 
 While the list is open, the page behind it does not scroll and does not take pointer events. Inside a drawer or a modal, `Escape` closes the list first and the dialog on the next press.

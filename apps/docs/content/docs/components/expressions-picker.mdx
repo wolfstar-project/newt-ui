@@ -77,6 +77,13 @@ React receives selections through `onSelect(item, value)`; Vue emits `select` wi
       type: "string",
       description: "Classes applied to the outer wrapper.",
     },
+    {
+      name: "labels",
+      type: "Partial<ExpressionsPickerLabels> | undefined",
+      default: "defaultExpressionsPickerLabels",
+      description:
+        "Replaces every name and text the picker writes: the tabs, the search field, the skin tones, the empty states, the result count and the preview bar. Omitted keys keep their default.",
+    },
   ]}
 />
 
@@ -117,6 +124,8 @@ Listen for the bubbling `newt:expression-select` event on the root. `event.detai
 ## Accessibility
 
 The native modal dialog contains keyboard focus and makes the surrounding page inert. Opening focuses the search field; Down Arrow moves from it into the grid. Escape closes the skin tone list first, then the dialog. A click on the backdrop also closes it. Closing or selecting returns focus to the trigger.
+
+Pass `labels` to translate the picker. In the HTML flavour, add a `labels` object to the JSON data. [Translating labels](/docs/translating-labels) lists every English default.
 
 The tab list uses automatic activation: Left and Right move between types in reading direction, and Home and End select the first and last tab. The selected tab is a filled pill, not only a color change.
 
