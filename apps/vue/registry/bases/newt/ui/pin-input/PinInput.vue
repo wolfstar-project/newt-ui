@@ -3,6 +3,8 @@ import { computed, ref, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
+import { defaultPinInputCellLabel, type PinInputCellLabelState } from "."
+
 /*
  * A short code, one character to a box. Each box is its own `<input>`, so a
  * screen reader can say which one it is on; the first carries
@@ -25,6 +27,8 @@ const props = withDefaults(
     invalid?: boolean
     /** Accessible name for the group of boxes. */
     label?: string
+    /** Builds the accessible name of each box. */
+    formatCellLabel?: (state: PinInputCellLabelState) => string
     /** Posts the code with a form, through a hidden input. */
     name?: string
   }>(),
@@ -36,6 +40,7 @@ const props = withDefaults(
     disabled: false,
     invalid: false,
     label: "Verification code",
+    formatCellLabel: defaultPinInputCellLabel,
   }
 )
 
@@ -185,7 +190,13 @@ function onFocus(event: FocusEvent) {
         :type="props.mask ? 'password' : 'text'"
         :inputmode="props.type === 'numeric' ? 'numeric' : 'text'"
         :autocomplete="index === 1 ? 'one-time-code' : 'off'"
-        :aria-label="`${props.type === 'numeric' ? 'Digit' : 'Character'} ${index} of ${props.length}`"
+        :aria-label="
+          props.formatCellLabel({
+            position: index,
+            length: props.length,
+            type: props.type,
+          })
+        "
         :aria-invalid="props.invalid ? true : undefined"
         :disabled="props.disabled"
         :value="code[index - 1] ?? ''"

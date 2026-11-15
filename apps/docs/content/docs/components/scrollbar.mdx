@@ -131,6 +131,8 @@ Set these on the scroll area or on any ancestor. Each one is optional.
 
 The viewport scrolls natively in both variants. The keyboard, the wheel and touch work as they do on any scrolling element. The overlay thumb is decoration for assistive technology and carries `aria-hidden`.
 
+The focusable viewport takes its name from `viewportLabel`. [Translating labels](/docs/translating-labels) lists every English default.
+
 Set `focusable` when the area scrolls and holds no other focusable content. The viewport then takes `tabindex="0"`, `role="group"` and the `viewportLabel`. Its focus ring is drawn inside the box, so an ancestor with `overflow: hidden` cannot clip it.
 
 An auto-hidden thumb also shows on keyboard focus, so a keyboard user sees the scroll position. Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description.

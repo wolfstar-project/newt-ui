@@ -89,6 +89,8 @@ Put `DrawerTrigger` and `DrawerContent` inside `Drawer`. `DrawerContent` holds a
 
 The panel carries `role="dialog"` and `aria-modal="true"`, and closes on `Escape` or a press on the dimmed page. `DrawerTitle` is its accessible name, so always render one with real text. `DrawerDescription` is its accessible description. When the drawer opens, focus moves to its first control. While it is open, Tab and Shift+Tab stay inside the panel, and the primitive hides the page behind from screen readers. When it closes, focus goes back to the `DrawerTrigger`. The close button in the header has a visible focus ring and takes its name from `closeLabel`. Use `side="bottom"` on a phone, where a side panel would cover the whole screen.
 
+`closeLabel` on `DrawerHeader` names the close button; it defaults to `Close`. [Translating labels](/docs/translating-labels) lists every English default.
+
 ## Tokens
 
 <TokensNote name="drawer" />

@@ -3,11 +3,18 @@ import type { HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-const props = defineProps<{
-  class?: HTMLAttributes["class"]
-  /** How many messages the thread holds. */
-  count: number
-}>()
+import { defaultThreadPreviewCount } from "."
+
+const props = withDefaults(
+  defineProps<{
+    class?: HTMLAttributes["class"]
+    /** How many messages the thread holds. */
+    count: number
+    /** Builds the text from the count. Defaults to `1 message`, `3 messages`. */
+    formatCount?: (count: number) => string
+  }>(),
+  { formatCount: defaultThreadPreviewCount }
+)
 </script>
 
 <template>
@@ -20,6 +27,6 @@ const props = defineProps<{
       )
     "
   >
-    {{ props.count === 1 ? "1 message" : `${props.count} messages` }}
+    {{ props.formatCount(props.count) }}
   </span>
 </template>

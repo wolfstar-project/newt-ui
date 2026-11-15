@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils"
 
 import {
   buildExpressionSections,
+  defaultExpressionsPickerLabels,
   expressionKinds,
   expressionShortcode,
   expressionsFocusRing,
@@ -23,6 +24,7 @@ import {
   type ExpressionCategory,
   type ExpressionItem,
   type ExpressionKind,
+  type ExpressionsPickerLabels,
   type SkinTone,
 } from "."
 import ExpressionArt from "./ExpressionArt.vue"
@@ -37,6 +39,8 @@ const props = withDefaults(
     current?: string | null
     label?: string
     disabled?: boolean
+    /** Replaces the English names and texts; omitted keys keep their default. */
+    labels?: Partial<ExpressionsPickerLabels>
   }>(),
   {
     items: () => [],
@@ -69,6 +73,10 @@ const hovered = shallowRef<{ item: ExpressionItem; where: string } | null>(null)
 
 const triggerClass = `min-h-[var(--newt-expressions-target-size)] cursor-pointer rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-elevated px-[var(--newt-space-3)] py-[var(--newt-space-2)] font-[family-name:var(--newt-font-sans)] text-[length:var(--newt-font-size-sm)] leading-[var(--newt-line-height-normal)] text-newt-text-primary enabled:hover:bg-newt-bg-hover enabled:active:bg-newt-bg-active disabled:cursor-not-allowed disabled:text-newt-text-muted ${expressionsFocusRing}`
 
+const text = computed(() => ({
+  ...defaultExpressionsPickerLabels,
+  ...props.labels,
+}))
 const searching = computed(() => query.value.trim().length > 0)
 const sections = computed(() =>
   buildExpressionSections(
@@ -76,7 +84,8 @@ const sections = computed(() =>
     props.categories,
     props.recent,
     kind.value,
-    query.value
+    query.value,
+    text.value
   )
 )
 const isOpen = (key: string) => !collapsed.value.includes(key)
@@ -195,7 +204,7 @@ function tabKeyDown(event: KeyboardEvent, index: number) {
   const nextTab = expressionKinds[next]
   if (!nextTab) return
   event.preventDefault()
-  changeKind(nextTab.kind)
+  changeKind(nextTab)
   dialog.value
     ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')
     .item(next)
@@ -309,23 +318,23 @@ function clearQuery() {
       >
         <div
           role="tablist"
-          aria-label="Expression type"
+          :aria-label="text.kinds"
           class="flex items-center gap-[var(--newt-space-2)]"
         >
           <button
             v-for="(tab, index) in expressionKinds"
-            :id="`${id}-${tab.kind}`"
-            :key="tab.kind"
+            :id="`${id}-${tab}`"
+            :key="tab"
             role="tab"
             type="button"
-            :aria-selected="kind === tab.kind"
+            :aria-selected="kind === tab"
             :aria-controls="`${id}-panel`"
-            :tabindex="kind === tab.kind ? 0 : -1"
-            :class="expressionsPickerVariants({ selected: kind === tab.kind })"
-            @click="changeKind(tab.kind)"
+            :tabindex="kind === tab ? 0 : -1"
+            :class="expressionsPickerVariants({ selected: kind === tab })"
+            @click="changeKind(tab)"
             @keydown="tabKeyDown($event, index)"
           >
-            {{ tab.label }}
+            {{ text[tab] }}
           </button>
         </div>
       </div>
@@ -340,8 +349,8 @@ function clearQuery() {
             type="text"
             autocomplete="off"
             spellcheck="false"
-            aria-label="Search expressions"
-            placeholder="Search by name or keyword"
+            :aria-label="text.search"
+            :placeholder="text.searchPlaceholder"
             :class="`box-border h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] w-full rounded-[var(--newt-radius-md)] border-0 bg-newt-bg-input pe-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] ps-[calc(var(--newt-space-3)*3)] font-[family-name:var(--newt-font-sans)] text-[length:var(--newt-font-size-sm)] text-newt-text-primary placeholder:text-newt-text-muted ${expressionsFocusRing}`"
             @input="hovered = null"
             @keydown.down.prevent="focusFirstCell"
@@ -357,7 +366,7 @@ function clearQuery() {
           <button
             v-if="query"
             type="button"
-            aria-label="Clear search"
+            :aria-label="text.clearSearch"
             :class="
               cn(
                 expressionsPickerVariants(),
@@ -373,7 +382,7 @@ function clearQuery() {
           <button
             ref="toneButton"
             type="button"
-            :aria-label="`Skin tone: ${toneSample?.label}`"
+            :aria-label="text.skinTone(text.toneNames[tone])"
             :aria-expanded="showTones"
             :class="
               cn(
@@ -392,15 +401,15 @@ function clearQuery() {
           <div
             v-if="showTones"
             role="group"
-            aria-label="Skin tone"
+            :aria-label="text.skinTones"
             class="absolute -end-[var(--newt-space-1)] -top-[var(--newt-space-1)] z-20 flex flex-col gap-[var(--newt-space-1)] rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-floating p-[var(--newt-space-1)] shadow-elevation-high"
           >
             <button
               v-for="option in skinTones"
               :key="option.tone"
               type="button"
-              :aria-label="option.label"
-              :title="option.label"
+              :aria-label="text.toneNames[option.tone]"
+              :title="text.toneNames[option.tone]"
               :aria-pressed="tone === option.tone"
               :class="
                 cn(
@@ -428,7 +437,7 @@ function clearQuery() {
       >
         <nav
           v-if="!searching && sections.length > 1"
-          aria-label="Categories"
+          :aria-label="text.categories"
           class="flex w-[calc(var(--newt-expressions-target-size)+var(--newt-space-2))] shrink-0 flex-col items-center gap-[var(--newt-space-1)] overflow-y-auto overflow-x-hidden border-e border-newt-border p-[var(--newt-space-2)] ![scrollbar-width:none]"
         >
           <button
@@ -543,7 +552,7 @@ function clearQuery() {
                 :disabled="disabled || item.disabled"
                 :tabindex="`${section.key}|${item.id}` === tabKey ? 0 : -1"
                 :aria-label="
-                  item.disabled ? `${item.label}, unavailable` : item.label
+                  item.disabled ? text.unavailable(item.label) : item.label
                 "
                 :aria-pressed="isCurrent(item)"
                 :class="
@@ -573,22 +582,14 @@ function clearQuery() {
             class="flex flex-col items-center px-[var(--newt-space-3)] py-[calc(var(--newt-space-3)*3)] text-center text-newt-text-secondary"
           >
             <p class="m-0 font-semibold text-newt-text-primary">
-              {{
-                searching
-                  ? "No expressions match your search."
-                  : "Nothing here yet."
-              }}
+              {{ searching ? text.noResults : text.empty }}
             </p>
             <p class="m-0">
-              {{
-                searching
-                  ? "Try another word or another tab."
-                  : "Try another tab."
-              }}
+              {{ searching ? text.noResultsHelp : text.emptyHelp }}
             </p>
           </div>
           <p v-else-if="searching" role="status" class="sr-only">
-            {{ resultCount === 1 ? "1 result" : `${resultCount} results` }}
+            {{ text.resultCount(resultCount) }}
           </p>
         </div>
       </div>
@@ -620,14 +621,12 @@ function clearQuery() {
             <span
               v-if="preview.where"
               class="truncate text-[length:var(--newt-font-size-xs)] text-newt-text-secondary"
-              >from
-              <strong class="font-semibold">{{ preview.where }}</strong></span
+              >{{ `${text.from} `
+              }}<strong class="font-semibold">{{ preview.where }}</strong></span
             >
           </span>
         </template>
-        <span v-else class="text-newt-text-secondary"
-          >Hover or focus an expression to preview it.</span
-        >
+        <span v-else class="text-newt-text-secondary">{{ text.hint }}</span>
       </div>
     </dialog>
   </div>

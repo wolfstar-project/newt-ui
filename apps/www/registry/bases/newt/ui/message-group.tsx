@@ -129,10 +129,11 @@ MessageGroupAuthor.displayName = "MessageGroupAuthor"
 export interface MessageGroupBotTagProps extends React.HTMLAttributes<HTMLSpanElement> {
   /** Add the check Discord puts on verified applications. */
   verified?: boolean
-  /**
-   * Accessible name. Defaults to "Application", or "Verified application"
-   * with `verified`; pass a translation here.
-   */
+  /** Accessible name of the tag. `aria-label` still wins. */
+  label?: string
+  /** Accessible name with `verified`. `aria-label` still wins. */
+  verifiedLabel?: string
+  /** Fixed accessible name. Wins over `label` and `verifiedLabel`. */
   "aria-label"?: string
 }
 
@@ -144,6 +145,8 @@ const MessageGroupBotTag = React.forwardRef<
     {
       className,
       verified = false,
+      label = "Application",
+      verifiedLabel = "Verified application",
       children = "BOT",
       "aria-label": ariaLabel,
       ...props
@@ -153,9 +156,7 @@ const MessageGroupBotTag = React.forwardRef<
     <span
       ref={ref}
       role="img"
-      aria-label={
-        ariaLabel ?? (verified ? "Verified application" : "Application")
-      }
+      aria-label={ariaLabel ?? (verified ? verifiedLabel : label)}
       className={cn(
         "inline-flex items-center gap-0.5 rounded-[3px] bg-newt-brand px-1 py-px text-[10px] font-semibold uppercase tracking-[0.02em] text-newt-on-accent",
         className

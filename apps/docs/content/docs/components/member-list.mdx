@@ -130,6 +130,18 @@ The first row below has a decoration. The hover is drawn over the decoration, so
       type: "boolean | undefined",
       description: "Adds a check mark for a verified application.",
     },
+    {
+      name: "label",
+      type: "string",
+      default: '"Application"',
+      description: "Accessible name of the tag. `aria-label` still wins.",
+    },
+    {
+      name: "verifiedLabel",
+      type: "string",
+      default: '"Verified application"',
+      description: "Accessible name with `verified`. `aria-label` still wins.",
+    },
   ]}
 />
 
@@ -140,6 +152,8 @@ In the plain HTML and CSS distribution, write the ids yourself: give the heading
 ## Accessibility
 
 Each list is named by its heading, so a screen reader announces "Moderators, list, 1 item" when it enters a group. Do not put a heading inside a `MemberList`.
+
+The app tag's name comes from `label` and `verifiedLabel`. Its visible `APP` is the children or the default slot. [Translating labels](/docs/translating-labels) lists every English default.
 
 A row that does nothing is not focusable and shows no pointer. A row that opens a profile must be `interactive`, so a keyboard reaches it and Enter opens it. Give the presence dot a `label`, or write the status in the row, so the state does not depend on colour alone.
 

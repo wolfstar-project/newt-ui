@@ -77,22 +77,29 @@ React receives selections through `onSelect(item, value)`; Vue emits `select` wi
       type: "string",
       description: "Classes applied to the outer wrapper.",
     },
+    {
+      name: "labels",
+      type: "Partial<ExpressionsPickerLabels> | undefined",
+      default: "defaultExpressionsPickerLabels",
+      description:
+        "Replaces every name and text the picker writes: the tabs, the search field, the skin tones, the empty states, the name of an unavailable item, the result count and the preview bar. Omitted keys keep their default.",
+    },
   ]}
 />
 
 ### ExpressionItem
 
-| Field      | Type                            | Meaning                                                                                        |
-| ---------- | ------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `id`       | `string`                        | Stable ID, unique across the complete list. `recent` refers to it.                             |
-| `kind`     | `"emoji" \| "sticker" \| "gif"` | Which tab contains this item.                                                                  |
-| `category` | `string`                        | The `id` of its `ExpressionCategory`.                                                          |
-| `label`    | `string`                        | Accessible name, searched, and shown in the foot bar. Emoji show it as `:snake_case:`.         |
-| `value`    | `string`                        | What a selection returns: Unicode text, or an application token for server emoji and media.    |
-| `keywords` | `readonly string[]`             | Optional search aliases. Every word of a search must match the label or a keyword.             |
-| `skins`    | `readonly string[]`             | Optional: the emoji in the five skin tones, light to dark. Without it the tone does not apply. |
-| `src`      | `string`                        | Optional **static** image: a server emoji, a sticker, or a GIF poster. Never fetched as media. |
-| `disabled` | `boolean`                       | Optional unavailable state, shown dimmed with a dashed border and announced as unavailable.    |
+| Field      | Type                            | Meaning                                                                                          |
+| ---------- | ------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `id`       | `string`                        | Stable ID, unique across the complete list. `recent` refers to it.                               |
+| `kind`     | `"emoji" \| "sticker" \| "gif"` | Which tab contains this item.                                                                    |
+| `category` | `string`                        | The `id` of its `ExpressionCategory`.                                                            |
+| `label`    | `string`                        | Accessible name, searched, and shown in the foot bar. Emoji show it as `:snake_case:`.           |
+| `value`    | `string`                        | What a selection returns: Unicode text, or an application token for server emoji and media.      |
+| `keywords` | `readonly string[]`             | Optional search aliases. Every word of a search must match the label or a keyword.               |
+| `skins`    | `readonly string[]`             | Optional: the emoji in the five skin tones, light to dark. Without it the tone does not apply.   |
+| `src`      | `string`                        | Optional **static** image: a server emoji, a sticker, or a GIF poster. Never fetched as media.   |
+| `disabled` | `boolean`                       | Optional unavailable state, shown dimmed with a dashed border and named by `labels.unavailable`. |
 
 ### ExpressionCategory
 
@@ -117,6 +124,8 @@ Listen for the bubbling `newt:expression-select` event on the root. `event.detai
 ## Accessibility
 
 The native modal dialog contains keyboard focus and makes the surrounding page inert. Opening focuses the search field; Down Arrow moves from it into the grid. Escape closes the skin tone list first, then the dialog. A click on the backdrop also closes it. Closing or selecting returns focus to the trigger.
+
+Pass `labels` to translate the picker. In the HTML flavour, add a `labels` object to the JSON data. [Translating labels](/docs/translating-labels) lists every English default.
 
 The tab list uses automatic activation: Left and Right move between types in reading direction, and Home and End select the first and last tab. The selected tab is a filled pill, not only a color change.
 

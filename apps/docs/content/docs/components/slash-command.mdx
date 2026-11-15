@@ -59,6 +59,13 @@ The chip draws each space 4px wide, so the picture does not change with the text
       description:
         "Content that follows the command inside the chip, after a space.",
     },
+    {
+      name: "formatLabel",
+      type: "(state: { path, options }) => string",
+      default: "defaultSlashCommandLabel",
+      description:
+        "Builds the accessible name from the command path and the options. `aria-label` still wins.",
+    },
   ]}
 />
 
@@ -73,6 +80,8 @@ A formatter can move a part to its own line. The picture stays the same, but `te
 ## Accessibility
 
 The chip is a `group`, and its `aria-label` gives the full command. The slash is hidden from assistive technology, because the label already says it. The colon is text, not generated content, so a screen reader reads it once.
+
+Pass `formatLabel` to translate the chip's name, `Slash command /ban member`. [Translating labels](/docs/translating-labels) lists every English default.
 
 Pass through ARIA attributes when the surrounding context needs a label or description.
 

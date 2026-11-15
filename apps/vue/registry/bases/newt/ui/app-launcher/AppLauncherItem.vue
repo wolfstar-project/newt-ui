@@ -19,13 +19,15 @@ const props = withDefaults(
     description?: string
     /** Marks a paid placement, as the client does for promoted apps. */
     promoted?: boolean
+    /** Text of the `promoted` badge, also part of the button's name. */
+    promotedLabel?: string
     /**
      * `row` puts the icon beside the text. `tile` puts it above, for a
      * `variant="grid"` list.
      */
     variant?: "row" | "tile"
   }>(),
-  { promoted: false, variant: "row" }
+  { promoted: false, promotedLabel: "Promoted", variant: "row" }
 )
 
 defineSlots<{
@@ -92,7 +94,7 @@ defineSlots<{
             v-if="props.promoted"
             class="shrink-0 rounded-full bg-newt-text-primary px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none tracking-wide text-newt-bg-surface"
           >
-            Promoted
+            {{ props.promotedLabel }}
           </span>
         </span>
         <span

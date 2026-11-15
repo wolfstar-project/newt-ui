@@ -4,7 +4,11 @@ import { computed } from "vue"
 
 import { cn } from "@/lib/utils"
 
-import type { SlashCommandOption } from "."
+import {
+  defaultSlashCommandLabel,
+  type SlashCommandLabelState,
+  type SlashCommandOption,
+} from "."
 
 const props = withDefaults(
   defineProps<{
@@ -16,8 +20,10 @@ const props = withDefaults(
     /** Subcommand group segment, e.g. `/settings roles add`. */
     subcommandGroup?: string
     options?: readonly SlashCommandOption[]
+    /** Builds the accessible name; `aria-label` still wins when both are set. */
+    formatLabel?: (state: SlashCommandLabelState) => string
   }>(),
-  { options: () => [] }
+  { options: () => [], formatLabel: defaultSlashCommandLabel }
 )
 
 defineSlots<{
@@ -32,15 +38,9 @@ const path = computed(() =>
     .join(" ")
 )
 
-const label = computed(() => {
-  const spoken = props.options
-    .map(
-      (option) =>
-        `${option.name}: ${option.value ?? option.description ?? option.name}`
-    )
-    .join(" ")
-  return `Slash command /${path.value}${spoken ? ` ${spoken}` : ""}`
-})
+const label = computed(() =>
+  props.formatLabel({ path: path.value, options: props.options })
+)
 </script>
 
 <!--

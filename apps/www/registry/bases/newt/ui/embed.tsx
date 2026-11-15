@@ -241,11 +241,23 @@ EmbedFooterSeparator.displayName = "EmbedFooterSeparator"
 /*
  * A fixed locale, not the visitor's: an embed rendered on the server and
  * hydrated in the browser has to produce the same string in both places.
+ * One formatter per locale and zone, built on first use.
  */
-const embedTimeFormat = new Intl.DateTimeFormat("en-US", {
-  dateStyle: "short",
-  timeStyle: "short",
-})
+const embedTimeFormats = new Map<string, Intl.DateTimeFormat>()
+
+function embedTimeFormat(locale: string, timeZone: string | undefined) {
+  const key = `${locale}|${timeZone ?? ""}`
+  let format = embedTimeFormats.get(key)
+  if (!format) {
+    format = new Intl.DateTimeFormat(locale, {
+      dateStyle: "short",
+      timeStyle: "short",
+      timeZone,
+    })
+    embedTimeFormats.set(key, format)
+  }
+  return format
+}
 
 export interface EmbedTimestampProps extends Omit<
   React.ComponentProps<"time">,
@@ -253,12 +265,38 @@ export interface EmbedTimestampProps extends Omit<
 > {
   /** The moment to render. Anything `new Date()` accepts. */
   date: Date | number | string
+  /**
+   * Locale of the text. Pass a fixed value, not the browser's language, so
+   * the server and the browser write the same text.
+   */
+  locale?: string
+  /**
+   * Time zone of the text, such as `"Europe/Paris"`. Defaults to the zone of
+   * the runtime. Set it when the server and the browser sit in other zones.
+   */
+  timeZone?: string
+  /** Builds the text from the date. Wins over `locale` and `timeZone`. */
+  formatter?: (date: Date) => string
 }
 
 const EmbedTimestamp = React.forwardRef<HTMLTimeElement, EmbedTimestampProps>(
-  ({ className, date, children, ...props }, ref) => {
+  (
+    {
+      className,
+      date,
+      locale = "en-US",
+      timeZone,
+      formatter,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const value = date instanceof Date ? date : new Date(date)
     const valid = !Number.isNaN(value.getTime())
+    const text = valid
+      ? (formatter?.(value) ?? embedTimeFormat(locale, timeZone).format(value))
+      : ""
     return (
       <time
         ref={ref}
@@ -266,7 +304,7 @@ const EmbedTimestamp = React.forwardRef<HTMLTimeElement, EmbedTimestampProps>(
         className={cn(className)}
         {...props}
       >
-        {children ?? (valid ? embedTimeFormat.format(value) : "")}
+        {children ?? text}
       </time>
     )
   }

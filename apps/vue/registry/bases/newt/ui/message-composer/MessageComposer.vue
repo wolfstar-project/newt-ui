@@ -5,8 +5,10 @@ import { computed } from "vue"
 import { cn } from "@/lib/utils"
 
 import {
+  defaultMessageComposerLabels,
   type MessageComposerInputAttributes,
   type MessageComposerInputProps,
+  type MessageComposerLabels,
   type MessageComposerLayout,
   messageComposerButtonVariants,
   messageComposerFieldVariants,
@@ -30,6 +32,8 @@ const props = withDefaults(
     layout?: MessageComposerLayout
     /** Shows the add button. */
     showAdd?: boolean
+    /** Replaces the English names; omitted keys keep their default. */
+    labels?: Partial<MessageComposerLabels>
   }>(),
   { autocomplete: false, disabled: false, layout: "default", showAdd: true }
 )
@@ -58,16 +62,13 @@ const slots = defineSlots<{
 
 const value = defineModel<string>({ default: "" })
 
-/* The composer's own English names. Every other text comes from a prop. */
-const text = {
-  group: (channelName: string) => `Message composer for #${channelName}`,
-  placeholder: (channelName: string) => `Message #${channelName}`,
-  add: "Add attachment",
-  send: "Send message",
-}
+const text = computed(() => ({
+  ...defaultMessageComposerLabels,
+  ...props.labels,
+}))
 
 const label = computed(
-  () => props.placeholder ?? text.placeholder(props.channelName)
+  () => props.placeholder ?? text.value.placeholder(props.channelName)
 )
 const hasValue = computed(() => value.value.trim().length > 0)
 

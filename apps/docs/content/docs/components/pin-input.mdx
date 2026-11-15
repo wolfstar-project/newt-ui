@@ -111,6 +111,13 @@ The value is a single string with no gaps, so a character typed in a later box l
       description:
         "Adds a hidden input with this name, so the code posts with a form.",
     },
+    {
+      name: "formatCellLabel",
+      type: "(state: { position, length, type }) => string",
+      default: "defaultPinInputCellLabel",
+      description:
+        "Builds the accessible name of each box: `Digit 2 of 6`. `position` counts from 1.",
+    },
   ]}
 />
 
@@ -119,6 +126,8 @@ Submit from the complete callback when the code should be checked as soon as it 
 ## Accessibility
 
 The boxes sit in a `role="group"` named by `label`, and each box announces its position ("Digit 2 of 6"). The first box carries `autocomplete="one-time-code"`, which lets a phone offer the code from a text message. `Left` and `Right` move between boxes following the reading direction, and `Home` and `End` jump to the ends. An error needs words as well as the red border: put the message in a `FieldHelp` with `variant="error"`.
+
+Each box takes its name from `formatCellLabel`. [Translating labels](/docs/translating-labels) lists every English default.
 
 ## Tokens
 

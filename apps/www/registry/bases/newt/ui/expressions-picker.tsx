@@ -53,21 +53,86 @@ export interface ExpressionsPickerProps extends Omit<
   disabled?: boolean
   /** Receives the item and its value in the chosen skin tone. */
   onSelect?: (item: ExpressionItem, value: string) => void
+  /** Replaces the English names and texts; omitted keys keep their default. */
+  labels?: Partial<ExpressionsPickerLabels>
 }
 
-const kinds: { kind: ExpressionKind; label: string }[] = [
-  { kind: "gif", label: "GIFs" },
-  { kind: "sticker", label: "Stickers" },
-  { kind: "emoji", label: "Emoji" },
-]
+/** Every name and text the picker writes itself. */
+export interface ExpressionsPickerLabels {
+  /** Name of the tab list. */
+  kinds: string
+  gif: string
+  sticker: string
+  emoji: string
+  /** Name of the search field. */
+  search: string
+  searchPlaceholder: string
+  clearSearch: string
+  /** Name of the skin tone button, built from the current tone's name. */
+  skinTone: (tone: string) => string
+  /** Name of the group of skin tones. */
+  skinTones: string
+  /** The six skin tones, from the default to the darkest. */
+  toneNames: readonly [string, string, string, string, string, string]
+  /** Name of the category rail. */
+  categories: string
+  searchResults: string
+  recent: string
+  noResults: string
+  noResultsHelp: string
+  empty: string
+  emptyHelp: string
+  /** Name of an item that cannot be chosen, built from its label. */
+  unavailable: (label: string) => string
+  /** Read out after each search. */
+  resultCount: (count: number) => string
+  /** Written before the category name in the preview bar. */
+  from: string
+  /** The preview bar while nothing is hovered or chosen. */
+  hint: string
+}
 
-const skinTones: { tone: SkinTone; label: string; sample: string }[] = [
-  { tone: 0, label: "Default skin tone", sample: "👋" },
-  { tone: 1, label: "Light skin tone", sample: "👋🏻" },
-  { tone: 2, label: "Medium-light skin tone", sample: "👋🏼" },
-  { tone: 3, label: "Medium skin tone", sample: "👋🏽" },
-  { tone: 4, label: "Medium-dark skin tone", sample: "👋🏾" },
-  { tone: 5, label: "Dark skin tone", sample: "👋🏿" },
+/** The English defaults. */
+export const defaultExpressionsPickerLabels: ExpressionsPickerLabels = {
+  kinds: "Expression type",
+  gif: "GIFs",
+  sticker: "Stickers",
+  emoji: "Emoji",
+  search: "Search expressions",
+  searchPlaceholder: "Search by name or keyword",
+  clearSearch: "Clear search",
+  skinTone: (tone) => `Skin tone: ${tone}`,
+  skinTones: "Skin tone",
+  toneNames: [
+    "Default skin tone",
+    "Light skin tone",
+    "Medium-light skin tone",
+    "Medium skin tone",
+    "Medium-dark skin tone",
+    "Dark skin tone",
+  ],
+  categories: "Categories",
+  searchResults: "Search results",
+  recent: "Recently used",
+  noResults: "No expressions match your search.",
+  noResultsHelp: "Try another word or another tab.",
+  empty: "Nothing here yet.",
+  emptyHelp: "Try another tab.",
+  unavailable: (label) => `${label}, unavailable`,
+  resultCount: (count) => (count === 1 ? "1 result" : `${count} results`),
+  from: "from",
+  hint: "Hover or focus an expression to preview it.",
+}
+
+const kinds: readonly ExpressionKind[] = ["gif", "sticker", "emoji"]
+
+const skinTones: { tone: SkinTone; sample: string }[] = [
+  { tone: 0, sample: "👋" },
+  { tone: 1, sample: "👋🏻" },
+  { tone: 2, sample: "👋🏼" },
+  { tone: 3, sample: "👋🏽" },
+  { tone: 4, sample: "👋🏾" },
+  { tone: 5, sample: "👋🏿" },
 ]
 
 /** The value of an item in a skin tone, or its own value when it has none. */
@@ -109,7 +174,8 @@ function buildSections(
   categories: readonly ExpressionCategory[],
   recent: readonly string[],
   kind: ExpressionKind,
-  query: string
+  query: string,
+  labels: Pick<ExpressionsPickerLabels, "searchResults" | "recent">
 ): Section[] {
   const ofKind = items.filter((item) => item.kind === kind)
   if (query.trim()) {
@@ -118,7 +184,7 @@ function buildSections(
       ? [
           {
             key: "results",
-            label: "Search results",
+            label: labels.searchResults,
             items: found,
             collapsible: false,
           },
@@ -134,7 +200,7 @@ function buildSections(
   if (used.length)
     sections.push({
       key: "recent",
-      label: "Recently used",
+      label: labels.recent,
       glyph: "🕘",
       items: used,
       collapsible: true,
@@ -296,11 +362,13 @@ const ExpressionsPicker = React.forwardRef<
       label = "Choose an expression",
       disabled = false,
       onSelect,
+      labels: labelOverrides,
       className,
       ...props
     },
     ref
   ) => {
+    const labels = { ...defaultExpressionsPickerLabels, ...labelOverrides }
     const id = React.useId()
     const dialog = React.useRef<HTMLDialogElement>(null)
     const trigger = React.useRef<HTMLButtonElement>(null)
@@ -325,7 +393,14 @@ const ExpressionsPicker = React.forwardRef<
     } | null>(null)
 
     const searching = query.trim().length > 0
-    const sections = buildSections(items, categories, recent, kind, query)
+    const sections = buildSections(
+      items,
+      categories,
+      recent,
+      kind,
+      query,
+      labels
+    )
     const isOpen = (key: string) => !collapsed.includes(key)
     const activeSection = scrolledTo ?? sections[0]?.key
     const cellKeys = sections
@@ -437,7 +512,7 @@ const ExpressionsPicker = React.forwardRef<
       const nextTab = kinds[next]
       if (!nextTab) return
       event.preventDefault()
-      changeKind(nextTab.kind)
+      changeKind(nextTab)
       dialog.current
         ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')
         .item(next)
@@ -539,25 +614,25 @@ const ExpressionsPicker = React.forwardRef<
           <div className="flex shrink-0 items-center gap-[var(--newt-space-2)] px-[var(--newt-space-3)] pt-[var(--newt-space-3)]">
             <div
               role="tablist"
-              aria-label="Expression type"
+              aria-label={labels.kinds}
               className="flex items-center gap-[var(--newt-space-2)]"
             >
               {kinds.map((tab, index) => (
                 <button
-                  key={tab.kind}
-                  id={`${id}-${tab.kind}`}
+                  key={tab}
+                  id={`${id}-${tab}`}
                   role="tab"
                   type="button"
-                  aria-selected={kind === tab.kind}
+                  aria-selected={kind === tab}
                   aria-controls={`${id}-panel`}
-                  tabIndex={kind === tab.kind ? 0 : -1}
-                  onClick={() => changeKind(tab.kind)}
+                  tabIndex={kind === tab ? 0 : -1}
+                  onClick={() => changeKind(tab)}
                   onKeyDown={(event) => tabKeyDown(event, index)}
                   className={expressionsPickerVariants({
-                    selected: kind === tab.kind,
+                    selected: kind === tab,
                   })}
                 >
-                  {tab.label}
+                  {labels[tab]}
                 </button>
               ))}
             </div>
@@ -571,8 +646,8 @@ const ExpressionsPicker = React.forwardRef<
                 autoComplete="off"
                 spellCheck={false}
                 value={query}
-                aria-label="Search expressions"
-                placeholder="Search by name or keyword"
+                aria-label={labels.search}
+                placeholder={labels.searchPlaceholder}
                 onChange={(event) => {
                   setQuery(event.target.value)
                   setHovered(null)
@@ -591,7 +666,7 @@ const ExpressionsPicker = React.forwardRef<
               {query ? (
                 <button
                   type="button"
-                  aria-label="Clear search"
+                  aria-label={labels.clearSearch}
                   onClick={() => {
                     setQuery("")
                     search.current?.focus()
@@ -610,7 +685,7 @@ const ExpressionsPicker = React.forwardRef<
                 <button
                   ref={toneButton}
                   type="button"
-                  aria-label={`Skin tone: ${toneSample?.label}`}
+                  aria-label={labels.skinTone(labels.toneNames[tone])}
                   aria-expanded={showTones}
                   onClick={() => setShowTones((value) => !value)}
                   className={cn(
@@ -628,15 +703,15 @@ const ExpressionsPicker = React.forwardRef<
                 {showTones ? (
                   <div
                     role="group"
-                    aria-label="Skin tone"
+                    aria-label={labels.skinTones}
                     className="absolute -end-[var(--newt-space-1)] -top-[var(--newt-space-1)] z-20 flex flex-col gap-[var(--newt-space-1)] rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-floating p-[var(--newt-space-1)] shadow-elevation-high"
                   >
                     {skinTones.map((option) => (
                       <button
                         key={option.tone}
                         type="button"
-                        aria-label={option.label}
-                        title={option.label}
+                        aria-label={labels.toneNames[option.tone]}
+                        title={labels.toneNames[option.tone]}
                         aria-pressed={tone === option.tone}
                         onClick={() => pickTone(option.tone)}
                         className={cn(
@@ -666,7 +741,7 @@ const ExpressionsPicker = React.forwardRef<
           >
             {!searching && sections.length > 1 ? (
               <nav
-                aria-label="Categories"
+                aria-label={labels.categories}
                 className="flex w-[calc(var(--newt-expressions-target-size)+var(--newt-space-2))] shrink-0 flex-col items-center gap-[var(--newt-space-1)] overflow-y-auto overflow-x-hidden border-e border-newt-border p-[var(--newt-space-2)] ![scrollbar-width:none]"
               >
                 {sections.map((section) => (
@@ -782,7 +857,7 @@ const ExpressionsPicker = React.forwardRef<
                             tabIndex={key === tabKey ? 0 : -1}
                             aria-label={
                               item.disabled
-                                ? `${item.label}, unavailable`
+                                ? labels.unavailable(item.label)
                                 : item.label
                             }
                             aria-pressed={
@@ -822,19 +897,15 @@ const ExpressionsPicker = React.forwardRef<
                   className="flex flex-col items-center px-[var(--newt-space-3)] py-[calc(var(--newt-space-3)*3)] text-center text-newt-text-secondary"
                 >
                   <p className="m-0 font-semibold text-newt-text-primary">
-                    {searching
-                      ? "No expressions match your search."
-                      : "Nothing here yet."}
+                    {searching ? labels.noResults : labels.empty}
                   </p>
                   <p className="m-0">
-                    {searching
-                      ? "Try another word or another tab."
-                      : "Try another tab."}
+                    {searching ? labels.noResultsHelp : labels.emptyHelp}
                   </p>
                 </div>
               ) : searching ? (
                 <p role="status" className="sr-only">
-                  {resultCount === 1 ? "1 result" : `${resultCount} results`}
+                  {labels.resultCount(resultCount)}
                 </p>
               ) : null}
             </div>
@@ -865,16 +936,14 @@ const ExpressionsPicker = React.forwardRef<
                   </span>
                   {preview.where ? (
                     <span className="truncate text-[length:var(--newt-font-size-xs)] text-newt-text-secondary">
-                      from{" "}
+                      {labels.from}{" "}
                       <strong className="font-semibold">{preview.where}</strong>
                     </span>
                   ) : null}
                 </span>
               </>
             ) : (
-              <span className="text-newt-text-secondary">
-                Hover or focus an expression to preview it.
-              </span>
+              <span className="text-newt-text-secondary">{labels.hint}</span>
             )}
           </div>
         </dialog>

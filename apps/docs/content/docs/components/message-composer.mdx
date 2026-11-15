@@ -187,6 +187,13 @@ In the HTML flavour, add `newt-composer--narrow` to the bar and `newt-composer__
       description:
         "Shown in place of the send button while the value is empty.",
     },
+    {
+      name: "labels",
+      type: "Partial<MessageComposerLabels> | undefined",
+      default: "defaultMessageComposerLabels",
+      description:
+        "Replaces the English names: `group` and `placeholder` (functions of the channel name), `add` and `send`. Omitted keys keep their default.",
+    },
   ]}
 />
 
@@ -208,6 +215,8 @@ The registry exports `MessageComposer` and `messageComposerButtonVariants`, and 
 ## Accessibility
 
 The bar is a `group` named after the channel. The field takes its accessible name from the placeholder, so keep the channel in it.
+
+The bar, the field, the add button and the send button take their names from `labels`. [Translating labels](/docs/translating-labels) lists every English default.
 
 A field of your own must take focus and carry `inputProps`, so it keeps the label, the combobox attributes and the keyboard handling. If the field is not an `<input>`, set its `aria-disabled` from `disabled`.
 

@@ -253,38 +253,54 @@ MemberListName.displayName = "MemberListName"
 /* The APP tag bots carry next to their name; `verified` adds Discord's check. */
 export interface MemberListAppTagProps extends React.HTMLAttributes<HTMLSpanElement> {
   verified?: boolean
+  /** Accessible name of the tag. `aria-label` still wins. */
+  label?: string
+  /** Accessible name with `verified`. `aria-label` still wins. */
+  verifiedLabel?: string
 }
 
 const MemberListAppTag = React.forwardRef<
   HTMLSpanElement,
   MemberListAppTagProps
->(({ className, verified = false, children = "APP", ...props }, ref) => (
-  <span
-    ref={ref}
-    role="img"
-    aria-label={verified ? "Verified application" : "Application"}
-    className={cn(
-      "inline-flex shrink-0 items-center gap-0.5 rounded-[var(--newt-radius-sm)] bg-newt-brand px-1 py-px text-[9px] font-bold leading-none text-newt-on-accent",
-      className
-    )}
-    {...props}
-  >
-    {verified ? (
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        focusable="false"
-        className="h-2.5 w-2.5"
-      >
-        <path
-          fill="currentColor"
-          d="M9.55 17.6 4.4 12.45l1.4-1.4 3.75 3.75 8.65-8.65 1.4 1.4z"
-        />
-      </svg>
-    ) : null}
-    {children}
-  </span>
-))
+>(
+  (
+    {
+      className,
+      verified = false,
+      label = "Application",
+      verifiedLabel = "Verified application",
+      children = "APP",
+      ...props
+    },
+    ref
+  ) => (
+    <span
+      ref={ref}
+      role="img"
+      aria-label={verified ? verifiedLabel : label}
+      className={cn(
+        "inline-flex shrink-0 items-center gap-0.5 rounded-[var(--newt-radius-sm)] bg-newt-brand px-1 py-px text-[9px] font-bold leading-none text-newt-on-accent",
+        className
+      )}
+      {...props}
+    >
+      {verified ? (
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+          className="h-2.5 w-2.5"
+        >
+          <path
+            fill="currentColor"
+            d="M9.55 17.6 4.4 12.45l1.4-1.4 3.75 3.75 8.65-8.65 1.4 1.4z"
+          />
+        </svg>
+      ) : null}
+      {children}
+    </span>
+  )
+)
 MemberListAppTag.displayName = "MemberListAppTag"
 
 const MemberListRole = React.forwardRef<
