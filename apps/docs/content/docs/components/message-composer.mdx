@@ -15,6 +15,57 @@ The channel input bar: attachment control, text field with combobox hooks, and s
 
 <Usage name="message-composer" />
 
+The bar holds, in order: the add button, the `leading` controls, the field and the send button. The field holds the input, then the `actions`. Set `showAdd` to `false` (`:show-add="false"` in Vue) to remove the add button.
+
+`Enter` sends the value. The send button is off while the value is empty or holds only spaces. Set `disabled` to turn off the input, the add button and the send button.
+
+### Icon buttons
+
+`messageComposerButtonVariants` gives the style of the built-in icon buttons to a button of your own. Use it for a button in `leading`, `actions` or `trailing`, so it matches the add and send buttons. In the HTML flavour, give the button the class `newt-composer__button`.
+
+```tsx
+<MessageComposer
+  channelName="general"
+  actions={
+    <button
+      type="button"
+      aria-label="Emoji"
+      className={messageComposerButtonVariants()}
+    >
+      <EmojiIcon />
+    </button>
+  }
+/>
+```
+
+## Examples
+
+### Your own field
+
+`renderInput` in React and the `#input` slot in Vue replace the built-in input. The composer keeps its value, its keyboard handling and the state of the send button. The function or the slot receives:
+
+- `value`: the current value.
+- `setValue`: changes the value, as typing does.
+- `submit`: sends the value, as `Enter` does.
+- `disabled`: whether the composer is off.
+- `inputProps`: the placeholder, the label, the combobox attributes, `disabled` and the keydown handler.
+
+Spread `inputProps` on the element that takes focus: `{...inputProps}` in React, `v-bind="inputProps"` in Vue. The keydown handler is `onKeyDown` in React and `onKeydown` in Vue. The field here draws the command as a chip and keeps a plain input for the last option.
+
+<ComponentPreview name="message-composer" variant="input" />
+
+### Narrow layout
+
+Set `layout="narrow"` on a phone. The bar loses its frame, the field becomes a pill, and the buttons beside the field become circles. The composer does not pick the layout from its width, so a composer in a narrow sidebar keeps the default bar. Choose the layout from the width of the screen in your app.
+
+Give a button beside the field `messageComposerButtonVariants({ layout: "narrow" })`. A button in `actions` sits inside the pill, so it keeps the default style.
+
+`trailing` takes the place of the send button while the value is empty. The example puts a microphone there, and the send button comes back once there is something to send. `trailing` works in both layouts.
+
+In the HTML flavour, add `newt-composer--narrow` to the bar and `newt-composer__button--narrow` to each button beside the field.
+
+<ComponentPreview name="message-composer" variant="narrow" />
+
 ## API reference
 
 <PropsTable
@@ -29,35 +80,39 @@ The channel input bar: attachment control, text field with combobox hooks, and s
     {
       name: "value",
       type: "string | undefined",
-      description: "Optional value value.",
+      description:
+        "The value, for a controlled composer. Vue uses `v-model` in its place.",
     },
     {
       name: "defaultValue",
       type: "string | undefined",
-      description: "Optional defaultValue value.",
+      default: '""',
+      description: "The first value of an uncontrolled composer. React only.",
     },
     {
       name: "onValueChange",
       type: "(value: string) => void | undefined",
-      description: "Optional onValueChange value.",
+      description:
+        "Called with each new value. Vue uses `v-model` in its place.",
     },
     {
       name: "placeholder",
       type: "string | undefined",
-      description: "Optional placeholder value.",
+      description:
+        "Placeholder and accessible name of the field. Defaults to `Message #` and the channel name.",
     },
     {
-      name: "onSubmit",
+      name: "onSubmit / @submit",
       type: "(value: string) => void | undefined",
       description: "Sent on Enter and on the send control.",
     },
     {
-      name: "onEscape",
+      name: "onEscape / @escape",
       type: "() => void | undefined",
-      description: "Optional onEscape value.",
+      description: "Called when Escape is pressed in the field.",
     },
     {
-      name: "onNavigate",
+      name: "onNavigate / @navigate",
       type: '(direction: "up" | "down") => void | undefined',
       description:
         "Arrow keys, for driving a suggestion list above the composer.",
@@ -65,43 +120,98 @@ The channel input bar: attachment control, text field with combobox hooks, and s
     {
       name: "autocomplete",
       type: "boolean | undefined",
+      default: "false",
       description:
         "Wire the input up as a combobox for slash-command autocomplete.",
     },
     {
       name: "ariaControls",
       type: "string | undefined",
-      description: "Optional ariaControls value.",
+      description: "Id of the suggestion list, while `autocomplete` is set.",
     },
     {
       name: "ariaExpanded",
       type: "boolean | undefined",
-      description: "Optional ariaExpanded value.",
+      description: "Whether the suggestion list is open.",
     },
     {
       name: "ariaActiveDescendant",
       type: "string | undefined",
-      description: "Optional ariaActiveDescendant value.",
-    },
-    {
-      name: "actions",
-      type: "React.ReactNode | undefined",
       description:
-        "Extra controls rendered between the field and the send button.",
+        "Id of the highlighted suggestion. Vue spells it `ariaActivedescendant`.",
     },
     {
-      name: "onAdd",
+      name: "disabled",
+      type: "boolean | undefined",
+      default: "false",
+      description: "Turns off the input, the add button and the send button.",
+    },
+    {
+      name: "layout",
+      type: '"default" | "narrow" | undefined',
+      default: '"default"',
+      description:
+        "`narrow` is the phone layout: no frame, a pill field and round buttons.",
+    },
+    {
+      name: "showAdd",
+      type: "boolean | undefined",
+      default: "true",
+      description: "Shows the add button.",
+    },
+    {
+      name: "onAdd / @add",
       type: "() => void | undefined",
-      description: "Optional onAdd value.",
+      description: "Called when the add button is pressed.",
+    },
+    {
+      name: "leading / #leading",
+      type: "React.ReactNode / Vue slot",
+      description: "Controls after the add button, before the field.",
+    },
+    {
+      name: "renderInput / #input",
+      type: "(props: MessageComposerInputProps) => ReactNode / Vue slot",
+      description:
+        "Replaces the built-in input. Receives `value`, `setValue`, `submit`, `disabled` and `inputProps`.",
+    },
+    {
+      name: "actions / #actions",
+      type: "React.ReactNode / Vue slot",
+      description:
+        "Extra controls at the end of the field, before the send button.",
+    },
+    {
+      name: "trailing / #trailing",
+      type: "React.ReactNode / Vue slot",
+      description:
+        "Shown in place of the send button while the value is empty.",
     },
   ]}
 />
 
-The registry exports `MessageComposer`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+<PropsTable
+  of="messageComposerButtonVariants"
+  rows={[
+    {
+      name: "layout",
+      type: '"default" | "narrow" | undefined',
+      default: '"default"',
+      description:
+        "`default` is a square 32px button. `narrow` is a filled 40px circle, for a button beside the field in the narrow layout.",
+    },
+  ]}
+/>
+
+The registry exports `MessageComposer` and `messageComposerButtonVariants`, and the types `MessageComposerInputProps` and `MessageComposerInputAttributes`. The root renders a `<div>` and accepts its native attributes. React uses `className`, while Vue uses `class` and fallthrough attributes.
 
 ## Accessibility
 
-Keep the textarea labelled with the channel context, let `Enter` and `Shift+Enter` retain their documented meanings, and give every icon-only action an accessible name.
+The bar is a `group` named after the channel. The field takes its accessible name from the placeholder, so keep the channel in it.
+
+A field of your own must take focus and carry `inputProps`, so it keeps the label, the combobox attributes and the keyboard handling. If the field is not an `<input>`, set its `aria-disabled` from `disabled`.
+
+Give every icon button you add an `aria-label`. A button in `trailing` replaces the send button while the value is empty, so name it after what it does.
 
 ## Tokens
 

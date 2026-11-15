@@ -1521,6 +1521,7 @@ export const ui: Registry = [
     title: "Message Composer",
     description:
       "The channel input bar: attachment control, text field with combobox hooks, and send.",
+    dependencies: ["class-variance-authority"],
     files: [
       {
         path: "ui/message-composer/MessageComposer.vue",

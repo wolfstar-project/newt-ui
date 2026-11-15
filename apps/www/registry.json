@@ -701,6 +701,7 @@
       "type": "registry:ui",
       "title": "Message Composer",
       "description": "The channel input bar: attachment control, text field with combobox hooks, and send.",
+      "dependencies": ["class-variance-authority"],
       "files": [
         {
           "path": "registry/bases/newt/ui/message-composer.tsx",
