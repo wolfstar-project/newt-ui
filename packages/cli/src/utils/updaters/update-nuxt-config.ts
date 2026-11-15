@@ -243,7 +243,8 @@ export type NuxtBarrels =
   | { readonly _tag: "AlreadyIgnored"; readonly file: string }
   | {
       readonly _tag: "Manual"
-      readonly reason: ManualReason
+      /** `missing-file`: no `nuxt.config` exists yet, so `file` names one to create. */
+      readonly reason: ManualReason | "missing-file"
       readonly file: string
       readonly ignore: string
     }
@@ -266,7 +267,7 @@ export async function updateNuxtConfig(config: Config): Promise<NuxtBarrels> {
   if (file === undefined) {
     return {
       _tag: "Manual",
-      reason: "config-shape",
+      reason: "missing-file",
       file: DEFAULT_NUXT_CONFIG,
       ignore,
     }
