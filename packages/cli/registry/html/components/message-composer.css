@@ -87,6 +87,7 @@
  * inside the field keep the default look.
  */
 .newt-composer--narrow {
+  min-height: 40px;
   padding: 0;
   border: 0;
   background: none;
