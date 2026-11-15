@@ -11,7 +11,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <span
     :class="
       cn(
-        'inline-flex items-center gap-1.5 text-xs text-newt-text-muted',
+        'inline-flex shrink-0 items-center gap-1.5 text-xs text-newt-text-muted',
         props.class
       )
     "

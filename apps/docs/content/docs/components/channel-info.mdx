@@ -15,20 +15,77 @@ The channel detail panel that covers a channel on narrow screens. Compose it fro
 
 <Usage name="channel-info" />
 
+The preview above is an `inline` panel: a side panel that is always on screen. Without `inline`, `ChannelInfo` is a dialog.
+
+## Examples
+
+### Dialog
+
+`ChannelInfo` is a dialog built on [Radix Dialog](https://www.radix-ui.com/primitives/docs/components/dialog) in React and [Reka UI Dialog](https://reka-ui.com/docs/components/dialog) in Vue. It renders in place, with no portal and no overlay, so your layout decides where it sits. It is open for as long as it is mounted.
+
+When it mounts, focus moves to its first control. Tab cycles through the controls of the panel. Escape calls `onClose` (`@close` in Vue). Unmount the panel in answer. Focus then returns to the element that held it before.
+
+Add `modal` when the panel covers the channel, as the example below does. The rest of the page is then out of use. Assistive technology skips it, focus cannot move to it, and a press on it asks to close the panel.
+
+<ComponentPreview name="channel-info" variant="dialog" />
+
+### Decorative actions
+
+A read-only view draws the actions and does nothing with them. Pass `as="span"` to `ChannelInfoAction`. The action keeps its look and loses its pointer, its hover and its place in the tab order. It also takes `aria-hidden`.
+
 ## API reference
 
 <PropsTable
   of="ChannelInfo"
   rows={[
     {
-      name: "children / default slot",
-      type: "React.ReactNode / Vue slot",
-      description: "Content rendered inside the component.",
+      name: "inline",
+      type: "boolean | undefined",
+      default: "false",
+      description:
+        "Render a plain panel: no dialog role, and focus stays where it is. Use it for a side panel that is always on screen.",
     },
     {
-      name: "className / class",
-      type: "string",
-      description: "Additional classes merged with the component defaults.",
+      name: "modal",
+      type: "boolean | undefined",
+      default: "false",
+      description:
+        "Take the page beside the panel out of use: it is hidden from assistive technology, focus cannot move to it, and a press on it closes the panel. Use it when the panel covers the channel. Has no effect on an `inline` panel.",
+    },
+    {
+      name: "label",
+      type: "string | undefined",
+      description:
+        "The accessible name of the panel. Without it, name the panel with `aria-label` or `aria-labelledby`.",
+    },
+    {
+      name: "onClose / @close",
+      type: "() => void",
+      description:
+        "The user asks to close the dialog: Escape, or a press outside a `modal` one.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="ChannelInfoAction"
+  rows={[
+    {
+      name: "as",
+      type: "string | Component",
+      description:
+        "The element or component to render. Defaults to `button`, or to `a` when `href` is set. Pass a router link component to keep client navigation. `span` renders the decorative form, which runs no event handlers.",
+    },
+    {
+      name: "href",
+      type: "string | undefined",
+      description: "Render a link to this URL.",
+    },
+    {
+      name: "disabled",
+      type: "boolean | undefined",
+      description:
+        "Turns the control off. A link loses its URL, which takes it out of the tab order, and says so with `aria-disabled`. A disabled control fades to half opacity.",
     },
   ]}
 />
@@ -37,7 +94,17 @@ The registry exports `ChannelInfo`, `ChannelInfoToolbar`, `ChannelInfoActions`, 
 
 ## Accessibility
 
-Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+Give the panel a `label`. A dialog reads it when it opens. An `inline` panel with a label is a `region` landmark; without one it is a plain `div`.
+
+Tab cycles through the controls of a dialog, and Escape leaves it. A dialog that is not `modal` leaves the page beside it in use: a press there moves focus out, and the panel stays open. Use `modal` when the panel hides the channel, so focus cannot move to content the user cannot see.
+
+Do not wrap a dialog `ChannelInfo` in a [Drawer](/docs/components/drawer) or a [Modal](/docs/components/modal). That nests one dialog in another. Put an `inline` panel inside them when you want their overlay.
+
+Every icon-only action needs an `aria-label`. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+In the plain HTML and CSS distribution, `channel-info.js` gives a panel marked `data-newt-channel-info` the same behaviour. A `data-newt-channel-info-close` control closes it, and `aria-modal="true"` makes it modal. The panel fires `newt:close` before it leaves the page; cancel the event to close it your own way.
+
+With several panels open, Escape closes the newest one that holds focus. An Escape that a control inside already handled with `preventDefault()` closes nothing, and the panel marks the Escape it handles the same way. Tab skips controls inside hidden content.
 
 ## Tokens
 

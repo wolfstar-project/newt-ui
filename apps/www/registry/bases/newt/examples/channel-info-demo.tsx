@@ -23,7 +23,8 @@ import {
 export default function ChannelInfoDemo() {
   return (
     <ChannelInfo
-      aria-label="Channel information for #general"
+      inline
+      label="Channel information for #general"
       className="h-[420px] rounded-md"
     >
       <ChannelInfoToolbar>

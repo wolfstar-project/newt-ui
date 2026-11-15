@@ -520,6 +520,14 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/bases/newt/ui/channel-header/ChannelHeaderBack.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/channel-header/ChannelHeaderTitle.vue",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/bases/newt/ui/channel-header/ChannelHeaderOnline.vue",
           "type": "registry:ui"
         },
@@ -535,6 +543,7 @@
       "type": "registry:ui",
       "title": "Channel Info",
       "description": "The channel detail panel that covers a channel on narrow screens.",
+      "dependencies": ["reka-ui"],
       "registryDependencies": ["tabs"],
       "files": [
         {

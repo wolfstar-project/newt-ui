@@ -12,9 +12,12 @@
     "ChannelHeaderToolbar.vue",
     "ChannelHeaderAction.vue",
     "ChannelHeaderSearch.vue",
+    "ChannelHeaderBack.vue",
+    "ChannelHeaderTitle.vue",
     "ChannelHeaderOnline.vue",
     "index.ts"
   ],
   "reactDemo": "channel-header-demo",
-  "vueDemo": "ChannelHeaderDemo"
+  "vueDemo": "ChannelHeaderDemo",
+  "examples": ["narrow", "decorative"]
 }

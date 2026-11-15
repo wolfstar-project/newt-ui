@@ -366,12 +366,45 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ChannelHeaderNarrowDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "examples/ChannelHeaderNarrowDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ChannelHeaderDecorativeDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "examples/ChannelHeaderDecorativeDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ChannelInfoDemo",
     type: "registry:example",
     registryDependencies: ["channel-info", "tabs"],
     files: [
       {
         path: "examples/ChannelInfoDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ChannelInfoDialogDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-info", "button"],
+    files: [
+      {
+        path: "examples/ChannelInfoDialogDemo.vue",
         type: "registry:example",
       },
     ],

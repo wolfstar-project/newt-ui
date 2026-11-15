@@ -10,7 +10,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <span
     :class="
       cn(
-        'min-w-0 truncate text-[13px] font-medium text-newt-text-muted',
+        'min-w-0 shrink-[99999] truncate text-[13px] font-medium text-newt-text-muted',
         props.class
       )
     "

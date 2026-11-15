@@ -10,6 +10,10 @@
   background: var(--newt-bg-surface);
   color: var(--newt-text-primary);
 }
+/* The panel takes focus itself only when it holds no control. */
+.newt-channel-info:focus {
+  outline: none;
+}
 
 .newt-channel-info__toolbar {
   display: flex;
@@ -27,6 +31,12 @@
   gap: 4px;
 }
 
+/*
+ * An action is a `button` or an `a`. The same class on a `span` is the
+ * decorative form, for a read-only view: give it `aria-hidden="true"`. It
+ * keeps the resting look and has no pointer, no hover and no place in the
+ * tab order.
+ */
 .newt-channel-info__action {
   display: inline-flex;
   flex-shrink: 0;
@@ -39,18 +49,34 @@
   border-radius: var(--newt-radius-full);
   background: transparent;
   color: var(--newt-text-secondary);
+  text-decoration: none;
+}
+.newt-channel-info__action:is(button, a) {
   cursor: pointer;
   transition:
     background var(--newt-duration-fast) var(--newt-ease),
     color var(--newt-duration-fast) var(--newt-ease);
 }
-.newt-channel-info__action:hover {
+.newt-channel-info__action:is(button, a):hover {
   background: var(--newt-bg-hover);
   color: var(--newt-text-primary);
 }
 .newt-channel-info__action:focus-visible {
   outline: 2px solid var(--newt-text-link);
   outline-offset: 2px;
+}
+
+/*
+ * A control that is off: a `button` with `disabled`, or a link with
+ * `aria-disabled="true"` and no `href`. It fades, and a link takes no press.
+ */
+.newt-channel-info__action:disabled,
+.newt-channel-info__action[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.newt-channel-info__action[aria-disabled="true"] {
+  pointer-events: none;
 }
 
 .newt-channel-info__identity {
