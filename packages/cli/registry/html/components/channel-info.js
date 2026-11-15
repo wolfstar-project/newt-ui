@@ -23,7 +23,8 @@
  * A panel without the attribute is an inline side panel: no script runs.
  */
 
-/* A block, so the script can be included twice without redeclaring. */
+/* A block, so the script can be included twice without redeclaring. Each
+ * element is set up once, so a second include adds no listeners. */
 {
   const FOCUSABLE = [
     "a[href]",
@@ -74,6 +75,9 @@
   const isModal = (panel) => panel.getAttribute("aria-modal") === "true"
 
   document.querySelectorAll("[data-newt-channel-info]").forEach((panel) => {
+    /* A second include of the script leaves an opened panel alone. */
+    if (panel.dataset.newtInitialized) return
+    panel.dataset.newtInitialized = "true"
     const modal = isModal(panel)
     const active = document.activeElement
     /* An `autofocus` control inside has focus already: keep it, and there is

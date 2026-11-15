@@ -238,3 +238,17 @@ describe("app-launcher.js, inline", () => {
     expect(launcher()).not.toBeNull()
   })
 })
+
+describe("app-launcher.js, included twice", () => {
+  it("fires newt:close once per close", () => {
+    open()
+    runInThisContext(behavior)
+    let closes = 0
+    launcher()?.addEventListener("newt:close", () => {
+      closes += 1
+    })
+    control("Moderation bot").setAttribute("data-newt-app-launcher-close", "")
+    control("Moderation bot").click()
+    expect(closes).toBe(1)
+  })
+})
