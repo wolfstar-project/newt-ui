@@ -19,7 +19,7 @@ defineSlots<{
     type="button"
     :class="
       cn(
-        'flex w-full shrink-0 cursor-pointer flex-col overflow-hidden rounded-md border-0 bg-newt-bg-elevated p-0 text-start text-newt-text-primary transition-colors duration-fast ease-newt',
+        'flex w-full shrink-0 cursor-pointer flex-col overflow-hidden rounded-[var(--newt-radius-md)] border-0 bg-newt-bg-elevated p-0 text-start text-newt-text-primary transition-colors duration-fast ease-newt',
         'hover:bg-newt-bg-hover',
         'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
         props.class

@@ -7,7 +7,7 @@ const Card = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
     <div
       ref={ref}
       className={cn(
-        "rounded-lg border border-newt-border bg-newt-bg-elevated p-5 text-newt-text-primary",
+        "rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-elevated p-5 text-newt-text-primary",
         className
       )}
       {...props}

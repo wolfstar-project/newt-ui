@@ -55,7 +55,7 @@ Label.displayName = "Label"
  * needs to say it once.
  */
 const controlClassName =
-  "w-full rounded-sm border border-newt-border bg-newt-bg-input px-3 py-2.5 font-sans text-sm text-newt-text-primary transition-colors duration-fast ease-newt placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none group-data-[invalid]/field:border-newt-danger aria-[invalid=true]:border-newt-danger"
+  "w-full rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-3 py-2.5 font-[family-name:var(--newt-font-sans)] text-sm text-newt-text-primary transition-colors duration-fast ease-newt placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none group-data-[invalid]/field:border-newt-danger aria-[invalid=true]:border-newt-danger"
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   ({ className, type = "text", ...props }, ref) => (
@@ -142,7 +142,7 @@ const Checkbox = React.forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(
-      "group inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-newt-border bg-newt-bg-input text-newt-on-accent transition-colors duration-fast ease-newt focus-visible:border-newt-brand focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+      "group inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input text-newt-on-accent transition-colors duration-fast ease-newt focus-visible:border-newt-brand focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
       "data-[state=checked]:border-newt-brand data-[state=checked]:bg-newt-brand data-[state=indeterminate]:border-newt-brand data-[state=indeterminate]:bg-newt-brand",
       className
     )}

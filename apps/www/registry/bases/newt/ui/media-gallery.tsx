@@ -30,7 +30,7 @@ const MediaGallery = React.forwardRef<HTMLDivElement, MediaGalleryProps>(
     <div
       ref={ref}
       className={cn(
-        "grid max-w-[550px] auto-rows-[1fr] gap-1 overflow-hidden rounded-lg",
+        "grid max-w-[550px] auto-rows-[1fr] gap-1 overflow-hidden rounded-[var(--newt-radius-lg)]",
         layoutFor(count ?? React.Children.count(children)),
         className
       )}

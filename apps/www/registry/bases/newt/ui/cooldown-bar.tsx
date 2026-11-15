@@ -36,7 +36,7 @@ const CooldownBarValue = React.forwardRef<
   <strong
     ref={ref}
     className={cn(
-      "font-mono font-semibold text-newt-text-secondary",
+      "font-[family-name:var(--newt-font-mono)] font-semibold text-newt-text-secondary",
       className
     )}
     {...props}

@@ -9,7 +9,7 @@ const UserProfile = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "w-[280px] overflow-hidden rounded-lg border border-newt-border bg-newt-bg-base shadow-elevation-high",
+      "w-[280px] overflow-hidden rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-base shadow-elevation-high",
       className
     )}
     {...props}

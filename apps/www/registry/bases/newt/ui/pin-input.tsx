@@ -202,7 +202,7 @@ const PinInput = React.forwardRef<HTMLDivElement, PinInputProps>(
               onKeyDown={(event) => handleKeyDown(index, event)}
               onPaste={(event) => handlePaste(index, event)}
               onFocus={(event) => event.target.select()}
-              className="h-[52px] w-11 rounded-sm border border-newt-border bg-newt-bg-input p-0 text-center font-mono text-xl font-semibold text-newt-text-primary caret-newt-brand transition-colors duration-fast ease-newt focus:border-newt-brand focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 group-data-[invalid]/pin:border-newt-danger"
+              className="h-[52px] w-11 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input p-0 text-center font-[family-name:var(--newt-font-mono)] text-xl font-semibold text-newt-text-primary caret-newt-brand transition-colors duration-fast ease-newt focus:border-newt-brand focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 group-data-[invalid]/pin:border-newt-danger"
             />
           </React.Fragment>
         ))}

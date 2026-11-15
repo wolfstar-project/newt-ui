@@ -17,7 +17,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
     aria-label="User controls"
     :class="
       cn(
-        'flex w-full items-center gap-2 rounded-md bg-newt-bg-base p-2',
+        'flex w-full items-center gap-2 rounded-[var(--newt-radius-md)] bg-newt-bg-base p-2',
         props.class
       )
     "

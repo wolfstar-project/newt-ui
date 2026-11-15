@@ -60,7 +60,7 @@ function onChange(event: Event) {
     :data-disabled="props.disabled ? true : undefined"
     :class="
       cn(
-        'flex flex-col items-center justify-center gap-1 rounded-md border border-dashed border-newt-border bg-newt-bg-base px-4 py-6 text-center',
+        'flex flex-col items-center justify-center gap-1 rounded-[var(--newt-radius-md)] border border-dashed border-newt-border bg-newt-bg-base px-4 py-6 text-center',
         'transition-colors duration-fast ease-newt',
         'data-[dragging]:border-newt-brand data-[dragging]:bg-newt-bg-surface',
         'focus-within:border-newt-brand',

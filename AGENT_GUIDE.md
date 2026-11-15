@@ -34,8 +34,14 @@ Tailwind token classes (both apps, see `tailwind.config.ts` → `newtPreset`):
 `bg-newt-bg-base|surface|elevated|floating|input|hover|active`,
 `border-newt-border`, `text-newt-text-primary|secondary|muted|link`,
 `bg-newt-brand|brand-hover|brand-active`, `bg-newt-online|idle|dnd|offline|danger|danger-hover`,
-`rounded-sm|md|lg|full`, `font-sans|mono|display`, `shadow-elevation-low|high`,
+`rounded-full`, `font-display`, `shadow-elevation-low|high`,
 `ease-newt`, `duration-fast|base`.
+
+Radii and the sans and mono stacks are read from the tokens, never from the
+host's Tailwind scale: `rounded-[var(--newt-radius-sm|md|lg)]` and
+`font-[family-name:var(--newt-font-sans|mono)]`. `rounded-md` and `font-sans`
+follow the app that installs the component (Nuxt UI sets `rounded-md` to 12px),
+so `packages/cli/src/registry/newt-scale.test.ts` refuses them.
 
 ## 1. What newt/ui is
 

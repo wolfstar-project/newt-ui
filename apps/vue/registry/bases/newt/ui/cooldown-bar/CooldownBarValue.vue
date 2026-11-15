@@ -8,7 +8,12 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
 
 <template>
   <strong
-    :class="cn('font-mono font-semibold text-newt-text-secondary', props.class)"
+    :class="
+      cn(
+        'font-[family-name:var(--newt-font-mono)] font-semibold text-newt-text-secondary',
+        props.class
+      )
+    "
   >
     <slot />
   </strong>

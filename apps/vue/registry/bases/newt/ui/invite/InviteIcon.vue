@@ -24,6 +24,11 @@ const props = withDefaults(
     :src="props.src"
     :alt="props.alt"
     :aria-hidden="props.alt === '' ? true : undefined"
-    :class="cn('h-12 w-12 shrink-0 rounded-md object-cover', props.class)"
+    :class="
+      cn(
+        'h-12 w-12 shrink-0 rounded-[var(--newt-radius-md)] object-cover',
+        props.class
+      )
+    "
   />
 </template>

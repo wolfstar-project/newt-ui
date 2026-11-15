@@ -106,7 +106,7 @@ function submit(message: string) {
   <div
     :class="
       cn(
-        'overflow-hidden rounded-lg border border-newt-border bg-newt-bg-elevated',
+        'overflow-hidden rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-elevated',
         props.class
       )
     "

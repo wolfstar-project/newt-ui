@@ -95,7 +95,7 @@ export function AiChat({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-lg border border-newt-border bg-newt-bg-elevated",
+        "overflow-hidden rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-elevated",
         className
       )}
       {...props}

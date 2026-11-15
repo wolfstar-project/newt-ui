@@ -152,7 +152,7 @@ const open = ref(false)
         :tabindex="open ? -1 : undefined"
         :class="
           cn(
-            'group flex min-h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-sm border border-newt-border bg-newt-bg-input px-2 font-sans text-sm font-medium text-newt-text-primary hover:border-newt-bg-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50',
+            'group flex min-h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-2 font-[family-name:var(--newt-font-sans)] text-sm font-medium text-newt-text-primary hover:border-newt-bg-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50',
             props.triggerClass
           )
         "
@@ -204,7 +204,7 @@ const open = ref(false)
         :aria-label="props.label"
         :class="
           cn(
-            'z-[110] w-[var(--reka-select-trigger-width)] rounded-md border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high',
+            'z-[110] w-[var(--reka-select-trigger-width)] rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high',
             props.contentClass
           )
         "
@@ -243,7 +243,7 @@ const open = ref(false)
             "
             :class="
               cn(
-                'group/item flex cursor-pointer select-none items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm text-newt-text-secondary outline-none',
+                'group/item flex cursor-pointer select-none items-center gap-2.5 rounded-[var(--newt-radius-sm)] px-2.5 py-2 text-sm text-newt-text-secondary outline-none',
                 'data-[state=checked]:text-newt-text-primary',
                 'data-[highlighted]:bg-newt-brand data-[highlighted]:data-[state=unchecked]:text-newt-on-accent',
                 'data-[disabled]:cursor-not-allowed data-[disabled]:text-newt-text-muted data-[disabled]:opacity-50'

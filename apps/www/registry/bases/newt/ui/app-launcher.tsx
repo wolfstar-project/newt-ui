@@ -13,10 +13,11 @@ const appLauncherVariants = cva(
     variants: {
       variant: {
         /* The desktop popout, at a fixed size. */
-        popout: "h-[min(680px,calc(100dvh-2rem))] max-w-[504px] rounded-md",
+        popout:
+          "h-[min(680px,calc(100dvh-2rem))] max-w-[504px] rounded-[var(--newt-radius-md)]",
         /* The bottom sheet: full width, rising from the bottom edge. */
         sheet:
-          "h-[var(--newt-app-launcher-sheet-height,90dvh)] max-w-none rounded-t-lg border-b-0",
+          "h-[var(--newt-app-launcher-sheet-height,90dvh)] max-w-none rounded-t-[var(--newt-radius-lg)] border-b-0",
       },
     },
     defaultVariants: { variant: "popout" },
@@ -318,7 +319,7 @@ const AppLauncherSearchInput = React.forwardRef<
     autoComplete="off"
     spellCheck={false}
     className={cn(
-      "h-11 w-full appearance-none rounded-md border-2 border-transparent bg-newt-bg-input py-0 ps-11 pe-3 text-base text-newt-text-primary outline-none",
+      "h-11 w-full appearance-none rounded-[var(--newt-radius-md)] border-2 border-transparent bg-newt-bg-input py-0 ps-11 pe-3 text-base text-newt-text-primary outline-none",
       "placeholder:text-newt-text-muted focus:border-newt-brand",
       className
     )}
@@ -394,7 +395,7 @@ const AppLauncherViewMore = React.forwardRef<
     ref={ref}
     type={type}
     className={cn(
-      "cursor-pointer rounded-sm border-0 bg-transparent p-0 text-base font-semibold text-newt-text-link no-underline hover:underline",
+      "cursor-pointer rounded-[var(--newt-radius-sm)] border-0 bg-transparent p-0 text-base font-semibold text-newt-text-link no-underline hover:underline",
       "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
       className
     )}
@@ -419,7 +420,7 @@ const AppLauncherList = React.forwardRef<HTMLDivElement, AppLauncherListProps>(
       className={cn(
         variant === "grid"
           ? "grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-2"
-          : "flex flex-col overflow-hidden rounded-md bg-newt-bg-elevated [&>*+*]:border-t [&>*+*]:border-newt-border",
+          : "flex flex-col overflow-hidden rounded-[var(--newt-radius-md)] bg-newt-bg-elevated [&>*+*]:border-t [&>*+*]:border-newt-border",
         className
       )}
       {...props}
@@ -479,7 +480,7 @@ const AppLauncherItem = React.forwardRef<
       className={cn(
         "relative flex w-full items-center transition-colors duration-fast ease-newt",
         variant === "tile"
-          ? "flex-col gap-2 rounded-md bg-newt-bg-elevated px-2 py-3"
+          ? "flex-col gap-2 rounded-[var(--newt-radius-md)] bg-newt-bg-elevated px-2 py-3"
           : "gap-3 px-3 py-3",
         "hover:bg-newt-bg-hover",
         className
@@ -491,7 +492,7 @@ const AppLauncherItem = React.forwardRef<
         className={cn(
           "flex min-w-0 cursor-pointer items-center border-0 bg-transparent p-0 outline-none",
           variant === "tile"
-            ? "w-full flex-col gap-2 text-center after:rounded-md"
+            ? "w-full flex-col gap-2 text-center after:rounded-[var(--newt-radius-md)]"
             : "flex-1 gap-3 text-start",
           "after:absolute after:inset-0",
           "focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-newt-text-link"
@@ -639,7 +640,7 @@ const AppLauncherPromoCard = React.forwardRef<
     ref={ref}
     type={type}
     className={cn(
-      "flex w-full shrink-0 cursor-pointer flex-col overflow-hidden rounded-md border-0 bg-newt-bg-elevated p-0 text-start text-newt-text-primary transition-colors duration-fast ease-newt",
+      "flex w-full shrink-0 cursor-pointer flex-col overflow-hidden rounded-[var(--newt-radius-md)] border-0 bg-newt-bg-elevated p-0 text-start text-newt-text-primary transition-colors duration-fast ease-newt",
       "hover:bg-newt-bg-hover",
       "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
       className

@@ -14,7 +14,7 @@ export { default as ContextMenuSeparator } from "./ContextMenuSeparator.vue"
  * keyboard, so it takes the place of the old `:hover` rule.
  */
 export const contextMenuItemVariants = cva(
-  "group flex cursor-pointer select-none items-center justify-between rounded-sm px-2 py-1.5 text-[13px] outline-none transition-colors duration-fast ease-newt data-[highlighted]:text-newt-on-accent data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+  "group flex cursor-pointer select-none items-center justify-between rounded-[var(--newt-radius-sm)] px-2 py-1.5 text-[13px] outline-none transition-colors duration-fast ease-newt data-[highlighted]:text-newt-on-accent data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
   {
     variants: {
       variant: {

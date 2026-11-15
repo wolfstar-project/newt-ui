@@ -10,7 +10,7 @@ const Invite = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "max-w-[432px] rounded-md bg-newt-bg-surface px-4 pb-4 pt-2 text-newt-text-primary",
+      "max-w-[432px] rounded-[var(--newt-radius-md)] bg-newt-bg-surface px-4 pb-4 pt-2 text-newt-text-primary",
       className
     )}
     {...props}
@@ -76,7 +76,10 @@ const InviteIcon = React.forwardRef<HTMLImageElement, InviteIconProps>(
       ref={ref}
       alt={alt}
       aria-hidden={alt === "" ? true : undefined}
-      className={cn("h-12 w-12 shrink-0 rounded-md object-cover", className)}
+      className={cn(
+        "h-12 w-12 shrink-0 rounded-[var(--newt-radius-md)] object-cover",
+        className
+      )}
       {...props}
     />
   )

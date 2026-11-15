@@ -6,7 +6,7 @@ export { default as AlertDescription } from "./AlertDescription.vue"
 export { default as AlertActions } from "./AlertActions.vue"
 
 export const alertVariants = cva(
-  "flex w-full items-start gap-3 rounded-sm border border-s-4 border-newt-border bg-newt-bg-surface px-3.5 py-3 text-sm leading-5 text-newt-text-secondary",
+  "flex w-full items-start gap-3 rounded-[var(--newt-radius-sm)] border border-s-4 border-newt-border bg-newt-bg-surface px-3.5 py-3 text-sm leading-5 text-newt-text-secondary",
   {
     variants: {
       variant: {

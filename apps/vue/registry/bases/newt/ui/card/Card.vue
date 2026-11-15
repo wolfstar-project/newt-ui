@@ -10,7 +10,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <div
     :class="
       cn(
-        'rounded-lg border border-newt-border bg-newt-bg-elevated p-5 text-newt-text-primary',
+        'rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-elevated p-5 text-newt-text-primary',
         props.class
       )
     "

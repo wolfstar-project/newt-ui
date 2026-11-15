@@ -17,7 +17,7 @@ const props = withDefaults(
     :data-state="props.active ? 'active' : 'inactive'"
     :class="
       cn(
-        'min-h-11 cursor-pointer rounded-md px-3 py-2 hover:bg-newt-bg-hover',
+        'min-h-11 cursor-pointer rounded-[var(--newt-radius-md)] px-3 py-2 hover:bg-newt-bg-hover',
         'data-[state=active]:bg-newt-bg-active',
         props.class
       )

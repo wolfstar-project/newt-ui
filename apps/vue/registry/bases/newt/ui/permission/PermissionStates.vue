@@ -33,7 +33,12 @@ function select(value: PermissionValue) {
 <template>
   <div
     role="group"
-    :class="cn('flex gap-1 rounded-sm bg-newt-bg-base p-0.5', props.class)"
+    :class="
+      cn(
+        'flex gap-1 rounded-[var(--newt-radius-sm)] bg-newt-bg-base p-0.5',
+        props.class
+      )
+    "
   >
     <button
       v-for="option in options"
@@ -46,7 +51,7 @@ function select(value: PermissionValue) {
       :data-value="option.value"
       :class="
         cn(
-          'flex h-7 w-7 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-sm text-newt-text-muted transition-colors duration-fast ease-newt hover:text-newt-text-secondary disabled:cursor-not-allowed disabled:opacity-50',
+          'flex h-7 w-7 cursor-pointer items-center justify-center rounded-[var(--newt-radius-sm)] border-0 bg-transparent text-sm text-newt-text-muted transition-colors duration-fast ease-newt hover:text-newt-text-secondary disabled:cursor-not-allowed disabled:opacity-50',
           option.value === model && activeClasses[option.value]
         )
       "

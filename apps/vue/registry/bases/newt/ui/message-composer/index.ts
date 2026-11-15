@@ -8,7 +8,7 @@ export const messageComposerVariants = cva(
     variants: {
       layout: {
         default:
-          "min-h-11 rounded-md border border-newt-border bg-newt-bg-input-elevated px-4",
+          "min-h-11 rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-input-elevated px-4",
         /* A phone: no frame, a pill field, round buttons beside it. */
         narrow: "min-h-10",
       },
@@ -40,7 +40,7 @@ export const messageComposerButtonVariants = cva(
   {
     variants: {
       layout: {
-        default: "h-8 w-8 rounded-sm bg-transparent",
+        default: "h-8 w-8 rounded-[var(--newt-radius-sm)] bg-transparent",
         narrow: "h-10 w-10 rounded-full bg-newt-bg-input-elevated",
       },
     },

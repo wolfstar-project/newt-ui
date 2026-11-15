@@ -15,7 +15,7 @@ const ThreadPreview = React.forwardRef<
   <a
     ref={ref}
     className={cn(
-      "flex max-w-[440px] items-center gap-2 rounded-md bg-newt-bg-surface px-3 py-2 text-sm no-underline",
+      "flex max-w-[440px] items-center gap-2 rounded-[var(--newt-radius-md)] bg-newt-bg-surface px-3 py-2 text-sm no-underline",
       "transition-colors duration-fast ease-newt hover:bg-newt-bg-elevated",
       "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
       className

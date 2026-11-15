@@ -33,7 +33,7 @@ function onClick() {
     :aria-pressed="pressed"
     :class="
       cn(
-        'inline-flex h-8 w-8 items-center justify-center rounded-sm text-newt-text-secondary transition-colors duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link aria-pressed:text-newt-danger',
+        'inline-flex h-8 w-8 items-center justify-center rounded-[var(--newt-radius-sm)] text-newt-text-secondary transition-colors duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link aria-pressed:text-newt-danger',
         props.class
       )
     "

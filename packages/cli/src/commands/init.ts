@@ -73,9 +73,7 @@ import {
   type NuxtBarrels,
 } from "../utils/updaters/update-nuxt-config.js"
 import { updatePresetCss } from "../utils/updaters/update-preset.js"
-
-/** The registry item that carries the design tokens. */
-const THEME_ITEM = "theme-newt"
+import { THEME_ITEM } from "../utils/updaters/update-theme-names.js"
 
 export interface InitOptions {
   cwd: string
@@ -430,7 +428,7 @@ async function runInit(
       : undefined
   if (existingCss.includes(TOKENS_MARKER)) {
     cssSpinner.stop(
-      `${relativePath(cwd, cssPath)} already contains newt tokens, skipped.`
+      `${relativePath(cwd, cssPath)} already contains newt tokens, skipped. Run ${highlighter.info("npx newtui tokens")} to add the ones it is missing.`
     )
   } else {
     const header =

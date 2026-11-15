@@ -34,7 +34,7 @@ const forwarded = useForwardPropsEmits(delegated, emits)
     v-bind="forwarded"
     :class="
       cn(
-        'flex w-full flex-col overflow-hidden rounded-md border border-newt-border bg-newt-bg-surface',
+        'flex w-full flex-col overflow-hidden rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-surface',
         props.class
       )
     "

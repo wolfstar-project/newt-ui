@@ -155,7 +155,7 @@ const inputProps = computed<MessageComposerInputAttributes>(() => ({
           v-model="value"
           type="text"
           v-bind="inputProps"
-          class="w-full min-w-0 border-0 bg-transparent font-sans text-[15px] text-newt-text-primary outline-none placeholder:text-newt-text-muted disabled:cursor-not-allowed"
+          class="w-full min-w-0 border-0 bg-transparent font-[family-name:var(--newt-font-sans)] text-[15px] text-newt-text-primary outline-none placeholder:text-newt-text-muted disabled:cursor-not-allowed"
         />
       </slot>
       <slot name="actions" />

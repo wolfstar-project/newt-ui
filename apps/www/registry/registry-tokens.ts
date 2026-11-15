@@ -207,6 +207,8 @@ export const tailwindV4Theme = {
     )
   ),
   "--ease-newt": "var(--newt-ease)",
+  "--transition-duration-fast": "var(--newt-duration-fast)",
+  "--transition-duration-base": "var(--newt-duration-base)",
 } satisfies Record<string, string>
 
 /**
@@ -237,5 +239,8 @@ export const tailwindV3Theme = {
     SHADOWS.map((name) => [name, `var(--newt-shadow-${name})`] as const)
   ),
   transitionTimingFunction: { newt: "var(--newt-ease)" },
-  transitionDuration: { fast: "100ms", base: "150ms" },
+  transitionDuration: {
+    fast: "var(--newt-duration-fast)",
+    base: "var(--newt-duration-base)",
+  },
 } satisfies TailwindV3Theme

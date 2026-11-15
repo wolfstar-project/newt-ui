@@ -136,7 +136,7 @@ function onKeydown(event: KeyboardEvent, row: Row) {
       :style="{ paddingInlineStart: `${8 + (row.level - 1) * 16}px` }"
       :class="
         cn(
-          'group flex min-h-8 cursor-pointer select-none items-center gap-1.5 rounded-sm py-1 pe-2 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link',
+          'group flex min-h-8 cursor-pointer select-none items-center gap-1.5 rounded-[var(--newt-radius-sm)] py-1 pe-2 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link',
           row.node.children !== undefined
             ? 'text-xs font-bold uppercase tracking-[0.02em]'
             : 'text-[15px] font-medium leading-5',

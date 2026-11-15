@@ -13,4 +13,4 @@ export { default as Checkbox } from "./Checkbox.vue"
  * needs to say it once.
  */
 export const controlClassName =
-  "w-full rounded-sm border border-newt-border bg-newt-bg-input px-3 py-2.5 font-sans text-sm text-newt-text-primary transition-colors duration-fast ease-newt placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none group-data-[invalid]/field:border-newt-danger aria-[invalid=true]:border-newt-danger"
+  "w-full rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-3 py-2.5 font-[family-name:var(--newt-font-sans)] text-sm text-newt-text-primary transition-colors duration-fast ease-newt placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none group-data-[invalid]/field:border-newt-danger aria-[invalid=true]:border-newt-danger"

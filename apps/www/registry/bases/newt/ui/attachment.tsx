@@ -9,7 +9,7 @@ const Attachment = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex max-w-[360px] items-center gap-3 rounded-md border border-newt-border bg-newt-bg-surface px-3 py-[10px]",
+      "flex max-w-[360px] items-center gap-3 rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-surface px-3 py-[10px]",
       className
     )}
     {...props}
@@ -25,7 +25,7 @@ const AttachmentIcon = React.forwardRef<
     ref={ref}
     aria-hidden="true"
     className={cn(
-      "flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-newt-brand font-mono text-xs font-bold text-newt-on-accent",
+      "flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--newt-radius-sm)] bg-newt-brand font-[family-name:var(--newt-font-mono)] text-xs font-bold text-newt-on-accent",
       className
     )}
     {...props}

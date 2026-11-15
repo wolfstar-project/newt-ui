@@ -262,7 +262,7 @@ const ChannelHeaderSearch = React.forwardRef<
           "flex shrink-0 items-center text-newt-text-muted no-underline",
           compact
             ? "h-6 w-6 justify-center border-0 bg-transparent p-0"
-            : "h-7 w-60 justify-between gap-3 rounded-sm border border-newt-border bg-newt-bg-input px-2",
+            : "h-7 w-60 justify-between gap-3 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-2",
           !decorative && [
             interactiveClassName,
             compact
@@ -374,7 +374,7 @@ const ChannelHeaderTitle = React.forwardRef<
         disabled={isButton ? disabled : undefined}
         aria-disabled={!isButton && !plain && disabled ? true : undefined}
         className={cn(
-          "inline-flex min-w-0 items-center gap-2 rounded-sm border-0 bg-transparent px-1.5 py-1 text-start text-newt-text-primary no-underline",
+          "inline-flex min-w-0 items-center gap-2 rounded-[var(--newt-radius-sm)] border-0 bg-transparent px-1.5 py-1 text-start text-newt-text-primary no-underline",
           !plain && [interactiveClassName, "hover:bg-newt-bg-hover"],
           className
         )}

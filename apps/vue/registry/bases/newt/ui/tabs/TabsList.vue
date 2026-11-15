@@ -17,7 +17,7 @@ const delegated = computed(() => {
     v-bind="delegated"
     :class="
       cn(
-        'flex w-fit max-w-full gap-1 overflow-x-auto rounded-md bg-newt-bg-base p-1',
+        'flex w-fit max-w-full gap-1 overflow-x-auto rounded-[var(--newt-radius-md)] bg-newt-bg-base p-1',
         props.class
       )
     "

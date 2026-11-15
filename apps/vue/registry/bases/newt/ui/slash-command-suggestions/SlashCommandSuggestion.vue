@@ -31,7 +31,7 @@ const props = withDefaults(
     :data-state="props.active ? 'active' : 'inactive'"
     :class="
       cn(
-        'grid min-h-12 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-md px-2 py-1.5',
+        'grid min-h-12 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-[var(--newt-radius-md)] px-2 py-1.5',
         '[@container_(max-width:480px)]:gap-x-2 [@container_(max-width:480px)]:gap-y-0.5',
         props.disabled
           ? 'cursor-default opacity-60'

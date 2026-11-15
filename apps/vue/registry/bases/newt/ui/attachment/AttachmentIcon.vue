@@ -11,7 +11,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
     aria-hidden="true"
     :class="
       cn(
-        'flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-newt-brand font-mono text-xs font-bold text-newt-on-accent',
+        'flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--newt-radius-sm)] bg-newt-brand font-[family-name:var(--newt-font-mono)] text-xs font-bold text-newt-on-accent',
         props.class
       )
     "

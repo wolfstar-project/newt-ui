@@ -77,7 +77,7 @@ const exact = computed(() =>
     :title="exact"
     :class="
       cn(
-        'rounded-sm bg-newt-bg-elevated px-1 text-newt-text-primary',
+        'rounded-[var(--newt-radius-sm)] bg-newt-bg-elevated px-1 text-newt-text-primary',
         props.class
       )
     "

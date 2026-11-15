@@ -51,7 +51,9 @@ block for v4. `init` writes whichever the project needs. Either way the
 utilities are the same — `bg-newt-brand`, `text-newt-text-muted`,
 `border-newt-border`, `shadow-elevation-high`, `duration-fast`, `ease-newt`.
 The `@theme` block maps only `newt` names, never `--radius-*`, `--font-sans` or
-`--font-mono`, so installing newt/ui does not restyle the rest of the app.
+`--font-mono`, so installing newt/ui does not restyle the rest of the app. The
+components read their radii and type from `--newt-radius-*` and
+`--newt-font-*` directly, so the host's scale does not restyle them either.
 
 ## A preset is the short way to the same place
 

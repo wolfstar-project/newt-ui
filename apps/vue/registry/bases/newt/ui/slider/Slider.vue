@@ -123,7 +123,7 @@ function ratioOf(point: number): number {
         v-for="index in thumbs"
         :key="index"
         v-bind="thumbAttrs"
-        class="block h-6 w-2.5 rounded-sm border border-newt-border bg-newt-on-accent shadow-elevation-low focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
+        class="block h-6 w-2.5 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-on-accent shadow-elevation-low focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
       />
     </SliderRoot>
   </div>

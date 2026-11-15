@@ -51,7 +51,7 @@ function onKeydown(event: KeyboardEvent) {
     "
     :class="
       cn(
-        'h-[85px] w-[85px] rounded-lg object-cover',
+        'h-[85px] w-[85px] rounded-[var(--newt-radius-lg)] object-cover',
         props.spoiler && !revealed && 'cursor-pointer blur-lg',
         props.class
       )

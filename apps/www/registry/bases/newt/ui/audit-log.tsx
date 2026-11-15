@@ -128,7 +128,7 @@ const AuditLogEntry = React.forwardRef<HTMLLIElement, AuditLogEntryProps>(
         ref={ref}
         data-kind={kind}
         className={cn(
-          "overflow-hidden rounded-md border border-newt-border bg-newt-bg-surface",
+          "overflow-hidden rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-surface",
           className
         )}
         {...props}
@@ -174,7 +174,7 @@ const AuditLogChange = React.forwardRef<
   <li
     ref={ref}
     className={cn(
-      "marker:font-mono marker:text-xs marker:text-newt-text-muted [&_strong]:font-semibold [&_strong]:text-newt-text-primary",
+      "marker:font-[family-name:var(--newt-font-mono)] marker:text-xs marker:text-newt-text-muted [&_strong]:font-semibold [&_strong]:text-newt-text-primary",
       className
     )}
     {...props}

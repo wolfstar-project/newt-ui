@@ -20,7 +20,7 @@ const props = withDefaults(
   <li
     :class="
       cn(
-        'inline-flex min-w-0 items-center gap-1.5 text-newt-text-secondary [&:not(:first-child)]:before:text-newt-text-muted [&:not(:first-child)]:before:content-[\'/\'] [&_a:focus-visible]:outline [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-2 [&_a:focus-visible]:outline-newt-text-link [&_a:hover]:text-newt-text-primary [&_a:hover]:underline [&_a]:rounded-sm [&_a]:text-newt-text-secondary [&_a]:no-underline [&_a]:transition-colors [&_a]:duration-fast [&_a]:ease-newt',
+        'inline-flex min-w-0 items-center gap-1.5 text-newt-text-secondary [&:not(:first-child)]:before:text-newt-text-muted [&:not(:first-child)]:before:content-[\'/\'] [&_a:focus-visible]:outline [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-2 [&_a:focus-visible]:outline-newt-text-link [&_a:hover]:text-newt-text-primary [&_a:hover]:underline [&_a]:rounded-[var(--newt-radius-sm)] [&_a]:text-newt-text-secondary [&_a]:no-underline [&_a]:transition-colors [&_a]:duration-fast [&_a]:ease-newt',
         props.class
       )
     "

@@ -25,10 +25,11 @@ export const appLauncherVariants = cva(
     variants: {
       variant: {
         /* The desktop popout, at a fixed size. */
-        popout: "h-[min(680px,calc(100dvh-2rem))] max-w-[504px] rounded-md",
+        popout:
+          "h-[min(680px,calc(100dvh-2rem))] max-w-[504px] rounded-[var(--newt-radius-md)]",
         /* The bottom sheet: full width, rising from the bottom edge. */
         sheet:
-          "h-[var(--newt-app-launcher-sheet-height,90dvh)] max-w-none rounded-t-lg border-b-0",
+          "h-[var(--newt-app-launcher-sheet-height,90dvh)] max-w-none rounded-t-[var(--newt-radius-lg)] border-b-0",
       },
     },
     defaultVariants: { variant: "popout" },

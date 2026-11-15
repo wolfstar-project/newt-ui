@@ -14,6 +14,7 @@ import { list } from "./commands/list.js"
 import { migrate } from "./commands/migrate.js"
 import { preset } from "./commands/preset.js"
 import { search } from "./commands/search.js"
+import { tokens } from "./commands/tokens.js"
 import { view } from "./commands/view.js"
 import { MCP_CLIENTS, mcpInit } from "./mcp/init.js"
 import { handleError, highlighter, logger } from "./utils/logger.js"
@@ -100,6 +101,7 @@ function printHelp(): void {
     search [query]           search the registry by name or description
     view <components...>     print a component's source without installing it
     diff <component>         check an installed component against the registry
+    tokens [components...]   add the theme names your stylesheet is missing
     info                     print what this project is and what it has installed
     mcp                      run the MCP server over stdio
     mcp init                 write the MCP config for an editor (--client)
@@ -126,7 +128,8 @@ function printHelp(): void {
     -p, --path <path>        the path to add the component to (add)
     -t, --type <type>        filter by registry item type (list, search)
         --json               output as JSON (list, search, view, info)
-        --dry-run            report what would change, write nothing (migrate)
+        --dry-run            report what would change, write nothing
+                             (migrate, tokens)
         --client <name>      the editor to configure (mcp init):
                              ${MCP_CLIENTS.join(", ")}
         --legacy             use the legacy HTML/CSS CLI (same as newtui-html)
@@ -138,6 +141,7 @@ function printHelp(): void {
     $ newtui add button avatar
     $ newtui list --framework vue
     $ newtui diff button
+    $ newtui tokens --dry-run
     $ newtui search presence --json
     $ newtui info --json
     $ newtui mcp init --client claude
@@ -306,6 +310,14 @@ async function main(): Promise<void> {
     }
     case "diff":
       await diff({ component: rest[0], cwd, registry })
+      break
+    case "tokens":
+      await tokens({
+        components: rest,
+        cwd,
+        registry,
+        dryRun: flagBoolean(args["dry-run"]),
+      })
       break
     case "info":
       await info({ cwd, registry, json: flagBoolean(args.json) })

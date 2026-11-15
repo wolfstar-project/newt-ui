@@ -241,6 +241,8 @@ describe("add installation pipeline", () => {
     expect(requests).toEqual([
       "/styles/default/button.json",
       "/styles/default/icon.json",
+      /* the theme, to check the stylesheet declares what the tree uses */
+      "/styles/default/theme-newt.json",
     ])
   })
 
@@ -262,6 +264,8 @@ describe("add installation pipeline", () => {
     expect(requests).toEqual([
       "/styles/default/button.json",
       "/styles/default/icon.json",
+      /* the theme, to check the stylesheet declares what the tree uses */
+      "/styles/default/theme-newt.json",
     ])
     expect(
       await readFile(path.join(cwd, "components/ui/icon.tsx"), "utf8")

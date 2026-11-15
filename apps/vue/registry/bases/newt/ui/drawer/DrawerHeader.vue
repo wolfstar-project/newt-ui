@@ -29,7 +29,7 @@ const props = withDefaults(
     </div>
     <DialogClose
       :aria-label="props.closeLabel"
-      class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-sm text-newt-text-muted hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
+      class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--newt-radius-sm)] text-newt-text-muted hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
     >
       <svg viewBox="0 0 16 16" aria-hidden="true" class="h-4 w-4">
         <path

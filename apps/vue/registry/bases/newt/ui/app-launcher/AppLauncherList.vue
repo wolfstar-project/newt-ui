@@ -23,7 +23,7 @@ const props = withDefaults(
       cn(
         props.variant === 'grid'
           ? 'grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-2'
-          : 'flex flex-col overflow-hidden rounded-md bg-newt-bg-elevated [&>*+*]:border-t [&>*+*]:border-newt-border',
+          : 'flex flex-col overflow-hidden rounded-[var(--newt-radius-md)] bg-newt-bg-elevated [&>*+*]:border-t [&>*+*]:border-newt-border',
         props.class
       )
     "

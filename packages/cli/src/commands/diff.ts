@@ -14,6 +14,7 @@ import {
   resolveTargetPath,
   transformContent,
 } from "../utils/transformers/imports.js"
+import { checkThemeNames } from "../utils/updaters/update-theme-names.js"
 
 export interface DiffOptions {
   component?: string
@@ -68,6 +69,9 @@ export async function diff(options: DiffOptions): Promise<void> {
     logger.info(`${relative}: differs`)
     printLineDiff(local, remote)
   }
+
+  /* the registry's version is the one an update would bring in */
+  await checkThemeNames([item], config, registryUrl)
 
   if (changed === 0) {
     outro(highlighter.success("No updates found."))

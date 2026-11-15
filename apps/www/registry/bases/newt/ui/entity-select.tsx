@@ -305,7 +305,7 @@ const EntitySelect = React.forwardRef<HTMLDivElement, EntitySelectProps>(
               onClick={() => (open ? closeMenu() : openMenu())}
               onKeyDown={onKeyDown}
               className={cn(
-                "flex w-full items-center gap-2 rounded-md border border-newt-border bg-newt-bg-base px-3 py-2 text-start text-sm text-newt-text-secondary",
+                "flex w-full items-center gap-2 rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-base px-3 py-2 text-start text-sm text-newt-text-secondary",
                 "transition-colors duration-fast ease-newt hover:border-newt-text-muted",
                 "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
                 open && "border-newt-text-link",
@@ -330,7 +330,7 @@ const EntitySelect = React.forwardRef<HTMLDivElement, EntitySelectProps>(
                         event.stopPropagation()
                         remove(option.value)
                       }}
-                      className="flex items-center gap-1.5 rounded-sm bg-newt-bg-elevated px-1.5 py-1 text-xs text-newt-text-primary"
+                      className="flex items-center gap-1.5 rounded-[var(--newt-radius-sm)] bg-newt-bg-elevated px-1.5 py-1 text-xs text-newt-text-primary"
                     >
                       {option.icon ? (
                         <span
@@ -433,7 +433,7 @@ const EntitySelect = React.forwardRef<HTMLDivElement, EntitySelectProps>(
               }
             }}
             onMouseDown={(event) => event.preventDefault()}
-            className="z-[110] w-[var(--radix-popover-trigger-width)] rounded-md border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high outline-none"
+            className="z-[110] w-[var(--radix-popover-trigger-width)] rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high outline-none"
           >
             <ul
               ref={listRef}
@@ -475,7 +475,7 @@ const EntitySelect = React.forwardRef<HTMLDivElement, EntitySelectProps>(
                       }}
                       onClick={() => toggle(index)}
                       className={cn(
-                        "flex cursor-pointer items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm text-newt-text-secondary",
+                        "flex cursor-pointer items-center gap-2.5 rounded-[var(--newt-radius-sm)] px-2.5 py-2 text-sm text-newt-text-secondary",
                         highlighted && "bg-newt-bg-elevated",
                         picked && "text-newt-text-primary",
                         option.disabled &&
@@ -505,7 +505,7 @@ const EntitySelect = React.forwardRef<HTMLDivElement, EntitySelectProps>(
                       )}
 
                       {option.badge === undefined ? null : (
-                        <span className="shrink-0 rounded-sm bg-newt-brand px-1 py-0.5 text-[10px] font-bold uppercase leading-none text-newt-on-accent">
+                        <span className="shrink-0 rounded-[var(--newt-radius-sm)] bg-newt-brand px-1 py-0.5 text-[10px] font-bold uppercase leading-none text-newt-on-accent">
                           {option.badge}
                         </span>
                       )}
@@ -520,7 +520,7 @@ const EntitySelect = React.forwardRef<HTMLDivElement, EntitySelectProps>(
                           aria-hidden="true"
                           data-checked={picked || undefined}
                           className={cn(
-                            "flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border-2 border-newt-text-muted",
+                            "flex h-5 w-5 shrink-0 items-center justify-center rounded-[var(--newt-radius-sm)] border-2 border-newt-text-muted",
                             "data-[checked]:border-newt-brand data-[checked]:bg-newt-brand"
                           )}
                         >
