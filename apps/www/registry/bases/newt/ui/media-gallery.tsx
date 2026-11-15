@@ -42,47 +42,75 @@ const MediaGallery = React.forwardRef<HTMLDivElement, MediaGalleryProps>(
 )
 MediaGallery.displayName = "MediaGallery"
 
-export interface MediaGalleryItemProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+/*
+ * The props of the element or component `as` names, so a custom image
+ * component's own props type-check.
+ */
+export type MediaGalleryItemProps<E extends React.ElementType = "img"> = {
+  /**
+   * The image element or component to render. Defaults to `img`; pass your
+   * framework's image component for optimised sources. It receives `src`,
+   * `alt`, `className` and the spoiler attributes and handlers.
+   */
+  as?: E
   /** Blurs the image until it is clicked. */
   spoiler?: boolean
+} & Omit<React.ComponentPropsWithRef<E>, "as" | "spoiler">
+
+type MediaGalleryItemComponent = {
+  <E extends React.ElementType = "img">(
+    props: MediaGalleryItemProps<E>
+  ): React.ReactNode
+  displayName?: string
 }
 
+/*
+ * SAFETY: `forwardRef` drops the generic signature. The render hands every
+ * prop it does not set itself to `as` unchanged, so the props of `as` are
+ * the props the part receives.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- see SAFETY
 const MediaGalleryItem = React.forwardRef<
   HTMLImageElement,
   MediaGalleryItemProps
->(({ className, spoiler = false, alt = "", ...props }, ref) => {
-  const [revealed, setRevealed] = React.useState(false)
-  const hidden = spoiler && !revealed
+>(
+  (
+    { as: Tag = "img", className, spoiler = false, alt = "", ...props },
+    ref
+  ) => {
+    const [revealed, setRevealed] = React.useState(false)
+    const hidden = spoiler && !revealed
 
-  return (
-    <img
-      ref={ref}
-      alt={alt}
-      data-spoiler={hidden || undefined}
-      role={hidden ? "button" : undefined}
-      tabIndex={hidden ? 0 : undefined}
-      aria-label={hidden ? "Spoiler, click to reveal" : undefined}
-      onClick={() => setRevealed(true)}
-      onKeyDown={(event) => {
-        if (!hidden) return
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault()
-          setRevealed(true)
-        }
-      }}
-      /*
-       * `object-cover` on a stretched cell: the mosaic keeps its shape whatever
-       * aspect ratio arrives, which is the point of a mosaic.
-       */
-      className={cn(
-        "h-full w-full object-cover",
-        hidden && "cursor-pointer blur-lg",
-        className
-      )}
-      {...props}
-    />
-  )
-})
+    return (
+      <Tag
+        ref={ref}
+        alt={alt}
+        data-spoiler={hidden || undefined}
+        role={hidden ? "button" : undefined}
+        tabIndex={hidden ? 0 : undefined}
+        aria-label={hidden ? "Spoiler, click to reveal" : undefined}
+        onClick={() => setRevealed(true)}
+        onKeyDown={(event: React.KeyboardEvent<HTMLImageElement>) => {
+          if (!hidden) return
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault()
+            setRevealed(true)
+          }
+        }}
+        /*
+         * `object-cover` on a stretched cell: the mosaic keeps its shape whatever
+         * aspect ratio arrives, which is the point of a mosaic.
+         */
+        className={cn(
+          "h-full w-full object-cover",
+          hidden && "cursor-pointer blur-lg",
+          className
+        )}
+        {...props}
+      />
+    )
+  }
+) as MediaGalleryItemComponent
 MediaGalleryItem.displayName = "MediaGalleryItem"
 
 export { MediaGallery, MediaGalleryItem }

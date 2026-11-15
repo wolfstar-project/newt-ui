@@ -54,8 +54,13 @@ export function defaultReactionLabel({
 
 export interface ReactionProps
   extends
-    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children">,
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     Omit<VariantProps<typeof reactionVariants>, "interactive"> {
+  /**
+   * The emoji, drawn by your own component: an icon or an image component.
+   * Wins over `emoji` and `emojiSrc`. Set `emojiAlt` to name it.
+   */
+  children?: React.ReactNode
   /** Emoji or icon rendered on the left. Optional when `emojiSrc` is set. */
   emoji?: React.ReactNode
   /** Image URL of a server (custom) emoji, rendered instead of `emoji`. */
@@ -88,6 +93,7 @@ const Reaction = React.forwardRef<HTMLElement, ReactionProps>(
   (
     {
       className,
+      children,
       emoji,
       emojiSrc,
       emojiAlt,
@@ -125,7 +131,14 @@ const Reaction = React.forwardRef<HTMLElement, ReactionProps>(
 
     const content = (
       <>
-        {emojiSrc ? (
+        {React.Children.toArray(children).length > 0 ? (
+          <span
+            aria-hidden="true"
+            className="inline-flex shrink-0 items-center"
+          >
+            {children}
+          </span>
+        ) : emojiSrc ? (
           <img
             src={emojiSrc}
             alt=""

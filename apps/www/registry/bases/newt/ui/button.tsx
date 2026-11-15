@@ -19,6 +19,12 @@ const buttonVariants = cva(
       size: {
         default: "rounded-sm px-4 py-2.5 text-sm",
         sm: "rounded-sm px-3 py-1.5 text-[13px]",
+        /*
+         * 32px, the height of a button in a message's action row. The height
+         * is fixed, so an emoji image, a leading icon or the link variant
+         * cannot make one button of the row taller or shorter.
+         */
+        message: "h-8 rounded-sm px-4 py-0 text-sm",
         lg: "rounded-sm px-6 py-3 text-base",
         icon: "rounded-full p-2 text-sm",
       },
@@ -26,6 +32,7 @@ const buttonVariants = cva(
     compoundVariants: [
       { variant: "link", size: "default", class: "px-0 py-1" },
       { variant: "link", size: "sm", class: "px-0 py-1" },
+      { variant: "link", size: "message", class: "px-0" },
       { variant: "link", size: "lg", class: "px-0 py-1" },
     ],
     defaultVariants: {
@@ -69,8 +76,24 @@ export interface ButtonProps
   emoji?: string
   /** Accessible name for `emoji`; empty (the default) hides it from readers. */
   emojiAlt?: string
+  /**
+   * Content before the label, such as an icon component or a unicode emoji.
+   * It sits in its own box, so the button's gap separates it from the label.
+   */
+  leading?: React.ReactNode
+  /** Content after the label, before the link-out glyph. */
+  trailing?: React.ReactNode
   /** Link-out glyph after the label. Defaults on for `variant="link"`. */
   launchIcon?: boolean
+}
+
+/*
+ * No box without content: an empty box would still take a gap and push an
+ * emoji-only button off centre. `toArray` drops `null`, `undefined` and
+ * booleans, so `leading={cond && <Icon />}` leaves no box when `cond` is false.
+ */
+function renders(node: React.ReactNode): boolean {
+  return React.Children.toArray(node).length > 0
 }
 
 const Button = React.forwardRef<HTMLElement, ButtonProps>(
@@ -85,6 +108,8 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
       disabled,
       emoji,
       emojiAlt = "",
+      leading,
+      trailing,
       launchIcon,
       children,
       ...props
@@ -117,7 +142,15 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
             className="h-[1.375em] w-[1.375em] shrink-0 object-contain align-bottom"
           />
         ) : null}
-        <span className="truncate">{children}</span>
+        {renders(leading) ? (
+          <span className="inline-flex shrink-0 items-center">{leading}</span>
+        ) : null}
+        {renders(children) ? (
+          <span className="truncate">{children}</span>
+        ) : null}
+        {renders(trailing) ? (
+          <span className="inline-flex shrink-0 items-center">{trailing}</span>
+        ) : null}
         {showLaunch ? <LaunchIcon /> : null}
       </Tag>
     )

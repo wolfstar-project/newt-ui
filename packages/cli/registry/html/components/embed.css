@@ -1,8 +1,11 @@
 /* newt-ui · Embed (Discord-inspired message embed) */
 
 .newt-embed {
-  /* Override per embed to carry the bot's accent colour. */
-  --newt-embed-color: var(--newt-brand);
+  /*
+   * Override per embed to carry the bot's accent colour. Without one the bar
+   * is the neutral border colour, the same default as `.newt-v2-container`.
+   */
+  --newt-embed-color: var(--newt-border);
 
   position: relative;
   display: flex;

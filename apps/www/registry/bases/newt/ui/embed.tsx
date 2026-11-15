@@ -3,7 +3,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 export interface EmbedProps extends Omit<React.ComponentProps<"div">, "color"> {
-  /** Accent colour of the left bar. Any CSS colour; defaults to the brand. */
+  /** Accent colour of the left bar. Any CSS colour; defaults to the border colour, like `V2Container`. */
   color?: string
 }
 
@@ -22,7 +22,7 @@ const Embed = React.forwardRef<HTMLDivElement, EmbedProps>(
           : style
       }
       className={cn(
-        "relative flex max-w-[var(--newt-embed-max-width)] overflow-hidden rounded-md border border-s-0 border-newt-embed-border bg-newt-embed-bg before:absolute before:inset-y-0 before:start-0 before:w-1 before:bg-[var(--newt-embed-color,var(--newt-brand))]",
+        "relative flex max-w-[var(--newt-embed-max-width)] overflow-hidden rounded-md border border-s-0 border-newt-embed-border bg-newt-embed-bg before:absolute before:inset-y-0 before:start-0 before:w-1 before:bg-[var(--newt-embed-color,var(--newt-border))]",
         className
       )}
       {...props}
@@ -50,18 +50,42 @@ const EmbedAuthor = React.forwardRef<
 ))
 EmbedAuthor.displayName = "EmbedAuthor"
 
-const EmbedAuthorIcon = React.forwardRef<
-  HTMLImageElement,
-  React.ComponentProps<"img">
->(({ className, alt = "", ...props }, ref) => (
-  <img
-    ref={ref}
-    alt={alt}
-    aria-hidden={alt === "" ? true : undefined}
-    className={cn("h-6 w-6 shrink-0 rounded-full object-cover", className)}
-    {...props}
-  />
-))
+/*
+ * The props of the element or component `as` names, so a custom image
+ * component's own props type-check.
+ */
+export type EmbedIconProps<E extends React.ElementType = "img"> = {
+  /**
+   * The image element or component to render. Defaults to `img`; pass your
+   * framework's image component for optimised sources.
+   */
+  as?: E
+} & Omit<React.ComponentPropsWithRef<E>, "as">
+
+type EmbedIconComponent = {
+  <E extends React.ElementType = "img">(
+    props: EmbedIconProps<E>
+  ): React.ReactNode
+  displayName?: string
+}
+
+/*
+ * SAFETY: `forwardRef` drops the generic signature. The render hands every
+ * prop it does not set itself to `as` unchanged, so the props of `as` are
+ * the props the part receives.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- see SAFETY
+const EmbedAuthorIcon = React.forwardRef<HTMLImageElement, EmbedIconProps>(
+  ({ as: Tag = "img", className, alt = "", ...props }, ref) => (
+    <Tag
+      ref={ref}
+      alt={alt}
+      aria-hidden={alt === "" ? true : undefined}
+      className={cn("h-6 w-6 shrink-0 rounded-full object-cover", className)}
+      {...props}
+    />
+  )
+) as EmbedIconComponent
 EmbedAuthorIcon.displayName = "EmbedAuthorIcon"
 
 const EmbedAuthorName = React.forwardRef<
@@ -179,18 +203,23 @@ const EmbedFooter = React.forwardRef<
 ))
 EmbedFooter.displayName = "EmbedFooter"
 
-const EmbedFooterIcon = React.forwardRef<
-  HTMLImageElement,
-  React.ComponentProps<"img">
->(({ className, alt = "", ...props }, ref) => (
-  <img
-    ref={ref}
-    alt={alt}
-    aria-hidden={alt === "" ? true : undefined}
-    className={cn("h-4 w-4 shrink-0 rounded-full object-cover", className)}
-    {...props}
-  />
-))
+/*
+ * SAFETY: `forwardRef` drops the generic signature. The render hands every
+ * prop it does not set itself to `as` unchanged, so the props of `as` are
+ * the props the part receives.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- see SAFETY
+const EmbedFooterIcon = React.forwardRef<HTMLImageElement, EmbedIconProps>(
+  ({ as: Tag = "img", className, alt = "", ...props }, ref) => (
+    <Tag
+      ref={ref}
+      alt={alt}
+      aria-hidden={alt === "" ? true : undefined}
+      className={cn("h-4 w-4 shrink-0 rounded-full object-cover", className)}
+      {...props}
+    />
+  )
+) as EmbedIconComponent
 EmbedFooterIcon.displayName = "EmbedFooterIcon"
 
 /* Middle dot, the way Discord separates footer text from the timestamp. */

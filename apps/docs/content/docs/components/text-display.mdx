@@ -1,0 +1,69 @@
+---
+title: "Text Display"
+description: "A block of message text that keeps its line breaks, with the chat markdown heading and subtext sizes."
+---
+
+A text display is a block of message text, the most common Components V2 part. Put it in a `V2Container`, in a `SectionContent` or anywhere a message shows text. It keeps the line breaks of the string it gets (`white-space: pre-line`), so a bot's `\n` is a new line on screen.
+
+<ComponentPreview name="text-display" />
+
+## Installation
+
+<Installation name="text-display" />
+
+## Usage
+
+<Usage name="text-display" />
+
+## Sizes
+
+`size` picks one of the chat markdown sizes. They match the `Markdown` component, so a text display and a rendered message look the same.
+
+| `size`      | Markdown | Text                                     |
+| ----------- | -------- | ---------------------------------------- |
+| `default`   | none     | The container's size                     |
+| `heading-1` | `#`      | 24px, bold                               |
+| `heading-2` | `##`     | 20px, bold, the size of `SectionHeading` |
+| `heading-3` | `###`    | 16px, bold                               |
+| `subtext`   | `-#`     | 13px, muted colour                       |
+
+Without a size, the text keeps the size and the colour of the container around it. A heading size keeps the font of the container, as a `Markdown` heading does. `SectionHeading` uses the display font and a tighter line height.
+
+In Vue, a template collapses its own line breaks before the part sees them. Bind the text as a string, such as `{{ content }}`, to keep them. In the HTML version, start the text right after the opening tag; a newline there is a line break too.
+
+## API reference
+
+<PropsTable
+  of="TextDisplay"
+  rows={[
+    {
+      name: "size",
+      type: '"default" | "heading-1" | "heading-2" | "heading-3" | "subtext"',
+      description:
+        "The chat markdown size: `#`, `##` and `###` headings, or `-#` subtext.",
+      default: '"default"',
+    },
+    {
+      name: "as",
+      type: "React.ElementType (React) / string | Component (Vue)",
+      description:
+        "The element or component to render. Pass `h2` or `h3` when a heading size is also a heading of the page.",
+      default: '"div"',
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "The text. Line breaks in a string are kept.",
+    },
+  ]}
+/>
+
+The registry exports `TextDisplay` and `textDisplayVariants`. `TextDisplay` accepts the native attributes of the element it renders. React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Accessibility
+
+A heading size only changes the look. If the text is a heading of the page, pass a heading element with `as`, such as `as="h3"`, so assistive technology can navigate to it. Keep the heading levels in order inside the page. Subtext uses `--newt-text-muted`; keep it for secondary text, never for the only copy of important information.
+
+## Tokens
+
+<TokensNote name="text-display" />

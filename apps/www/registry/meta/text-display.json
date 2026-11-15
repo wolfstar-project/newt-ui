@@ -1,0 +1,9 @@
+{
+  "name": "text-display",
+  "title": "Text Display",
+  "description": "A block of message text that keeps its line breaks, with the chat markdown heading and subtext sizes.",
+  "dependencies": ["class-variance-authority"],
+  "vueFiles": ["TextDisplay.vue", "index.ts"],
+  "reactDemo": "text-display-demo",
+  "vueDemo": "TextDisplayDemo"
+}

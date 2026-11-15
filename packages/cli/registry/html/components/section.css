@@ -35,8 +35,8 @@
   flex-shrink: 0;
 }
 .newt-section__thumbnail {
-  inline-size: 86px;
-  block-size: 86px;
+  inline-size: 85px;
+  block-size: 85px;
   border-radius: var(--newt-radius-lg);
   object-fit: cover;
 }

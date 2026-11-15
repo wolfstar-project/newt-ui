@@ -1002,6 +1002,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "text-display",
+    {
+      name: "text-display",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: ["registry/bases/newt/ui/text-display.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/ui/text-display")
+      ),
+    },
+  ],
+  [
     "thread-preview",
     {
       name: "thread-preview",
@@ -1461,6 +1473,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/button-sizes-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/button-sizes-demo")
+      ),
+    },
+  ],
+  [
+    "button-slots-demo",
+    {
+      name: "button-slots-demo",
+      type: "registry:example",
+      registryDependencies: ["button"],
+      files: ["registry/bases/newt/examples/button-slots-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/button-slots-demo")
       ),
     },
   ],
@@ -2111,6 +2135,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "invite-router-demo",
+    {
+      name: "invite-router-demo",
+      type: "registry:example",
+      registryDependencies: ["invite", "button"],
+      files: ["registry/bases/newt/examples/invite-router-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/invite-router-demo")
+      ),
+    },
+  ],
+  [
     "kbd-tag-demo",
     {
       name: "kbd-tag-demo",
@@ -2696,6 +2732,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "reaction-icon-demo",
+    {
+      name: "reaction-icon-demo",
+      type: "registry:example",
+      registryDependencies: ["reaction"],
+      files: ["registry/bases/newt/examples/reaction-icon-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/reaction-icon-demo")
+      ),
+    },
+  ],
+  [
     "reaction-readonly-demo",
     {
       name: "reaction-readonly-demo",
@@ -3265,6 +3313,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "text-display-demo",
+    {
+      name: "text-display-demo",
+      type: "registry:example",
+      registryDependencies: ["text-display", "divider", "v2-container"],
+      files: ["registry/bases/newt/examples/text-display-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/text-display-demo")
+      ),
+    },
+  ],
+  [
     "thread-preview-demo",
     {
       name: "thread-preview-demo",
@@ -3479,7 +3539,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "v2-container-demo",
       type: "registry:example",
-      registryDependencies: ["v2-container", "action-row", "button", "divider"],
+      registryDependencies: [
+        "v2-container",
+        "action-row",
+        "button",
+        "divider",
+        "text-display",
+      ],
       files: ["registry/bases/newt/examples/v2-container-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/v2-container-demo")

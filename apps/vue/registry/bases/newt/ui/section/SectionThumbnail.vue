@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { ref, type HTMLAttributes } from "vue"
+import { ref, type Component, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
 const props = withDefaults(
   defineProps<{
     class?: HTMLAttributes["class"]
+    /**
+     * The image element or component to render. Defaults to `img`; pass
+     * `NuxtImg` or another image component for optimised sources. It
+     * receives `src`, `alt`, `class` and the spoiler attributes and handlers.
+     */
+    as?: string | Component
     src: string
     alt?: string
     /**
@@ -14,7 +20,7 @@ const props = withDefaults(
      */
     spoiler?: boolean
   }>(),
-  { alt: "", spoiler: false }
+  { as: "img", alt: "", spoiler: false }
 )
 
 const revealed = ref(false)
@@ -33,7 +39,8 @@ function onKeydown(event: KeyboardEvent) {
 </script>
 
 <template>
-  <img
+  <component
+    :is="props.as"
     :src="props.src"
     :alt="props.alt"
     :data-spoiler="props.spoiler && !revealed ? true : undefined"
@@ -44,7 +51,7 @@ function onKeydown(event: KeyboardEvent) {
     "
     :class="
       cn(
-        'h-[86px] w-[86px] rounded-lg object-cover',
+        'h-[85px] w-[85px] rounded-lg object-cover',
         props.spoiler && !revealed && 'cursor-pointer blur-lg',
         props.class
       )

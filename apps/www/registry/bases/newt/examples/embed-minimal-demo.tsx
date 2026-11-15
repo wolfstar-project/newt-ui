@@ -1,6 +1,6 @@
 import { Embed, EmbedDescription } from "@/registry/bases/newt/ui/embed"
 
-/* Every part is optional: with no `color` the bar takes the brand colour. */
+/* Every part is optional: with no `color` the bar takes the neutral border colour. */
 export default function EmbedMinimalDemo() {
   return (
     <Embed>

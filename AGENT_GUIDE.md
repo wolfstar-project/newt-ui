@@ -204,6 +204,7 @@ and border changes only. This is a deliberate constraint, not an oversight.
 | Member list row       | `.newt-member`                                                                 | presence dot + role tag                                              |
 | Role tag              | `.newt-role-tag`                                                               | colored dot + label                                                  |
 | Divider               | `.newt-divider`                                                                | labeled section divider (date separators, group headers)             |
+| Text display          | `.newt-text-display`                                                           | message text with kept line breaks and markdown sizes                |
 | Mention chip          | `.newt-mention`                                                                | user/channel/role variants                                           |
 | Spoiler               | `.newt-spoiler`                                                                | click-to-reveal text block                                           |
 | Voice channel row     | `.newt-voice-channel`                                                          | nested member rows with mic/headset icons                            |

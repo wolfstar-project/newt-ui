@@ -289,6 +289,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "button-slots-demo",
+    type: "registry:example",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "examples/button-slots-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "button-disabled-demo",
     type: "registry:example",
     registryDependencies: ["button"],
@@ -872,6 +883,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "invite-router-demo",
+    type: "registry:example",
+    registryDependencies: ["invite", "button"],
+    files: [
+      {
+        path: "examples/invite-router-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "kbd-tag-demo",
     type: "registry:example",
     registryDependencies: ["kbd-tag"],
@@ -1406,6 +1428,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "reaction-icon-demo",
+    type: "registry:example",
+    registryDependencies: ["reaction"],
+    files: [
+      {
+        path: "examples/reaction-icon-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "reaction-readonly-demo",
     type: "registry:example",
     registryDependencies: ["reaction"],
@@ -1912,6 +1945,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "text-display-demo",
+    type: "registry:example",
+    registryDependencies: ["text-display", "divider", "v2-container"],
+    files: [
+      {
+        path: "examples/text-display-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "thread-preview-demo",
     type: "registry:example",
     registryDependencies: ["thread-preview"],
@@ -2107,7 +2151,13 @@ export const examples: Registry = [
   {
     name: "v2-container-demo",
     type: "registry:example",
-    registryDependencies: ["v2-container", "action-row", "button", "divider"],
+    registryDependencies: [
+      "v2-container",
+      "action-row",
+      "button",
+      "divider",
+      "text-display",
+    ],
     files: [
       {
         path: "examples/v2-container-demo.tsx",

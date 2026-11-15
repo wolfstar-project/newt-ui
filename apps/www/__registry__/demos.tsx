@@ -85,6 +85,7 @@ import SystemMessageDemo from "@/registry/bases/newt/examples/system-message-dem
 import TableDemo from "@/registry/bases/newt/examples/table-demo"
 import TabsDemo from "@/registry/bases/newt/examples/tabs-demo"
 import TagInputDemo from "@/registry/bases/newt/examples/tag-input-demo"
+import TextDisplayDemo from "@/registry/bases/newt/examples/text-display-demo"
 import ThreadPreviewDemo from "@/registry/bases/newt/examples/thread-preview-demo"
 import TimelineDemo from "@/registry/bases/newt/examples/timeline-demo"
 import TimestampDemo from "@/registry/bases/newt/examples/timestamp-demo"
@@ -187,6 +188,7 @@ const demoEntries: Array<[string, React.ComponentType]> = [
   ["table", TableDemo],
   ["tabs", TabsDemo],
   ["tag-input", TagInputDemo],
+  ["text-display", TextDisplayDemo],
   ["thread-preview", ThreadPreviewDemo],
   ["timeline", TimelineDemo],
   ["timestamp", TimestampDemo],

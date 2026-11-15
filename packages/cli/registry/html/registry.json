@@ -329,6 +329,13 @@
       "uses": ["divider"]
     },
     {
+      "name": "text-display",
+      "title": "Text Display",
+      "rootClass": "newt-text-display",
+      "files": ["text-display.css", "text-display.html"],
+      "uses": ["v2-container"]
+    },
+    {
       "name": "channel-header",
       "title": "Channel Header",
       "rootClass": "newt-channel-header",

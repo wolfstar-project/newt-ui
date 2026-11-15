@@ -18,6 +18,12 @@ export const buttonVariants = cva(
       size: {
         default: "rounded-sm px-4 py-2.5 text-sm",
         sm: "rounded-sm px-3 py-1.5 text-[13px]",
+        /*
+         * 32px, the height of a button in a message's action row. The height
+         * is fixed, so an emoji image, a leading icon or the link variant
+         * cannot make one button of the row taller or shorter.
+         */
+        message: "h-8 rounded-sm px-4 py-0 text-sm",
         lg: "rounded-sm px-6 py-3 text-base",
         icon: "rounded-full p-2 text-sm",
       },
@@ -25,6 +31,7 @@ export const buttonVariants = cva(
     compoundVariants: [
       { variant: "link", size: "default", class: "px-0 py-1" },
       { variant: "link", size: "sm", class: "px-0 py-1" },
+      { variant: "link", size: "message", class: "px-0" },
       { variant: "link", size: "lg", class: "px-0 py-1" },
     ],
     defaultVariants: {
