@@ -289,6 +289,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ButtonSlotsDemo",
+    type: "registry:example",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "examples/ButtonSlotsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ButtonDisabledDemo",
     type: "registry:example",
     registryDependencies: ["button"],
@@ -1406,6 +1417,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ReactionIconDemo",
+    type: "registry:example",
+    registryDependencies: ["reaction"],
+    files: [
+      {
+        path: "examples/ReactionIconDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ReactionReadonlyDemo",
     type: "registry:example",
     registryDependencies: ["reaction"],
@@ -1912,6 +1934,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "TextDisplayDemo",
+    type: "registry:example",
+    registryDependencies: ["text-display", "divider", "v2-container"],
+    files: [
+      {
+        path: "examples/TextDisplayDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ThreadPreviewDemo",
     type: "registry:example",
     registryDependencies: ["thread-preview"],
@@ -2107,7 +2140,13 @@ export const examples: Registry = [
   {
     name: "V2ContainerDemo",
     type: "registry:example",
-    registryDependencies: ["v2-container", "action-row", "button", "divider"],
+    registryDependencies: [
+      "v2-container",
+      "action-row",
+      "button",
+      "divider",
+      "text-display",
+    ],
     files: [
       {
         path: "examples/V2ContainerDemo.vue",

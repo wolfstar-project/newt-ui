@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ButtonHTMLAttributes } from "vue"
-import { computed, ref, watch } from "vue"
+import { computed, ref, watch, type VNode } from "vue"
 
 import { cn } from "@/lib/utils"
 
@@ -42,6 +42,14 @@ const props = withDefaults(
     formatLabel: defaultReactionLabel,
   }
 )
+
+const slots = defineSlots<{
+  /**
+   * The emoji, drawn by your own component: an icon or an image component.
+   * Wins over `emoji` and `emojiSrc`. Set `emojiAlt` to name it.
+   */
+  default?: () => VNode[]
+}>()
 
 const emit = defineEmits<{ (e: "update:active", value: boolean): void }>()
 
@@ -86,8 +94,15 @@ const label = computed(
       )
     "
   >
+    <span
+      v-if="slots.default"
+      aria-hidden="true"
+      class="inline-flex shrink-0 items-center"
+    >
+      <slot />
+    </span>
     <img
-      v-if="props.emojiSrc"
+      v-else-if="props.emojiSrc"
       :src="props.emojiSrc"
       alt=""
       aria-hidden="true"
@@ -108,8 +123,15 @@ const label = computed(
     :class="cn(reactionVariants({ active: isActive }), props.class)"
     @click="toggle"
   >
+    <span
+      v-if="slots.default"
+      aria-hidden="true"
+      class="inline-flex shrink-0 items-center"
+    >
+      <slot />
+    </span>
     <img
-      v-if="props.emojiSrc"
+      v-else-if="props.emojiSrc"
       :src="props.emojiSrc"
       alt=""
       aria-hidden="true"

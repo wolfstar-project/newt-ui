@@ -68,6 +68,12 @@ SectionAccessory.displayName = "SectionAccessory"
 
 export interface SectionThumbnailProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   /**
+   * The image element or component to render. Defaults to `img`; pass your
+   * framework's image component for optimised sources. It receives `src`,
+   * `alt`, `className` and the spoiler attributes and handlers.
+   */
+  as?: React.ElementType
+  /**
    * Marks the image as a spoiler: blurred until clicked, the same treatment
    * a spoilered attachment gets.
    */
@@ -77,39 +83,44 @@ export interface SectionThumbnailProps extends React.ImgHTMLAttributes<HTMLImage
 const SectionThumbnail = React.forwardRef<
   HTMLImageElement,
   SectionThumbnailProps
->(({ className, spoiler = false, alt = "", ...props }, ref) => {
-  const [revealed, setRevealed] = React.useState(false)
-  const hidden = spoiler && !revealed
+>(
+  (
+    { as: Tag = "img", className, spoiler = false, alt = "", ...props },
+    ref
+  ) => {
+    const [revealed, setRevealed] = React.useState(false)
+    const hidden = spoiler && !revealed
 
-  return (
-    <img
-      ref={ref}
-      alt={alt}
-      data-spoiler={hidden || undefined}
-      /*
-       * A spoilered thumbnail is a button until it is opened: it takes a
-       * click and a key, and says what it is to a screen reader.
-       */
-      role={hidden ? "button" : undefined}
-      tabIndex={hidden ? 0 : undefined}
-      aria-label={hidden ? "Spoiler, click to reveal" : undefined}
-      onClick={() => setRevealed(true)}
-      onKeyDown={(event) => {
-        if (!hidden) return
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault()
-          setRevealed(true)
-        }
-      }}
-      className={cn(
-        "h-[86px] w-[86px] rounded-lg object-cover",
-        hidden && "cursor-pointer blur-lg",
-        className
-      )}
-      {...props}
-    />
-  )
-})
+    return (
+      <Tag
+        ref={ref}
+        alt={alt}
+        data-spoiler={hidden || undefined}
+        /*
+         * A spoilered thumbnail is a button until it is opened: it takes a
+         * click and a key, and says what it is to a screen reader.
+         */
+        role={hidden ? "button" : undefined}
+        tabIndex={hidden ? 0 : undefined}
+        aria-label={hidden ? "Spoiler, click to reveal" : undefined}
+        onClick={() => setRevealed(true)}
+        onKeyDown={(event: React.KeyboardEvent<HTMLImageElement>) => {
+          if (!hidden) return
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault()
+            setRevealed(true)
+          }
+        }}
+        className={cn(
+          "h-[85px] w-[85px] rounded-lg object-cover",
+          hidden && "cursor-pointer blur-lg",
+          className
+        )}
+        {...props}
+      />
+    )
+  }
+)
 SectionThumbnail.displayName = "SectionThumbnail"
 
 export {

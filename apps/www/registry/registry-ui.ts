@@ -1187,6 +1187,20 @@ export const ui: Registry = [
     ],
   },
   {
+    name: "text-display",
+    type: "registry:ui",
+    title: "Text Display",
+    description:
+      "A block of message text that keeps its line breaks, with the chat markdown heading and subtext sizes.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/text-display.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
     name: "thread-preview",
     type: "registry:ui",
     title: "Thread Preview",

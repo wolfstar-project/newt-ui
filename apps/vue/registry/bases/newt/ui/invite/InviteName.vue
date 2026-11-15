@@ -1,13 +1,24 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import type { Component, HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-const props = defineProps<{ class?: HTMLAttributes["class"] }>()
+const props = withDefaults(
+  defineProps<{
+    class?: HTMLAttributes["class"]
+    /**
+     * The element or component to render. Defaults to `a`; pass `NuxtLink`
+     * or `RouterLink` to keep client navigation.
+     */
+    as?: string | Component
+  }>(),
+  { as: "a" }
+)
 </script>
 
 <template>
-  <a
+  <component
+    :is="props.as"
     :class="
       cn(
         'block truncate font-bold text-newt-text-primary no-underline hover:underline',
@@ -16,5 +27,5 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
     "
   >
     <slot />
-  </a>
+  </component>
 </template>

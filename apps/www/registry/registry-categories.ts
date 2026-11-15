@@ -99,6 +99,7 @@ export const categories: DocsCategory[] = [
     components: [
       "action-row",
       "v2-container",
+      "text-display",
       "section",
       "media-gallery",
       "entity-select",

@@ -43,6 +43,12 @@ const MediaGallery = React.forwardRef<HTMLDivElement, MediaGalleryProps>(
 MediaGallery.displayName = "MediaGallery"
 
 export interface MediaGalleryItemProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+  /**
+   * The image element or component to render. Defaults to `img`; pass your
+   * framework's image component for optimised sources. It receives `src`,
+   * `alt`, `className` and the spoiler attributes and handlers.
+   */
+  as?: React.ElementType
   /** Blurs the image until it is clicked. */
   spoiler?: boolean
 }
@@ -50,39 +56,44 @@ export interface MediaGalleryItemProps extends React.ImgHTMLAttributes<HTMLImage
 const MediaGalleryItem = React.forwardRef<
   HTMLImageElement,
   MediaGalleryItemProps
->(({ className, spoiler = false, alt = "", ...props }, ref) => {
-  const [revealed, setRevealed] = React.useState(false)
-  const hidden = spoiler && !revealed
+>(
+  (
+    { as: Tag = "img", className, spoiler = false, alt = "", ...props },
+    ref
+  ) => {
+    const [revealed, setRevealed] = React.useState(false)
+    const hidden = spoiler && !revealed
 
-  return (
-    <img
-      ref={ref}
-      alt={alt}
-      data-spoiler={hidden || undefined}
-      role={hidden ? "button" : undefined}
-      tabIndex={hidden ? 0 : undefined}
-      aria-label={hidden ? "Spoiler, click to reveal" : undefined}
-      onClick={() => setRevealed(true)}
-      onKeyDown={(event) => {
-        if (!hidden) return
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault()
-          setRevealed(true)
-        }
-      }}
-      /*
-       * `object-cover` on a stretched cell: the mosaic keeps its shape whatever
-       * aspect ratio arrives, which is the point of a mosaic.
-       */
-      className={cn(
-        "h-full w-full object-cover",
-        hidden && "cursor-pointer blur-lg",
-        className
-      )}
-      {...props}
-    />
-  )
-})
+    return (
+      <Tag
+        ref={ref}
+        alt={alt}
+        data-spoiler={hidden || undefined}
+        role={hidden ? "button" : undefined}
+        tabIndex={hidden ? 0 : undefined}
+        aria-label={hidden ? "Spoiler, click to reveal" : undefined}
+        onClick={() => setRevealed(true)}
+        onKeyDown={(event: React.KeyboardEvent<HTMLImageElement>) => {
+          if (!hidden) return
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault()
+            setRevealed(true)
+          }
+        }}
+        /*
+         * `object-cover` on a stretched cell: the mosaic keeps its shape whatever
+         * aspect ratio arrives, which is the point of a mosaic.
+         */
+        className={cn(
+          "h-full w-full object-cover",
+          hidden && "cursor-pointer blur-lg",
+          className
+        )}
+        {...props}
+      />
+    )
+  }
+)
 MediaGalleryItem.displayName = "MediaGalleryItem"
 
 export { MediaGallery, MediaGalleryItem }

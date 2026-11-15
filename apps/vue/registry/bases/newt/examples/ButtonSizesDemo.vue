@@ -6,6 +6,7 @@ import { Button } from "~~/registry/bases/newt/ui/button"
   <!-- `icon` has no visible text, so the label moves to `aria-label`. -->
   <div class="flex flex-wrap items-center gap-3">
     <Button size="sm">Small</Button>
+    <Button size="message">Message</Button>
     <Button>Default</Button>
     <Button size="lg">Large</Button>
     <Button size="icon" variant="secondary" aria-label="Add a reaction">

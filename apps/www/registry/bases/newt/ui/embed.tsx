@@ -3,7 +3,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 export interface EmbedProps extends Omit<React.ComponentProps<"div">, "color"> {
-  /** Accent colour of the left bar. Any CSS colour; defaults to the brand. */
+  /** Accent colour of the left bar. Any CSS colour; defaults to the border colour, like `V2Container`. */
   color?: string
 }
 
@@ -22,7 +22,7 @@ const Embed = React.forwardRef<HTMLDivElement, EmbedProps>(
           : style
       }
       className={cn(
-        "relative flex max-w-[var(--newt-embed-max-width)] overflow-hidden rounded-md border border-s-0 border-newt-embed-border bg-newt-embed-bg before:absolute before:inset-y-0 before:start-0 before:w-1 before:bg-[var(--newt-embed-color,var(--newt-brand))]",
+        "relative flex max-w-[var(--newt-embed-max-width)] overflow-hidden rounded-md border border-s-0 border-newt-embed-border bg-newt-embed-bg before:absolute before:inset-y-0 before:start-0 before:w-1 before:bg-[var(--newt-embed-color,var(--newt-border))]",
         className
       )}
       {...props}
@@ -50,18 +50,25 @@ const EmbedAuthor = React.forwardRef<
 ))
 EmbedAuthor.displayName = "EmbedAuthor"
 
-const EmbedAuthorIcon = React.forwardRef<
-  HTMLImageElement,
-  React.ComponentProps<"img">
->(({ className, alt = "", ...props }, ref) => (
-  <img
-    ref={ref}
-    alt={alt}
-    aria-hidden={alt === "" ? true : undefined}
-    className={cn("h-6 w-6 shrink-0 rounded-full object-cover", className)}
-    {...props}
-  />
-))
+export interface EmbedIconProps extends React.ComponentProps<"img"> {
+  /**
+   * The image element or component to render. Defaults to `img`; pass your
+   * framework's image component for optimised sources.
+   */
+  as?: React.ElementType
+}
+
+const EmbedAuthorIcon = React.forwardRef<HTMLImageElement, EmbedIconProps>(
+  ({ as: Tag = "img", className, alt = "", ...props }, ref) => (
+    <Tag
+      ref={ref}
+      alt={alt}
+      aria-hidden={alt === "" ? true : undefined}
+      className={cn("h-6 w-6 shrink-0 rounded-full object-cover", className)}
+      {...props}
+    />
+  )
+)
 EmbedAuthorIcon.displayName = "EmbedAuthorIcon"
 
 const EmbedAuthorName = React.forwardRef<
@@ -179,18 +186,17 @@ const EmbedFooter = React.forwardRef<
 ))
 EmbedFooter.displayName = "EmbedFooter"
 
-const EmbedFooterIcon = React.forwardRef<
-  HTMLImageElement,
-  React.ComponentProps<"img">
->(({ className, alt = "", ...props }, ref) => (
-  <img
-    ref={ref}
-    alt={alt}
-    aria-hidden={alt === "" ? true : undefined}
-    className={cn("h-4 w-4 shrink-0 rounded-full object-cover", className)}
-    {...props}
-  />
-))
+const EmbedFooterIcon = React.forwardRef<HTMLImageElement, EmbedIconProps>(
+  ({ as: Tag = "img", className, alt = "", ...props }, ref) => (
+    <Tag
+      ref={ref}
+      alt={alt}
+      aria-hidden={alt === "" ? true : undefined}
+      className={cn("h-4 w-4 shrink-0 rounded-full object-cover", className)}
+      {...props}
+    />
+  )
+)
 EmbedFooterIcon.displayName = "EmbedFooterIcon"
 
 /* Middle dot, the way Discord separates footer text from the timestamp. */

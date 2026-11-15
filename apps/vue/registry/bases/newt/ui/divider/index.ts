@@ -6,8 +6,15 @@ export const dividerVariants = cva(
   "flex items-center gap-3 text-xs font-semibold text-newt-text-muted data-[orientation=vertical]:flex-col data-[orientation=vertical]:self-stretch",
   {
     variants: {
-      /* Spacing steps, for stacking dividers inside dense containers. */
+      /*
+       * Spacing steps, for stacking dividers inside dense containers.
+       * `small` and `large` are the two steps of a Components V2 separator.
+       */
       spacing: {
+        small:
+          "my-1 data-[orientation=vertical]:mx-1 data-[orientation=vertical]:my-0",
+        large:
+          "my-2 data-[orientation=vertical]:mx-2 data-[orientation=vertical]:my-0",
         sm: "my-1 data-[orientation=vertical]:mx-1 data-[orientation=vertical]:my-0",
         md: "my-4 data-[orientation=vertical]:mx-4 data-[orientation=vertical]:my-0",
         lg: "my-6 data-[orientation=vertical]:mx-6 data-[orientation=vertical]:my-0",

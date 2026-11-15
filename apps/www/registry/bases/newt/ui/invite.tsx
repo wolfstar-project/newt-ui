@@ -45,18 +45,25 @@ const InviteBody = React.forwardRef<
 ))
 InviteBody.displayName = "InviteBody"
 
-const InviteIcon = React.forwardRef<
-  HTMLImageElement,
-  React.ComponentProps<"img">
->(({ className, alt = "", ...props }, ref) => (
-  <img
-    ref={ref}
-    alt={alt}
-    aria-hidden={alt === "" ? true : undefined}
-    className={cn("h-12 w-12 shrink-0 rounded-md object-cover", className)}
-    {...props}
-  />
-))
+export interface InviteIconProps extends React.ComponentProps<"img"> {
+  /**
+   * The image element or component to render. Defaults to `img`; pass your
+   * framework's image component for optimised sources.
+   */
+  as?: React.ElementType
+}
+
+const InviteIcon = React.forwardRef<HTMLImageElement, InviteIconProps>(
+  ({ as: Tag = "img", className, alt = "", ...props }, ref) => (
+    <Tag
+      ref={ref}
+      alt={alt}
+      aria-hidden={alt === "" ? true : undefined}
+      className={cn("h-12 w-12 shrink-0 rounded-md object-cover", className)}
+      {...props}
+    />
+  )
+)
 InviteIcon.displayName = "InviteIcon"
 
 const InviteInfo = React.forwardRef<
@@ -67,19 +74,26 @@ const InviteInfo = React.forwardRef<
 ))
 InviteInfo.displayName = "InviteInfo"
 
-const InviteName = React.forwardRef<
-  HTMLAnchorElement,
-  React.ComponentProps<"a">
->(({ className, ...props }, ref) => (
-  <a
-    ref={ref}
-    className={cn(
-      "block truncate font-bold text-newt-text-primary no-underline hover:underline",
-      className
-    )}
-    {...props}
-  />
-))
+export interface InviteNameProps extends React.ComponentProps<"a"> {
+  /**
+   * The element or component to render. Defaults to `a`; pass a router link
+   * component to keep client navigation.
+   */
+  as?: React.ElementType
+}
+
+const InviteName = React.forwardRef<HTMLAnchorElement, InviteNameProps>(
+  ({ as: Tag = "a", className, ...props }, ref) => (
+    <Tag
+      ref={ref}
+      className={cn(
+        "block truncate font-bold text-newt-text-primary no-underline hover:underline",
+        className
+      )}
+      {...props}
+    />
+  )
+)
 InviteName.displayName = "InviteName"
 
 const InviteCounts = React.forwardRef<

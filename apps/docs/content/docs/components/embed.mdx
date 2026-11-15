@@ -31,7 +31,7 @@ The `color` prop sets the bar on the leading edge. It takes any CSS colour, so p
 
 ### Minimal
 
-Every part of an embed is optional. A lone `EmbedDescription` is enough for a short confirmation, and with no `color` the bar takes the brand colour.
+Every part of an embed is optional. A lone `EmbedDescription` is enough for a short confirmation, and with no `color` the bar takes the neutral border colour.
 
 <ComponentPreview name="embed" variant="minimal" />
 
@@ -44,7 +44,7 @@ Every part of an embed is optional. A lone `EmbedDescription` is enough for a sh
       name: "color",
       type: "string | undefined",
       description:
-        "Accent colour of the left bar. Any CSS colour; defaults to the brand.",
+        "Accent colour of the left bar. Any CSS colour. Without one, the bar takes `--newt-border`, the same default as `V2Container`.",
     },
   ]}
 />

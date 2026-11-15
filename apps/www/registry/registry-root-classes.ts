@@ -51,6 +51,7 @@ const rootClassEntries = [
   ["app-launcher", "newt-app-launcher"],
   ["slash-command-suggestions", "newt-slash-suggestions"],
   ["v2-container", "newt-v2-container"],
+  ["text-display", "newt-text-display"],
   ["channel-header", "newt-channel-header"],
   ["channel-welcome", "newt-channel-welcome"],
   ["channel-info", "newt-channel-info"],

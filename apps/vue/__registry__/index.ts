@@ -1313,6 +1313,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "text-display",
+    {
+      name: "text-display",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/text-display/TextDisplay.vue",
+        "registry/bases/newt/ui/text-display/index.ts",
+      ],
+    },
+  ],
+  [
     "thread-preview",
     {
       name: "thread-preview",
@@ -1825,6 +1837,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ButtonSizesDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ButtonSizesDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ButtonSlotsDemo",
+    {
+      name: "ButtonSlotsDemo",
+      type: "registry:example",
+      registryDependencies: ["button"],
+      files: ["registry/bases/newt/examples/ButtonSlotsDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/ButtonSlotsDemo.vue")
       ),
     },
   ],
@@ -3067,6 +3091,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ReactionIconDemo",
+    {
+      name: "ReactionIconDemo",
+      type: "registry:example",
+      registryDependencies: ["reaction"],
+      files: ["registry/bases/newt/examples/ReactionIconDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/ReactionIconDemo.vue")
+      ),
+    },
+  ],
+  [
     "ReactionReadonlyDemo",
     {
       name: "ReactionReadonlyDemo",
@@ -3635,6 +3671,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "TextDisplayDemo",
+    {
+      name: "TextDisplayDemo",
+      type: "registry:example",
+      registryDependencies: ["text-display", "divider", "v2-container"],
+      files: ["registry/bases/newt/examples/TextDisplayDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TextDisplayDemo.vue")
+      ),
+    },
+  ],
+  [
     "ThreadPreviewDemo",
     {
       name: "ThreadPreviewDemo",
@@ -3849,7 +3897,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "V2ContainerDemo",
       type: "registry:example",
-      registryDependencies: ["v2-container", "action-row", "button", "divider"],
+      registryDependencies: [
+        "v2-container",
+        "action-row",
+        "button",
+        "divider",
+        "text-display",
+      ],
       files: ["registry/bases/newt/examples/V2ContainerDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/V2ContainerDemo.vue")
