@@ -1,3 +1,4 @@
+import { statSync } from "node:fs"
 import path from "node:path"
 
 import { getRegistryItem } from "../../registry/api.js"
@@ -30,21 +31,32 @@ export const THEME_ITEM = "theme-newt"
 /** How deep `@import` chains are followed; a real project needs two or three. */
 const MAX_IMPORT_DEPTH = 8
 
-/** The relative `@import` targets of a stylesheet: `./newt.css`, `../x.css`. */
-function relativeImports(css: string): string[] {
+/**
+ * The `@import` targets of a stylesheet that can be local files: `newt.css`,
+ * `./newt.css`, `../x.css`. A URL with a scheme or a root path is skipped.
+ */
+function localImports(css: string): string[] {
   const clean = css.replace(/\/\*[\s\S]*?\*\//g, "")
   return [
-    ...clean.matchAll(
-      /@import\s+(?:url\(\s*)?["']?(\.{1,2}\/[^"')\s;]+)["']?\s*\)?/g
-    ),
-  ].flatMap((match) => (match[1] === undefined ? [] : [match[1]]))
+    ...clean.matchAll(/@import\s+(?:url\(\s*)?["']?([^"')\s;]+)["']?\s*\)?/g),
+  ].flatMap((match) =>
+    match[1] === undefined || /^(?:[a-z][\w+.-]*:|\/)/i.test(match[1])
+      ? []
+      : [match[1]]
+  )
+}
+
+function isFile(target: string): boolean {
+  return statSync(target, { throwIfNoEntry: false })?.isFile() ?? false
 }
 
 /**
- * The text of a stylesheet and of every stylesheet it imports by a relative
- * path, joined. A project that keeps its tokens in `newt.css` and imports it
- * from `main.css` declares them as surely as one that writes them inline.
- * Package imports (`@import "tailwindcss"`) are not followed.
+ * The text of a stylesheet and of every local stylesheet it imports, joined.
+ * A project that keeps its tokens in `newt.css` and imports it from
+ * `main.css` declares them as surely as one that writes them inline. CSS
+ * reads `@import "newt.css"` as relative to the importing file, so a target
+ * is followed when that file exists. Package imports (`@import "tailwindcss"`)
+ * have no such file and are not followed.
  */
 export async function readStylesheets(entry: string): Promise<string> {
   const seen = new Set<string>()
@@ -52,10 +64,11 @@ export async function readStylesheets(entry: string): Promise<string> {
     const resolved = path.resolve(file)
     if (seen.has(resolved) || depth > MAX_IMPORT_DEPTH) return []
     seen.add(resolved)
+    if (!isFile(resolved)) return []
     const css = await readFileIfExists(resolved)
     if (css === null) return []
     const imported = await Promise.all(
-      relativeImports(css).map((target) =>
+      localImports(css).map((target) =>
         read(path.resolve(path.dirname(resolved), target), depth + 1)
       )
     )
@@ -78,7 +91,7 @@ export async function readProjectTheme(config: Config): Promise<ProjectTheme> {
 
 async function readConfigCandidate(cwd: string): Promise<string | null> {
   const found = findFirstExisting(cwd, TAILWIND_CONFIG_CANDIDATES)
-  return found === undefined ? null : readFileIfExists(found)
+  return found === undefined ? null : readFileIfExists(path.resolve(cwd, found))
 }
 
 /**
@@ -125,13 +138,17 @@ export function reportMissingThemeNames(
   logger.warn(
     `Your project does not declare ${names.length} theme name(s) these components use: ${names.join(", ")}. The classes that read them produce no CSS.`
   )
-  logger.log(
-    `Run ${highlighter.info("npx newtui tokens")} to add them, or paste this into ${highlighter.info(stylesheet)}:`
-  )
-  logger.log(highlighter.dim(rendered.css.trimEnd()))
+  /* On v3 the missing names can all be config entries, with no CSS to paste. */
+  const hasCss = rendered.css.length > 0
+  if (hasCss) {
+    logger.log(
+      `Run ${highlighter.info("npx newtui tokens")} to add them, or paste this into ${highlighter.info(stylesheet)}:`
+    )
+    logger.log(highlighter.dim(rendered.css.trimEnd()))
+  }
   if (rendered.config !== undefined) {
     logger.log(
-      `Then add these entries to ${highlighter.info("theme.extend")} in ${highlighter.info(relativePath(cwd, tailwindConfig))}:`
+      `${hasCss ? "Then add" : "Add"} these entries to ${highlighter.info("theme.extend")} in ${highlighter.info(relativePath(cwd, tailwindConfig))}:`
     )
     logger.log(highlighter.dim(rendered.config))
   }

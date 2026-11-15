@@ -155,6 +155,63 @@ describe("missingThemeNames", () => {
     ])
   })
 
+  it("counts a v3 entry whose key an older init gave a literal value", () => {
+    const missing = missingThemeNames(used, {
+      major: 3,
+      css: olderInit,
+      config: `export default {
+  theme: {
+    extend: {
+      colors: { "newt-brand": "var(--newt-brand)" },
+      // boxShadow: { "elevation-high": "var(--newt-shadow-elevation-high)" },
+      transitionDuration: { fast: "100ms", base: "150ms" },
+    },
+  },
+}`,
+    })
+
+    expect(themeNameList(missing)).toEqual([
+      "--shadow-elevation-high",
+      "--newt-shadow-elevation-high",
+      "--newt-duration-fast",
+    ])
+  })
+
+  it("does not count a v3 key that sits under another theme section", () => {
+    const missing = missingThemeNames(
+      themeNamesUsed(theme, ["duration-fast"]),
+      {
+        major: 3,
+        css: olderInit,
+        config: `export default { theme: { extend: { spacing: { fast: "4px" } } } }`,
+      }
+    )
+
+    expect(themeNameList(missing)).toContain("--transition-duration-fast")
+  })
+
+  it("counts a v4 entry only inside an @theme block", () => {
+    const missing = missingThemeNames(
+      themeNamesUsed(theme, ["shadow-elevation-high bg-newt-brand"]),
+      {
+        major: 4,
+        css: `@theme inline {
+  --color-newt-brand: var(--newt-brand);
+}
+
+:root {
+  --shadow-elevation-high: var(--newt-shadow-elevation-high);
+  --newt-brand: #5865f2;
+  --newt-shadow-elevation-high: 0 8px 16px rgba(0,0,0,0.24);
+}
+`,
+        config: null,
+      }
+    )
+
+    expect(themeNameList(missing)).toEqual(["--shadow-elevation-high"])
+  })
+
   it("treats every v3 entry as missing when there is no tailwind.config", () => {
     const missing = missingThemeNames(
       themeNamesUsed(theme, ["bg-newt-brand"]),
