@@ -1,4 +1,42 @@
-<div class="newt-app-launcher" role="dialog" aria-label="Apps">
+<!--
+  A dialog that renders in place. app-launcher.js gives a
+  [data-newt-app-launcher] launcher its behaviour: focus moves in, Tab cycles
+  through its controls, Escape or a [data-newt-app-launcher-close] control
+  closes it, and focus returns. Add aria-modal="true" when the launcher covers
+  the page: focus then cannot stay outside it, and a press outside closes it.
+
+  To show the launcher in a page that is always on screen, leave out role,
+  tabindex and data-newt-app-launcher. Use role="region" to keep the
+  aria-label.
+
+  Bottom sheet: add newt-app-launcher--sheet. The sheet fills the width and
+  reads its height from --newt-app-launcher-sheet-height (90dvh). Make the
+  handle a control when it changes the sheet, and keep aria-expanded in step:
+    <button type="button" class="newt-app-launcher__handle-button"
+            aria-label="Expand the sheet" aria-expanded="false">
+      <span class="newt-app-launcher__handle" aria-hidden="true"></span>
+    </button>
+
+  Drill-in header: back control, centred title, and a spacer as wide as the
+  back control.
+    <div class="newt-app-launcher__header">
+      <button type="button" class="newt-app-launcher__back"
+              aria-label="Back">…</button>
+      <h2 class="newt-app-launcher__header-title">Moderation</h2>
+      <span style="width: 32px; flex-shrink: 0" aria-hidden="true"></span>
+    </div>
+
+  Promoted card: art on top, footer below.
+    <button type="button" class="newt-app-launcher__promo">
+      <span class="newt-app-launcher__promo-art"><img src="…" alt="" /></span>
+      <span class="newt-app-launcher__promo-footer">…</span>
+    </button>
+
+  Tiles: newt-app-launcher__list--grid holding newt-app-launcher__item--tile
+  items. A logo that must not be cropped takes
+  newt-app-launcher__item-icon--contain or newt-app-launcher__recent--contain.
+-->
+<div class="newt-app-launcher" role="dialog" aria-label="Apps" tabindex="-1" data-newt-app-launcher>
   <div class="newt-app-launcher__handle" aria-hidden="true"></div>
 
   <div class="newt-app-launcher__search">
@@ -29,59 +67,39 @@
   </div>
 
   <div class="newt-app-launcher__body newt-scrollbar">
-    <section
-      class="newt-app-launcher__section"
-      aria-labelledby="newt-app-launcher-recents"
-    >
+    <section class="newt-app-launcher__section" aria-labelledby="newt-app-launcher-recents">
       <div class="newt-app-launcher__section-header">
-        <h2
-          class="newt-app-launcher__section-title"
-          id="newt-app-launcher-recents"
-        >
-          Recents
-        </h2>
-        <button type="button" class="newt-app-launcher__view-more">
-          View More
-        </button>
+        <h2 class="newt-app-launcher__section-title" id="newt-app-launcher-recents">Recents</h2>
+        <button type="button" class="newt-app-launcher__view-more">View More</button>
       </div>
-      <div class="newt-app-launcher__recents">
-        <button
-          type="button"
-          class="newt-app-launcher__recent"
-          aria-label="Moderation bot"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z" />
-          </svg>
-        </button>
-        <button
-          type="button"
-          class="newt-app-launcher__recent"
-          aria-label="Music bot"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path
-              d="M9 18V6l10-2v12M9 18a3 3 0 1 1-2-2.83M19 16a3 3 0 1 1-2-2.83"
-            />
-          </svg>
-        </button>
-      </div>
+      <ul
+        class="newt-app-launcher__recents"
+        role="list"
+        aria-labelledby="newt-app-launcher-recents"
+      >
+        <li>
+          <button type="button" class="newt-app-launcher__recent" aria-label="Moderation bot">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z" />
+            </svg>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="newt-app-launcher__recent" aria-label="Music bot">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M9 18V6l10-2v12M9 18a3 3 0 1 1-2-2.83M19 16a3 3 0 1 1-2-2.83" />
+            </svg>
+          </button>
+        </li>
+      </ul>
     </section>
 
-    <section
-      class="newt-app-launcher__section"
-      aria-labelledby="newt-app-launcher-server"
-    >
+    <section class="newt-app-launcher__section" aria-labelledby="newt-app-launcher-server">
       <div class="newt-app-launcher__section-header">
-        <h2
-          class="newt-app-launcher__section-title"
-          id="newt-app-launcher-server"
-        >
+        <h2 class="newt-app-launcher__section-title" id="newt-app-launcher-server">
           Apps in this Server
         </h2>
-        <button type="button" class="newt-app-launcher__view-more">
-          View More
-        </button>
+        <button type="button" class="newt-app-launcher__view-more">View More</button>
       </div>
 
       <div class="newt-app-launcher__list">
@@ -101,6 +119,11 @@
             <span class="newt-app-launcher__item-description">
               Bans, timeouts and audit logs.
             </span>
+          </span>
+          <span class="newt-app-launcher__item-trailing" aria-hidden="true">
+            <svg class="newt-app-launcher__chevron" viewBox="0 0 20 20" fill="currentColor">
+              <path d="m7.3 4.3 5.7 5.7-5.7 5.7-1.4-1.4 4.3-4.3-4.3-4.3 1.4-1.4Z" />
+            </svg>
           </span>
         </button>
 
