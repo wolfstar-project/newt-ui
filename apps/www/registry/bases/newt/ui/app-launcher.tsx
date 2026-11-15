@@ -192,7 +192,7 @@ const AppLauncherHandle = React.forwardRef<HTMLElement, AppLauncherHandleProps>(
         aria-hidden={interactive ? undefined : true}
         className={cn(
           interactive
-            ? "group mx-auto mt-0.5 flex h-6 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
+            ? "group mx-auto mt-1.5 flex h-6 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
             : cn("mx-auto mt-2", gripClassName),
           className
         )}
@@ -612,7 +612,7 @@ const AppLauncherPromoCard = React.forwardRef<
     ref={ref}
     type={type}
     className={cn(
-      "flex w-full cursor-pointer flex-col overflow-hidden rounded-md border-0 bg-newt-bg-elevated p-0 text-start text-newt-text-primary transition-colors duration-fast ease-newt",
+      "flex w-full shrink-0 cursor-pointer flex-col overflow-hidden rounded-md border-0 bg-newt-bg-elevated p-0 text-start text-newt-text-primary transition-colors duration-fast ease-newt",
       "hover:bg-newt-bg-hover",
       "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
       className

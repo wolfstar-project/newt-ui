@@ -39,7 +39,7 @@ const gripClass = "h-1 w-9 shrink-0 rounded-full bg-newt-border"
     :aria-expanded="props.expanded"
     :class="
       cn(
-        'group mx-auto mt-0.5 flex h-6 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0',
+        'group mx-auto mt-1.5 flex h-6 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0',
         'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
         props.class
       )
