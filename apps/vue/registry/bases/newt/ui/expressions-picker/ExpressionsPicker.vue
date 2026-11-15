@@ -71,7 +71,7 @@ const scrolledTo = shallowRef<string | null>(null)
 const activeKey = shallowRef<string | null>(null)
 const hovered = shallowRef<{ item: ExpressionItem; where: string } | null>(null)
 
-const triggerClass = `min-h-[var(--newt-expressions-target-size)] cursor-pointer rounded-sm border border-newt-border bg-newt-bg-elevated px-[var(--newt-space-3)] py-[var(--newt-space-2)] font-sans text-[length:var(--newt-font-size-sm)] leading-[var(--newt-line-height-normal)] text-newt-text-primary enabled:hover:bg-newt-bg-hover enabled:active:bg-newt-bg-active disabled:cursor-not-allowed disabled:text-newt-text-muted ${expressionsFocusRing}`
+const triggerClass = `min-h-[var(--newt-expressions-target-size)] cursor-pointer rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-elevated px-[var(--newt-space-3)] py-[var(--newt-space-2)] font-[family-name:var(--newt-font-sans)] text-[length:var(--newt-font-size-sm)] leading-[var(--newt-line-height-normal)] text-newt-text-primary enabled:hover:bg-newt-bg-hover enabled:active:bg-newt-bg-active disabled:cursor-not-allowed disabled:text-newt-text-muted ${expressionsFocusRing}`
 
 const text = computed(() => ({
   ...defaultExpressionsPickerLabels,
@@ -308,7 +308,7 @@ function clearQuery() {
       :id="id"
       ref="dialog"
       :aria-label="label"
-      class="m-auto box-border h-[min(var(--newt-expressions-height),calc(100dvh-2*var(--newt-space-3)))] w-[min(var(--newt-expressions-width),calc(100%-2*var(--newt-space-3)))] max-w-none overflow-hidden rounded-lg border border-newt-border bg-newt-bg-surface p-0 font-sans text-[length:var(--newt-font-size-sm)] leading-[var(--newt-line-height-normal)] text-newt-text-primary shadow-elevation-high backdrop:bg-[color-mix(in_srgb,var(--newt-bg-base)_80%,transparent)] open:flex open:flex-col"
+      class="m-auto box-border h-[min(var(--newt-expressions-height),calc(100dvh-2*var(--newt-space-3)))] w-[min(var(--newt-expressions-width),calc(100%-2*var(--newt-space-3)))] max-w-none overflow-hidden rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-surface p-0 font-[family-name:var(--newt-font-sans)] text-[length:var(--newt-font-size-sm)] leading-[var(--newt-line-height-normal)] text-newt-text-primary shadow-elevation-high backdrop:bg-[color-mix(in_srgb,var(--newt-bg-base)_80%,transparent)] open:flex open:flex-col"
       @close="closed"
       @keydown="onDialogKeyDown"
       @click.self="close"
@@ -351,7 +351,7 @@ function clearQuery() {
             spellcheck="false"
             :aria-label="text.search"
             :placeholder="text.searchPlaceholder"
-            :class="`box-border h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] w-full rounded-md border-0 bg-newt-bg-input pe-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] ps-[calc(var(--newt-space-3)*3)] font-sans text-[length:var(--newt-font-size-sm)] text-newt-text-primary placeholder:text-newt-text-muted ${expressionsFocusRing}`"
+            :class="`box-border h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] w-full rounded-[var(--newt-radius-md)] border-0 bg-newt-bg-input pe-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] ps-[calc(var(--newt-space-3)*3)] font-[family-name:var(--newt-font-sans)] text-[length:var(--newt-font-size-sm)] text-newt-text-primary placeholder:text-newt-text-muted ${expressionsFocusRing}`"
             @input="hovered = null"
             @keydown.down.prevent="focusFirstCell"
           />
@@ -402,7 +402,7 @@ function clearQuery() {
             v-if="showTones"
             role="group"
             :aria-label="text.skinTones"
-            class="absolute -end-[var(--newt-space-1)] -top-[var(--newt-space-1)] z-20 flex flex-col gap-[var(--newt-space-1)] rounded-md border border-newt-border bg-newt-bg-floating p-[var(--newt-space-1)] shadow-elevation-high"
+            class="absolute -end-[var(--newt-space-1)] -top-[var(--newt-space-1)] z-20 flex flex-col gap-[var(--newt-space-1)] rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-floating p-[var(--newt-space-1)] shadow-elevation-high"
           >
             <button
               v-for="option in skinTones"
@@ -494,7 +494,7 @@ function clearQuery() {
                 type="button"
                 :aria-expanded="isOpen(section.key)"
                 :aria-controls="`${id}-${section.key}`"
-                :class="`inline-flex max-w-full cursor-pointer items-center gap-[var(--newt-space-2)] rounded-sm border-0 bg-transparent px-[var(--newt-space-1)] font-[inherit] text-[inherit] hover:text-newt-text-primary ${expressionsFocusRing}`"
+                :class="`inline-flex max-w-full cursor-pointer items-center gap-[var(--newt-space-2)] rounded-[var(--newt-radius-sm)] border-0 bg-transparent px-[var(--newt-space-1)] font-[inherit] text-[inherit] hover:text-newt-text-primary ${expressionsFocusRing}`"
                 @click="toggleSection(section.key)"
               >
                 <img
@@ -557,7 +557,7 @@ function clearQuery() {
                 :aria-pressed="isCurrent(item)"
                 :class="
                   cn(
-                    'flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-transparent p-0 enabled:hover:bg-newt-bg-hover aria-pressed:bg-newt-bg-active aria-pressed:shadow-[inset_0_0_0_2px_var(--newt-brand)] disabled:cursor-not-allowed disabled:border-dashed disabled:border-newt-border disabled:opacity-50',
+                    'flex cursor-pointer items-center justify-center rounded-[var(--newt-radius-md)] border border-transparent bg-transparent p-0 enabled:hover:bg-newt-bg-hover aria-pressed:bg-newt-bg-active aria-pressed:shadow-[inset_0_0_0_2px_var(--newt-brand)] disabled:cursor-not-allowed disabled:border-dashed disabled:border-newt-border disabled:opacity-50',
                     kind === 'emoji'
                       ? 'size-[var(--newt-expressions-target-size)]'
                       : 'aspect-square w-full',

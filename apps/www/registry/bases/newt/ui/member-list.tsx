@@ -125,7 +125,7 @@ export interface MemberListItemProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const MEMBER_ROW =
-  "relative isolate flex min-w-0 items-center gap-2.5 rounded-sm px-2 py-1.5"
+  "relative isolate flex min-w-0 items-center gap-2.5 rounded-[var(--newt-radius-sm)] px-2 py-1.5"
 const MEMBER_ROW_INTERACTIVE =
   "w-full cursor-pointer border-0 bg-transparent text-start after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-[inherit] after:transition-colors after:duration-fast after:ease-newt after:content-[''] hover:after:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link"
 
@@ -264,7 +264,7 @@ const MemberListAppTag = React.forwardRef<
       role="img"
       aria-label={verified ? verifiedLabel : label}
       className={cn(
-        "inline-flex shrink-0 items-center gap-0.5 rounded-sm bg-newt-brand px-1 py-px text-[9px] font-bold leading-none text-newt-on-accent",
+        "inline-flex shrink-0 items-center gap-0.5 rounded-[var(--newt-radius-sm)] bg-newt-brand px-1 py-px text-[9px] font-bold leading-none text-newt-on-accent",
         className
       )}
       {...props}
