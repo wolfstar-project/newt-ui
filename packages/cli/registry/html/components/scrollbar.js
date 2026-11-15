@@ -45,7 +45,7 @@ document.querySelectorAll("[data-newt-scrollbar]").forEach((root) => {
     const length = track.clientHeight
     thumb.style.height = `${(viewport.clientHeight / viewport.scrollHeight) * length}px`
     // The stylesheet caps the height, so the travel is read back from the box.
-    const travel = length - thumb.offsetHeight
+    const travel = Math.max(0, length - thumb.offsetHeight)
     thumb.style.transform = `translateY(${(viewport.scrollTop / overflow) * travel}px)`
   }
 
@@ -62,7 +62,15 @@ document.querySelectorAll("[data-newt-scrollbar]").forEach((root) => {
       resize.observe(element)
     }
   }
-  new MutationObserver(watch).observe(viewport, { childList: true })
+  /*
+   * A new child needs watching. A changed text node resizes nothing that is
+   * watched when it sits straight in the viewport, so it redraws.
+   */
+  new MutationObserver((records) => {
+    if (records.some((r) => r.type === "childList" && r.target === viewport))
+      watch()
+    else draw()
+  }).observe(viewport, { childList: true, characterData: true, subtree: true })
   watch()
 
   /*

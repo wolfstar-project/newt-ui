@@ -883,6 +883,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "invite-router-demo",
+    type: "registry:example",
+    registryDependencies: ["invite", "button"],
+    files: [
+      {
+        path: "examples/invite-router-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "kbd-tag-demo",
     type: "registry:example",
     registryDependencies: ["kbd-tag"],

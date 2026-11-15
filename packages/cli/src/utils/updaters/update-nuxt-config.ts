@@ -57,13 +57,34 @@ export function barrelIgnorePattern(input: {
   ].join("/")
 }
 
+type Quote = '"' | "'"
+
+/**
+ * `value` as a JavaScript string literal in `quote`. The pattern follows the ui
+ * alias, so it can hold a quote or a backslash that must not end the string.
+ */
+export function stringLiteral(value: string, quote: Quote = '"'): string {
+  const double = JSON.stringify(value)
+  if (quote === '"') return double
+  const body = double.slice(1, -1).replaceAll('\\"', '"').replaceAll("'", "\\'")
+  return `'${body}'`
+}
+
 /** The `components` option for `nuxt.config`, without a trailing comma. */
-export function componentsOption(ignore: string, indent = "  "): string {
+export function componentsOption(
+  ignore: string,
+  indent = "  ",
+  quote: Quote = '"'
+): string {
+  const dirs =
+    quote === '"'
+      ? NUXT_DEFAULT_DIRS
+      : NUXT_DEFAULT_DIRS.map((entry) => entry.replaceAll('"', "'"))
   return [
     "components: [",
     ...[
-      ...NUXT_DEFAULT_DIRS,
-      `{ path: "~/components", ignore: ["${ignore}"] }`,
+      ...dirs,
+      `{ path: ${stringLiteral("~/components", quote)}, ignore: [${stringLiteral(ignore, quote)}] }`,
     ].map((entry) => `${indent}${entry},`),
     "]",
   ].join("\n")
@@ -127,6 +148,8 @@ function stringEnd(source: string, start: number): number {
 type ManualReason =
   /** The config already sets `components`; merging into it is the owner's call. */
   | "components-option"
+  /** A top-level `...spread` may set `components` and replace the inserted option. */
+  | "spread"
   /** No single multi-line `defineNuxtConfig({` to write into. */
   | "config-shape"
 
@@ -139,16 +162,45 @@ const COMPONENTS_KEY = /\bcomponents["'`]?\s*:/
 const CONFIG_OPENING = /defineNuxtConfig\(\s*\{/g
 
 /**
+ * Whether the object that opens just before `start` spreads another object
+ * into itself. Only its own level counts: a spread inside an option, such as
+ * `modules: [...base]`, cannot replace `components`.
+ */
+function spreadsAtTopLevel(code: string, start: number): boolean {
+  let depth = 0
+  let index = start
+  while (index < code.length) {
+    const char = code.charAt(index)
+    if (char === '"' || char === "'" || char === "`") {
+      index = stringEnd(code, index)
+      continue
+    }
+    if ("{[(".includes(char)) {
+      depth += 1
+    } else if ("}])".includes(char)) {
+      if (depth === 0) return false
+      depth -= 1
+    } else if (depth === 0 && code.startsWith("...", index)) {
+      return true
+    }
+    index += 1
+  }
+  return false
+}
+
+/**
  * Add the `components` option to a `nuxt.config` source. The edit is text, not
  * a parse, so it only happens where it cannot go wrong: one
- * `defineNuxtConfig({` that ends its line, and no `components` key anywhere.
+ * `defineNuxtConfig({` that ends its line, no top-level spread, and no
+ * `components` key anywhere.
  * Every other shape is reported back for the reader to do by hand.
  */
 export function ignoreBarrels(source: string, ignore: string): NuxtConfigEdit {
   const code = blankComments(source)
 
   if (COMPONENTS_KEY.test(code)) {
-    return code.includes(ignore)
+    const written = [ignore, stringLiteral(ignore, "'"), stringLiteral(ignore)]
+    return written.some((form) => code.includes(form))
       ? { _tag: "AlreadyIgnored" }
       : { _tag: "Manual", reason: "components-option" }
   }
@@ -158,6 +210,9 @@ export function ignoreBarrels(source: string, ignore: string): NuxtConfigEdit {
   if (opening === undefined) return { _tag: "Manual", reason: "config-shape" }
 
   const afterBrace = opening.index + opening[0].length
+  if (spreadsAtTopLevel(code, afterBrace)) {
+    return { _tag: "Manual", reason: "spread" }
+  }
   const lineEnd = /^[ \t]*(\r?\n)/.exec(code.slice(afterBrace))
   const eol = lineEnd?.[1]
   if (lineEnd === null || eol === undefined) {
@@ -169,12 +224,10 @@ export function ignoreBarrels(source: string, ignore: string): NuxtConfigEdit {
   const sibling = /^(?:[ \t]*\r?\n)*([ \t]+)[^\s}]/.exec(source.slice(insertAt))
   const indent = sibling?.[1] ?? "  "
   // `create-nuxt` writes single quotes; follow the file rather than fight it.
-  const singleQuotes = code.includes("'") && !code.includes('"')
-  const option = componentsOption(ignore, indent)
+  const quote = code.includes("'") && !code.includes('"') ? "'" : '"'
+  const option = componentsOption(ignore, indent, quote)
     .split("\n")
-    .map(
-      (line) => `${indent}${singleQuotes ? line.replaceAll('"', "'") : line}`
-    )
+    .map((line) => `${indent}${line}`)
     .join(eol)
 
   return {

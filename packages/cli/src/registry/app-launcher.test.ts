@@ -46,6 +46,19 @@ function press(key: string, shiftKey = false) {
   return event
 }
 
+function launchers() {
+  return [...document.querySelectorAll<HTMLElement>(".newt-app-launcher")]
+}
+
+function pressOn(target: Element) {
+  const event = new MouseEvent("pointerdown", {
+    bubbles: true,
+    cancelable: true,
+  })
+  target.dispatchEvent(event)
+  return event
+}
+
 /** The page: a control that holds focus, then the launcher, opened by `edit`. */
 function open(edit: (launcher: HTMLElement) => void = () => undefined) {
   document.body.innerHTML = `<button id="opener">Apps</button>${markup}`
@@ -103,9 +116,72 @@ describe("app-launcher.js, as a dialog", () => {
     expect(document.activeElement).toBe(control("Poll Night"))
   })
 
+  it("keeps the launcher open when a control inside handles Escape", () => {
+    control("Poll Night").addEventListener("keydown", (event) => {
+      if (event.key === "Escape") event.preventDefault()
+    })
+    control("Poll Night").focus()
+    press("Escape")
+    expect(launcher()).not.toBeNull()
+  })
+
+  it("marks the Escape it handles, so a surrounding dialog stays open", () => {
+    const event = press("Escape")
+    expect(event.defaultPrevented).toBe(true)
+  })
+
   it("stays open when the page beside it is pressed", () => {
     opener.dispatchEvent(new MouseEvent("pointerdown", { bubbles: true }))
     expect(launcher()).not.toBeNull()
+  })
+})
+
+describe("app-launcher.js, with hidden controls", () => {
+  beforeEach(() => {
+    open((found) => {
+      const hidden = `<div hidden><button>Hidden</button></div><div style="display: none"><button>Not displayed</button></div>`
+      found.insertAdjacentHTML("afterbegin", hidden)
+      found.insertAdjacentHTML("beforeend", hidden)
+    })
+  })
+
+  it("moves focus to the first control that is shown", () => {
+    expect(document.activeElement).toBe(control("Search apps"))
+  })
+
+  it("wraps Tab past controls inside hidden content", () => {
+    control("Poll Night").focus()
+    const event = press("Tab")
+    expect(event.defaultPrevented).toBe(true)
+    expect(document.activeElement).toBe(control("Search apps"))
+  })
+
+  it("wraps Shift+Tab past controls inside hidden content", () => {
+    const event = press("Tab", true)
+    expect(event.defaultPrevented).toBe(true)
+    expect(document.activeElement).toBe(control("Poll Night"))
+  })
+})
+
+describe("app-launcher.js, with two launchers open", () => {
+  beforeEach(() => {
+    document.body.innerHTML = `<button id="opener">Apps</button>${markup}${markup}`
+    document.querySelector<HTMLButtonElement>("#opener")?.focus()
+    runInThisContext(behavior)
+  })
+
+  it("closes only the launcher that holds focus on Escape", () => {
+    const [first, second] = launchers()
+    first?.querySelector("button")?.focus()
+    press("Escape")
+    expect(launchers()).toEqual([second])
+  })
+
+  it("closes only the newest launcher on Escape from the page", () => {
+    const [first] = launchers()
+    document.querySelector<HTMLButtonElement>("#opener")?.focus()
+    press("Escape")
+    expect(launchers()).toEqual([first])
   })
 })
 
@@ -116,17 +192,38 @@ describe("app-launcher.js, as a modal dialog", () => {
     opener = open((found) => found.setAttribute("aria-modal", "true"))
   })
 
-  it("pulls focus back in on Tab from the page beside it", () => {
-    opener.focus()
+  it("pulls focus back in on Tab once focus has left it", () => {
+    control("Search apps").blur()
     const event = press("Tab")
     expect(event.defaultPrevented).toBe(true)
     expect(document.activeElement).toBe(control("Search apps"))
   })
 
   it("closes when the page beside it is pressed", () => {
-    opener.dispatchEvent(new MouseEvent("pointerdown", { bubbles: true }))
+    pressOn(opener)
     expect(launcher()).toBeNull()
     expect(document.activeElement).toBe(opener)
+  })
+
+  it("cancels the press outside, so the press cannot move focus off the opener", () => {
+    const event = pressOn(document.body)
+    expect(event.defaultPrevented).toBe(true)
+  })
+
+  it("takes focus back when the page beside it takes focus", () => {
+    control("Moderation bot").focus()
+    opener.focus()
+    expect(document.activeElement).toBe(control("Moderation bot"))
+  })
+
+  it("lets the page take focus again once it closes", () => {
+    press("Escape")
+    document.body.insertAdjacentHTML(
+      "beforeend",
+      '<button id="other">Other</button>'
+    )
+    document.querySelector<HTMLButtonElement>("#other")?.focus()
+    expect(document.activeElement?.id).toBe("other")
   })
 })
 

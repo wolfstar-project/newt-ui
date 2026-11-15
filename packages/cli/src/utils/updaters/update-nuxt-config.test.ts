@@ -1,3 +1,5 @@
+import vm from "node:vm"
+
 import { describe, expect, it } from "vitest"
 
 import {
@@ -57,6 +59,18 @@ describe("barrelIgnorePattern", () => {
     ).toBeUndefined()
   })
 })
+
+interface LoadedConfig {
+  components: { ignore?: string[] }[]
+}
+
+/** Run an edited config the way Nuxt would, and return what it exports. */
+function loadConfig(source: string): LoadedConfig {
+  return vm.runInNewContext(source.replace("export default", "result ="), {
+    defineNuxtConfig: (config: LoadedConfig) => config,
+    result: undefined,
+  })
+}
 
 const CONFIG = `// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -127,6 +141,23 @@ export default defineNuxtConfig({
 `,
     })
   })
+
+  it.each([
+    ["single", "'", "customer's/**/index.ts"],
+    ["double", '"', 'say "hi"/**/index.ts'],
+  ])(
+    "writes a pattern with a quote that a %s-quoted config can load",
+    (_label, quote, ignore) => {
+      const source = `export default defineNuxtConfig({\n  ssr: ${quote}x${quote},\n})\n`
+      const edit = ignoreBarrels(source, ignore)
+      if (edit._tag !== "Edited") throw new Error(`not edited: ${edit._tag}`)
+
+      expect(loadConfig(edit.source).components[2]?.ignore).toEqual([ignore])
+      expect(ignoreBarrels(edit.source, ignore)).toEqual({
+        _tag: "AlreadyIgnored",
+      })
+    }
+  )
 
   it("keeps the line endings of the file", () => {
     const edit = ignoreBarrels(
@@ -203,6 +234,30 @@ export default defineNuxtConfig({
       _tag: "Manual",
       reason: "components-option",
     })
+  })
+
+  it.each([
+    ["a spread after the options", "  ssr: true,\n  ...sharedConfig,\n"],
+    ["a spread before the options", "  ...sharedConfig,\n  ssr: true,\n"],
+    ["a conditional spread", "  ...(isDev ? devConfig : {}),\n"],
+  ])("leaves a config with %s to its owner", (_label, options) => {
+    // The spread object may set components and replace the inserted option.
+    const source = `export default defineNuxtConfig({\n${options}})\n`
+
+    expect(ignoreBarrels(source, "ui/**/index.ts")).toEqual({
+      _tag: "Manual",
+      reason: "spread",
+    })
+  })
+
+  it("edits a config whose only spreads sit inside an option", () => {
+    const source = `export default defineNuxtConfig({
+  modules: [...baseModules, "@nuxt/ui"],
+  vite: { ...viteConfig },
+  app: { head: { title: "a ...b" } },
+})
+`
+    expect(ignoreBarrels(source, "ui/**/index.ts")._tag).toBe("Edited")
   })
 
   it.each([

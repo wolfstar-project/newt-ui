@@ -787,7 +787,11 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       name: "scrollbar",
       type: "registry:ui",
       registryDependencies: [],
-      files: ["registry/bases/newt/ui/scrollbar.tsx"],
+      files: [
+        "registry/bases/newt/ui/scrollbar.tsx",
+        "registry/bases/newt/ui/scroll-area.tsx",
+        "registry/bases/newt/ui/scrollbar-classes.ts",
+      ],
       component: React.lazy(() => import("@/registry/bases/newt/ui/scrollbar")),
     },
   ],
@@ -2127,6 +2131,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/invite-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/invite-demo")
+      ),
+    },
+  ],
+  [
+    "invite-router-demo",
+    {
+      name: "invite-router-demo",
+      type: "registry:example",
+      registryDependencies: ["invite", "button"],
+      files: ["registry/bases/newt/examples/invite-router-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/invite-router-demo")
       ),
     },
   ],

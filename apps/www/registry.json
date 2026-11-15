@@ -945,6 +945,14 @@
         {
           "path": "registry/bases/newt/ui/scrollbar.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/scrollbar-classes.ts",
+          "type": "registry:ui"
         }
       ],
       "framework": "react"
