@@ -168,6 +168,48 @@ describe("HTML expressions picker", () => {
     ).toBe(true)
   })
 
+  it("reads its runtime texts from the labels in the JSON", () => {
+    document.body.innerHTML = markup
+    const source = document.querySelector("[data-newt-expressions-data]")
+    if (!source?.textContent) throw new Error("Missing picker data")
+    const data = JSON.parse(source.textContent)
+    data.labels = {
+      recent: "Récents",
+      searchResults: "Résultats",
+      skinTone: "Teint : {tone}",
+      toneNames: [
+        "Par défaut",
+        "Clair",
+        "Moyen clair",
+        "Moyen",
+        "Moyen foncé",
+        "Foncé",
+      ],
+      resultCount: "{count} résultats",
+      oneResult: "1 résultat",
+      noResultsHelp: "Essayez un autre mot.",
+      hint: "Survolez une expression.",
+    }
+    source.textContent = JSON.stringify(data)
+    runInThisContext(behavior)
+    button("Choose an expression").click()
+    expect(sectionTitles()[0]).toBe("Récents")
+    expect(
+      document.querySelector("footer, [data-newt-footer]")?.textContent
+    ).toContain("Survolez une expression.")
+    button("Teint : Par défaut").click()
+    expect(button("Moyen").getAttribute("title")).toBe("Moyen")
+    search("thumbs")
+    expect(sectionTitles()).toEqual(["Résultats"])
+    expect(document.querySelector('[role="status"]')?.textContent).toBe(
+      "1 résultat"
+    )
+    search("not present")
+    expect(document.querySelector('[role="status"]')?.textContent).toContain(
+      "Essayez un autre mot."
+    )
+  })
+
   it("closes when the backdrop is clicked, not the panel", () => {
     button("Choose an expression").click()
     const dialog = document.querySelector("dialog")
