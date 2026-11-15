@@ -43,6 +43,9 @@ export default defineNuxtConfig({
 `init` guesses the bundler from a `nuxt.config`, so the flags are only needed
 when it guesses wrong.
 
+In a Nuxt project, `init` also adds a `components` option to `nuxt.config.ts`.
+[Component barrels](#barrels) gives the reason.
+
 </Step>
 
 <Step title="Add a component">
@@ -67,12 +70,59 @@ Put `.newt-root` on the wrapper in `app.vue`.
 
 </PathTabs>
 
+## Component barrels [#barrels]
+
+`add` writes each Vue component as a folder: the `.vue` files and an `index.ts`
+barrel. Nuxt reads every file under `components/` as a component. It names an
+`index` file after its folder, so `tabs/index.ts` and `tabs/Tabs.vue` both
+resolve to `UiTabs`. Nuxt then prints one warning for each folder:
+
+```text
+WARN  [NUXT_B3011] Two component files resolving to the same name UiTabs:
+
+ - ~/components/ui/tabs/index.ts
+ - ~/components/ui/tabs/Tabs.vue
+```
+
+Your code imports from the barrel, so Nuxt does not need to register it. `init`
+adds this option to `nuxt.config.ts`. It keeps the barrels out of the scan:
+
+```ts title="nuxt.config.ts"
+export default defineNuxtConfig({
+  components: [
+    { path: "~/components/islands", island: true },
+    { path: "~/components/global", global: true },
+    { path: "~/components", ignore: ["ui/**/index.ts"] },
+  ],
+})
+```
+
+The first two entries are the directories Nuxt scans by default. A `components`
+array replaces those defaults, so the option names them again.
+
+- The pattern follows the `ui` alias in `components.json`. The alias
+  `@/components/newt/ui` gives `newt/ui/**/index.ts`.
+- A project without TypeScript gets `index.js` in the pattern.
+- If the `ui` alias points outside `components/`, Nuxt does not scan it. `init`
+  then changes nothing.
+- `init` edits the file only if it has one multi-line `defineNuxtConfig({` call,
+  no `components` option and no top-level spread such as `...sharedConfig`. If
+  it does not, `init` prints the lines to add.
+- A spread object can set `components` and replace the option. If yours does,
+  add the ignore there.
+- If your config already sets `components`, add
+  `ignore: ["ui/**/index.ts"]` to the entry for `~/components`.
+- If you ran `init` before it wrote this option, add the option yourself.
+
 ## The module [#module]
 
 `@newtui/nuxt` saves you the imports. It registers your `components/ui`
 directory with Nuxt, so `Button.vue` is available as `<Button />` anywhere
 without the directory name in front of it, and it prepends the token stylesheet
 to your CSS so the variables exist before your own styles run. It needs Nuxt 4.
+
+The module registers `components/ui` before Nuxt scans `components/`. It reads
+only the `.vue` files, so the barrels cause no warning with the module either.
 
 <PmTabs cmd="--yes @newtui/nuxt" />
 
@@ -99,6 +149,7 @@ entry already carries them.
 components.json                          the config, shared with shadcn
 app/assets/css/tailwind.css              the --newt-* token block
 app/lib/utils.ts                         cn()
+nuxt.config.ts                           the components option
 app/components/ui/button/Button.vue      add button
 app/components/ui/button/index.ts
 ```

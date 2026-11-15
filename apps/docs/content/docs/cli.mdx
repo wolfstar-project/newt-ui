@@ -15,6 +15,10 @@ Reads your project and writes three things: `components.json`, a `cn` helper at
 your utils alias, and the `--newt-*` token block appended to the global
 stylesheet it found.
 
+In a Nuxt project, `init` also adds a `components` option to `nuxt.config`. The
+option keeps the `index.ts` barrels out of Nuxt's component scan. See
+[Component barrels](/docs/installation/nuxt#barrels).
+
 ```bash
 npx newtui@latest init
 npx newtui@latest init --defaults
