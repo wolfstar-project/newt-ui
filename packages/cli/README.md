@@ -7,6 +7,7 @@ npx newtui init          # writes components.json, lib/utils.ts, appends --newt-
 npx newtui add button    # copies components + resolves registryDependencies + installs npm deps
 npx newtui list          # lists registry items
 npx newtui diff button   # compares local files with the registry
+npx newtui tokens        # adds the theme names your stylesheet is missing
 
 npx newtui init --template next --preset nt1.…   # create the project, then wear the preset
 npx newtui apply --preset nt1.…                  # restyle a project that already ran init
@@ -20,6 +21,12 @@ npx newtui preset decode nt1.…                   # read what a preset code car
 In a Nuxt project, `init` also adds a `components` option to `nuxt.config`. Nuxt reads each `index.ts` barrel under `components/ui` as a second component and warns about the duplicate name (`NUXT_B3011`). The option keeps the barrels out of that scan. If `init` cannot edit the file safely, it prints the lines to add.
 
 Every command reads `framework` back from `components.json`, so `add`, `diff` and `list` all target the right registry without being told again.
+
+## Theme names
+
+A class such as `shadow-elevation-high` produces CSS only when the project's theme declares `--shadow-elevation-high`. After `add` and `diff`, the CLI compares the theme names the components use with your stylesheet and the files it imports. It prints each missing name and the block to paste: `@theme` entries on Tailwind v4, `theme.extend` entries on v3, and the raw `--newt-*` variables on both.
+
+`npx newtui tokens` appends that block for you. It adds only the missing names, so a second run writes nothing. Pass component names to limit it to what those components use, and `--dry-run` to print the block without writing it. On Tailwind v3 it prints the config entries, because it does not edit `tailwind.config`.
 
 ## Registry
 

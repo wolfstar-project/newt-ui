@@ -226,6 +226,7 @@ stylesheets.
 -p, --path <path>      the path to add the component to (add)
 -t, --type <type>      filter by registry item type (list)
     --json             output as JSON (list)
+    --dry-run          report what would change, write nothing (tokens)
     --legacy           use the HTML/CSS CLI (same as newtui-html)
 -h, --help             display the help
 -v, --version          display the version number
@@ -234,9 +235,10 @@ stylesheets.
 `--registry` overrides where items are fetched from, and so does the
 `NEWT_REGISTRY_URL` environment variable. The defaults are
 `https://newtui.dev/r` for React and `https://newtui.dev/vue/r` for Vue. Beyond
-`init` and `add` there are two more commands: `list`, which prints the registry,
-and `diff`, which compares a component you have against the one the registry
-currently ships.
+`init` and `add` there are three more commands: `list`, which prints the
+registry; `diff`, which compares a component you have against the one the
+registry currently ships; and `tokens`, which adds the theme names your
+stylesheet is missing.
 
 [The button page](/docs/components/button) is the shortest way to see what one
 of these files looks like once it is in your project. The registry, both CLIs

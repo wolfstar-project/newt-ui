@@ -203,6 +203,8 @@ export const tailwindV4Theme: TailwindV4Theme = {
     SHADOWS.map((name) => [`--shadow-${name}`, `var(--newt-shadow-${name})`])
   ),
   "--ease-newt": "var(--newt-ease)",
+  "--transition-duration-fast": "var(--newt-duration-fast)",
+  "--transition-duration-base": "var(--newt-duration-base)",
 }
 
 /**
@@ -238,5 +240,8 @@ export const tailwindV3Theme: TailwindV3Theme = {
     SHADOWS.map((name) => [name, `var(--newt-shadow-${name})`])
   ),
   transitionTimingFunction: { newt: "var(--newt-ease)" },
-  transitionDuration: { fast: "100ms", base: "150ms" },
+  transitionDuration: {
+    fast: "var(--newt-duration-fast)",
+    base: "var(--newt-duration-base)",
+  },
 }

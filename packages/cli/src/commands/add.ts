@@ -8,7 +8,12 @@ import {
   getRegistryUrl,
   resolveTree,
 } from "../registry/api.js"
-import { isNamespaced, SHADCN_BRIDGE_ITEM } from "../registry/namespaces.js"
+import {
+  isNamespaced,
+  NEWTUI_NAMESPACE,
+  parseNamespaced,
+  SHADCN_BRIDGE_ITEM,
+} from "../registry/namespaces.js"
 import type { RegistryItem } from "../schema/index.js"
 import type { Config } from "../utils/get-config.js"
 import { highlighter, logger } from "../utils/logger.js"
@@ -17,6 +22,7 @@ import { detectTailwindMajor } from "../utils/tailwind.js"
 import { updateCss } from "../utils/updaters/update-css.js"
 import { updateDependencies } from "../utils/updaters/update-dependencies.js"
 import { updateFiles } from "../utils/updaters/update-files.js"
+import { checkThemeNames } from "../utils/updaters/update-theme-names.js"
 
 export interface AddOptions {
   components: string[]
@@ -108,6 +114,13 @@ async function withShadcnBridge(
   return tree
 }
 
+/** `button` and `@newtui/button` come from newt/ui; `@acme/card` does not. */
+function isFromNewtRegistry(name: string): boolean {
+  return (
+    !isNamespaced(name) || parseNamespaced(name)?.namespace === NEWTUI_NAMESPACE
+  )
+}
+
 async function runAdd(
   config: Config,
   registryUrl: string,
@@ -161,5 +174,10 @@ async function runAdd(
     return hint === undefined ? [] : [highlighter.dim(hint)]
   })
   if (hints.length > 0) logger.log(hints.join("\n"))
+
+  /* a third-party item is written against shadcn's names, not newt/ui's */
+  if (names.some(isFromNewtRegistry)) {
+    await checkThemeNames(tree, config, registryUrl)
+  }
   outro("Done.")
 }
