@@ -33,6 +33,26 @@ One to ten images in a mosaic, laid out by how many there are. Compose it from t
   ]}
 />
 
+<PropsTable
+  of="MediaGalleryItem"
+  rows={[
+    {
+      name: "as",
+      type: "React.ElementType (React) / string | Component (Vue)",
+      default: '"img"',
+      description:
+        "The image element or component to render, such as `NuxtImg`. It gets `src`, `alt`, the classes and the spoiler attributes and handlers, so the spoiler still works.",
+    },
+    {
+      name: "spoiler",
+      type: "boolean",
+      default: "false",
+      description:
+        "Blurs the image until it is clicked or activated with `Enter` or `Space`.",
+    },
+  ]}
+/>
+
 ## Accessibility
 
 Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.

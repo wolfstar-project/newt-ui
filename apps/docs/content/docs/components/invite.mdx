@@ -18,6 +18,32 @@ The server invite card a link unfurls into inside a message. Compose it from the
 ## API reference
 
 <PropsTable
+  of="InviteName"
+  rows={[
+    {
+      name: "as",
+      type: "React.ElementType (React) / string | Component (Vue)",
+      default: '"a"',
+      description:
+        "The element or component to render. Pass a router link, such as `NuxtLink` or `RouterLink`, to keep client-side navigation.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="InviteIcon"
+  rows={[
+    {
+      name: "as",
+      type: "React.ElementType (React) / string | Component (Vue)",
+      default: '"img"',
+      description:
+        "The image element or component to render. Pass your framework's image component, such as `NuxtImg`, for optimised sources.",
+    },
+  ]}
+/>
+
+<PropsTable
   of="InviteCount"
   rows={[
     {

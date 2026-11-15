@@ -7,6 +7,8 @@ The Components V2 block that groups text, separators and action rows behind one 
 
 <ComponentPreview name="v2-container" />
 
+Build the content from the other message parts: `TextDisplay` for text, `Divider` with `spacing="small"` or `spacing="large"` for a separator, `Section` and `MediaGallery` for media, and `ActionRow` with `Button size="message"` for actions.
+
 ## Installation
 
 <Installation name="v2-container" />
@@ -24,7 +26,7 @@ The Components V2 block that groups text, separators and action rows behind one 
       name: "accentColor",
       type: "string | undefined",
       description:
-        "Accent colour of the left bar; defaults to the surface border.",
+        "Accent colour of the left bar. Without one, the bar takes `--newt-border`, the same default as `Embed`.",
     },
   ]}
 />

@@ -50,6 +50,19 @@ Every part of an embed is optional. A lone `EmbedDescription` is enough for a sh
 />
 
 <PropsTable
+  of="EmbedAuthorIcon / EmbedFooterIcon"
+  rows={[
+    {
+      name: "as",
+      type: "React.ElementType (React) / string | Component (Vue)",
+      default: '"img"',
+      description:
+        "The image element or component to render. Pass your framework's image component, such as `NuxtImg`, for optimised sources.",
+    },
+  ]}
+/>
+
+<PropsTable
   of="EmbedTimestamp"
   rows={[
     {
