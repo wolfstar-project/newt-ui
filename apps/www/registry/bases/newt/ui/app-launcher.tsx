@@ -433,6 +433,8 @@ export interface AppLauncherItemProps extends Omit<
   icon?: React.ReactNode
   /** Marks a paid placement, as the client does for promoted apps. */
   promoted?: boolean
+  /** Text of the `promoted` badge, also part of the button's name. */
+  promotedLabel?: string
   /** Content after the text, such as a chevron or a visibility toggle. */
   trailing?: React.ReactNode
   /**
@@ -453,6 +455,7 @@ const AppLauncherItem = React.forwardRef<
       description,
       icon,
       promoted = false,
+      promotedLabel = "Promoted",
       trailing,
       variant = "row",
       type = "button",
@@ -492,7 +495,7 @@ const AppLauncherItem = React.forwardRef<
           </span>
           {promoted ? (
             <span className="shrink-0 rounded-full bg-newt-text-primary px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none tracking-wide text-newt-bg-surface">
-              Promoted
+              {promotedLabel}
             </span>
           ) : null}
         </span>

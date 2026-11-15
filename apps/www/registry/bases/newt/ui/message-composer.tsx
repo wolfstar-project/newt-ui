@@ -5,10 +5,22 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-/* The composer's own English names. Every other text comes from a prop. */
-const text = {
-  group: (channelName: string) => `Message composer for #${channelName}`,
-  placeholder: (channelName: string) => `Message #${channelName}`,
+/** The composer's own names. Pass `labels` to translate them. */
+export interface MessageComposerLabels {
+  /** Accessible name of the whole bar, built from the channel name. */
+  group: (channelName: string) => string
+  /** Placeholder and name of the field, when `placeholder` is not set. */
+  placeholder: (channelName: string) => string
+  /** Accessible name of the add button. */
+  add: string
+  /** Accessible name of the send button. */
+  send: string
+}
+
+/** The English defaults. */
+export const defaultMessageComposerLabels: MessageComposerLabels = {
+  group: (channelName) => `Message composer for #${channelName}`,
+  placeholder: (channelName) => `Message #${channelName}`,
   add: "Add attachment",
   send: "Send message",
 }
@@ -147,6 +159,8 @@ export interface MessageComposerProps extends Omit<
   actions?: React.ReactNode
   /** Shown in place of the send button while the field is empty. */
   trailing?: React.ReactNode
+  /** Replaces the English names; omitted keys keep their default. */
+  labels?: Partial<MessageComposerLabels>
 }
 
 const MessageComposer = React.forwardRef<HTMLDivElement, MessageComposerProps>(
@@ -173,10 +187,12 @@ const MessageComposer = React.forwardRef<HTMLDivElement, MessageComposerProps>(
       renderInput,
       actions,
       trailing,
+      labels: labelOverrides,
       ...props
     },
     ref
   ) => {
+    const text = { ...defaultMessageComposerLabels, ...labelOverrides }
     const [uncontrolled, setUncontrolled] = React.useState(defaultValue)
     const current = value ?? uncontrolled
     const hasValue = current.trim().length > 0

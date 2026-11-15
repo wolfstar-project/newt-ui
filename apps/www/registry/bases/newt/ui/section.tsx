@@ -78,6 +78,8 @@ export interface SectionThumbnailProps extends React.ImgHTMLAttributes<HTMLImage
    * a spoilered attachment gets.
    */
   spoiler?: boolean
+  /** Accessible name of a hidden spoiler, read in place of the image. */
+  spoilerLabel?: string
 }
 
 const SectionThumbnail = React.forwardRef<
@@ -85,7 +87,14 @@ const SectionThumbnail = React.forwardRef<
   SectionThumbnailProps
 >(
   (
-    { as: Tag = "img", className, spoiler = false, alt = "", ...props },
+    {
+      as: Tag = "img",
+      className,
+      spoiler = false,
+      spoilerLabel = "Spoiler, click to reveal",
+      alt = "",
+      ...props
+    },
     ref
   ) => {
     const [revealed, setRevealed] = React.useState(false)
@@ -102,7 +111,7 @@ const SectionThumbnail = React.forwardRef<
          */
         role={hidden ? "button" : undefined}
         tabIndex={hidden ? 0 : undefined}
-        aria-label={hidden ? "Spoiler, click to reveal" : undefined}
+        aria-label={hidden ? spoilerLabel : undefined}
         onClick={() => setRevealed(true)}
         onKeyDown={(event: React.KeyboardEvent<HTMLImageElement>) => {
           if (!hidden) return

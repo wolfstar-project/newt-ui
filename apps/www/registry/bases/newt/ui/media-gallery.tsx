@@ -51,6 +51,8 @@ export interface MediaGalleryItemProps extends React.ImgHTMLAttributes<HTMLImage
   as?: React.ElementType
   /** Blurs the image until it is clicked. */
   spoiler?: boolean
+  /** Accessible name of a hidden spoiler, read in place of the image. */
+  spoilerLabel?: string
 }
 
 const MediaGalleryItem = React.forwardRef<
@@ -58,7 +60,14 @@ const MediaGalleryItem = React.forwardRef<
   MediaGalleryItemProps
 >(
   (
-    { as: Tag = "img", className, spoiler = false, alt = "", ...props },
+    {
+      as: Tag = "img",
+      className,
+      spoiler = false,
+      spoilerLabel = "Spoiler, click to reveal",
+      alt = "",
+      ...props
+    },
     ref
   ) => {
     const [revealed, setRevealed] = React.useState(false)
@@ -71,7 +80,7 @@ const MediaGalleryItem = React.forwardRef<
         data-spoiler={hidden || undefined}
         role={hidden ? "button" : undefined}
         tabIndex={hidden ? 0 : undefined}
-        aria-label={hidden ? "Spoiler, click to reveal" : undefined}
+        aria-label={hidden ? spoilerLabel : undefined}
         onClick={() => setRevealed(true)}
         onKeyDown={(event: React.KeyboardEvent<HTMLImageElement>) => {
           if (!hidden) return

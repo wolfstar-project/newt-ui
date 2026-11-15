@@ -26,8 +26,27 @@ export interface PinInputProps extends Omit<
   invalid?: boolean
   /** Accessible name for the group of boxes. */
   label?: string
+  /** Builds the accessible name of each box. */
+  formatCellLabel?: (state: PinInputCellLabelState) => string
   /** Posts the code with a form, through a hidden input. */
   name?: string
+}
+
+/** What the accessible name of one box is built from. */
+export interface PinInputCellLabelState {
+  /** The place of the box, from 1. */
+  position: number
+  length: number
+  type: "numeric" | "alphanumeric"
+}
+
+/** The English default: `Digit 2 of 6`. Pass `formatCellLabel` to translate it. */
+export function defaultPinInputCellLabel({
+  position,
+  length,
+  type,
+}: PinInputCellLabelState): string {
+  return `${type === "numeric" ? "Digit" : "Character"} ${position} of ${length}`
 }
 
 /* Global, so `match` returns every accepted character and drops the rest. */
@@ -79,6 +98,7 @@ const PinInput = React.forwardRef<HTMLDivElement, PinInputProps>(
       disabled = false,
       invalid = false,
       label = "Verification code",
+      formatCellLabel = defaultPinInputCellLabel,
       name,
       ...props
     },
@@ -194,7 +214,11 @@ const PinInput = React.forwardRef<HTMLDivElement, PinInputProps>(
               type={mask ? "password" : "text"}
               inputMode={type === "numeric" ? "numeric" : "text"}
               autoComplete={index === 0 ? "one-time-code" : "off"}
-              aria-label={`${type === "numeric" ? "Digit" : "Character"} ${index + 1} of ${length}`}
+              aria-label={formatCellLabel({
+                position: index + 1,
+                length,
+                type,
+              })}
               aria-invalid={invalid || undefined}
               disabled={disabled}
               value={code[index] ?? ""}

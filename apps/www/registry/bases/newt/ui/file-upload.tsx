@@ -23,6 +23,10 @@ export interface FileUploadProps extends Omit<
   disabled?: boolean
   /** The line under the prompt: how many, how large. */
   hint?: React.ReactNode
+  /** The text before the browse control. */
+  prompt?: string
+  /** The browse control, which opens the file picker. */
+  browseLabel?: string
   /** Called with whatever was dropped or picked. */
   onFiles?: (files: readonly File[]) => void
 }
@@ -35,6 +39,8 @@ const FileUpload = React.forwardRef<HTMLDivElement, FileUploadProps>(
       multiple = false,
       disabled = false,
       hint,
+      prompt = "Drop files here or",
+      browseLabel = "browse",
       onFiles,
       ...props
     },
@@ -87,14 +93,14 @@ const FileUpload = React.forwardRef<HTMLDivElement, FileUploadProps>(
         </svg>
 
         <p className="text-sm text-newt-text-secondary">
-          Drop files here or{" "}
+          {prompt}{" "}
           {/*
            * The label is the control: clicking the word opens the picker, and
            * the input keeps the focus ring and the keyboard behaviour it was
            * born with.
            */}
           <label className="cursor-pointer text-newt-text-link underline-offset-2 hover:underline">
-            browse
+            {browseLabel}
             <input
               ref={inputRef}
               type="file"

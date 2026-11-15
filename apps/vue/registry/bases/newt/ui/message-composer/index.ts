@@ -48,6 +48,26 @@ export const messageComposerButtonVariants = cva(
   }
 )
 
+/** The composer's own names. Pass `labels` to translate them. */
+export interface MessageComposerLabels {
+  /** Accessible name of the whole bar, built from the channel name. */
+  group: (channelName: string) => string
+  /** Placeholder and name of the field, when `placeholder` is not set. */
+  placeholder: (channelName: string) => string
+  /** Accessible name of the add button. */
+  add: string
+  /** Accessible name of the send button. */
+  send: string
+}
+
+/** The English defaults. */
+export const defaultMessageComposerLabels: MessageComposerLabels = {
+  group: (channelName) => `Message composer for #${channelName}`,
+  placeholder: (channelName) => `Message #${channelName}`,
+  add: "Add attachment",
+  send: "Send message",
+}
+
 export type MessageComposerLayout = NonNullable<
   VariantProps<typeof messageComposerVariants>["layout"]
 >

@@ -22,6 +22,15 @@ export interface SlashCommandProps extends React.HTMLAttributes<HTMLSpanElement>
   options?: readonly SlashCommandOption[]
   /** Content that follows the command inside the chip, after a space. */
   children?: React.ReactNode
+  /** Builds the accessible name; `aria-label` still wins when both are set. */
+  formatLabel?: (state: SlashCommandLabelState) => string
+}
+
+/** What the accessible name of a command chip is built from. */
+export interface SlashCommandLabelState {
+  /** The command path without the slash: `ban member`. */
+  path: string
+  options: readonly SlashCommandOption[]
 }
 
 /** `/name group sub` — the segments a caller can actually reach. */
@@ -33,10 +42,11 @@ function commandPath(
     .join(" ")
 }
 
-function describe(
-  path: string,
-  options: readonly SlashCommandOption[]
-): string {
+/** The English default. Pass `formatLabel` to translate it. */
+export function defaultSlashCommandLabel({
+  path,
+  options,
+}: SlashCommandLabelState): string {
   const spoken = options
     .map(
       (option) =>
@@ -64,6 +74,7 @@ const SlashCommand = React.forwardRef<HTMLSpanElement, SlashCommandProps>(
       subcommandGroup,
       options = [],
       children,
+      formatLabel = defaultSlashCommandLabel,
       ...props
     },
     ref
@@ -75,7 +86,7 @@ const SlashCommand = React.forwardRef<HTMLSpanElement, SlashCommandProps>(
       <span
         ref={ref}
         role="group"
-        aria-label={describe(path, options)}
+        aria-label={formatLabel({ path, options })}
         className={cn(
           "inline-block rounded-[var(--newt-radius-sm)] bg-[color-mix(in_srgb,var(--newt-brand)_15%,transparent)] py-[2px] ps-[6px] pe-2 font-[family-name:var(--newt-font-mono)] text-[13px] text-newt-mention-text [word-spacing:calc(4px_-_1ch)] [&>*]:[word-spacing:normal] [&>*]:[unicode-bidi:isolate]",
           className

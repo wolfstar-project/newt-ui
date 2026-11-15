@@ -48,6 +48,8 @@ const props = withDefaults(
     disabled?: boolean
     /** Accessible name of the trigger and the listbox. */
     label?: string
+    /** Shown when the list is empty. Defaults to a line for each `kind`. */
+    emptyLabel?: string
     /**
      * The element the panel is portalled into. Defaults to `body`; pass the
      * enclosing native `<dialog>` or a themed wrapper to keep it there.
@@ -384,7 +386,7 @@ function onChipMouseDown(event: MouseEvent, entity: string) {
               v-if="options.length === 0"
               class="px-2.5 py-2 text-sm text-newt-text-muted"
             >
-              {{ entitySelectEmpty[props.kind] }}
+              {{ props.emptyLabel ?? entitySelectEmpty[props.kind] }}
             </li>
 
             <li

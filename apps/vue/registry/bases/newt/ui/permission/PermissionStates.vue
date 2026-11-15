@@ -1,22 +1,33 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import { computed, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-import type { PermissionValue } from "."
+import {
+  defaultPermissionStateLabels,
+  type PermissionStateLabels,
+  type PermissionValue,
+} from "."
 
 const props = defineProps<{
   class?: HTMLAttributes["class"]
   disabled?: boolean
+  /** Replaces the English names; omitted keys keep their default. */
+  labels?: Partial<PermissionStateLabels>
 }>()
 
 const model = defineModel<PermissionValue>({ default: "inherit" })
 
-const options: { value: PermissionValue; label: string; glyph: string }[] = [
-  { value: "deny", label: "Deny", glyph: "✕" },
-  { value: "inherit", label: "Inherit", glyph: "/" },
-  { value: "allow", label: "Allow", glyph: "✓" },
+const options: { value: PermissionValue; glyph: string }[] = [
+  { value: "deny", glyph: "✕" },
+  { value: "inherit", glyph: "/" },
+  { value: "allow", glyph: "✓" },
 ]
+
+const labels = computed(() => ({
+  ...defaultPermissionStateLabels,
+  ...props.labels,
+}))
 
 const activeClasses = {
   deny: "bg-[rgba(242,63,66,0.15)] text-newt-dnd hover:text-newt-dnd",
@@ -45,7 +56,7 @@ function select(value: PermissionValue) {
       :key="option.value"
       type="button"
       :aria-pressed="option.value === model"
-      :aria-label="option.label"
+      :aria-label="labels[option.value]"
       :disabled="props.disabled"
       :data-state="option.value === model ? 'active' : 'inactive'"
       :data-value="option.value"

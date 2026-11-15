@@ -57,12 +57,25 @@ const PermissionDescription = React.forwardRef<
 ))
 PermissionDescription.displayName = "PermissionDescription"
 
-const stateOptions: { value: PermissionValue; label: string; glyph: string }[] =
-  [
-    { value: "deny", label: "Deny", glyph: "✕" },
-    { value: "inherit", label: "Inherit", glyph: "/" },
-    { value: "allow", label: "Allow", glyph: "✓" },
-  ]
+const stateOptions: { value: PermissionValue; glyph: string }[] = [
+  { value: "deny", glyph: "✕" },
+  { value: "inherit", glyph: "/" },
+  { value: "allow", glyph: "✓" },
+]
+
+/** The accessible name of each state button. */
+export interface PermissionStateLabels {
+  deny: string
+  inherit: string
+  allow: string
+}
+
+/** The English defaults. Pass `labels` to translate them. */
+export const defaultPermissionStateLabels: PermissionStateLabels = {
+  deny: "Deny",
+  inherit: "Inherit",
+  allow: "Allow",
+}
 
 const activeStateClasses = {
   deny: "bg-[rgba(242,63,66,0.15)] text-newt-dnd hover:text-newt-dnd",
@@ -80,6 +93,8 @@ export interface PermissionStatesProps extends Omit<
   defaultValue?: PermissionValue
   onValueChange?: (value: PermissionValue) => void
   disabled?: boolean
+  /** Replaces the English names; omitted keys keep their default. */
+  labels?: Partial<PermissionStateLabels>
 }
 
 const PermissionStates = React.forwardRef<
@@ -93,10 +108,12 @@ const PermissionStates = React.forwardRef<
       defaultValue = "inherit",
       onValueChange,
       disabled = false,
+      labels: labelOverrides,
       ...props
     },
     ref
   ) => {
+    const labels = { ...defaultPermissionStateLabels, ...labelOverrides }
     const [internal, setInternal] =
       React.useState<PermissionValue>(defaultValue)
     const isControlled = valueProp !== undefined
@@ -125,7 +142,7 @@ const PermissionStates = React.forwardRef<
               key={option.value}
               type="button"
               aria-pressed={active}
-              aria-label={option.label}
+              aria-label={labels[option.value]}
               disabled={disabled}
               data-state={active ? "active" : "inactive"}
               data-value={option.value}

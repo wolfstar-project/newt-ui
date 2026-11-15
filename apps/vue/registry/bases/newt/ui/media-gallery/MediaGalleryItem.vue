@@ -16,8 +16,15 @@ const props = withDefaults(
     alt?: string
     /** Blurs the image until it is clicked. */
     spoiler?: boolean
+    /** Accessible name of a hidden spoiler, read in place of the image. */
+    spoilerLabel?: string
   }>(),
-  { as: "img", alt: "", spoiler: false }
+  {
+    as: "img",
+    alt: "",
+    spoiler: false,
+    spoilerLabel: "Spoiler, click to reveal",
+  }
 )
 
 const revealed = ref(false)
@@ -43,9 +50,7 @@ function onKeydown(event: KeyboardEvent) {
     :data-spoiler="props.spoiler && !revealed ? true : undefined"
     :role="props.spoiler && !revealed ? 'button' : undefined"
     :tabindex="props.spoiler && !revealed ? 0 : undefined"
-    :aria-label="
-      props.spoiler && !revealed ? 'Spoiler, click to reveal' : undefined
-    "
+    :aria-label="props.spoiler && !revealed ? props.spoilerLabel : undefined"
     :class="
       cn(
         'h-full w-full object-cover',

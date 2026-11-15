@@ -57,6 +57,8 @@ export interface EntitySelectProps extends Omit<
   disabled?: boolean
   /** Accessible name of the trigger and the listbox. */
   label?: string
+  /** Shown when the list is empty. Defaults to a line for each `kind`. */
+  emptyLabel?: string
   /**
    * The element the panel is portalled into. Defaults to `document.body`;
    * pass the enclosing native `<dialog>` or a themed wrapper to keep it there.
@@ -105,6 +107,7 @@ const EntitySelect = React.forwardRef<HTMLDivElement, EntitySelectProps>(
       placeholder = "Make a selection",
       disabled = false,
       label = "Select an option",
+      emptyLabel,
       container,
       ...props
     },
@@ -457,7 +460,7 @@ const EntitySelect = React.forwardRef<HTMLDivElement, EntitySelectProps>(
             >
               {options.length === 0 ? (
                 <li className="px-2.5 py-2 text-sm text-newt-text-muted">
-                  {EMPTY[kind]}
+                  {emptyLabel ?? EMPTY[kind]}
                 </li>
               ) : (
                 options.map((option, index) => {
