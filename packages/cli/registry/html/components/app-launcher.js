@@ -6,11 +6,19 @@
  * element that held it before. Cancel the event to close it your own way.
  *
  * Tab and Shift+Tab cycle through the controls of the launcher, as they do in
- * the React and Vue ports. A press on the page beside it still moves focus
- * there, and the launcher stays open.
+ * the React and Vue ports. Controls inside hidden content are skipped. A
+ * press on the page beside it still moves focus there, and the launcher stays
+ * open.
+ *
+ * With several launchers open, Escape closes one: the newest launcher that holds
+ * focus, or else the newest launcher. Escape that a control inside already
+ * handled (`event.preventDefault()`) closes nothing. The launcher marks the
+ * Escape it handles the same way, so a surrounding dialog stays open.
  *
  * With `aria-modal="true"` focus cannot stay outside the launcher: Tab from the
- * page pulls it back in, and a press outside closes the launcher.
+ * page pulls it back in, and so does any other move of focus to the page. A
+ * press outside closes the launcher, and the press is cancelled so it cannot
+ * take focus from the element that gets it back.
  *
  * A launcher without the attribute is shown in the page: no script runs.
  */
@@ -31,24 +39,57 @@
     "[tabindex]:not([tabindex='-1'])",
   ].join(",")
 
+  /* A control that is hidden, by itself or by an ancestor, takes no focus. */
+  const shown = (element) => {
+    if (typeof element.checkVisibility === "function") {
+      return element.checkVisibility({
+        checkVisibilityCSS: true,
+        visibilityProperty: true,
+      })
+    }
+    /* Engines without `checkVisibility`: walk up to the root. */
+    for (let node = element; node; node = node.parentElement) {
+      if (node.hidden || getComputedStyle(node).display === "none") return false
+    }
+    return getComputedStyle(element).visibility !== "hidden"
+  }
+
   const tabbablesIn = (container) =>
-    [...container.querySelectorAll(FOCUSABLE)].filter((element) => {
-      if (element.tabIndex < 0 || element.closest("[inert]")) return false
-      const style = getComputedStyle(element)
-      return style.visibility !== "hidden" && style.display !== "none"
-    })
+    [...container.querySelectorAll(FOCUSABLE)].filter(
+      (element) =>
+        element.tabIndex >= 0 && !element.closest("[inert]") && shown(element)
+    )
+
+  /* The launchers this script opened, oldest first. */
+  const opened = []
+  const openLaunchers = () => opened.filter((launcher) => launcher.isConnected)
+  /* The launcher that answers keys and presses: the newest that holds focus. */
+  const activeLauncher = () => {
+    const launchers = openLaunchers()
+    return (
+      launchers.findLast((launcher) =>
+        launcher.contains(document.activeElement)
+      ) ?? launchers.at(-1)
+    )
+  }
+  const isModal = (launcher) => launcher.getAttribute("aria-modal") === "true"
 
   document.querySelectorAll("[data-newt-app-launcher]").forEach((launcher) => {
-    const modal = launcher.getAttribute("aria-modal") === "true"
+    const modal = isModal(launcher)
     const active = document.activeElement
     /* An `autofocus` control inside has focus already: keep it, and there is
      * no outside element to hand focus back to. */
     const inside = launcher.contains(active)
     const opener = inside ? null : active
+    /* The last control inside that held focus, to give it back to. */
+    let lastFocused = inside ? active : null
 
     function release() {
       document.removeEventListener("keydown", onKeyDown)
       document.removeEventListener("pointerdown", onPointerDown)
+      document.removeEventListener("focusin", onFocusIn)
+      const index = opened.indexOf(launcher)
+      if (index !== -1) opened.splice(index, 1)
     }
 
     function close() {
@@ -67,11 +108,14 @@
         release()
         return
       }
+      if (event.key !== "Escape" && event.key !== "Tab") return
+      if (activeLauncher() !== launcher) return
       if (event.key === "Escape") {
+        if (event.defaultPrevented) return
+        event.preventDefault()
         close()
         return
       }
-      if (event.key !== "Tab") return
       const active = document.activeElement
       const inside = launcher.contains(active)
       /* Only a modal launcher takes focus back from the page beside it. */
@@ -101,14 +145,41 @@
         release()
         return
       }
-      if (modal && !launcher.contains(event.target)) close()
+      if (!modal || activeLauncher() !== launcher) return
+      if (launcher.contains(event.target)) return
+      /* Without this the press would focus what it hit after `close` hands
+       * focus back. */
+      event.preventDefault()
+      close()
+    }
+
+    /* A modal launcher takes focus back from the page, however it got there. */
+    function onFocusIn(event) {
+      if (!launcher.isConnected) {
+        release()
+        return
+      }
+      if (launcher.contains(event.target)) {
+        lastFocused = event.target
+        return
+      }
+      if (!modal || openLaunchers().findLast(isModal) !== launcher) return
+      const target =
+        lastFocused !== null &&
+        launcher.contains(lastFocused) &&
+        shown(lastFocused)
+          ? lastFocused
+          : (tabbablesIn(launcher)[0] ?? launcher)
+      target.focus()
     }
 
     launcher.addEventListener("click", (event) => {
       if (event.target.closest("[data-newt-app-launcher-close]")) close()
     })
+    opened.push(launcher)
     document.addEventListener("keydown", onKeyDown)
     document.addEventListener("pointerdown", onPointerDown)
+    document.addEventListener("focusin", onFocusIn)
     if (!inside) {
       const initial = tabbablesIn(launcher)[0] ?? launcher
       initial.focus()

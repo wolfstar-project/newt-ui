@@ -98,6 +98,35 @@ describe("scrollbar.js, overlay thumb", () => {
     )
   })
 
+  it("redraws when a text node in the viewport changes", async () => {
+    const viewport = part(".newt-scrollbar__viewport")
+    const text = document.createTextNode("short")
+    viewport.replaceChildren(text)
+    size(viewport, { scrollHeight: 200 })
+    runInThisContext(behavior)
+    expect(part(".newt-scrollbar__track").hidden).toBe(true)
+    size(viewport, { scrollHeight: 800 })
+    text.data = "long enough to overflow"
+    await Promise.resolve()
+    expect(part(".newt-scrollbar__track").hidden).toBe(false)
+  })
+
+  it("stays inside a track shorter than its minimum length", () => {
+    size(part(".newt-scrollbar__track"), { clientHeight: 10 })
+    Object.defineProperty(part(".newt-scrollbar__thumb"), "offsetHeight", {
+      configurable: true,
+      value: 24,
+    })
+    runInThisContext(behavior)
+    scrollTo(300)
+    expect(part(".newt-scrollbar__thumb").style.transform).toBe(
+      "translateY(0px)"
+    )
+    pointer("pointerdown", 100)
+    pointer("pointermove", 150)
+    expect(part(".newt-scrollbar__viewport").scrollTop).toBe(300)
+  })
+
   it("hides the track when the content fits", () => {
     size(part(".newt-scrollbar__viewport"), { scrollHeight: 200 })
     runInThisContext(behavior)
