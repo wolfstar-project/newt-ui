@@ -88,7 +88,7 @@ function attachScrollbar(
       const length = track.clientHeight
       thumb.style.height = `${(viewport.clientHeight / viewport.scrollHeight) * length}px`
       // The classes cap the height, so the travel is read back from the box.
-      const travel = length - thumb.offsetHeight
+      const travel = Math.max(0, length - thumb.offsetHeight)
       thumb.style.transform = `translateY(${(viewport.scrollTop / overflow) * travel}px)`
     }
 
@@ -105,8 +105,24 @@ function attachScrollbar(
         resize.observe(element)
       }
     }
-    const mutation = new MutationObserver(watch)
-    mutation.observe(viewport, { childList: true })
+    /*
+     * A new child needs watching. A changed text node resizes nothing that is
+     * watched when it sits straight in the viewport, so it redraws.
+     */
+    const mutation = new MutationObserver((records) => {
+      if (
+        records.some((r) => r.type === "childList" && r.target === viewport)
+      ) {
+        watch()
+      } else {
+        draw()
+      }
+    })
+    mutation.observe(viewport, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    })
     watch()
     signal.addEventListener("abort", () => {
       resize.disconnect()
@@ -286,7 +302,7 @@ const ScrollArea = React.forwardRef<HTMLDivElement, ScrollAreaProps>(
         >
           <div
             ref={thumb}
-            className="pointer-events-auto max-h-[var(--newt-scrollbar-thumb-max-height,none)] min-h-[24px] w-[var(--newt-scrollbar-thumb-width,8px)] touch-none rounded-full bg-[var(--newt-scrollbar-thumb,var(--newt-bg-active))] hover:bg-[var(--newt-scrollbar-thumb-hover,var(--newt-text-muted))] active:bg-[var(--newt-scrollbar-thumb-hover,var(--newt-text-muted))]"
+            className="pointer-events-auto max-h-[var(--newt-scrollbar-thumb-max-height,none)] min-h-[min(24px,100%)] w-[var(--newt-scrollbar-thumb-width,8px)] touch-none rounded-full bg-[var(--newt-scrollbar-thumb,var(--newt-bg-active))] hover:bg-[var(--newt-scrollbar-thumb-hover,var(--newt-text-muted))] active:bg-[var(--newt-scrollbar-thumb-hover,var(--newt-text-muted))]"
           />
         </div>
       </div>
