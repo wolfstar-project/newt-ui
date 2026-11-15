@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import type { HTMLAttributes, VNode } from "vue"
 
 import { cn } from "@/lib/utils"
 
@@ -10,9 +10,21 @@ const props = withDefaults(
     description?: string
     /** Marks a paid placement, as the client does for promoted apps. */
     promoted?: boolean
+    /**
+     * `row` puts the icon beside the text. `tile` puts it above, for a
+     * `variant="grid"` list.
+     */
+    variant?: "row" | "tile"
   }>(),
-  { promoted: false }
+  { promoted: false, variant: "row" }
 )
+
+defineSlots<{
+  /** Icon for the app; pair with `<AppLauncherItemIcon>`. */
+  icon?: () => VNode[]
+  /** Content after the text, such as a chevron or a visibility toggle. */
+  trailing?: () => VNode[]
+}>()
 </script>
 
 <template>
@@ -20,7 +32,10 @@ const props = withDefaults(
     type="button"
     :class="
       cn(
-        'flex w-full cursor-pointer items-center gap-3 border-0 bg-transparent px-3 py-3 text-start transition-colors duration-fast ease-newt',
+        'flex w-full cursor-pointer items-center border-0 transition-colors duration-fast ease-newt',
+        props.variant === 'tile'
+          ? 'flex-col gap-2 rounded-md bg-newt-bg-elevated px-2 py-3 text-center'
+          : 'gap-3 bg-transparent px-3 py-3 text-start',
         'hover:bg-newt-bg-hover',
         'focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link',
         props.class
@@ -28,8 +43,22 @@ const props = withDefaults(
     "
   >
     <slot name="icon" />
-    <span class="flex min-w-0 flex-1 flex-col gap-0.5">
-      <span class="flex min-w-0 items-center gap-1.5">
+    <span
+      :class="
+        cn(
+          'flex min-w-0 flex-col gap-0.5',
+          props.variant === 'tile' ? 'w-full' : 'flex-1'
+        )
+      "
+    >
+      <span
+        :class="
+          cn(
+            'flex min-w-0 items-center gap-1.5',
+            props.variant === 'tile' && 'justify-center'
+          )
+        "
+      >
         <span
           class="truncate text-base font-medium leading-tight text-newt-text-primary"
         >
@@ -48,6 +77,12 @@ const props = withDefaults(
       >
         {{ props.description }}
       </span>
+    </span>
+    <span
+      v-if="$slots.trailing"
+      class="inline-flex shrink-0 items-center gap-1 text-newt-text-muted [&>svg]:h-5 [&>svg]:w-5"
+    >
+      <slot name="trailing" />
     </span>
   </button>
 </template>

@@ -29,7 +29,7 @@ const BoardIcon = () => (
 
 export default function AppLauncherDemo() {
   return (
-    <AppLauncher aria-label="Apps" className="h-[420px]">
+    <AppLauncher inline label="Apps" className="h-[420px]">
       <AppLauncherHandle />
 
       <AppLauncherSearch>
@@ -45,7 +45,7 @@ export default function AppLauncherDemo() {
             <AppLauncherSectionTitle>Recents</AppLauncherSectionTitle>
             <AppLauncherViewMore>View More</AppLauncherViewMore>
           </AppLauncherSectionHeader>
-          <AppLauncherRecents>
+          <AppLauncherRecents aria-label="Recent apps">
             <AppLauncherRecent aria-label="Moderation">
               <ShieldIcon />
             </AppLauncherRecent>

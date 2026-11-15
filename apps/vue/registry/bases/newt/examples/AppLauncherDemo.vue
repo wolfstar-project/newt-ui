@@ -21,7 +21,7 @@ const boardPath = "M4 4h16v12H8l-4 4V4Z"
 </script>
 
 <template>
-  <AppLauncher aria-label="Apps" class="h-[420px]">
+  <AppLauncher inline label="Apps" class="h-[420px]">
     <AppLauncherHandle />
 
     <AppLauncherSearch>
@@ -37,7 +37,7 @@ const boardPath = "M4 4h16v12H8l-4 4V4Z"
           <AppLauncherSectionTitle>Recents</AppLauncherSectionTitle>
           <AppLauncherViewMore>View More</AppLauncherViewMore>
         </AppLauncherSectionHeader>
-        <AppLauncherRecents>
+        <AppLauncherRecents aria-label="Recent apps">
           <AppLauncherRecent aria-label="Moderation">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path :d="shieldPath" />

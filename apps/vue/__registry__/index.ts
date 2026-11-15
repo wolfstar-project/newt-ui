@@ -115,6 +115,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/app-launcher/AppLauncher.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherHandle.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherHeader.vue",
+        "registry/bases/newt/ui/app-launcher/AppLauncherHeaderTitle.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherBack.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherSearch.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherSearchInput.vue",
@@ -128,6 +129,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/app-launcher/AppLauncherItemIcon.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherRecents.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherRecent.vue",
+        "registry/bases/newt/ui/app-launcher/AppLauncherPromoCard.vue",
         "registry/bases/newt/ui/app-launcher/index.ts",
       ],
     },
@@ -1630,6 +1632,31 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/AppLauncherDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/AppLauncherDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AppLauncherSheetDemo",
+    {
+      name: "AppLauncherSheetDemo",
+      type: "registry:example",
+      registryDependencies: ["app-launcher", "button"],
+      files: ["registry/bases/newt/examples/AppLauncherSheetDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AppLauncherSheetDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AppLauncherDrillInDemo",
+    {
+      name: "AppLauncherDrillInDemo",
+      type: "registry:example",
+      registryDependencies: ["app-launcher"],
+      files: ["registry/bases/newt/examples/AppLauncherDrillInDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/AppLauncherDrillInDemo.vue")
       ),
     },
   ],

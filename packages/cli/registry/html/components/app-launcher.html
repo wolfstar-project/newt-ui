@@ -36,7 +36,13 @@
   items. A logo that must not be cropped takes
   newt-app-launcher__item-icon--contain or newt-app-launcher__recent--contain.
 -->
-<div class="newt-app-launcher" role="dialog" aria-label="Apps" tabindex="-1" data-newt-app-launcher>
+<div
+  class="newt-app-launcher"
+  role="dialog"
+  aria-label="Apps"
+  tabindex="-1"
+  data-newt-app-launcher
+>
   <div class="newt-app-launcher__handle" aria-hidden="true"></div>
 
   <div class="newt-app-launcher__search">
@@ -67,10 +73,20 @@
   </div>
 
   <div class="newt-app-launcher__body newt-scrollbar">
-    <section class="newt-app-launcher__section" aria-labelledby="newt-app-launcher-recents">
+    <section
+      class="newt-app-launcher__section"
+      aria-labelledby="newt-app-launcher-recents"
+    >
       <div class="newt-app-launcher__section-header">
-        <h2 class="newt-app-launcher__section-title" id="newt-app-launcher-recents">Recents</h2>
-        <button type="button" class="newt-app-launcher__view-more">View More</button>
+        <h2
+          class="newt-app-launcher__section-title"
+          id="newt-app-launcher-recents"
+        >
+          Recents
+        </h2>
+        <button type="button" class="newt-app-launcher__view-more">
+          View More
+        </button>
       </div>
       <ul
         class="newt-app-launcher__recents"
@@ -78,28 +94,46 @@
         aria-labelledby="newt-app-launcher-recents"
       >
         <li>
-          <button type="button" class="newt-app-launcher__recent" aria-label="Moderation bot">
+          <button
+            type="button"
+            class="newt-app-launcher__recent"
+            aria-label="Moderation bot"
+          >
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z" />
             </svg>
           </button>
         </li>
         <li>
-          <button type="button" class="newt-app-launcher__recent" aria-label="Music bot">
+          <button
+            type="button"
+            class="newt-app-launcher__recent"
+            aria-label="Music bot"
+          >
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M9 18V6l10-2v12M9 18a3 3 0 1 1-2-2.83M19 16a3 3 0 1 1-2-2.83" />
+              <path
+                d="M9 18V6l10-2v12M9 18a3 3 0 1 1-2-2.83M19 16a3 3 0 1 1-2-2.83"
+              />
             </svg>
           </button>
         </li>
       </ul>
     </section>
 
-    <section class="newt-app-launcher__section" aria-labelledby="newt-app-launcher-server">
+    <section
+      class="newt-app-launcher__section"
+      aria-labelledby="newt-app-launcher-server"
+    >
       <div class="newt-app-launcher__section-header">
-        <h2 class="newt-app-launcher__section-title" id="newt-app-launcher-server">
+        <h2
+          class="newt-app-launcher__section-title"
+          id="newt-app-launcher-server"
+        >
           Apps in this Server
         </h2>
-        <button type="button" class="newt-app-launcher__view-more">View More</button>
+        <button type="button" class="newt-app-launcher__view-more">
+          View More
+        </button>
       </div>
 
       <div class="newt-app-launcher__list">
@@ -121,8 +155,14 @@
             </span>
           </span>
           <span class="newt-app-launcher__item-trailing" aria-hidden="true">
-            <svg class="newt-app-launcher__chevron" viewBox="0 0 20 20" fill="currentColor">
-              <path d="m7.3 4.3 5.7 5.7-5.7 5.7-1.4-1.4 4.3-4.3-4.3-4.3 1.4-1.4Z" />
+            <svg
+              class="newt-app-launcher__chevron"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                d="m7.3 4.3 5.7 5.7-5.7 5.7-1.4-1.4 4.3-4.3-4.3-4.3 1.4-1.4Z"
+              />
             </svg>
           </span>
         </button>

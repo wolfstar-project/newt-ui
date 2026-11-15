@@ -162,7 +162,8 @@
       "name": "app-launcher",
       "type": "registry:ui",
       "title": "App Launcher",
-      "description": "The Apps popout, with search, a recents strip and the apps installed in a server.",
+      "description": "The Apps launcher, as a desktop popout or a bottom sheet, with search, a recents strip and the apps installed in a server.",
+      "dependencies": ["class-variance-authority", "reka-ui"],
       "registryDependencies": ["scrollbar"],
       "files": [
         {
@@ -175,6 +176,10 @@
         },
         {
           "path": "registry/bases/newt/ui/app-launcher/AppLauncherHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/app-launcher/AppLauncherHeaderTitle.vue",
           "type": "registry:ui"
         },
         {
@@ -227,6 +232,10 @@
         },
         {
           "path": "registry/bases/newt/ui/app-launcher/AppLauncherRecent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/app-launcher/AppLauncherPromoCard.vue",
           "type": "registry:ui"
         },
         {

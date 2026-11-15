@@ -113,6 +113,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "app-launcher-sheet-demo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher", "button"],
+    files: [
+      {
+        path: "examples/app-launcher-sheet-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "app-launcher-drill-in-demo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher"],
+    files: [
+      {
+        path: "examples/app-launcher-drill-in-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "attachment-demo",
     type: "registry:example",
     registryDependencies: ["attachment", "button"],
