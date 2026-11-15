@@ -227,16 +227,14 @@
   background: transparent;
 }
 
+/* A row: the item's button, then the trailing part beside it. */
 .newt-app-launcher__item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
   padding: 12px;
-  border: 0;
-  background: transparent;
-  text-align: start;
-  cursor: pointer;
   transition: background var(--newt-duration-fast) var(--newt-ease);
 }
 .newt-app-launcher__item + .newt-app-launcher__item {
@@ -245,7 +243,28 @@
 .newt-app-launcher__item:hover {
   background: var(--newt-bg-hover);
 }
-.newt-app-launcher__item:focus-visible {
+
+/* The button covers the whole row through its ::after, so a press on the
+ * row, a chevron included, presses it. */
+.newt-app-launcher__item-action {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+  outline: none;
+}
+.newt-app-launcher__item-action::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.newt-app-launcher__item-action:focus-visible::after {
   outline: 2px solid var(--newt-text-link);
   outline-offset: -2px;
 }
@@ -257,10 +276,19 @@
   padding: 12px 8px;
   border-radius: var(--newt-radius-md);
   background: var(--newt-bg-elevated);
-  text-align: center;
 }
 .newt-app-launcher__item--tile + .newt-app-launcher__item--tile {
   border-top: 0;
+}
+.newt-app-launcher__item--tile .newt-app-launcher__item-action {
+  flex: none;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: center;
+}
+.newt-app-launcher__item--tile .newt-app-launcher__item-action::after {
+  border-radius: var(--newt-radius-md);
 }
 .newt-app-launcher__item--tile .newt-app-launcher__item-body {
   width: 100%;
@@ -357,6 +385,17 @@
 .newt-app-launcher__item-trailing > svg {
   width: 20px;
   height: 20px;
+}
+/* A press on the trailing part passes through to the button that covers the
+ * row, so a chevron presses it. A control takes its own presses and rises
+ * above the button. */
+.newt-app-launcher__item-trailing {
+  pointer-events: none;
+}
+.newt-app-launcher__item-trailing
+  :is(a, button, input, label, select, textarea) {
+  position: relative;
+  pointer-events: auto;
 }
 
 /* A forward chevron, mirrored in a right-to-left tree. */

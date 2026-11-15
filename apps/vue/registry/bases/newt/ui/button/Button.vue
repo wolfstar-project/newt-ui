@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import type { ButtonHTMLAttributes, Component, HTMLAttributes } from "vue"
-import { computed, type VNode } from "vue"
+import {
+  Comment,
+  computed,
+  Fragment,
+  isVNode,
+  type VNode,
+  type VNodeArrayChildren,
+} from "vue"
 
 import { cn } from "@/lib/utils"
 
@@ -47,6 +54,30 @@ const slots = defineSlots<{
   trailing?: () => VNode[]
 }>()
 
+/*
+ * Whether a slot renders anything. A slot that is passed but empty, such as
+ * `<template #leading><Icon v-if="cond" /></template>`, yields only a comment
+ * or an empty fragment, and must not leave a box that takes a gap. Of the
+ * other child values, these render nothing; any other text renders.
+ */
+const NOTHING = new Set<unknown>([null, undefined, true, false, ""])
+
+function visible(nodes: VNodeArrayChildren): boolean {
+  return nodes.some((node) => {
+    if (Array.isArray(node)) return visible(node)
+    if (!isVNode(node)) return !NOTHING.has(node)
+    if (node.type === Comment) return false
+    if (node.type === Fragment) {
+      return Array.isArray(node.children) && visible(node.children)
+    }
+    return true
+  })
+}
+
+function renders(slot: (() => VNode[]) | undefined): boolean {
+  return slot !== undefined && visible(slot())
+}
+
 const showLaunch = computed(() => props.launchIcon ?? props.variant === "link")
 const tag = computed(
   () => props.as ?? (props.href === undefined ? "button" : "a")
@@ -85,11 +116,17 @@ const isButton = computed(() => tag.value === "button")
       separates an icon component or a unicode emoji from the label. No label
       box without a label: an empty box would still take a gap.
     -->
-    <span v-if="slots.leading" class="inline-flex shrink-0 items-center">
+    <span
+      v-if="renders(slots.leading)"
+      class="inline-flex shrink-0 items-center"
+    >
       <slot name="leading" />
     </span>
-    <span v-if="slots.default" class="truncate"><slot /></span>
-    <span v-if="slots.trailing" class="inline-flex shrink-0 items-center">
+    <span v-if="renders(slots.default)" class="truncate"><slot /></span>
+    <span
+      v-if="renders(slots.trailing)"
+      class="inline-flex shrink-0 items-center"
+    >
       <slot name="trailing" />
     </span>
     <!-- The "opens elsewhere" glyph Discord puts on link buttons. -->
