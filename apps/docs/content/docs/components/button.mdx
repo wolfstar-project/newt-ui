@@ -19,7 +19,7 @@ The button carries six intents and five sizes. Which one you reach for is a stat
 
 ### Sizes
 
-`sm` (28px), `message` (32px), `default` (36px) and `lg` (40px) change the padding and the text size. Use `message` for a button in a message's action row. `icon` is a circle for a lone glyph. An icon button has no visible text, so give it an `aria-label`.
+`sm`, `message`, `default` and `lg` change the padding and the text size. `message` is 32px high, the size of a button in a message's action row. `icon` is a circle for a lone glyph. An icon button has no visible text, so give it an `aria-label`.
 
 <ComponentPreview name="button" variant="sizes" />
 
@@ -56,7 +56,7 @@ Pass `href` and any variant renders an `<a>`, for an action that goes somewhere.
       name: "size",
       type: '"default" | "sm" | "message" | "lg" | "icon"',
       description:
-        "Padding and text size: 36px, 28px, 32px or 40px high. `message` is the size of a button in a message. `icon` makes it a circle.",
+        "Padding and text size. `message` is 32px high, the size of a button in a message. `icon` makes it a circle.",
       default: '"default"',
     },
     {
