@@ -51,8 +51,9 @@ entry in the shared `apps/www/registry/registry-categories.ts` taxonomy.
   Keep the escape-key and overlay-click handling, the auto-dismiss timers, and
   the copy-to-clipboard feedback.
 - Keep the ARIA roles and attributes from the original markup, and keep focus
-  states visible. Presence dots are `role="status"`; dialogs are
-  `role="dialog"` with a label.
+  states visible. Dialogs are `role="dialog"` with a label.
+  Presence dots have no role: a list of members must not become a list of
+  live regions. A dot names its state with visually hidden text (`label`).
 - Class names in the React/Vue sources are Tailwind utilities only — the
   `newt-` BEM names belong to the HTML distribution, not to the framework
   ports (`data-*` attributes for state are fine).

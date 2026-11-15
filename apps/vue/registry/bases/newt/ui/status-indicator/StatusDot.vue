@@ -8,6 +8,11 @@ import { statusDotVariants, type StatusDotVariants } from "."
 const props = withDefaults(
   defineProps<{
     status?: StatusDotVariants["status"]
+    /**
+     * The state in words, such as "Online". It is read by a screen reader and
+     * not shown. Leave it out when the state is already written beside the dot.
+     */
+    label?: string
     class?: HTMLAttributes["class"]
   }>(),
   { status: "offline" }
@@ -18,7 +23,12 @@ const props = withDefaults(
   <div
     :data-status="props.status"
     :class="cn(statusDotVariants({ status: props.status }), props.class)"
-  />
+  >
+    <span v-if="props.label !== undefined" class="sr-only">{{
+      props.label
+    }}</span>
+    <slot />
+  </div>
 </template>
 
 <style>

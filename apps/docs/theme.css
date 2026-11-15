@@ -70,6 +70,7 @@
   --color-newt-idle: var(--newt-idle);
   --color-newt-dnd: var(--newt-dnd);
   --color-newt-offline: var(--newt-offline);
+  --color-newt-streaming: var(--newt-streaming);
   --color-newt-danger: var(--newt-danger);
   --color-newt-danger-hover: var(--newt-danger-hover);
 
@@ -178,6 +179,7 @@
     --newt-idle: #f0b232;
     --newt-dnd: #f23f42;
     --newt-offline: #80848e;
+    --newt-streaming: #593695;
     --newt-danger: #da373c;
     --newt-danger-hover: #a12828;
 
@@ -273,6 +275,7 @@
     --newt-idle: #b58500;
     --newt-dnd: #d83a3e;
     --newt-offline: #80848e;
+    --newt-streaming: #593695;
     --newt-danger: #d83a3e;
     --newt-danger-hover: #a12828;
 

@@ -12,16 +12,29 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 3px solid var(--newt-bg-base);
+  /*
+   * The ring cuts the dot out of the avatar. Set `--newt-status-ring` to the
+   * colour of the surface behind the avatar when it is not the base surface.
+   */
+  border: 3px solid var(--newt-status-ring, var(--newt-bg-base));
   background: var(--newt-offline);
+}
+
+/* The state in words, for a screen reader. The dot itself has no text. */
+.newt-status__label {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .newt-status__dot--online {
   background: var(--newt-online);
 }
 .newt-status__dot--idle {
-  background: var(--newt-bg-base);
-  border-color: var(--newt-bg-base);
+  background: var(--newt-status-ring, var(--newt-bg-base));
 }
 .newt-status__dot--idle::after {
   content: "";
@@ -32,7 +45,7 @@
   clip-path: circle(60% at 35% 35%);
 }
 .newt-status__dot--dnd {
-  background: var(--newt-bg-base);
+  background: var(--newt-status-ring, var(--newt-bg-base));
 }
 .newt-status__dot--dnd::after {
   content: "";
@@ -49,7 +62,7 @@
   background: var(--newt-offline);
 }
 .newt-status__dot--streaming {
-  background: #593695;
+  background: var(--newt-streaming);
 }
 
 /* presence glow — signature motif */

@@ -10,9 +10,9 @@ import {
 
 <template>
   <div class="flex items-center gap-3">
-    <StatusIndicator aria-label="Streaming">
+    <StatusIndicator>
       <Avatar>R</Avatar>
-      <StatusDot status="streaming" />
+      <StatusDot status="streaming" label="Streaming" />
     </StatusIndicator>
     <div class="flex flex-col text-start">
       <span class="text-sm font-semibold text-newt-text-primary">rowan</span>

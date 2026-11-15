@@ -34,6 +34,7 @@ export const newtPreset: Omit<Config, "content"> = {
           idle: "var(--newt-idle)",
           dnd: "var(--newt-dnd)",
           offline: "var(--newt-offline)",
+          streaming: "var(--newt-streaming)",
           danger: "var(--newt-danger)",
           "danger-hover": "var(--newt-danger-hover)",
           "mention-text": "var(--newt-mention-text)",

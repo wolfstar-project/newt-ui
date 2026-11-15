@@ -84,8 +84,9 @@ chase down hardcoded hex values across components.
 Every component file/section includes, in order:
 
 1. **Markup** — semantic HTML, ARIA roles where the native element doesn't
-   imply them (e.g. `role="status"` for presence dots, `role="dialog"` +
-   `aria-modal="true"` for modals).
+   imply them (e.g. `role="dialog"` + `aria-modal="true"` for modals). Do not
+   give a repeated element a live role: a presence dot has no role, because a
+   member list would become a list of live regions.
 2. **Styles** — scoped under the `.newt-<name>` root class, using only
    `--newt-*` tokens for color/spacing/radius/motion.
 3. **Behavior (optional)** — vanilla JS attached via `data-newt-*` attributes,
@@ -106,8 +107,10 @@ Every component file/section includes, in order:
       `:focus-visible` style (reuse `.newt-btn:focus-visible` pattern: 2px
       `--newt-text-link` outline, 2px offset).
 - [ ] Icon-only controls have `aria-label` or visually-hidden text.
-- [ ] Status/presence indicators expose state via `role="status"` or an
-      `aria-label` (e.g. `aria-label="Online"`), not color alone.
+- [ ] Status/presence indicators expose state in words, not color alone:
+      visually hidden text inside the dot (`label` on `StatusDot`,
+      `.newt-status__label` in HTML) or the state written beside it. They
+      never carry `role="status"`, which makes every row a live region.
 - [ ] Animations respect `prefers-reduced-motion: reduce`.
 - [ ] Modals trap focus and close on `Escape`; toasts are `role="status"` /
       `aria-live="polite"` and never trap focus.

@@ -19,15 +19,19 @@ Presence, encoded in shape as well as colour: idle is a crescent, do-not-disturb
 
 ### Streaming
 
-The `streaming` status marks a member who is live. Put the state in the `aria-label` of the `StatusIndicator`, because the dot alone says nothing to a screen reader.
+The `streaming` status marks a member who is live. Give the dot a `label`, because the dot alone says nothing to a screen reader.
 
 <ComponentPreview name="status-indicator" variant="streaming" />
 
 ### Member list
 
-In a member list, pair each dot with the status in words so the state does not depend on colour or shape alone.
+In a member list, pair each dot with the status in words so the state does not depend on colour or shape alone. The state is then written beside the dot, so the dot takes no `label`.
 
 <ComponentPreview name="status-indicator" variant="members" />
+
+## Surfaces [#surfaces]
+
+The ring around the dot cuts it out of the avatar. It takes the colour of `--newt-status-ring`, and `--newt-bg-base` when that is not set. If the avatar sits on another surface, set `--newt-status-ring` to that surface on a wrapper, for example `[--newt-status-ring:var(--newt-bg-surface)]`. The idle crescent and the do-not-disturb bar read the same property.
 
 ## API reference
 
@@ -40,32 +44,24 @@ In a member list, pair each dot with the status in words so the state does not d
       description: "The presence state.",
       default: '"offline"',
     },
-  ]}
-/>
-
-<PropsTable
-  of="StatusIndicator"
-  rows={[
-    {
-      name: "status",
-      type: '"online" | "idle" | "dnd" | "offline" | "streaming"',
-      description: "Passed through to the dot.",
-      default: '"offline"',
-    },
     {
       name: "label",
       type: "string",
       description:
-        "Text beside the dot. Also the accessible name when present.",
+        'The state in words, such as "Online". A screen reader reads it; it is not shown. Leave it out when the state is written beside the dot.',
     },
   ]}
 />
 
-Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+`StatusIndicator` takes no props of its own. It is the box that anchors the dot to the avatar. Every part also accepts the native attributes of the element it renders, and a `className` that is merged rather than replaced.
+
+In the plain HTML and CSS distribution, put the state in a `newt-status__label` span inside the dot.
 
 ## Accessibility
 
-The dot carries `role="status"` and an `aria-label` naming the state, so it is never colour alone. The online state has a soft pulse, which is the one animation in the library; it is behind `prefers-reduced-motion` and the state is legible without it.
+The dot has no role. A member list draws one dot per row, and a live region per row would announce every change of presence. The `label` of the dot names the state, so the state never depends on colour alone. If the state is already written beside the avatar, leave `label` out so it is not read twice.
+
+The online state has a soft pulse, which is the one animation in the library. It is behind `prefers-reduced-motion`, and the state is legible without it.
 
 ## Tokens
 

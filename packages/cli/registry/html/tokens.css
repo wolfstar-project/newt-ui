@@ -41,6 +41,7 @@
   --newt-idle: #f0b232;
   --newt-dnd: #f23f42;
   --newt-offline: #80848e;
+  --newt-streaming: #593695;
   --newt-danger: #da373c;
   --newt-danger-hover: #a12828;
 
@@ -135,6 +136,7 @@
   --newt-idle: #b58500;
   --newt-dnd: #d83a3e;
   --newt-offline: #80848e;
+  --newt-streaming: #593695;
   --newt-danger: #d83a3e;
   --newt-danger-hover: #a12828;
 
