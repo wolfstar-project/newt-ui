@@ -1,18 +1,54 @@
+"use client"
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/*
+ * The composition:
+ *
+ *   MemberListSection          <section>
+ *     MemberListHeading        <h3 id>
+ *     MemberList               role="list", aria-labelledby the heading
+ *       MemberListItem         role="listitem"
+ *
+ * A heading is never a child of the list, which may own only list items.
+ * The section generates one id, the heading takes it and the list points at
+ * it, so each list is named by its heading. A list outside a section takes
+ * an `aria-label` instead.
+ */
+const MemberListSectionContext = React.createContext<string | undefined>(
+  undefined
+)
+
 const MemberList = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    role="list"
-    className={cn("flex flex-col", className)}
-    {...props}
-  />
-))
+>(
+  (
+    {
+      className,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
+      ...props
+    },
+    ref
+  ) => {
+    const headingId = React.useContext(MemberListSectionContext)
+    return (
+      <div
+        ref={ref}
+        role="list"
+        aria-label={ariaLabel}
+        aria-labelledby={
+          ariaLabelledby ?? (ariaLabel === undefined ? headingId : undefined)
+        }
+        className={cn("flex flex-col", className)}
+        {...props}
+      />
+    )
+  }
+)
 MemberList.displayName = "MemberList"
 
 /*
@@ -24,51 +60,127 @@ export interface MemberListSectionProps extends React.HTMLAttributes<HTMLElement
 }
 
 const MemberListSection = React.forwardRef<HTMLElement, MemberListSectionProps>(
-  ({ className, offline = false, ...props }, ref) => (
-    <section
+  ({ className, offline = false, ...props }, ref) => {
+    const headingId = React.useId()
+    return (
+      <MemberListSectionContext.Provider value={headingId}>
+        <section
+          ref={ref}
+          data-offline={offline || undefined}
+          className={cn(
+            "[&:not(:first-child)]:mt-3",
+            offline &&
+              "[&_[role=listitem]]:opacity-45 [&_[data-slot=member-name]]:text-newt-text-muted",
+            className
+          )}
+          {...props}
+        />
+      </MemberListSectionContext.Provider>
+    )
+  }
+)
+MemberListSection.displayName = "MemberListSection"
+
+export interface MemberListHeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  /** The heading level. Pick the one that fits the outline of the page. */
+  as?: "h2" | "h3" | "h4" | "h5" | "h6"
+}
+
+/*
+ * Inside a section the heading takes the id the section generated, so the
+ * list beside it is named by it. If you pass an `id` of your own, pass the
+ * same id as `aria-labelledby` on the `MemberList`.
+ */
+const MemberListHeading = React.forwardRef<
+  HTMLHeadingElement,
+  MemberListHeadingProps
+>(({ className, as: Heading = "h3", id, ...props }, ref) => {
+  const headingId = React.useContext(MemberListSectionContext)
+  return (
+    <Heading
       ref={ref}
-      data-offline={offline || undefined}
+      id={id ?? headingId}
       className={cn(
-        "[&:not(:first-child)]:mt-3",
-        offline &&
-          "[&_[role=listitem]]:opacity-45 [&_[data-slot=member-name]]:text-newt-text-muted",
+        "m-0 px-2 pb-0.5 text-[12px] font-semibold uppercase leading-4 tracking-[0.02em] text-newt-text-muted",
         className
       )}
       {...props}
     />
   )
-)
-MemberListSection.displayName = "MemberListSection"
-
-const MemberListHeading = React.forwardRef<
-  HTMLHeadingElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn(
-      "m-0 px-2 pb-0.5 text-[12px] font-semibold uppercase leading-4 tracking-[0.02em] text-newt-text-muted",
-      className
-    )}
-    {...props}
-  />
-))
+})
 MemberListHeading.displayName = "MemberListHeading"
 
-const MemberListItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    role="listitem"
-    className={cn(
-      "flex min-w-0 cursor-pointer items-center gap-2.5 rounded-sm px-2 py-1.5 transition-colors duration-fast ease-newt hover:bg-newt-bg-hover",
-      className
-    )}
-    {...props}
-  />
-))
+interface MemberListItemOwnProps {
+  /**
+   * An underlay drawn behind the row, such as a profile decoration. The hover
+   * is drawn over it, so it stays visible. An `img` fills the row.
+   */
+  decoration?: React.ReactNode
+}
+
+/*
+ * `interactive` picks the element, so it also picks the attributes: a plain
+ * row takes the attributes of a `div`, an interactive row those of a
+ * `button`, such as `disabled`, `name` and `value`.
+ */
+export type MemberListItemProps =
+  | (MemberListItemOwnProps &
+      React.HTMLAttributes<HTMLDivElement> & {
+        interactive?: false
+      })
+  | (MemberListItemOwnProps &
+      React.ButtonHTMLAttributes<HTMLButtonElement> & {
+        /**
+         * Make the row a button, for a row that opens a profile. It takes
+         * focus, answers Enter and Space, and shows a hover and a focus
+         * ring. Every attribute and listener, and the ref, land on the
+         * button.
+         */
+        interactive: true
+      })
+
+const MEMBER_ROW =
+  "relative isolate flex min-w-0 items-center gap-2.5 rounded-sm px-2 py-1.5"
+const MEMBER_ROW_INTERACTIVE =
+  "w-full cursor-pointer border-0 bg-transparent text-start after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-[inherit] after:transition-colors after:duration-fast after:ease-newt after:content-[''] hover:after:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link"
+
+/*
+ * One member. A plain row has no pointer and no hover, because it does
+ * nothing. With `interactive` the row is a button inside the list item.
+ */
+const MemberListItem = React.forwardRef<HTMLElement, MemberListItemProps>(
+  ({ className, interactive = false, decoration, children, ...props }, ref) => {
+    /*
+     * `createElement` types the ref by the element it is given, so one
+     * `HTMLElement` ref serves the `div` and the `button` without an
+     * assertion.
+     */
+    const row = React.createElement(
+      interactive ? "button" : "div",
+      {
+        ref,
+        type: interactive ? "button" : undefined,
+        role: interactive ? undefined : "listitem",
+        className: cn(
+          MEMBER_ROW,
+          interactive && MEMBER_ROW_INTERACTIVE,
+          className
+        ),
+        ...props,
+      },
+      decoration === undefined ? null : (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-[inherit] [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
+        >
+          {decoration}
+        </span>
+      ),
+      children
+    )
+    return interactive ? <div role="listitem">{row}</div> : row
+  }
+)
 MemberListItem.displayName = "MemberListItem"
 
 const MemberListNameRow = React.forwardRef<

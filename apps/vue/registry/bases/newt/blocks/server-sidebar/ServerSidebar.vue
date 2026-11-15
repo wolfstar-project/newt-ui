@@ -28,7 +28,16 @@ import {
   VoiceChannelMembers,
 } from "~~/registry/bases/newt/ui/voice-channel"
 
-import type { SidebarMember, VoiceChannelSummary } from "./types"
+import type { MemberStatus, SidebarMember, VoiceChannelSummary } from "./types"
+
+/* The state of each dot in words, for a screen reader. */
+const STATUS_LABELS = {
+  online: "Online",
+  idle: "Idle",
+  dnd: "Do not disturb",
+  offline: "Offline",
+  streaming: "Streaming",
+} as const satisfies Record<MemberStatus, string>
 
 /*
  * The column beside a channel: who the server is, who is in voice, and who is
@@ -78,23 +87,28 @@ const groups = computed(() => {
       </VoiceChannelMembers>
     </VoiceChannel>
 
-    <MemberList>
+    <div>
       <MemberListSection v-for="[group, groupMembers] in groups" :key="group">
         <MemberListHeading
           >{{ group }} — {{ groupMembers.length }}</MemberListHeading
         >
-        <MemberListItem v-for="member in groupMembers" :key="member.id">
-          <StatusIndicator>
-            <Avatar size="sm">{{ member.initials }}</Avatar>
-            <StatusDot :status="member.status" />
-          </StatusIndicator>
-          <MemberListInfo>
-            <MemberListNameRow>
-              <MemberListName>{{ member.name }}</MemberListName>
-            </MemberListNameRow>
-          </MemberListInfo>
-        </MemberListItem>
+        <MemberList>
+          <MemberListItem v-for="member in groupMembers" :key="member.id">
+            <StatusIndicator>
+              <Avatar size="sm">{{ member.initials }}</Avatar>
+              <StatusDot
+                :status="member.status"
+                :label="STATUS_LABELS[member.status]"
+              />
+            </StatusIndicator>
+            <MemberListInfo>
+              <MemberListNameRow>
+                <MemberListName>{{ member.name }}</MemberListName>
+              </MemberListNameRow>
+            </MemberListInfo>
+          </MemberListItem>
+        </MemberList>
       </MemberListSection>
-    </MemberList>
+    </div>
   </aside>
 </template>

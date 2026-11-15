@@ -77,6 +77,25 @@
   object-fit: cover;
 }
 
+/*
+ * An avatar with no image: a circle that holds an icon or initials, so an
+ * avatar that is an icon can be drawn.
+ */
+.newt-reply__avatar--fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--newt-brand);
+  color: var(--newt-on-accent);
+  font-size: 9px;
+  font-weight: 600;
+}
+.newt-reply__avatar--fallback > svg {
+  width: 10px;
+  height: 10px;
+}
+
 .newt-reply__author {
   flex-shrink: 0;
   color: var(--newt-text-link);

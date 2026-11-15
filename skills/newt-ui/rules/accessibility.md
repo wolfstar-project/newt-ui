@@ -33,11 +33,15 @@ State carried by colour alone.
 ## Correct
 
 ```tsx
-<StatusIndicator status="online" label="Online" />
+<StatusIndicator>
+  <Avatar size="md">A</Avatar>
+  <StatusDot status="online" label="Online" />
+</StatusIndicator>
 ```
 
 The dot encodes its state in shape as well as colour — idle is a crescent,
-do-not-disturb is a bar — and carries `role="status"` with a name.
+do-not-disturb is a bar — and names it in visually hidden text. It has no
+role: a member list would otherwise become a list of live regions.
 
 ## Incorrect
 

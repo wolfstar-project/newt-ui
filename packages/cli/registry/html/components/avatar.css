@@ -20,10 +20,20 @@
   height: 100%;
   object-fit: cover;
 }
+.newt-avatar--xs {
+  width: 16px;
+  height: 16px;
+  font-size: 9px;
+}
 .newt-avatar--sm {
   width: 24px;
   height: 24px;
   font-size: 11px;
+}
+.newt-avatar--md {
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
 }
 .newt-avatar--lg {
   width: 80px;

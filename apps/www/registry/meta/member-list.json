@@ -16,5 +16,6 @@
     "index.ts"
   ],
   "reactDemo": "member-list-demo",
-  "vueDemo": "MemberListDemo"
+  "vueDemo": "MemberListDemo",
+  "examples": ["interactive"]
 }

@@ -921,6 +921,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "member-list-interactive-demo",
+    type: "registry:example",
+    registryDependencies: ["member-list", "avatar", "status-indicator"],
+    files: [
+      {
+        path: "examples/member-list-interactive-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "mention-demo",
     type: "registry:example",
     registryDependencies: ["mention"],
@@ -1874,6 +1885,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/tabs-disabled-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "tabs-overflow-demo",
+    type: "registry:example",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "examples/tabs-overflow-demo.tsx",
         type: "registry:example",
       },
     ],

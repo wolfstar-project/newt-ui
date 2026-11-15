@@ -33,7 +33,7 @@ export default function UserProfileDemo() {
         <UserProfileAvatar>
           <StatusIndicator>
             <Avatar size="lg">U</Avatar>
-            <StatusDot status="online" />
+            <StatusDot status="online" label="Online" />
           </StatusIndicator>
         </UserProfileAvatar>
         <UserProfileName>username</UserProfileName>

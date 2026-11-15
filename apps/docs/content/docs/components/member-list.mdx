@@ -15,6 +15,31 @@ A server member sidebar: role sections, presence, coloured names and APP tags. C
 
 <Usage name="member-list" />
 
+## Composition [#composition]
+
+Each group of members is one `MemberListSection`. The section holds a `MemberListHeading` and then one `MemberList`, which holds the `MemberListItem` rows.
+
+```text
+MemberListSection        <section>
+  MemberListHeading      <h3>, the name of the list
+  MemberList             role="list"
+    MemberListItem       role="listitem"
+```
+
+The heading is never inside the list, because a list may own only list items. The section generates an id. The heading takes that id, and the list points at it with `aria-labelledby`, so each list is named by its heading. The id comes from `useId` in both frameworks, so the server render and the client agree.
+
+A list with no section has no heading to point at. Give it an `aria-label`. If you give a heading an `id` of your own, pass the same id as `aria-labelledby` on its `MemberList`.
+
+## Examples
+
+### Rows that open a profile [#interactive]
+
+A plain row does nothing, so it has no pointer and no hover. Add `interactive` to a row that opens a profile. The row then renders a `<button>` inside the list item: it takes focus, answers Enter and Space, and shows a hover and a focus ring. Listeners, attributes and the ref land on the button, so the row works as the trigger of a popover. In React, an interactive row also takes the attributes of a button, such as `disabled`, `name` and `value`.
+
+The first row below has a decoration. The hover is drawn over the decoration, so the hover stays visible on an image.
+
+<ComponentPreview name="member-list" variant="interactive" />
+
 ## API reference
 
 <PropsTable
@@ -22,8 +47,60 @@ A server member sidebar: role sections, presence, coloured names and APP tags. C
   rows={[
     {
       name: "offline",
-      type: "boolean | undefined",
-      description: "Optional offline value.",
+      type: "boolean",
+      description:
+        "Dims the rows and the names of the group, for members who are offline.",
+      default: "false",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="MemberListHeading"
+  rows={[
+    {
+      name: "as",
+      type: '"h2" | "h3" | "h4" | "h5" | "h6"',
+      description:
+        "The heading level. Pick the one that fits the outline of the page.",
+      default: '"h3"',
+    },
+  ]}
+/>
+
+<PropsTable
+  of="MemberList"
+  rows={[
+    {
+      name: "aria-label",
+      type: "string",
+      description:
+        "The name of a list with no section. Inside a section, the heading names the list.",
+    },
+    {
+      name: "aria-labelledby",
+      type: "string",
+      description:
+        "Overrides the link to the heading of the section. Use it when the heading has an id of your own.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="MemberListItem"
+  rows={[
+    {
+      name: "interactive",
+      type: "boolean",
+      description:
+        "Renders the row as a button inside the list item, with a pointer, a hover and a focus ring.",
+      default: "false",
+    },
+    {
+      name: "decoration (React) / #decoration slot (Vue)",
+      type: "React.ReactNode / Vue slot",
+      description:
+        "An underlay drawn behind the row, such as a profile decoration. The hover is drawn over it. An `img` fills the row.",
     },
   ]}
 />
@@ -51,16 +128,20 @@ A server member sidebar: role sections, presence, coloured names and APP tags. C
     {
       name: "verified",
       type: "boolean | undefined",
-      description: "Optional verified value.",
+      description: "Adds a check mark for a verified application.",
     },
   ]}
 />
 
 The registry exports `MemberList`, `MemberListSection`, `MemberListHeading`, `MemberListItem`, `MemberListInfo`, `MemberListNameRow`, `MemberListName`, `MemberListAppTag`, `MemberListRole`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
 
+In the plain HTML and CSS distribution, write the ids yourself: give the heading an `id` and the `.newt-member-list` the same value in `aria-labelledby`. An interactive row is a `<button class="newt-member newt-member--interactive">` inside a `role="listitem"` element. A decoration is a `.newt-member__decoration` span, the first child of the row.
+
 ## Accessibility
 
-Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+Each list is named by its heading, so a screen reader announces "Moderators, list, 1 item" when it enters a group. Do not put a heading inside a `MemberList`.
+
+A row that does nothing is not focusable and shows no pointer. A row that opens a profile must be `interactive`, so a keyboard reaches it and Enter opens it. Give the presence dot a `label`, or write the status in the row, so the state does not depend on colour alone.
 
 ## Tokens
 

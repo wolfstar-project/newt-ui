@@ -1,7 +1,7 @@
 {
   "name": "avatar",
   "title": "Avatar",
-  "description": "A circular user avatar with image support and initials fallback in three sizes.",
+  "description": "A circular user avatar with image support and initials fallback in five sizes.",
   "dependencies": ["class-variance-authority", "radix-ui"],
   "vueDependencies": ["class-variance-authority", "reka-ui"],
   "vueFiles": [

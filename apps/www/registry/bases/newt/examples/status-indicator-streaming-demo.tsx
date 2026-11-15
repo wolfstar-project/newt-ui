@@ -8,9 +8,9 @@ import {
 export default function StatusIndicatorStreamingDemo() {
   return (
     <div className="flex items-center gap-3">
-      <StatusIndicator aria-label="Streaming">
+      <StatusIndicator>
         <Avatar>R</Avatar>
-        <StatusDot status="streaming" />
+        <StatusDot status="streaming" label="Streaming" />
       </StatusIndicator>
       <div className="flex flex-col text-start">
         <span className="text-sm font-semibold text-newt-text-primary">

@@ -7,21 +7,21 @@ import {
 export default function StatusIndicatorDemo() {
   return (
     <div className="flex items-center gap-6">
-      <StatusIndicator aria-label="Online">
+      <StatusIndicator>
         <Avatar>A</Avatar>
-        <StatusDot status="online" />
+        <StatusDot status="online" label="Online" />
       </StatusIndicator>
-      <StatusIndicator aria-label="Idle">
+      <StatusIndicator>
         <Avatar>B</Avatar>
-        <StatusDot status="idle" />
+        <StatusDot status="idle" label="Idle" />
       </StatusIndicator>
-      <StatusIndicator aria-label="Do not disturb">
+      <StatusIndicator>
         <Avatar>C</Avatar>
-        <StatusDot status="dnd" />
+        <StatusDot status="dnd" label="Do not disturb" />
       </StatusIndicator>
-      <StatusIndicator aria-label="Offline">
+      <StatusIndicator>
         <Avatar>D</Avatar>
-        <StatusDot status="offline" />
+        <StatusDot status="offline" label="Offline" />
       </StatusIndicator>
     </div>
   )

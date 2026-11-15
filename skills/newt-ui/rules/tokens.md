@@ -12,7 +12,7 @@ which works by overriding the same names.
 | Surfaces  | `--newt-bg-base`, `--newt-bg-surface`, `--newt-bg-elevated`, `--newt-bg-floating`, `--newt-bg-input`, `--newt-bg-hover`, `--newt-bg-active`, `--newt-border` |
 | Text      | `--newt-text-primary`, `--newt-text-secondary`, `--newt-text-message`, `--newt-text-muted`, `--newt-text-link`                                               |
 | Brand     | `--newt-brand`, `--newt-brand-hover`, `--newt-brand-active`                                                                                                  |
-| Status    | `--newt-online`, `--newt-idle`, `--newt-dnd`, `--newt-offline`, `--newt-danger`                                                                              |
+| Status    | `--newt-online`, `--newt-idle`, `--newt-dnd`, `--newt-offline`, `--newt-streaming`, `--newt-danger`                                                          |
 | Shape     | `--newt-radius-sm                                                                                                                                            | md  | lg  | full` |
 | Type      | `--newt-font-sans`, `--newt-font-mono`, `--newt-font-display`                                                                                                |
 | Elevation | `--newt-shadow-elevation-low`, `--newt-shadow-elevation-high`                                                                                                |

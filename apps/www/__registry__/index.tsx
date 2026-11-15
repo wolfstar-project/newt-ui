@@ -2164,6 +2164,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "member-list-interactive-demo",
+    {
+      name: "member-list-interactive-demo",
+      type: "registry:example",
+      registryDependencies: ["member-list", "avatar", "status-indicator"],
+      files: ["registry/bases/newt/examples/member-list-interactive-demo.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/examples/member-list-interactive-demo")
+      ),
+    },
+  ],
+  [
     "mention-demo",
     {
       name: "mention-demo",
@@ -3224,6 +3237,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/tabs-disabled-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/tabs-disabled-demo")
+      ),
+    },
+  ],
+  [
+    "tabs-overflow-demo",
+    {
+      name: "tabs-overflow-demo",
+      type: "registry:example",
+      registryDependencies: ["tabs"],
+      files: ["registry/bases/newt/examples/tabs-overflow-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/tabs-overflow-demo")
       ),
     },
   ],

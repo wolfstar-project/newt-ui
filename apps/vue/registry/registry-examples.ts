@@ -921,6 +921,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "MemberListInteractiveDemo",
+    type: "registry:example",
+    registryDependencies: ["member-list", "avatar", "status-indicator"],
+    files: [
+      {
+        path: "examples/MemberListInteractiveDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "MentionDemo",
     type: "registry:example",
     registryDependencies: ["mention"],
@@ -1874,6 +1885,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/TabsDisabledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TabsOverflowDemo",
+    type: "registry:example",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "examples/TabsOverflowDemo.vue",
         type: "registry:example",
       },
     ],

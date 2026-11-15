@@ -41,6 +41,37 @@ The spine reads [two custom properties](/docs/components/message-group#custom-pr
 />
 
 <PropsTable
+  of="ReplyPreviewAvatar"
+  rows={[
+    {
+      name: "src",
+      type: "string",
+      description:
+        "The image URL. Without it and without `srcSet`, the avatar is a 16px circle that holds its fallback.",
+    },
+    {
+      name: "srcSet (React) / srcset (Vue)",
+      type: "string",
+      description:
+        "Image candidates for each pixel density. It draws the image without `src` too.",
+    },
+    {
+      name: "alt",
+      type: "string",
+      description:
+        "Accessible name. Leave it empty beside the author name, which hides the avatar from a screen reader.",
+      default: '""',
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description:
+        "The fallback, drawn when there is no `src` and no `srcSet`: an icon or initials. The circle sizes an `svg` to 10px.",
+    },
+  ]}
+/>
+
+<PropsTable
   of="ReplyPreviewCommand"
   rows={[
     {
@@ -52,7 +83,7 @@ The spine reads [two custom properties](/docs/components/message-group#custom-pr
   ]}
 />
 
-In the plain HTML and CSS distribution, give the icon the class `newt-reply__command-icon` and put it before `newt-reply__command-name`.
+In the plain HTML and CSS distribution, give the icon the class `newt-reply__command-icon` and put it before `newt-reply__command-name`. For an avatar with no image, use a `<span>` with the classes `newt-reply__avatar newt-reply__avatar--fallback` and put the icon in it.
 
 The registry also exports `ReplyPreviewAvatar`, `ReplyPreviewAuthor`, `ReplyPreviewText`, `ReplyPreviewAction` and `ReplyPreviewCommand`. Each part accepts the native attributes of the element it renders.
 

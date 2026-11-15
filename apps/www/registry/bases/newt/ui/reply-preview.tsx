@@ -33,18 +33,59 @@ const ReplyPreview = React.forwardRef<
 ))
 ReplyPreview.displayName = "ReplyPreview"
 
+export interface ReplyPreviewAvatarProps extends Omit<
+  React.ImgHTMLAttributes<HTMLImageElement>,
+  "children"
+> {
+  /**
+   * The fallback, drawn when there is no `src` and no `srcSet`: an icon or
+   * initials in a
+   * 16px circle. The circle sizes an `svg` to 10px.
+   */
+  children?: React.ReactNode
+}
+
+/*
+ * The avatar of the referenced author. With a `src` or a `srcSet` it is an
+ * image. Without either it is a circle that holds its children, so an avatar that is an icon
+ * can be drawn. An empty `alt` hides either form from a screen reader.
+ */
 const ReplyPreviewAvatar = React.forwardRef<
-  HTMLImageElement,
-  React.ComponentProps<"img">
->(({ className, alt = "", ...props }, ref) => (
-  <img
-    ref={ref}
-    alt={alt}
-    aria-hidden={alt === "" ? true : undefined}
-    className={cn("h-4 w-4 shrink-0 rounded-full object-cover", className)}
-    {...props}
-  />
-))
+  HTMLElement,
+  ReplyPreviewAvatarProps
+>(({ className, alt = "", src, srcSet, children, ...props }, ref) => {
+  const decorative = alt === ""
+  if (src !== undefined || srcSet !== undefined) {
+    /*
+     * `createElement` types the ref by the element it is given here, so the
+     * one `HTMLElement` ref serves both forms without an assertion.
+     */
+    return React.createElement("img", {
+      ref,
+      src,
+      srcSet,
+      alt,
+      "aria-hidden": decorative ? true : undefined,
+      className: cn("h-4 w-4 shrink-0 rounded-full object-cover", className),
+      ...props,
+    })
+  }
+  return (
+    <span
+      ref={ref}
+      role={decorative ? undefined : "img"}
+      aria-label={decorative ? undefined : alt}
+      aria-hidden={decorative ? true : undefined}
+      className={cn(
+        "inline-flex h-4 w-4 shrink-0 items-center justify-center overflow-hidden rounded-full bg-newt-brand text-[9px] font-semibold text-newt-on-accent [&>svg]:h-2.5 [&>svg]:w-2.5",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </span>
+  )
+})
 ReplyPreviewAvatar.displayName = "ReplyPreviewAvatar"
 
 const ReplyPreviewAuthor = React.forwardRef<
