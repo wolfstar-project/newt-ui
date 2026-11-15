@@ -107,6 +107,7 @@ standard attribute on the part's root element.
 | `StageBannerClose`     | `aria-label`                       | `Dismiss`                                                     |
 | `Stepper`              | `completedLabel`                   | `completed`                                                   |
 | `TagInput`             | `removeLabel`                      | `(tag) => "Remove moderation"`                                |
+| `Timestamp`            | `locale`, `timeZone`               | the runtime's locale and zone                                 |
 | `ThreadPreviewCount`   | `formatCount`                      | `1 message`, `3 messages`                                     |
 | `ToastClose`           | `aria-label`                       | `Dismiss`                                                     |
 | `TokenField`           | `revealLabel`, `hideLabel`         | `Reveal`, `Hide`                                              |
@@ -123,14 +124,18 @@ next to the component: `defaultExpressionsPickerLabels`,
 
 ## Dates [#dates]
 
-`Timestamp` and `Calendar` take a `locale`. `EmbedTimestamp` takes a `locale`
-too, and a `formatter` that wins over it.
+`Timestamp` and `Calendar` take a `locale`. `Timestamp` and `EmbedTimestamp`
+also take a `timeZone`. `EmbedTimestamp` takes a `formatter` too, which wins
+over both.
 
-Pass a fixed locale, such as the one your router chose. Do not read the
-browser's language during the first render. The server and the browser must
-write the same text, or the page fails to hydrate. If the server runs in
-another time zone than your readers, also pass `timeZone` to
-`EmbedTimestamp`.
+The server and the browser must write the same text, or the page fails to
+hydrate. A fixed locale is not enough for that. Each runtime writes the time
+in its own zone, so a server in UTC and a reader in Paris write different hours.
+
+- Pass a fixed locale, such as the one your router chose. Do not read the
+  browser's language during the first render.
+- Pass a fixed `timeZone` too, such as the reader's zone from their profile.
+  Or render the time only in the browser.
 
 ## HTML and CSS [#html]
 
@@ -147,12 +152,14 @@ scripts write text while the page runs. Translate that text with an attribute:
 | `token-field.js`        | `data-newt-reveal-label`, `data-newt-hide-label` | `Reveal`, `Hide`           |
 | `token-field.js`        | `data-newt-copied-label` on the copy button      | `Copied!`                  |
 
-In an attribute or in the picker's JSON, `{tag}`, `{tone}` and `{count}` stand
-for the value they name. The picker's script reads these keys from `labels`:
-`toneNames`, `skinTone`, `searchResults`, `recent`, `noResults`,
-`noResultsHelp`, `empty`, `emptyHelp`, `oneResult`, `resultCount`, `from` and
-`hint`. JSON has no functions, so the count takes two keys: `oneResult` for
-one result and `resultCount` for any other number.
+In an attribute or in the picker's JSON, `{tag}`, `{tone}`, `{count}` and
+`{label}` stand for the value they name. The picker's script reads these keys
+from `labels`: `toneNames`, `skinTone`, `searchResults`, `recent`,
+`noResults`, `noResultsHelp`, `empty`, `emptyHelp`, `unavailable`,
+`oneResult`, `resultCount`, `from` and `hint`. `unavailable` names an item
+that cannot be chosen; its default is `{label}, unavailable`. JSON has no
+functions, so the count takes two keys: `oneResult` for one result and
+`resultCount` for any other number.
 
 ```json
 {
