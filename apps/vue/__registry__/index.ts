@@ -2588,6 +2588,32 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "MessageComposerInputDemo",
+    {
+      name: "MessageComposerInputDemo",
+      type: "registry:example",
+      registryDependencies: ["message-composer", "slash-command"],
+      files: ["registry/bases/newt/examples/MessageComposerInputDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/MessageComposerInputDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MessageComposerNarrowDemo",
+    {
+      name: "MessageComposerNarrowDemo",
+      type: "registry:example",
+      registryDependencies: ["message-composer"],
+      files: ["registry/bases/newt/examples/MessageComposerNarrowDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/MessageComposerNarrowDemo.vue")
+      ),
+    },
+  ],
+  [
     "MessageGroupDemo",
     {
       name: "MessageGroupDemo",

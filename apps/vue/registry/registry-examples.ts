@@ -965,6 +965,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "MessageComposerInputDemo",
+    type: "registry:example",
+    registryDependencies: ["message-composer", "slash-command"],
+    files: [
+      {
+        path: "examples/MessageComposerInputDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "MessageComposerNarrowDemo",
+    type: "registry:example",
+    registryDependencies: ["message-composer"],
+    files: [
+      {
+        path: "examples/MessageComposerNarrowDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "MessageGroupDemo",
     type: "registry:example",
     registryDependencies: [

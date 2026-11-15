@@ -965,6 +965,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "message-composer-input-demo",
+    type: "registry:example",
+    registryDependencies: ["message-composer", "slash-command"],
+    files: [
+      {
+        path: "examples/message-composer-input-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "message-composer-narrow-demo",
+    type: "registry:example",
+    registryDependencies: ["message-composer"],
+    files: [
+      {
+        path: "examples/message-composer-narrow-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "message-group-demo",
     type: "registry:example",
     registryDependencies: [

@@ -2221,6 +2221,32 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "message-composer-input-demo",
+    {
+      name: "message-composer-input-demo",
+      type: "registry:example",
+      registryDependencies: ["message-composer", "slash-command"],
+      files: ["registry/bases/newt/examples/message-composer-input-demo.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/examples/message-composer-input-demo")
+      ),
+    },
+  ],
+  [
+    "message-composer-narrow-demo",
+    {
+      name: "message-composer-narrow-demo",
+      type: "registry:example",
+      registryDependencies: ["message-composer"],
+      files: ["registry/bases/newt/examples/message-composer-narrow-demo.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/examples/message-composer-narrow-demo")
+      ),
+    },
+  ],
+  [
     "message-group-demo",
     {
       name: "message-group-demo",
