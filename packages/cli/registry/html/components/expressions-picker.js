@@ -4,7 +4,7 @@
   const TONES = ["👋", "👋🏻", "👋🏼", "👋🏽", "👋🏾", "👋🏿"]
   /*
    * The texts the script writes. Translate them with a `labels` object in the
-   * JSON; `{tone}` and `{count}` stand for the value they name.
+   * JSON; `{tone}`, `{count}` and `{label}` stand for the value they name.
    */
   const LABELS = {
     toneNames: [
@@ -22,6 +22,7 @@
     noResultsHelp: "Try another word or another tab.",
     empty: "Nothing here yet.",
     emptyHelp: "Try another tab.",
+    unavailable: "{label}, unavailable",
     oneResult: "1 result",
     resultCount: "{count} results",
     from: "from",
@@ -287,7 +288,7 @@
         toneRoot.hidden = kind !== "emoji"
         toneButton.setAttribute(
           "aria-label",
-          labels.skinTone.replaceAll("{tone}", labels.toneNames[tone])
+          labels.skinTone.replaceAll("{tone}", () => labels.toneNames[tone])
         )
         toneButton.querySelector("span").textContent = TONES[tone]
 
@@ -383,7 +384,7 @@
                 "data-newt-id": item.id,
                 tabindex: key === tabKey ? "0" : "-1",
                 "aria-label": item.disabled
-                  ? `${item.label}, unavailable`
+                  ? labels.unavailable.replaceAll("{label}", () => item.label)
                   : item.label,
                 "aria-pressed": String(isCurrent(item)),
               })
@@ -430,7 +431,7 @@
           status.textContent =
             count === 1
               ? labels.oneResult
-              : labels.resultCount.replaceAll("{count}", String(count))
+              : labels.resultCount.replaceAll("{count}", () => String(count))
           scroll.append(status)
         }
         renderFooter()

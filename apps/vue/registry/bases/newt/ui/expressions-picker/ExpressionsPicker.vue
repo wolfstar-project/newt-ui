@@ -552,7 +552,7 @@ function clearQuery() {
                 :disabled="disabled || item.disabled"
                 :tabindex="`${section.key}|${item.id}` === tabKey ? 0 : -1"
                 :aria-label="
-                  item.disabled ? `${item.label}, unavailable` : item.label
+                  item.disabled ? text.unavailable(item.label) : item.label
                 "
                 :aria-pressed="isCurrent(item)"
                 :class="

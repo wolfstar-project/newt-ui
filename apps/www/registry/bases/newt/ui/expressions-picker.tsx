@@ -82,6 +82,8 @@ export interface ExpressionsPickerLabels {
   noResultsHelp: string
   empty: string
   emptyHelp: string
+  /** Name of an item that cannot be chosen, built from its label. */
+  unavailable: (label: string) => string
   /** Read out after each search. */
   resultCount: (count: number) => string
   /** Written before the category name in the preview bar. */
@@ -116,6 +118,7 @@ export const defaultExpressionsPickerLabels: ExpressionsPickerLabels = {
   noResultsHelp: "Try another word or another tab.",
   empty: "Nothing here yet.",
   emptyHelp: "Try another tab.",
+  unavailable: (label) => `${label}, unavailable`,
   resultCount: (count) => (count === 1 ? "1 result" : `${count} results`),
   from: "from",
   hint: "Hover or focus an expression to preview it.",
@@ -854,7 +857,7 @@ const ExpressionsPicker = React.forwardRef<
                             tabIndex={key === tabKey ? 0 : -1}
                             aria-label={
                               item.disabled
-                                ? `${item.label}, unavailable`
+                                ? labels.unavailable(item.label)
                                 : item.label
                             }
                             aria-pressed={

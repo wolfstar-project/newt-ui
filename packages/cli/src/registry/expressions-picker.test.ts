@@ -210,6 +210,33 @@ describe("HTML expressions picker", () => {
     )
   })
 
+  it("names unavailable items and keeps replacement patterns in labels", () => {
+    document.body.innerHTML = markup
+    const source = document.querySelector("[data-newt-expressions-data]")
+    if (!source?.textContent) throw new Error("Missing picker data")
+    const data = JSON.parse(source.textContent)
+    data.labels = {
+      unavailable: "{label} (indisponible)",
+      skinTone: "Teint : {tone}",
+      toneNames: [
+        "Teint $&",
+        "Clair",
+        "Moyen clair",
+        "Moyen",
+        "Moyen foncé",
+        "Foncé",
+      ],
+    }
+    source.textContent = JSON.stringify(data)
+    runInThisContext(behavior)
+    button("Choose an expression").click()
+    const moon = cells().find((cell) => cell.dataset.newtId === "moon")
+    expect(moon?.getAttribute("aria-label")).toBe(
+      "crescent moon (indisponible)"
+    )
+    expect(button("Teint : Teint $&")).toBeDefined()
+  })
+
   it("closes when the backdrop is clicked, not the panel", () => {
     button("Choose an expression").click()
     const dialog = document.querySelector("dialog")
