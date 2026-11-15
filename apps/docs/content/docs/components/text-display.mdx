@@ -19,15 +19,15 @@ A text display is a block of message text, the most common Components V2 part. P
 
 `size` picks one of the chat markdown sizes. They match the `Markdown` component, so a text display and a rendered message look the same.
 
-| `size`      | Markdown | Text                            |
-| ----------- | -------- | ------------------------------- |
-| `default`   | none     | The container's size            |
-| `heading-1` | `#`      | 24px, bold                      |
-| `heading-2` | `##`     | 20px, bold, as `SectionHeading` |
-| `heading-3` | `###`    | 16px, bold                      |
-| `subtext`   | `-#`     | 13px, muted colour              |
+| `size`      | Markdown | Text                                     |
+| ----------- | -------- | ---------------------------------------- |
+| `default`   | none     | The container's size                     |
+| `heading-1` | `#`      | 24px, bold                               |
+| `heading-2` | `##`     | 20px, bold, the size of `SectionHeading` |
+| `heading-3` | `###`    | 16px, bold                               |
+| `subtext`   | `-#`     | 13px, muted colour                       |
 
-Without a size, the text keeps the size and the colour of the container around it.
+Without a size, the text keeps the size and the colour of the container around it. A heading size keeps the font of the container, as a `Markdown` heading does. `SectionHeading` uses the display font and a tighter line height.
 
 In Vue, a template collapses its own line breaks before the part sees them. Bind the text as a string, such as `{{ content }}`, to keep them. In the HTML version, start the text right after the opening tag; a newline there is a line break too.
 

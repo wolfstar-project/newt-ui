@@ -38,7 +38,7 @@ import {
       <MessageGroupAvatar>
         <StatusIndicator>
           <Avatar>U</Avatar>
-          <StatusDot status="online" />
+          <StatusDot status="online" label="Online" />
         </StatusIndicator>
       </MessageGroupAvatar>
       <MessageGroupBody>

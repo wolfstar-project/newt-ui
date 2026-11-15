@@ -32,6 +32,17 @@
       <span class="newt-app-launcher__promo-footer">…</span>
     </button>
 
+  Item: a newt-app-launcher__item row holds the newt-app-launcher__item-action
+  button, then an optional newt-app-launcher__item-trailing beside it. The
+  button covers the row, so a press on a chevron presses it. A control in
+  the trailing part stays a separate control; drop aria-hidden there:
+    <div class="newt-app-launcher__item">
+      <button type="button" class="newt-app-launcher__item-action">…</button>
+      <span class="newt-app-launcher__item-trailing">
+        <button type="button" aria-label="Hide Moderation">…</button>
+      </span>
+    </div>
+
   Tiles: newt-app-launcher__list--grid holding newt-app-launcher__item--tile
   items. A logo that must not be cropped takes
   newt-app-launcher__item-icon--contain or newt-app-launcher__recent--contain.
@@ -137,23 +148,27 @@
       </div>
 
       <div class="newt-app-launcher__list">
-        <button type="button" class="newt-app-launcher__item">
-          <span
-            class="newt-app-launcher__item-icon newt-app-launcher__item-icon--round"
-            aria-hidden="true"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z" />
-            </svg>
-          </span>
-          <span class="newt-app-launcher__item-body">
-            <span class="newt-app-launcher__item-title">
-              <span class="newt-app-launcher__item-name">Moderation</span>
+        <div class="newt-app-launcher__item">
+          <button type="button" class="newt-app-launcher__item-action">
+            <span
+              class="newt-app-launcher__item-icon newt-app-launcher__item-icon--round"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z"
+                />
+              </svg>
             </span>
-            <span class="newt-app-launcher__item-description">
-              Bans, timeouts and audit logs.
+            <span class="newt-app-launcher__item-body">
+              <span class="newt-app-launcher__item-title">
+                <span class="newt-app-launcher__item-name">Moderation</span>
+              </span>
+              <span class="newt-app-launcher__item-description">
+                Bans, timeouts and audit logs.
+              </span>
             </span>
-          </span>
+          </button>
           <span class="newt-app-launcher__item-trailing" aria-hidden="true">
             <svg
               class="newt-app-launcher__chevron"
@@ -165,24 +180,26 @@
               />
             </svg>
           </span>
-        </button>
+        </div>
 
-        <button type="button" class="newt-app-launcher__item">
-          <span class="newt-app-launcher__item-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M4 4h16v12H8l-4 4V4Z" />
-            </svg>
-          </span>
-          <span class="newt-app-launcher__item-body">
-            <span class="newt-app-launcher__item-title">
-              <span class="newt-app-launcher__item-name">Poll Night</span>
-              <span class="newt-app-launcher__item-promoted">Promoted</span>
+        <div class="newt-app-launcher__item">
+          <button type="button" class="newt-app-launcher__item-action">
+            <span class="newt-app-launcher__item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4 4h16v12H8l-4 4V4Z" />
+              </svg>
             </span>
-            <span class="newt-app-launcher__item-description">
-              Run a quick poll in any channel.
+            <span class="newt-app-launcher__item-body">
+              <span class="newt-app-launcher__item-title">
+                <span class="newt-app-launcher__item-name">Poll Night</span>
+                <span class="newt-app-launcher__item-promoted">Promoted</span>
+              </span>
+              <span class="newt-app-launcher__item-description">
+                Run a quick poll in any channel.
+              </span>
             </span>
-          </span>
-        </button>
+          </button>
+        </div>
       </div>
     </section>
   </div>

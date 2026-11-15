@@ -262,22 +262,72 @@ function declares(css: string, property: string): boolean {
   return new RegExp(`(?<![\\w-])${escapeRegExp(property)}\\s*:`).test(css)
 }
 
+/** The text between the brace at `open` and the brace that closes it. */
+function braceBody(text: string, open: number): string {
+  let depth = 0
+  for (let index = open; index < text.length; index += 1) {
+    if (text[index] === "{") depth += 1
+    if (text[index] === "}") depth -= 1
+    if (depth === 0) return text.slice(open + 1, index)
+  }
+  return text.slice(open + 1)
+}
+
+/** The bodies of every `@theme` block, `@theme inline { … }` included. */
+function themeBlocks(css: string): string {
+  return [...css.matchAll(/@theme\b[^{;]*\{/g)]
+    .map((match) => braceBody(css, match.index + match[0].length - 1))
+    .join("\n")
+}
+
+/** A JavaScript object key, bare or quoted, followed by its colon. */
+function objectKey(key: string): RegExp {
+  const name = escapeRegExp(key)
+  return new RegExp(`(?<![\\w$-])(?:"${name}"|'${name}'|${name})\\s*:\\s*`, "g")
+}
+
+/**
+ * Whether the config object text has a value at `path`. Tailwind reads
+ * `{ newt: { brand } }` and `{ "newt-brand" }` as the same name, so the rest
+ * of a path may also be one dashed key. The value itself is not compared:
+ * an older `init` wrote `fast: "100ms"`, which still produces the utility.
+ */
+function hasPath(text: string, path: readonly string[]): boolean {
+  const [head, ...rest] = path
+  if (head === undefined) return true
+  if (rest.length === 0) return objectKey(head).test(text)
+  const dashed = path.filter((segment) => segment !== "DEFAULT").join("-")
+  if (objectKey(dashed).test(text)) return true
+  return [...text.matchAll(objectKey(head))].some((match) => {
+    const open = match.index + match[0].length
+    return text[open] === "{" && hasPath(braceBody(text, open), rest)
+  })
+}
+
+/** Config source with its comments removed, keeping `//` inside a URL. */
+function configWithoutComments(config: string): string {
+  return withoutComments(config).replace(/(^|[^:"'])\/\/.*$/gm, "$1")
+}
+
 /**
  * The names in `names` that the project does not declare. Raw variables are
- * read from the stylesheet. On v4 the entries are too: they belong in its
- * `@theme`. On v3 they belong in `tailwind.config`, whose entries reference
- * the raw variable, so the reference is what is looked for.
+ * read from the stylesheet. On v4 the entries are too, inside its `@theme`
+ * blocks: a property declared on `:root` registers no utility. On v3 they
+ * belong in `tailwind.config`, under the `theme.extend` section and key
+ * Tailwind names the utility from.
  */
 export function missingThemeNames(
   names: ThemeNames,
   project: ProjectTheme
 ): ThemeNames {
   const css = withoutComments(project.css)
-  const config = project.config
+  const theme = themeBlocks(css)
+  const config =
+    project.config === null ? null : configWithoutComments(project.config)
   const entries = names.entries.filter((entry) => {
-    if (project.major === 4) return !declares(css, entry.property)
+    if (project.major === 4) return !declares(theme, entry.property)
     if (entry.v3 === undefined) return false
-    return config === null || !config.includes(entry.v3.value)
+    return config === null || !hasPath(config, entry.v3.path)
   })
   return {
     entries,

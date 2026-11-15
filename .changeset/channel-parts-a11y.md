@@ -4,8 +4,8 @@
 
 `channel-header`, `channel-info` and `channel-welcome` gain a decorative form for their actions, a narrow header layout and real dialog behaviour. Add the items again to get the changes.
 
-- `ChannelHeaderAction`, `ChannelHeaderSearch`, `ChannelInfoAction` and `ChannelWelcomeAction` take `as` and `href`, as `Button` does. `as="span"` renders the decorative form for a read-only view. It is `aria-hidden`, has no pointer and no hover, and is out of the tab order. In the HTML flavour, put the action class on a `span` with `aria-hidden="true"`.
-- The same parts, `ChannelHeaderBack` and `ChannelHeaderTitle` take `disabled`. A disabled link loses its URL, leaves the tab order and carries `aria-disabled`, as `Button` does.
+- `ChannelHeaderAction`, `ChannelHeaderSearch`, `ChannelInfoAction` and `ChannelWelcomeAction` take `as` and `href`, as `Button` does. `as="span"` renders the decorative form for a read-only view. It is `aria-hidden`, has no pointer and no hover, and is out of the tab order. Its event handlers do not run. In the HTML flavour, put the action class on a `span` with `aria-hidden="true"`.
+- The same parts, `ChannelHeaderBack` and `ChannelHeaderTitle` take `disabled`. A disabled link loses its URL, leaves the tab order and carries `aria-disabled`, as `Button` does. A disabled control fades to half opacity and shows the not-allowed cursor.
 - `ChannelHeaderAction` reports `active` as `aria-pressed`. Leave `active` unset for an action that is not a toggle.
 - `ChannelHeaderName` now truncates. The topic shrinks first, and the name shrinks when the topic has no width left.
 - The narrow header has its own parts. `ChannelHeaderBack` leaves the channel and shows an unread count in `badge`. `ChannelHeaderTitle` makes the channel name a button. `ChannelHeaderSearch` takes `compact` for an icon-only control. The HTML flavour adds `newt-channel-header__back`, `__back-badge`, `__title`, `__title-chevron` and `__search--compact`.

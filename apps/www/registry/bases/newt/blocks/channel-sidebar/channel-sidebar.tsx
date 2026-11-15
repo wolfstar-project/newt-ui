@@ -29,6 +29,18 @@ export interface SidebarUser {
   statusText?: string
 }
 
+/*
+ * The state of the dot in words, for a screen reader. The dot speaks it only
+ * when no status line is written beside it.
+ */
+const STATUS_LABELS = {
+  online: "Online",
+  idle: "Idle",
+  dnd: "Do not disturb",
+  offline: "Offline",
+  streaming: "Streaming",
+} as const satisfies Record<SidebarUser["status"], string>
+
 export interface ChannelSidebarProps extends Omit<
   React.ComponentProps<"aside">,
   "onChange"
@@ -91,7 +103,14 @@ export function ChannelSidebar({
         <UserPanel>
           <StatusIndicator>
             <Avatar size="sm">{user.initials}</Avatar>
-            <StatusDot status={user.status} />
+            <StatusDot
+              status={user.status}
+              label={
+                user.statusText === undefined
+                  ? STATUS_LABELS[user.status]
+                  : undefined
+              }
+            />
           </StatusIndicator>
           <UserPanelInfo name={user.name} status={user.statusText} />
           <UserPanelActions>

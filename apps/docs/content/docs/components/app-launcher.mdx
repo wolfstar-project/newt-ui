@@ -39,7 +39,7 @@ Add `modal` when the launcher covers the page. The rest of the page is then out 
 
 A view that opens from an app has its own header. `AppLauncherHeaderTitle` takes the free width and centres in it. Put a spacer as wide as the back control after it, so the title sits in the centre of the header.
 
-`AppLauncherPromoCard` draws a promoted app: art on top, a footer below. `AppLauncherItem` takes `trailing` for content after the text, such as a chevron. `variant="tile"` puts the icon above the name, inside an `AppLauncherList` with `variant="grid"`.
+`AppLauncherPromoCard` draws a promoted app: art on top, a footer below. `AppLauncherItem` takes `trailing` for content after the text, such as a chevron. The item is a row that holds its button and, beside it, the trailing content. A press on a chevron presses the button. A control in `trailing`, such as a visibility toggle, keeps its own presses. `className` styles the row, and the ref and other props go to the button. `variant="tile"` puts the icon above the name, inside an `AppLauncherList` with `variant="grid"`.
 
 An `<img>` in `AppLauncherItemIcon` or `AppLauncherRecent` covers the icon and is cropped. Pass `fit="contain"` for a logo that must not be cut, as the first tile does.
 
@@ -156,7 +156,7 @@ An `<img>` in `AppLauncherItemIcon` or `AppLauncherRecent` covers the icon and i
       name: "trailing / #trailing",
       type: "React.ReactNode | slot",
       description:
-        "Content after the text, such as a chevron or a visibility toggle.",
+        "Content after the text, such as a chevron or a visibility toggle. It sits beside the item button, so it can hold a control.",
     },
     {
       name: "variant",

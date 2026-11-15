@@ -121,7 +121,7 @@ ChannelHeaderToolbar.displayName = "ChannelHeaderToolbar"
 
 /* What every control of the header adds to its resting look. */
 const interactiveClassName =
-  "cursor-pointer transition-colors aria-disabled:pointer-events-none duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
+  "cursor-pointer transition-colors duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
 
 interface ChannelHeaderControlProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -129,6 +129,7 @@ interface ChannelHeaderControlProps extends React.ButtonHTMLAttributes<HTMLButto
    * `href` is set; pass a router link component to keep client navigation.
    * `span` renders the decorative form: hidden from assistive technology, out
    * of the tab order, with no pointer and no hover.
+   * Its event handlers do not run.
    */
   as?: React.ElementType
   /** Render a link to this URL. */
@@ -151,6 +152,18 @@ function resolveControl(
 ) {
   const Tag: React.ElementType = as ?? (href === undefined ? "button" : "a")
   return { Tag, isButton: Tag === "button", decorative: Tag === "span" }
+}
+
+/*
+ * The `span` form runs nothing: it drops every event handler, so a click
+ * cannot start an action that the keyboard and assistive technology miss.
+ */
+function withoutHandlers(
+  props: React.HTMLAttributes<HTMLElement>
+): React.HTMLAttributes<HTMLElement> {
+  return Object.fromEntries(
+    Object.entries(props).filter(([name]) => !/^on[A-Z]/.test(name))
+  )
 }
 
 export interface ChannelHeaderActionProps extends ChannelHeaderControlProps {
@@ -185,7 +198,7 @@ const ChannelHeaderAction = React.forwardRef<
           !decorative && [interactiveClassName, "hover:text-newt-text-primary"],
           className
         )}
-        {...props}
+        {...(decorative ? withoutHandlers(props) : props)}
       />
     )
   }
@@ -258,7 +271,7 @@ const ChannelHeaderSearch = React.forwardRef<
           ],
           className
         )}
-        {...props}
+        {...(decorative ? withoutHandlers(props) : props)}
       >
         <span
           className={
@@ -314,7 +327,7 @@ const ChannelHeaderBack = React.forwardRef<HTMLElement, ChannelHeaderBackProps>(
           !decorative && [interactiveClassName, "hover:text-newt-text-primary"],
           className
         )}
-        {...props}
+        {...(decorative ? withoutHandlers(props) : props)}
       >
         {children ?? (
           <svg
@@ -341,7 +354,8 @@ ChannelHeaderBack.displayName = "ChannelHeaderBack"
  * The channel name as a control, for the narrow header where a press on the
  * title opens the channel details. Put `ChannelHeaderIcon` and
  * `ChannelHeaderName` inside it: the name is its accessible name. `span`
- * renders it as plain text, still readable by assistive technology.
+ * renders it as plain text, still readable by assistive technology. Its
+ * event handlers do not run.
  */
 const ChannelHeaderTitle = React.forwardRef<
   HTMLElement,
@@ -364,7 +378,7 @@ const ChannelHeaderTitle = React.forwardRef<
           !plain && [interactiveClassName, "hover:bg-newt-bg-hover"],
           className
         )}
-        {...props}
+        {...(plain ? withoutHandlers(props) : props)}
       >
         {children}
         {plain ? null : (

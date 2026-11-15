@@ -111,6 +111,12 @@ const AppLauncherDialog = React.forwardRef<
             if (!modal) event.preventDefault()
           }}
           className={cn(variantClassName, "outline-none", className)}
+          /*
+           * Without a `label` there is no title. Older Radix releases still
+           * point the dialog at the title's id, which names nothing, so an
+           * `aria-label` would go unread. `aria-labelledby` from props wins.
+           */
+          {...(label === undefined ? { "aria-labelledby": undefined } : {})}
           {...props}
         >
           {/* The name, as a heading no one sees: Radix points the dialog at it. */}
@@ -435,7 +441,10 @@ export interface AppLauncherItemProps extends Omit<
   promoted?: boolean
   /** Text of the `promoted` badge, also part of the button's name. */
   promotedLabel?: string
-  /** Content after the text, such as a chevron or a visibility toggle. */
+  /**
+   * Content after the text, such as a chevron or a visibility toggle. It sits
+   * beside the item's button, so it can hold a control of its own.
+   */
   trailing?: React.ReactNode
   /**
    * `row` puts the icon beside the text. `tile` puts it above, for a
@@ -444,6 +453,13 @@ export interface AppLauncherItemProps extends Omit<
   variant?: "row" | "tile"
 }
 
+/*
+ * The row is a wrapper that holds the item's button and, beside it, the
+ * `trailing` content. A control in `trailing` is then not nested in the
+ * button. The button's `::after` covers the whole row, so a press anywhere
+ * else on the row, a chevron included, presses the button. `className`
+ * styles the row; the ref and the other props go to the button.
+ */
 const AppLauncherItem = React.forwardRef<
   HTMLButtonElement,
   AppLauncherItemProps
@@ -463,54 +479,65 @@ const AppLauncherItem = React.forwardRef<
     },
     ref
   ) => (
-    <button
-      ref={ref}
-      type={type}
+    <div
       className={cn(
-        "flex w-full cursor-pointer items-center border-0 transition-colors duration-fast ease-newt",
+        "relative flex w-full items-center transition-colors duration-fast ease-newt",
         variant === "tile"
-          ? "flex-col gap-2 rounded-[var(--newt-radius-md)] bg-newt-bg-elevated px-2 py-3 text-center"
-          : "gap-3 bg-transparent px-3 py-3 text-start",
+          ? "flex-col gap-2 rounded-[var(--newt-radius-md)] bg-newt-bg-elevated px-2 py-3"
+          : "gap-3 px-3 py-3",
         "hover:bg-newt-bg-hover",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link",
         className
       )}
-      {...props}
     >
-      {icon}
-      <span
+      <button
+        ref={ref}
+        type={type}
         className={cn(
-          "flex min-w-0 flex-col gap-0.5",
-          variant === "tile" ? "w-full" : "flex-1"
+          "flex min-w-0 cursor-pointer items-center border-0 bg-transparent p-0 outline-none",
+          variant === "tile"
+            ? "w-full flex-col gap-2 text-center after:rounded-[var(--newt-radius-md)]"
+            : "flex-1 gap-3 text-start",
+          "after:absolute after:inset-0",
+          "focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-newt-text-link"
         )}
+        {...props}
       >
+        {icon}
         <span
           className={cn(
-            "flex min-w-0 items-center gap-1.5",
-            variant === "tile" && "justify-center"
+            "flex min-w-0 flex-col gap-0.5",
+            variant === "tile" ? "w-full" : "flex-1"
           )}
         >
-          <span className="truncate text-base font-medium leading-tight text-newt-text-primary">
-            {name}
+          <span
+            className={cn(
+              "flex min-w-0 items-center gap-1.5",
+              variant === "tile" && "justify-center"
+            )}
+          >
+            <span className="truncate text-base font-medium leading-tight text-newt-text-primary">
+              {name}
+            </span>
+            {promoted ? (
+              <span className="shrink-0 rounded-full bg-newt-text-primary px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none tracking-wide text-newt-bg-surface">
+                {promotedLabel}
+              </span>
+            ) : null}
           </span>
-          {promoted ? (
-            <span className="shrink-0 rounded-full bg-newt-text-primary px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none tracking-wide text-newt-bg-surface">
-              {promotedLabel}
+          {description ? (
+            <span className="truncate text-sm leading-snug text-newt-text-muted">
+              {description}
             </span>
           ) : null}
         </span>
-        {description ? (
-          <span className="truncate text-sm leading-snug text-newt-text-muted">
-            {description}
-          </span>
-        ) : null}
-      </span>
+      </button>
       {trailing ? (
-        <span className="inline-flex shrink-0 items-center gap-1 text-newt-text-muted [&>svg]:h-5 [&>svg]:w-5">
+        /* A press passes through to the button, unless it lands on a control. */
+        <span className="pointer-events-none inline-flex shrink-0 items-center gap-1 text-newt-text-muted [&>svg]:h-5 [&>svg]:w-5 [&_:is(a,button,input,label,select,textarea)]:pointer-events-auto [&_:is(a,button,input,label,select,textarea)]:relative">
           {trailing}
         </span>
       ) : null}
-    </button>
+    </div>
   )
 )
 AppLauncherItem.displayName = "AppLauncherItem"
