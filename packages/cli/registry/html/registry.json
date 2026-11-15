@@ -308,6 +308,7 @@
       "title": "App Launcher",
       "rootClass": "newt-app-launcher",
       "files": ["app-launcher.css", "app-launcher.html"],
+      "js": "app-launcher.js",
       "uses": ["scrollbar"]
     },
     {

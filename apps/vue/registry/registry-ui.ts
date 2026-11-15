@@ -161,7 +161,8 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "App Launcher",
     description:
-      "The Apps popout, with search, a recents strip and the apps installed in a server.",
+      "The Apps launcher, as a desktop popout or a bottom sheet, with search, a recents strip and the apps installed in a server.",
+    dependencies: ["class-variance-authority", "reka-ui"],
     registryDependencies: ["scrollbar"],
     files: [
       {
@@ -174,6 +175,10 @@ export const ui: Registry = [
       },
       {
         path: "ui/app-launcher/AppLauncherHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherHeaderTitle.vue",
         type: "registry:ui",
       },
       {
@@ -226,6 +231,10 @@ export const ui: Registry = [
       },
       {
         path: "ui/app-launcher/AppLauncherRecent.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherPromoCard.vue",
         type: "registry:ui",
       },
       {

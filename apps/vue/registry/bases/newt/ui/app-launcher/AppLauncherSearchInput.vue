@@ -4,10 +4,13 @@ import type { HTMLAttributes } from "vue"
 import { cn } from "@/lib/utils"
 
 const props = defineProps<{ class?: HTMLAttributes["class"] }>()
+/* Bind the query with `v-model`. */
+const model = defineModel<string>()
 </script>
 
 <template>
   <input
+    v-model="model"
     type="search"
     autocomplete="off"
     spellcheck="false"

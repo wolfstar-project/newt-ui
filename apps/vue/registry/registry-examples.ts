@@ -113,6 +113,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "AppLauncherSheetDemo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher", "button"],
+    files: [
+      {
+        path: "examples/AppLauncherSheetDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AppLauncherDrillInDemo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher"],
+    files: [
+      {
+        path: "examples/AppLauncherDrillInDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AttachmentDemo",
     type: "registry:example",
     registryDependencies: ["attachment", "button"],

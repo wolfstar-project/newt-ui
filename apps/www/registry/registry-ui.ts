@@ -85,7 +85,8 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "App Launcher",
     description:
-      "The Apps popout, with search, a recents strip and the apps installed in a server.",
+      "The Apps launcher, as a desktop popout or a bottom sheet, with search, a recents strip and the apps installed in a server.",
+    dependencies: ["class-variance-authority", "radix-ui"],
     registryDependencies: ["scrollbar"],
     files: [
       {

@@ -1272,6 +1272,31 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "app-launcher-sheet-demo",
+    {
+      name: "app-launcher-sheet-demo",
+      type: "registry:example",
+      registryDependencies: ["app-launcher", "button"],
+      files: ["registry/bases/newt/examples/app-launcher-sheet-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/app-launcher-sheet-demo")
+      ),
+    },
+  ],
+  [
+    "app-launcher-drill-in-demo",
+    {
+      name: "app-launcher-drill-in-demo",
+      type: "registry:example",
+      registryDependencies: ["app-launcher"],
+      files: ["registry/bases/newt/examples/app-launcher-drill-in-demo.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/examples/app-launcher-drill-in-demo")
+      ),
+    },
+  ],
+  [
     "attachment-demo",
     {
       name: "attachment-demo",

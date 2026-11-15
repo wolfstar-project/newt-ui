@@ -240,3 +240,16 @@ describe("channel-info.js, inline", () => {
     expect(panel()).not.toBeNull()
   })
 })
+
+describe("channel-info.js, included twice", () => {
+  it("fires newt:close once per close", () => {
+    open()
+    runInThisContext(behavior)
+    let closes = 0
+    panel()?.addEventListener("newt:close", () => {
+      closes += 1
+    })
+    control("Back to channel").click()
+    expect(closes).toBe(1)
+  })
+})

@@ -7,15 +7,21 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
 </script>
 
 <template>
-  <!-- Horizontal strip of recently used apps. -->
-  <div
+  <!--
+    Horizontal strip of recently used apps, as a list: a screen reader
+    announces how many there are. Name it with `aria-label` or
+    `aria-labelledby`. `list-style: none` drops the list role in Safari, so
+    the role is set again.
+  -->
+  <ul
+    role="list"
     :class="
       cn(
-        'flex gap-3 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+        'm-0 flex list-none gap-3 overflow-x-auto p-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
         props.class
       )
     "
   >
     <slot />
-  </div>
+  </ul>
 </template>
