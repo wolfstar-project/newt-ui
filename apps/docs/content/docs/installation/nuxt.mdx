@@ -105,8 +105,11 @@ array replaces those defaults, so the option names them again.
 - A project without TypeScript gets `index.js` in the pattern.
 - If the `ui` alias points outside `components/`, Nuxt does not scan it. `init`
   then changes nothing.
-- `init` edits the file only if it has one multi-line `defineNuxtConfig({` call
-  and no `components` option. If it does not, `init` prints the lines to add.
+- `init` edits the file only if it has one multi-line `defineNuxtConfig({` call,
+  no `components` option and no top-level spread such as `...sharedConfig`. If
+  it does not, `init` prints the lines to add.
+- A spread object can set `components` and replace the option. If yours does,
+  add the ignore there.
 - If your config already sets `components`, add
   `ignore: ["ui/**/index.ts"]` to the entry for `~/components`.
 - If you ran `init` before it wrote this option, add the option yourself.

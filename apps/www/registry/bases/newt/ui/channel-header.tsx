@@ -121,7 +121,7 @@ ChannelHeaderToolbar.displayName = "ChannelHeaderToolbar"
 
 /* What every control of the header adds to its resting look. */
 const interactiveClassName =
-  "cursor-pointer transition-colors duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
+  "cursor-pointer transition-colors aria-disabled:pointer-events-none duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link"
 
 interface ChannelHeaderControlProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -133,6 +133,11 @@ interface ChannelHeaderControlProps extends React.ButtonHTMLAttributes<HTMLButto
   as?: React.ElementType
   /** Render a link to this URL. */
   href?: string
+  /**
+   * Turns the control off. A link loses its URL, which takes it out of the
+   * tab order, and says so with `aria-disabled`.
+   */
+  disabled?: boolean
   /** Link target, with `href`. */
   target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"]
   /** Link relationship, with `href`. */
@@ -159,25 +164,32 @@ export interface ChannelHeaderActionProps extends ChannelHeaderControlProps {
 const ChannelHeaderAction = React.forwardRef<
   HTMLElement,
   ChannelHeaderActionProps
->(({ as, href, className, active, type = "button", ...props }, ref) => {
-  const { Tag, isButton, decorative } = resolveControl(as, href)
-  return (
-    <Tag
-      ref={ref}
-      type={isButton ? type : undefined}
-      href={decorative ? undefined : href}
-      aria-hidden={decorative ? true : undefined}
-      aria-pressed={isButton ? active : undefined}
-      data-state={active ? "active" : "inactive"}
-      className={cn(
-        "inline-flex h-6 w-6 shrink-0 items-center justify-center border-0 bg-transparent p-0 text-newt-text-muted data-[state=active]:text-newt-text-primary",
-        !decorative && [interactiveClassName, "hover:text-newt-text-primary"],
-        className
-      )}
-      {...props}
-    />
-  )
-})
+>(
+  (
+    { as, href, disabled, className, active, type = "button", ...props },
+    ref
+  ) => {
+    const { Tag, isButton, decorative } = resolveControl(as, href)
+    return (
+      <Tag
+        ref={ref}
+        type={isButton ? type : undefined}
+        href={decorative || disabled ? undefined : href}
+        disabled={isButton ? disabled : undefined}
+        aria-disabled={!isButton && !decorative && disabled ? true : undefined}
+        aria-hidden={decorative ? true : undefined}
+        aria-pressed={isButton ? active : undefined}
+        data-state={active ? "active" : "inactive"}
+        className={cn(
+          "inline-flex h-6 w-6 shrink-0 items-center justify-center border-0 bg-transparent p-0 text-newt-text-muted data-[state=active]:text-newt-text-primary",
+          !decorative && [interactiveClassName, "hover:text-newt-text-primary"],
+          className
+        )}
+        {...props}
+      />
+    )
+  }
+)
 ChannelHeaderAction.displayName = "ChannelHeaderAction"
 
 const SearchIcon = ({ className }: { className: string }) => (
@@ -214,6 +226,7 @@ const ChannelHeaderSearch = React.forwardRef<
     {
       as,
       href,
+      disabled,
       className,
       placeholder = "Search",
       compact = false,
@@ -228,7 +241,9 @@ const ChannelHeaderSearch = React.forwardRef<
       <Tag
         ref={ref}
         type={isButton ? type : undefined}
-        href={decorative ? undefined : href}
+        href={decorative || disabled ? undefined : href}
+        disabled={isButton ? disabled : undefined}
+        aria-disabled={!isButton && !decorative && disabled ? true : undefined}
         aria-hidden={decorative ? true : undefined}
         className={cn(
           "flex shrink-0 items-center text-newt-text-muted no-underline",
@@ -273,7 +288,16 @@ export interface ChannelHeaderBackProps extends ChannelHeaderControlProps {
  */
 const ChannelHeaderBack = React.forwardRef<HTMLElement, ChannelHeaderBackProps>(
   (
-    { as, href, className, badge, type = "button", children, ...props },
+    {
+      as,
+      href,
+      disabled,
+      className,
+      badge,
+      type = "button",
+      children,
+      ...props
+    },
     ref
   ) => {
     const { Tag, isButton, decorative } = resolveControl(as, href)
@@ -281,7 +305,9 @@ const ChannelHeaderBack = React.forwardRef<HTMLElement, ChannelHeaderBackProps>(
       <Tag
         ref={ref}
         type={isButton ? type : undefined}
-        href={decorative ? undefined : href}
+        href={decorative || disabled ? undefined : href}
+        disabled={isButton ? disabled : undefined}
+        aria-disabled={!isButton && !decorative && disabled ? true : undefined}
         aria-hidden={decorative ? true : undefined}
         className={cn(
           "inline-flex h-6 min-w-6 shrink-0 items-center justify-center gap-1 border-0 bg-transparent p-0 text-newt-text-muted no-underline",
@@ -320,38 +346,45 @@ ChannelHeaderBack.displayName = "ChannelHeaderBack"
 const ChannelHeaderTitle = React.forwardRef<
   HTMLElement,
   ChannelHeaderControlProps
->(({ as, href, className, type = "button", children, ...props }, ref) => {
-  const { Tag, isButton, decorative: plain } = resolveControl(as, href)
-  return (
-    <Tag
-      ref={ref}
-      type={isButton ? type : undefined}
-      href={plain ? undefined : href}
-      className={cn(
-        "inline-flex min-w-0 items-center gap-2 rounded-sm border-0 bg-transparent px-1.5 py-1 text-start text-newt-text-primary no-underline",
-        !plain && [interactiveClassName, "hover:bg-newt-bg-hover"],
-        className
-      )}
-      {...props}
-    >
-      {children}
-      {plain ? null : (
-        <svg
-          viewBox="0 0 16 16"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-          className="h-4 w-4 shrink-0 text-newt-text-muted rtl:-scale-x-100"
-        >
-          <path d="m6 3.5 4.5 4.5L6 12.5" />
-        </svg>
-      )}
-    </Tag>
-  )
-})
+>(
+  (
+    { as, href, disabled, className, type = "button", children, ...props },
+    ref
+  ) => {
+    const { Tag, isButton, decorative: plain } = resolveControl(as, href)
+    return (
+      <Tag
+        ref={ref}
+        type={isButton ? type : undefined}
+        href={plain || disabled ? undefined : href}
+        disabled={isButton ? disabled : undefined}
+        aria-disabled={!isButton && !plain && disabled ? true : undefined}
+        className={cn(
+          "inline-flex min-w-0 items-center gap-2 rounded-sm border-0 bg-transparent px-1.5 py-1 text-start text-newt-text-primary no-underline",
+          !plain && [interactiveClassName, "hover:bg-newt-bg-hover"],
+          className
+        )}
+        {...props}
+      >
+        {children}
+        {plain ? null : (
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            className="h-4 w-4 shrink-0 text-newt-text-muted rtl:-scale-x-100"
+          >
+            <path d="m6 3.5 4.5 4.5L6 12.5" />
+          </svg>
+        )}
+      </Tag>
+    )
+  }
+)
 ChannelHeaderTitle.displayName = "ChannelHeaderTitle"
 
 /* Compact "N Online" readout used by the narrow layout of the header. */
