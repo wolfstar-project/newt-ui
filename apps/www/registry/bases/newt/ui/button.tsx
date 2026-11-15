@@ -87,6 +87,15 @@ export interface ButtonProps
   launchIcon?: boolean
 }
 
+/*
+ * No box without content: an empty box would still take a gap and push an
+ * emoji-only button off centre. `toArray` drops `null`, `undefined` and
+ * booleans, so `leading={cond && <Icon />}` leaves no box when `cond` is false.
+ */
+function renders(node: React.ReactNode): boolean {
+  return React.Children.toArray(node).length > 0
+}
+
 const Button = React.forwardRef<HTMLElement, ButtonProps>(
   (
     {
@@ -133,19 +142,15 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
             className="h-[1.375em] w-[1.375em] shrink-0 object-contain align-bottom"
           />
         ) : null}
-        {leading == null ? null : (
+        {renders(leading) ? (
           <span className="inline-flex shrink-0 items-center">{leading}</span>
-        )}
-        {/*
-         * No label box without a label: an empty box would still take a gap
-         * and push an emoji-only button off centre.
-         */}
-        {React.Children.toArray(children).length > 0 ? (
+        ) : null}
+        {renders(children) ? (
           <span className="truncate">{children}</span>
         ) : null}
-        {trailing == null ? null : (
+        {renders(trailing) ? (
           <span className="inline-flex shrink-0 items-center">{trailing}</span>
-        )}
+        ) : null}
         {showLaunch ? <LaunchIcon /> : null}
       </Tag>
     )

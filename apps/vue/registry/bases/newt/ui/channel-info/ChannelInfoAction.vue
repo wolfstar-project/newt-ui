@@ -4,12 +4,25 @@ import { computed } from "vue"
 
 import { cn } from "@/lib/utils"
 
+defineOptions({ inheritAttrs: false })
+
+/*
+ * The `span` form runs nothing: it drops every listener, so a click cannot
+ * start an action that the keyboard and assistive technology miss.
+ */
+function withoutListeners(attrs: HTMLAttributes): HTMLAttributes {
+  return Object.fromEntries(
+    Object.entries(attrs).filter(([name]) => !/^on[A-Z]/.test(name))
+  )
+}
+
 const props = defineProps<{
   /**
    * The element or component to render. Defaults to `button`, or to `a`
    * when `href` is set; pass `NuxtLink` or `RouterLink` to keep client
    * navigation. `span` renders the decorative form: hidden from assistive
    * technology, out of the tab order, with no pointer and no hover.
+   * Its event handlers do not run.
    */
   as?: string | Component
   /** Render a link to this URL. */
@@ -43,10 +56,11 @@ const decorative = computed(() => tag.value === "span")
       cn(
         'inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-0 bg-transparent p-0 text-newt-text-secondary no-underline',
         !decorative &&
-          'cursor-pointer transition-colors aria-disabled:pointer-events-none duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
+          'cursor-pointer transition-colors duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50',
         props.class
       )
     "
+    v-bind="decorative ? withoutListeners($attrs) : $attrs"
   >
     <slot />
   </component>

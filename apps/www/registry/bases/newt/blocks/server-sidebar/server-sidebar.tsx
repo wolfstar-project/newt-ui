@@ -43,6 +43,15 @@ export interface SidebarMember {
   group: string
 }
 
+/* The state of each dot in words, for a screen reader. */
+const STATUS_LABELS = {
+  online: "Online",
+  idle: "Idle",
+  dnd: "Do not disturb",
+  offline: "Offline",
+  streaming: "Streaming",
+} as const satisfies Record<SidebarMember["status"], string>
+
 export interface ServerSidebarProps extends React.ComponentProps<"aside"> {
   serverName: string
   /** Who is currently in the voice channel, in join order. */
@@ -107,7 +116,10 @@ export function ServerSidebar({
                 <MemberListItem key={member.id}>
                   <StatusIndicator>
                     <Avatar size="sm">{member.initials}</Avatar>
-                    <StatusDot status={member.status} />
+                    <StatusDot
+                      status={member.status}
+                      label={STATUS_LABELS[member.status]}
+                    />
                   </StatusIndicator>
                   <MemberListInfo>
                     <MemberListNameRow>
