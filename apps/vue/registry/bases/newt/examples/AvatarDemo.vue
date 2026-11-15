@@ -4,8 +4,10 @@ import { Avatar } from "~~/registry/bases/newt/ui/avatar"
 
 <template>
   <div class="flex items-center gap-4">
-    <Avatar>N</Avatar>
+    <Avatar size="xs">N</Avatar>
     <Avatar size="sm">N</Avatar>
+    <Avatar size="md">N</Avatar>
+    <Avatar>N</Avatar>
     <Avatar size="lg">N</Avatar>
   </div>
 </template>

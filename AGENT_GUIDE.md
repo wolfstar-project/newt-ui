@@ -167,7 +167,7 @@ and border changes only. This is a deliberate constraint, not an oversight.
 | Button                | `.newt-btn`                                                                    | primary/secondary/success/danger/link/icon variants                  |
 | Badge                 | `.newt-badge`                                                                  | brand/success/warning/danger, optional `--dot`                       |
 | Status indicator      | `.newt-status` / `.newt-status__dot`                                           | online/idle/dnd/offline/streaming, state encoded in shape not motion |
-| Avatar                | `.newt-avatar`                                                                 | sm/default/lg sizes                                                  |
+| Avatar                | `.newt-avatar`                                                                 | xs/sm/md/default/lg sizes                                            |
 | Embed                 | `.newt-embed`                                                                  | Discord message embed card                                           |
 | Card                  | `.newt-card`                                                                   | generic panel                                                        |
 | Form fields           | `.newt-field`, `.newt-input`, `.newt-textarea`, `.newt-select`, `.newt-switch` | settings-modal styling                                               |

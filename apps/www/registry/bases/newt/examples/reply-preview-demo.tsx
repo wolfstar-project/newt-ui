@@ -44,6 +44,16 @@ export default function ReplyPreviewDemo() {
         <ReplyPreviewAction>used</ReplyPreviewAction>
         <ReplyPreviewCommand icon={SLASH_ICON}>ban member</ReplyPreviewCommand>
       </ReplyPreview>
+      {/* No `src`: the children draw an avatar that is an icon. */}
+      <ReplyPreview>
+        <ReplyPreviewAvatar>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" />
+          </svg>
+        </ReplyPreviewAvatar>
+        <ReplyPreviewAuthor>@relay</ReplyPreviewAuthor>
+        <ReplyPreviewText>deploy finished in 42 seconds</ReplyPreviewText>
+      </ReplyPreview>
     </div>
   )
 }
