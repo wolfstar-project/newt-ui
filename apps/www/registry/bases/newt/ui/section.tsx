@@ -66,20 +66,37 @@ const SectionAccessory = React.forwardRef<
 ))
 SectionAccessory.displayName = "SectionAccessory"
 
-export interface SectionThumbnailProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+/*
+ * The props of the element or component `as` names, so a custom image
+ * component's own props type-check.
+ */
+export type SectionThumbnailProps<E extends React.ElementType = "img"> = {
   /**
    * The image element or component to render. Defaults to `img`; pass your
    * framework's image component for optimised sources. It receives `src`,
    * `alt`, `className` and the spoiler attributes and handlers.
    */
-  as?: React.ElementType
+  as?: E
   /**
    * Marks the image as a spoiler: blurred until clicked, the same treatment
    * a spoilered attachment gets.
    */
   spoiler?: boolean
+} & Omit<React.ComponentPropsWithRef<E>, "as" | "spoiler">
+
+type SectionThumbnailComponent = {
+  <E extends React.ElementType = "img">(
+    props: SectionThumbnailProps<E>
+  ): React.ReactNode
+  displayName?: string
 }
 
+/*
+ * SAFETY: `forwardRef` drops the generic signature. The render hands every
+ * prop it does not set itself to `as` unchanged, so the props of `as` are
+ * the props the part receives.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- see SAFETY
 const SectionThumbnail = React.forwardRef<
   HTMLImageElement,
   SectionThumbnailProps
@@ -120,7 +137,7 @@ const SectionThumbnail = React.forwardRef<
       />
     )
   }
-)
+) as SectionThumbnailComponent
 SectionThumbnail.displayName = "SectionThumbnail"
 
 export {

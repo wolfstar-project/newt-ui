@@ -77,9 +77,18 @@
   padding: 6px 12px;
   font-size: 13px;
 }
-/* 32px, the height of a button in a message's action row. */
+/*
+ * 32px, the height of a button in a message's action row. The height is
+ * fixed, so an emoji image, a leading icon or the link variant cannot make
+ * one button of the row taller or shorter.
+ */
 .newt-btn--message {
-  padding: 8px 16px;
+  block-size: 32px;
+  padding-block: 0;
+  padding-inline: 16px;
+}
+.newt-btn--link.newt-btn--message {
+  padding-inline: 0;
 }
 .newt-btn--lg {
   padding: 12px 24px;

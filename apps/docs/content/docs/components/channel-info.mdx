@@ -81,6 +81,12 @@ A read-only view draws the actions and does nothing with them. Pass `as="span"` 
       type: "string | undefined",
       description: "Render a link to this URL.",
     },
+    {
+      name: "disabled",
+      type: "boolean | undefined",
+      description:
+        "Turns the control off. A link loses its URL, which takes it out of the tab order, and says so with `aria-disabled`.",
+    },
   ]}
 />
 
@@ -97,6 +103,8 @@ Do not wrap a dialog `ChannelInfo` in a [Drawer](/docs/components/drawer) or a [
 Every icon-only action needs an `aria-label`. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
 
 In the plain HTML and CSS distribution, `channel-info.js` gives a panel marked `data-newt-channel-info` the same behaviour. A `data-newt-channel-info-close` control closes it, and `aria-modal="true"` makes it modal. The panel fires `newt:close` before it leaves the page; cancel the event to close it your own way.
+
+With several panels open, Escape closes the newest one that holds focus. An Escape that a control inside already handled with `preventDefault()` closes nothing, and the panel marks the Escape it handles the same way. Tab skips controls inside hidden content.
 
 ## Tokens
 

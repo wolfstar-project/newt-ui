@@ -15,6 +15,11 @@ const props = withDefaults(
     as?: string | Component
     /** Render a link to this URL. */
     href?: string
+    /**
+     * Turns the control off. A link loses its URL, which takes it out of the
+     * tab order, and says so with `aria-disabled`.
+     */
+    disabled?: boolean
     class?: HTMLAttributes["class"]
     /**
      * Makes the action a toggle and keeps it lit up while `true`. A button
@@ -41,7 +46,11 @@ const decorative = computed(() => tag.value === "span")
   <component
     :is="tag"
     :type="isButton ? 'button' : undefined"
-    :href="decorative ? undefined : props.href"
+    :href="decorative || props.disabled ? undefined : props.href"
+    :disabled="isButton ? props.disabled : undefined"
+    :aria-disabled="
+      !isButton && !decorative && props.disabled ? true : undefined
+    "
     :aria-hidden="decorative ? true : undefined"
     :aria-pressed="isButton ? props.active : undefined"
     :data-state="props.active ? 'active' : 'inactive'"
@@ -49,7 +58,7 @@ const decorative = computed(() => tag.value === "span")
       cn(
         'inline-flex h-6 w-6 shrink-0 items-center justify-center border-0 bg-transparent p-0 text-newt-text-muted data-[state=active]:text-newt-text-primary',
         !decorative &&
-          'cursor-pointer transition-colors duration-fast ease-newt hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
+          'cursor-pointer transition-colors aria-disabled:pointer-events-none duration-fast ease-newt hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
         props.class
       )
     "

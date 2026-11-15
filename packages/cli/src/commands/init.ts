@@ -68,6 +68,7 @@ import { getTokensCssBlock, TOKENS_MARKER } from "../utils/tokens.js"
 import {
   barrelFileName,
   componentsOption,
+  stringLiteral,
   updateNuxtConfig,
   type NuxtBarrels,
 } from "../utils/updaters/update-nuxt-config.js"
@@ -650,10 +651,16 @@ function printBarrelInstructions(
     logger.log(
       `${file} already sets ${highlighter.info("components")}, so init left it unchanged. Add this to the entry for your components directory:`
     )
-    logger.log(highlighter.dim(`  ignore: ["${barrels.ignore}"]`))
+    logger.log(highlighter.dim(`  ignore: [${stringLiteral(barrels.ignore)}]`))
     return
   }
-  logger.log(`init could not edit ${file} safely. Add this option to it:`)
+  if (barrels.reason === "spread") {
+    logger.log(
+      `${file} spreads another object into its config, so init left it unchanged. If that object sets ${highlighter.info("components")}, add the ignore there. Otherwise add this option after the spread:`
+    )
+  } else {
+    logger.log(`init could not edit ${file} safely. Add this option to it:`)
+  }
   logger.log(
     highlighter.dim(
       `${componentsOption(barrels.ignore)},`

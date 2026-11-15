@@ -883,6 +883,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "InviteRouterDemo",
+    type: "registry:example",
+    registryDependencies: ["invite", "button"],
+    files: [
+      {
+        path: "examples/InviteRouterDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "KbdTagDemo",
     type: "registry:example",
     registryDependencies: ["kbd-tag"],

@@ -15,6 +15,11 @@ const props = withDefaults(
     as?: string | Component
     /** Render a link to this URL. */
     href?: string
+    /**
+     * Turns the control off. A link loses its URL, which takes it out of the
+     * tab order, and says so with `aria-disabled`.
+     */
+    disabled?: boolean
     class?: HTMLAttributes["class"]
     /** The text shown when the default slot is empty. */
     placeholder?: string
@@ -39,7 +44,11 @@ const decorative = computed(() => tag.value === "span")
   <component
     :is="tag"
     :type="isButton ? 'button' : undefined"
-    :href="decorative ? undefined : props.href"
+    :href="decorative || props.disabled ? undefined : props.href"
+    :disabled="isButton ? props.disabled : undefined"
+    :aria-disabled="
+      !isButton && !decorative && props.disabled ? true : undefined
+    "
     :aria-hidden="decorative ? true : undefined"
     :class="
       cn(
@@ -48,7 +57,7 @@ const decorative = computed(() => tag.value === "span")
           ? 'h-6 w-6 justify-center border-0 bg-transparent p-0'
           : 'h-7 w-60 justify-between gap-3 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-2',
         !decorative &&
-          'cursor-pointer transition-colors duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
+          'cursor-pointer transition-colors aria-disabled:pointer-events-none duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
         !decorative &&
           (props.compact
             ? 'hover:text-newt-text-primary'
