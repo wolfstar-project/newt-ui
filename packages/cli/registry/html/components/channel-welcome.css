@@ -65,6 +65,19 @@
   outline-offset: 2px;
 }
 
+/*
+ * A control that is off: a `button` with `disabled`, or a link with
+ * `aria-disabled="true"` and no `href`. It fades, and a link takes no press.
+ */
+.newt-channel-welcome__action:disabled,
+.newt-channel-welcome__action[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.newt-channel-welcome__action[aria-disabled="true"] {
+  pointer-events: none;
+}
+
 /* Creation date, centred between two hairlines. */
 .newt-channel-welcome__date {
   display: grid;

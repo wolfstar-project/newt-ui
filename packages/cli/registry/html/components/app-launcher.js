@@ -23,7 +23,8 @@
  * A launcher without the attribute is shown in the page: no script runs.
  */
 
-/* A block, so the script can be included twice without redeclaring. */
+/* A block, so the script can be included twice without redeclaring. Each
+ * element is set up once, so a second include adds no listeners. */
 {
   const FOCUSABLE = [
     "a[href]",
@@ -75,6 +76,9 @@
   const isModal = (launcher) => launcher.getAttribute("aria-modal") === "true"
 
   document.querySelectorAll("[data-newt-app-launcher]").forEach((launcher) => {
+    /* A second include of the script leaves an opened launcher alone. */
+    if (launcher.dataset.newtInitialized) return
+    launcher.dataset.newtInitialized = "true"
     const modal = isModal(launcher)
     const active = document.activeElement
     /* An `autofocus` control inside has focus already: keep it, and there is

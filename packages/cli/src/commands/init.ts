@@ -656,6 +656,17 @@ function printBarrelInstructions(
     logger.log(highlighter.dim(`  ignore: [${stringLiteral(barrels.ignore)}]`))
     return
   }
+  if (barrels.reason === "missing-file") {
+    logger.log(`Create ${file} with:`)
+    const option = componentsOption(barrels.ignore)
+      .split("\n")
+      .map((line) => `    ${line}`)
+      .join("\n")
+    logger.log(
+      highlighter.dim(`  export default defineNuxtConfig({\n${option},\n  })`)
+    )
+    return
+  }
   if (barrels.reason === "spread") {
     logger.log(
       `${file} spreads another object into its config, so init left it unchanged. If that object sets ${highlighter.info("components")}, add the ignore there. Otherwise add this option after the spread:`
