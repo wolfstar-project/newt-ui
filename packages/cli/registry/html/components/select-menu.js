@@ -12,7 +12,6 @@ document.querySelectorAll("[data-newt-select]").forEach((root) => {
   const trigger = root.querySelector(".newt-select-menu__trigger")
   const panel = root.querySelector(".newt-select-menu__panel")
   const value = root.querySelector(".newt-select-menu__value")
-  const emoji = root.querySelector(".newt-select-menu__emoji")
   const options = [...root.querySelectorAll(".newt-select-menu__option")]
   if (!trigger || !panel || options.length === 0) return
 
@@ -100,10 +99,23 @@ document.querySelectorAll("[data-newt-select]").forEach((root) => {
       value.textContent = (label ?? option).textContent.trim()
       value.classList.remove("newt-select-menu__value--placeholder")
     }
-    if (emoji) {
-      const chosen = option.querySelector(".newt-select-menu__option-emoji")
-      emoji.textContent = chosen ? chosen.textContent : ""
-      emoji.hidden = !chosen
+    /*
+     * The trigger emoji follows the chosen row. It is made when a row has one
+     * and removed when the next row has none, so the markup can leave it out.
+     */
+    const chosen = option.querySelector(".newt-select-menu__option-emoji")
+    let emoji = trigger.querySelector(".newt-select-menu__emoji")
+    if (chosen) {
+      if (!emoji) {
+        emoji = document.createElement("span")
+        emoji.className = "newt-select-menu__emoji"
+        emoji.setAttribute("aria-hidden", "true")
+        if (value) value.before(emoji)
+        else trigger.prepend(emoji)
+      }
+      emoji.textContent = chosen.textContent
+    } else if (emoji) {
+      emoji.remove()
     }
     root.dispatchEvent(
       new CustomEvent("newt-select", {

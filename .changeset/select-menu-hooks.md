@@ -9,4 +9,4 @@
 - An option takes `emoji`, a unicode character drawn where the icon would be. `icon` wins when an option has both.
 - `renderItem` (React) and the `#item` slot (Vue) draw the content of a row. `renderItemDescription` and `#item-description` draw only the description. A row drawn with `renderItem` or `#item` names its option with all of its text.
 - The trigger has `tabindex="-1"` while the list is open, so an axe audit no longer reports it under `aria-hidden-focus`. Focus still returns to it on close. The other focusable elements of the page can still be reported; the docs page says why.
-- In the HTML flavour, mark the label of a row with `newt-select-menu__option-label`. The script copies that text to the trigger. A row without the class still gives all of its text, as before.
+- In the HTML flavour, mark the label of a row with `newt-select-menu__option-label`. The script copies that text to the trigger. A row without the class still gives all of its text, as before. The script also copies the `newt-select-menu__option-emoji` of a row to the trigger.
