@@ -47,7 +47,13 @@ The spine reads [two custom properties](/docs/components/message-group#custom-pr
       name: "src",
       type: "string",
       description:
-        "The image URL. Without it the avatar is a 16px circle that holds its fallback.",
+        "The image URL. Without it and without `srcSet`, the avatar is a 16px circle that holds its fallback.",
+    },
+    {
+      name: "srcSet (React) / srcset (Vue)",
+      type: "string",
+      description:
+        "Image candidates for each pixel density. It draws the image without `src` too.",
     },
     {
       name: "alt",
@@ -60,7 +66,7 @@ The spine reads [two custom properties](/docs/components/message-group#custom-pr
       name: "children / default slot",
       type: "React.ReactNode / Vue slot",
       description:
-        "The fallback, drawn when there is no `src`: an icon or initials. The circle sizes an `svg` to 10px.",
+        "The fallback, drawn when there is no `src` and no `srcSet`: an icon or initials. The circle sizes an `svg` to 10px.",
     },
   ]}
 />

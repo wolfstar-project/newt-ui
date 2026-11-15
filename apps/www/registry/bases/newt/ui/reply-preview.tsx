@@ -38,23 +38,24 @@ export interface ReplyPreviewAvatarProps extends Omit<
   "children"
 > {
   /**
-   * The fallback, drawn when there is no `src`: an icon or initials in a
+   * The fallback, drawn when there is no `src` and no `srcSet`: an icon or
+   * initials in a
    * 16px circle. The circle sizes an `svg` to 10px.
    */
   children?: React.ReactNode
 }
 
 /*
- * The avatar of the referenced author. With a `src` it is an image. Without
- * one it is a circle that holds its children, so an avatar that is an icon
+ * The avatar of the referenced author. With a `src` or a `srcSet` it is an
+ * image. Without either it is a circle that holds its children, so an avatar that is an icon
  * can be drawn. An empty `alt` hides either form from a screen reader.
  */
 const ReplyPreviewAvatar = React.forwardRef<
   HTMLElement,
   ReplyPreviewAvatarProps
->(({ className, alt = "", src, children, ...props }, ref) => {
+>(({ className, alt = "", src, srcSet, children, ...props }, ref) => {
   const decorative = alt === ""
-  if (src !== undefined) {
+  if (src !== undefined || srcSet !== undefined) {
     /*
      * `createElement` types the ref by the element it is given here, so the
      * one `HTMLElement` ref serves both forms without an assertion.
@@ -62,6 +63,7 @@ const ReplyPreviewAvatar = React.forwardRef<
     return React.createElement("img", {
       ref,
       src,
+      srcSet,
       alt,
       "aria-hidden": decorative ? true : undefined,
       className: cn("h-4 w-4 shrink-0 rounded-full object-cover", className),
