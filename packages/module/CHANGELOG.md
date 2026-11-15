@@ -1,5 +1,15 @@
 # @newtui/nuxt
 
+## 2.0.0
+
+### Major Changes
+
+- [#95](https://github.com/wolfstar-project/newt-ui/pull/95) [`975a2de`](https://github.com/wolfstar-project/newt-ui/commit/975a2de6c813071d2c6924e9b51227343bdfa9b1) - Register `components/ui` before Nuxt scans `components/`. Nuxt gives a file to the first directory that scans it, so the module registered nothing: components stayed `<UiButton />`, and each `index.ts` barrel caused a `NUXT_B3011` duplicate name warning. The components are now `<Button />` (or `<NewtButton />` with `prefix: "Newt"`), as the documentation says, and the warnings are gone. If your templates use the `Ui` names, rename them or remove the module.
+
+### Patch Changes
+
+- [#106](https://github.com/wolfstar-project/newt-ui/pull/106) [`a6123f8`](https://github.com/wolfstar-project/newt-ui/commit/a6123f84e6c6347d701b4854bfaa2f6b092622f0) - The token stylesheet of the module now declares `--newt-streaming` and `--newt-text-message`. The streaming dot of `status-indicator` keeps its colour, and message text in `message-group` takes its own colour. No change is needed in your project.
+
 ## 1.0.2
 
 ### Patch Changes
