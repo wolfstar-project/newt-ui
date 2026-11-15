@@ -189,7 +189,7 @@ function onFocus(event: FocusEvent) {
         :aria-invalid="props.invalid ? true : undefined"
         :disabled="props.disabled"
         :value="code[index - 1] ?? ''"
-        class="h-[52px] w-11 rounded-sm border border-newt-border bg-newt-bg-input p-0 text-center font-mono text-xl font-semibold text-newt-text-primary caret-newt-brand transition-colors duration-fast ease-newt focus:border-newt-brand focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 group-data-[invalid]/pin:border-newt-danger"
+        class="h-[52px] w-11 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input p-0 text-center font-[family-name:var(--newt-font-mono)] text-xl font-semibold text-newt-text-primary caret-newt-brand transition-colors duration-fast ease-newt focus:border-newt-brand focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 group-data-[invalid]/pin:border-newt-danger"
         @input="onInput(index - 1, $event)"
         @keydown="onKeydown(index - 1, $event)"
         @paste="onPaste(index - 1, $event)"

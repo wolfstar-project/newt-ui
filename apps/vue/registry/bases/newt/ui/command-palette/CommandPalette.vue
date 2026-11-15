@@ -62,7 +62,7 @@ const query = ref("")
 const active = ref(0)
 
 const kbdClassName =
-  "inline-flex h-5 min-w-5 items-center justify-center rounded-sm border border-newt-border bg-newt-bg-base px-1.5 font-mono text-[11px] font-semibold text-newt-text-secondary"
+  "inline-flex h-5 min-w-5 items-center justify-center rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-base px-1.5 font-[family-name:var(--newt-font-mono)] text-[11px] font-semibold text-newt-text-secondary"
 
 function matches(item: CommandItem, needle: string): boolean {
   if (needle === "") return true
@@ -172,7 +172,7 @@ watch(open, (isOpen) => {
         v-bind="$attrs"
         :class="
           cn(
-            'fixed inset-x-0 top-[15vh] z-[100] mx-auto flex max-h-[70vh] w-[560px] max-w-[92vw] flex-col overflow-hidden rounded-lg border border-newt-border bg-newt-bg-elevated text-newt-text-primary shadow-elevation-high outline-none',
+            'fixed inset-x-0 top-[15vh] z-[100] mx-auto flex max-h-[70vh] w-[560px] max-w-[92vw] flex-col overflow-hidden rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-elevated text-newt-text-primary shadow-elevation-high outline-none',
             props.class
           )
         "
@@ -195,7 +195,7 @@ watch(open, (isOpen) => {
           :placeholder="props.placeholder"
           autocomplete="off"
           spellcheck="false"
-          class="mx-3 mt-3 rounded-sm border border-newt-border bg-newt-bg-input px-3.5 py-3 font-sans text-base text-newt-text-primary placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none"
+          class="mx-3 mt-3 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-3.5 py-3 font-[family-name:var(--newt-font-sans)] text-base text-newt-text-primary placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none"
           @input="onInput"
           @keydown="onKeydown"
         />
@@ -230,7 +230,7 @@ watch(open, (isOpen) => {
               :aria-selected="item === current"
               :class="
                 cn(
-                  'flex cursor-pointer items-center gap-2 rounded-sm p-2 text-[15px] leading-5',
+                  'flex cursor-pointer items-center gap-2 rounded-[var(--newt-radius-sm)] p-2 text-[15px] leading-5',
                   item === current
                     ? 'bg-newt-bg-active text-newt-text-primary'
                     : 'text-newt-text-secondary'

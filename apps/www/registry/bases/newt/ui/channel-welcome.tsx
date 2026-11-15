@@ -86,7 +86,7 @@ const ChannelWelcomeAction = React.forwardRef<
       href={decorative ? undefined : href}
       aria-hidden={decorative ? true : undefined}
       className={cn(
-        "mt-3 inline-flex items-center gap-2 rounded-sm border-0 bg-newt-bg-elevated px-4 py-1.5 text-sm font-medium text-newt-text-primary no-underline",
+        "mt-3 inline-flex items-center gap-2 rounded-[var(--newt-radius-sm)] border-0 bg-newt-bg-elevated px-4 py-1.5 text-sm font-medium text-newt-text-primary no-underline",
         !decorative &&
           "cursor-pointer transition-colors duration-fast ease-newt hover:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
         className

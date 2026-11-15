@@ -34,7 +34,7 @@ defineSlots<{
       cn(
         'flex w-full cursor-pointer items-center border-0 transition-colors duration-fast ease-newt',
         props.variant === 'tile'
-          ? 'flex-col gap-2 rounded-md bg-newt-bg-elevated px-2 py-3 text-center'
+          ? 'flex-col gap-2 rounded-[var(--newt-radius-md)] bg-newt-bg-elevated px-2 py-3 text-center'
           : 'gap-3 bg-transparent px-3 py-3 text-start',
         'hover:bg-newt-bg-hover',
         'focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-newt-text-link',

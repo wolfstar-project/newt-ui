@@ -92,7 +92,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       <div
         data-invalid={invalid || undefined}
         className={cn(
-          "inline-flex items-stretch overflow-hidden rounded-sm border border-newt-border bg-newt-bg-input transition-colors duration-fast ease-newt focus-within:border-newt-brand data-[invalid]:border-newt-danger group-data-[invalid]/field:border-newt-danger",
+          "inline-flex items-stretch overflow-hidden rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input transition-colors duration-fast ease-newt focus-within:border-newt-brand data-[invalid]:border-newt-danger group-data-[invalid]/field:border-newt-danger",
           disabled && "opacity-50",
           className
         )}
@@ -135,7 +135,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               commit(parsed)
             }
           }}
-          className="w-16 border-0 bg-transparent px-1 py-2.5 text-center font-sans text-sm tabular-nums text-newt-text-primary [appearance:textfield] focus:outline-none disabled:cursor-not-allowed [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          className="w-16 border-0 bg-transparent px-1 py-2.5 text-center font-[family-name:var(--newt-font-sans)] text-sm tabular-nums text-newt-text-primary [appearance:textfield] focus:outline-none disabled:cursor-not-allowed [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           {...props}
         />
         <button

@@ -8,7 +8,7 @@ const InlineCode = React.forwardRef<HTMLElement, React.ComponentProps<"code">>(
       ref={ref}
       className={cn(
         /* `pre-wrap` keeps wrapped code readable without eating the spacing. */
-        "whitespace-pre-wrap rounded-sm border border-newt-border bg-newt-bg-base px-1 font-mono text-[0.85em] text-newt-text-primary",
+        "whitespace-pre-wrap rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-base px-1 font-[family-name:var(--newt-font-mono)] text-[0.85em] text-newt-text-primary",
         className
       )}
       {...props}

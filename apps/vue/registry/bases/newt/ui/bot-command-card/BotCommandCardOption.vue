@@ -23,12 +23,14 @@ const props = withDefaults(
 
 <template>
   <div :class="cn('flex items-baseline gap-2.5 text-xs', props.class)">
-    <span class="shrink-0 font-mono font-semibold text-newt-text-primary">
+    <span
+      class="shrink-0 font-[family-name:var(--newt-font-mono)] font-semibold text-newt-text-primary"
+    >
       {{ props.name }}
     </span>
     <span
       v-if="props.type"
-      class="shrink-0 font-mono text-[11px] text-newt-text-secondary"
+      class="shrink-0 font-[family-name:var(--newt-font-mono)] text-[11px] text-newt-text-secondary"
     >
       {{ props.type }}
     </span>

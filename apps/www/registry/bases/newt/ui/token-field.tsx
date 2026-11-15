@@ -74,7 +74,7 @@ const TokenField = React.forwardRef<HTMLDivElement, TokenFieldProps>(
           type={revealed ? "text" : "password"}
           value={value}
           readOnly
-          className="font-mono tracking-[0.05em]"
+          className="font-[family-name:var(--newt-font-mono)] tracking-[0.05em]"
         />
         <Button
           type="button"

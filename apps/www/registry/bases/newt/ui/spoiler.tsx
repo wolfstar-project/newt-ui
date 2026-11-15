@@ -67,7 +67,7 @@ const Spoiler = React.forwardRef<HTMLSpanElement, SpoilerProps>(
         aria-expanded={revealed}
         data-state={revealed ? "revealed" : "hidden"}
         className={cn(
-          "rounded-sm px-1 transition-[background-color] duration-fast ease-newt",
+          "rounded-[var(--newt-radius-sm)] px-1 transition-[background-color] duration-fast ease-newt",
           revealed
             ? "cursor-text select-text bg-newt-bg-active text-newt-text-primary"
             : "cursor-pointer select-none bg-newt-spoiler hover:bg-newt-spoiler-hover",

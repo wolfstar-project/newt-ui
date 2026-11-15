@@ -46,7 +46,7 @@ const DropdownContent = React.forwardRef<
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          "z-[110] w-60 rounded-md border border-newt-border bg-newt-bg-floating p-1.5 text-newt-text-primary shadow-elevation-high outline-none",
+          "z-[110] w-60 rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-floating p-1.5 text-newt-text-primary shadow-elevation-high outline-none",
           className
         )}
         {...props}
@@ -61,7 +61,7 @@ DropdownContent.displayName = "DropdownContent"
  * keyboard, so it takes the place of the old `:hover` rule.
  */
 const dropdownItemVariants = cva(
-  "group flex cursor-pointer select-none items-center gap-2.5 rounded-sm px-2.5 py-2 outline-none transition-colors duration-fast ease-newt data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+  "group flex cursor-pointer select-none items-center gap-2.5 rounded-[var(--newt-radius-sm)] px-2.5 py-2 outline-none transition-colors duration-fast ease-newt data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
   {
     variants: {
       variant: {

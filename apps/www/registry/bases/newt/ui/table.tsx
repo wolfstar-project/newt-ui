@@ -16,7 +16,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
   ({ className, wrapperClassName, ...props }, ref) => (
     <div
       className={cn(
-        "w-full overflow-x-auto rounded-md border border-newt-border bg-newt-bg-surface",
+        "w-full overflow-x-auto rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-surface",
         wrapperClassName
       )}
     >
@@ -120,7 +120,7 @@ const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
           type="button"
           onClick={onSort}
           className={cn(
-            "-mx-1.5 -my-1 inline-flex items-center gap-1 rounded-sm px-1.5 py-1 uppercase tracking-[inherit] hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link",
+            "-mx-1.5 -my-1 inline-flex items-center gap-1 rounded-[var(--newt-radius-sm)] px-1.5 py-1 uppercase tracking-[inherit] hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link",
             sort !== "none" && "text-newt-text-primary"
           )}
         >

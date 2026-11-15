@@ -19,8 +19,11 @@ which works by overriding the same names.
 | Motion    | `--newt-duration-fast`, `--newt-duration-base`, `--newt-ease`                                                                                                |
 
 The Tailwind utilities are the same names: `bg-newt-brand`,
-`text-newt-text-muted`, `border-newt-border`, `rounded-md`,
-`shadow-elevation-high`, `duration-fast`, `ease-newt`.
+`text-newt-text-muted`, `border-newt-border`, `shadow-elevation-high`,
+`duration-fast`, `ease-newt`. Radii and the sans and mono stacks are read from
+the tokens with an arbitrary value: `rounded-[var(--newt-radius-md)]`,
+`font-[family-name:var(--newt-font-sans)]`. `rounded-md` and `font-sans`
+follow the host app's scale instead.
 
 ## Incorrect
 
@@ -36,7 +39,7 @@ to the light palette gets a dark card with unreadable text.
 ## Correct
 
 ```tsx
-<div className="rounded-md bg-newt-bg-elevated p-4 text-newt-text-secondary">
+<div className="rounded-[var(--newt-radius-md)] bg-newt-bg-elevated p-4 text-newt-text-secondary">
   <span className="text-newt-online">Online</span>
 </div>
 ```

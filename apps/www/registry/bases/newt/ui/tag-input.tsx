@@ -79,7 +79,7 @@ const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
           }
         }}
         className={cn(
-          "flex min-h-[42px] w-full cursor-text flex-wrap items-center gap-1.5 rounded-sm border border-newt-border bg-newt-bg-input px-2 py-1.5 transition-colors duration-fast ease-newt focus-within:border-newt-brand data-[invalid]:border-newt-danger group-data-[invalid]/field:border-newt-danger",
+          "flex min-h-[42px] w-full cursor-text flex-wrap items-center gap-1.5 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-2 py-1.5 transition-colors duration-fast ease-newt focus-within:border-newt-brand data-[invalid]:border-newt-danger group-data-[invalid]/field:border-newt-danger",
           disabled && "cursor-not-allowed opacity-50",
           className
         )}
@@ -87,7 +87,7 @@ const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
         {tags.map((tag) => (
           <span
             key={tag}
-            className="inline-flex max-w-full items-center gap-1 rounded-sm bg-newt-bg-active py-[3px] pe-1 ps-2 text-[13px] font-medium leading-[18px] text-newt-text-primary"
+            className="inline-flex max-w-full items-center gap-1 rounded-[var(--newt-radius-sm)] bg-newt-bg-active py-[3px] pe-1 ps-2 text-[13px] font-medium leading-[18px] text-newt-text-primary"
           >
             <span className="truncate">{tag}</span>
             <button
@@ -146,7 +146,7 @@ const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
             event.preventDefault()
             add(pasted.split(/[,\n]/))
           }}
-          className="min-w-20 flex-1 border-0 bg-transparent px-1 py-[3px] font-sans text-sm leading-[18px] text-newt-text-primary placeholder:text-newt-text-muted focus:outline-none disabled:cursor-not-allowed"
+          className="min-w-20 flex-1 border-0 bg-transparent px-1 py-[3px] font-[family-name:var(--newt-font-sans)] text-sm leading-[18px] text-newt-text-primary placeholder:text-newt-text-muted focus:outline-none disabled:cursor-not-allowed"
           {...props}
         />
       </div>

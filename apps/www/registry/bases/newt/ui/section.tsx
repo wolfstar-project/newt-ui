@@ -112,7 +112,7 @@ const SectionThumbnail = React.forwardRef<
           }
         }}
         className={cn(
-          "h-[85px] w-[85px] rounded-lg object-cover",
+          "h-[85px] w-[85px] rounded-[var(--newt-radius-lg)] object-cover",
           hidden && "cursor-pointer blur-lg",
           className
         )}

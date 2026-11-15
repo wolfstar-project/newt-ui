@@ -11,7 +11,7 @@ export const scrollbarClassName = [
   "[scrollbar-width:thin] [scrollbar-color:var(--newt-scrollbar-thumb,var(--newt-bg-active))_transparent]",
   "[&::-webkit-scrollbar]:h-4 [&::-webkit-scrollbar]:w-4",
   "[&::-webkit-scrollbar-track]:bg-transparent",
-  "[&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:border-4 [&::-webkit-scrollbar-thumb]:border-solid [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-[var(--newt-scrollbar-thumb,var(--newt-bg-active))] [&::-webkit-scrollbar-thumb]:bg-clip-padding",
+  "[&::-webkit-scrollbar-thumb]:rounded-[var(--newt-radius-lg)] [&::-webkit-scrollbar-thumb]:border-4 [&::-webkit-scrollbar-thumb]:border-solid [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-[var(--newt-scrollbar-thumb,var(--newt-bg-active))] [&::-webkit-scrollbar-thumb]:bg-clip-padding",
   "[&::-webkit-scrollbar-thumb:hover]:bg-[var(--newt-scrollbar-thumb-hover,var(--newt-text-muted))] [&::-webkit-scrollbar-thumb:hover]:bg-clip-padding",
   "[&::-webkit-scrollbar-corner]:bg-transparent",
 ].join(" ")

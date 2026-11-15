@@ -145,7 +145,7 @@ const Timestamp = React.forwardRef<HTMLTimeElement, TimestampProps>(
         dateTime={date.toISOString()}
         title={exact}
         className={cn(
-          "rounded-sm bg-newt-bg-elevated px-1 text-newt-text-primary",
+          "rounded-[var(--newt-radius-sm)] bg-newt-bg-elevated px-1 text-newt-text-primary",
           className
         )}
         {...props}

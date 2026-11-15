@@ -21,7 +21,7 @@ const props = defineProps<{
   <div
     :class="
       cn(
-        'w-full overflow-x-auto rounded-md border border-newt-border bg-newt-bg-surface',
+        'w-full overflow-x-auto rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-surface',
         props.wrapperClass
       )
     "

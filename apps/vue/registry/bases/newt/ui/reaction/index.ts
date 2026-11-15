@@ -4,7 +4,7 @@ export { default as Reaction } from "./Reaction.vue"
 export { default as ReactionGroup } from "./ReactionGroup.vue"
 
 export const reactionVariants = cva(
-  "inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[13px] transition-[background-color,border-color] duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
+  "inline-flex items-center gap-1 rounded-[var(--newt-radius-md)] border px-2 py-0.5 text-[13px] transition-[background-color,border-color] duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
   {
     variants: {
       active: {

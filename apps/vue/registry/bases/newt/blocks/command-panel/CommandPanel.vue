@@ -168,7 +168,7 @@ function handleKeydown(event: KeyboardEvent) {
     </BotCommandCard>
     <div
       v-else
-      class="rounded-md border border-newt-border bg-newt-bg-elevated p-4 text-sm text-newt-text-muted"
+      class="rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-elevated p-4 text-sm text-newt-text-muted"
       aria-live="polite"
     >
       {{ props.emptyLabel }}

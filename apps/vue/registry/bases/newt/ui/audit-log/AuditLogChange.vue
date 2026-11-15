@@ -11,7 +11,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <li
     :class="
       cn(
-        'marker:font-mono marker:text-xs marker:text-newt-text-muted [&_strong]:font-semibold [&_strong]:text-newt-text-primary',
+        'marker:font-[family-name:var(--newt-font-mono)] marker:text-xs marker:text-newt-text-muted [&_strong]:font-semibold [&_strong]:text-newt-text-primary',
         props.class
       )
     "

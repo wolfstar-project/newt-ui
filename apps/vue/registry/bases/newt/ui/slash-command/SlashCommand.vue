@@ -61,7 +61,7 @@ const label = computed(() => {
     :aria-label="label"
     :class="
       cn(
-        'inline-block rounded-sm bg-[color-mix(in_srgb,var(--newt-brand)_15%,transparent)] py-[2px] ps-[6px] pe-2 font-mono text-[13px] text-newt-mention-text [word-spacing:calc(4px_-_1ch)] [&>*]:[word-spacing:normal] [&>*]:[unicode-bidi:isolate]',
+        'inline-block rounded-[var(--newt-radius-sm)] bg-[color-mix(in_srgb,var(--newt-brand)_15%,transparent)] py-[2px] ps-[6px] pe-2 font-[family-name:var(--newt-font-mono)] text-[13px] text-newt-mention-text [word-spacing:calc(4px_-_1ch)] [&>*]:[word-spacing:normal] [&>*]:[unicode-bidi:isolate]',
         props.class
       )
     "
@@ -85,7 +85,7 @@ const label = computed(() => {
             'inline-block [&>*]:[unicode-bidi:isolate]',
             // The option the caret currently sits in.
             option.focused &&
-              'rounded-sm bg-[color-mix(in_srgb,var(--newt-brand)_35%,transparent)] px-0.5'
+              'rounded-[var(--newt-radius-sm)] bg-[color-mix(in_srgb,var(--newt-brand)_35%,transparent)] px-0.5'
           )
         "
       >

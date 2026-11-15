@@ -36,7 +36,7 @@ const plain = computed(() => tag.value === "span")
     :href="plain ? undefined : props.href"
     :class="
       cn(
-        'inline-flex min-w-0 items-center gap-2 rounded-sm border-0 bg-transparent px-1.5 py-1 text-start text-newt-text-primary no-underline',
+        'inline-flex min-w-0 items-center gap-2 rounded-[var(--newt-radius-sm)] border-0 bg-transparent px-1.5 py-1 text-start text-newt-text-primary no-underline',
         !plain &&
           'cursor-pointer transition-colors duration-fast ease-newt hover:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
         props.class

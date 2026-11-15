@@ -444,7 +444,7 @@ const Markdown = React.forwardRef<HTMLDivElement, MarkdownProps>(
             </ModalHeader>
             <ModalBody>
               <p className="m-0">{labels.linkWarningBody}</p>
-              <p className="mt-2 break-all rounded-sm bg-newt-bg-base p-2 font-mono text-[13px] text-newt-text-primary">
+              <p className="mt-2 break-all rounded-[var(--newt-radius-sm)] bg-newt-bg-base p-2 font-[family-name:var(--newt-font-mono)] text-[13px] text-newt-text-primary">
                 {pendingUrl}
               </p>
             </ModalBody>

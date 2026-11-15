@@ -17,7 +17,7 @@ const Pagination = React.forwardRef<HTMLElement, React.ComponentProps<"nav">>(
 Pagination.displayName = "Pagination"
 
 const paginationButtonVariants = cva(
-  "flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-sm border px-2 text-[13px] font-medium disabled:cursor-not-allowed disabled:opacity-40",
+  "flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-[var(--newt-radius-sm)] border px-2 text-[13px] font-medium disabled:cursor-not-allowed disabled:opacity-40",
   {
     variants: {
       active: {

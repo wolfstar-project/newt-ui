@@ -22,7 +22,7 @@ const SlashCommandSuggestions = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "grid max-h-80 w-full max-w-[var(--newt-slash-suggestions-max-width,640px)] grid-cols-[auto_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto_auto] overflow-hidden rounded-lg bg-newt-bg-floating text-newt-text-primary shadow-elevation-high [container-type:inline-size]",
+      "grid max-h-80 w-full max-w-[var(--newt-slash-suggestions-max-width,640px)] grid-cols-[auto_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto_auto] overflow-hidden rounded-[var(--newt-radius-lg)] bg-newt-bg-floating text-newt-text-primary shadow-elevation-high [container-type:inline-size]",
       className
     )}
     {...props}
@@ -234,7 +234,7 @@ const SlashCommandSuggestion = React.forwardRef<
       aria-disabled={disabled || undefined}
       data-state={active ? "active" : "inactive"}
       className={cn(
-        "grid min-h-12 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-md px-2 py-1.5",
+        "grid min-h-12 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-[var(--newt-radius-md)] px-2 py-1.5",
         "[@container_(max-width:480px)]:gap-x-2 [@container_(max-width:480px)]:gap-y-0.5",
         disabled
           ? "cursor-default opacity-60"
@@ -282,7 +282,7 @@ const SlashCommandSuggestionMatched = React.forwardRef<
     aria-selected={active}
     data-state={active ? "active" : "inactive"}
     className={cn(
-      "min-h-11 cursor-pointer rounded-md px-3 py-2 hover:bg-newt-bg-hover",
+      "min-h-11 cursor-pointer rounded-[var(--newt-radius-md)] px-3 py-2 hover:bg-newt-bg-hover",
       "data-[state=active]:bg-newt-bg-active",
       className
     )}

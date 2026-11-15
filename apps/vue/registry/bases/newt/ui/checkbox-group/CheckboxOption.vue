@@ -55,7 +55,7 @@ const isDisabled = computed(() => group.disabled.value || props.disabled)
       :required="props.required"
       :class="
         cn(
-          'mt-px flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border-2 border-newt-text-muted bg-transparent p-0 transition-colors duration-fast ease-newt disabled:cursor-not-allowed',
+          'mt-px flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-[var(--newt-radius-sm)] border-2 border-newt-text-muted bg-transparent p-0 transition-colors duration-fast ease-newt disabled:cursor-not-allowed',
           'data-[state=checked]:border-newt-brand data-[state=checked]:bg-newt-brand',
           'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
           !isDisabled && 'group-hover:border-newt-text-secondary'

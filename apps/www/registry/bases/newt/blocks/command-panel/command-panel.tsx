@@ -173,7 +173,7 @@ export function CommandPanel({
         </BotCommandCard>
       ) : (
         <div
-          className="rounded-md border border-newt-border bg-newt-bg-elevated p-4 text-sm text-newt-text-muted"
+          className="rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-elevated p-4 text-sm text-newt-text-muted"
           aria-live="polite"
         >
           {emptyLabel}

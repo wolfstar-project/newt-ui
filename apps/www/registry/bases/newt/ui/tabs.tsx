@@ -18,7 +18,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "flex w-fit max-w-full gap-1 overflow-x-auto rounded-md bg-newt-bg-base p-1",
+      "flex w-fit max-w-full gap-1 overflow-x-auto rounded-[var(--newt-radius-md)] bg-newt-bg-base p-1",
       className
     )}
     {...props}
@@ -33,7 +33,7 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "shrink-0 cursor-pointer rounded-sm border-0 bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-newt-text-muted transition-all duration-fast ease-newt",
+      "shrink-0 cursor-pointer rounded-[var(--newt-radius-sm)] border-0 bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-newt-text-muted transition-all duration-fast ease-newt",
       "data-[state=active]:bg-newt-bg-elevated data-[state=active]:text-newt-text-primary",
       "data-[state=inactive]:hover:text-newt-text-secondary",
       "focus-visible:outline focus-visible:outline-2 focus-visible:outline-newt-text-link",
@@ -52,7 +52,7 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "mt-2 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
+      "mt-2 rounded-[var(--newt-radius-sm)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
       className
     )}
     {...props}

@@ -89,7 +89,7 @@ function onWrapperClick(event: MouseEvent) {
     :data-invalid="props.invalid ? true : undefined"
     :class="
       cn(
-        'flex min-h-[42px] w-full cursor-text flex-wrap items-center gap-1.5 rounded-sm border border-newt-border bg-newt-bg-input px-2 py-1.5 transition-colors duration-fast ease-newt focus-within:border-newt-brand data-[invalid]:border-newt-danger group-data-[invalid]/field:border-newt-danger',
+        'flex min-h-[42px] w-full cursor-text flex-wrap items-center gap-1.5 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-2 py-1.5 transition-colors duration-fast ease-newt focus-within:border-newt-brand data-[invalid]:border-newt-danger group-data-[invalid]/field:border-newt-danger',
         props.disabled && 'cursor-not-allowed opacity-50',
         props.class
       )
@@ -99,7 +99,7 @@ function onWrapperClick(event: MouseEvent) {
     <span
       v-for="tag in tags"
       :key="tag"
-      class="inline-flex max-w-full items-center gap-1 rounded-sm bg-newt-bg-active py-[3px] pe-1 ps-2 text-[13px] font-medium leading-[18px] text-newt-text-primary"
+      class="inline-flex max-w-full items-center gap-1 rounded-[var(--newt-radius-sm)] bg-newt-bg-active py-[3px] pe-1 ps-2 text-[13px] font-medium leading-[18px] text-newt-text-primary"
     >
       <span class="truncate">{{ tag }}</span>
       <button
@@ -124,7 +124,7 @@ function onWrapperClick(event: MouseEvent) {
       type="text"
       :disabled="props.disabled"
       :aria-invalid="props.invalid ? true : undefined"
-      class="min-w-20 flex-1 border-0 bg-transparent px-1 py-[3px] font-sans text-sm leading-[18px] text-newt-text-primary placeholder:text-newt-text-muted focus:outline-none disabled:cursor-not-allowed"
+      class="min-w-20 flex-1 border-0 bg-transparent px-1 py-[3px] font-[family-name:var(--newt-font-sans)] text-sm leading-[18px] text-newt-text-primary placeholder:text-newt-text-muted focus:outline-none disabled:cursor-not-allowed"
       @keydown="onKeydown"
       @paste="onPaste"
     />

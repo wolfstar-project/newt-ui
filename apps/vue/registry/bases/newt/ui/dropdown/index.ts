@@ -19,7 +19,7 @@ export { default as DropdownItemDescription } from "./DropdownItemDescription.vu
  * keyboard, so it takes the place of the old `:hover` rule.
  */
 export const dropdownItemVariants = cva(
-  "group flex cursor-pointer select-none items-center gap-2.5 rounded-sm px-2.5 py-2 outline-none transition-colors duration-fast ease-newt data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+  "group flex cursor-pointer select-none items-center gap-2.5 rounded-[var(--newt-radius-sm)] px-2.5 py-2 outline-none transition-colors duration-fast ease-newt data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
   {
     variants: {
       variant: {

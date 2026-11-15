@@ -46,7 +46,7 @@ const decorative = computed(() => tag.value === "span")
         'flex shrink-0 items-center text-newt-text-muted no-underline',
         props.compact
           ? 'h-6 w-6 justify-center border-0 bg-transparent p-0'
-          : 'h-7 w-60 justify-between gap-3 rounded-sm border border-newt-border bg-newt-bg-input px-2',
+          : 'h-7 w-60 justify-between gap-3 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-2',
         !decorative &&
           'cursor-pointer transition-colors duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link',
         !decorative &&

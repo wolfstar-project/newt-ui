@@ -34,7 +34,7 @@ const messageComposerVariants = cva(
     variants: {
       layout: {
         default:
-          "min-h-11 rounded-md border border-newt-border bg-newt-bg-input-elevated px-4",
+          "min-h-11 rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-input-elevated px-4",
         /* A phone: no frame, a pill field, round buttons beside it. */
         narrow: "min-h-10",
       },
@@ -63,7 +63,7 @@ const messageComposerButtonVariants = cva(
   {
     variants: {
       layout: {
-        default: "h-8 w-8 rounded-sm bg-transparent",
+        default: "h-8 w-8 rounded-[var(--newt-radius-sm)] bg-transparent",
         narrow: "h-10 w-10 rounded-full bg-newt-bg-input-elevated",
       },
     },
@@ -258,7 +258,7 @@ const MessageComposer = React.forwardRef<HTMLDivElement, MessageComposerProps>(
               value={current}
               {...inputProps}
               onChange={(event) => setValue(event.target.value)}
-              className="w-full min-w-0 border-0 bg-transparent font-sans text-[15px] text-newt-text-primary outline-none placeholder:text-newt-text-muted disabled:cursor-not-allowed"
+              className="w-full min-w-0 border-0 bg-transparent font-[family-name:var(--newt-font-sans)] text-[15px] text-newt-text-primary outline-none placeholder:text-newt-text-muted disabled:cursor-not-allowed"
             />
           )}
           {actions}

@@ -89,7 +89,7 @@ const Poll = React.forwardRef<HTMLDivElement, PollProps>(
         <div
           ref={ref}
           className={cn(
-            "flex w-full max-w-[440px] flex-col gap-3 rounded-lg border border-newt-border bg-newt-bg-surface p-4",
+            "flex w-full max-w-[440px] flex-col gap-3 rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-surface p-4",
             className
           )}
           {...props}
@@ -168,7 +168,7 @@ const PollAnswer = React.forwardRef<HTMLButtonElement, PollAnswerProps>(
         }}
         data-chosen={chosen || undefined}
         className={cn(
-          "relative flex items-center gap-3 overflow-hidden rounded-md border border-newt-border bg-newt-bg-base px-3 py-2.5 text-start text-sm text-newt-text-secondary",
+          "relative flex items-center gap-3 overflow-hidden rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-base px-3 py-2.5 text-start text-sm text-newt-text-secondary",
           "transition-colors duration-fast ease-newt hover:border-newt-text-muted",
           "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
           "data-[chosen]:border-newt-brand data-[chosen]:text-newt-text-primary",

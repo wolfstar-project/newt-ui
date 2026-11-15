@@ -112,7 +112,10 @@ const PermissionStates = React.forwardRef<
       <div
         ref={ref}
         role="group"
-        className={cn("flex gap-1 rounded-sm bg-newt-bg-base p-0.5", className)}
+        className={cn(
+          "flex gap-1 rounded-[var(--newt-radius-sm)] bg-newt-bg-base p-0.5",
+          className
+        )}
         {...props}
       >
         {stateOptions.map((option) => {
@@ -128,7 +131,7 @@ const PermissionStates = React.forwardRef<
               data-value={option.value}
               onClick={() => select(option.value)}
               className={cn(
-                "flex h-7 w-7 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-sm text-newt-text-muted transition-colors duration-fast ease-newt hover:text-newt-text-secondary disabled:cursor-not-allowed disabled:opacity-50",
+                "flex h-7 w-7 cursor-pointer items-center justify-center rounded-[var(--newt-radius-sm)] border-0 bg-transparent text-sm text-newt-text-muted transition-colors duration-fast ease-newt hover:text-newt-text-secondary disabled:cursor-not-allowed disabled:opacity-50",
                 active && activeStateClasses[option.value]
               )}
             >

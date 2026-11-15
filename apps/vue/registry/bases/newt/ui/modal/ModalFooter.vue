@@ -12,7 +12,7 @@ const props = defineProps<{
   <div
     :class="
       cn(
-        'flex justify-end gap-2 rounded-b-lg bg-newt-bg-surface p-4',
+        'flex justify-end gap-2 rounded-b-[var(--newt-radius-lg)] bg-newt-bg-surface p-4',
         props.class
       )
     "

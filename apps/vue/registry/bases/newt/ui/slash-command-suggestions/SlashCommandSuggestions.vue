@@ -21,7 +21,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <div
     :class="
       cn(
-        'grid max-h-80 w-full max-w-[var(--newt-slash-suggestions-max-width,640px)] grid-cols-[auto_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto_auto] overflow-hidden rounded-lg bg-newt-bg-floating text-newt-text-primary shadow-elevation-high [container-type:inline-size]',
+        'grid max-h-80 w-full max-w-[var(--newt-slash-suggestions-max-width,640px)] grid-cols-[auto_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto_auto] overflow-hidden rounded-[var(--newt-radius-lg)] bg-newt-bg-floating text-newt-text-primary shadow-elevation-high [container-type:inline-size]',
         props.class
       )
     "

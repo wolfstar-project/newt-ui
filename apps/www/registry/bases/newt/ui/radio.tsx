@@ -40,8 +40,8 @@ const Radio = React.forwardRef<
   <RadioGroupPrimitive.Item
     ref={ref}
     className={cn(
-      "group flex cursor-pointer items-center gap-3 border-0 bg-transparent px-1 py-2 text-start font-sans text-[15px] leading-5 text-newt-text-secondary",
-      "hover:text-newt-text-primary focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
+      "group flex cursor-pointer items-center gap-3 border-0 bg-transparent px-1 py-2 text-start font-[family-name:var(--newt-font-sans)] text-[15px] leading-5 text-newt-text-secondary",
+      "hover:text-newt-text-primary focus-visible:rounded-[var(--newt-radius-sm)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
       "data-[state=checked]:text-newt-text-primary",
       "disabled:cursor-not-allowed disabled:opacity-50",
       className

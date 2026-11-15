@@ -38,9 +38,14 @@ entry in the shared `apps/www/registry/registry-categories.ts` taxonomy.
   `rtl:-scale-x-100`.
 - Tokens only. Every colour, radius, font, shadow, easing, and duration comes
   from a `--newt-*` variable, reached through the Tailwind utility
-  (`bg-newt-bg-elevated`, `text-newt-text-muted`, `rounded-md`,
-  `shadow-elevation-high`, `ease-newt`, `duration-fast`). If a value has no
-  token, add the token; do not inline a hex.
+  (`bg-newt-bg-elevated`, `text-newt-text-muted`, `shadow-elevation-high`,
+  `ease-newt`, `duration-fast`). If a value has no token, add the token; do
+  not inline a hex.
+- Radii and the sans and mono stacks come from the tokens, not the host's
+  Tailwind scale: `rounded-[var(--newt-radius-md)]`,
+  `font-[family-name:var(--newt-font-sans)]`. `rounded-md` and `font-sans`
+  follow the app that installs the component, and
+  `packages/cli/src/registry/newt-scale.test.ts` fails on them.
 - Anything the utilities cannot express (odd pixel values, keyframes,
   gradients) goes in a Tailwind arbitrary value or an inline
   `style={{ … var(--newt-*) }}` — still referencing the token.

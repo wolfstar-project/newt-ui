@@ -9,7 +9,7 @@ const BotCommandCard = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "max-w-[480px] rounded-md border border-newt-border bg-newt-bg-elevated p-4",
+      "max-w-[480px] rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-elevated p-4",
       className
     )}
     {...props}
@@ -41,7 +41,7 @@ const BotCommandCardName = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "inline-flex items-center gap-1 font-mono text-sm font-semibold text-newt-text-link",
+      "inline-flex items-center gap-1 font-[family-name:var(--newt-font-mono)] text-sm font-semibold text-newt-text-link",
       className
     )}
     {...props}
@@ -118,11 +118,11 @@ const BotCommandCardOption = React.forwardRef<
       className={cn("flex items-baseline gap-2.5 text-xs", className)}
       {...props}
     >
-      <span className="shrink-0 font-mono font-semibold text-newt-text-primary">
+      <span className="shrink-0 font-[family-name:var(--newt-font-mono)] font-semibold text-newt-text-primary">
         {name}
       </span>
       {type ? (
-        <span className="shrink-0 font-mono text-[11px] text-newt-text-secondary">
+        <span className="shrink-0 font-[family-name:var(--newt-font-mono)] text-[11px] text-newt-text-secondary">
           {type}
         </span>
       ) : null}

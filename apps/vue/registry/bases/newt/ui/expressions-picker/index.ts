@@ -170,7 +170,7 @@ export const expressionsFocusRing =
 
 /** Tabs and the small controls of the panel. */
 export const expressionsPickerVariants = cva(
-  `inline-flex min-h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] min-w-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] cursor-pointer items-center justify-center gap-[var(--newt-space-1)] rounded-md border-0 px-[var(--newt-space-3)] font-sans text-[length:var(--newt-font-size-sm)] font-semibold leading-[var(--newt-line-height-normal)] enabled:hover:bg-newt-bg-hover enabled:hover:text-newt-text-primary enabled:active:bg-newt-bg-active disabled:cursor-not-allowed disabled:text-newt-text-muted ${expressionsFocusRing}`,
+  `inline-flex min-h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] min-w-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] cursor-pointer items-center justify-center gap-[var(--newt-space-1)] rounded-[var(--newt-radius-md)] border-0 px-[var(--newt-space-3)] font-[family-name:var(--newt-font-sans)] text-[length:var(--newt-font-size-sm)] font-semibold leading-[var(--newt-line-height-normal)] enabled:hover:bg-newt-bg-hover enabled:hover:text-newt-text-primary enabled:active:bg-newt-bg-active disabled:cursor-not-allowed disabled:text-newt-text-muted ${expressionsFocusRing}`,
   {
     variants: {
       selected: {

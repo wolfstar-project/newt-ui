@@ -135,7 +135,7 @@ function visit() {
         <ModalBody>
           <p class="m-0">{{ labels.linkWarningBody }}</p>
           <p
-            class="mt-2 break-all rounded-sm bg-newt-bg-base p-2 font-mono text-[13px] text-newt-text-primary"
+            class="mt-2 break-all rounded-[var(--newt-radius-sm)] bg-newt-bg-base p-2 font-[family-name:var(--newt-font-mono)] text-[13px] text-newt-text-primary"
           >
             {{ pendingUrl }}
           </p>

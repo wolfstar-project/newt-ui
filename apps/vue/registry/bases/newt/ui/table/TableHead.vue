@@ -41,7 +41,7 @@ const emit = defineEmits<{
       type="button"
       :class="
         cn(
-          '-mx-1.5 -my-1 inline-flex items-center gap-1 rounded-sm px-1.5 py-1 uppercase tracking-[inherit] hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link',
+          '-mx-1.5 -my-1 inline-flex items-center gap-1 rounded-[var(--newt-radius-sm)] px-1.5 py-1 uppercase tracking-[inherit] hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link',
           props.sort !== 'none' && 'text-newt-text-primary'
         )
       "
