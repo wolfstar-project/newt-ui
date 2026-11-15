@@ -960,6 +960,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "MessageGroupReplyDemo",
+    type: "registry:example",
+    registryDependencies: ["message-group", "avatar", "reply-preview"],
+    files: [
+      {
+        path: "examples/MessageGroupReplyDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "MessageListDemo",
     type: "registry:example",
     registryDependencies: ["message-list", "avatar", "message-group"],

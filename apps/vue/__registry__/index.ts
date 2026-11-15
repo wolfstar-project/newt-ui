@@ -2566,6 +2566,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "MessageGroupReplyDemo",
+    {
+      name: "MessageGroupReplyDemo",
+      type: "registry:example",
+      registryDependencies: ["message-group", "avatar", "reply-preview"],
+      files: ["registry/bases/newt/examples/MessageGroupReplyDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/MessageGroupReplyDemo.vue")
+      ),
+    },
+  ],
+  [
     "MessageListDemo",
     {
       name: "MessageListDemo",

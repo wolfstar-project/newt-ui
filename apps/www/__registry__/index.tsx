@@ -2205,6 +2205,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "message-group-reply-demo",
+    {
+      name: "message-group-reply-demo",
+      type: "registry:example",
+      registryDependencies: ["message-group", "avatar", "reply-preview"],
+      files: ["registry/bases/newt/examples/message-group-reply-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/message-group-reply-demo")
+      ),
+    },
+  ],
+  [
     "message-list-demo",
     {
       name: "message-list-demo",

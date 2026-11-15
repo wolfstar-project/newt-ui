@@ -24,6 +24,7 @@ export const newtPreset: Omit<Config, "content"> = {
           border: "var(--newt-border)",
           "text-primary": "var(--newt-text-primary)",
           "text-secondary": "var(--newt-text-secondary)",
+          "text-message": "var(--newt-text-message)",
           "text-muted": "var(--newt-text-muted)",
           "text-link": "var(--newt-text-link)",
           brand: "var(--newt-brand)",

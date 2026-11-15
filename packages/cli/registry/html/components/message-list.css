@@ -13,8 +13,11 @@
   }
 }
 
-/* Rows sit flush inside the log: the list owns the padding, not the row. */
-.newt-message-list > .newt-message-group {
+/*
+ * Rows sit flush inside the log: the list owns the padding, not the row. A
+ * descendant selector, so a row inside a wrapper keeps its padding.
+ */
+.newt-message-list .newt-message-group {
   padding: 6px 8px;
   border-radius: var(--newt-radius-sm);
 }

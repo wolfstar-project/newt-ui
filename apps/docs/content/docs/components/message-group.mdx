@@ -29,6 +29,12 @@ Set `as="li"` to render each row as an item of the list that holds the channel, 
 
 <ComponentPreview name="message-group" variant="app" />
 
+### Reply
+
+With `withReply`, the preview in `MessageGroupReply` sits 2px above the body. Its spine starts above the centre of the avatar and stops before the preview. The second row holds a smaller avatar, so it sets [the two custom properties](#custom-properties) of the row.
+
+<ComponentPreview name="message-group" variant="reply" />
+
 ## API reference
 
 <PropsTable
@@ -74,6 +80,33 @@ Set `as="li"` to render each row as an item of the list that holds the channel, 
 />
 
 The registry exports `MessageGroup`, `MessageGroupAvatar`, `MessageGroupReply`, `MessageGroupBody`, `MessageGroupHeader`, `MessageGroupAuthor`, `MessageGroupBotTag`, `MessageGroupTime`, `MessageGroupContent`, `MessageGroupReactions`, `MessageGroupEphemeralNotice`, `MessageGroupEphemeralAction`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## Custom properties [#custom-properties]
+
+Set these on the row. Each one is optional. A reply preview in the row reads both to place its spine.
+
+<PropsTable
+  rows={[
+    {
+      name: "--newt-message-group-avatar-size",
+      type: "length",
+      default: "40px",
+      description:
+        "Width of the avatar in the row. Set it when the avatar has another size.",
+    },
+    {
+      name: "--newt-message-group-gap",
+      type: "length",
+      default: "16px",
+      description:
+        "Gap between the avatar and the body. Set it in place of a `gap-*` class, so the spine follows.",
+    },
+  ]}
+/>
+
+## Message text colour [#text-colour]
+
+The row sets the colour of the message text from `--newt-text-message`. `MessageGroupContent` has no colour of its own, so it takes the colour of the row. To change the text colour of one message, put a colour class on `MessageGroup`. If your token file has no `--newt-text-message`, the row uses `--newt-text-secondary`.
 
 ## Accessibility
 
