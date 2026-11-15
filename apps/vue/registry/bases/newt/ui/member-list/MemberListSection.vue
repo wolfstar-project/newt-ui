@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import { provide, useId, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
+
+import { memberListSectionKey } from "."
 
 /*
  * Discord groups members under each hoisted role, then Online, then Offline.
@@ -11,6 +13,8 @@ const props = defineProps<{
   class?: HTMLAttributes["class"]
   offline?: boolean
 }>()
+
+provide(memberListSectionKey, useId())
 </script>
 
 <template>

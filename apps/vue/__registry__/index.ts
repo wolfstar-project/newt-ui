@@ -2527,6 +2527,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "MemberListInteractiveDemo",
+    {
+      name: "MemberListInteractiveDemo",
+      type: "registry:example",
+      registryDependencies: ["member-list", "avatar", "status-indicator"],
+      files: ["registry/bases/newt/examples/MemberListInteractiveDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/MemberListInteractiveDemo.vue")
+      ),
+    },
+  ],
+  [
     "MentionDemo",
     {
       name: "MentionDemo",

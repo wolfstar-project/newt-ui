@@ -2160,6 +2160,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "member-list-interactive-demo",
+    {
+      name: "member-list-interactive-demo",
+      type: "registry:example",
+      registryDependencies: ["member-list", "avatar", "status-indicator"],
+      files: ["registry/bases/newt/examples/member-list-interactive-demo.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/examples/member-list-interactive-demo")
+      ),
+    },
+  ],
+  [
     "mention-demo",
     {
       name: "mention-demo",

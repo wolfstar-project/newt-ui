@@ -921,6 +921,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "member-list-interactive-demo",
+    type: "registry:example",
+    registryDependencies: ["member-list", "avatar", "status-indicator"],
+    files: [
+      {
+        path: "examples/member-list-interactive-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "mention-demo",
     type: "registry:example",
     registryDependencies: ["mention"],

@@ -921,6 +921,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "MemberListInteractiveDemo",
+    type: "registry:example",
+    registryDependencies: ["member-list", "avatar", "status-indicator"],
+    files: [
+      {
+        path: "examples/MemberListInteractiveDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "MentionDemo",
     type: "registry:example",
     registryDependencies: ["mention"],

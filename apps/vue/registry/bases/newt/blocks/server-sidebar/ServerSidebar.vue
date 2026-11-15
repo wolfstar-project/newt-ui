@@ -78,23 +78,25 @@ const groups = computed(() => {
       </VoiceChannelMembers>
     </VoiceChannel>
 
-    <MemberList>
+    <div>
       <MemberListSection v-for="[group, groupMembers] in groups" :key="group">
         <MemberListHeading
           >{{ group }} — {{ groupMembers.length }}</MemberListHeading
         >
-        <MemberListItem v-for="member in groupMembers" :key="member.id">
-          <StatusIndicator>
-            <Avatar size="sm">{{ member.initials }}</Avatar>
-            <StatusDot :status="member.status" />
-          </StatusIndicator>
-          <MemberListInfo>
-            <MemberListNameRow>
-              <MemberListName>{{ member.name }}</MemberListName>
-            </MemberListNameRow>
-          </MemberListInfo>
-        </MemberListItem>
+        <MemberList>
+          <MemberListItem v-for="member in groupMembers" :key="member.id">
+            <StatusIndicator>
+              <Avatar size="sm">{{ member.initials }}</Avatar>
+              <StatusDot :status="member.status" />
+            </StatusIndicator>
+            <MemberListInfo>
+              <MemberListNameRow>
+                <MemberListName>{{ member.name }}</MemberListName>
+              </MemberListNameRow>
+            </MemberListInfo>
+          </MemberListItem>
+        </MemberList>
       </MemberListSection>
-    </MemberList>
+    </div>
   </aside>
 </template>

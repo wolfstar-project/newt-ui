@@ -96,28 +96,30 @@ export function ServerSidebar({
         </VoiceChannel>
       )}
 
-      <MemberList>
+      <div>
         {groups.map(([group, groupMembers]) => (
           <MemberListSection key={group}>
             <MemberListHeading>
               {group} — {groupMembers.length}
             </MemberListHeading>
-            {groupMembers.map((member) => (
-              <MemberListItem key={member.id}>
-                <StatusIndicator>
-                  <Avatar size="sm">{member.initials}</Avatar>
-                  <StatusDot status={member.status} />
-                </StatusIndicator>
-                <MemberListInfo>
-                  <MemberListNameRow>
-                    <MemberListName>{member.name}</MemberListName>
-                  </MemberListNameRow>
-                </MemberListInfo>
-              </MemberListItem>
-            ))}
+            <MemberList>
+              {groupMembers.map((member) => (
+                <MemberListItem key={member.id}>
+                  <StatusIndicator>
+                    <Avatar size="sm">{member.initials}</Avatar>
+                    <StatusDot status={member.status} />
+                  </StatusIndicator>
+                  <MemberListInfo>
+                    <MemberListNameRow>
+                      <MemberListName>{member.name}</MemberListName>
+                    </MemberListNameRow>
+                  </MemberListInfo>
+                </MemberListItem>
+              ))}
+            </MemberList>
           </MemberListSection>
         ))}
-      </MemberList>
+      </div>
     </aside>
   )
 }
