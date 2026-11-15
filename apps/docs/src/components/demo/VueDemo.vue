@@ -1,6 +1,21 @@
+<script lang="ts">
+/*
+ * Astro mounts every island as its own Vue app, and `useId` counts per app.
+ * Two demos on one page would hand out the same ids, so a list in the second
+ * demo would take its name from a heading in the first. Each island gets its
+ * own prefix instead.
+ */
+let islands = 0
+</script>
+
 <script setup lang="ts">
 import { useStore } from "@nanostores/vue"
-import { computed, defineAsyncComponent, type Component } from "vue"
+import {
+  computed,
+  defineAsyncComponent,
+  getCurrentInstance,
+  type Component,
+} from "vue"
 
 import { vueDemos } from "@/lib/registry-client"
 import { $framework } from "@/stores/framework"
@@ -11,6 +26,12 @@ import { $framework } from "@/stores/framework"
  * a framework nobody asked about.
  */
 const props = defineProps<{ demo: string }>()
+
+const config = getCurrentInstance()?.appContext.config
+if (config !== undefined) {
+  islands += 1
+  config.idPrefix = `newt-demo-${islands}`
+}
 
 const framework = useStore($framework)
 
