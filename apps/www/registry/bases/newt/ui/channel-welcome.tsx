@@ -62,6 +62,7 @@ export interface ChannelWelcomeActionProps extends React.ButtonHTMLAttributes<HT
    * `href` is set; pass a router link component to keep client navigation.
    * `span` renders the decorative form: hidden from assistive technology, out
    * of the tab order, with no pointer and no hover.
+   * Its event handlers do not run.
    */
   as?: React.ElementType
   /** Render a link to this URL. */
@@ -75,6 +76,18 @@ export interface ChannelWelcomeActionProps extends React.ButtonHTMLAttributes<HT
   target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"]
   /** Link relationship, with `href`. */
   rel?: string
+}
+
+/*
+ * The `span` form runs nothing: it drops every event handler, so a click
+ * cannot start an action that the keyboard and assistive technology miss.
+ */
+function withoutHandlers(
+  props: React.HTMLAttributes<HTMLElement>
+): React.HTMLAttributes<HTMLElement> {
+  return Object.fromEntries(
+    Object.entries(props).filter(([name]) => !/^on[A-Z]/.test(name))
+  )
 }
 
 const ChannelWelcomeAction = React.forwardRef<
@@ -95,10 +108,10 @@ const ChannelWelcomeAction = React.forwardRef<
       className={cn(
         "mt-3 inline-flex items-center gap-2 rounded-sm border-0 bg-newt-bg-elevated px-4 py-1.5 text-sm font-medium text-newt-text-primary no-underline",
         !decorative &&
-          "cursor-pointer transition-colors aria-disabled:pointer-events-none duration-fast ease-newt hover:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
+          "cursor-pointer transition-colors duration-fast ease-newt hover:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50",
         className
       )}
-      {...props}
+      {...(decorative ? withoutHandlers(props) : props)}
     />
   )
 })
