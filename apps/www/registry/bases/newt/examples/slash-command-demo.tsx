@@ -16,6 +16,15 @@ export default function SlashCommandDemo() {
           },
         ]}
       />
+      <SlashCommand
+        name="conf"
+        subcommandGroup="menu"
+        subcommand="save"
+        options={[{ name: "key", value: "prefix" }]}
+      />
+      <SlashCommand name="remind" options={[{ name: "in", value: "10m" }]}>
+        <span className="text-newt-text-muted">sends in this channel</span>
+      </SlashCommand>
     </div>
   )
 }

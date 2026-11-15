@@ -1648,6 +1648,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "slash-command-suggestions-narrow-demo",
+    type: "registry:example",
+    registryDependencies: ["slash-command-suggestions", "slash-command"],
+    files: [
+      {
+        path: "examples/slash-command-suggestions-narrow-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "slider-demo",
     type: "registry:example",
     registryDependencies: ["slider"],

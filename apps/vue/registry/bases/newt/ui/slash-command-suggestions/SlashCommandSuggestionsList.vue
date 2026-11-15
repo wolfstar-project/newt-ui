@@ -11,7 +11,11 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <div
     role="listbox"
     :class="
-      cn('min-w-0 flex-1 overflow-y-auto p-2', scrollbarClassName, props.class)
+      cn(
+        'col-start-2 row-start-1 min-w-0 overflow-y-auto p-2',
+        scrollbarClassName,
+        props.class
+      )
     "
   >
     <slot />

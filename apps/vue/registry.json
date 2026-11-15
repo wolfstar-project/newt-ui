@@ -2244,6 +2244,10 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsFooter.vue",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionGroup.vue",
           "type": "registry:ui"
         },

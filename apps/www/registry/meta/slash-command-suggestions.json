@@ -10,6 +10,7 @@
     "SlashCommandSuggestionsRailItem.vue",
     "SlashCommandSuggestionsList.vue",
     "SlashCommandSuggestionsHeader.vue",
+    "SlashCommandSuggestionsFooter.vue",
     "SlashCommandSuggestionGroup.vue",
     "SlashCommandAppIcon.vue",
     "SlashCommandSuggestion.vue",
@@ -17,5 +18,6 @@
     "index.ts"
   ],
   "reactDemo": "slash-command-suggestions-demo",
-  "vueDemo": "SlashCommandSuggestionsDemo"
+  "vueDemo": "SlashCommandSuggestionsDemo",
+  "examples": ["narrow"]
 }

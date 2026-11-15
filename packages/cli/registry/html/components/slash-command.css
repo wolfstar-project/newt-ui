@@ -1,19 +1,38 @@
 /* newt-ui · Slash Command */
 
+/*
+ * The separators are real text: a space between two segments and a colon
+ * after an option name. A copy, a search and a test all read
+ * `/ban member user:@username`. The chip is inline content, not a flex row,
+ * because a flex row drops the space between two items and a copy then breaks
+ * the line at each one.
+ */
 .newt-command {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
-  padding: 2px 8px 2px 6px;
+  display: inline-block;
+  padding-block: 2px;
+  padding-inline: 6px 8px;
   border-radius: var(--newt-radius-sm);
   background: color-mix(in srgb, var(--newt-brand) 15%, transparent);
   color: var(--newt-mention-text);
   font-family: var(--newt-font-mono);
   font-size: 13px;
+  /* A space is 1ch wide in a monospace font. This draws each one 4px wide. */
+  word-spacing: calc(4px - 1ch);
 }
 
+/*
+ * Only the spaces between the parts are narrowed, never the ones inside. Each
+ * part is its own run of text, so a right-to-left chip orders its parts from
+ * the right, as a flex row did.
+ */
+.newt-command > * {
+  word-spacing: normal;
+  unicode-bidi: isolate;
+}
+
+/* No space follows the slash, so the text reads `/ban`. */
 .newt-command__icon {
+  margin-inline-end: 4px;
   opacity: 0.8;
 }
 
@@ -23,33 +42,41 @@
   font-weight: 600;
 }
 
+/*
+ * One box, so an option moves to the next line whole. Markup that puts the
+ * name and the value on separate lines leaves a space between them; it takes
+ * no room, and the margin on the value is the gap.
+ */
 .newt-command__option {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  display: inline-block;
+  word-spacing: -1ch;
+}
+.newt-command__option > * {
+  word-spacing: normal;
+  unicode-bidi: isolate;
 }
 
 /* The option the caret currently sits in, as the client highlights it. */
 .newt-command__option--focused {
-  padding: 0 2px;
+  padding-inline: 2px;
   border-radius: var(--newt-radius-sm);
   background: color-mix(in srgb, var(--newt-brand) 35%, transparent);
 }
 
+/* The colon is part of the markup: `user:`. */
 .newt-command__option-name {
   color: var(--newt-text-muted);
 }
-.newt-command__option-name::after {
-  content: ":";
-}
 
 .newt-command__option-value {
+  margin-inline-start: 4px;
   font-weight: 500;
   color: var(--newt-text-primary);
 }
 
 /* No value yet — the option's description stands in, in italics. */
 .newt-command__option-placeholder {
+  margin-inline-start: 4px;
   font-style: italic;
   color: var(--newt-text-muted);
 }

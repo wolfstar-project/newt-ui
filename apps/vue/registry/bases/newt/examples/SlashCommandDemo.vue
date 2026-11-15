@@ -11,5 +11,14 @@ const banOptions = [
   <div class="flex flex-col items-start gap-3">
     <SlashCommand name="command" />
     <SlashCommand name="ban" subcommand="member" :options="banOptions" />
+    <SlashCommand
+      name="conf"
+      subcommand-group="menu"
+      subcommand="save"
+      :options="[{ name: 'key', value: 'prefix' }]"
+    />
+    <SlashCommand name="remind" :options="[{ name: 'in', value: '10m' }]">
+      <span class="text-newt-text-muted">sends in this channel</span>
+    </SlashCommand>
   </div>
 </template>
