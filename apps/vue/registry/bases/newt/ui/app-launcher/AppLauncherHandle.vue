@@ -36,9 +36,7 @@ const gripClass = "h-1 w-9 shrink-0 rounded-full bg-newt-border"
     v-else
     type="button"
     :aria-label="props.label"
-    :aria-expanded="
-      props.expanded === undefined ? undefined : String(props.expanded)
-    "
+    :aria-expanded="props.expanded"
     :class="
       cn(
         'group mx-auto mt-0.5 flex h-6 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0',
