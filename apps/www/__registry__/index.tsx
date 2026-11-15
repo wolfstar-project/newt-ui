@@ -787,7 +787,11 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       name: "scrollbar",
       type: "registry:ui",
       registryDependencies: [],
-      files: ["registry/bases/newt/ui/scrollbar.tsx"],
+      files: [
+        "registry/bases/newt/ui/scrollbar.tsx",
+        "registry/bases/newt/ui/scroll-area.tsx",
+        "registry/bases/newt/ui/scrollbar-classes.ts",
+      ],
       component: React.lazy(() => import("@/registry/bases/newt/ui/scrollbar")),
     },
   ],

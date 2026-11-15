@@ -96,7 +96,8 @@
 }
 .newt-scrollbar__thumb {
   width: var(--newt-scrollbar-thumb-width, 8px);
-  min-height: 24px;
+  /* A track shorter than the minimum still holds the whole thumb. */
+  min-height: min(24px, 100%);
   max-height: var(--newt-scrollbar-thumb-max-height, none);
   border-radius: var(--newt-radius-full);
   background-color: var(--newt-scrollbar-thumb, var(--newt-bg-active));

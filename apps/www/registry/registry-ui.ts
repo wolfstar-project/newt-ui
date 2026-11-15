@@ -932,6 +932,14 @@ export const ui: Registry = [
         path: "ui/scrollbar.tsx",
         type: "registry:ui",
       },
+      {
+        path: "ui/scroll-area.tsx",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/scrollbar-classes.ts",
+        type: "registry:ui",
+      },
     ],
   },
   {
