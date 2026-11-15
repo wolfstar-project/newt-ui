@@ -155,6 +155,11 @@ export interface ChannelInfoActionProps extends React.ButtonHTMLAttributes<HTMLB
   as?: React.ElementType
   /** Render a link to this URL. */
   href?: string
+  /**
+   * Turns the control off. A link loses its URL, which takes it out of the
+   * tab order, and says so with `aria-disabled`.
+   */
+  disabled?: boolean
   /** Link target, with `href`. */
   target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"]
   /** Link relationship, with `href`. */
@@ -162,7 +167,7 @@ export interface ChannelInfoActionProps extends React.ButtonHTMLAttributes<HTMLB
 }
 
 const ChannelInfoAction = React.forwardRef<HTMLElement, ChannelInfoActionProps>(
-  ({ as, href, className, type = "button", ...props }, ref) => {
+  ({ as, href, disabled, className, type = "button", ...props }, ref) => {
     const Tag: React.ElementType = as ?? (href === undefined ? "button" : "a")
     const isButton = Tag === "button"
     const decorative = Tag === "span"
@@ -170,12 +175,14 @@ const ChannelInfoAction = React.forwardRef<HTMLElement, ChannelInfoActionProps>(
       <Tag
         ref={ref}
         type={isButton ? type : undefined}
-        href={decorative ? undefined : href}
+        href={decorative || disabled ? undefined : href}
+        disabled={isButton ? disabled : undefined}
+        aria-disabled={!isButton && !decorative && disabled ? true : undefined}
         aria-hidden={decorative ? true : undefined}
         className={cn(
           "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-0 bg-transparent p-0 text-newt-text-secondary no-underline",
           !decorative &&
-            "cursor-pointer transition-colors duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
+            "cursor-pointer transition-colors aria-disabled:pointer-events-none duration-fast ease-newt hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
           className
         )}
         {...props}

@@ -15,5 +15,6 @@
     "index.ts"
   ],
   "reactDemo": "invite-demo",
+  "examples": ["router"],
   "vueDemo": "InviteDemo"
 }

@@ -9,7 +9,7 @@
 - A new `--newt-streaming` token colours the streaming dot, with `bg-newt-streaming` on Tailwind v3 and v4. Run `init` again, or add the token to your stylesheet.
 - `Avatar` takes `size="xs"` (16px) and `size="md"` (32px). The HTML flavour adds `newt-avatar--xs` and `newt-avatar--md`.
 - `ReplyPreviewAvatar` no longer needs `src`. Without it, the avatar is a 16px circle that holds its children (the default slot in Vue), such as an icon. The HTML flavour adds `newt-reply__avatar--fallback`.
-- `MemberListItem` takes `interactive` for a row that opens a profile. The row then renders a button inside the list item, with a pointer, a hover and a focus ring. Listeners, attributes and the ref land on the button.
+- `MemberListItem` takes `interactive` for a row that opens a profile. The row then renders a button inside the list item, with a pointer, a hover and a focus ring. Listeners, attributes and the ref land on the button. In React, an interactive row takes the attributes of a button, such as `disabled`, `name` and `value`.
 - `MemberListItem` takes `decoration` (the `#decoration` slot in Vue), an underlay drawn behind the row. The hover is drawn over it.
 - `MemberListHeading` takes `as`, from `h2` to `h6`. The default stays `h3`.
 - `TabsList` is never wider than its container. If the triggers do not fit, it scrolls sideways, and the triggers keep their width.

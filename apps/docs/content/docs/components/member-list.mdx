@@ -34,7 +34,7 @@ A list with no section has no heading to point at. Give it an `aria-label`. If y
 
 ### Rows that open a profile [#interactive]
 
-A plain row does nothing, so it has no pointer and no hover. Add `interactive` to a row that opens a profile. The row then renders a `<button>` inside the list item: it takes focus, answers Enter and Space, and shows a hover and a focus ring. Listeners, attributes and the ref land on the button, so the row works as the trigger of a popover.
+A plain row does nothing, so it has no pointer and no hover. Add `interactive` to a row that opens a profile. The row then renders a `<button>` inside the list item: it takes focus, answers Enter and Space, and shows a hover and a focus ring. Listeners, attributes and the ref land on the button, so the row works as the trigger of a popover. In React, an interactive row also takes the attributes of a button, such as `disabled`, `name` and `value`.
 
 The first row below has a decoration. The hover is drawn over the decoration, so the hover stays visible on an image.
 

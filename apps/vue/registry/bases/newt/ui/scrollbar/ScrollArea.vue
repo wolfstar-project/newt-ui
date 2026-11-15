@@ -115,7 +115,7 @@ function attachScrollbar(
       const length = rail.clientHeight
       handle.style.height = `${(scroller.clientHeight / scroller.scrollHeight) * length}px`
       // The classes cap the height, so the travel is read back from the box.
-      const travel = length - handle.offsetHeight
+      const travel = Math.max(0, length - handle.offsetHeight)
       handle.style.transform = `translateY(${(scroller.scrollTop / overflow) * travel}px)`
     }
 
@@ -132,8 +132,24 @@ function attachScrollbar(
         resize.observe(element)
       }
     }
-    const mutation = new MutationObserver(watch)
-    mutation.observe(scroller, { childList: true })
+    /*
+     * A new child needs watching. A changed text node resizes nothing that is
+     * watched when it sits straight in the viewport, so it redraws.
+     */
+    const mutation = new MutationObserver((records) => {
+      if (
+        records.some((r) => r.type === "childList" && r.target === scroller)
+      ) {
+        watch()
+      } else {
+        draw()
+      }
+    })
+    mutation.observe(scroller, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    })
     watch()
     signal.addEventListener("abort", () => {
       resize.disconnect()
@@ -250,7 +266,7 @@ watchEffect(
     >
       <div
         ref="thumb"
-        class="pointer-events-auto max-h-[var(--newt-scrollbar-thumb-max-height,none)] min-h-[24px] w-[var(--newt-scrollbar-thumb-width,8px)] touch-none rounded-full bg-[var(--newt-scrollbar-thumb,var(--newt-bg-active))] hover:bg-[var(--newt-scrollbar-thumb-hover,var(--newt-text-muted))] active:bg-[var(--newt-scrollbar-thumb-hover,var(--newt-text-muted))]"
+        class="pointer-events-auto max-h-[var(--newt-scrollbar-thumb-max-height,none)] min-h-[min(24px,100%)] w-[var(--newt-scrollbar-thumb-width,8px)] touch-none rounded-full bg-[var(--newt-scrollbar-thumb,var(--newt-bg-active))] hover:bg-[var(--newt-scrollbar-thumb-hover,var(--newt-text-muted))] active:bg-[var(--newt-scrollbar-thumb-hover,var(--newt-text-muted))]"
       />
     </div>
   </div>

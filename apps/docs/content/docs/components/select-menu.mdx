@@ -168,7 +168,7 @@ The trigger carries `data-slot="select-menu-trigger"` and the panel carries `dat
 
 Load `tokens.css`, `select-menu.css` and `select-menu.js` with the markup. Set `data-side="top"` on the root to open the panel above the trigger. Set `data-align` to `center` or `end` on the panel when it is not as wide as the trigger.
 
-Draw an emoji with `newt-select-menu__emoji` on the trigger and `newt-select-menu__option-emoji` in a row. Mark the label of a row with `newt-select-menu__option-label`. The script copies that text to the trigger, so a row can hold more than its label.
+Draw an emoji in a row with `newt-select-menu__option-emoji`. The script copies it to the trigger as `newt-select-menu__emoji`, and removes it when the chosen row has none. Mark the label of a row with `newt-select-menu__option-label`. The script copies that text to the trigger, so a row can hold more than its label.
 
 ## Accessibility
 

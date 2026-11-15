@@ -39,7 +39,8 @@ export default function MemberListInteractiveDemo() {
             <MemberListItem
               key={member.name}
               interactive
-              onClick={() => setOpened(member.name)}
+              value={member.name}
+              onClick={(event) => setOpened(event.currentTarget.value)}
               decoration={
                 index === 0 ? (
                   <span className="block h-full w-full bg-[linear-gradient(90deg,color-mix(in_srgb,var(--newt-brand)_45%,transparent),transparent)]" />

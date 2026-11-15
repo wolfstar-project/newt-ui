@@ -110,19 +110,34 @@ const MemberListHeading = React.forwardRef<
 })
 MemberListHeading.displayName = "MemberListHeading"
 
-export interface MemberListItemProps extends React.HTMLAttributes<HTMLElement> {
-  /**
-   * Make the row a button, for a row that opens a profile. It takes focus,
-   * answers Enter and Space, and shows a hover and a focus ring. Every
-   * attribute and listener, and the ref, land on the button.
-   */
-  interactive?: boolean
+interface MemberListItemOwnProps {
   /**
    * An underlay drawn behind the row, such as a profile decoration. The hover
    * is drawn over it, so it stays visible. An `img` fills the row.
    */
   decoration?: React.ReactNode
 }
+
+/*
+ * `interactive` picks the element, so it also picks the attributes: a plain
+ * row takes the attributes of a `div`, an interactive row those of a
+ * `button`, such as `disabled`, `name` and `value`.
+ */
+export type MemberListItemProps =
+  | (MemberListItemOwnProps &
+      React.HTMLAttributes<HTMLDivElement> & {
+        interactive?: false
+      })
+  | (MemberListItemOwnProps &
+      React.ButtonHTMLAttributes<HTMLButtonElement> & {
+        /**
+         * Make the row a button, for a row that opens a profile. It takes
+         * focus, answers Enter and Space, and shows a hover and a focus
+         * ring. Every attribute and listener, and the ref, land on the
+         * button.
+         */
+        interactive: true
+      })
 
 const MEMBER_ROW =
   "relative isolate flex min-w-0 items-center gap-2.5 rounded-[var(--newt-radius-sm)] px-2 py-1.5"

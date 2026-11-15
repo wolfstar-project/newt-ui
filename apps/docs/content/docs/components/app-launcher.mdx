@@ -249,6 +249,8 @@ A handle that changes the sheet needs a `label`, so it is a button with a name. 
 
 In the plain HTML and CSS distribution, `app-launcher.js` gives a launcher marked `data-newt-app-launcher` the same behaviour. A `data-newt-app-launcher-close` control closes it, and `aria-modal="true"` makes it modal. The launcher fires `newt:close` before it leaves the page; cancel the event to close it your own way.
 
+With several launchers open, Escape closes the newest one that holds focus. An Escape that a control inside already handled with `preventDefault()` closes nothing, and the launcher marks the Escape it handles the same way. Tab skips controls inside hidden content.
+
 ## Tokens
 
 <TokensNote name="app-launcher" />

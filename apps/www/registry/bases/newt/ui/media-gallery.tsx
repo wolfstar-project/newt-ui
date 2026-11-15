@@ -42,19 +42,36 @@ const MediaGallery = React.forwardRef<HTMLDivElement, MediaGalleryProps>(
 )
 MediaGallery.displayName = "MediaGallery"
 
-export interface MediaGalleryItemProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+/*
+ * The props of the element or component `as` names, so a custom image
+ * component's own props type-check.
+ */
+export type MediaGalleryItemProps<E extends React.ElementType = "img"> = {
   /**
    * The image element or component to render. Defaults to `img`; pass your
    * framework's image component for optimised sources. It receives `src`,
    * `alt`, `className` and the spoiler attributes and handlers.
    */
-  as?: React.ElementType
+  as?: E
   /** Blurs the image until it is clicked. */
   spoiler?: boolean
   /** Accessible name of a hidden spoiler, read in place of the image. */
   spoilerLabel?: string
+} & Omit<React.ComponentPropsWithRef<E>, "as" | "spoiler">
+
+type MediaGalleryItemComponent = {
+  <E extends React.ElementType = "img">(
+    props: MediaGalleryItemProps<E>
+  ): React.ReactNode
+  displayName?: string
 }
 
+/*
+ * SAFETY: `forwardRef` drops the generic signature. The render hands every
+ * prop it does not set itself to `as` unchanged, so the props of `as` are
+ * the props the part receives.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- see SAFETY
 const MediaGalleryItem = React.forwardRef<
   HTMLImageElement,
   MediaGalleryItemProps
@@ -102,7 +119,7 @@ const MediaGalleryItem = React.forwardRef<
       />
     )
   }
-)
+) as MediaGalleryItemComponent
 MediaGalleryItem.displayName = "MediaGalleryItem"
 
 export { MediaGallery, MediaGalleryItem }
