@@ -1,11 +1,16 @@
+import { mkdir, mkdtemp, readdir, rm, writeFile } from "node:fs/promises"
+import { tmpdir } from "node:os"
+import path from "node:path"
 import vm from "node:vm"
 
-import { describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it } from "vitest"
 
+import { rawConfigSchema, resolveConfigPaths } from "../get-config.js"
 import {
   barrelIgnorePattern,
   componentsOption,
   ignoreBarrels,
+  updateNuxtConfig,
 } from "./update-nuxt-config.js"
 
 describe("barrelIgnorePattern", () => {
@@ -287,5 +292,44 @@ describe("componentsOption", () => {
   { path: "~/components", ignore: ["newt/ui/**/index.ts"] },
 ]`
     )
+  })
+})
+
+describe("updateNuxtConfig", () => {
+  let cwd: string
+
+  beforeEach(async () => {
+    cwd = await mkdtemp(path.join(tmpdir(), "newtui-nuxt-barrels-"))
+  })
+
+  afterEach(async () => {
+    await rm(cwd, { recursive: true, force: true })
+  })
+
+  it("asks for a new nuxt.config when the project has none", async () => {
+    // Nuxt is detected from package.json alone, before any config exists.
+    await writeFile(
+      path.resolve(cwd, "package.json"),
+      JSON.stringify({ dependencies: { nuxt: "^4.2.0" } })
+    )
+    await mkdir(path.resolve(cwd, "app"))
+    const config = await resolveConfigPaths(
+      cwd,
+      rawConfigSchema.parse({
+        framework: "vue",
+        bundler: "nuxt",
+        typescript: true,
+        tailwind: { css: "app/assets/css/main.css" },
+        aliases: { components: "@/components", ui: "@/components/ui" },
+      })
+    )
+
+    expect(await updateNuxtConfig(config)).toEqual({
+      _tag: "Manual",
+      reason: "missing-file",
+      file: "nuxt.config.ts",
+      ignore: "ui/**/index.ts",
+    })
+    expect(await readdir(cwd)).not.toContain("nuxt.config.ts")
   })
 })
