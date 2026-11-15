@@ -110,6 +110,12 @@ const AppLauncherDialog = React.forwardRef<
             if (!modal) event.preventDefault()
           }}
           className={cn(variantClassName, "outline-none", className)}
+          /*
+           * Without a `label` there is no title. Older Radix releases still
+           * point the dialog at the title's id, which names nothing, so an
+           * `aria-label` would go unread. `aria-labelledby` from props wins.
+           */
+          {...(label === undefined ? { "aria-labelledby": undefined } : {})}
           {...props}
         >
           {/* The name, as a heading no one sees: Radix points the dialog at it. */}
