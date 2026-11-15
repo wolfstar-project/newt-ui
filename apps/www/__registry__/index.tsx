@@ -2763,6 +2763,43 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "select-menu-above-demo",
+    {
+      name: "select-menu-above-demo",
+      type: "registry:example",
+      registryDependencies: ["select-menu"],
+      files: ["registry/bases/newt/examples/select-menu-above-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/select-menu-above-demo")
+      ),
+    },
+  ],
+  [
+    "select-menu-description-demo",
+    {
+      name: "select-menu-description-demo",
+      type: "registry:example",
+      registryDependencies: ["select-menu"],
+      files: ["registry/bases/newt/examples/select-menu-description-demo.tsx"],
+      component: React.lazy(
+        () =>
+          import("@/registry/bases/newt/examples/select-menu-description-demo")
+      ),
+    },
+  ],
+  [
+    "select-menu-item-demo",
+    {
+      name: "select-menu-item-demo",
+      type: "registry:example",
+      registryDependencies: ["select-menu"],
+      files: ["registry/bases/newt/examples/select-menu-item-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/select-menu-item-demo")
+      ),
+    },
+  ],
+  [
     "server-banner-demo",
     {
       name: "server-banner-demo",

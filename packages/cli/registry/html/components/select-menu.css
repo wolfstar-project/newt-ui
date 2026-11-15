@@ -55,6 +55,20 @@
   color: var(--newt-text-secondary);
 }
 
+/*
+ * An emoji stands where the icon would, for an option that has no glyph of
+ * its own. The box matches the icon so the label starts at the same place.
+ */
+.newt-select-menu__emoji,
+.newt-select-menu__option-emoji {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+}
+
 .newt-select-menu__value {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -98,6 +112,18 @@
 .newt-select-menu__panel[data-placement="above"] {
   top: auto;
   bottom: calc(100% + 4px);
+}
+/*
+ * A panel as wide as its trigger has nothing to line up. These two are for a
+ * panel given another width.
+ */
+.newt-select-menu__panel[data-align="center"] {
+  inset-inline-start: 50%;
+  transform: translateX(calc(var(--newt-dir) * -50%));
+}
+.newt-select-menu__panel[data-align="end"] {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
 }
 .newt-select-menu__panel[hidden] {
   display: none;
@@ -243,6 +269,13 @@
   flex-direction: column;
   min-width: 0;
 }
+/* The label is what the trigger shows once the option is chosen. */
+.newt-select-menu__option-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* A description may hold more than text: an inline glyph, a mention. */
 .newt-select-menu__option-description {
   font-size: 12px;
   color: var(--newt-text-muted);

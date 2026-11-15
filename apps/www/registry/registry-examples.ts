@@ -1472,6 +1472,39 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "select-menu-above-demo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/select-menu-above-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "select-menu-description-demo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/select-menu-description-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "select-menu-item-demo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/select-menu-item-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "server-banner-demo",
     type: "registry:example",
     registryDependencies: ["server-banner", "button"],

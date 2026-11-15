@@ -1472,6 +1472,39 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "SelectMenuAboveDemo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/SelectMenuAboveDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SelectMenuDescriptionDemo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/SelectMenuDescriptionDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SelectMenuItemDemo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/SelectMenuItemDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ServerBannerDemo",
     type: "registry:example",
     registryDependencies: ["server-banner", "button"],

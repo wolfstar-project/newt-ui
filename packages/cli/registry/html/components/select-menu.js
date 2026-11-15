@@ -4,6 +4,9 @@
  * Focus never leaves the trigger: the open listbox is driven through
  * `aria-activedescendant`, which is what lets Escape, Tab and click-outside
  * stay simple. Keys: Arrow up/down, Home, End, Enter, Space, Escape.
+ *
+ * `data-side="top"` on the root opens the panel above the trigger. Either
+ * side gives way to the other when it has no room.
  */
 document.querySelectorAll("[data-newt-select]").forEach((root) => {
   const trigger = root.querySelector(".newt-select-menu__trigger")
@@ -46,12 +49,20 @@ document.querySelectorAll("[data-newt-select]").forEach((root) => {
     return -1
   }
 
-  /* Flip above the trigger when the panel would run past the viewport. */
+  /*
+   * The panel opens on the side the root asks for, and flips when it would
+   * run past the viewport there and the other side has more room.
+   */
   const place = () => {
     const box = trigger.getBoundingClientRect()
+    const above = box.top
     const below = window.innerHeight - box.bottom
-    panel.dataset.placement =
-      below < panel.offsetHeight && box.top > below ? "above" : "below"
+    const height = panel.offsetHeight
+    const opensAbove =
+      root.dataset.side === "top"
+        ? !(above < height && below > above)
+        : below < height && above > below
+    panel.dataset.placement = opensAbove ? "above" : "below"
   }
 
   const open = () => {
@@ -83,8 +94,28 @@ document.querySelectorAll("[data-newt-select]").forEach((root) => {
       other.classList.toggle("newt-select-menu__option--selected", isChosen)
     })
     if (value) {
-      value.textContent = option.textContent.trim()
+      /* A row may hold more than its label, so the label is read by name. */
+      const label = option.querySelector(".newt-select-menu__option-label")
+      value.textContent = (label ?? option).textContent.trim()
       value.classList.remove("newt-select-menu__value--placeholder")
+    }
+    /*
+     * The trigger emoji follows the chosen row. It is made when a row has one
+     * and removed when the next row has none, so the markup can leave it out.
+     */
+    const chosen = option.querySelector(".newt-select-menu__option-emoji")
+    let emoji = trigger.querySelector(".newt-select-menu__emoji")
+    if (chosen) {
+      if (!emoji) {
+        emoji = document.createElement("span")
+        emoji.className = "newt-select-menu__emoji"
+        emoji.setAttribute("aria-hidden", "true")
+        if (value) value.before(emoji)
+        else trigger.prepend(emoji)
+      }
+      emoji.textContent = chosen.textContent
+    } else if (emoji) {
+      emoji.remove()
     }
     root.dispatchEvent(
       new CustomEvent("newt-select", {
