@@ -241,7 +241,8 @@
       "name": "scrollbar",
       "title": "Scrollbar Utility",
       "rootClass": "newt-scrollbar",
-      "files": ["scrollbar.css", "scrollbar.html"]
+      "files": ["scrollbar.css", "scrollbar.html"],
+      "js": "scrollbar.js"
     },
     {
       "name": "channel-topic",
@@ -306,7 +307,8 @@
       "name": "app-launcher",
       "title": "App Launcher",
       "rootClass": "newt-app-launcher",
-      "files": ["app-launcher.css", "app-launcher.html"]
+      "files": ["app-launcher.css", "app-launcher.html"],
+      "uses": ["scrollbar"]
     },
     {
       "name": "slash-command-suggestions",
@@ -316,7 +318,7 @@
         "slash-command-suggestions.css",
         "slash-command-suggestions.html"
       ],
-      "uses": ["slash-command"]
+      "uses": ["slash-command", "scrollbar"]
     },
     {
       "name": "v2-container",

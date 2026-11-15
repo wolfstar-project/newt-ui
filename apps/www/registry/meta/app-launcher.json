@@ -2,6 +2,7 @@
   "name": "app-launcher",
   "title": "App Launcher",
   "description": "The Apps popout, with search, a recents strip and the apps installed in a server.",
+  "registryDependencies": ["scrollbar"],
   "vueFiles": [
     "AppLauncher.vue",
     "AppLauncherHandle.vue",

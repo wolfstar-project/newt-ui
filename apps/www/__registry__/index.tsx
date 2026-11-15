@@ -84,7 +84,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "app-launcher",
       type: "registry:ui",
-      registryDependencies: [],
+      registryDependencies: ["scrollbar"],
       files: ["registry/bases/newt/ui/app-launcher.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/ui/app-launcher")
@@ -787,7 +787,11 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       name: "scrollbar",
       type: "registry:ui",
       registryDependencies: [],
-      files: ["registry/bases/newt/ui/scrollbar.tsx"],
+      files: [
+        "registry/bases/newt/ui/scrollbar.tsx",
+        "registry/bases/newt/ui/scroll-area.tsx",
+        "registry/bases/newt/ui/scrollbar-classes.ts",
+      ],
       component: React.lazy(() => import("@/registry/bases/newt/ui/scrollbar")),
     },
   ],
@@ -894,7 +898,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "slash-command-suggestions",
       type: "registry:ui",
-      registryDependencies: ["slash-command"],
+      registryDependencies: ["slash-command", "scrollbar"],
       files: ["registry/bases/newt/ui/slash-command-suggestions.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/ui/slash-command-suggestions")
@@ -2670,6 +2674,30 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/scrollbar-demo.tsx"],
       component: React.lazy(
         () => import("@/registry/bases/newt/examples/scrollbar-demo")
+      ),
+    },
+  ],
+  [
+    "scrollbar-overlay-demo",
+    {
+      name: "scrollbar-overlay-demo",
+      type: "registry:example",
+      registryDependencies: ["scrollbar"],
+      files: ["registry/bases/newt/examples/scrollbar-overlay-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/scrollbar-overlay-demo")
+      ),
+    },
+  ],
+  [
+    "scrollbar-auto-hide-demo",
+    {
+      name: "scrollbar-auto-hide-demo",
+      type: "registry:example",
+      registryDependencies: ["scrollbar"],
+      files: ["registry/bases/newt/examples/scrollbar-auto-hide-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/scrollbar-auto-hide-demo")
       ),
     },
   ],

@@ -1395,6 +1395,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ScrollbarOverlayDemo",
+    type: "registry:example",
+    registryDependencies: ["scrollbar"],
+    files: [
+      {
+        path: "examples/ScrollbarOverlayDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ScrollbarAutoHideDemo",
+    type: "registry:example",
+    registryDependencies: ["scrollbar"],
+    files: [
+      {
+        path: "examples/ScrollbarAutoHideDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SectionDemo",
     type: "registry:example",
     registryDependencies: ["section"],
