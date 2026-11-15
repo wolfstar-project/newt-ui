@@ -2131,6 +2131,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "invite-router-demo",
+    {
+      name: "invite-router-demo",
+      type: "registry:example",
+      registryDependencies: ["invite", "button"],
+      files: ["registry/bases/newt/examples/invite-router-demo.tsx"],
+      component: React.lazy(
+        () => import("@/registry/bases/newt/examples/invite-router-demo")
+      ),
+    },
+  ],
+  [
     "kbd-tag-demo",
     {
       name: "kbd-tag-demo",

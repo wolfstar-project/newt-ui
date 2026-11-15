@@ -2498,6 +2498,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "InviteRouterDemo",
+    {
+      name: "InviteRouterDemo",
+      type: "registry:example",
+      registryDependencies: ["invite", "button"],
+      files: ["registry/bases/newt/examples/InviteRouterDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/InviteRouterDemo.vue")
+      ),
+    },
+  ],
+  [
     "KbdTagDemo",
     {
       name: "KbdTagDemo",

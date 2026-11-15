@@ -50,14 +50,31 @@ const EmbedAuthor = React.forwardRef<
 ))
 EmbedAuthor.displayName = "EmbedAuthor"
 
-export interface EmbedIconProps extends React.ComponentProps<"img"> {
+/*
+ * The props of the element or component `as` names, so a custom image
+ * component's own props type-check.
+ */
+export type EmbedIconProps<E extends React.ElementType = "img"> = {
   /**
    * The image element or component to render. Defaults to `img`; pass your
    * framework's image component for optimised sources.
    */
-  as?: React.ElementType
+  as?: E
+} & Omit<React.ComponentPropsWithRef<E>, "as">
+
+type EmbedIconComponent = {
+  <E extends React.ElementType = "img">(
+    props: EmbedIconProps<E>
+  ): React.ReactNode
+  displayName?: string
 }
 
+/*
+ * SAFETY: `forwardRef` drops the generic signature. The render hands every
+ * prop it does not set itself to `as` unchanged, so the props of `as` are
+ * the props the part receives.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- see SAFETY
 const EmbedAuthorIcon = React.forwardRef<HTMLImageElement, EmbedIconProps>(
   ({ as: Tag = "img", className, alt = "", ...props }, ref) => (
     <Tag
@@ -68,7 +85,7 @@ const EmbedAuthorIcon = React.forwardRef<HTMLImageElement, EmbedIconProps>(
       {...props}
     />
   )
-)
+) as EmbedIconComponent
 EmbedAuthorIcon.displayName = "EmbedAuthorIcon"
 
 const EmbedAuthorName = React.forwardRef<
@@ -186,6 +203,12 @@ const EmbedFooter = React.forwardRef<
 ))
 EmbedFooter.displayName = "EmbedFooter"
 
+/*
+ * SAFETY: `forwardRef` drops the generic signature. The render hands every
+ * prop it does not set itself to `as` unchanged, so the props of `as` are
+ * the props the part receives.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- see SAFETY
 const EmbedFooterIcon = React.forwardRef<HTMLImageElement, EmbedIconProps>(
   ({ as: Tag = "img", className, alt = "", ...props }, ref) => (
     <Tag
@@ -196,7 +219,7 @@ const EmbedFooterIcon = React.forwardRef<HTMLImageElement, EmbedIconProps>(
       {...props}
     />
   )
-)
+) as EmbedIconComponent
 EmbedFooterIcon.displayName = "EmbedFooterIcon"
 
 /* Middle dot, the way Discord separates footer text from the timestamp. */
