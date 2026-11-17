@@ -3617,6 +3617,144 @@ html[data-framework="vue"] [data-framework="react"] {
   display: none;
 }
 
+/* --- command block (PmTabs) -------------------------------------------- */
+
+/*
+ * Every variant of a command is in the markup; these rules show one. Package
+ * manager first (pnpm when `<html>` has no choice), then the CLI where the
+ * block offers both, then the framework. Each later rule is more specific than
+ * the one it overrides, so the order of the rules is not what decides.
+ */
+.command {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.4rem 0.4rem 0.4rem 0.5rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-surface);
+}
+
+.command-lines {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: none;
+  border: 0;
+  font-family: var(--newt-font-mono);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+.command-line {
+  display: none;
+  padding: 0;
+  background: none;
+  color: var(--newt-text-primary);
+}
+
+.command-prompt {
+  color: var(--newt-text-muted);
+  user-select: none;
+}
+
+html:not([data-pm]) .command .command-line[data-pm="pnpm"],
+html[data-pm="pnpm"] .command .command-line[data-pm="pnpm"],
+html[data-pm="npm"] .command .command-line[data-pm="npm"],
+html[data-pm="yarn"] .command .command-line[data-pm="yarn"],
+html[data-pm="bun"] .command .command-line[data-pm="bun"] {
+  display: block;
+}
+
+html:not([data-cli="shadcn"])
+  .command
+  .command-line[data-cli="shadcn"][data-pm],
+html[data-cli="shadcn"]
+  .command[data-clis="both"]
+  .command-line[data-cli="newtui"][data-pm],
+html:not([data-framework="vue"])
+  .command
+  .command-line[data-framework="vue"][data-pm],
+html[data-framework="vue"]
+  .command
+  .command-line[data-framework="react"][data-pm] {
+  display: none;
+}
+
+.command-pickers {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.35rem;
+}
+
+.command-pickers select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-base);
+  color: var(--newt-text-primary);
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.command-copy {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-sm);
+  background: var(--newt-bg-base);
+  color: var(--newt-text-muted);
+  cursor: pointer;
+  transition: color var(--newt-duration-fast) var(--newt-ease);
+}
+
+.command-copy:hover,
+.command-copy[data-copied="true"] {
+  color: var(--newt-text-primary);
+}
+
+.command-copy svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.command-copy:focus-visible,
+.command-pickers select:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.command-hint {
+  display: none;
+  margin: -0.5rem 0 1rem;
+  color: var(--newt-text-secondary);
+  font-size: 0.8125rem;
+}
+
+html[data-cli="shadcn"] .command-hint {
+  display: block;
+}
+
+.command-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* --- callout and steps ------------------------------------------------- */
 
 .callout {

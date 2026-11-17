@@ -35,6 +35,8 @@ export function normalizeFile(
  * The two registries use the same base layout but different framework aliases:
  *   React: `@/registry/bases/newt/ui/button`  -> `@/components/ui/button`
  *   Vue:   `~~/registry/bases/newt/ui/button` -> `@/components/ui/button`
+ * The Vue build publishes `~~/registry` as `@/registry`, the path that
+ * shadcn-vue rewrites, so a Vue item now arrives in the React form.
  * Legacy roots remain supported for custom registries built before the move.
  * `@/lib/utils` maps to `<aliases.utils>` in both.
  */
@@ -49,7 +51,11 @@ function transformImports(content: string, config: Config): string {
   const hooksSegment = config.framework === "vue" ? "composables" : "hooks"
   const roots =
     config.framework === "vue"
-      ? ["~~/registry/bases/newt", "@/lib/registry/default"]
+      ? [
+          "@/registry/bases/newt",
+          "~~/registry/bases/newt",
+          "@/lib/registry/default",
+        ]
       : ["@/registry/bases/newt", "@/registry/default"]
 
   let out = content

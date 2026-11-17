@@ -30,6 +30,15 @@ const RESERVED_NAMES = new Set(["index", "registry", "styles"])
  */
 const OWN_NAMESPACE = "@newtui"
 
+/**
+ * The sources import each other through Nuxt's `~~/registry/...`. The shadcn
+ * and shadcn-vue CLIs rewrite only `@/registry/<style>/ui/...`, so the
+ * published copy uses that form. `newtui add` reads both.
+ */
+function publishImports(content: string) {
+  return content.replaceAll("~~/registry/bases/newt/", "@/registry/bases/newt/")
+}
+
 function qualifyDependencies(item: RegistryItem, ownNames: Set<string>) {
   return item.registryDependencies?.map((dep) =>
     ownNames.has(dep) ? `${OWN_NAMESPACE}/${dep}` : dep
@@ -99,7 +108,10 @@ async function buildStyles(allItems: Registry) {
           const abs = file.path.startsWith("lib/")
             ? path.join(APP_LIB, file.path.replace(/^lib\//, ""))
             : path.join(REGISTRY_SOURCE, file.path)
-          return { ...file, content: await fs.readFile(abs, "utf8") }
+          return {
+            ...file,
+            content: publishImports(await fs.readFile(abs, "utf8")),
+          }
         })
       )
       const payload = registryItemSchema.parse({

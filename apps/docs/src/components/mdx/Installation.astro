@@ -67,21 +67,21 @@ const vuePackages = npmPackages("vue", meta).join(" ")
         (reactPackages !== "" || vuePackages !== "") && (
           <Step title="Install the dependencies">
             {reactPackages === vuePackages ? (
-              <PmTabs cmd={`--yes ${reactPackages}`} />
+              <PmTabs install={reactPackages} />
             ) : (
               <>
                 <div data-framework="react">
                   {reactPackages === "" ? (
                     <p>The React port needs no package.</p>
                   ) : (
-                    <PmTabs cmd={`--yes ${reactPackages}`} />
+                    <PmTabs install={reactPackages} />
                   )}
                 </div>
                 <div data-framework="vue">
                   {vuePackages === "" ? (
                     <p>The Vue port needs no package.</p>
                   ) : (
-                    <PmTabs cmd={`--yes ${vuePackages}`} />
+                    <PmTabs install={vuePackages} />
                   )}
                 </div>
               </>
