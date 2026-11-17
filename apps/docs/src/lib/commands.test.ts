@@ -73,6 +73,25 @@ describe("commandVariants", () => {
     )
   })
 
+  it("offers only shadcn-vue for an item the React registry lacks", () => {
+    const variants = commandVariants({
+      _tag: "run",
+      cmd: "newtui@latest add nuxt-ui-theme",
+      only: "vue",
+    })
+
+    expect(
+      variants.filter((v) => v.pm === "npm" && v.cli === "shadcn")
+    ).toEqual([
+      {
+        pm: "npm",
+        cli: "shadcn",
+        framework: "any",
+        text: "npx shadcn-vue@latest add @newtui/nuxt-ui-theme",
+      },
+    ])
+  })
+
   it("offers no shadcn command when the add takes a flag or another registry", () => {
     for (const cmd of [
       "newtui@latest add button --overwrite",

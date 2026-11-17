@@ -4,13 +4,15 @@ import {
   commandVariants,
   PACKAGE_MANAGERS,
   type Command,
+  type Framework,
 } from "../../lib/commands"
 import { PACKAGE_MANAGER_MARKS } from "../../lib/pm-marks"
 
 /*
  * One command, every package manager. Pass `cmd` for a package to run once
  * (`newtui@latest add button`) or `install` for packages to add to the
- * project (`zod`); each package manager gets its own spelling.
+ * project (`zod`); each package manager gets its own spelling. Pass `only`
+ * when one framework's registry alone has the items.
  *
  * Every variant is server-rendered and CSS shows one, keyed on `data-pm` and
  * `data-cli` on `<html>`. The pre-paint script writes both from
@@ -22,13 +24,17 @@ import { PACKAGE_MANAGER_MARKS } from "../../lib/pm-marks"
  * the package manager's mark. Focus moves onto the options while one is open.
  */
 type Props =
-  | { readonly cmd: string; readonly install?: undefined }
+  | {
+      readonly cmd: string
+      readonly only?: Framework
+      readonly install?: undefined
+    }
   | { readonly install: string; readonly cmd?: undefined }
 
 const props = Astro.props
 const command: Command =
   props.install === undefined
-    ? { _tag: "run", cmd: props.cmd }
+    ? { _tag: "run", cmd: props.cmd, only: props.only }
     : { _tag: "install", packages: props.install }
 
 const variants = commandVariants(command)
@@ -84,8 +90,8 @@ const pickers = [
             class="command-picker-trigger"
             aria-haspopup="listbox"
             aria-expanded="false"
-            aria-label={picker.label}
           >
+            <span class="command-sr">{picker.label}: </span>
             {picker.options.map((option) => (
               <span
                 class="command-picker-current"

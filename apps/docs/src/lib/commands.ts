@@ -26,16 +26,21 @@ export const DEFAULT_PACKAGE_MANAGER: PackageManager = "npm"
 export const CLIS = ["newtui", "shadcn"] as const
 export type Cli = (typeof CLIS)[number]
 
-/** A package to run once, or packages to add to the project. */
+export type Framework = "react" | "vue"
+
+/**
+ * A package to run once, or packages to add to the project. `only` names the
+ * one framework whose registry publishes the items, as for `nuxt-ui-theme`.
+ */
 export type Command =
-  | { readonly _tag: "run"; readonly cmd: string }
+  | { readonly _tag: "run"; readonly cmd: string; readonly only?: Framework }
   | { readonly _tag: "install"; readonly packages: string }
 
 export interface CommandVariant {
   readonly pm: PackageManager
   readonly cli: Cli
   /** `any` shows on both sides of the framework switch. */
-  readonly framework: "any" | "react" | "vue"
+  readonly framework: "any" | Framework
   readonly text: string
 }
 
@@ -77,6 +82,11 @@ function installText(pm: PackageManager, packages: string): string {
   return [SPELLINGS[pm].install, ...names].join(" ")
 }
 
+const SHADCN_PACKAGES = {
+  react: "shadcn",
+  vue: "shadcn-vue",
+} as const satisfies Record<Framework, string>
+
 /** The namespace the registry publishes its own items under. */
 const NAMESPACE = "@newtui"
 
@@ -113,20 +123,19 @@ export function commandVariants(command: Command): readonly CommandVariant[] {
       text: runText(pm, command.cmd),
     }
     if (items === undefined) return [own]
+    const shadcn = (framework: Framework): string =>
+      runText(pm, `${SHADCN_PACKAGES[framework]}@latest add ${items}`)
+    /* One registry has the items: its CLI shows whichever framework is on. */
+    if (command.only !== undefined) {
+      return [
+        own,
+        { pm, cli: "shadcn", framework: "any", text: shadcn(command.only) },
+      ]
+    }
     return [
       own,
-      {
-        pm,
-        cli: "shadcn",
-        framework: "react",
-        text: runText(pm, `shadcn@latest add ${items}`),
-      },
-      {
-        pm,
-        cli: "shadcn",
-        framework: "vue",
-        text: runText(pm, `shadcn-vue@latest add ${items}`),
-      },
+      { pm, cli: "shadcn", framework: "react", text: shadcn("react") },
+      { pm, cli: "shadcn", framework: "vue", text: shadcn("vue") },
     ]
   })
 }
