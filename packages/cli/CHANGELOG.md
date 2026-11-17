@@ -1,5 +1,11 @@
 # newtui
 
+## 2.9.2
+
+### Patch Changes
+
+- [#103](https://github.com/wolfstar-project/newt-ui/pull/103) [`baa4b49`](https://github.com/wolfstar-project/newt-ui/commit/baa4b4998c49e1815e1a6b217e294b56e8cff66f) - fix(deps): update all non-major dependencies Thanks [@renovate](https://github.com/apps/renovate)!
+
 ## 2.9.1
 
 ### Patch Changes
