@@ -70,7 +70,7 @@ provide(pollKey, {
   <div
     :class="
       cn(
-        'flex w-full max-w-[440px] flex-col gap-3 rounded-lg border border-newt-border bg-newt-bg-surface p-4',
+        'flex w-full max-w-[440px] flex-col gap-3 rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-surface p-4',
         props.class
       )
     "

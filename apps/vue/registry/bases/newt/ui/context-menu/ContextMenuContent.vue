@@ -37,7 +37,7 @@ const forwarded = useForwardPropsEmits(delegated, emits)
       v-bind="{ ...forwarded, ...$attrs }"
       :class="
         cn(
-          'z-[110] w-[188px] rounded-md border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high outline-none',
+          'z-[110] w-[188px] rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high outline-none',
           props.class
         )
       "

@@ -44,13 +44,20 @@ const newtModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
     const componentDir = options.componentDir ?? DEFAULT_COMPONENT_DIR
 
     // `components/ui/button/Button.vue` -> `<Button />` (or `<NewtButton />`).
-    addComponentsDir({
-      path: join(nuxt.options.srcDir, componentDir, "ui"),
-      prefix: options.prefix ?? "",
-      pathPrefix: false,
-      extensions: ["vue"],
-      global: false,
-    })
+    // Prepended, because Nuxt gives a file to the first directory that scans
+    // it. Behind the default `components` directory this one registers
+    // nothing: every file is already `<UiButton />`, and each `index.ts`
+    // barrel is a duplicate of its component (NUXT_B3011).
+    addComponentsDir(
+      {
+        path: join(nuxt.options.srcDir, componentDir, "ui"),
+        prefix: options.prefix ?? "",
+        pathPrefix: false,
+        extensions: ["vue"],
+        global: false,
+      },
+      { prepend: true }
+    )
 
     if (options.css !== false) {
       const tokens = resolver.resolve("./runtime/tokens.css")

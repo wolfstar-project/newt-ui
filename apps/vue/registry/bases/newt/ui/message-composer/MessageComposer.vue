@@ -1,8 +1,19 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
+import type { HTMLAttributes, VNode } from "vue"
 import { computed } from "vue"
 
 import { cn } from "@/lib/utils"
+
+import {
+  defaultMessageComposerLabels,
+  type MessageComposerInputAttributes,
+  type MessageComposerInputProps,
+  type MessageComposerLabels,
+  type MessageComposerLayout,
+  messageComposerButtonVariants,
+  messageComposerFieldVariants,
+  messageComposerVariants,
+} from "."
 
 const props = withDefaults(
   defineProps<{
@@ -15,8 +26,16 @@ const props = withDefaults(
     ariaControls?: string
     ariaExpanded?: boolean
     ariaActivedescendant?: string
+    /** Turns off the input, the add button and the send button. */
+    disabled?: boolean
+    /** `"narrow"` is the phone layout: a pill field and round buttons. */
+    layout?: MessageComposerLayout
+    /** Shows the add button. */
+    showAdd?: boolean
+    /** Replaces the English names; omitted keys keep their default. */
+    labels?: Partial<MessageComposerLabels>
   }>(),
-  { autocomplete: false }
+  { autocomplete: false, disabled: false, layout: "default", showAdd: true }
 )
 
 const emit = defineEmits<{
@@ -27,19 +46,46 @@ const emit = defineEmits<{
   add: []
 }>()
 
-const text = defineModel<string>({ default: "" })
+const slots = defineSlots<{
+  /** Controls after the add button, before the field. */
+  leading?: () => VNode[]
+  /**
+   * Replaces the built-in input with your own field. It receives the value,
+   * a setter, the submit action and the attributes to bind on the field.
+   */
+  input?: (props: MessageComposerInputProps) => VNode[]
+  /** Extra controls at the end of the field, before the send button. */
+  actions?: () => VNode[]
+  /** Shown in place of the send button while the field is empty. */
+  trailing?: () => VNode[]
+}>()
+
+const value = defineModel<string>({ default: "" })
+
+const text = computed(() => ({
+  ...defaultMessageComposerLabels,
+  ...props.labels,
+}))
 
 const label = computed(
-  () => props.placeholder ?? `Message #${props.channelName}`
+  () => props.placeholder ?? text.value.placeholder(props.channelName)
 )
-const hasValue = computed(() => text.value.trim().length > 0)
+const hasValue = computed(() => value.value.trim().length > 0)
 
-const composerButton =
-  "inline-flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent p-0 text-inherit hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50"
+/* The send control only lights up once there is something to send. */
+const sendReady = {
+  default: "text-newt-brand",
+  narrow:
+    "bg-newt-brand text-newt-on-accent hover:bg-newt-brand-hover hover:text-newt-on-accent",
+}
+
+function setValue(next: string) {
+  value.value = next
+}
 
 function submit() {
-  if (!hasValue.value) return
-  emit("submit", text.value)
+  if (!hasValue.value || props.disabled) return
+  emit("submit", value.value)
 }
 
 function onKeydown(event: KeyboardEvent) {
@@ -58,23 +104,35 @@ function onKeydown(event: KeyboardEvent) {
       emit("navigate", event.key === "ArrowUp" ? "up" : "down")
   }
 }
+
+const inputProps = computed<MessageComposerInputAttributes>(() => ({
+  placeholder: label.value,
+  "aria-label": label.value,
+  role: props.autocomplete ? "combobox" : undefined,
+  autocomplete: props.autocomplete ? "off" : undefined,
+  "aria-controls": props.autocomplete ? props.ariaControls : undefined,
+  "aria-expanded": props.autocomplete ? props.ariaExpanded : undefined,
+  "aria-activedescendant": props.autocomplete
+    ? props.ariaActivedescendant
+    : undefined,
+  disabled: props.disabled,
+  spellcheck: false,
+  onKeydown,
+}))
 </script>
 
 <template>
   <div
     role="group"
-    :aria-label="`Message composer for #${props.channelName}`"
-    :class="
-      cn(
-        'flex min-h-11 min-w-0 items-center gap-2 rounded-md border border-newt-border bg-newt-bg-input-elevated px-4 text-newt-text-muted',
-        props.class
-      )
-    "
+    :aria-label="text.group(props.channelName)"
+    :class="cn(messageComposerVariants({ layout: props.layout }), props.class)"
   >
     <button
+      v-if="props.showAdd"
       type="button"
-      aria-label="Add attachment"
-      :class="composerButton"
+      :aria-label="text.add"
+      :disabled="props.disabled"
+      :class="messageComposerButtonVariants({ layout: props.layout })"
       @click="emit('add')"
     >
       <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5">
@@ -84,30 +142,37 @@ function onKeydown(event: KeyboardEvent) {
         />
       </svg>
     </button>
-    <div class="flex min-w-0 flex-1 items-center gap-2">
-      <input
-        v-model="text"
-        type="text"
-        :placeholder="label"
-        :aria-label="label"
-        :spellcheck="false"
-        :role="props.autocomplete ? 'combobox' : undefined"
-        :autocomplete="props.autocomplete ? 'off' : undefined"
-        :aria-controls="props.autocomplete ? props.ariaControls : undefined"
-        :aria-expanded="props.autocomplete ? props.ariaExpanded : undefined"
-        :aria-activedescendant="
-          props.autocomplete ? props.ariaActivedescendant : undefined
-        "
-        class="w-full border-0 bg-transparent font-sans text-[15px] text-newt-text-primary outline-none placeholder:text-newt-text-muted"
-        @keydown="onKeydown"
-      />
+    <slot name="leading" />
+    <div :class="messageComposerFieldVariants({ layout: props.layout })">
+      <slot
+        name="input"
+        :value="value"
+        :setValue="setValue"
+        :submit="submit"
+        :disabled="props.disabled"
+        :inputProps="inputProps"
+      >
+        <input
+          v-model="value"
+          type="text"
+          v-bind="inputProps"
+          class="w-full min-w-0 border-0 bg-transparent font-[family-name:var(--newt-font-sans)] text-[15px] text-newt-text-primary outline-none placeholder:text-newt-text-muted disabled:cursor-not-allowed"
+        />
+      </slot>
+      <slot name="actions" />
     </div>
-    <slot name="actions" />
+    <slot v-if="slots.trailing && !hasValue" name="trailing" />
     <button
+      v-else
       type="button"
-      aria-label="Send message"
-      :disabled="!hasValue"
-      :class="cn(composerButton, hasValue && 'text-newt-brand')"
+      :aria-label="text.send"
+      :disabled="props.disabled || !hasValue"
+      :class="
+        cn(
+          messageComposerButtonVariants({ layout: props.layout }),
+          hasValue && !props.disabled && sendReady[props.layout]
+        )
+      "
       @click="submit"
     >
       <!-- The send control only lights up once there is something to send. -->

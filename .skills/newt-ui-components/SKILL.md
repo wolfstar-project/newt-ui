@@ -38,9 +38,14 @@ entry in the shared `apps/www/registry/registry-categories.ts` taxonomy.
   `rtl:-scale-x-100`.
 - Tokens only. Every colour, radius, font, shadow, easing, and duration comes
   from a `--newt-*` variable, reached through the Tailwind utility
-  (`bg-newt-bg-elevated`, `text-newt-text-muted`, `rounded-md`,
-  `shadow-elevation-high`, `ease-newt`, `duration-fast`). If a value has no
-  token, add the token; do not inline a hex.
+  (`bg-newt-bg-elevated`, `text-newt-text-muted`, `shadow-elevation-high`,
+  `ease-newt`, `duration-fast`). If a value has no token, add the token; do
+  not inline a hex.
+- Radii and the sans and mono stacks come from the tokens, not the host's
+  Tailwind scale: `rounded-[var(--newt-radius-md)]`,
+  `font-[family-name:var(--newt-font-sans)]`. `rounded-md` and `font-sans`
+  follow the app that installs the component, and
+  `packages/cli/src/registry/newt-scale.test.ts` fails on them.
 - Anything the utilities cannot express (odd pixel values, keyframes,
   gradients) goes in a Tailwind arbitrary value or an inline
   `style={{ … var(--newt-*) }}` — still referencing the token.
@@ -51,8 +56,9 @@ entry in the shared `apps/www/registry/registry-categories.ts` taxonomy.
   Keep the escape-key and overlay-click handling, the auto-dismiss timers, and
   the copy-to-clipboard feedback.
 - Keep the ARIA roles and attributes from the original markup, and keep focus
-  states visible. Presence dots are `role="status"`; dialogs are
-  `role="dialog"` with a label.
+  states visible. Dialogs are `role="dialog"` with a label.
+  Presence dots have no role: a list of members must not become a list of
+  live regions. A dot names its state with visually hidden text (`label`).
 - Class names in the React/Vue sources are Tailwind utilities only — the
   `newt-` BEM names belong to the HTML distribution, not to the framework
   ports (`data-*` attributes for state are fine).

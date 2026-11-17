@@ -162,7 +162,9 @@
       "name": "app-launcher",
       "type": "registry:ui",
       "title": "App Launcher",
-      "description": "The Apps popout, with search, a recents strip and the apps installed in a server.",
+      "description": "The Apps launcher, as a desktop popout or a bottom sheet, with search, a recents strip and the apps installed in a server.",
+      "dependencies": ["class-variance-authority", "reka-ui"],
+      "registryDependencies": ["scrollbar"],
       "files": [
         {
           "path": "registry/bases/newt/ui/app-launcher/AppLauncher.vue",
@@ -174,6 +176,10 @@
         },
         {
           "path": "registry/bases/newt/ui/app-launcher/AppLauncherHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/app-launcher/AppLauncherHeaderTitle.vue",
           "type": "registry:ui"
         },
         {
@@ -226,6 +232,10 @@
         },
         {
           "path": "registry/bases/newt/ui/app-launcher/AppLauncherRecent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/app-launcher/AppLauncherPromoCard.vue",
           "type": "registry:ui"
         },
         {
@@ -299,7 +309,7 @@
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
-      "description": "A circular user avatar with image support and initials fallback in three sizes.",
+      "description": "A circular user avatar with image support and initials fallback in five sizes.",
       "dependencies": ["class-variance-authority", "reka-ui"],
       "files": [
         {
@@ -519,6 +529,14 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/bases/newt/ui/channel-header/ChannelHeaderBack.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/channel-header/ChannelHeaderTitle.vue",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/bases/newt/ui/channel-header/ChannelHeaderOnline.vue",
           "type": "registry:ui"
         },
@@ -534,6 +552,7 @@
       "type": "registry:ui",
       "title": "Channel Info",
       "description": "The channel detail panel that covers a channel on narrow screens.",
+      "dependencies": ["reka-ui"],
       "registryDependencies": ["tabs"],
       "files": [
         {
@@ -1514,6 +1533,7 @@
       "type": "registry:ui",
       "title": "Message Composer",
       "description": "The channel input bar: attachment control, text field with combobox hooks, and send.",
+      "dependencies": ["class-variance-authority"],
       "files": [
         {
           "path": "registry/bases/newt/ui/message-composer/MessageComposer.vue",
@@ -1992,7 +2012,7 @@
       "name": "scrollbar",
       "type": "registry:ui",
       "title": "Scrollbar Utility",
-      "description": "Discord-styled scrollbars for any scrollable container, with an optional keyboard-focusable viewport.",
+      "description": "Discord-styled scrollbars for any scrollable container, with an overlay thumb, auto-hide and an optional keyboard-focusable viewport.",
       "files": [
         {
           "path": "registry/bases/newt/ui/scrollbar/ScrollArea.vue",
@@ -2211,7 +2231,7 @@
       "title": "Slash Command Suggestions",
       "description": "The command picker that opens above the composer, with an app rail, grouped options and a matched-command preview.",
       "dependencies": ["class-variance-authority"],
-      "registryDependencies": ["slash-command"],
+      "registryDependencies": ["slash-command", "scrollbar"],
       "files": [
         {
           "path": "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestions.vue",
@@ -2231,6 +2251,10 @@
         },
         {
           "path": "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsFooter.vue",
           "type": "registry:ui"
         },
         {
@@ -2470,6 +2494,24 @@
         },
         {
           "path": "registry/bases/newt/ui/tag-input/index.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "text-display",
+      "type": "registry:ui",
+      "title": "Text Display",
+      "description": "A block of message text that keeps its line breaks, with the chat markdown heading and subtext sizes.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/bases/newt/ui/text-display/TextDisplay.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/bases/newt/ui/text-display/index.ts",
           "type": "registry:ui"
         }
       ],

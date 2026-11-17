@@ -6,6 +6,7 @@ import {
   SlashCommandSuggestionGroup,
   SlashCommandSuggestionMatched,
   SlashCommandSuggestions,
+  SlashCommandSuggestionsFooter,
   SlashCommandSuggestionsHeader,
   SlashCommandSuggestionsList,
   SlashCommandSuggestionsRail,
@@ -89,5 +90,14 @@ const shieldPath = "M12 2 4 5v7c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z"
         />
       </SlashCommandSuggestionMatched>
     </SlashCommandSuggestionsList>
+
+    <SlashCommandSuggestionsFooter>
+      <SlashCommand
+        name="ban"
+        :options="[
+          { name: 'user', description: 'the member to ban', focused: true },
+        ]"
+      />
+    </SlashCommandSuggestionsFooter>
   </SlashCommandSuggestions>
 </template>

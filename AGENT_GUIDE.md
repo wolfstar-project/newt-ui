@@ -34,8 +34,14 @@ Tailwind token classes (both apps, see `tailwind.config.ts` → `newtPreset`):
 `bg-newt-bg-base|surface|elevated|floating|input|hover|active`,
 `border-newt-border`, `text-newt-text-primary|secondary|muted|link`,
 `bg-newt-brand|brand-hover|brand-active`, `bg-newt-online|idle|dnd|offline|danger|danger-hover`,
-`rounded-sm|md|lg|full`, `font-sans|mono|display`, `shadow-elevation-low|high`,
+`rounded-full`, `font-display`, `shadow-elevation-low|high`,
 `ease-newt`, `duration-fast|base`.
+
+Radii and the sans and mono stacks are read from the tokens, never from the
+host's Tailwind scale: `rounded-[var(--newt-radius-sm|md|lg)]` and
+`font-[family-name:var(--newt-font-sans|mono)]`. `rounded-md` and `font-sans`
+follow the app that installs the component (Nuxt UI sets `rounded-md` to 12px),
+so `packages/cli/src/registry/newt-scale.test.ts` refuses them.
 
 ## 1. What newt/ui is
 
@@ -84,8 +90,9 @@ chase down hardcoded hex values across components.
 Every component file/section includes, in order:
 
 1. **Markup** — semantic HTML, ARIA roles where the native element doesn't
-   imply them (e.g. `role="status"` for presence dots, `role="dialog"` +
-   `aria-modal="true"` for modals).
+   imply them (e.g. `role="dialog"` + `aria-modal="true"` for modals). Do not
+   give a repeated element a live role: a presence dot has no role, because a
+   member list would become a list of live regions.
 2. **Styles** — scoped under the `.newt-<name>` root class, using only
    `--newt-*` tokens for color/spacing/radius/motion.
 3. **Behavior (optional)** — vanilla JS attached via `data-newt-*` attributes,
@@ -106,8 +113,10 @@ Every component file/section includes, in order:
       `:focus-visible` style (reuse `.newt-btn:focus-visible` pattern: 2px
       `--newt-text-link` outline, 2px offset).
 - [ ] Icon-only controls have `aria-label` or visually-hidden text.
-- [ ] Status/presence indicators expose state via `role="status"` or an
-      `aria-label` (e.g. `aria-label="Online"`), not color alone.
+- [ ] Status/presence indicators expose state in words, not color alone:
+      visually hidden text inside the dot (`label` on `StatusDot`,
+      `.newt-status__label` in HTML) or the state written beside it. They
+      never carry `role="status"`, which makes every row a live region.
 - [ ] Animations respect `prefers-reduced-motion: reduce`.
 - [ ] Modals trap focus and close on `Escape`; toasts are `role="status"` /
       `aria-live="polite"` and never trap focus.
@@ -164,7 +173,7 @@ and border changes only. This is a deliberate constraint, not an oversight.
 | Button                | `.newt-btn`                                                                    | primary/secondary/success/danger/link/icon variants                  |
 | Badge                 | `.newt-badge`                                                                  | brand/success/warning/danger, optional `--dot`                       |
 | Status indicator      | `.newt-status` / `.newt-status__dot`                                           | online/idle/dnd/offline/streaming, state encoded in shape not motion |
-| Avatar                | `.newt-avatar`                                                                 | sm/default/lg sizes                                                  |
+| Avatar                | `.newt-avatar`                                                                 | xs/sm/md/default/lg sizes                                            |
 | Embed                 | `.newt-embed`                                                                  | Discord message embed card                                           |
 | Card                  | `.newt-card`                                                                   | generic panel                                                        |
 | Form fields           | `.newt-field`, `.newt-input`, `.newt-textarea`, `.newt-select`, `.newt-switch` | settings-modal styling                                               |
@@ -201,6 +210,7 @@ and border changes only. This is a deliberate constraint, not an oversight.
 | Member list row       | `.newt-member`                                                                 | presence dot + role tag                                              |
 | Role tag              | `.newt-role-tag`                                                               | colored dot + label                                                  |
 | Divider               | `.newt-divider`                                                                | labeled section divider (date separators, group headers)             |
+| Text display          | `.newt-text-display`                                                           | message text with kept line breaks and markdown sizes                |
 | Mention chip          | `.newt-mention`                                                                | user/channel/role variants                                           |
 | Spoiler               | `.newt-spoiler`                                                                | click-to-reveal text block                                           |
 | Voice channel row     | `.newt-voice-channel`                                                          | nested member rows with mic/headset icons                            |
@@ -217,7 +227,7 @@ and border changes only. This is a deliberate constraint, not an oversight.
 | Cooldown bar          | `.newt-cooldown`                                                               | rate-limit/cooldown progress variant, idle→ready color shift         |
 | Pagination            | `.newt-pagination` / `.newt-load-more`                                         | page-number controls and "load more" divider                         |
 | Stage banner          | `.newt-stage-banner`                                                           | thin announcement bar, optional `--dismissible`                      |
-| Scrollbar utility     | `.newt-scrollbar`                                                              | apply to any scroll container for Discord-style scrollbars           |
+| Scrollbar utility     | `.newt-scrollbar`                                                              | any scroll container; `--overlay` draws the thumb, `--auto-hide`     |
 | Channel topic bar     | `.newt-channel-topic`                                                          | channel name + topic description header                              |
 | Notification badge    | `.newt-notif-badge`                                                            | count bubble or unread dot, positioned on parent                     |
 | User profile popout   | `.newt-profile`                                                                | floating card with banner, avatar, bio, role tags                    |

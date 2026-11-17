@@ -15,6 +15,10 @@ Reads your project and writes three things: `components.json`, a `cn` helper at
 your utils alias, and the `--newt-*` token block appended to the global
 stylesheet it found.
 
+In a Nuxt project, `init` also adds a `components` option to `nuxt.config`. The
+option keeps the `index.ts` barrels out of Nuxt's component scan. See
+[Component barrels](/docs/installation/nuxt#barrels).
+
 ```bash
 npx newtui@latest init
 npx newtui@latest init --defaults
@@ -64,6 +68,12 @@ whole tree and installed in one pass.
 
 A file already on disk is kept, not replaced: you are asked, and with `--yes` it
 is skipped and reported.
+
+After the files are written, `add` checks that your project declares every
+theme name the components use. A class such as `shadow-elevation-high` produces
+no CSS without `--shadow-elevation-high` in your theme, and Tailwind does not
+warn about it. `add` lists each missing name and prints the block to paste. Run
+[`tokens`](#tokens) to write it for you.
 
 ### Third-party registries [#add-third-party]
 
@@ -165,6 +175,35 @@ ships, so an upgrade is a decision rather than a surprise.
 ```bash
 npx newtui@latest diff button
 ```
+
+`diff` also lists the theme names the registry's version uses that your project
+does not declare, the same check `add` runs.
+
+## tokens [#tokens]
+
+Adds the theme names your stylesheet is missing, and only those.
+
+```bash
+npx newtui@latest tokens                       # every name in the theme
+npx newtui@latest tokens app-launcher popover  # only what these components use
+npx newtui@latest tokens --dry-run             # print the block, write nothing
+```
+
+A project that ran an older `init`, or keeps its token file by hand, can lack
+names that newer components use. `tokens` reads your stylesheet and every file
+it imports with a relative path. It then appends the missing names in the shape
+your Tailwind major reads:
+
+- **Tailwind v4.** An `@theme` block with the missing entries, such as
+  `--shadow-elevation-high`, and the raw `--newt-*` variables they read.
+- **Tailwind v3.** The raw `--newt-*` variables. The CLI does not edit
+  `tailwind.config`, so it prints the `theme.extend` entries to add there.
+
+A second run finds nothing missing and writes nothing.
+
+| Flag        | Effect                                           |
+| ----------- | ------------------------------------------------ |
+| `--dry-run` | Print the missing names and the block, no write. |
 
 ## Global flags [#flags]
 

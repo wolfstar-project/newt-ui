@@ -9,14 +9,16 @@ import {
   SelectTrigger,
   SelectViewport,
 } from "reka-ui"
-import type { HTMLAttributes } from "vue"
+import type { HTMLAttributes, VNode } from "vue"
 import { computed, ref, useId } from "vue"
 
 import { cn } from "@/lib/utils"
 
 import {
   SELECT_MENU_MAX_OPTIONS,
+  type SelectMenuAlign,
   type SelectMenuOption,
+  type SelectMenuSide,
   type SelectMenuVariant,
 } from "."
 
@@ -44,14 +46,45 @@ const props = withDefaults(
      * enclosing native `<dialog>` or a themed wrapper to keep it there.
      */
     container?: string | HTMLElement
+    /**
+     * The side of the trigger the panel opens on. It flips to the opposite
+     * side when the preferred one has no room.
+     */
+    side?: SelectMenuSide
+    /** How the panel lines up with the trigger along that side. */
+    align?: SelectMenuAlign
+    /** Classes merged onto the trigger button, to size or restyle it. */
+    triggerClass?: HTMLAttributes["class"]
+    /** Classes merged onto the panel. */
+    contentClass?: HTMLAttributes["class"]
   }>(),
   {
     variant: "settings",
     placeholder: "Make a selection",
     disabled: false,
     label: "Select an option",
+    side: "bottom",
+    align: "start",
   }
 )
+
+defineSlots<{
+  /**
+   * Replaces what a row draws: the icon or emoji, the label and the
+   * description. The row itself and its tick stay the menu's.
+   */
+  item?: (props: {
+    option: SelectMenuOption
+    index: number
+    selected: boolean
+  }) => VNode[]
+  /** Replaces the text of the description of an option that has one. */
+  "item-description"?: (props: {
+    option: SelectMenuOption
+    index: number
+    selected: boolean
+  }) => VNode[]
+}>()
 
 /*
  * The cap is applied here rather than left to the caller: a row the platform
@@ -91,6 +124,15 @@ function onValueChange(next: string) {
   model.value = next
   emit("select", next)
 }
+
+/*
+ * While the list is open, Reka hides everything outside it from assistive
+ * technology, the trigger included. A hidden element that still takes Tab is
+ * what an accessibility audit reports, so the trigger leaves the tab order
+ * until the list closes. Focus is held in the list meanwhile, and it returns
+ * to the trigger by script, which a negative tabindex allows.
+ */
+const open = ref(false)
 </script>
 
 <template>
@@ -98,22 +140,32 @@ function onValueChange(next: string) {
     :model-value="selected"
     :disabled="props.disabled"
     @update:model-value="onValueChange"
+    @update:open="open = $event"
   >
     <div
       v-bind="$attrs"
       :class="cn('relative w-full max-w-[400px]', props.class)"
     >
       <SelectTrigger
+        data-slot="select-menu-trigger"
         :aria-label="props.label"
-        class="group flex min-h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-sm border border-newt-border bg-newt-bg-input px-2 font-sans text-sm font-medium text-newt-text-primary hover:border-newt-bg-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50"
+        :tabindex="open ? -1 : undefined"
+        :class="
+          cn(
+            'group flex min-h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-2 font-[family-name:var(--newt-font-sans)] text-sm font-medium text-newt-text-primary hover:border-newt-bg-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50',
+            props.triggerClass
+          )
+        "
       >
         <span class="flex min-w-0 flex-1 items-center gap-2">
+          <!-- An icon wins over an emoji when an option carries both. -->
           <span
-            v-if="selectedOption?.icon"
+            v-if="selectedOption?.icon || selectedOption?.emoji"
             aria-hidden="true"
-            class="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary"
+            class="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-base leading-none text-newt-text-secondary"
           >
-            <component :is="selectedOption.icon" />
+            <component :is="selectedOption.icon" v-if="selectedOption.icon" />
+            <template v-else>{{ selectedOption.emoji }}</template>
           </span>
           <span
             :class="cn('truncate', !selectedOption && 'text-newt-text-muted')"
@@ -144,11 +196,18 @@ function onValueChange(next: string) {
 
     <SelectPortal :to="props.container">
       <SelectContent
+        data-slot="select-menu-content"
         position="popper"
-        align="start"
+        :side="props.side"
+        :align="props.align"
         :side-offset="4"
         :aria-label="props.label"
-        class="z-[110] w-[var(--reka-select-trigger-width)] rounded-md border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high"
+        :class="
+          cn(
+            'z-[110] w-[var(--reka-select-trigger-width)] rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-floating p-1.5 shadow-elevation-high',
+            props.contentClass
+          )
+        "
       >
         <!--
           A message select shows its scrollbar: the list is capped, so the bar
@@ -178,36 +237,64 @@ function onValueChange(next: string) {
             :disabled="option.disabled"
             :text-value="option.label"
             :aria-describedby="
-              option.description ? `${id}-description-${index}` : undefined
+              option.description && !$slots.item
+                ? `${id}-description-${index}`
+                : undefined
             "
             :class="
               cn(
-                'group/item flex cursor-pointer select-none items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm text-newt-text-secondary outline-none',
+                'group/item flex cursor-pointer select-none items-center gap-2.5 rounded-[var(--newt-radius-sm)] px-2.5 py-2 text-sm text-newt-text-secondary outline-none',
                 'data-[state=checked]:text-newt-text-primary',
                 'data-[highlighted]:bg-newt-brand data-[highlighted]:data-[state=unchecked]:text-newt-on-accent',
                 'data-[disabled]:cursor-not-allowed data-[disabled]:text-newt-text-muted data-[disabled]:opacity-50'
               )
             "
           >
-            <span
-              v-if="option.icon"
-              aria-hidden="true"
-              class="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-newt-text-secondary group-data-[highlighted]/item:text-newt-on-accent"
+            <!--
+              A row drawn by the caller is the option's name as a whole: the
+              text of everything in it, with no description id left dangling.
+            -->
+            <SelectItemText
+              v-if="$slots.item"
+              as="div"
+              class="flex min-w-0 flex-1 items-center gap-2.5"
             >
-              <component :is="option.icon" />
-            </span>
-            <span class="flex min-w-0 flex-col">
-              <SelectItemText class="truncate">
-                {{ option.label }}
-              </SelectItemText>
+              <slot
+                name="item"
+                :option="option"
+                :index="index"
+                :selected="option.value === selected"
+              />
+            </SelectItemText>
+            <template v-else>
               <span
-                v-if="option.description"
-                :id="`${id}-description-${index}`"
-                class="truncate text-xs text-newt-text-muted group-data-[highlighted]/item:text-newt-on-accent"
+                v-if="option.icon || option.emoji"
+                aria-hidden="true"
+                class="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-base leading-none text-newt-text-secondary group-data-[highlighted]/item:text-newt-on-accent"
               >
-                {{ option.description }}
+                <component :is="option.icon" v-if="option.icon" />
+                <template v-else>{{ option.emoji }}</template>
               </span>
-            </span>
+              <span class="flex min-w-0 flex-col">
+                <SelectItemText class="truncate">
+                  {{ option.label }}
+                </SelectItemText>
+                <span
+                  v-if="option.description"
+                  :id="`${id}-description-${index}`"
+                  class="truncate text-xs text-newt-text-muted group-data-[highlighted]/item:text-newt-on-accent"
+                >
+                  <slot
+                    name="item-description"
+                    :option="option"
+                    :index="index"
+                    :selected="option.value === selected"
+                  >
+                    {{ option.description }}
+                  </slot>
+                </span>
+              </span>
+            </template>
             <!--
               Only the settings menu ticks a row. In a message the choice is
               submitted rather than kept, so there is no standing selection for

@@ -10,7 +10,7 @@ const ServerBanner = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex max-w-[480px] items-center gap-4 rounded-lg border border-newt-border bg-newt-bg-elevated px-5 py-4",
+      "flex max-w-[480px] items-center gap-4 rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-elevated px-5 py-4",
       className
     )}
     {...props}
@@ -26,7 +26,7 @@ const ServerBannerIcon = React.forwardRef<
     ref={ref}
     aria-hidden="true"
     className={cn(
-      "flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-newt-brand text-[22px] font-bold text-newt-on-accent",
+      "flex h-14 w-14 shrink-0 items-center justify-center rounded-[var(--newt-radius-lg)] bg-newt-brand text-[22px] font-bold text-newt-on-accent",
       className
     )}
     {...props}

@@ -1,9 +1,9 @@
 ---
 title: "Scrollbar Utility"
-description: "Discord-styled scrollbars for any scrollable container, with an optional keyboard-focusable viewport."
+description: "Discord-styled scrollbars for any scrollable container, with an overlay thumb, auto-hide and an optional keyboard-focusable viewport."
 ---
 
-Discord-styled scrollbars for any scrollable container, with an optional keyboard-focusable viewport. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+Discord-styled scrollbars for any scrollable container, with an overlay thumb, auto-hide and an optional keyboard-focusable viewport. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
 
 <ComponentPreview name="scrollbar" />
 
@@ -15,11 +15,49 @@ Discord-styled scrollbars for any scrollable container, with an optional keyboar
 
 <Usage name="scrollbar" />
 
+`ScrollArea` styles the browser's own scrollbar by default. To style an element of your own, add `scrollbarClassName` to its classes.
+
+## Examples
+
+### Overlay
+
+`variant="overlay"` draws the thumb over the content. The box keeps its full width, which suits a narrow column. Only the thumb takes the pointer, so the content under the track stays clickable.
+
+The overlay variant renders an outer box around the viewport. The viewport is the element that scrolls. `className`, `style` and `dir` land on the box. Every other attribute lands on the viewport, and so does the React `ref`. Put padding that should scroll with the content in `viewportClassName` (`viewport-class` in Vue).
+
+Give the box a height or a maximum height. The overlay variant scrolls on the block axis only. Use the native variant for content that scrolls sideways.
+
+Here a card floats over the foot of the column. `--newt-scrollbar-inset-end` stops the track above it.
+
+<ComponentPreview name="scrollbar" variant="overlay" />
+
+### Auto-hide
+
+`autoHide` hides the thumb until the pointer is over the area, keyboard focus is inside it, or it scrolls. It works with both variants. The rail below also sets `--newt-scrollbar-thumb-width` and `--newt-scrollbar-thumb-max-height` for a short, thin thumb.
+
+<ComponentPreview name="scrollbar" variant="auto-hide" />
+
+To auto-hide the scrollbar of your own element, add `scrollbarAutoHideClassName` next to `scrollbarClassName`. That class set reacts to hover and keyboard focus. Set `data-scrolling` on the element to show the thumb for any other reason.
+
 ## API reference
 
 <PropsTable
   of="ScrollArea"
   rows={[
+    {
+      name: "variant",
+      type: '"native" | "overlay"',
+      default: '"native"',
+      description:
+        "`native` styles the browser's scrollbar, which keeps a lane beside the content. `overlay` draws a thumb over the content.",
+    },
+    {
+      name: "autoHide",
+      type: "boolean | undefined",
+      default: "false",
+      description:
+        "Hide the thumb until the pointer is over the area, keyboard focus is inside it, or it scrolls.",
+    },
     {
       name: "focusable",
       type: "boolean | undefined",
@@ -31,14 +69,75 @@ Discord-styled scrollbars for any scrollable container, with an optional keyboar
       type: "string | undefined",
       description: "Accessible name of the focusable viewport.",
     },
+    {
+      name: "viewportClassName / viewportClass",
+      type: "string",
+      description:
+        "Classes for the element that scrolls. With `overlay`, padding that should scroll with the content belongs here.",
+    },
   ]}
 />
 
-The registry exports `ScrollArea`, `Scrollbar`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+The registry exports `ScrollArea`, `Scrollbar`, `scrollbarClassName` and `scrollbarAutoHideClassName`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes. In Vue, `ScrollArea` exposes `viewport`, the element that scrolls.
+
+## Custom properties
+
+Set these on the scroll area or on any ancestor. Each one is optional.
+
+<PropsTable
+  rows={[
+    {
+      name: "--newt-scrollbar-thumb",
+      type: "color",
+      default: "var(--newt-bg-active)",
+      description: "Colour of the thumb.",
+    },
+    {
+      name: "--newt-scrollbar-thumb-hover",
+      type: "color",
+      default: "var(--newt-text-muted)",
+      description: "Colour of the thumb under the pointer.",
+    },
+    {
+      name: "--newt-scrollbar-inset-start",
+      type: "length",
+      default: "4px",
+      description:
+        "Overlay only. Gap between the top of the box and the track.",
+    },
+    {
+      name: "--newt-scrollbar-inset-end",
+      type: "length",
+      default: "4px",
+      description:
+        "Overlay only. Gap between the track and the foot of the box.",
+    },
+    {
+      name: "--newt-scrollbar-thumb-width",
+      type: "length",
+      default: "8px",
+      description: "Overlay only. Thickness of the thumb.",
+    },
+    {
+      name: "--newt-scrollbar-thumb-max-height",
+      type: "length",
+      default: "none",
+      description: "Overlay only. Longest the thumb can be.",
+    },
+  ]}
+/>
 
 ## Accessibility
 
-Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+The viewport scrolls natively in both variants. The keyboard, the wheel and touch work as they do on any scrolling element. The overlay thumb is decoration for assistive technology and carries `aria-hidden`.
+
+The focusable viewport takes its name from `viewportLabel`. [Translating labels](/docs/translating-labels) lists every English default.
+
+Set `focusable` when the area scrolls and holds no other focusable content. The viewport then takes `tabindex="0"`, `role="group"` and the `viewportLabel`. Its focus ring is drawn inside the box, so an ancestor with `overflow: hidden` cannot clip it.
+
+An auto-hidden thumb also shows on keyboard focus, so a keyboard user sees the scroll position. Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description.
+
+In the plain HTML and CSS distribution, the overlay thumb and the scroll state of `newt-scrollbar--auto-hide` need `scrollbar.js`. Mark the element with `data-newt-scrollbar`.
 
 ## Tokens
 

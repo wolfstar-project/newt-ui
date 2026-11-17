@@ -6,7 +6,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const reactionVariants = cva(
-  "inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[13px] transition-[background-color,border-color] duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
+  "inline-flex items-center gap-1 rounded-[var(--newt-radius-md)] border px-2 py-0.5 text-[13px] transition-[background-color,border-color] duration-fast ease-newt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
   {
     variants: {
       active: {
@@ -54,8 +54,13 @@ export function defaultReactionLabel({
 
 export interface ReactionProps
   extends
-    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children">,
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     Omit<VariantProps<typeof reactionVariants>, "interactive"> {
+  /**
+   * The emoji, drawn by your own component: an icon or an image component.
+   * Wins over `emoji` and `emojiSrc`. Set `emojiAlt` to name it.
+   */
+  children?: React.ReactNode
   /** Emoji or icon rendered on the left. Optional when `emojiSrc` is set. */
   emoji?: React.ReactNode
   /** Image URL of a server (custom) emoji, rendered instead of `emoji`. */
@@ -88,6 +93,7 @@ const Reaction = React.forwardRef<HTMLElement, ReactionProps>(
   (
     {
       className,
+      children,
       emoji,
       emojiSrc,
       emojiAlt,
@@ -125,7 +131,14 @@ const Reaction = React.forwardRef<HTMLElement, ReactionProps>(
 
     const content = (
       <>
-        {emojiSrc ? (
+        {React.Children.toArray(children).length > 0 ? (
+          <span
+            aria-hidden="true"
+            className="inline-flex shrink-0 items-center"
+          >
+            {children}
+          </span>
+        ) : emojiSrc ? (
           <img
             src={emojiSrc}
             alt=""

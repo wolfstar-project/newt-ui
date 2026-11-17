@@ -1,9 +1,9 @@
 ---
 title: "Avatar"
-description: "A circular user avatar with image support and initials fallback in three sizes."
+description: "A circular user avatar with image support and initials fallback in five sizes."
 ---
 
-An image, or the initials that stand in for one. Three sizes, all circles, all sized in the same steps the rest of the library uses.
+An image, or the initials that stand in for one. Five sizes, all circles: `xs` for a reply line, `sm` for a compact row, `md` for a member row, `default` for a message, and `lg` for a profile.
 
 It is built on [Radix Avatar](https://www.radix-ui.com/primitives/docs/components/avatar) in React and [Reka UI Avatar](https://reka-ui.com/docs/components/avatar) in Vue. The primitive tracks the image. `AvatarFallback` shows while the image loads and when the load fails.
 
@@ -44,8 +44,8 @@ Next to a visible name the avatar is decoration: the image takes `alt=""` and th
   rows={[
     {
       name: "size",
-      type: '"sm" | "default" | "lg"',
-      description: "24px, 40px or 80px.",
+      type: '"xs" | "sm" | "md" | "default" | "lg"',
+      description: "16px, 24px, 32px, 40px or 80px.",
       default: '"default"',
     },
     {

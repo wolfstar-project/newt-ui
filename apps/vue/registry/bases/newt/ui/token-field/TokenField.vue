@@ -58,7 +58,7 @@ onBeforeUnmount(() => {
       :type="revealed ? 'text' : 'password'"
       :value="props.value"
       readonly
-      class="font-mono tracking-[0.05em]"
+      class="font-[family-name:var(--newt-font-mono)] tracking-[0.05em]"
     />
     <Button
       type="button"

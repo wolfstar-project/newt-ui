@@ -1,17 +1,30 @@
 <script setup lang="ts">
-import { ref, type HTMLAttributes } from "vue"
+import { ref, type Component, type HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
 const props = withDefaults(
   defineProps<{
     class?: HTMLAttributes["class"]
+    /**
+     * The image element or component to render. Defaults to `img`; pass
+     * `NuxtImg` or another image component for optimised sources. It
+     * receives `src`, `alt`, `class` and the spoiler attributes and handlers.
+     */
+    as?: string | Component
     src: string
     alt?: string
     /** Blurs the image until it is clicked. */
     spoiler?: boolean
+    /** Accessible name of a hidden spoiler, read in place of the image. */
+    spoilerLabel?: string
   }>(),
-  { alt: "", spoiler: false }
+  {
+    as: "img",
+    alt: "",
+    spoiler: false,
+    spoilerLabel: "Spoiler, click to reveal",
+  }
 )
 
 const revealed = ref(false)
@@ -30,15 +43,14 @@ function onKeydown(event: KeyboardEvent) {
 </script>
 
 <template>
-  <img
+  <component
+    :is="props.as"
     :src="props.src"
     :alt="props.alt"
     :data-spoiler="props.spoiler && !revealed ? true : undefined"
     :role="props.spoiler && !revealed ? 'button' : undefined"
     :tabindex="props.spoiler && !revealed ? 0 : undefined"
-    :aria-label="
-      props.spoiler && !revealed ? 'Spoiler, click to reveal' : undefined
-    "
+    :aria-label="props.spoiler && !revealed ? props.spoilerLabel : undefined"
     :class="
       cn(
         'h-full w-full object-cover',

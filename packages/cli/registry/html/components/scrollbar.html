@@ -4,7 +4,11 @@
 
   Add tabindex="0" + role="group" + aria-label when the region scrolls and
   holds no other focusable content, so it can be scrolled from the keyboard
-  (WCAG 2.1.1).
+  (WCAG 2.1.1). The focus ring is drawn inside the box.
+
+  Add .newt-scrollbar--auto-hide to show the thumb only on hover, on keyboard
+  focus and while the region scrolls. The last one needs scrollbar.js and
+  data-newt-scrollbar.
 -->
 <div
   class="newt-scrollbar"
@@ -14,4 +18,29 @@
   aria-label="Scrollable region"
 >
   <!-- scrollable content -->
+</div>
+
+<!--
+  Overlay: the thumb is drawn over the content, so the box keeps its full
+  width. It needs scrollbar.js. The viewport is the element that scrolls;
+  size the outer box. --newt-scrollbar-inset-start and
+  --newt-scrollbar-inset-end move the ends of the track, for example to stop
+  above a card that floats over the foot of a column.
+-->
+<div
+  class="newt-scrollbar newt-scrollbar--overlay newt-scrollbar--auto-hide"
+  style="max-height: 240px; --newt-scrollbar-inset-end: 48px"
+  data-newt-scrollbar
+>
+  <div
+    class="newt-scrollbar__viewport"
+    tabindex="0"
+    role="group"
+    aria-label="Scrollable region"
+  >
+    <!-- scrollable content -->
+  </div>
+  <div class="newt-scrollbar__track" aria-hidden="true" hidden>
+    <div class="newt-scrollbar__thumb"></div>
+  </div>
 </div>

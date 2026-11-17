@@ -21,8 +21,17 @@ const props = withDefaults(
     disabled?: boolean
     /** The line under the prompt: how many, how large. */
     hint?: string
+    /** The text before the browse control. */
+    prompt?: string
+    /** The browse control, which opens the file picker. */
+    browseLabel?: string
   }>(),
-  { multiple: false, disabled: false }
+  {
+    multiple: false,
+    disabled: false,
+    prompt: "Drop files here or",
+    browseLabel: "browse",
+  }
 )
 
 const emit = defineEmits<{ (e: "files", value: readonly File[]): void }>()
@@ -60,7 +69,7 @@ function onChange(event: Event) {
     :data-disabled="props.disabled ? true : undefined"
     :class="
       cn(
-        'flex flex-col items-center justify-center gap-1 rounded-md border border-dashed border-newt-border bg-newt-bg-base px-4 py-6 text-center',
+        'flex flex-col items-center justify-center gap-1 rounded-[var(--newt-radius-md)] border border-dashed border-newt-border bg-newt-bg-base px-4 py-6 text-center',
         'transition-colors duration-fast ease-newt',
         'data-[dragging]:border-newt-brand data-[dragging]:bg-newt-bg-surface',
         'focus-within:border-newt-brand',
@@ -84,7 +93,8 @@ function onChange(event: Event) {
     </svg>
 
     <p class="text-sm text-newt-text-secondary">
-      Drop files here or
+      <!-- A space follows the prompt; one typed in the template would not survive. -->
+      {{ `${props.prompt} ` }}
       <!--
         The label is the control: clicking the word opens the picker, and the
         input keeps the focus ring and the keyboard behaviour it was born with.
@@ -92,7 +102,7 @@ function onChange(event: Event) {
       <label
         class="cursor-pointer text-newt-text-link underline-offset-2 hover:underline"
       >
-        browse
+        {{ props.browseLabel }}
         <input
           type="file"
           :accept="props.accept"

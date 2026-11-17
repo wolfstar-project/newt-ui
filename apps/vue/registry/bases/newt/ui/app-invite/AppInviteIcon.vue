@@ -16,7 +16,7 @@ const props = withDefaults(
     :aria-hidden="props.alt === '' ? true : undefined"
     :class="
       cn(
-        'h-20 w-20 shrink-0 rounded-lg bg-newt-bg-base object-cover',
+        'h-20 w-20 shrink-0 rounded-[var(--newt-radius-lg)] bg-newt-bg-base object-cover',
         props.class
       )
     "

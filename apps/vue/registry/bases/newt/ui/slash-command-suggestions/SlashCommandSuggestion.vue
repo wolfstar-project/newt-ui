@@ -19,6 +19,11 @@ const props = withDefaults(
 </script>
 
 <template>
+  <!--
+    In a picker narrower than 480px, the app name moves beside the command
+    name, and the description takes the full width under them, on up to two
+    lines.
+  -->
   <div
     role="option"
     :aria-selected="props.active"
@@ -26,7 +31,8 @@ const props = withDefaults(
     :data-state="props.active ? 'active' : 'inactive'"
     :class="
       cn(
-        'grid min-h-12 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-md px-2 py-1.5',
+        'grid min-h-12 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-[var(--newt-radius-md)] px-2 py-1.5',
+        '[@container_(max-width:480px)]:gap-x-2 [@container_(max-width:480px)]:gap-y-0.5',
         props.disabled
           ? 'cursor-default opacity-60'
           : 'cursor-pointer hover:bg-newt-bg-hover',
@@ -36,23 +42,25 @@ const props = withDefaults(
     "
   >
     <slot name="icon" />
-    <div class="flex min-w-0 flex-col gap-0.5">
-      <!-- The client spaces the slash away from the command path. -->
+    <div
+      class="flex min-w-0 flex-col gap-0.5 [@container_(max-width:480px)]:contents"
+    >
       <span
-        class="text-[15px] font-semibold leading-tight text-newt-text-primary"
+        class="text-[15px] font-semibold leading-tight text-newt-text-primary [@container_(max-width:480px)]:col-start-2 [@container_(max-width:480px)]:row-start-1"
       >
-        /&nbsp;{{ props.name }}
+        <!-- The slash stands off the command path. A margin keeps the text `/ban`. -->
+        <span class="me-1">/</span>{{ props.name }}
       </span>
       <span
         v-if="props.description"
-        class="truncate text-[13px] leading-snug text-newt-text-secondary"
+        class="truncate text-[13px] leading-snug text-newt-text-secondary [@container_(max-width:480px)]:col-[2/-1] [@container_(max-width:480px)]:row-start-2 [@container_(max-width:480px)]:line-clamp-2 [@container_(max-width:480px)]:whitespace-normal"
       >
         {{ props.description }}
       </span>
     </div>
     <span
       v-if="props.appLabel"
-      class="shrink-0 text-[13px] text-newt-text-secondary"
+      class="shrink-0 text-[13px] text-newt-text-secondary [@container_(max-width:480px)]:col-start-3 [@container_(max-width:480px)]:row-start-1"
     >
       {{ props.appLabel }}
     </span>

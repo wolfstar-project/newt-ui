@@ -15,7 +15,63 @@ The bar above the message list, with the channel name, topic and channel actions
 
 <Usage name="channel-header" />
 
+Put the name and the topic in `ChannelHeaderInfo`, and the actions in `ChannelHeaderToolbar`. When the bar runs out of room, the topic shrinks first. The name truncates only after the topic has no width left.
+
+## Examples
+
+### Narrow layout
+
+On a narrow screen, the bar holds three controls. `ChannelHeaderBack` leaves the channel and shows the unread count in `badge`. `ChannelHeaderTitle` makes the name a button that opens the channel details. `ChannelHeaderSearch` with `compact` draws only the icon. `ChannelHeaderOnline` shows the member count.
+
+<ComponentPreview name="channel-header" variant="narrow" />
+
+The bar has a minimum height, so a title with two lines makes it taller. Show one layout or the other with your own breakpoint classes.
+
+### Decorative actions
+
+A showcase or a read-only view draws the actions and does nothing with them. Pass `as="span"` to an action or to the search. The part keeps its look and loses its pointer, its hover and its place in the tab order. It also takes `aria-hidden`, so assistive technology skips it.
+
+<ComponentPreview name="channel-header" variant="decorative" />
+
 ## API reference
+
+<PropsTable
+  of="ChannelHeader"
+  rows={[
+    {
+      name: "as",
+      type: "string | Component",
+      default: '"div"',
+      description:
+        "The element to render. Pass `header` when the bar sits inside `main`, `article`, `aside`, `nav` or `section`.",
+    },
+  ]}
+/>
+
+`ChannelHeaderAction`, `ChannelHeaderSearch`, `ChannelHeaderBack` and `ChannelHeaderTitle` are the controls. Each one takes these two props.
+
+<PropsTable
+  of="ChannelHeaderAction, ChannelHeaderSearch, ChannelHeaderBack, ChannelHeaderTitle"
+  rows={[
+    {
+      name: "as",
+      type: "string | Component",
+      description:
+        "The element or component to render. Defaults to `button`, or to `a` when `href` is set. Pass a router link component to keep client navigation. `span` renders the decorative form, which runs no event handlers.",
+    },
+    {
+      name: "href",
+      type: "string | undefined",
+      description: "Render a link to this URL.",
+    },
+    {
+      name: "disabled",
+      type: "boolean | undefined",
+      description:
+        "Turns the control off. A link loses its URL, which takes it out of the tab order, and says so with `aria-disabled`. A disabled control fades to half opacity.",
+    },
+  ]}
+/>
 
 <PropsTable
   of="ChannelHeaderAction"
@@ -23,7 +79,8 @@ The bar above the message list, with the channel name, topic and channel actions
     {
       name: "active",
       type: "boolean | undefined",
-      description: "Keeps a toggled action (such as the member list) lit up.",
+      description:
+        "Makes the action a toggle and keeps it lit up while `true`. A button reports the value as `aria-pressed`. Leave it unset for a plain action.",
     },
   ]}
 />
@@ -34,16 +91,54 @@ The bar above the message list, with the channel name, topic and channel actions
     {
       name: "placeholder",
       type: "string | undefined",
-      description: "Optional placeholder value.",
+      default: '"Search"',
+      description:
+        "The text shown when the control has no children. Children, or the default slot in Vue, replace it.",
+    },
+    {
+      name: "compact",
+      type: "boolean | undefined",
+      default: "false",
+      description:
+        "Icon-only form for the narrow layout. The text stays in the control for assistive technology.",
     },
   ]}
 />
 
-The registry exports `ChannelHeader`, `ChannelHeaderInfo`, `ChannelHeaderIcon`, `ChannelHeaderName`, `ChannelHeaderDivider`, `ChannelHeaderTopic`, `ChannelHeaderToolbar`, `ChannelHeaderAction`, `ChannelHeaderSearch`, `ChannelHeaderOnline`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+<PropsTable
+  of="ChannelHeaderBack"
+  rows={[
+    {
+      name: "badge",
+      type: "React.ReactNode / string | number",
+      description:
+        "The unread count drawn beside the arrow. Leave it unset for no badge.",
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description: "An icon of your own in place of the arrow.",
+    },
+  ]}
+/>
+
+`ChannelHeaderTitle` takes `ChannelHeaderIcon` and `ChannelHeaderName` as children and adds a chevron after them. With `as="span"` it renders plain text with no chevron, and assistive technology still reads it.
+
+The registry exports `ChannelHeader`, `ChannelHeaderInfo`, `ChannelHeaderIcon`, `ChannelHeaderName`, `ChannelHeaderDivider`, `ChannelHeaderTopic`, `ChannelHeaderToolbar`, `ChannelHeaderAction`, `ChannelHeaderSearch`, `ChannelHeaderBack`, `ChannelHeaderTitle`, `ChannelHeaderOnline`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
 
 ## Accessibility
 
-Every icon-only toolbar action needs an `aria-label`. Preserve the visible focus ring and keep the channel name in the accessible heading hierarchy.
+The bar is a `div`. A `header` element outside `main`, `article`, `aside`, `nav` or `section` is a banner landmark, and a page must have only one. Pass `as="header"` when the bar sits inside one of those elements.
+
+The search control's text, and so its name, comes from `placeholder`. [Translating labels](/docs/translating-labels) lists every English default.
+
+Every icon-only action needs an `aria-label`. `ChannelHeaderBack` has no text either. Put the unread count in its label, for example "Back to channels, 3 unread", because the label replaces the badge for assistive technology.
+
+Set `active` on an action that turns something on and off. The button then reports its state with `aria-pressed`. Keep the label the same in both states, for example "Member list".
+
+`ChannelHeaderSearch` takes its accessible name from its text, so the name always matches what a user sees. The same holds for `ChannelHeaderTitle`, whose name is the channel name.
+
+Do not hide an interactive action with `aria-hidden` alone. It stays in the tab order, and a keyboard user lands on a control that a screen reader cannot announce. Use the decorative form.
 
 ## Tokens
 

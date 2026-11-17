@@ -11,6 +11,17 @@ import {
 const AVATAR =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%235865f2'/%3E%3C/svg%3E"
 
+/* A slash in a square. The chip sizes an icon it is given to 12px. */
+const SLASH_ICON = (
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5Zm9.4 3 1.9.7L9.6 18l-1.9-.7L14.4 6Z"
+    />
+  </svg>
+)
+
 export default function ReplyPreviewDemo() {
   return (
     <div className="flex flex-col gap-3">
@@ -26,6 +37,22 @@ export default function ReplyPreviewDemo() {
         <ReplyPreviewAuthor>@username</ReplyPreviewAuthor>
         <ReplyPreviewAction>used</ReplyPreviewAction>
         <ReplyPreviewCommand>/ban member</ReplyPreviewCommand>
+      </ReplyPreview>
+      <ReplyPreview>
+        <ReplyPreviewAvatar src={AVATAR} />
+        <ReplyPreviewAuthor>@username</ReplyPreviewAuthor>
+        <ReplyPreviewAction>used</ReplyPreviewAction>
+        <ReplyPreviewCommand icon={SLASH_ICON}>ban member</ReplyPreviewCommand>
+      </ReplyPreview>
+      {/* No `src`: the children draw an avatar that is an icon. */}
+      <ReplyPreview>
+        <ReplyPreviewAvatar>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" />
+          </svg>
+        </ReplyPreviewAvatar>
+        <ReplyPreviewAuthor>@relay</ReplyPreviewAuthor>
+        <ReplyPreviewText>deploy finished in 42 seconds</ReplyPreviewText>
       </ReplyPreview>
     </div>
   )

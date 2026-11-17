@@ -24,8 +24,9 @@ const props = defineProps<{
     :class="
       cn(
         'flex min-w-0 flex-col px-2 pb-4 pt-1 sm:px-4',
-        // Rows sit flush: the list owns the padding, not the row.
-        '[&>[data-slot=message-row]]:rounded-sm [&>[data-slot=message-row]]:px-2 [&>[data-slot=message-row]]:py-1.5',
+        // Rows sit flush: the list owns the padding, not the row. A descendant
+        // selector, so a row inside a wrapper keeps its padding.
+        '[&_[data-slot=message-row]]:rounded-[var(--newt-radius-sm)] [&_[data-slot=message-row]]:px-2 [&_[data-slot=message-row]]:py-1.5',
         props.class
       )
     "

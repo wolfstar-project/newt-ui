@@ -161,7 +161,9 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "App Launcher",
     description:
-      "The Apps popout, with search, a recents strip and the apps installed in a server.",
+      "The Apps launcher, as a desktop popout or a bottom sheet, with search, a recents strip and the apps installed in a server.",
+    dependencies: ["class-variance-authority", "reka-ui"],
+    registryDependencies: ["scrollbar"],
     files: [
       {
         path: "ui/app-launcher/AppLauncher.vue",
@@ -173,6 +175,10 @@ export const ui: Registry = [
       },
       {
         path: "ui/app-launcher/AppLauncherHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherHeaderTitle.vue",
         type: "registry:ui",
       },
       {
@@ -225,6 +231,10 @@ export const ui: Registry = [
       },
       {
         path: "ui/app-launcher/AppLauncherRecent.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/app-launcher/AppLauncherPromoCard.vue",
         type: "registry:ui",
       },
       {
@@ -298,7 +308,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Avatar",
     description:
-      "A circular user avatar with image support and initials fallback in three sizes.",
+      "A circular user avatar with image support and initials fallback in five sizes.",
     dependencies: ["class-variance-authority", "reka-ui"],
     files: [
       {
@@ -516,6 +526,14 @@ export const ui: Registry = [
         type: "registry:ui",
       },
       {
+        path: "ui/channel-header/ChannelHeaderBack.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/channel-header/ChannelHeaderTitle.vue",
+        type: "registry:ui",
+      },
+      {
         path: "ui/channel-header/ChannelHeaderOnline.vue",
         type: "registry:ui",
       },
@@ -531,6 +549,7 @@ export const ui: Registry = [
     title: "Channel Info",
     description:
       "The channel detail panel that covers a channel on narrow screens.",
+    dependencies: ["reka-ui"],
     registryDependencies: ["tabs"],
     files: [
       {
@@ -1502,6 +1521,7 @@ export const ui: Registry = [
     title: "Message Composer",
     description:
       "The channel input bar: attachment control, text field with combobox hooks, and send.",
+    dependencies: ["class-variance-authority"],
     files: [
       {
         path: "ui/message-composer/MessageComposer.vue",
@@ -1980,7 +2000,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Scrollbar Utility",
     description:
-      "Discord-styled scrollbars for any scrollable container, with an optional keyboard-focusable viewport.",
+      "Discord-styled scrollbars for any scrollable container, with an overlay thumb, auto-hide and an optional keyboard-focusable viewport.",
     files: [
       {
         path: "ui/scrollbar/ScrollArea.vue",
@@ -2198,7 +2218,7 @@ export const ui: Registry = [
     description:
       "The command picker that opens above the composer, with an app rail, grouped options and a matched-command preview.",
     dependencies: ["class-variance-authority"],
-    registryDependencies: ["slash-command"],
+    registryDependencies: ["slash-command", "scrollbar"],
     files: [
       {
         path: "ui/slash-command-suggestions/SlashCommandSuggestions.vue",
@@ -2218,6 +2238,10 @@ export const ui: Registry = [
       },
       {
         path: "ui/slash-command-suggestions/SlashCommandSuggestionsHeader.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/slash-command-suggestions/SlashCommandSuggestionsFooter.vue",
         type: "registry:ui",
       },
       {
@@ -2455,6 +2479,24 @@ export const ui: Registry = [
       },
       {
         path: "ui/tag-input/index.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "text-display",
+    type: "registry:ui",
+    title: "Text Display",
+    description:
+      "A block of message text that keeps its line breaks, with the chat markdown heading and subtext sizes.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/text-display/TextDisplay.vue",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/text-display/index.ts",
         type: "registry:ui",
       },
     ],

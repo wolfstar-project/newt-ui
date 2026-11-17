@@ -11,7 +11,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <code
     :class="
       cn(
-        'whitespace-pre-wrap rounded-sm border border-newt-border bg-newt-bg-base px-1 font-mono text-[0.85em] text-newt-text-primary',
+        'whitespace-pre-wrap rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-base px-1 font-[family-name:var(--newt-font-mono)] text-[0.85em] text-newt-text-primary',
         props.class
       )
     "

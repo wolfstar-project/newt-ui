@@ -19,9 +19,9 @@ const members = [
     <li
       v-for="member in members"
       :key="member.name"
-      class="flex items-center gap-3 rounded-md px-2 py-1.5 hover:bg-newt-bg-hover"
+      class="flex items-center gap-3 rounded-md px-2 py-1.5"
     >
-      <StatusIndicator :aria-label="member.label">
+      <StatusIndicator>
         <Avatar>{{ member.name.charAt(0).toUpperCase() }}</Avatar>
         <StatusDot :status="member.status" />
       </StatusIndicator>

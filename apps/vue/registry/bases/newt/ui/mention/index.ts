@@ -9,7 +9,7 @@ export { default as Mention } from "./Mention.vue"
  * follows automatically.
  */
 export const mentionVariants = cva(
-  "inline-flex min-h-[22px] items-center gap-0.5 rounded-sm border-0 bg-[color-mix(in_srgb,var(--newt-mention-color)_15%,transparent)] px-1 align-middle font-sans text-[14px] font-medium leading-5 text-[var(--newt-mention-color)] no-underline transition-colors duration-fast ease-newt",
+  "inline-flex min-h-[22px] items-center gap-0.5 rounded-[var(--newt-radius-sm)] border-0 bg-[color-mix(in_srgb,var(--newt-mention-color)_15%,transparent)] px-1 align-middle font-[family-name:var(--newt-font-sans)] text-[14px] font-medium leading-5 text-[var(--newt-mention-color)] no-underline transition-colors duration-fast ease-newt",
   {
     variants: {
       variant: {

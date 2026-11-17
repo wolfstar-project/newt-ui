@@ -12,7 +12,7 @@ const props = defineProps<{
   <div
     :class="
       cn(
-        'max-w-[480px] rounded-md border border-newt-border bg-newt-bg-elevated p-4',
+        'max-w-[480px] rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-elevated p-4',
         props.class
       )
     "

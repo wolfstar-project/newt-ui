@@ -15,6 +15,18 @@ An inline /command with its subcommand path and typed options, including the foc
 
 <Usage name="slash-command" />
 
+Pass the command as `name`, its path as `subcommandGroup` and `subcommand`, and the typed options as `options`. An option with no `value` shows its `description` in italics. Set `focused` on the option the caret sits in.
+
+### The text of the chip
+
+The separators are real text. A space stands between two parts, and a colon follows each option name. The third chip of the preview reads `/conf menu save key:prefix`, in `textContent`, in a copy and in a search of the page.
+
+The chip draws each space 4px wide, so the picture does not change with the text. It measures that gap against the width of a space in a monospace font. Keep a monospace font on the chip.
+
+### Content after the command
+
+`children` in React and the default slot in Vue follow the last option inside the chip, after a space. The last chip of the preview adds a note this way.
+
 ## API reference
 
 <PropsTable
@@ -38,16 +50,40 @@ An inline /command with its subcommand path and typed options, including the foc
     {
       name: "options",
       type: "readonly SlashCommandOption[] | undefined",
-      description: "Optional options value.",
+      description:
+        "The typed options, in order. Each one has a `name`, and optionally a `value`, a `description` and `focused`.",
+    },
+    {
+      name: "children / default slot",
+      type: "ReactNode / Vue slot",
+      description:
+        "Content that follows the command inside the chip, after a space.",
+    },
+    {
+      name: "formatLabel",
+      type: "(state: { path, options }) => string",
+      default: "defaultSlashCommandLabel",
+      description:
+        "Builds the accessible name from the command path and the options. `aria-label` still wins.",
     },
   ]}
 />
 
-The registry exports `SlashCommandOption`, `SlashCommand`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+The registry exports `SlashCommandOption`, `SlashCommand`. The chip also accepts the native attributes of a `<span>`; React uses `className`, while Vue uses `class` and fallthrough attributes.
+
+## HTML and CSS
+
+Load `tokens.css` and `slash-command.css` with the markup. Write one space between two parts, and no space after the slash or after a colon. The colon is part of the option name: `<span class="newt-command__option-name">user:</span>`.
+
+A formatter can move a part to its own line. The picture stays the same, but `textContent` then holds a line break in place of the space. The reference markup keeps each space single with an `oxfmt-ignore` comment. To add content after the command, write a space and an element after the last option.
 
 ## Accessibility
 
-Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+The chip is a `group`, and its `aria-label` gives the full command. The slash is hidden from assistive technology, because the label already says it. The colon is text, not generated content, so a screen reader reads it once.
+
+Pass `formatLabel` to translate the chip's name, `Slash command /ban member`. [Translating labels](/docs/translating-labels) lists every English default.
+
+Pass through ARIA attributes when the surrounding context needs a label or description.
 
 ## Tokens
 

@@ -1,11 +1,15 @@
 {
   "name": "app-launcher",
   "title": "App Launcher",
-  "description": "The Apps popout, with search, a recents strip and the apps installed in a server.",
+  "description": "The Apps launcher, as a desktop popout or a bottom sheet, with search, a recents strip and the apps installed in a server.",
+  "dependencies": ["class-variance-authority", "radix-ui"],
+  "vueDependencies": ["class-variance-authority", "reka-ui"],
+  "registryDependencies": ["scrollbar"],
   "vueFiles": [
     "AppLauncher.vue",
     "AppLauncherHandle.vue",
     "AppLauncherHeader.vue",
+    "AppLauncherHeaderTitle.vue",
     "AppLauncherBack.vue",
     "AppLauncherSearch.vue",
     "AppLauncherSearchInput.vue",
@@ -19,8 +23,10 @@
     "AppLauncherItemIcon.vue",
     "AppLauncherRecents.vue",
     "AppLauncherRecent.vue",
+    "AppLauncherPromoCard.vue",
     "index.ts"
   ],
   "reactDemo": "app-launcher-demo",
-  "vueDemo": "AppLauncherDemo"
+  "vueDemo": "AppLauncherDemo",
+  "examples": ["sheet", "drill-in"]
 }

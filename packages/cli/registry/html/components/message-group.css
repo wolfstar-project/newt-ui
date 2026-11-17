@@ -1,9 +1,23 @@
 /* newt-ui · Message Group */
 
 .newt-message-group {
+  /*
+   * The size of the avatar and the gap beside it. A reply preview in the row
+   * reads both, so its spine starts above the centre of the avatar. Set them
+   * when the row holds an avatar of another size.
+   */
+  --newt-message-group-avatar-size: 40px;
+  --newt-message-group-gap: 16px;
+
   display: flex;
-  gap: 16px;
+  gap: var(--newt-message-group-gap);
   padding: 4px 0;
+  /*
+   * The colour of the message text lives on the row, and the content inherits
+   * it: a colour set on the row reaches the content. The fallback keeps a
+   * project whose token file has no `--newt-text-message` on the old colour.
+   */
+  color: var(--newt-text-message, var(--newt-text-secondary));
 }
 .newt-message-group:hover {
   background: var(--newt-bg-message-hover);
@@ -18,6 +32,8 @@
   grid-template-columns: auto minmax(0, 1fr);
   grid-template-rows: auto auto;
   align-items: start;
+  /* The reply line sits close to the author line, not a full gap above it. */
+  row-gap: 2px;
 }
 .newt-message-group--with-reply > .newt-message-group__avatar {
   grid-column: 1;
@@ -84,7 +100,6 @@
 }
 .newt-message-group__content {
   font-size: 15px;
-  color: var(--newt-text-secondary);
   line-height: 1.5;
 }
 .newt-message-group__reactions {

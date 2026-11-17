@@ -28,5 +28,33 @@ const AVATAR =
       <ReplyPreviewAction>used</ReplyPreviewAction>
       <ReplyPreviewCommand>/ban member</ReplyPreviewCommand>
     </ReplyPreview>
+    <!-- A slash in a square. The chip sizes an icon it is given to 12px. -->
+    <ReplyPreview>
+      <ReplyPreviewAvatar :src="AVATAR" />
+      <ReplyPreviewAuthor>@username</ReplyPreviewAuthor>
+      <ReplyPreviewAction>used</ReplyPreviewAction>
+      <ReplyPreviewCommand>
+        <template #icon>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              fill-rule="evenodd"
+              d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5Zm9.4 3 1.9.7L9.6 18l-1.9-.7L14.4 6Z"
+            />
+          </svg>
+        </template>
+        ban member
+      </ReplyPreviewCommand>
+    </ReplyPreview>
+    <!-- No `src`: the slot draws an avatar that is an icon. -->
+    <ReplyPreview>
+      <ReplyPreviewAvatar>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" />
+        </svg>
+      </ReplyPreviewAvatar>
+      <ReplyPreviewAuthor>@relay</ReplyPreviewAuthor>
+      <ReplyPreviewText>deploy finished in 42 seconds</ReplyPreviewText>
+    </ReplyPreview>
   </div>
 </template>

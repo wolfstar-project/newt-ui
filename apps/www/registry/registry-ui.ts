@@ -85,7 +85,9 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "App Launcher",
     description:
-      "The Apps popout, with search, a recents strip and the apps installed in a server.",
+      "The Apps launcher, as a desktop popout or a bottom sheet, with search, a recents strip and the apps installed in a server.",
+    dependencies: ["class-variance-authority", "radix-ui"],
+    registryDependencies: ["scrollbar"],
     files: [
       {
         path: "ui/app-launcher.tsx",
@@ -126,7 +128,7 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Avatar",
     description:
-      "A circular user avatar with image support and initials fallback in three sizes.",
+      "A circular user avatar with image support and initials fallback in five sizes.",
     dependencies: ["class-variance-authority", "radix-ui"],
     files: [
       {
@@ -247,6 +249,7 @@ export const ui: Registry = [
     title: "Channel Info",
     description:
       "The channel detail panel that covers a channel on narrow screens.",
+    dependencies: ["radix-ui"],
     registryDependencies: ["tabs"],
     files: [
       {
@@ -686,6 +689,7 @@ export const ui: Registry = [
     title: "Message Composer",
     description:
       "The channel input bar: attachment control, text field with combobox hooks, and send.",
+    dependencies: ["class-variance-authority"],
     files: [
       {
         path: "ui/message-composer.tsx",
@@ -924,10 +928,18 @@ export const ui: Registry = [
     type: "registry:ui",
     title: "Scrollbar Utility",
     description:
-      "Discord-styled scrollbars for any scrollable container, with an optional keyboard-focusable viewport.",
+      "Discord-styled scrollbars for any scrollable container, with an overlay thumb, auto-hide and an optional keyboard-focusable viewport.",
     files: [
       {
         path: "ui/scrollbar.tsx",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/scroll-area.tsx",
+        type: "registry:ui",
+      },
+      {
+        path: "ui/scrollbar-classes.ts",
         type: "registry:ui",
       },
     ],
@@ -1054,7 +1066,7 @@ export const ui: Registry = [
     description:
       "The command picker that opens above the composer, with an app rail, grouped options and a matched-command preview.",
     dependencies: ["class-variance-authority"],
-    registryDependencies: ["slash-command"],
+    registryDependencies: ["slash-command", "scrollbar"],
     files: [
       {
         path: "ui/slash-command-suggestions.tsx",
@@ -1179,6 +1191,20 @@ export const ui: Registry = [
     files: [
       {
         path: "ui/tag-input.tsx",
+        type: "registry:ui",
+      },
+    ],
+  },
+  {
+    name: "text-display",
+    type: "registry:ui",
+    title: "Text Display",
+    description:
+      "A block of message text that keeps its line breaks, with the chat markdown heading and subtext sizes.",
+    dependencies: ["class-variance-authority"],
+    files: [
+      {
+        path: "ui/text-display.tsx",
         type: "registry:ui",
       },
     ],

@@ -32,7 +32,7 @@ const items = computed(() => {
   <div
     :class="
       cn(
-        'grid max-w-[550px] auto-rows-[1fr] gap-1 overflow-hidden rounded-lg',
+        'grid max-w-[550px] auto-rows-[1fr] gap-1 overflow-hidden rounded-[var(--newt-radius-lg)]',
         mediaGalleryLayout(items),
         props.class
       )

@@ -1,14 +1,33 @@
 /* Load with defer, after the picker markup. Safe to load again for new roots. */
 ;(() => {
   const KINDS = ["gif", "sticker", "emoji"]
-  const TONES = [
-    ["Default skin tone", "👋"],
-    ["Light skin tone", "👋🏻"],
-    ["Medium-light skin tone", "👋🏼"],
-    ["Medium skin tone", "👋🏽"],
-    ["Medium-dark skin tone", "👋🏾"],
-    ["Dark skin tone", "👋🏿"],
-  ]
+  const TONES = ["👋", "👋🏻", "👋🏼", "👋🏽", "👋🏾", "👋🏿"]
+  /*
+   * The texts the script writes. Translate them with a `labels` object in the
+   * JSON; `{tone}`, `{count}` and `{label}` stand for the value they name.
+   */
+  const LABELS = {
+    toneNames: [
+      "Default skin tone",
+      "Light skin tone",
+      "Medium-light skin tone",
+      "Medium skin tone",
+      "Medium-dark skin tone",
+      "Dark skin tone",
+    ],
+    skinTone: "Skin tone: {tone}",
+    searchResults: "Search results",
+    recent: "Recently used",
+    noResults: "No expressions match your search.",
+    noResultsHelp: "Try another word or another tab.",
+    empty: "Nothing here yet.",
+    emptyHelp: "Try another tab.",
+    unavailable: "{label}, unavailable",
+    oneResult: "1 result",
+    resultCount: "{count} results",
+    from: "from",
+    hint: "Hover or focus an expression to preview it.",
+  }
   const RECENT_LIMIT = 18
   const SVG = "http://www.w3.org/2000/svg"
 
@@ -38,12 +57,12 @@
       .filter(Boolean)
       .every((word) => text.includes(word))
   }
-  function sectionsFor(data, recent, kind, query) {
+  function sectionsFor(data, recent, kind, query, labels) {
     const ofKind = data.items.filter((item) => item.kind === kind)
     if (query.trim()) {
       const found = ofKind.filter((item) => matches(item, query))
       return found.length
-        ? [{ key: "results", label: "Search results", items: found }]
+        ? [{ key: "results", label: labels.searchResults, items: found }]
         : []
     }
     const byId = new Map(ofKind.map((item) => [item.id, item]))
@@ -52,7 +71,7 @@
     if (used.length)
       sections.push({
         key: "recent",
-        label: "Recently used",
+        label: labels.recent,
         glyph: "🕘",
         items: used,
         collapsible: true,
@@ -178,6 +197,7 @@
       const data = JSON.parse(source.textContent)
       data.items ??= []
       data.categories ??= []
+      const labels = { ...LABELS, ...data.labels }
       let recent = [...(data.recent ?? [])]
       // A counter, not crypto.randomUUID(): that only exists in secure contexts.
       let serial = 0
@@ -220,7 +240,7 @@
         footer.replaceChildren()
         if (!shown) {
           const hint = el("span", "newt-expressions-picker__hint")
-          hint.textContent = "Hover or focus an expression to preview it."
+          hint.textContent = labels.hint
           footer.append(hint)
           return
         }
@@ -237,7 +257,7 @@
           const from = el("span", "newt-expressions-picker__where")
           const source = el("strong")
           source.textContent = shown.where
-          from.append("from ", source)
+          from.append(`${labels.from} `, source)
           text.append(from)
         }
         footer.append(preview, text)
@@ -246,7 +266,7 @@
       function render() {
         const query = search.value
         const searching = query.trim().length > 0
-        const sections = sectionsFor(data, recent, kind, query)
+        const sections = sectionsFor(data, recent, kind, query, labels)
         const keys = sections
           .filter((section) => !collapsed.includes(section.key))
           .flatMap((section) =>
@@ -266,8 +286,11 @@
         })
         clear.hidden = !searching
         toneRoot.hidden = kind !== "emoji"
-        toneButton.setAttribute("aria-label", `Skin tone: ${TONES[tone][0]}`)
-        toneButton.querySelector("span").textContent = TONES[tone][1]
+        toneButton.setAttribute(
+          "aria-label",
+          labels.skinTone.replaceAll("{tone}", () => labels.toneNames[tone])
+        )
+        toneButton.querySelector("span").textContent = TONES[tone]
 
         rail.replaceChildren()
         rail.hidden = searching || sections.length < 2
@@ -361,7 +384,7 @@
                 "data-newt-id": item.id,
                 tabindex: key === tabKey ? "0" : "-1",
                 "aria-label": item.disabled
-                  ? `${item.label}, unavailable`
+                  ? labels.unavailable.replaceAll("{label}", () => item.label)
                   : item.label,
                 "aria-pressed": String(isCurrent(item)),
               })
@@ -392,13 +415,9 @@
             role: "status",
           })
           const heading = el("p", "newt-expressions-picker__empty-title")
-          heading.textContent = searching
-            ? "No expressions match your search."
-            : "Nothing here yet."
+          heading.textContent = searching ? labels.noResults : labels.empty
           const help = el("p")
-          help.textContent = searching
-            ? "Try another word or another tab."
-            : "Try another tab."
+          help.textContent = searching ? labels.noResultsHelp : labels.emptyHelp
           empty.append(heading, help)
           scroll.append(empty)
         } else if (searching) {
@@ -409,7 +428,10 @@
           const status = el("p", "newt-expressions-picker__sr-only", {
             role: "status",
           })
-          status.textContent = count === 1 ? "1 result" : `${count} results`
+          status.textContent =
+            count === 1
+              ? labels.oneResult
+              : labels.resultCount.replaceAll("{count}", () => String(count))
           scroll.append(status)
         }
         renderFooter()
@@ -417,7 +439,8 @@
 
       function renderTones() {
         toneList.replaceChildren()
-        TONES.forEach(([label, sample], index) => {
+        TONES.forEach((sample, index) => {
+          const label = labels.toneNames[index]
           const option = el("button", "newt-expressions-picker__control", {
             type: "button",
             "aria-label": label,

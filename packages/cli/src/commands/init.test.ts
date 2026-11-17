@@ -124,3 +124,65 @@ describe("init stylesheet", () => {
     expect(config.tailwind.darkSelector).toBe("data-theme")
   })
 })
+
+describe("init Nuxt components option", () => {
+  let cwd: string
+
+  const NUXT_CONFIG = `export default defineNuxtConfig({
+  compatibilityDate: "2025-07-15",
+})
+`
+
+  beforeEach(async () => {
+    cwd = await mkdtemp(path.join(tmpdir(), "newtui-init-nuxt-"))
+    await writeFile(
+      path.join(cwd, "package.json"),
+      JSON.stringify({
+        dependencies: { nuxt: "^4.0.0", tailwindcss: "^4.1.0" },
+      })
+    )
+    await writeFile(path.join(cwd, "nuxt.config.ts"), NUXT_CONFIG)
+  })
+
+  afterEach(async () => {
+    await rm(cwd, { recursive: true, force: true })
+  })
+
+  async function runInit() {
+    await init({
+      cwd,
+      yes: true,
+      defaults: true,
+      skipInstall: true,
+      registry: OFFLINE_REGISTRY,
+    })
+    return readFile(path.join(cwd, "nuxt.config.ts"), "utf8")
+  }
+
+  it("keeps the index.ts barrels out of Nuxt's component scan", async () => {
+    expect(await runInit()).toBe(`export default defineNuxtConfig({
+  components: [
+    { path: "~/components/islands", island: true },
+    { path: "~/components/global", global: true },
+    { path: "~/components", ignore: ["ui/**/index.ts"] },
+  ],
+  compatibilityDate: "2025-07-15",
+})
+`)
+  })
+
+  it("writes the option once when init runs again", async () => {
+    const first = await runInit()
+
+    expect(await runInit()).toBe(first)
+  })
+
+  it("leaves nuxt.config alone when the ui alias resolves outside components", async () => {
+    await writeFile(
+      path.join(cwd, "tsconfig.json"),
+      JSON.stringify({ compilerOptions: { paths: { "@/*": ["./kit/*"] } } })
+    )
+
+    expect(await runInit()).toBe(NUXT_CONFIG)
+  })
+})

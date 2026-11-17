@@ -14,6 +14,17 @@
   color: var(--newt-text-primary);
 }
 
+/*
+ * Bottom sheet: the launcher fills the width and rises from the bottom edge.
+ * Set --newt-app-launcher-sheet-height to change its height (90dvh).
+ */
+.newt-app-launcher--sheet {
+  max-width: none;
+  height: var(--newt-app-launcher-sheet-height, 90dvh);
+  border-bottom-width: 0;
+  border-radius: var(--newt-radius-lg) var(--newt-radius-lg) 0 0;
+}
+
 /* Grip shown when the launcher is presented as a bottom sheet. */
 .newt-app-launcher__handle {
   flex-shrink: 0;
@@ -22,6 +33,35 @@
   margin: 8px auto 0;
   border-radius: var(--newt-radius-full);
   background: var(--newt-border);
+}
+
+/*
+ * The handle as a control, for a sheet the user expands or collapses. It
+ * carries the name and aria-expanded; the grip inside stays decorative.
+ */
+.newt-app-launcher__handle-button {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 24px;
+  margin: 6px auto 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--newt-radius-full);
+  background: transparent;
+  cursor: pointer;
+}
+.newt-app-launcher__handle-button > .newt-app-launcher__handle {
+  margin: 0;
+}
+.newt-app-launcher__handle-button:hover > .newt-app-launcher__handle {
+  background: var(--newt-text-muted);
+}
+.newt-app-launcher__handle-button:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
 }
 
 /* Drill-in header: back control on the left, view title beside it. */
@@ -60,6 +100,20 @@
 .newt-app-launcher__back:focus-visible {
   outline: 2px solid var(--newt-text-link);
   outline-offset: 2px;
+}
+
+/* Title of a drill-in view, centred between the back control and a spacer. */
+.newt-app-launcher__header-title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--newt-text-primary);
 }
 
 .newt-app-launcher__search {
@@ -163,16 +217,24 @@
   background: var(--newt-bg-elevated);
 }
 
+/* Grid of tiles: hold newt-app-launcher__item--tile items. */
+.newt-app-launcher__list--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 8px;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* A row: the item's button, then the trailing part beside it. */
 .newt-app-launcher__item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
   padding: 12px;
-  border: 0;
-  background: transparent;
-  text-align: start;
-  cursor: pointer;
   transition: background var(--newt-duration-fast) var(--newt-ease);
 }
 .newt-app-launcher__item + .newt-app-launcher__item {
@@ -181,9 +243,58 @@
 .newt-app-launcher__item:hover {
   background: var(--newt-bg-hover);
 }
-.newt-app-launcher__item:focus-visible {
+
+/* The button covers the whole row through its ::after, so a press on the
+ * row, a chevron included, presses it. */
+.newt-app-launcher__item-action {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+  outline: none;
+}
+.newt-app-launcher__item-action::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.newt-app-launcher__item-action:focus-visible::after {
   outline: 2px solid var(--newt-text-link);
   outline-offset: -2px;
+}
+
+/* An app as a tile: icon above, name and description below, centred. */
+.newt-app-launcher__item--tile {
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 8px;
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-elevated);
+}
+.newt-app-launcher__item--tile + .newt-app-launcher__item--tile {
+  border-top: 0;
+}
+.newt-app-launcher__item--tile .newt-app-launcher__item-action {
+  flex: none;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: center;
+}
+.newt-app-launcher__item--tile .newt-app-launcher__item-action::after {
+  border-radius: var(--newt-radius-md);
+}
+.newt-app-launcher__item--tile .newt-app-launcher__item-body {
+  width: 100%;
+}
+.newt-app-launcher__item--tile .newt-app-launcher__item-title {
+  justify-content: center;
 }
 
 .newt-app-launcher__item-icon {
@@ -210,6 +321,10 @@
 .newt-app-launcher__item-icon > svg {
   width: 20px;
   height: 20px;
+}
+/* A logo that must not be cropped. */
+.newt-app-launcher__item-icon--contain > img {
+  object-fit: contain;
 }
 
 .newt-app-launcher__item-body {
@@ -259,15 +374,96 @@
   color: var(--newt-text-muted);
 }
 
-/* Horizontal strip of recently used apps. */
+/* Content after the text: a chevron, a badge, a visibility toggle. */
+.newt-app-launcher__item-trailing {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 4px;
+  color: var(--newt-text-muted);
+}
+.newt-app-launcher__item-trailing > svg {
+  width: 20px;
+  height: 20px;
+}
+/* A press on the trailing part passes through to the button that covers the
+ * row, so a chevron presses it. A control takes its own presses and rises
+ * above the button. */
+.newt-app-launcher__item-trailing {
+  pointer-events: none;
+}
+.newt-app-launcher__item-trailing
+  :is(a, button, input, label, select, textarea) {
+  position: relative;
+  pointer-events: auto;
+}
+
+/* A forward chevron, mirrored in a right-to-left tree. */
+.newt-app-launcher__chevron {
+  transform: scaleX(var(--newt-dir));
+}
+
+/* A promoted app: art on top, a footer with its name below. */
+.newt-app-launcher__promo {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-elevated);
+  color: var(--newt-text-primary);
+  text-align: start;
+  cursor: pointer;
+  transition: background var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-app-launcher__promo:hover {
+  background: var(--newt-bg-hover);
+}
+.newt-app-launcher__promo:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+.newt-app-launcher__promo-art {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--newt-bg-base);
+}
+.newt-app-launcher__promo-art > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.newt-app-launcher__promo-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 12px;
+}
+
+/* Horizontal strip of recently used apps, as a list. */
 .newt-app-launcher__recents {
   display: flex;
   gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   overflow-x: auto;
   scrollbar-width: none;
 }
 .newt-app-launcher__recents::-webkit-scrollbar {
   display: none;
+}
+.newt-app-launcher__recents > li {
+  display: flex;
+  flex-shrink: 0;
 }
 
 .newt-app-launcher__recent {
@@ -301,4 +497,7 @@
 .newt-app-launcher__recent > svg {
   width: 24px;
   height: 24px;
+}
+.newt-app-launcher__recent--contain > img {
+  object-fit: contain;
 }

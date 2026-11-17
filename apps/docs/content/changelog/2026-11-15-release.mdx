@@ -1,0 +1,169 @@
+---
+title: "November 2026 — newtui 2.9.0, @newtui/nuxt 2.0.0"
+description: "app-launcher gains a bottom sheet, an operable handle, real dialog behaviour and the parts a full launcher needs."
+type: changelog
+slug: changelog/2026-11-15-release
+date: 2026-11-15
+---
+
+## `newtui` 2.9.0
+
+- `app-launcher` gains a bottom sheet, an operable handle, real dialog behaviour and the parts a full launcher needs. Add the item again to get the changes.
+
+  - `AppLauncher` takes `variant`: `popout` (the default) or `sheet`. The sheet fills the width and reads its height from `--newt-app-launcher-sheet-height`, which defaults to `90dvh`. The HTML flavour adds `newt-app-launcher--sheet`.
+  - `AppLauncherHandle` takes `label` and `expanded`. With a `label`, it renders a `button` with that name and reports `expanded` as `aria-expanded`. Without one, it stays a decorative grip. The HTML flavour adds `newt-app-launcher__handle-button`.
+  - `AppLauncher` takes `label`, `modal` and `inline`, and calls `onClose` (`@close` in Vue). `label` is optional, as it is on `ChannelInfo`, so code that names the launcher with `aria-label` keeps working. Pass `label` or `aria-label`: a dialog without a name fails an accessibility audit.
+  - The Vue `AppLauncherSearchInput` takes `v-model`. The React one takes `onValueChange` beside `value` and `onChange`.
+  - `AppLauncherItem` takes `trailing` (`#trailing` in Vue) for content after the text, and `variant="tile"` for an icon above the name. `AppLauncherList` takes `variant="grid"` to lay out tiles.
+  - `AppLauncherItemIcon` and `AppLauncherRecent` take `fit`: `cover` (the default) or `contain`, for a logo that must not be cropped.
+  - New parts: `AppLauncherPromoCard`, with `art` and `footer` (`#art` and `#footer` in Vue), and `AppLauncherHeaderTitle`, the centred title of a drill-in view. The HTML flavour adds `newt-app-launcher__promo`, `__header-title`, `__item-trailing`, `__item--tile`, `__list--grid` and the `--contain` modifiers.
+
+  Five things change for existing code.
+
+  - `AppLauncher` is now a dialog built on Radix Dialog (React) and Reka UI Dialog (Vue), so the item installs `radix-ui` or `reka-ui`, and `class-variance-authority`. The React file is now a client component. It still renders in place, with no portal and no overlay. When it mounts, focus moves into it, and Tab then cycles through its controls. Escape calls `onClose`, and focus returns when you unmount the launcher. Add `modal` when the launcher covers the page. If you render the launcher in the page, for example in a showcase, add `inline`: it then has no dialog role and does not move focus.
+  - `AppLauncherRecents` renders a `ul` with `role="list"`, and each `AppLauncherRecent` wraps its button in an `li`. A screen reader now announces the number of recent apps. Put only `AppLauncherRecent` parts inside `AppLauncherRecents`. A React ref on `AppLauncherRecents` is now an `HTMLUListElement`. In the HTML flavour, use a `ul` and wrap each recent in an `li`.
+  - The React `AppLauncherHandle` forwards its ref as an `HTMLElement`, because it renders a `div` or a `button`.
+  - `AppLauncherItem` renders a row `div` that holds its `button` and, beside it, the `trailing` content. A control in `trailing` is no longer nested in the button. `className` (`class` in Vue) now styles the row. The ref and the other props still go to the button. In the HTML flavour, `newt-app-launcher__item` is the row, and `newt-app-launcher__item-action` is its button.
+  - In the HTML flavour, the dialog behaviour needs the new `app-launcher.js` and a `data-newt-app-launcher` attribute. Leave the attribute and the dialog role out for a launcher that stays in the page.
+
+- `channel-header`, `channel-info` and `channel-welcome` gain a decorative form for their actions, a narrow header layout and real dialog behaviour. Add the items again to get the changes.
+
+  - `ChannelHeaderAction`, `ChannelHeaderSearch`, `ChannelInfoAction` and `ChannelWelcomeAction` take `as` and `href`, as `Button` does. `as="span"` renders the decorative form for a read-only view. It is `aria-hidden`, has no pointer and no hover, and is out of the tab order. Its event handlers do not run. In the HTML flavour, put the action class on a `span` with `aria-hidden="true"`.
+  - The same parts, `ChannelHeaderBack` and `ChannelHeaderTitle` take `disabled`. A disabled link loses its URL, leaves the tab order and carries `aria-disabled`, as `Button` does. A disabled control fades to half opacity and shows the not-allowed cursor.
+  - `ChannelHeaderAction` reports `active` as `aria-pressed`. Leave `active` unset for an action that is not a toggle.
+  - `ChannelHeaderName` now truncates. The topic shrinks first, and the name shrinks when the topic has no width left.
+  - The narrow header has its own parts. `ChannelHeaderBack` leaves the channel and shows an unread count in `badge`. `ChannelHeaderTitle` makes the channel name a button. `ChannelHeaderSearch` takes `compact` for an icon-only control. The HTML flavour adds `newt-channel-header__back`, `__back-badge`, `__title`, `__title-chevron` and `__search--compact`.
+  - `ChannelInfo` takes `label`, `modal` and `inline`, and calls `onClose` (`@close` in Vue).
+
+  Five things change for existing code.
+
+  - `ChannelHeader` renders a `div`. It rendered a `header`, which is a second banner landmark outside `main`, `article`, `aside`, `nav` or `section`. Pass `as="header"` to keep the element.
+  - `ChannelHeader` has a minimum height of 48px in place of a fixed height, so a title with two lines fits.
+  - `ChannelHeaderSearch` has no `aria-label`. Its text is its accessible name, so the name matches what a user sees.
+  - `ChannelHeaderAction` with `active` set now carries `aria-pressed`. Remove an `aria-pressed` of your own, and keep the label the same in both states.
+  - `ChannelInfo` is now a dialog built on Radix Dialog (React) and Reka UI Dialog (Vue), so the item installs `radix-ui` or `reka-ui`. It still renders in place, with no portal and no overlay. When it mounts, focus moves into it, and Tab then cycles through its controls. Escape calls `onClose`, and focus returns when you unmount the panel. Add `modal` when the panel covers the channel: the rest of the page is then hidden from assistive technology, focus cannot move to it, and a press on it calls `onClose`. If you render `ChannelInfo` as a side panel that is always on screen, add `inline`: it then has no dialog role and does not move focus. In the HTML flavour, the dialog behaviour needs the new `channel-info.js` and a `data-newt-channel-info` attribute.
+
+- `member-list`, `status-indicator`, `avatar`, `tabs` and `reply-preview` gain new sizes, an interactive row and a defined list structure. Add the items again to get the changes.
+
+  - `StatusDot` takes `label`, the state in words, such as "Online". A screen reader reads it, and it is not shown. In the HTML flavour, put a `newt-status__label` span inside the dot.
+  - The ring of a status dot reads `--newt-status-ring`, then `--newt-bg-base`. If the avatar sits on another surface, set `--newt-status-ring` to that surface.
+  - A new `--newt-streaming` token colours the streaming dot, with `bg-newt-streaming` on Tailwind v3 and v4. Run `init` again, or add the token to your stylesheet.
+  - `Avatar` takes `size="xs"` (16px) and `size="md"` (32px). The HTML flavour adds `newt-avatar--xs` and `newt-avatar--md`.
+  - `ReplyPreviewAvatar` no longer needs `src`. A `srcSet` (`srcset` in Vue) alone also draws the image. Without either, the avatar is a 16px circle that holds its children (the default slot in Vue), such as an icon. The HTML flavour adds `newt-reply__avatar--fallback`.
+  - `MemberListItem` takes `interactive` for a row that opens a profile. The row then renders a button inside the list item, with a pointer, a hover and a focus ring. Listeners, attributes and the ref land on the button. In React, an interactive row takes the attributes of a button, such as `disabled`, `name` and `value`.
+  - `MemberListItem` takes `decoration` (the `#decoration` slot in Vue), an underlay drawn behind the row. The hover is drawn over it.
+  - `MemberListHeading` takes `as`, from `h2` to `h6`. The default stays `h3`.
+  - `TabsList` is never wider than its container. If the triggers do not fit, it scrolls sideways, and the triggers keep their width.
+
+  Four things change for existing code.
+
+  - `StatusIndicator` no longer has `role="status"`. A member list made every row a live region with nothing to announce. Move an `aria-label` from `StatusIndicator` to `label` on `StatusDot`.
+  - `MemberListItem` has no pointer and no hover by default, because a plain row does nothing. Add `interactive` to a row that opens something.
+  - A heading is no longer a child of the list. Put a `MemberList` inside each `MemberListSection`, after its `MemberListHeading`. The section links the two, so each list is named by its heading. Give a `MemberList` with no section an `aria-label`. In the HTML flavour, `.newt-member-list` is now the list inside a section, with `aria-labelledby` pointing at the heading.
+  - `MemberListSection` with `offline` now dims each `role="listitem"` element, so it dims interactive rows too.
+
+- `message-composer` takes a field of your own, more slots and a narrow phone layout. Add the item again to get the changes.
+
+  - `renderInput` (React) and the `#input` slot (Vue) replace the built-in input. They receive `value`, `setValue`, `submit`, `disabled` and `inputProps`. Spread `inputProps` on your field to keep the label, the combobox attributes and the keyboard handling. Enter still submits, and the send button still follows the value.
+  - `leading` (`#leading` in Vue) renders controls after the add button, before the field.
+  - `showAdd` removes the add button when it is `false`. It defaults to `true`.
+  - `trailing` (`#trailing` in Vue) takes the place of the send button while the value is empty.
+  - `disabled` turns off the input, the add button and the send button.
+  - `layout="narrow"` is the phone layout: no frame, a pill field and round buttons. The HTML flavour adds `newt-composer--narrow` and `newt-composer__button--narrow`.
+  - `messageComposerButtonVariants` is exported. Give it to a button you add, so it matches the built-in icon buttons. The item now installs `class-variance-authority`.
+
+  One thing changes for existing code. The `actions` slot now renders inside the field, at its end. The bar looks the same. If your styles select the field by its position, remove them and use `renderInput` or `#input` instead.
+
+- `message-group`, `reply-preview` and `message-list` now draw a reply close to the message it answers. Add the three items again to get the changes.
+
+  - With `withReply`, the reply line sits 2px above the body of the message. It sat 20px above before. A `ReplyPreview` inside `MessageGroupReply` has no margin and no start padding.
+  - The spine of the preview starts above the centre of the avatar and stops 4px before the preview. `MessageGroup` publishes `--newt-message-group-avatar-size` (`40px`) and `--newt-message-group-gap` (`16px`), and the preview reads both. Set them on the row when the avatar has another size. Outside a group, the preview keeps its own elbow.
+  - `ReplyPreviewCommand` takes an icon: the `icon` prop in React, the `#icon` slot in Vue, and the class `newt-reply__command-icon` in the HTML flavour. The icon sits before the truncating label, so the gap of the chip applies. The chip sizes an `svg` to 12px.
+  - The new token `--newt-text-message` (`#dbdee1` dark, `#313338` light) is the colour of message text. `MessageGroup` sets it on the row, and `MessageGroupContent` has no colour of its own. A colour class on the row now changes the text colour of the message.
+  - `MessageList` pads every row inside it. A row inside a wrapper keeps its padding, also when the wrapper is `display: contents`.
+
+  Four things change for existing code. Message text is brighter on dark surfaces and darker on light surfaces. Text in a row that sets no colour takes the colour of the row. A margin or start padding class on a `ReplyPreview` inside a group no longer applies, so change the distance with a `gap-y-*` class on the row. If you drew your own spine, remove it. If you set a `gap-*` class on the row, set `--newt-message-group-gap` in its place so the spine follows.
+
+  `newtui init` leaves a stylesheet that already holds the tokens untouched. If you keep your token file by hand, add `--newt-text-message` to both themes. Without the token, the row falls back to `--newt-text-secondary`, so message text keeps the colour it had. The `text-newt-text-message` utility needs the token in your Tailwind theme: `--color-newt-text-message: var(--newt-text-message)` in `@theme` on Tailwind v4, or `"text-message": "var(--newt-text-message)"` in the `newt` colours on v3. The components do not use that utility, so they work without it.
+
+- `init` keeps the `index.ts` barrels out of Nuxt's component scan. Nuxt read each barrel as a second component and warned once per component folder (`NUXT_B3011: Two component files resolving to the same name`). In a Nuxt project, `init` now adds a `components` option to `nuxt.config` that ignores the barrels and keeps Nuxt's default directories. The pattern follows the `ui` alias in `components.json`. `init` edits only a config with one multi-line `defineNuxtConfig({` call, no `components` option and no top-level spread such as `...sharedConfig`. In every other case it prints the lines to add. If the project has no `nuxt.config` yet, it prints the file to create. If your project already ran `init`, add the option yourself: see the Nuxt installation guide.
+
+- `scrollbar` gains an overlay thumb, auto-hide and a focus ring. `ScrollArea` takes `variant="overlay"`, which draws the thumb over the content so the box keeps its full width. `--newt-scrollbar-inset-start` and `--newt-scrollbar-inset-end` move the ends of the track, and `--newt-scrollbar-thumb-width` and `--newt-scrollbar-thumb-max-height` size the thumb. `autoHide` shows the thumb only on hover, on keyboard focus and while the area scrolls. `scrollbarAutoHideClassName` does the same for an element of your own. The thumb colour reads `--newt-scrollbar-thumb` and `--newt-scrollbar-thumb-hover`, and falls back to the colours it had.
+
+  Three things change for existing code. A `focusable` viewport now draws its focus ring inside its box, where an `overflow: hidden` ancestor cannot clip it. The body of `app-launcher` and the list of `slash-command-suggestions` use the styled scrollbar, so both items now install `scrollbar`. In React, `ScrollArea` moves to a client component in `scroll-area.tsx`. The class strings move to `scrollbar-classes.ts`, so a Server Component can still use them. `scrollbar.tsx` exports both, so imports stay the same. The default variant is `native`, so the scrollbar itself looks as it did. In the HTML distribution, the overlay thumb needs the new `scrollbar.js` and a `data-newt-scrollbar` attribute. Add the item again to get the new files.
+
+- `select-menu` can now draw a select as it appears under a message. Add the item again to get the changes.
+
+  - `side` and `align` place the panel. `side="top"` opens it above the trigger, and it still flips when that side has no room. In the HTML flavour, set `data-side="top"` on the root and `data-align` on the panel.
+  - `triggerClassName` and `contentClassName` (`triggerClass` and `contentClass` in Vue) merge classes onto the trigger and the panel. Both parts carry a `data-slot`: `select-menu-trigger` and `select-menu-content`.
+  - An option takes `emoji`, a unicode character drawn where the icon would be. `icon` wins when an option has both.
+  - `renderItem` (React) and the `#item` slot (Vue) draw the content of a row. `renderItemDescription` and `#item-description` draw only the description. A row drawn with `renderItem` or `#item` names its option with all of its text.
+  - The trigger has `tabindex="-1"` while the list is open, so an axe audit no longer reports it under `aria-hidden-focus`. Focus still returns to it on close. The other focusable elements of the page can still be reported; the docs page says why.
+  - In the HTML flavour, mark the label of a row with `newt-select-menu__option-label`. The script copies that text to the trigger. A row without the class still gives all of its text, as before. The script also copies the `newt-select-menu__option-emoji` of a row to the trigger.
+
+- `slash-command` and `slash-command-suggestions` have real text separators and a layout that follows the picker. Add both items again to get the changes.
+
+  - The text of a `SlashCommand` is now `/conf menu save key:prefix`. A real space stands between two parts and a real colon follows each option name. A copy, a search and `textContent` all give that text. The chip still draws each gap 4px wide.
+  - `SlashCommand` takes `children` in React and a default slot in Vue. The content follows the last option inside the chip, after a space.
+  - The text of a `SlashCommandSuggestion` is now `/warn`, with no non-breaking space. A margin on the slash draws the gap.
+  - `SlashCommandAppIcon` sizes its first child whatever the element is. An icon component that renders a `<span>` now gets half the size of the circle, as an inline SVG does.
+  - `SlashCommandSuggestionsFooter` is a new part: a bar under the rail and the list, for the command being typed.
+  - The width cap of the picker reads `--newt-slash-suggestions-max-width`. The default is still 640px. Set it to `none` to make the picker as wide as the composer.
+  - `SlashCommandSuggestionsRail` takes `orientation`: `"vertical"` or `"horizontal"`.
+  - In a picker narrower than 480px, the rail becomes a row under the list, unless `orientation` fixes it. A suggestion puts the app name beside the command name and gives the description the full width, on up to two lines.
+
+  Six things change for existing code.
+
+  - The chip is inline content and no longer a flex container. A class that relied on `gap` or on a flex child no longer applies.
+  - The colon is no longer generated by CSS. In the HTML flavour, write it in the markup: `<span class="newt-command__option-name">user:</span>`. Write one space between two parts and none after the slash.
+  - In the HTML flavour, wrap the slash of a suggestion in `newt-slash-suggestions__option-slash` in place of `/&nbsp;`.
+  - The picker is a grid and a size container (`container-type: inline-size`). Its width must not depend on its content, so keep `w-full` or give it a width. `flex-col` on the picker has no effect now: the footer and a horizontal rail take their own rows.
+  - A picker narrower than 480px changes layout as described above. Pass `orientation="vertical"` to keep the rail beside the list.
+  - `SlashCommandAppIcon` now sets the size of a first child that is not an `<img>`, and that size wins over a size class on the child. Put text straight inside the icon, with no wrapper element.
+
+- A new `text-display` item, and message parts that follow what a Components V2 message sends. Add the changed items again to get the changes.
+
+  - `text-display` is a block of message text. It keeps the line breaks of its string (`white-space: pre-line`). `size` takes `heading-1`, `heading-2`, `heading-3` and `subtext`, the `#`, `##`, `###` and `-#` sizes of the `Markdown` component. `as` picks the element, so `as="h3"` makes a heading size a real heading. The HTML flavour is `newt-text-display` with `--heading-1`, `--heading-2`, `--heading-3` and `--subtext`.
+  - `Divider` takes `spacing="small"` (4px) and `spacing="large"` (8px), the two steps of a V2 separator. `sm`, `md` and `lg` still work. The HTML flavour adds `newt-divider--small` and `newt-divider--large`.
+  - `Button` takes content before and after the label: the `leading` and `trailing` props in React, the `#leading` and `#trailing` slots in Vue, and `newt-btn__leading` and `newt-btn__trailing` in the HTML flavour. Each sits in its own box, so an icon component or a unicode emoji gets the gap. The `emoji` image URL prop still works.
+  - `Button` takes `size="message"`, 32px high, for a button in a message. The height is fixed, so a link button or an emoji image keeps the row aligned. The HTML flavour adds `newt-btn--message`.
+  - `Reaction` draws its emoji from its children in React and from its default slot in Vue, for an icon or an image component. The slot wins over `emoji` and `emojiSrc`. Set `emojiAlt` to name it. `formatLabel` still builds the accessible name. The HTML flavour adds `newt-reaction__emoji`.
+  - `InviteName` takes `as`, as `Button` does. Pass `NuxtLink`, `RouterLink` or another link component to keep client navigation. In React, the part takes the props of that component, such as `to`.
+  - `EmbedAuthorIcon`, `EmbedFooterIcon`, `InviteIcon`, `MediaGalleryItem` and `SectionThumbnail` take `as`, so you can pass an image component such as `NuxtImg`. In React, each part takes the props of that component. The spoiler of `MediaGalleryItem` and `SectionThumbnail` still works with it.
+
+  Three things change for existing code.
+
+  - An `Embed` with no `color` draws its bar in `--newt-border`, the same neutral default as `V2Container`. It used `--newt-brand` before. Pass `color="var(--newt-brand)"` to keep the old bar. An explicit `color` works as before.
+  - `SectionThumbnail` is 85px square. It was 86px.
+  - A `Button` with no label renders no label box, so an emoji-only button has no extra gap after the emoji.
+
+- `add` and `diff` now warn when a component uses a theme name your project does not declare. Before, a class such as `shadow-elevation-high` or `duration-fast` produced no CSS, and nothing said so. The CLI reads your stylesheet and the local files it imports, such as `@import "newt.css"`. It lists each missing name and prints the block to paste: `@theme` entries on Tailwind v4, `theme.extend` entries on v3, and the raw `--newt-*` variables on both.
+
+  The new `newtui tokens` command appends that block for you. It adds only the missing names, so a second run writes nothing. Pass component names to limit it to what they use, and `--dry-run` to print the block without writing it. On Tailwind v3 it prints the `tailwind.config` entries instead of editing the file.
+
+  The theme now maps `duration-fast` and `duration-base` on Tailwind v4 through `--transition-duration-fast` and `--transition-duration-base`. Earlier `init` runs did not write them, so these classes had no effect on v4. Run `npx newtui tokens` to add them. On Tailwind v3 the preset now reads `var(--newt-duration-fast)` and `var(--newt-duration-base)` instead of fixed values.
+
+  Components now read their radii and their sans and mono stacks from the newt tokens, not from your Tailwind scale. `rounded-md` became `rounded-[var(--newt-radius-md)]`, and `font-sans` became `font-[family-name:var(--newt-font-sans)]`; the same holds for `sm`, `lg`, the sided radii and `font-mono`. Before, a host with its own scale restyled them: in an app with Nuxt UI `rounded-md` is 12px, not 8px. Tailwind v3 compiled the default 6px. Both forms compile on Tailwind v3 and v4, and a `rounded-*` or `font-*` class you pass still wins. A newt/create preset's radius and font now reach the components too. Run `npx newtui add <component> --overwrite` to update installed components. To keep your own scale inside newt/ui, set `--newt-radius-*` and `--newt-font-*` to it, as the theming guide shows.
+
+- Every name and text a component writes itself now comes from a prop. English stays the default, so nothing changes until you pass a translation. Add the changed items again to get the new props. The new [Translating labels](https://newtui.dev/docs/translating-labels) page lists every prop and its English default.
+
+  - `MessageComposer` takes `labels`: `group`, `placeholder`, `add` and `send`. `group` and `placeholder` are functions of the channel name. `defaultMessageComposerLabels` holds the English text.
+  - `SlashCommand` takes `formatLabel`, which builds the chip's name from the command path and the options. `defaultSlashCommandLabel` is the English default.
+  - `AppLauncherItem` takes `promotedLabel` for the `Promoted` badge.
+  - `MemberListAppTag` and `MessageGroupBotTag` take `label` and `verifiedLabel`. An `aria-label` on `MessageGroupBotTag` still wins.
+  - `SectionThumbnail` and `MediaGalleryItem` take `spoilerLabel`.
+  - `EmbedTimestamp` takes `locale`, `timeZone` and `formatter`. `formatter` wins over the other two. `locale` defaults to `en-US`, as before. Pass a fixed locale and time zone, so the server and the browser write the same text.
+  - `Timestamp` takes `timeZone`. It defaults to the zone of the runtime, as before.
+  - `ThreadPreviewCount` takes `formatCount`. `PinInput` takes `formatCellLabel` for the name of each box.
+  - `PermissionStates` takes `labels` with `deny`, `inherit` and `allow`.
+  - `EntitySelect` takes `emptyLabel`. `FileUpload` takes `prompt` and `browseLabel`.
+  - `ExpressionsPicker` takes `labels` for every name and text it writes. `defaultExpressionsPickerLabels` holds the English text. `unavailable` builds the name of an item you cannot choose from its label.
+  - In the HTML flavour, `tag-input.js` reads `data-newt-remove-label` from the field, with `{tag}` for the chip's text. `token-field.js` reads `data-newt-reveal-label`, `data-newt-hide-label` and `data-newt-copied-label`. `expressions-picker.js` reads a `labels` object from its JSON data, with `{label}` in `unavailable` for the item's name.
+
+  One thing changes for existing code. In Vue, `expressionKinds` is now a list of kinds, and the entries of `skinTones` no longer carry a `label`. Read the names from `defaultExpressionsPickerLabels` instead.
+
+## `@newtui/nuxt` 2.0.0
+
+- Register `components/ui` before Nuxt scans `components/`. Nuxt gives a file to the first directory that scans it, so the module registered nothing: components stayed `<UiButton />`, and each `index.ts` barrel caused a `NUXT_B3011` duplicate name warning. The components are now `<Button />` (or `<NewtButton />` with `prefix: "Newt"`), as the documentation says, and the warnings are gone. If your templates use the `Ui` names, rename them or remove the module.
+
+- The token stylesheet of the module now declares `--newt-streaming` and `--newt-text-message`. The streaming dot of `status-indicator` keeps its colour, and message text in `message-group` takes its own colour. No change is needed in your project.

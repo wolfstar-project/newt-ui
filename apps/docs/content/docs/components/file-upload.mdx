@@ -30,12 +30,26 @@ A drop zone that also opens a file picker from the keyboard. Compose it from the
       type: "string",
       description: "Additional classes merged with the component defaults.",
     },
+    {
+      name: "prompt",
+      type: "string",
+      default: '"Drop files here or"',
+      description: "The text before the browse control.",
+    },
+    {
+      name: "browseLabel",
+      type: "string",
+      default: '"browse"',
+      description: "The browse control, which opens the file picker.",
+    },
   ]}
 />
 
 ## Accessibility
 
 Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+The prompt and the browse control take their text from `prompt` and `browseLabel`. [Translating labels](/docs/translating-labels) lists every English default.
 
 ## Tokens
 

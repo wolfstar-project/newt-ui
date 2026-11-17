@@ -13,5 +13,5 @@
   ],
   "reactDemo": "tabs-demo",
   "vueDemo": "TabsDemo",
-  "examples": ["controlled", "panels", "disabled"]
+  "examples": ["controlled", "panels", "disabled", "overflow"]
 }

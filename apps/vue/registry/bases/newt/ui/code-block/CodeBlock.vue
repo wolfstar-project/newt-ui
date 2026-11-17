@@ -30,7 +30,7 @@ const runs = computed<readonly CodeTokenSpec[] | undefined>(() =>
   <pre
     :class="
       cn(
-        'overflow-x-auto rounded-md border border-newt-border bg-newt-code-bg p-4 font-mono text-[13px] leading-[1.6] text-newt-text-secondary',
+        'overflow-x-auto rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-code-bg p-4 font-[family-name:var(--newt-font-mono)] text-[13px] leading-[1.6] text-newt-text-secondary',
         props.class
       )
     "

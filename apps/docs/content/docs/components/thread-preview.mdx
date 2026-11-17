@@ -33,9 +33,28 @@ The thread hanging off a message: its name, its reply count and the last thing s
   ]}
 />
 
+<PropsTable
+  of="ThreadPreviewCount"
+  rows={[
+    {
+      name: "count",
+      type: "number",
+      description: "How many messages the thread holds.",
+    },
+    {
+      name: "formatCount",
+      type: "(count: number) => string",
+      default: "defaultThreadPreviewCount",
+      description: "Builds the text from the count: `1 message`, `3 messages`.",
+    },
+  ]}
+/>
+
 ## Accessibility
 
 Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+`ThreadPreviewCount` writes its count in English unless you pass `formatCount`. [Translating labels](/docs/translating-labels) lists every English default.
 
 ## Tokens
 

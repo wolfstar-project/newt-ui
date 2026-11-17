@@ -21,9 +21,35 @@ One instant, written in the reader's own locale and time zone. Compose it from t
   of="Timestamp"
   rows={[
     {
-      name: "children / default slot",
-      type: "React.ReactNode / Vue slot",
-      description: "Content rendered inside the component.",
+      name: "value",
+      type: "Date | number",
+      description: "The instant. A number is read as seconds.",
+    },
+    {
+      name: "format",
+      type: "TimestampStyle",
+      default: "shortDateTime",
+      description:
+        "One of shortTime, longTime, shortDate, longDate, shortDateTime, longDateTime or relative.",
+    },
+    {
+      name: "locale",
+      type: "string | undefined",
+      description:
+        "Locale of the text. Defaults to the locale of the runtime. Pass a fixed value, so the server and the browser write the same text.",
+    },
+    {
+      name: "timeZone",
+      type: "string | undefined",
+      description:
+        "Time zone of the text, such as `Europe/Paris`. Defaults to the zone of the runtime.",
+    },
+    {
+      name: "tick",
+      type: "number",
+      default: "60000",
+      description:
+        "How often a relative timestamp redraws, in milliseconds. Zero freezes it.",
     },
     {
       name: "className / class",
@@ -36,6 +62,8 @@ One instant, written in the reader's own locale and time zone. Compose it from t
 ## Accessibility
 
 Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+The server and the browser must write the same text. Pass a fixed `locale` and a fixed `timeZone` for that. Without `timeZone`, each runtime writes the time in its own zone. [Translating labels](/docs/translating-labels#dates) explains both.
 
 ## Tokens
 

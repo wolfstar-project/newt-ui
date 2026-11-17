@@ -18,6 +18,8 @@ Open http://localhost:3000.
 - `app/assets/css/main.css` — the `--newt-*` design tokens inside `@layer base`.
 - `nuxt.config.ts` — `future: { compatibilityVersion: 4 }`, so Nuxt's own
   source root is `app/`, and `@tailwindcss/vite`.
+  Its `components` option keeps the `index.ts` barrels out of Nuxt's component
+  scan. Without it, Nuxt warns about a duplicate name for each component folder.
 - `components.json` — the newt/ui CLI config (`ui` -> `@/components/ui`,
   `utils` -> `@/lib/utils`, `framework` -> `nuxt`).
 - `app/lib/utils.ts` — the `cn()` helper.

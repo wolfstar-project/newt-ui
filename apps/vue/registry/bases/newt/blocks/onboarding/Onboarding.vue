@@ -56,7 +56,7 @@ function forward() {
   <section
     :class="
       cn(
-        'flex w-full flex-col gap-6 rounded-lg border border-newt-border bg-newt-bg-surface p-6',
+        'flex w-full flex-col gap-6 rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-surface p-6',
         props.class
       )
     "

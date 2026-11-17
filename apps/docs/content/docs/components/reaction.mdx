@@ -29,6 +29,12 @@ Bind `active` to own the toggle. The pill never changes `count` by itself, so ad
 
 <ComponentPreview name="reaction" variant="custom-emoji" />
 
+### Icon emoji
+
+Pass the emoji as children in React, or in the default slot in Vue, to draw it with an icon or an image component. The slot wins over `emoji` and `emojiSrc`. Set `emojiAlt` so the accessible name says which emoji it is.
+
+<ComponentPreview name="reaction" variant="icon" />
+
 ### Read-only
 
 `readonly` renders a tally that cannot be toggled or focused. Use it in feeds and previews where the reader cannot react.
@@ -40,6 +46,12 @@ Bind `active` to own the toggle. The pill never changes `count` by itself, so ad
 <PropsTable
   of="Reaction"
   rows={[
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description:
+        "The emoji, drawn by an icon or an image component. Wins over `emoji` and `emojiSrc`. Name it with `emojiAlt`.",
+    },
     {
       name: "emoji",
       type: "React.ReactNode (React) / string (Vue)",
@@ -98,6 +110,8 @@ The registry exports `Reaction`, `ReactionGroup`. Parts without a table accept t
 ## Accessibility
 
 The reaction is a real button and publishes its toggled state through `aria-pressed`. A `readonly` reaction is an image with the same accessible name instead, so a feed that only shows counts adds no tab stops. Translate the name with `formatLabel` when the page is not in English. Keep the emoji name and count understandable to screen readers.
+
+[Translating labels](/docs/translating-labels) lists every English default.
 
 ## Tokens
 

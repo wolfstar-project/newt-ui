@@ -124,6 +124,8 @@ Opening the palette always starts from an empty query with the first row highlig
 
 The shell carries `role="dialog"` and `aria-modal="true"`, and takes its accessible name from `label`. The primitive holds focus inside it and hides the page behind from screen readers. `Escape` closes it, and so does a press on the dimmed page. While an input method composes text, `Escape` cancels the candidate and the palette stays open. When the palette closes, focus goes back to the element that had it before. The search field is a `role="combobox"` that keeps focus the whole time: `Up` and `Down` move the highlight, wrapping at the ends, and `aria-activedescendant` tells a screen reader which row is highlighted. `Enter` chooses it. Rows are `role="option"` inside a `role="listbox"`, grouped under their headings. The footer hints repeat what the keys do for sighted users and are hidden from assistive technology.
 
+`label`, `placeholder`, `emptyText` and `hints` default to English. [Translating labels](/docs/translating-labels) lists every English default.
+
 ## Tokens
 
 <TokensNote name="command-palette" />

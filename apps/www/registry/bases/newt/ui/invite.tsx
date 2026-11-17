@@ -10,7 +10,7 @@ const Invite = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "max-w-[432px] rounded-md bg-newt-bg-surface px-4 pb-4 pt-2 text-newt-text-primary",
+      "max-w-[432px] rounded-[var(--newt-radius-md)] bg-newt-bg-surface px-4 pb-4 pt-2 text-newt-text-primary",
       className
     )}
     {...props}
@@ -45,18 +45,45 @@ const InviteBody = React.forwardRef<
 ))
 InviteBody.displayName = "InviteBody"
 
-const InviteIcon = React.forwardRef<
-  HTMLImageElement,
-  React.ComponentProps<"img">
->(({ className, alt = "", ...props }, ref) => (
-  <img
-    ref={ref}
-    alt={alt}
-    aria-hidden={alt === "" ? true : undefined}
-    className={cn("h-12 w-12 shrink-0 rounded-md object-cover", className)}
-    {...props}
-  />
-))
+/*
+ * The props of the element or component `as` names, so a custom image
+ * component's own props type-check.
+ */
+export type InviteIconProps<E extends React.ElementType = "img"> = {
+  /**
+   * The image element or component to render. Defaults to `img`; pass your
+   * framework's image component for optimised sources.
+   */
+  as?: E
+} & Omit<React.ComponentPropsWithRef<E>, "as">
+
+type InviteIconComponent = {
+  <E extends React.ElementType = "img">(
+    props: InviteIconProps<E>
+  ): React.ReactNode
+  displayName?: string
+}
+
+/*
+ * SAFETY: `forwardRef` drops the generic signature. The render hands every
+ * prop it does not set itself to `as` unchanged, so the props of `as` are
+ * the props the part receives.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- see SAFETY
+const InviteIcon = React.forwardRef<HTMLImageElement, InviteIconProps>(
+  ({ as: Tag = "img", className, alt = "", ...props }, ref) => (
+    <Tag
+      ref={ref}
+      alt={alt}
+      aria-hidden={alt === "" ? true : undefined}
+      className={cn(
+        "h-12 w-12 shrink-0 rounded-[var(--newt-radius-md)] object-cover",
+        className
+      )}
+      {...props}
+    />
+  )
+) as InviteIconComponent
 InviteIcon.displayName = "InviteIcon"
 
 const InviteInfo = React.forwardRef<
@@ -67,19 +94,43 @@ const InviteInfo = React.forwardRef<
 ))
 InviteInfo.displayName = "InviteInfo"
 
-const InviteName = React.forwardRef<
-  HTMLAnchorElement,
-  React.ComponentProps<"a">
->(({ className, ...props }, ref) => (
-  <a
-    ref={ref}
-    className={cn(
-      "block truncate font-bold text-newt-text-primary no-underline hover:underline",
-      className
-    )}
-    {...props}
-  />
-))
+/*
+ * The props of the element or component `as` names, so a router link's own
+ * props, such as `to`, type-check.
+ */
+export type InviteNameProps<E extends React.ElementType = "a"> = {
+  /**
+   * The element or component to render. Defaults to `a`; pass a router link
+   * component to keep client navigation.
+   */
+  as?: E
+} & Omit<React.ComponentPropsWithRef<E>, "as">
+
+type InviteNameComponent = {
+  <E extends React.ElementType = "a">(
+    props: InviteNameProps<E>
+  ): React.ReactNode
+  displayName?: string
+}
+
+/*
+ * SAFETY: `forwardRef` drops the generic signature. The render hands every
+ * prop it does not set itself to `as` unchanged, so the props of `as` are
+ * the props the part receives.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- see SAFETY
+const InviteName = React.forwardRef<HTMLAnchorElement, InviteNameProps>(
+  ({ as: Tag = "a", className, ...props }, ref) => (
+    <Tag
+      ref={ref}
+      className={cn(
+        "block truncate font-bold text-newt-text-primary no-underline hover:underline",
+        className
+      )}
+      {...props}
+    />
+  )
+) as InviteNameComponent
 InviteName.displayName = "InviteName"
 
 const InviteCounts = React.forwardRef<

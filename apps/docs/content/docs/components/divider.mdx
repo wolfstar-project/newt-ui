@@ -9,6 +9,8 @@ It is built on [Radix Separator](https://www.radix-ui.com/primitives/docs/compon
 
 <ComponentPreview name="divider" />
 
+A Components V2 separator has two steps. Use `spacing="small"` for 4px and `spacing="large"` for 8px. The `sm`, `md` and `lg` steps still work for other layouts.
+
 ## Installation
 
 <Installation name="divider" />
@@ -24,8 +26,9 @@ It is built on [Radix Separator](https://www.radix-ui.com/primitives/docs/compon
   rows={[
     {
       name: "spacing",
-      type: '"sm" | "md" | "lg"',
-      description: "Margin around the rule: 4px, 16px or 24px.",
+      type: '"small" | "large" | "sm" | "md" | "lg"',
+      description:
+        "Margin around the rule. `small` and `large` are the 4px and 8px steps of a Components V2 separator. `sm`, `md` and `lg` are 4px, 16px and 24px.",
       default: '"md"',
     },
     {

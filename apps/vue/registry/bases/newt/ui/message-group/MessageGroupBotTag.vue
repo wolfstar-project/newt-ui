@@ -3,24 +3,27 @@ import type { HTMLAttributes } from "vue"
 
 import { cn } from "@/lib/utils"
 
-const props = defineProps<{
-  class?: HTMLAttributes["class"]
-  /** Add the check Discord puts on verified applications. */
-  verified?: boolean
-  /**
-   * Accessible name. Defaults to "Application", or "Verified application"
-   * with `verified`; pass a translation here.
-   */
-  ariaLabel?: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    class?: HTMLAttributes["class"]
+    /** Add the check Discord puts on verified applications. */
+    verified?: boolean
+    /** Accessible name of the tag. `aria-label` still wins. */
+    label?: string
+    /** Accessible name with `verified`. `aria-label` still wins. */
+    verifiedLabel?: string
+    /** Fixed accessible name. Wins over `label` and `verifiedLabel`. */
+    ariaLabel?: string
+  }>(),
+  { label: "Application", verifiedLabel: "Verified application" }
+)
 </script>
 
 <template>
   <span
     role="img"
     :aria-label="
-      props.ariaLabel ??
-      (props.verified ? 'Verified application' : 'Application')
+      props.ariaLabel ?? (props.verified ? props.verifiedLabel : props.label)
     "
     :class="
       cn(

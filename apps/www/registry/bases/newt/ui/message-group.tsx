@@ -33,9 +33,21 @@ const MessageGroup = React.forwardRef<HTMLElement, MessageGroupProps>(
       data-slot="message-row"
       data-ephemeral={ephemeral || undefined}
       className={cn(
-        "gap-4 py-1",
+        /*
+         * The size of the avatar and the gap beside it. A reply preview in the
+         * row reads both, so its spine starts above the centre of the avatar.
+         * Set them when the row holds an avatar of another size.
+         */
+        "gap-x-[var(--newt-message-group-gap)] py-1 [--newt-message-group-avatar-size:40px] [--newt-message-group-gap:16px]",
+        /*
+         * The colour of the message text is on the row and the content
+         * inherits it, so a colour class on the row reaches the content. The
+         * fallback keeps a project without `--newt-text-message` on the
+         * colour it had.
+         */
+        "text-[color:var(--newt-text-message,var(--newt-text-secondary))]",
         withReply
-          ? "grid grid-cols-[auto_minmax(0,1fr)] grid-rows-[auto_auto] items-start [&>[data-slot=message-avatar]]:col-start-1 [&>[data-slot=message-avatar]]:row-start-2 [&>[data-slot=message-body]]:col-start-2 [&>[data-slot=message-body]]:row-start-2 [&>[data-slot=message-reply]]:col-start-2 [&>[data-slot=message-reply]]:row-start-1"
+          ? "grid grid-cols-[auto_minmax(0,1fr)] grid-rows-[auto_auto] items-start gap-y-0.5 [&>[data-slot=message-avatar]]:col-start-1 [&>[data-slot=message-avatar]]:row-start-2 [&>[data-slot=message-body]]:col-start-2 [&>[data-slot=message-body]]:row-start-2 [&>[data-slot=message-reply]]:col-start-2 [&>[data-slot=message-reply]]:row-start-1"
           : "flex",
         ephemeral
           ? "border-s-2 border-[color-mix(in_srgb,var(--newt-text-link)_40%,transparent)] bg-[color-mix(in_srgb,var(--newt-text-link)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--newt-text-link)_15%,transparent)]"
@@ -117,10 +129,11 @@ MessageGroupAuthor.displayName = "MessageGroupAuthor"
 export interface MessageGroupBotTagProps extends React.HTMLAttributes<HTMLSpanElement> {
   /** Add the check Discord puts on verified applications. */
   verified?: boolean
-  /**
-   * Accessible name. Defaults to "Application", or "Verified application"
-   * with `verified`; pass a translation here.
-   */
+  /** Accessible name of the tag. `aria-label` still wins. */
+  label?: string
+  /** Accessible name with `verified`. `aria-label` still wins. */
+  verifiedLabel?: string
+  /** Fixed accessible name. Wins over `label` and `verifiedLabel`. */
   "aria-label"?: string
 }
 
@@ -132,6 +145,8 @@ const MessageGroupBotTag = React.forwardRef<
     {
       className,
       verified = false,
+      label = "Application",
+      verifiedLabel = "Verified application",
       children = "BOT",
       "aria-label": ariaLabel,
       ...props
@@ -141,9 +156,7 @@ const MessageGroupBotTag = React.forwardRef<
     <span
       ref={ref}
       role="img"
-      aria-label={
-        ariaLabel ?? (verified ? "Verified application" : "Application")
-      }
+      aria-label={ariaLabel ?? (verified ? verifiedLabel : label)}
       className={cn(
         "inline-flex items-center gap-0.5 rounded-[3px] bg-newt-brand px-1 py-px text-[10px] font-semibold uppercase tracking-[0.02em] text-newt-on-accent",
         className
@@ -182,16 +195,14 @@ const MessageGroupTime = React.forwardRef<
 ))
 MessageGroupTime.displayName = "MessageGroupTime"
 
+/* No colour of its own: the content takes the colour of the row. */
 const MessageGroupContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn(
-      "text-[15px] leading-[1.5] text-newt-text-secondary",
-      className
-    )}
+    className={cn("text-[15px] leading-[1.5]", className)}
     {...props}
   />
 ))

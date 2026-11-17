@@ -15,6 +15,11 @@ export interface SelectMenuOption {
    */
   icon?: Component
   /**
+   * A unicode emoji drawn in the place of `icon`, for an option that has no
+   * component to pass. `icon` wins when an option carries both.
+   */
+  emoji?: string
+  /**
    * A muted aside after the label on the trigger, for what the option resolves
    * to. It is the first thing allowed to truncate.
    */
@@ -37,3 +42,12 @@ export const SELECT_MENU_MAX_OPTIONS = 25
  * against the row that is in force.
  */
 export type SelectMenuVariant = "settings" | "message"
+
+/**
+ * The side of the trigger the panel opens on. The panel flips to the opposite
+ * side when the preferred one has no room.
+ */
+export type SelectMenuSide = "top" | "right" | "bottom" | "left"
+
+/** How the panel lines up with the trigger along its side. */
+export type SelectMenuAlign = "start" | "center" | "end"

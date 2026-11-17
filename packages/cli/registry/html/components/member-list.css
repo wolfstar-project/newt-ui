@@ -1,5 +1,11 @@
 /* newt-ui · Member List */
 
+/*
+ * The composition: a `section.newt-member-list__section` holds a heading
+ * and one `role="list"` `.newt-member-list`, and the list points at the
+ * heading with `aria-labelledby`. A heading is never a child of the list,
+ * which may own only list items.
+ */
 .newt-member-list {
   display: flex;
   flex-direction: column;
@@ -22,25 +28,68 @@
 }
 
 /* Offline members stay listed but recede. */
-.newt-member-list__section--offline .newt-member {
+.newt-member-list__section--offline [role="listitem"] {
   opacity: 0.45;
 }
 .newt-member-list__section--offline .newt-member__name {
   color: var(--newt-text-muted);
 }
 
+/* A plain row has no pointer and no hover, because it does nothing. */
 .newt-member {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   gap: 10px;
   min-width: 0;
   padding: 6px 8px;
   border-radius: var(--newt-radius-sm);
+}
+
+/*
+ * A row that opens a profile is a `<button>` inside the list item. The
+ * hover is drawn on a layer of its own, so it shows over a decoration.
+ */
+.newt-member--interactive {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
   cursor: pointer;
+}
+.newt-member--interactive::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
   transition: background var(--newt-duration-fast) var(--newt-ease);
 }
-.newt-member:hover {
+.newt-member--interactive:hover::after {
   background: var(--newt-bg-hover);
+}
+.newt-member--interactive:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: -2px;
+}
+
+/* An underlay behind the row, such as a profile decoration. */
+.newt-member__decoration {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.newt-member__decoration > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .newt-member__info {
   display: flex;

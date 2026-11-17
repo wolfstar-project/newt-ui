@@ -65,7 +65,7 @@ const defaultHints: CommandPaletteHints = {
 }
 
 const kbdClassName =
-  "inline-flex h-5 min-w-5 items-center justify-center rounded-sm border border-newt-border bg-newt-bg-base px-1.5 font-mono text-[11px] font-semibold text-newt-text-secondary"
+  "inline-flex h-5 min-w-5 items-center justify-center rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-base px-1.5 font-[family-name:var(--newt-font-mono)] text-[11px] font-semibold text-newt-text-secondary"
 
 function matches(item: CommandItem, query: string): boolean {
   if (query === "") return true
@@ -159,7 +159,7 @@ const CommandPalette = React.forwardRef<
             ref={ref}
             aria-describedby={undefined}
             className={cn(
-              "fixed inset-x-0 top-[15vh] z-[100] mx-auto flex max-h-[70vh] w-[560px] max-w-[92vw] flex-col overflow-hidden rounded-lg border border-newt-border bg-newt-bg-elevated text-newt-text-primary shadow-elevation-high outline-none",
+              "fixed inset-x-0 top-[15vh] z-[100] mx-auto flex max-h-[70vh] w-[560px] max-w-[92vw] flex-col overflow-hidden rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-elevated text-newt-text-primary shadow-elevation-high outline-none",
               className
             )}
             onOpenAutoFocus={(event) => {
@@ -228,7 +228,7 @@ const CommandPalette = React.forwardRef<
                   )
                 }
               }}
-              className="mx-3 mt-3 rounded-sm border border-newt-border bg-newt-bg-input px-3.5 py-3 font-sans text-base text-newt-text-primary placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none"
+              className="mx-3 mt-3 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-input px-3.5 py-3 font-[family-name:var(--newt-font-sans)] text-base text-newt-text-primary placeholder:text-newt-text-muted focus:border-newt-brand focus:outline-none"
             />
             <div
               id={`${id}-list`}
@@ -257,7 +257,7 @@ const CommandPalette = React.forwardRef<
                         onClick={() => choose(item)}
                         onPointerMove={() => setActive(flat.indexOf(item))}
                         className={cn(
-                          "flex cursor-pointer items-center gap-2 rounded-sm p-2 text-[15px] leading-5",
+                          "flex cursor-pointer items-center gap-2 rounded-[var(--newt-radius-sm)] p-2 text-[15px] leading-5",
                           selected
                             ? "bg-newt-bg-active text-newt-text-primary"
                             : "text-newt-text-secondary"

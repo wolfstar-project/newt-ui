@@ -113,6 +113,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "AppLauncherSheetDemo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher", "button"],
+    files: [
+      {
+        path: "examples/AppLauncherSheetDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "AppLauncherDrillInDemo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher"],
+    files: [
+      {
+        path: "examples/AppLauncherDrillInDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "AttachmentDemo",
     type: "registry:example",
     registryDependencies: ["attachment", "button"],
@@ -267,6 +289,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ButtonSlotsDemo",
+    type: "registry:example",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "examples/ButtonSlotsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ButtonDisabledDemo",
     type: "registry:example",
     registryDependencies: ["button"],
@@ -366,12 +399,45 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ChannelHeaderNarrowDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "examples/ChannelHeaderNarrowDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ChannelHeaderDecorativeDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "examples/ChannelHeaderDecorativeDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ChannelInfoDemo",
     type: "registry:example",
     registryDependencies: ["channel-info", "tabs"],
     files: [
       {
         path: "examples/ChannelInfoDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ChannelInfoDialogDemo",
+    type: "registry:example",
+    registryDependencies: ["channel-info", "button"],
+    files: [
+      {
+        path: "examples/ChannelInfoDialogDemo.vue",
         type: "registry:example",
       },
     ],
@@ -817,6 +883,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "InviteRouterDemo",
+    type: "registry:example",
+    registryDependencies: ["invite", "button"],
+    files: [
+      {
+        path: "examples/InviteRouterDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "KbdTagDemo",
     type: "registry:example",
     registryDependencies: ["kbd-tag"],
@@ -866,6 +943,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "MemberListInteractiveDemo",
+    type: "registry:example",
+    registryDependencies: ["member-list", "avatar", "status-indicator"],
+    files: [
+      {
+        path: "examples/MemberListInteractiveDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "MentionDemo",
     type: "registry:example",
     registryDependencies: ["mention"],
@@ -883,6 +971,28 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/MessageComposerDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "MessageComposerInputDemo",
+    type: "registry:example",
+    registryDependencies: ["message-composer", "slash-command"],
+    files: [
+      {
+        path: "examples/MessageComposerInputDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "MessageComposerNarrowDemo",
+    type: "registry:example",
+    registryDependencies: ["message-composer"],
+    files: [
+      {
+        path: "examples/MessageComposerNarrowDemo.vue",
         type: "registry:example",
       },
     ],
@@ -922,6 +1032,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/MessageGroupAppDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "MessageGroupReplyDemo",
+    type: "registry:example",
+    registryDependencies: ["message-group", "avatar", "reply-preview"],
+    files: [
+      {
+        path: "examples/MessageGroupReplyDemo.vue",
         type: "registry:example",
       },
     ],
@@ -1329,6 +1450,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ReactionIconDemo",
+    type: "registry:example",
+    registryDependencies: ["reaction"],
+    files: [
+      {
+        path: "examples/ReactionIconDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "ReactionReadonlyDemo",
     type: "registry:example",
     registryDependencies: ["reaction"],
@@ -1395,6 +1527,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "ScrollbarOverlayDemo",
+    type: "registry:example",
+    registryDependencies: ["scrollbar"],
+    files: [
+      {
+        path: "examples/ScrollbarOverlayDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "ScrollbarAutoHideDemo",
+    type: "registry:example",
+    registryDependencies: ["scrollbar"],
+    files: [
+      {
+        path: "examples/ScrollbarAutoHideDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "SectionDemo",
     type: "registry:example",
     registryDependencies: ["section"],
@@ -1445,6 +1599,39 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/SelectMenuDisabledDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SelectMenuAboveDemo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/SelectMenuAboveDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SelectMenuDescriptionDemo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/SelectMenuDescriptionDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SelectMenuItemDemo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/SelectMenuItemDemo.vue",
         type: "registry:example",
       },
     ],
@@ -1555,6 +1742,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/SlashCommandSuggestionsDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "SlashCommandSuggestionsNarrowDemo",
+    type: "registry:example",
+    registryDependencies: ["slash-command-suggestions", "slash-command"],
+    files: [
+      {
+        path: "examples/SlashCommandSuggestionsNarrowDemo.vue",
         type: "registry:example",
       },
     ],
@@ -1747,12 +1945,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "TabsOverflowDemo",
+    type: "registry:example",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "examples/TabsOverflowDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "TagInputDemo",
     type: "registry:example",
     registryDependencies: ["tag-input", "form-fields"],
     files: [
       {
         path: "examples/TagInputDemo.vue",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "TextDisplayDemo",
+    type: "registry:example",
+    registryDependencies: ["text-display", "divider", "v2-container"],
+    files: [
+      {
+        path: "examples/TextDisplayDemo.vue",
         type: "registry:example",
       },
     ],
@@ -1953,7 +2173,13 @@ export const examples: Registry = [
   {
     name: "V2ContainerDemo",
     type: "registry:example",
-    registryDependencies: ["v2-container", "action-row", "button", "divider"],
+    registryDependencies: [
+      "v2-container",
+      "action-row",
+      "button",
+      "divider",
+      "text-display",
+    ],
     files: [
       {
         path: "examples/V2ContainerDemo.vue",

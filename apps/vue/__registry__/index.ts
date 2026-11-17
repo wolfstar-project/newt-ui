@@ -110,11 +110,12 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "app-launcher",
       type: "registry:ui",
-      registryDependencies: [],
+      registryDependencies: ["scrollbar"],
       files: [
         "registry/bases/newt/ui/app-launcher/AppLauncher.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherHandle.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherHeader.vue",
+        "registry/bases/newt/ui/app-launcher/AppLauncherHeaderTitle.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherBack.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherSearch.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherSearchInput.vue",
@@ -128,6 +129,7 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/app-launcher/AppLauncherItemIcon.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherRecents.vue",
         "registry/bases/newt/ui/app-launcher/AppLauncherRecent.vue",
+        "registry/bases/newt/ui/app-launcher/AppLauncherPromoCard.vue",
         "registry/bases/newt/ui/app-launcher/index.ts",
       ],
     },
@@ -284,6 +286,8 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
         "registry/bases/newt/ui/channel-header/ChannelHeaderToolbar.vue",
         "registry/bases/newt/ui/channel-header/ChannelHeaderAction.vue",
         "registry/bases/newt/ui/channel-header/ChannelHeaderSearch.vue",
+        "registry/bases/newt/ui/channel-header/ChannelHeaderBack.vue",
+        "registry/bases/newt/ui/channel-header/ChannelHeaderTitle.vue",
         "registry/bases/newt/ui/channel-header/ChannelHeaderOnline.vue",
         "registry/bases/newt/ui/channel-header/index.ts",
       ],
@@ -1169,13 +1173,14 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "slash-command-suggestions",
       type: "registry:ui",
-      registryDependencies: ["slash-command"],
+      registryDependencies: ["slash-command", "scrollbar"],
       files: [
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestions.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsRail.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsRailItem.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsList.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsHeader.vue",
+        "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionsFooter.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestionGroup.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandAppIcon.vue",
         "registry/bases/newt/ui/slash-command-suggestions/SlashCommandSuggestion.vue",
@@ -1304,6 +1309,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: [
         "registry/bases/newt/ui/tag-input/TagInput.vue",
         "registry/bases/newt/ui/tag-input/index.ts",
+      ],
+    },
+  ],
+  [
+    "text-display",
+    {
+      name: "text-display",
+      type: "registry:ui",
+      registryDependencies: [],
+      files: [
+        "registry/bases/newt/ui/text-display/TextDisplay.vue",
+        "registry/bases/newt/ui/text-display/index.ts",
       ],
     },
   ],
@@ -1631,6 +1648,31 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "AppLauncherSheetDemo",
+    {
+      name: "AppLauncherSheetDemo",
+      type: "registry:example",
+      registryDependencies: ["app-launcher", "button"],
+      files: ["registry/bases/newt/examples/AppLauncherSheetDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/AppLauncherSheetDemo.vue")
+      ),
+    },
+  ],
+  [
+    "AppLauncherDrillInDemo",
+    {
+      name: "AppLauncherDrillInDemo",
+      type: "registry:example",
+      registryDependencies: ["app-launcher"],
+      files: ["registry/bases/newt/examples/AppLauncherDrillInDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/AppLauncherDrillInDemo.vue")
+      ),
+    },
+  ],
+  [
     "AttachmentDemo",
     {
       name: "AttachmentDemo",
@@ -1799,6 +1841,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ButtonSlotsDemo",
+    {
+      name: "ButtonSlotsDemo",
+      type: "registry:example",
+      registryDependencies: ["button"],
+      files: ["registry/bases/newt/examples/ButtonSlotsDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/ButtonSlotsDemo.vue")
+      ),
+    },
+  ],
+  [
     "ButtonDisabledDemo",
     {
       name: "ButtonDisabledDemo",
@@ -1907,6 +1961,32 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ChannelHeaderNarrowDemo",
+    {
+      name: "ChannelHeaderNarrowDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-header"],
+      files: ["registry/bases/newt/examples/ChannelHeaderNarrowDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/ChannelHeaderNarrowDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChannelHeaderDecorativeDemo",
+    {
+      name: "ChannelHeaderDecorativeDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-header"],
+      files: ["registry/bases/newt/examples/ChannelHeaderDecorativeDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/ChannelHeaderDecorativeDemo.vue")
+      ),
+    },
+  ],
+  [
     "ChannelInfoDemo",
     {
       name: "ChannelInfoDemo",
@@ -1915,6 +1995,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/ChannelInfoDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/ChannelInfoDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ChannelInfoDialogDemo",
+    {
+      name: "ChannelInfoDialogDemo",
+      type: "registry:example",
+      registryDependencies: ["channel-info", "button"],
+      files: ["registry/bases/newt/examples/ChannelInfoDialogDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/ChannelInfoDialogDemo.vue")
       ),
     },
   ],
@@ -2405,6 +2498,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "InviteRouterDemo",
+    {
+      name: "InviteRouterDemo",
+      type: "registry:example",
+      registryDependencies: ["invite", "button"],
+      files: ["registry/bases/newt/examples/InviteRouterDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/InviteRouterDemo.vue")
+      ),
+    },
+  ],
+  [
     "KbdTagDemo",
     {
       name: "KbdTagDemo",
@@ -2458,6 +2563,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "MemberListInteractiveDemo",
+    {
+      name: "MemberListInteractiveDemo",
+      type: "registry:example",
+      registryDependencies: ["member-list", "avatar", "status-indicator"],
+      files: ["registry/bases/newt/examples/MemberListInteractiveDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/MemberListInteractiveDemo.vue")
+      ),
+    },
+  ],
+  [
     "MentionDemo",
     {
       name: "MentionDemo",
@@ -2478,6 +2596,32 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/MessageComposerDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/MessageComposerDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MessageComposerInputDemo",
+    {
+      name: "MessageComposerInputDemo",
+      type: "registry:example",
+      registryDependencies: ["message-composer", "slash-command"],
+      files: ["registry/bases/newt/examples/MessageComposerInputDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/MessageComposerInputDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MessageComposerNarrowDemo",
+    {
+      name: "MessageComposerNarrowDemo",
+      type: "registry:example",
+      registryDependencies: ["message-composer"],
+      files: ["registry/bases/newt/examples/MessageComposerNarrowDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/MessageComposerNarrowDemo.vue")
       ),
     },
   ],
@@ -2520,6 +2664,19 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/MessageGroupAppDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/MessageGroupAppDemo.vue")
+      ),
+    },
+  ],
+  [
+    "MessageGroupReplyDemo",
+    {
+      name: "MessageGroupReplyDemo",
+      type: "registry:example",
+      registryDependencies: ["message-group", "avatar", "reply-preview"],
+      files: ["registry/bases/newt/examples/MessageGroupReplyDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/MessageGroupReplyDemo.vue")
       ),
     },
   ],
@@ -2972,6 +3129,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ReactionIconDemo",
+    {
+      name: "ReactionIconDemo",
+      type: "registry:example",
+      registryDependencies: ["reaction"],
+      files: ["registry/bases/newt/examples/ReactionIconDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/ReactionIconDemo.vue")
+      ),
+    },
+  ],
+  [
     "ReactionReadonlyDemo",
     {
       name: "ReactionReadonlyDemo",
@@ -3044,6 +3213,31 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "ScrollbarOverlayDemo",
+    {
+      name: "ScrollbarOverlayDemo",
+      type: "registry:example",
+      registryDependencies: ["scrollbar"],
+      files: ["registry/bases/newt/examples/ScrollbarOverlayDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/ScrollbarOverlayDemo.vue")
+      ),
+    },
+  ],
+  [
+    "ScrollbarAutoHideDemo",
+    {
+      name: "ScrollbarAutoHideDemo",
+      type: "registry:example",
+      registryDependencies: ["scrollbar"],
+      files: ["registry/bases/newt/examples/ScrollbarAutoHideDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/ScrollbarAutoHideDemo.vue")
+      ),
+    },
+  ],
+  [
     "SectionDemo",
     {
       name: "SectionDemo",
@@ -3103,6 +3297,43 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       component: defineAsyncComponent(
         () =>
           import("~~/registry/bases/newt/examples/SelectMenuDisabledDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SelectMenuAboveDemo",
+    {
+      name: "SelectMenuAboveDemo",
+      type: "registry:example",
+      registryDependencies: ["select-menu"],
+      files: ["registry/bases/newt/examples/SelectMenuAboveDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SelectMenuAboveDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SelectMenuDescriptionDemo",
+    {
+      name: "SelectMenuDescriptionDemo",
+      type: "registry:example",
+      registryDependencies: ["select-menu"],
+      files: ["registry/bases/newt/examples/SelectMenuDescriptionDemo.vue"],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/SelectMenuDescriptionDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SelectMenuItemDemo",
+    {
+      name: "SelectMenuItemDemo",
+      type: "registry:example",
+      registryDependencies: ["select-menu"],
+      files: ["registry/bases/newt/examples/SelectMenuItemDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/SelectMenuItemDemo.vue")
       ),
     },
   ],
@@ -3229,6 +3460,21 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       component: defineAsyncComponent(
         () =>
           import("~~/registry/bases/newt/examples/SlashCommandSuggestionsDemo.vue")
+      ),
+    },
+  ],
+  [
+    "SlashCommandSuggestionsNarrowDemo",
+    {
+      name: "SlashCommandSuggestionsNarrowDemo",
+      type: "registry:example",
+      registryDependencies: ["slash-command-suggestions", "slash-command"],
+      files: [
+        "registry/bases/newt/examples/SlashCommandSuggestionsNarrowDemo.vue",
+      ],
+      component: defineAsyncComponent(
+        () =>
+          import("~~/registry/bases/newt/examples/SlashCommandSuggestionsNarrowDemo.vue")
       ),
     },
   ],
@@ -3439,6 +3685,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     },
   ],
   [
+    "TabsOverflowDemo",
+    {
+      name: "TabsOverflowDemo",
+      type: "registry:example",
+      registryDependencies: ["tabs"],
+      files: ["registry/bases/newt/examples/TabsOverflowDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TabsOverflowDemo.vue")
+      ),
+    },
+  ],
+  [
     "TagInputDemo",
     {
       name: "TagInputDemo",
@@ -3447,6 +3705,18 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
       files: ["registry/bases/newt/examples/TagInputDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/TagInputDemo.vue")
+      ),
+    },
+  ],
+  [
+    "TextDisplayDemo",
+    {
+      name: "TextDisplayDemo",
+      type: "registry:example",
+      registryDependencies: ["text-display", "divider", "v2-container"],
+      files: ["registry/bases/newt/examples/TextDisplayDemo.vue"],
+      component: defineAsyncComponent(
+        () => import("~~/registry/bases/newt/examples/TextDisplayDemo.vue")
       ),
     },
   ],
@@ -3665,7 +3935,13 @@ const registryIndexEntries: Array<[string, RegistryIndexEntry]> = [
     {
       name: "V2ContainerDemo",
       type: "registry:example",
-      registryDependencies: ["v2-container", "action-row", "button", "divider"],
+      registryDependencies: [
+        "v2-container",
+        "action-row",
+        "button",
+        "divider",
+        "text-display",
+      ],
       files: ["registry/bases/newt/examples/V2ContainerDemo.vue"],
       component: defineAsyncComponent(
         () => import("~~/registry/bases/newt/examples/V2ContainerDemo.vue")

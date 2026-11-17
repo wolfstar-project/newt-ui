@@ -33,9 +33,40 @@ A block of text with one accessory beside it — a thumbnail, or a button. Compo
   ]}
 />
 
+<PropsTable
+  of="SectionThumbnail"
+  rows={[
+    {
+      name: "as",
+      type: "React.ElementType (React) / string | Component (Vue)",
+      default: '"img"',
+      description:
+        "The image element or component to render, such as `NuxtImg`. It gets `src`, `alt`, the classes and the spoiler attributes and handlers, so the spoiler still works.",
+    },
+    {
+      name: "spoiler",
+      type: "boolean",
+      default: "false",
+      description:
+        "Blurs the thumbnail until it is clicked or activated with `Enter` or `Space`.",
+    },
+    {
+      name: "spoilerLabel",
+      type: "string",
+      default: '"Spoiler, click to reveal"',
+      description:
+        "Accessible name of a hidden spoiler, read in place of the image.",
+    },
+  ]}
+/>
+
+The thumbnail is 85px square. Use `TextDisplay` in `SectionContent` for the text beside it. `SectionHeading` has the size of `TextDisplay size="heading-2"`.
+
 ## Accessibility
 
 Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+A spoilered thumbnail takes its name from `spoilerLabel`. [Translating labels](/docs/translating-labels) lists every English default.
 
 ## Tokens
 

@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 
 const toastVariants = cva(
   [
-    "flex max-w-[360px] items-start gap-3 rounded-md border border-newt-border bg-newt-bg-elevated px-3.5 py-3 text-newt-text-primary shadow-elevation-high",
+    "flex max-w-[360px] items-start gap-3 rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-elevated px-3.5 py-3 text-newt-text-primary shadow-elevation-high",
     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
     /* The toast follows the pointer while it is swiped away. */
     "data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-transform data-[swipe=cancel]:duration-fast data-[swipe=cancel]:ease-newt",

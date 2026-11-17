@@ -15,7 +15,7 @@ const ThreadPreview = React.forwardRef<
   <a
     ref={ref}
     className={cn(
-      "flex max-w-[440px] items-center gap-2 rounded-md bg-newt-bg-surface px-3 py-2 text-sm no-underline",
+      "flex max-w-[440px] items-center gap-2 rounded-[var(--newt-radius-md)] bg-newt-bg-surface px-3 py-2 text-sm no-underline",
       "transition-colors duration-fast ease-newt hover:bg-newt-bg-elevated",
       "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
       className
@@ -61,24 +61,36 @@ ThreadPreviewName.displayName = "ThreadPreviewName"
 export interface ThreadPreviewCountProps extends React.HTMLAttributes<HTMLSpanElement> {
   /** How many messages the thread holds. */
   count: number
+  /** Builds the text from the count. Defaults to `1 message`, `3 messages`. */
+  formatCount?: (count: number) => string
+}
+
+/** The English default. Pass `formatCount` to translate it. */
+export function defaultThreadPreviewCount(count: number): string {
+  return count === 1 ? "1 message" : `${count} messages`
 }
 
 const ThreadPreviewCount = React.forwardRef<
   HTMLSpanElement,
   ThreadPreviewCountProps
->(({ className, count, ...props }, ref) => (
-  <span
-    ref={ref}
-    className={cn(
-      "shrink-0 text-xs font-medium tabular-nums text-newt-text-muted",
-      className
-    )}
-    {...props}
-  >
-    {/* Spelled out rather than a bare number, which would read as an index. */}
-    {count === 1 ? "1 message" : `${count} messages`}
-  </span>
-))
+>(
+  (
+    { className, count, formatCount = defaultThreadPreviewCount, ...props },
+    ref
+  ) => (
+    <span
+      ref={ref}
+      className={cn(
+        "shrink-0 text-xs font-medium tabular-nums text-newt-text-muted",
+        className
+      )}
+      {...props}
+    >
+      {/* Spelled out rather than a bare number, which would read as an index. */}
+      {formatCount(count)}
+    </span>
+  )
+)
 ThreadPreviewCount.displayName = "ThreadPreviewCount"
 
 /** The last thing said in the thread, which is why anyone opens it. */

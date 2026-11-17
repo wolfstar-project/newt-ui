@@ -15,7 +15,19 @@ import {
 
 import { cn } from "@/lib/utils"
 
-import type { SidebarUser } from "./types"
+import type { SidebarUser, UserStatus } from "./types"
+
+/*
+ * The state of the dot in words, for a screen reader. The dot speaks it only
+ * when no status line is written beside it.
+ */
+const STATUS_LABELS = {
+  online: "Online",
+  idle: "Idle",
+  dnd: "Do not disturb",
+  offline: "Offline",
+  streaming: "Streaming",
+} as const satisfies Record<UserStatus, string>
 
 /*
  * The column a server is navigated from: its name, its channels as a tree and
@@ -67,7 +79,14 @@ const deafened = ref(false)
       <UserPanel>
         <StatusIndicator>
           <Avatar size="sm">{{ props.user.initials }}</Avatar>
-          <StatusDot :status="props.user.status" />
+          <StatusDot
+            :status="props.user.status"
+            :label="
+              props.user.statusText === undefined
+                ? STATUS_LABELS[props.user.status]
+                : undefined
+            "
+          />
         </StatusIndicator>
         <UserPanelInfo
           :name="props.user.name"

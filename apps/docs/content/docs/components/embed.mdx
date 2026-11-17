@@ -31,7 +31,7 @@ The `color` prop sets the bar on the leading edge. It takes any CSS colour, so p
 
 ### Minimal
 
-Every part of an embed is optional. A lone `EmbedDescription` is enough for a short confirmation, and with no `color` the bar takes the brand colour.
+Every part of an embed is optional. A lone `EmbedDescription` is enough for a short confirmation, and with no `color` the bar takes the neutral border colour.
 
 <ComponentPreview name="embed" variant="minimal" />
 
@@ -44,7 +44,20 @@ Every part of an embed is optional. A lone `EmbedDescription` is enough for a sh
       name: "color",
       type: "string | undefined",
       description:
-        "Accent colour of the left bar. Any CSS colour; defaults to the brand.",
+        "Accent colour of the left bar. Any CSS colour. Without one, the bar takes `--newt-border`, the same default as `V2Container`.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="EmbedAuthorIcon / EmbedFooterIcon"
+  rows={[
+    {
+      name: "as",
+      type: "React.ElementType (React) / string | Component (Vue)",
+      default: '"img"',
+      description:
+        "The image element or component to render. Pass your framework's image component, such as `NuxtImg`, for optimised sources.",
     },
   ]}
 />
@@ -57,6 +70,25 @@ Every part of an embed is optional. A lone `EmbedDescription` is enough for a sh
       type: "Date | number | string",
       description: "The moment to render. Anything `new Date()` accepts.",
     },
+    {
+      name: "locale",
+      type: "string",
+      default: '"en-US"',
+      description:
+        "Locale of the text. Pass a fixed value, so the server and the browser write the same text.",
+    },
+    {
+      name: "timeZone",
+      type: "string | undefined",
+      description:
+        "Time zone of the text, such as `Europe/Paris`. Defaults to the zone of the runtime.",
+    },
+    {
+      name: "formatter",
+      type: "(date: Date) => string | undefined",
+      description:
+        "Builds the text from the date. Wins over `locale` and `timeZone`.",
+    },
   ]}
 />
 
@@ -65,6 +97,8 @@ The registry exports `Embed`, `EmbedAuthor`, `EmbedAuthorIcon`, `EmbedAuthorName
 ## Accessibility
 
 Preserve the native semantics of the rendered elements and pass through ARIA attributes when the surrounding context needs a label or description. Any interactive child needs a visible focus indicator, and meaning must not rely on colour alone.
+
+`EmbedTimestamp` writes an `en-US` date unless you pass `locale` or `formatter`. [Translating labels](/docs/translating-labels) lists every English default.
 
 ## Tokens
 

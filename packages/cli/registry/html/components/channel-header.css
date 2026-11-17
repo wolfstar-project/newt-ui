@@ -5,8 +5,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  height: 48px;
-  padding: 0 12px 0 16px;
+  min-height: 48px;
+  padding-block: 0;
+  padding-inline: 16px 12px;
   border-bottom: 1px solid var(--newt-border);
   background: var(--newt-bg-surface);
   color: var(--newt-text-primary);
@@ -28,7 +29,7 @@
 }
 
 .newt-channel-header__name {
-  flex-shrink: 0;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -47,7 +48,12 @@
   opacity: 0.7;
 }
 
+/*
+ * The shrink factor is what makes the topic give way before the name: the
+ * name only starts to truncate once the topic has no width left.
+ */
 .newt-channel-header__topic {
+  flex-shrink: 99999;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,6 +70,12 @@
   gap: 16px;
 }
 
+/*
+ * Every control of the header is a `button` or an `a`. The same class on a
+ * `span` is the decorative form, for a read-only view: give it
+ * `aria-hidden="true"`. It keeps the resting look and has no pointer, no
+ * hover and no place in the tab order.
+ */
 .newt-channel-header__action {
   display: inline-flex;
   flex-shrink: 0;
@@ -75,10 +87,12 @@
   border: 0;
   background: transparent;
   color: var(--newt-text-muted);
+}
+.newt-channel-header__action:is(button, a) {
   cursor: pointer;
   transition: color var(--newt-duration-fast) var(--newt-ease);
 }
-.newt-channel-header__action:hover,
+.newt-channel-header__action:is(button, a):hover,
 .newt-channel-header__action[data-state="active"] {
   color: var(--newt-text-primary);
 }
@@ -100,10 +114,15 @@
   border-radius: var(--newt-radius-sm);
   background: var(--newt-bg-input);
   color: var(--newt-text-muted);
-  cursor: pointer;
-  transition: border-color var(--newt-duration-fast) var(--newt-ease);
+  text-decoration: none;
 }
-.newt-channel-header__search:hover {
+.newt-channel-header__search:is(button, a) {
+  cursor: pointer;
+  transition:
+    border-color var(--newt-duration-fast) var(--newt-ease),
+    color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-channel-header__search:is(button, a):hover {
   border-color: var(--newt-text-muted);
 }
 .newt-channel-header__search:focus-visible {
@@ -123,9 +142,138 @@
   line-height: 1;
 }
 
+/*
+ * Icon-only search for the narrow header. The label stays in the control,
+ * out of sight, so it is still the accessible name.
+ */
+.newt-channel-header__search--compact {
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.newt-channel-header__search--compact:is(button, a):hover {
+  color: var(--newt-text-primary);
+}
+.newt-channel-header__search--compact .newt-channel-header__search-label {
+  position: absolute;
+  flex: none;
+  inline-size: 1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+}
+
+/* The control that leaves the channel in the narrow header. */
+.newt-channel-header__back {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--newt-text-muted);
+  text-decoration: none;
+}
+.newt-channel-header__back:is(button, a) {
+  cursor: pointer;
+  transition: color var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-channel-header__back:is(button, a):hover {
+  color: var(--newt-text-primary);
+}
+.newt-channel-header__back:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+/* The arrow and the chevron point the other way in right-to-left text. */
+.newt-channel-header__back > svg,
+.newt-channel-header__title-chevron {
+  flex-shrink: 0;
+  transform: scaleX(var(--newt-dir));
+}
+
+/* Unread count beside the back arrow. */
+.newt-channel-header__back-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-dnd);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--newt-on-accent);
+}
+
+/*
+ * The channel name as a control, for the narrow header where a press on the
+ * title opens the channel details. On a `span` it is plain text.
+ */
+.newt-channel-header__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: var(--newt-radius-sm);
+  background: transparent;
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+  color: var(--newt-text-primary);
+}
+.newt-channel-header__title:is(button, a) {
+  cursor: pointer;
+  transition: background var(--newt-duration-fast) var(--newt-ease);
+}
+.newt-channel-header__title:is(button, a):hover {
+  background: var(--newt-bg-hover);
+}
+.newt-channel-header__title:focus-visible {
+  outline: 2px solid var(--newt-text-link);
+  outline-offset: 2px;
+}
+
+/*
+ * A control that is off: a `button` with `disabled`, or a link with
+ * `aria-disabled="true"` and no `href`. It fades, and a link takes no press.
+ */
+.newt-channel-header__action:disabled,
+.newt-channel-header__search:disabled,
+.newt-channel-header__back:disabled,
+.newt-channel-header__title:disabled,
+.newt-channel-header__action[aria-disabled="true"],
+.newt-channel-header__search[aria-disabled="true"],
+.newt-channel-header__back[aria-disabled="true"],
+.newt-channel-header__title[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.newt-channel-header__action[aria-disabled="true"],
+.newt-channel-header__search[aria-disabled="true"],
+.newt-channel-header__back[aria-disabled="true"],
+.newt-channel-header__title[aria-disabled="true"] {
+  pointer-events: none;
+}
+
+.newt-channel-header__title-chevron {
+  color: var(--newt-text-muted);
+}
+
 /* Compact "N Online" readout used by the narrow layout of the header. */
 .newt-channel-header__online {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 6px;
   font-size: 12px;

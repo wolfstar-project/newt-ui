@@ -34,12 +34,66 @@
   transform: translateY(-100%);
 }
 
+/*
+ * In the reply slot of a message group the preview has no margin and no
+ * padding: the row sets the distance to the author line. The reach is the
+ * distance from the preview back to the centre of the avatar, from the two
+ * properties the group publishes. The fallbacks are the values of a group
+ * that does not publish them.
+ */
+.newt-message-group__reply .newt-reply {
+  --newt-reply-spine-reach: calc(
+    var(--newt-message-group-avatar-size, 40px) / 2 +
+      var(--newt-message-group-gap, 16px)
+  );
+
+  margin-bottom: 0;
+  padding-inline-start: 0;
+}
+
+/*
+ * There the spine leaves the preview. It starts above the centre of the
+ * avatar, half a stroke back and up so the stroke is centred on both axes,
+ * and stops 4px before the preview. Both ends are insets, so the box is the
+ * same under either `box-sizing`.
+ */
+.newt-message-group__reply .newt-reply::before {
+  inset-inline: calc(
+      -1 * var(--newt-reply-spine-reach) - var(--newt-reply-spine-width) / 2
+    )
+    calc(100% + 4px);
+  top: calc(50% - var(--newt-reply-spine-width) / 2);
+  bottom: 0;
+  width: auto;
+  height: auto;
+  transform: none;
+}
+
 .newt-reply__avatar {
   flex-shrink: 0;
   width: 16px;
   height: 16px;
   border-radius: var(--newt-radius-full);
   object-fit: cover;
+}
+
+/*
+ * An avatar with no image: a circle that holds an icon or initials, so an
+ * avatar that is an icon can be drawn.
+ */
+.newt-reply__avatar--fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--newt-brand);
+  color: var(--newt-on-accent);
+  font-size: 9px;
+  font-weight: 600;
+}
+.newt-reply__avatar--fallback > svg {
+  width: 10px;
+  height: 10px;
 }
 
 .newt-reply__author {

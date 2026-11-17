@@ -113,6 +113,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "app-launcher-sheet-demo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher", "button"],
+    files: [
+      {
+        path: "examples/app-launcher-sheet-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "app-launcher-drill-in-demo",
+    type: "registry:example",
+    registryDependencies: ["app-launcher"],
+    files: [
+      {
+        path: "examples/app-launcher-drill-in-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "attachment-demo",
     type: "registry:example",
     registryDependencies: ["attachment", "button"],
@@ -267,6 +289,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "button-slots-demo",
+    type: "registry:example",
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "examples/button-slots-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "button-disabled-demo",
     type: "registry:example",
     registryDependencies: ["button"],
@@ -366,12 +399,45 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "channel-header-narrow-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "examples/channel-header-narrow-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "channel-header-decorative-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-header"],
+    files: [
+      {
+        path: "examples/channel-header-decorative-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "channel-info-demo",
     type: "registry:example",
     registryDependencies: ["channel-info", "tabs"],
     files: [
       {
         path: "examples/channel-info-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "channel-info-dialog-demo",
+    type: "registry:example",
+    registryDependencies: ["channel-info", "button"],
+    files: [
+      {
+        path: "examples/channel-info-dialog-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -817,6 +883,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "invite-router-demo",
+    type: "registry:example",
+    registryDependencies: ["invite", "button"],
+    files: [
+      {
+        path: "examples/invite-router-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "kbd-tag-demo",
     type: "registry:example",
     registryDependencies: ["kbd-tag"],
@@ -866,6 +943,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "member-list-interactive-demo",
+    type: "registry:example",
+    registryDependencies: ["member-list", "avatar", "status-indicator"],
+    files: [
+      {
+        path: "examples/member-list-interactive-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "mention-demo",
     type: "registry:example",
     registryDependencies: ["mention"],
@@ -883,6 +971,28 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/message-composer-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "message-composer-input-demo",
+    type: "registry:example",
+    registryDependencies: ["message-composer", "slash-command"],
+    files: [
+      {
+        path: "examples/message-composer-input-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "message-composer-narrow-demo",
+    type: "registry:example",
+    registryDependencies: ["message-composer"],
+    files: [
+      {
+        path: "examples/message-composer-narrow-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -922,6 +1032,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/message-group-app-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "message-group-reply-demo",
+    type: "registry:example",
+    registryDependencies: ["message-group", "avatar", "reply-preview"],
+    files: [
+      {
+        path: "examples/message-group-reply-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -1329,6 +1450,17 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "reaction-icon-demo",
+    type: "registry:example",
+    registryDependencies: ["reaction"],
+    files: [
+      {
+        path: "examples/reaction-icon-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "reaction-readonly-demo",
     type: "registry:example",
     registryDependencies: ["reaction"],
@@ -1395,6 +1527,28 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "scrollbar-overlay-demo",
+    type: "registry:example",
+    registryDependencies: ["scrollbar"],
+    files: [
+      {
+        path: "examples/scrollbar-overlay-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "scrollbar-auto-hide-demo",
+    type: "registry:example",
+    registryDependencies: ["scrollbar"],
+    files: [
+      {
+        path: "examples/scrollbar-auto-hide-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "section-demo",
     type: "registry:example",
     registryDependencies: ["section"],
@@ -1445,6 +1599,39 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/select-menu-disabled-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "select-menu-above-demo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/select-menu-above-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "select-menu-description-demo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/select-menu-description-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "select-menu-item-demo",
+    type: "registry:example",
+    registryDependencies: ["select-menu"],
+    files: [
+      {
+        path: "examples/select-menu-item-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -1555,6 +1742,17 @@ export const examples: Registry = [
     files: [
       {
         path: "examples/slash-command-suggestions-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "slash-command-suggestions-narrow-demo",
+    type: "registry:example",
+    registryDependencies: ["slash-command-suggestions", "slash-command"],
+    files: [
+      {
+        path: "examples/slash-command-suggestions-narrow-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -1747,12 +1945,34 @@ export const examples: Registry = [
     ],
   },
   {
+    name: "tabs-overflow-demo",
+    type: "registry:example",
+    registryDependencies: ["tabs"],
+    files: [
+      {
+        path: "examples/tabs-overflow-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "tag-input-demo",
     type: "registry:example",
     registryDependencies: ["tag-input", "form-fields"],
     files: [
       {
         path: "examples/tag-input-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "text-display-demo",
+    type: "registry:example",
+    registryDependencies: ["text-display", "divider", "v2-container"],
+    files: [
+      {
+        path: "examples/text-display-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -1953,7 +2173,13 @@ export const examples: Registry = [
   {
     name: "v2-container-demo",
     type: "registry:example",
-    registryDependencies: ["v2-container", "action-row", "button", "divider"],
+    registryDependencies: [
+      "v2-container",
+      "action-row",
+      "button",
+      "divider",
+      "text-display",
+    ],
     files: [
       {
         path: "examples/v2-container-demo.tsx",

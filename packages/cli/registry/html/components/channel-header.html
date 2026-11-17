@@ -1,4 +1,15 @@
-<header class="newt-channel-header">
+<!--
+  The bar is a div: a header outside main, article, aside, nav or section is
+  a second banner landmark. Use a header element when it sits inside one.
+
+  A toggle carries data-state and aria-pressed. The search control takes its
+  accessible name from its text, so it has no aria-label.
+
+  For a read-only view, write an action as a span with aria-hidden="true":
+  <span class="newt-channel-header__action" aria-hidden="true">…</span>
+  It keeps the look and has no pointer, no hover and no tab stop.
+-->
+<div class="newt-channel-header">
   <div class="newt-channel-header__info">
     <span class="newt-channel-header__icon" aria-hidden="true">#</span>
     <span class="newt-channel-header__name">general</span>
@@ -28,7 +39,7 @@
       type="button"
       class="newt-channel-header__action"
       data-state="active"
-      aria-label="Hide member list"
+      aria-label="Member list"
       aria-pressed="true"
     >
       <svg
@@ -44,11 +55,7 @@
       </svg>
     </button>
 
-    <button
-      type="button"
-      class="newt-channel-header__search"
-      aria-label="Search"
-    >
+    <button type="button" class="newt-channel-header__search">
       <span class="newt-channel-header__search-label">Search</span>
       <svg
         viewBox="0 0 16 16"
@@ -65,4 +72,76 @@
       </svg>
     </button>
   </div>
-</header>
+</div>
+
+<!--
+  Narrow layout: a back control with the unread count, the title as a button
+  that opens the channel details, and an icon-only search. The back control
+  has no text, so its aria-label says where it goes and how much is unread.
+-->
+<div class="newt-channel-header" style="max-width: 360px">
+  <div class="newt-channel-header__info">
+    <button
+      type="button"
+      class="newt-channel-header__back"
+      aria-label="Back to channels, 3 unread"
+    >
+      <svg
+        viewBox="0 0 20 20"
+        width="20"
+        height="20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          d="M8.7 3.3 2 10l6.7 6.7 1.4-1.4L5.8 11H18V9H5.8l4.3-4.3-1.4-1.4Z"
+        />
+      </svg>
+      <span class="newt-channel-header__back-badge">3</span>
+    </button>
+    <button type="button" class="newt-channel-header__title">
+      <span class="newt-channel-header__icon" aria-hidden="true">#</span>
+      <span class="newt-channel-header__name">general</span>
+      <svg
+        class="newt-channel-header__title-chevron"
+        viewBox="0 0 16 16"
+        width="16"
+        height="16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="m6 3.5 4.5 4.5L6 12.5" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="newt-channel-header__toolbar">
+    <span class="newt-channel-header__online">
+      <span class="newt-channel-header__online-dot" aria-hidden="true"></span>
+      128 Online
+    </span>
+    <button
+      type="button"
+      class="newt-channel-header__search newt-channel-header__search--compact"
+    >
+      <span class="newt-channel-header__search-label">Search</span>
+      <svg
+        viewBox="0 0 16 16"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="7" cy="7" r="4.5" />
+        <path d="M10.5 10.5 14 14" />
+      </svg>
+    </button>
+  </div>
+</div>

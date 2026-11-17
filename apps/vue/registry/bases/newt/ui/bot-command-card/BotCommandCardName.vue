@@ -17,7 +17,7 @@ const props = withDefaults(
   <span
     :class="
       cn(
-        'inline-flex items-center gap-1 font-mono text-sm font-semibold text-newt-text-link',
+        'inline-flex items-center gap-1 font-[family-name:var(--newt-font-mono)] text-sm font-semibold text-newt-text-link',
         props.class
       )
     "

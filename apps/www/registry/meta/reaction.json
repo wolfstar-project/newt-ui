@@ -6,5 +6,5 @@
   "vueFiles": ["Reaction.vue", "ReactionGroup.vue", "index.ts"],
   "reactDemo": "reaction-demo",
   "vueDemo": "ReactionDemo",
-  "examples": ["controlled", "custom-emoji", "readonly"]
+  "examples": ["controlled", "custom-emoji", "icon", "readonly"]
 }

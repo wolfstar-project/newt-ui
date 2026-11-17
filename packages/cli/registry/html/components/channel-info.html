@@ -1,13 +1,29 @@
+<!--
+  A dialog that renders in place. channel-info.js gives a
+  [data-newt-channel-info] panel its behaviour: focus moves in, Tab cycles
+  through its controls, Escape or a [data-newt-channel-info-close] control
+  closes it, and focus returns. Add aria-modal="true" when the panel covers
+  the channel: focus then cannot stay outside it, and a press outside closes
+  it.
+
+  For a side panel that is always on screen, leave out role, tabindex and
+  data-newt-channel-info. Use role="region" to keep the aria-label.
+
+  For a read-only view, write an action as a span with aria-hidden="true".
+-->
 <div
   class="newt-channel-info"
   role="dialog"
   aria-label="Channel information for #general"
+  tabindex="-1"
+  data-newt-channel-info
 >
   <div class="newt-channel-info__toolbar">
     <button
       type="button"
       class="newt-channel-info__action"
       aria-label="Back to channel"
+      data-newt-channel-info-close
     >
       <svg
         viewBox="0 0 20 20"

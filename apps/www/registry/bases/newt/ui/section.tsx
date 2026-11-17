@@ -66,50 +66,87 @@ const SectionAccessory = React.forwardRef<
 ))
 SectionAccessory.displayName = "SectionAccessory"
 
-export interface SectionThumbnailProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+/*
+ * The props of the element or component `as` names, so a custom image
+ * component's own props type-check.
+ */
+export type SectionThumbnailProps<E extends React.ElementType = "img"> = {
+  /**
+   * The image element or component to render. Defaults to `img`; pass your
+   * framework's image component for optimised sources. It receives `src`,
+   * `alt`, `className` and the spoiler attributes and handlers.
+   */
+  as?: E
   /**
    * Marks the image as a spoiler: blurred until clicked, the same treatment
    * a spoilered attachment gets.
    */
   spoiler?: boolean
+  /** Accessible name of a hidden spoiler, read in place of the image. */
+  spoilerLabel?: string
+} & Omit<React.ComponentPropsWithRef<E>, "as" | "spoiler">
+
+type SectionThumbnailComponent = {
+  <E extends React.ElementType = "img">(
+    props: SectionThumbnailProps<E>
+  ): React.ReactNode
+  displayName?: string
 }
 
+/*
+ * SAFETY: `forwardRef` drops the generic signature. The render hands every
+ * prop it does not set itself to `as` unchanged, so the props of `as` are
+ * the props the part receives.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- see SAFETY
 const SectionThumbnail = React.forwardRef<
   HTMLImageElement,
   SectionThumbnailProps
->(({ className, spoiler = false, alt = "", ...props }, ref) => {
-  const [revealed, setRevealed] = React.useState(false)
-  const hidden = spoiler && !revealed
+>(
+  (
+    {
+      as: Tag = "img",
+      className,
+      spoiler = false,
+      spoilerLabel = "Spoiler, click to reveal",
+      alt = "",
+      ...props
+    },
+    ref
+  ) => {
+    const [revealed, setRevealed] = React.useState(false)
+    const hidden = spoiler && !revealed
 
-  return (
-    <img
-      ref={ref}
-      alt={alt}
-      data-spoiler={hidden || undefined}
-      /*
-       * A spoilered thumbnail is a button until it is opened: it takes a
-       * click and a key, and says what it is to a screen reader.
-       */
-      role={hidden ? "button" : undefined}
-      tabIndex={hidden ? 0 : undefined}
-      aria-label={hidden ? "Spoiler, click to reveal" : undefined}
-      onClick={() => setRevealed(true)}
-      onKeyDown={(event) => {
-        if (!hidden) return
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault()
-          setRevealed(true)
-        }
-      }}
-      className={cn(
-        "h-[86px] w-[86px] rounded-lg object-cover",
-        hidden && "cursor-pointer blur-lg",
-        className
-      )}
-      {...props}
-    />
-  )
-})
+    return (
+      <Tag
+        ref={ref}
+        alt={alt}
+        data-spoiler={hidden || undefined}
+        /*
+         * A spoilered thumbnail is a button until it is opened: it takes a
+         * click and a key, and says what it is to a screen reader.
+         */
+        role={hidden ? "button" : undefined}
+        tabIndex={hidden ? 0 : undefined}
+        aria-label={hidden ? spoilerLabel : undefined}
+        onClick={() => setRevealed(true)}
+        onKeyDown={(event: React.KeyboardEvent<HTMLImageElement>) => {
+          if (!hidden) return
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault()
+            setRevealed(true)
+          }
+        }}
+        className={cn(
+          "h-[85px] w-[85px] rounded-[var(--newt-radius-lg)] object-cover",
+          hidden && "cursor-pointer blur-lg",
+          className
+        )}
+        {...props}
+      />
+    )
+  }
+) as SectionThumbnailComponent
 SectionThumbnail.displayName = "SectionThumbnail"
 
 export {

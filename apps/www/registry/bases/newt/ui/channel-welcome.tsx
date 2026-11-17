@@ -56,22 +56,65 @@ const ChannelWelcomeDescription = React.forwardRef<
 ))
 ChannelWelcomeDescription.displayName = "ChannelWelcomeDescription"
 
+export interface ChannelWelcomeActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * The element or component to render. Defaults to `button`, or to `a` when
+   * `href` is set; pass a router link component to keep client navigation.
+   * `span` renders the decorative form: hidden from assistive technology, out
+   * of the tab order, with no pointer and no hover.
+   * Its event handlers do not run.
+   */
+  as?: React.ElementType
+  /** Render a link to this URL. */
+  href?: string
+  /**
+   * Turns the control off. A link loses its URL, which takes it out of the
+   * tab order, and says so with `aria-disabled`.
+   */
+  disabled?: boolean
+  /** Link target, with `href`. */
+  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"]
+  /** Link relationship, with `href`. */
+  rel?: string
+}
+
+/*
+ * The `span` form runs nothing: it drops every event handler, so a click
+ * cannot start an action that the keyboard and assistive technology miss.
+ */
+function withoutHandlers(
+  props: React.HTMLAttributes<HTMLElement>
+): React.HTMLAttributes<HTMLElement> {
+  return Object.fromEntries(
+    Object.entries(props).filter(([name]) => !/^on[A-Z]/.test(name))
+  )
+}
+
 const ChannelWelcomeAction = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentProps<"button">
->(({ className, type = "button", ...props }, ref) => (
-  <button
-    ref={ref}
-    type={type}
-    className={cn(
-      "mt-3 inline-flex cursor-pointer items-center gap-2 rounded-sm border-0 bg-newt-bg-elevated px-4 py-1.5 text-sm font-medium text-newt-text-primary transition-colors duration-fast ease-newt",
-      "hover:bg-newt-bg-hover",
-      "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link",
-      className
-    )}
-    {...props}
-  />
-))
+  HTMLElement,
+  ChannelWelcomeActionProps
+>(({ as, href, disabled, className, type = "button", ...props }, ref) => {
+  const Tag: React.ElementType = as ?? (href === undefined ? "button" : "a")
+  const isButton = Tag === "button"
+  const decorative = Tag === "span"
+  return (
+    <Tag
+      ref={ref}
+      type={isButton ? type : undefined}
+      href={decorative || disabled ? undefined : href}
+      disabled={isButton ? disabled : undefined}
+      aria-disabled={!isButton && !decorative && disabled ? true : undefined}
+      aria-hidden={decorative ? true : undefined}
+      className={cn(
+        "mt-3 inline-flex items-center gap-2 rounded-[var(--newt-radius-sm)] border-0 bg-newt-bg-elevated px-4 py-1.5 text-sm font-medium text-newt-text-primary no-underline",
+        !decorative &&
+          "cursor-pointer transition-colors duration-fast ease-newt hover:bg-newt-bg-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50",
+        className
+      )}
+      {...(decorative ? withoutHandlers(props) : props)}
+    />
+  )
+})
 ChannelWelcomeAction.displayName = "ChannelWelcomeAction"
 
 export interface ChannelWelcomeDateProps extends Omit<

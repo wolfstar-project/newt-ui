@@ -90,6 +90,11 @@ export interface TimestampProps extends Omit<
   /** Overrides the reader's locale, which is otherwise the browser's. */
   locale?: string
   /**
+   * Time zone of the text, such as `"Europe/Paris"`. Defaults to the zone of
+   * the runtime. Set it when the server and the browser sit in other zones.
+   */
+  timeZone?: string
+  /**
    * How often a relative timestamp redraws, in milliseconds. Zero freezes it,
    * which is what a server render wants.
    */
@@ -103,6 +108,7 @@ const Timestamp = React.forwardRef<HTMLTimeElement, TimestampProps>(
       value,
       format = "shortDateTime",
       locale,
+      timeZone,
       tick = 60_000,
       ...props
     },
@@ -129,15 +135,19 @@ const Timestamp = React.forwardRef<HTMLTimeElement, TimestampProps>(
     const text =
       format === "relative"
         ? relative(date, now, locale)
-        : new Intl.DateTimeFormat(locale, FORMATS[format]).format(date)
+        : new Intl.DateTimeFormat(locale, {
+            ...FORMATS[format],
+            timeZone,
+          }).format(date)
 
     /*
      * The full instant lives in the tooltip and in `dateTime`, so a relative
      * label never hides the thing it is a label for.
      */
-    const exact = new Intl.DateTimeFormat(locale, FORMATS.longDateTime).format(
-      date
-    )
+    const exact = new Intl.DateTimeFormat(locale, {
+      ...FORMATS.longDateTime,
+      timeZone,
+    }).format(date)
 
     return (
       <time
@@ -145,7 +155,7 @@ const Timestamp = React.forwardRef<HTMLTimeElement, TimestampProps>(
         dateTime={date.toISOString()}
         title={exact}
         className={cn(
-          "rounded-sm bg-newt-bg-elevated px-1 text-newt-text-primary",
+          "rounded-[var(--newt-radius-sm)] bg-newt-bg-elevated px-1 text-newt-text-primary",
           className
         )}
         {...props}

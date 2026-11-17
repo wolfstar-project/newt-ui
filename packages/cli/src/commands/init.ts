@@ -65,10 +65,15 @@ import {
 } from "../utils/tailwind.js"
 import { scaffoldTemplate, templateDefaults } from "../utils/templates.js"
 import { getTokensCssBlock, TOKENS_MARKER } from "../utils/tokens.js"
+import {
+  barrelFileName,
+  componentsOption,
+  stringLiteral,
+  updateNuxtConfig,
+  type NuxtBarrels,
+} from "../utils/updaters/update-nuxt-config.js"
 import { updatePresetCss } from "../utils/updaters/update-preset.js"
-
-/** The registry item that carries the design tokens. */
-const THEME_ITEM = "theme-newt"
+import { THEME_ITEM } from "../utils/updaters/update-theme-names.js"
 
 export interface InitOptions {
   cwd: string
@@ -423,7 +428,7 @@ async function runInit(
       : undefined
   if (existingCss.includes(TOKENS_MARKER)) {
     cssSpinner.stop(
-      `${relativePath(cwd, cssPath)} already contains newt tokens, skipped.`
+      `${relativePath(cwd, cssPath)} already contains newt tokens, skipped. Run ${highlighter.info("npx newtui tokens")} to add the ones it is missing.`
     )
   } else {
     const header =
@@ -465,6 +470,19 @@ async function runInit(
     )
   }
 
+  // nuxt.config: keep the barrels `add` writes out of Nuxt's component scan
+  const isNuxt =
+    config.framework === "vue" && (config.bundler ?? DEFAULT_BUNDLER) === "nuxt"
+  const barrels = isNuxt ? await updateNuxtConfig(config) : undefined
+  const barrelsIn = `${barrelFileName(config.typescript)} barrels in ${relativePath(cwd, config.resolvedPaths.ui)}`
+  if (barrels?._tag === "Edited") {
+    logger.success(
+      `Added the components option to ${highlighter.info(barrels.file)}. Nuxt now skips the ${barrelsIn}.`
+    )
+  } else if (barrels?._tag === "AlreadyIgnored") {
+    logger.info(`${barrels.file} already ignores the ${barrelsIn}, skipped.`)
+  }
+
   // dependencies
   if (!options.skipInstall) {
     await installDependencies(
@@ -481,12 +499,10 @@ async function runInit(
     theme,
     darkSelector
   )
-  if (config.framework === "vue") {
-    if ((config.bundler ?? DEFAULT_BUNDLER) === "nuxt") {
-      printNuxtInstructions(stylesheetEntry)
-    } else {
-      printViteInstructions(stylesheetEntry)
-    }
+  if (barrels !== undefined) {
+    printNuxtInstructions(stylesheetEntry, barrels, barrelsIn)
+  } else if (config.framework === "vue") {
+    printViteInstructions(stylesheetEntry)
   }
 }
 
@@ -592,7 +608,11 @@ function printTailwindInstructions(
   )
 }
 
-function printNuxtInstructions(css: string): void {
+function printNuxtInstructions(
+  css: string,
+  barrels: NuxtBarrels,
+  barrelsIn: string
+): void {
   const cssAlias = toNuxtCssAlias(css)
   logger.log(highlighter.bold("Nuxt setup"))
   logger.log(
@@ -606,9 +626,58 @@ function printNuxtInstructions(css: string): void {
     vite: { plugins: [tailwindcss()] },
   })`)
   )
+  if (barrels._tag === "Manual") printBarrelInstructions(barrels, barrelsIn)
   logger.log(
     highlighter.dim(
       "  Tip: @newtui/nuxt auto-imports every component in your ui directory — see https://newtui.dev"
+    )
+  )
+}
+
+/**
+ * `init` only edits a `nuxt.config` it can edit without guessing. Everything
+ * else gets the exact text to add, and the reason it is needed.
+ */
+function printBarrelInstructions(
+  barrels: Extract<NuxtBarrels, { _tag: "Manual" }>,
+  /** For example "index.ts barrels in app/components/ui". */
+  barrelsIn: string
+): void {
+  const file = highlighter.info(barrels.file)
+  logger.log(
+    `Nuxt reads the ${barrelsIn} as components too. It then warns that two files resolve to the same name (NUXT_B3011).`
+  )
+  if (barrels.reason === "components-option") {
+    logger.log(
+      `${file} already sets ${highlighter.info("components")}, so init left it unchanged. Add this to the entry for your components directory:`
+    )
+    logger.log(highlighter.dim(`  ignore: [${stringLiteral(barrels.ignore)}]`))
+    return
+  }
+  if (barrels.reason === "missing-file") {
+    logger.log(`Create ${file} with:`)
+    const option = componentsOption(barrels.ignore)
+      .split("\n")
+      .map((line) => `    ${line}`)
+      .join("\n")
+    logger.log(
+      highlighter.dim(`  export default defineNuxtConfig({\n${option},\n  })`)
+    )
+    return
+  }
+  if (barrels.reason === "spread") {
+    logger.log(
+      `${file} spreads another object into its config, so init left it unchanged. If that object sets ${highlighter.info("components")}, add the ignore there. Otherwise add this option after the spread:`
+    )
+  } else {
+    logger.log(`init could not edit ${file} safely. Add this option to it:`)
+  }
+  logger.log(
+    highlighter.dim(
+      `${componentsOption(barrels.ignore)},`
+        .split("\n")
+        .map((line) => `  ${line}`)
+        .join("\n")
     )
   )
 }

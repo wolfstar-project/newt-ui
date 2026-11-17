@@ -64,8 +64,8 @@ Every token, dark and light, is on [the colours page](/docs/colors).
 In order:
 
 1. **Markup** — semantic HTML, with ARIA roles where the native element does
-   not imply them: `role="status"` for a presence dot, `role="dialog"` plus
-   `aria-modal="true"` for a modal.
+   not imply them: `role="dialog"` plus `aria-modal="true"` for a modal. A
+   repeated element such as a presence dot takes no live role.
 2. **Styles** — scoped under the `.newt-<name>` root class, reading only
    `--newt-*` tokens.
 3. **Behaviour**, if any — vanilla JavaScript attached through `data-newt-*`

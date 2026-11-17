@@ -15,6 +15,12 @@ A reply preview keeps the referenced author and excerpt attached to the message 
 
 <Usage name="reply-preview" />
 
+## In a message group [#message-group]
+
+Put the preview in `MessageGroupReply`. There it has no margin and no start padding, and the row sets the distance to the author line. Its spine starts above the centre of the avatar and stops 4px before the preview.
+
+The spine reads [two custom properties](/docs/components/message-group#custom-properties) of the row: `--newt-message-group-avatar-size` and `--newt-message-group-gap`. If the row does not set them, the spine uses `40px` and `16px`. Outside a group, the preview keeps its own elbow, its margin and its padding.
+
 ## API reference
 
 <PropsTable
@@ -33,6 +39,51 @@ A reply preview keeps the referenced author and excerpt attached to the message 
     },
   ]}
 />
+
+<PropsTable
+  of="ReplyPreviewAvatar"
+  rows={[
+    {
+      name: "src",
+      type: "string",
+      description:
+        "The image URL. Without it and without `srcSet`, the avatar is a 16px circle that holds its fallback.",
+    },
+    {
+      name: "srcSet (React) / srcset (Vue)",
+      type: "string",
+      description:
+        "Image candidates for each pixel density. It draws the image without `src` too.",
+    },
+    {
+      name: "alt",
+      type: "string",
+      description:
+        "Accessible name. Leave it empty beside the author name, which hides the avatar from a screen reader.",
+      default: '""',
+    },
+    {
+      name: "children / default slot",
+      type: "React.ReactNode / Vue slot",
+      description:
+        "The fallback, drawn when there is no `src` and no `srcSet`: an icon or initials. The circle sizes an `svg` to 10px.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="ReplyPreviewCommand"
+  rows={[
+    {
+      name: "icon (React) / #icon slot (Vue)",
+      type: "React.ReactNode / Vue slot",
+      description:
+        "An icon before the command name. It sits outside the truncating label, so the gap of the chip applies. The chip sizes an `svg` to 12px.",
+    },
+  ]}
+/>
+
+In the plain HTML and CSS distribution, give the icon the class `newt-reply__command-icon` and put it before `newt-reply__command-name`. For an avatar with no image, use a `<span>` with the classes `newt-reply__avatar newt-reply__avatar--fallback` and put the icon in it.
 
 The registry also exports `ReplyPreviewAvatar`, `ReplyPreviewAuthor`, `ReplyPreviewText`, `ReplyPreviewAction` and `ReplyPreviewCommand`. Each part accepts the native attributes of the element it renders.
 

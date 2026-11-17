@@ -25,6 +25,14 @@
   margin: 24px 0;
 }
 
+/* The two steps of a Components V2 separator: 4px and 8px. */
+.newt-divider--small {
+  margin: 4px 0;
+}
+.newt-divider--large {
+  margin: 8px 0;
+}
+
 /* Pure spacing: keeps the gap, drops the rules on either side of the label. */
 .newt-divider--no-line::before,
 .newt-divider--no-line::after {

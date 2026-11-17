@@ -13,11 +13,11 @@ import {
 const COVER =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86 86">
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85 85">
       <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#5865f2"/><stop offset="1" stop-color="#eb459e"/>
       </linearGradient></defs>
-      <rect width="86" height="86" fill="url(#g)"/>
+      <rect width="85" height="85" fill="url(#g)"/>
     </svg>`
   )
 

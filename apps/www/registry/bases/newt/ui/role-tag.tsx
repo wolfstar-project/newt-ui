@@ -12,7 +12,7 @@ const RoleTag = React.forwardRef<HTMLSpanElement, RoleTagProps>(
     <span
       ref={ref}
       className={cn(
-        "inline-flex items-center gap-1 rounded-sm border border-newt-border bg-newt-bg-elevated px-1.5 py-0.5 text-[11px] font-semibold",
+        "inline-flex items-center gap-1 rounded-[var(--newt-radius-sm)] border border-newt-border bg-newt-bg-elevated px-1.5 py-0.5 text-[11px] font-semibold",
         className
       )}
       style={color ? { color, ...style } : style}

@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 export { default as Skeleton } from "./Skeleton.vue"
 
 export const skeletonVariants = cva(
-  "animate-[newt-skeleton-shimmer_1.6s_ease-in-out_infinite] rounded-sm bg-[linear-gradient(90deg,var(--newt-bg-elevated)_25%,var(--newt-bg-hover)_50%,var(--newt-bg-elevated)_75%)] bg-[length:200%_100%] motion-reduce:animate-none motion-reduce:opacity-60",
+  "animate-[newt-skeleton-shimmer_1.6s_ease-in-out_infinite] rounded-[var(--newt-radius-sm)] bg-[linear-gradient(90deg,var(--newt-bg-elevated)_25%,var(--newt-bg-hover)_50%,var(--newt-bg-elevated)_75%)] bg-[length:200%_100%] motion-reduce:animate-none motion-reduce:opacity-60",
   {
     variants: {
       variant: {

@@ -33,6 +33,12 @@
   color: var(--newt-text-muted);
 }
 
+/*
+ * The action is a `button` or an `a`. The same class on a `span` is the
+ * decorative form, for a read-only view: give it `aria-hidden="true"`. It
+ * keeps the resting look and has no pointer, no hover and no place in the
+ * tab order.
+ */
 .newt-channel-welcome__action {
   display: inline-flex;
   align-items: center;
@@ -44,16 +50,32 @@
   background: var(--newt-bg-elevated);
   font-size: 14px;
   font-weight: 500;
+  text-decoration: none;
   color: var(--newt-text-primary);
+}
+.newt-channel-welcome__action:is(button, a) {
   cursor: pointer;
   transition: background var(--newt-duration-fast) var(--newt-ease);
 }
-.newt-channel-welcome__action:hover {
+.newt-channel-welcome__action:is(button, a):hover {
   background: var(--newt-bg-hover);
 }
 .newt-channel-welcome__action:focus-visible {
   outline: 2px solid var(--newt-text-link);
   outline-offset: 2px;
+}
+
+/*
+ * A control that is off: a `button` with `disabled`, or a link with
+ * `aria-disabled="true"` and no `href`. It fades, and a link takes no press.
+ */
+.newt-channel-welcome__action:disabled,
+.newt-channel-welcome__action[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.newt-channel-welcome__action[aria-disabled="true"] {
+  pointer-events: none;
 }
 
 /* Creation date, centred between two hairlines. */

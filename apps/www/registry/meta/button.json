@@ -6,5 +6,5 @@
   "vueFiles": ["Button.vue", "index.ts"],
   "reactDemo": "button-demo",
   "vueDemo": "ButtonDemo",
-  "examples": ["sizes", "disabled", "link"]
+  "examples": ["sizes", "slots", "disabled", "link"]
 }

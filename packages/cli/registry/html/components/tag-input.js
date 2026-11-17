@@ -3,6 +3,10 @@
  * takes the last chip back; a chip's button removes it. A duplicate is
  * dropped rather than added twice. Every change dispatches `newt:change`
  * with the full list.
+ *
+ * A new chip's remove button is named from `data-newt-remove-label` on the
+ * field, where `{tag}` stands for the chip's text. It defaults to
+ * `Remove {tag}`.
  */
 const REMOVE_ICON =
   '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4.3 4.3a1 1 0 0 1 1.4 0L8 6.6l2.3-2.3a1 1 0 1 1 1.4 1.4L9.4 8l2.3 2.3a1 1 0 0 1-1.4 1.4L8 9.4l-2.3 2.3a1 1 0 0 1-1.4-1.4L6.6 8 4.3 5.7a1 1 0 0 1 0-1.4Z"/></svg>'
@@ -14,6 +18,7 @@ document.querySelectorAll("[data-newt-tag-input]").forEach((field) => {
   const tags = () => [...field.querySelectorAll(".newt-tag-input__tag")]
   const values = () => tags().map((tag) => tag.dataset.value ?? label(tag))
   const label = (tag) => tag.firstChild?.textContent?.trim() ?? ""
+  const removeLabel = field.dataset.newtRemoveLabel ?? "Remove {tag}"
 
   function announce() {
     field.dispatchEvent(
@@ -34,7 +39,10 @@ document.querySelectorAll("[data-newt-tag-input]").forEach((field) => {
     const remove = document.createElement("button")
     remove.type = "button"
     remove.className = "newt-tag-input__remove"
-    remove.setAttribute("aria-label", `Remove ${value}`)
+    remove.setAttribute(
+      "aria-label",
+      removeLabel.replaceAll("{tag}", () => value)
+    )
     remove.innerHTML = REMOVE_ICON
     tag.append(remove)
     input.before(tag)

@@ -1,9 +1,9 @@
 ---
 title: "App Launcher"
-description: "The Apps popout, with search, a recents strip and the apps installed in a server."
+description: "The Apps launcher, as a desktop popout or a bottom sheet, with search, a recents strip and the apps installed in a server."
 ---
 
-The Apps popout, with search, a recents strip and the apps installed in a server. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
+The Apps launcher, with search, a recents strip and the apps installed in a server. It is a popout on desktop and a bottom sheet on a phone. Compose it from the exported registry parts so local content and behaviour stay in the application while the visual contract stays token-driven.
 
 <ComponentPreview name="app-launcher" />
 
@@ -15,7 +15,124 @@ The Apps popout, with search, a recents strip and the apps installed in a server
 
 <Usage name="app-launcher" />
 
+The preview above is an `inline` launcher: it stays in the page and does not move focus. Without `inline`, `AppLauncher` is a dialog.
+
+## Examples
+
+### Bottom sheet
+
+Pass `variant="sheet"` for a phone. The sheet fills the width, drops its bottom border and rounds its top corners. Its height is `--newt-app-launcher-sheet-height`, which defaults to `90dvh`. Set the property on the launcher or on an ancestor to change it.
+
+Give `AppLauncherHandle` a `label` when the handle changes the sheet. It then renders a `button` with that name, so Enter and Space press it. Pass `expanded` to report the state as `aria-expanded`. Without a `label`, the handle is a decorative grip that assistive technology skips.
+
+The example below is a `modal` dialog. Press the handle to change the height, type to filter the apps, and press Escape to close it. The search field is controlled: `value` and `onValueChange` in React, `v-model` in Vue.
+
+<ComponentPreview name="app-launcher" variant="sheet" />
+
+`AppLauncher` is built on [Radix Dialog](https://www.radix-ui.com/primitives/docs/components/dialog) in React and [Reka UI Dialog](https://reka-ui.com/docs/components/dialog) in Vue. It renders in place, with no portal and no overlay, so your layout decides where it sits. It is open for as long as it is mounted.
+
+When it mounts, focus moves to its first control. Tab cycles through the controls of the launcher. Escape calls `onClose` (`@close` in Vue). Unmount the launcher in answer. Focus then returns to the element that held it before.
+
+Add `modal` when the launcher covers the page. The rest of the page is then out of use. Assistive technology skips it, focus cannot move to it, and a press on it asks to close the launcher.
+
+### Drill-in view
+
+A view that opens from an app has its own header. `AppLauncherHeaderTitle` takes the free width and centres in it. Put a spacer as wide as the back control after it, so the title sits in the centre of the header.
+
+`AppLauncherPromoCard` draws a promoted app: art on top, a footer below. `AppLauncherItem` takes `trailing` for content after the text, such as a chevron. The item is a row that holds its button and, beside it, the trailing content. A press on a chevron presses the button. A control in `trailing`, such as a visibility toggle, keeps its own presses. `className` styles the row, and the ref and other props go to the button. `variant="tile"` puts the icon above the name, inside an `AppLauncherList` with `variant="grid"`.
+
+An `<img>` in `AppLauncherItemIcon` or `AppLauncherRecent` covers the icon and is cropped. Pass `fit="contain"` for a logo that must not be cut, as the first tile does.
+
+<ComponentPreview name="app-launcher" variant="drill-in" />
+
 ## API reference
+
+<PropsTable
+  of="AppLauncher"
+  rows={[
+    {
+      name: "variant",
+      type: '"popout" | "sheet"',
+      default: '"popout"',
+      description:
+        "`popout` is the desktop launcher at a fixed size. `sheet` is the bottom sheet, with the height of `--newt-app-launcher-sheet-height`.",
+    },
+    {
+      name: "inline",
+      type: "boolean | undefined",
+      default: "false",
+      description:
+        "Render the launcher in the page: no dialog role, and focus stays where it is. Use it for a launcher that is always on screen, such as a showcase.",
+    },
+    {
+      name: "modal",
+      type: "boolean | undefined",
+      default: "false",
+      description:
+        "Take the page behind the launcher out of use: it is hidden from assistive technology, focus cannot move to it, and a press on it closes the launcher. Has no effect on an `inline` launcher.",
+    },
+    {
+      name: "label",
+      type: "string | undefined",
+      description:
+        "The accessible name of the launcher. Without it, name the launcher with `aria-label` or `aria-labelledby`.",
+    },
+    {
+      name: "onClose / @close",
+      type: "() => void",
+      description:
+        "The user asks to close the dialog: Escape, or a press outside a `modal` one.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="AppLauncherHandle"
+  rows={[
+    {
+      name: "label",
+      type: "string | undefined",
+      description:
+        "The accessible name of the handle. With it, the handle is a button. Without it, the handle is a decorative grip.",
+    },
+    {
+      name: "expanded",
+      type: "boolean | undefined",
+      description:
+        "Whether the sheet is expanded, reported as `aria-expanded` on the button.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="AppLauncherSearchInput"
+  rows={[
+    {
+      name: "value / v-model",
+      type: "string | undefined",
+      description: "The query. Bind it to control the field.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string) => void",
+      description:
+        "React only. Called with the text of the field on each change, after `onChange`.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="AppLauncherList"
+  rows={[
+    {
+      name: "variant",
+      type: '"stack" | "grid"',
+      default: '"stack"',
+      description:
+        "`stack` puts rows behind one rounded surface. `grid` lays out tile items in columns.",
+    },
+  ]}
+/>
 
 <PropsTable
   of="AppLauncherItem"
@@ -23,23 +140,43 @@ The Apps popout, with search, a recents strip and the apps installed in a server
     {
       name: "name",
       type: "string",
-      description: "Required name value.",
+      description: "The name of the app.",
     },
     {
       name: "description",
       type: "string | undefined",
-      description: "Optional description value.",
+      description: "A short line under the name.",
     },
     {
-      name: "icon",
-      type: "React.ReactNode | undefined",
-      description: "Icon for the app; pair with `<AppLauncherItemIcon>`.",
+      name: "icon / #icon",
+      type: "React.ReactNode | slot",
+      description: "Icon for the app; pair with `AppLauncherItemIcon`.",
+    },
+    {
+      name: "trailing / #trailing",
+      type: "React.ReactNode | slot",
+      description:
+        "Content after the text, such as a chevron or a visibility toggle. It sits beside the item button, so it can hold a control.",
+    },
+    {
+      name: "variant",
+      type: '"row" | "tile"',
+      default: '"row"',
+      description:
+        "`row` puts the icon beside the text. `tile` puts it above, for a `grid` list.",
     },
     {
       name: "promoted",
       type: "boolean | undefined",
       description:
         "Marks a paid placement, as the client does for promoted apps.",
+    },
+    {
+      name: "promotedLabel",
+      type: "string",
+      default: '"Promoted"',
+      description:
+        "Text of the `promoted` badge. It is also part of the button's name.",
     },
   ]}
 />
@@ -53,14 +190,66 @@ The Apps popout, with search, a recents strip and the apps installed in a server
       description:
         "Bots use circular avatars; games and activities keep the squircle.",
     },
+    {
+      name: "fit",
+      type: '"cover" | "contain"',
+      default: '"cover"',
+      description:
+        "How an `<img>` inside fills the icon. `cover` crops it; `contain` shows all of it.",
+    },
   ]}
 />
 
-The registry exports `AppLauncher`, `AppLauncherHandle`, `AppLauncherHeader`, `AppLauncherBack`, `AppLauncherSearch`, `AppLauncherSearchInput`, `AppLauncherBody`, `AppLauncherSection`, `AppLauncherSectionHeader`, `AppLauncherSectionTitle`, `AppLauncherViewMore`, `AppLauncherList`, `AppLauncherItem`, `AppLauncherItemIcon`, `AppLauncherRecents`, `AppLauncherRecent`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
+<PropsTable
+  of="AppLauncherRecent"
+  rows={[
+    {
+      name: "fit",
+      type: '"cover" | "contain"',
+      default: '"cover"',
+      description:
+        "How an `<img>` inside fills the tile. `cover` crops it; `contain` shows all of it.",
+    },
+  ]}
+/>
+
+<PropsTable
+  of="AppLauncherPromoCard"
+  rows={[
+    {
+      name: "art / #art",
+      type: "React.ReactNode | slot",
+      description:
+        "The artwork across the top, at 16:9. An `<img>` fills it and is cropped.",
+    },
+    {
+      name: "footer / #footer",
+      type: "React.ReactNode | slot",
+      description:
+        "The row below the art, such as an icon, the name and a line.",
+    },
+  ]}
+/>
+
+The registry exports `AppLauncher`, `AppLauncherHandle`, `AppLauncherHeader`, `AppLauncherHeaderTitle`, `AppLauncherBack`, `AppLauncherSearch`, `AppLauncherSearchInput`, `AppLauncherBody`, `AppLauncherSection`, `AppLauncherSectionHeader`, `AppLauncherSectionTitle`, `AppLauncherViewMore`, `AppLauncherList`, `AppLauncherItem`, `AppLauncherItemIcon`, `AppLauncherRecents`, `AppLauncherRecent`, `AppLauncherPromoCard`, and `appLauncherVariants`. Parts without a table accept the native attributes for the element they render; React uses `className`, while Vue uses `class` and fallthrough attributes.
 
 ## Accessibility
 
-Give the launcher an accessible heading, keep search labelled, and expose the active item while keyboard focus moves through the results.
+Give the launcher a `label`. A dialog reads it when it opens. An `inline` launcher with a label is a `region` landmark; without one it is a plain `div`.
+
+The `Promoted` badge takes its text from `promotedLabel`. [Translating labels](/docs/translating-labels) lists every English default.
+
+Tab cycles through the controls of a dialog, and Escape leaves it. A dialog that is not `modal` leaves the page beside it in use. Use `modal` for a sheet that covers the page, so focus cannot move to content the user cannot see.
+
+Do not wrap a dialog `AppLauncher` in a [Drawer](/docs/components/drawer) or a [Modal](/docs/components/modal). That nests one dialog in another. Put an `inline` launcher inside them when you want their overlay.
+
+A handle that changes the sheet needs a `label`, so it is a button with a name. Keep `expanded` in step with the sheet. A drag gesture alone fails keyboard users; the button gives them the same action.
+
+`AppLauncherRecents` is a list, so a screen reader announces how many recent apps there are. Name it with `aria-label` or `aria-labelledby`, and give every `AppLauncherRecent` an `aria-label`. Label the search field, and keep `alt=""` on art and icons that the text beside them already names.
+
+In the plain HTML and CSS distribution, `app-launcher.js` gives a launcher marked `data-newt-app-launcher` the same behaviour. A `data-newt-app-launcher-close` control closes it, and `aria-modal="true"` makes it modal. The launcher fires `newt:close` before it leaves the page; cancel the event to close it your own way.
+
+With several launchers open, Escape closes the newest one that holds focus. An Escape that a control inside already handled with `preventDefault()` closes nothing, and the launcher marks the Escape it handles the same way. Tab skips controls inside hidden content.
 
 ## Tokens
 

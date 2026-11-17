@@ -90,7 +90,7 @@ const summaryClassName =
     :data-kind="props.kind"
     :class="
       cn(
-        'overflow-hidden rounded-md border border-newt-border bg-newt-bg-surface',
+        'overflow-hidden rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-surface',
         props.class
       )
     "

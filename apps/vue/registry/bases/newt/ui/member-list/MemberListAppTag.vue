@@ -4,19 +4,26 @@ import type { HTMLAttributes } from "vue"
 import { cn } from "@/lib/utils"
 
 /* The APP tag bots carry next to their name; `verified` adds Discord's check. */
-const props = defineProps<{
-  class?: HTMLAttributes["class"]
-  verified?: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    class?: HTMLAttributes["class"]
+    verified?: boolean
+    /** Accessible name of the tag. `aria-label` still wins. */
+    label?: string
+    /** Accessible name with `verified`. `aria-label` still wins. */
+    verifiedLabel?: string
+  }>(),
+  { label: "Application", verifiedLabel: "Verified application" }
+)
 </script>
 
 <template>
   <span
     role="img"
-    :aria-label="props.verified ? 'Verified application' : 'Application'"
+    :aria-label="props.verified ? props.verifiedLabel : props.label"
     :class="
       cn(
-        'inline-flex shrink-0 items-center gap-0.5 rounded-sm bg-newt-brand px-1 py-px text-[9px] font-bold leading-none text-newt-on-accent',
+        'inline-flex shrink-0 items-center gap-0.5 rounded-[var(--newt-radius-sm)] bg-newt-brand px-1 py-px text-[9px] font-bold leading-none text-newt-on-accent',
         props.class
       )
     "

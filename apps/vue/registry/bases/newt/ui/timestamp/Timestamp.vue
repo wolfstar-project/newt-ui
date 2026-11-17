@@ -21,6 +21,12 @@ const props = withDefaults(
     /** Overrides the reader's locale, which is otherwise the browser's. */
     locale?: string
     /**
+     * Time zone of the text, such as `"Europe/Paris"`. Defaults to the zone
+     * of the runtime. Set it when the server and the browser sit in other
+     * zones.
+     */
+    timeZone?: string
+    /**
      * How often a relative timestamp redraws, in milliseconds. Zero freezes
      * it, which is what a server render wants.
      */
@@ -54,10 +60,10 @@ onBeforeUnmount(() => clearInterval(timer))
 const text = computed(() =>
   props.format === "relative"
     ? relativeTime(date.value, now.value, props.locale)
-    : new Intl.DateTimeFormat(
-        props.locale,
-        timestampFormats[props.format]
-      ).format(date.value)
+    : new Intl.DateTimeFormat(props.locale, {
+        ...timestampFormats[props.format],
+        timeZone: props.timeZone,
+      }).format(date.value)
 )
 
 /*
@@ -65,9 +71,10 @@ const text = computed(() =>
  * never hides the thing it is a label for.
  */
 const exact = computed(() =>
-  new Intl.DateTimeFormat(props.locale, timestampFormats.longDateTime).format(
-    date.value
-  )
+  new Intl.DateTimeFormat(props.locale, {
+    ...timestampFormats.longDateTime,
+    timeZone: props.timeZone,
+  }).format(date.value)
 )
 </script>
 
@@ -77,7 +84,7 @@ const exact = computed(() =>
     :title="exact"
     :class="
       cn(
-        'rounded-sm bg-newt-bg-elevated px-1 text-newt-text-primary',
+        'rounded-[var(--newt-radius-sm)] bg-newt-bg-elevated px-1 text-newt-text-primary',
         props.class
       )
     "

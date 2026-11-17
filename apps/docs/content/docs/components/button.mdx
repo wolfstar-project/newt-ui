@@ -3,7 +3,7 @@ title: "Button"
 description: "Displays a Discord-styled button with brand, secondary, success, danger and link variants."
 ---
 
-The button carries six intents and four sizes. Which one you reach for is a statement about what the action does, not about how it should look — `danger` is destructive, `success` is confirming, `link` is navigation that happens to sit in a row of buttons.
+The button carries six intents and five sizes. Which one you reach for is a statement about what the action does, not about how it should look — `danger` is destructive, `success` is confirming, `link` is navigation that happens to sit in a row of buttons.
 
 <ComponentPreview name="button" />
 
@@ -19,9 +19,15 @@ The button carries six intents and four sizes. Which one you reach for is a stat
 
 ### Sizes
 
-`sm`, `default` and `lg` change the padding and the text size; `icon` is a circle for a lone glyph. An icon button has no visible text, so give it an `aria-label`.
+`sm`, `message`, `default` and `lg` change the padding and the text size. `message` is 32px high, the size of a button in a message's action row. `icon` is a circle for a lone glyph. An icon button has no visible text, so give it an `aria-label`.
 
 <ComponentPreview name="button" variant="sizes" />
+
+### Leading and trailing content
+
+Put an icon component or a unicode emoji before the label with `leading`, or after it with `trailing`. In Vue these are the `#leading` and `#trailing` slots. Each sits in its own box, so the button's gap separates it from the label. Hide an emoji with `aria-hidden="true"` when the label already says the action. The `emoji` prop still takes an image URL.
+
+<ComponentPreview name="button" variant="slots" />
 
 ### Disabled
 
@@ -48,14 +54,26 @@ Pass `href` and any variant renders an `<a>`, for an action that goes somewhere.
     },
     {
       name: "size",
-      type: '"default" | "sm" | "lg" | "icon"',
-      description: "Padding and text size. `icon` makes it a circle.",
+      type: '"default" | "sm" | "message" | "lg" | "icon"',
+      description:
+        "Padding and text size. `message` is 32px high, the size of a button in a message. `icon` makes it a circle.",
       default: '"default"',
     },
     {
       name: "emoji",
       type: "string",
       description: "Image URL rendered before the label.",
+    },
+    {
+      name: "leading",
+      type: "React.ReactNode (React) / #leading slot (Vue)",
+      description:
+        "Content before the label, such as an icon component or a unicode emoji.",
+    },
+    {
+      name: "trailing",
+      type: "React.ReactNode (React) / #trailing slot (Vue)",
+      description: "Content after the label, before the link-out glyph.",
     },
     {
       name: "emojiAlt",

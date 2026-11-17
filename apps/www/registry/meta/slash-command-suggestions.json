@@ -3,13 +3,14 @@
   "title": "Slash Command Suggestions",
   "description": "The command picker that opens above the composer, with an app rail, grouped options and a matched-command preview.",
   "dependencies": ["class-variance-authority"],
-  "registryDependencies": ["slash-command"],
+  "registryDependencies": ["slash-command", "scrollbar"],
   "vueFiles": [
     "SlashCommandSuggestions.vue",
     "SlashCommandSuggestionsRail.vue",
     "SlashCommandSuggestionsRailItem.vue",
     "SlashCommandSuggestionsList.vue",
     "SlashCommandSuggestionsHeader.vue",
+    "SlashCommandSuggestionsFooter.vue",
     "SlashCommandSuggestionGroup.vue",
     "SlashCommandAppIcon.vue",
     "SlashCommandSuggestion.vue",
@@ -17,5 +18,6 @@
     "index.ts"
   ],
   "reactDemo": "slash-command-suggestions-demo",
-  "vueDemo": "SlashCommandSuggestionsDemo"
+  "vueDemo": "SlashCommandSuggestionsDemo",
+  "examples": ["narrow"]
 }

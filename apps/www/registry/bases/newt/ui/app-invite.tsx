@@ -10,7 +10,7 @@ const AppInvite = React.forwardRef<
   <article
     ref={ref}
     className={cn(
-      "flex max-w-[432px] flex-col overflow-hidden rounded-lg bg-newt-bg-surface text-newt-text-primary",
+      "flex max-w-[432px] flex-col overflow-hidden rounded-[var(--newt-radius-lg)] bg-newt-bg-surface text-newt-text-primary",
       className
     )}
     {...props}
@@ -68,7 +68,7 @@ const AppInviteIcon = React.forwardRef<
     alt={alt}
     aria-hidden={alt === "" ? true : undefined}
     className={cn(
-      "h-20 w-20 shrink-0 rounded-lg bg-newt-bg-base object-cover",
+      "h-20 w-20 shrink-0 rounded-[var(--newt-radius-lg)] bg-newt-bg-base object-cover",
       className
     )}
     {...props}

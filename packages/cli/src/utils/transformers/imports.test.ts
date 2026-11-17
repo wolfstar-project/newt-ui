@@ -57,6 +57,17 @@ describe("registry import transforms", () => {
     ).toBe('import { Button } from "@/components/ui/button"')
   })
 
+  it("rewrites the published Vue registry path to the configured UI alias", async () => {
+    const config = await createConfig("vue")
+
+    expect(
+      transformContent(
+        'import { Button } from "@/registry/bases/newt/ui/button"',
+        config
+      )
+    ).toBe('import { Button } from "@/components/ui/button"')
+  })
+
   it("keeps imports from registries published before the layout move compatible", async () => {
     const config = await createConfig("vue")
 

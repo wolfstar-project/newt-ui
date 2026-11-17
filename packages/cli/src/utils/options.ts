@@ -17,6 +17,7 @@ export const COMMANDS = [
   "migrate",
   "apply",
   "preset",
+  "tokens",
 ] as const
 export type CommandName = (typeof COMMANDS)[number]
 

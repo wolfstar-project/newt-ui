@@ -35,19 +35,86 @@ export interface ExpressionItem {
 
 export type SkinTone = 0 | 1 | 2 | 3 | 4 | 5
 
-export const expressionKinds: { kind: ExpressionKind; label: string }[] = [
-  { kind: "gif", label: "GIFs" },
-  { kind: "sticker", label: "Stickers" },
-  { kind: "emoji", label: "Emoji" },
+/** Every name and text the picker writes itself. */
+export interface ExpressionsPickerLabels {
+  /** Name of the tab list. */
+  kinds: string
+  gif: string
+  sticker: string
+  emoji: string
+  /** Name of the search field. */
+  search: string
+  searchPlaceholder: string
+  clearSearch: string
+  /** Name of the skin tone button, built from the current tone's name. */
+  skinTone: (tone: string) => string
+  /** Name of the group of skin tones. */
+  skinTones: string
+  /** The six skin tones, from the default to the darkest. */
+  toneNames: readonly [string, string, string, string, string, string]
+  /** Name of the category rail. */
+  categories: string
+  searchResults: string
+  recent: string
+  noResults: string
+  noResultsHelp: string
+  empty: string
+  emptyHelp: string
+  /** Name of an item that cannot be chosen, built from its label. */
+  unavailable: (label: string) => string
+  /** Read out after each search. */
+  resultCount: (count: number) => string
+  /** Written before the category name in the preview bar. */
+  from: string
+  /** The preview bar while nothing is hovered or chosen. */
+  hint: string
+}
+
+/** The English defaults. */
+export const defaultExpressionsPickerLabels: ExpressionsPickerLabels = {
+  kinds: "Expression type",
+  gif: "GIFs",
+  sticker: "Stickers",
+  emoji: "Emoji",
+  search: "Search expressions",
+  searchPlaceholder: "Search by name or keyword",
+  clearSearch: "Clear search",
+  skinTone: (tone) => `Skin tone: ${tone}`,
+  skinTones: "Skin tone",
+  toneNames: [
+    "Default skin tone",
+    "Light skin tone",
+    "Medium-light skin tone",
+    "Medium skin tone",
+    "Medium-dark skin tone",
+    "Dark skin tone",
+  ],
+  categories: "Categories",
+  searchResults: "Search results",
+  recent: "Recently used",
+  noResults: "No expressions match your search.",
+  noResultsHelp: "Try another word or another tab.",
+  empty: "Nothing here yet.",
+  emptyHelp: "Try another tab.",
+  unavailable: (label) => `${label}, unavailable`,
+  resultCount: (count) => (count === 1 ? "1 result" : `${count} results`),
+  from: "from",
+  hint: "Hover or focus an expression to preview it.",
+}
+
+export const expressionKinds: readonly ExpressionKind[] = [
+  "gif",
+  "sticker",
+  "emoji",
 ]
 
-export const skinTones: { tone: SkinTone; label: string; sample: string }[] = [
-  { tone: 0, label: "Default skin tone", sample: "👋" },
-  { tone: 1, label: "Light skin tone", sample: "👋🏻" },
-  { tone: 2, label: "Medium-light skin tone", sample: "👋🏼" },
-  { tone: 3, label: "Medium skin tone", sample: "👋🏽" },
-  { tone: 4, label: "Medium-dark skin tone", sample: "👋🏾" },
-  { tone: 5, label: "Dark skin tone", sample: "👋🏿" },
+export const skinTones: { tone: SkinTone; sample: string }[] = [
+  { tone: 0, sample: "👋" },
+  { tone: 1, sample: "👋🏻" },
+  { tone: 2, sample: "👋🏼" },
+  { tone: 3, sample: "👋🏽" },
+  { tone: 4, sample: "👋🏾" },
+  { tone: 5, sample: "👋🏿" },
 ]
 
 /** The value of an item in a skin tone, or its own value when it has none. */
@@ -89,7 +156,8 @@ export function buildExpressionSections(
   categories: readonly ExpressionCategory[],
   recent: readonly string[],
   kind: ExpressionKind,
-  query: string
+  query: string,
+  labels: Pick<ExpressionsPickerLabels, "searchResults" | "recent">
 ): ExpressionSection[] {
   const ofKind = items.filter((item) => item.kind === kind)
   if (query.trim()) {
@@ -98,7 +166,7 @@ export function buildExpressionSections(
       ? [
           {
             key: "results",
-            label: "Search results",
+            label: labels.searchResults,
             items: found,
             collapsible: false,
           },
@@ -114,7 +182,7 @@ export function buildExpressionSections(
   if (used.length)
     sections.push({
       key: "recent",
-      label: "Recently used",
+      label: labels.recent,
       glyph: "🕘",
       items: used,
       collapsible: true,
@@ -170,7 +238,7 @@ export const expressionsFocusRing =
 
 /** Tabs and the small controls of the panel. */
 export const expressionsPickerVariants = cva(
-  `inline-flex min-h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] min-w-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] cursor-pointer items-center justify-center gap-[var(--newt-space-1)] rounded-md border-0 px-[var(--newt-space-3)] font-sans text-[length:var(--newt-font-size-sm)] font-semibold leading-[var(--newt-line-height-normal)] enabled:hover:bg-newt-bg-hover enabled:hover:text-newt-text-primary enabled:active:bg-newt-bg-active disabled:cursor-not-allowed disabled:text-newt-text-muted ${expressionsFocusRing}`,
+  `inline-flex min-h-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] min-w-[calc(var(--newt-expressions-target-size)-var(--newt-space-2))] cursor-pointer items-center justify-center gap-[var(--newt-space-1)] rounded-[var(--newt-radius-md)] border-0 px-[var(--newt-space-3)] font-[family-name:var(--newt-font-sans)] text-[length:var(--newt-font-size-sm)] font-semibold leading-[var(--newt-line-height-normal)] enabled:hover:bg-newt-bg-hover enabled:hover:text-newt-text-primary enabled:active:bg-newt-bg-active disabled:cursor-not-allowed disabled:text-newt-text-muted ${expressionsFocusRing}`,
   {
     variants: {
       selected: {

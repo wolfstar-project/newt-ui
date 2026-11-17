@@ -61,7 +61,7 @@ function onKeydown(event: KeyboardEvent) {
     :data-state="isRevealed ? 'revealed' : 'hidden'"
     :class="
       cn(
-        'rounded-sm px-1 transition-[background-color] duration-fast ease-newt',
+        'rounded-[var(--newt-radius-sm)] px-1 transition-[background-color] duration-fast ease-newt',
         isRevealed
           ? 'cursor-text select-text bg-newt-bg-active text-newt-text-primary'
           : 'cursor-pointer select-none bg-newt-spoiler hover:bg-newt-spoiler-hover',

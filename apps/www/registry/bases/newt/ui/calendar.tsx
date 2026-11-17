@@ -56,7 +56,7 @@ function localToday(): string {
 const SUNDAY = Date.UTC(1970, 0, 4)
 
 const navClassName =
-  "inline-flex h-7 w-7 items-center justify-center rounded-sm text-newt-text-muted hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link"
+  "inline-flex h-7 w-7 items-center justify-center rounded-[var(--newt-radius-sm)] text-newt-text-muted hover:bg-newt-bg-hover hover:text-newt-text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link"
 
 /*
  * One month as a grid of days. The days are real buttons inside a table with
@@ -222,7 +222,7 @@ const Calendar = React.forwardRef<HTMLDivElement | null, CalendarProps>(
       <div
         ref={root}
         className={cn(
-          "inline-flex flex-col gap-2 rounded-md border border-newt-border bg-newt-bg-surface p-3 text-newt-text-primary",
+          "inline-flex flex-col gap-2 rounded-[var(--newt-radius-md)] border border-newt-border bg-newt-bg-surface p-3 text-newt-text-primary",
           className
         )}
         {...props}
@@ -313,7 +313,7 @@ const Calendar = React.forwardRef<HTMLDivElement | null, CalendarProps>(
                         }}
                         onKeyDown={(event) => onKeyDown(event, iso)}
                         className={cn(
-                          "flex h-[34px] w-[34px] items-center justify-center rounded-sm p-0 font-sans text-[13px] tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-35",
+                          "flex h-[34px] w-[34px] items-center justify-center rounded-[var(--newt-radius-sm)] p-0 font-[family-name:var(--newt-font-sans)] text-[13px] tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-newt-text-link disabled:cursor-not-allowed disabled:opacity-35",
                           iso === selected
                             ? "bg-newt-brand font-bold text-newt-on-accent"
                             : "text-newt-text-secondary enabled:hover:bg-newt-bg-hover enabled:hover:text-newt-text-primary",

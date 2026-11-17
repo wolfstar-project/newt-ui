@@ -35,6 +35,7 @@ export const newtTokens: NewtTokenMap = {
   "newt-border": "#3f4147",
   "newt-text-primary": "#f2f3f5",
   "newt-text-secondary": "#b5bac1",
+  "newt-text-message": "#dbdee1",
   "newt-text-muted": "#949ba4",
   "newt-text-link": "#00a8fc",
   "newt-brand": "#5865f2",
@@ -44,6 +45,7 @@ export const newtTokens: NewtTokenMap = {
   "newt-idle": "#f0b232",
   "newt-dnd": "#f23f42",
   "newt-offline": "#80848e",
+  "newt-streaming": "#593695",
   "newt-danger": "#da373c",
   "newt-danger-hover": "#a12828",
   "newt-mention-text": "#b3baff",
@@ -98,6 +100,7 @@ export const newtTokensLight: NewtTokenMap = {
   "newt-border": "#d3d5d9",
   "newt-text-primary": "#060607",
   "newt-text-secondary": "#4e5058",
+  "newt-text-message": "#313338",
   "newt-text-muted": "#5c5e66",
   "newt-text-link": "#006ce7",
   "newt-brand": "#5865f2",
@@ -107,6 +110,7 @@ export const newtTokensLight: NewtTokenMap = {
   "newt-idle": "#b58500",
   "newt-dnd": "#d83a3e",
   "newt-offline": "#80848e",
+  "newt-streaming": "#593695",
   "newt-danger": "#d83a3e",
   "newt-danger-hover": "#a12828",
   "newt-mention-text": "#505cdc",
@@ -139,6 +143,7 @@ const COLORS = [
   "border",
   "text-primary",
   "text-secondary",
+  "text-message",
   "text-muted",
   "text-link",
   "brand",
@@ -148,6 +153,7 @@ const COLORS = [
   "idle",
   "dnd",
   "offline",
+  "streaming",
   "danger",
   "danger-hover",
   "mention-text",
@@ -197,6 +203,8 @@ export const tailwindV4Theme: TailwindV4Theme = {
     SHADOWS.map((name) => [`--shadow-${name}`, `var(--newt-shadow-${name})`])
   ),
   "--ease-newt": "var(--newt-ease)",
+  "--transition-duration-fast": "var(--newt-duration-fast)",
+  "--transition-duration-base": "var(--newt-duration-base)",
 }
 
 /**
@@ -232,5 +240,8 @@ export const tailwindV3Theme: TailwindV3Theme = {
     SHADOWS.map((name) => [name, `var(--newt-shadow-${name})`])
   ),
   transitionTimingFunction: { newt: "var(--newt-ease)" },
-  transitionDuration: { fast: "100ms", base: "150ms" },
+  transitionDuration: {
+    fast: "var(--newt-duration-fast)",
+    base: "var(--newt-duration-base)",
+  },
 }

@@ -10,7 +10,7 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>()
   <div
     :class="
       cn(
-        'flex max-w-[480px] items-center gap-4 rounded-lg border border-newt-border bg-newt-bg-elevated px-5 py-4',
+        'flex max-w-[480px] items-center gap-4 rounded-[var(--newt-radius-lg)] border border-newt-border bg-newt-bg-elevated px-5 py-4',
         props.class
       )
     "

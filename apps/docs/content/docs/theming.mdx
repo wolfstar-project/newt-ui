@@ -22,9 +22,9 @@ knowing a palette changed.
 | Group     | Tokens                                                                                                                                                                                   |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Surfaces  | `--newt-bg-base`, `--newt-bg-surface`, `--newt-bg-elevated`, `--newt-bg-floating`, `--newt-bg-input`, `--newt-bg-input-elevated`, `--newt-bg-hover`, `--newt-bg-active`, `--newt-border` |
-| Text      | `--newt-text-primary`, `--newt-text-secondary`, `--newt-text-muted`, `--newt-text-link`                                                                                                  |
+| Text      | `--newt-text-primary`, `--newt-text-secondary`, `--newt-text-message`, `--newt-text-muted`, `--newt-text-link`                                                                           |
 | Brand     | `--newt-brand`, `--newt-brand-hover`, `--newt-brand-active`                                                                                                                              |
-| Status    | `--newt-online`, `--newt-idle`, `--newt-dnd`, `--newt-offline`, `--newt-danger`, `--newt-danger-hover`                                                                                   |
+| Status    | `--newt-online`, `--newt-idle`, `--newt-dnd`, `--newt-offline`, `--newt-streaming`, `--newt-danger`, `--newt-danger-hover`                                                               |
 | Shape     | `--newt-radius-sm`, `--newt-radius-md`, `--newt-radius-lg`, `--newt-radius-full`                                                                                                         |
 | Type      | `--newt-font-sans`, `--newt-font-mono`, `--newt-font-display`                                                                                                                            |
 | Elevation | `--newt-shadow-low`, `--newt-shadow-high`                                                                                                                                                |
@@ -121,11 +121,46 @@ Either way the utilities are the same: `bg-newt-brand`, `text-newt-text-muted`,
 `border-newt-border`, `shadow-elevation-high`, `duration-fast`, `ease-newt`.
 
 The theme `newtui init` writes maps only names Tailwind does not already use:
-the `newt-*` colours, `font-display`, the `elevation-*` shadows and the `newt`
-easing. It never redefines `--radius-*`, `--font-sans` or `--font-mono`, which
-would restyle every page of the app that installs it. Components reach the
-radii and type through Tailwind's own `rounded-*` and `font-*` scale, and the
-raw `--newt-radius-*` and `--newt-font-*` values stay available to your CSS.
+the `newt-*` colours, `font-display`, the `elevation-*` shadows, the `newt`
+easing and the `fast` and `base` durations. It never redefines `--radius-*`,
+`--font-sans` or `--font-mono`, which would restyle every page of the app that
+installs it.
+
+If a component uses a theme name your stylesheet does not declare, `add` lists
+it and prints the block to paste. `npx newtui tokens` writes that block for you.
+See [the CLI](/docs/cli#tokens).
+
+## Radii and type in a host app [#host-scale]
+
+The components read their radii and their sans and mono stacks from the tokens
+directly, not from Tailwind's `rounded-*` and `font-*` scale:
+
+```html
+<div
+  class="rounded-[var(--newt-radius-md)] font-[family-name:var(--newt-font-sans)]"
+></div>
+```
+
+The host's scale therefore leaves them alone. In an app with Nuxt UI,
+`rounded-md` is 12px, but a newt/ui popout keeps the 8px of
+`--newt-radius-md`. The same holds on Tailwind v3, where `rounded-md` is a
+fixed 6px. Your own pages keep your scale.
+
+To give newt/ui components your scale instead, set the tokens to it. Put the
+block after the newt/ui tokens:
+
+```css
+:root {
+  --newt-radius-sm: 6px;
+  --newt-radius-md: 12px;
+  --newt-radius-lg: 16px;
+  --newt-font-sans: "Your Sans", system-ui, sans-serif;
+}
+```
+
+To change one surface only, set the same properties on a selector of that
+surface. A popout renders at the end of `<body>`, outside that selector, so
+pass the element to its `container` prop to keep it inside.
 
 ## Adding a token [#adding]
 

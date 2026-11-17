@@ -1,5 +1,10 @@
 /* newt-ui · Message Composer (the channel input bar) */
 
+/*
+ * The bar holds, in order: the add button, any leading controls, the field,
+ * and the send button. The field holds the input and any extra actions.
+ */
+
 .newt-composer {
   display: flex;
   align-items: center;
@@ -23,6 +28,7 @@
 
 .newt-composer__input {
   width: 100%;
+  min-width: 0;
   border: 0;
   background: none;
   outline: none;
@@ -32,6 +38,9 @@
 }
 .newt-composer__input::placeholder {
   color: var(--newt-text-muted);
+}
+.newt-composer__input:disabled {
+  cursor: not-allowed;
 }
 
 .newt-composer__button {
@@ -64,6 +73,43 @@
 /* The send control only lights up once there is something to send. */
 .newt-composer__send:not(:disabled) {
   color: var(--newt-brand);
+}
+
+/*
+ * `.newt-composer__button` is public: give it to any icon button you add to
+ * the bar or the field, so it matches the built-in ones.
+ */
+
+/*
+ * Narrow layout, for a phone. The bar loses its frame, the field becomes a
+ * pill, and the buttons beside the field become circles. Put
+ * `.newt-composer__button--narrow` on each button beside the field. Buttons
+ * inside the field keep the default look.
+ */
+.newt-composer--narrow {
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.newt-composer--narrow .newt-composer__field {
+  min-height: 40px;
+  padding-inline: 16px 4px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-input-elevated);
+}
+.newt-composer__button--narrow {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--newt-radius-full);
+  background: var(--newt-bg-input-elevated);
+}
+.newt-composer__button--narrow.newt-composer__send:not(:disabled) {
+  background: var(--newt-brand);
+  color: var(--newt-on-accent);
+}
+.newt-composer__button--narrow.newt-composer__send:not(:disabled):hover {
+  background: var(--newt-brand-hover);
 }
 
 .newt-composer__icon {

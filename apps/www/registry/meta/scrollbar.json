@@ -1,8 +1,14 @@
 {
   "name": "scrollbar",
   "title": "Scrollbar Utility",
-  "description": "Discord-styled scrollbars for any scrollable container, with an optional keyboard-focusable viewport.",
+  "description": "Discord-styled scrollbars for any scrollable container, with an overlay thumb, auto-hide and an optional keyboard-focusable viewport.",
+  "reactFiles": [
+    "ui/scrollbar.tsx",
+    "ui/scroll-area.tsx",
+    "ui/scrollbar-classes.ts"
+  ],
   "vueFiles": ["ScrollArea.vue", "index.ts"],
   "reactDemo": "scrollbar-demo",
-  "vueDemo": "ScrollbarDemo"
+  "vueDemo": "ScrollbarDemo",
+  "examples": ["overlay", "auto-hide"]
 }

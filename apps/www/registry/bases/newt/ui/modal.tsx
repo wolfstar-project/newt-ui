@@ -43,7 +43,7 @@ const ModalContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed start-1/2 top-1/2 z-[100] w-[440px] max-w-[90vw] -translate-y-1/2 translate-x-[calc(var(--newt-dir)*-50%)] rounded-lg bg-newt-bg-elevated shadow-elevation-high outline-none",
+        "fixed start-1/2 top-1/2 z-[100] w-[440px] max-w-[90vw] -translate-y-1/2 translate-x-[calc(var(--newt-dir)*-50%)] rounded-[var(--newt-radius-lg)] bg-newt-bg-elevated shadow-elevation-high outline-none",
         className
       )}
       {...props}
@@ -112,7 +112,7 @@ const ModalFooter = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex justify-end gap-2 rounded-b-lg bg-newt-bg-surface p-4",
+      "flex justify-end gap-2 rounded-b-[var(--newt-radius-lg)] bg-newt-bg-surface p-4",
       className
     )}
     {...props}

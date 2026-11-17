@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 
 const props = defineProps<{
   class?: HTMLAttributes["class"]
-  /** Accent colour of the left bar. Any CSS colour; defaults to the brand. */
+  /** Accent colour of the left bar. Any CSS colour; defaults to the border colour, like `V2Container`. */
   color?: string
 }>()
 
@@ -27,7 +27,7 @@ const style = computed<CSSProperties | undefined>(() =>
     :style="style"
     :class="
       cn(
-        'relative flex max-w-[var(--newt-embed-max-width)] overflow-hidden rounded-md border border-s-0 border-newt-embed-border bg-newt-embed-bg before:absolute before:inset-y-0 before:start-0 before:w-1 before:bg-[var(--newt-embed-color,var(--newt-brand))]',
+        'relative flex max-w-[var(--newt-embed-max-width)] overflow-hidden rounded-[var(--newt-radius-md)] border border-s-0 border-newt-embed-border bg-newt-embed-bg before:absolute before:inset-y-0 before:start-0 before:w-1 before:bg-[var(--newt-embed-color,var(--newt-border))]',
         props.class
       )
     "
