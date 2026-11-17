@@ -2,10 +2,26 @@
  * The command a docs page shows, spelled out for every package manager and,
  * for `newtui add`, for the shadcn CLIs too. Pure data: `PmTabs.astro` renders
  * every variant and CSS shows the one the reader picked.
+ *
+ * The list and the spellings follow npmx.dev, npm first: it is the default
+ * for a reader who has not picked one.
  */
 
-export const PACKAGE_MANAGERS = ["pnpm", "npm", "yarn", "bun"] as const
+export const PACKAGE_MANAGERS = [
+  "npm",
+  "pnpm",
+  "yarn",
+  "bun",
+  "deno",
+  "vlt",
+  "vp",
+  "nub",
+  "ni",
+  "upm",
+] as const
 export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
+
+export const DEFAULT_PACKAGE_MANAGER: PackageManager = "npm"
 
 export const CLIS = ["newtui", "shadcn"] as const
 export type Cli = (typeof CLIS)[number]
@@ -23,19 +39,43 @@ export interface CommandVariant {
   readonly text: string
 }
 
-const RUNNER = {
-  pnpm: "pnpm dlx",
-  npm: "npx",
-  yarn: "yarn dlx",
-  bun: "bunx",
-} satisfies Record<PackageManager, string>
+interface Spelling {
+  /** Downloads a package and runs its binary once. */
+  readonly run: string
+  /** Adds packages to the project; empty when the bare command does it. */
+  readonly install: string
+  /** Deno resolves npm packages through the `npm:` specifier. */
+  readonly npmPrefix: boolean
+}
 
-const INSTALLER = {
-  pnpm: "pnpm add",
-  npm: "npm install",
-  yarn: "yarn add",
-  bun: "bun add",
-} satisfies Record<PackageManager, string>
+const SPELLINGS = {
+  npm: { run: "npx", install: "npm install", npmPrefix: false },
+  pnpm: { run: "pnpm dlx", install: "pnpm add", npmPrefix: false },
+  yarn: { run: "yarn dlx", install: "yarn add", npmPrefix: false },
+  bun: { run: "bunx", install: "bun add", npmPrefix: false },
+  /* `-A`: the CLI reads the project and writes files. */
+  deno: { run: "deno run -A", install: "deno add", npmPrefix: true },
+  vlt: { run: "vlx", install: "vlt install", npmPrefix: false },
+  vp: { run: "vp dlx", install: "vp add", npmPrefix: false },
+  nub: { run: "nubx", install: "nub add", npmPrefix: false },
+  ni: { run: "nlx", install: "ni", npmPrefix: false },
+  upm: { run: "upx", install: "upm add", npmPrefix: false },
+} as const satisfies Record<PackageManager, Spelling>
+
+function specifier(pm: PackageManager, name: string): string {
+  return SPELLINGS[pm].npmPrefix ? `npm:${name}` : name
+}
+
+/** `pkg args...` run once: the first word is the package. */
+function runText(pm: PackageManager, cmd: string): string {
+  const [pkg, ...args] = cmd.split(" ")
+  return [SPELLINGS[pm].run, specifier(pm, pkg), ...args].join(" ")
+}
+
+function installText(pm: PackageManager, packages: string): string {
+  const names = packages.split(/\s+/).map((name) => specifier(pm, name))
+  return [SPELLINGS[pm].install, ...names].join(" ")
+}
 
 /** The namespace the registry publishes its own items under. */
 const NAMESPACE = "@newtui"
@@ -61,7 +101,7 @@ export function commandVariants(command: Command): readonly CommandVariant[] {
       pm,
       cli: "newtui",
       framework: "any",
-      text: `${INSTALLER[pm]} ${command.packages}`,
+      text: installText(pm, command.packages),
     }))
   }
   const items = shadcnItems(command.cmd)
@@ -70,7 +110,7 @@ export function commandVariants(command: Command): readonly CommandVariant[] {
       pm,
       cli: "newtui",
       framework: "any",
-      text: `${RUNNER[pm]} ${command.cmd}`,
+      text: runText(pm, command.cmd),
     }
     if (items === undefined) return [own]
     return [
@@ -79,13 +119,13 @@ export function commandVariants(command: Command): readonly CommandVariant[] {
         pm,
         cli: "shadcn",
         framework: "react",
-        text: `${RUNNER[pm]} shadcn@latest add ${items}`,
+        text: runText(pm, `shadcn@latest add ${items}`),
       },
       {
         pm,
         cli: "shadcn",
         framework: "vue",
-        text: `${RUNNER[pm]} shadcn-vue@latest add ${items}`,
+        text: runText(pm, `shadcn-vue@latest add ${items}`),
       },
     ]
   })

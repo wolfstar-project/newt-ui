@@ -5,6 +5,7 @@ import {
   PACKAGE_MANAGERS,
   type Command,
 } from "../../lib/commands"
+import { PACKAGE_MANAGER_MARKS } from "../../lib/pm-marks"
 
 /*
  * One command, every package manager. Pass `cmd` for a package to run once
@@ -13,9 +14,12 @@ import {
  *
  * Every variant is server-rendered and CSS shows one, keyed on `data-pm` and
  * `data-cli` on `<html>`. The pre-paint script writes both from
- * `localStorage`, so a reader who picks npm once sees npm in every command on
- * every page, with no flash of pnpm first. An `add` of newt/ui items also
+ * `localStorage`, so a reader who picks pnpm once sees pnpm in every command
+ * on every page, with no flash of npm first. An `add` of newt/ui items also
  * offers the shadcn CLIs, which install from the same registry.
+ *
+ * The menus are listboxes rather than `<select>`, because an option carries
+ * the package manager's mark. Focus moves onto the options while one is open.
  */
 type Props =
   | { readonly cmd: string; readonly install?: undefined }
@@ -29,6 +33,26 @@ const command: Command =
 
 const variants = commandVariants(command)
 const offersShadcn = variants.some((variant) => variant.cli === "shadcn")
+
+const pickers = [
+  ...(offersShadcn
+    ? [
+        {
+          pick: "cli",
+          label: "CLI",
+          options: CLIS.map((value) => ({ value, mark: undefined })),
+        },
+      ]
+    : []),
+  {
+    pick: "pm",
+    label: "Package manager",
+    options: PACKAGE_MANAGERS.map((value) => ({
+      value,
+      mark: PACKAGE_MANAGER_MARKS[value],
+    })),
+  },
+] as const
 ---
 
 <div class="command" data-clis={offersShadcn ? "both" : "one"}>
@@ -53,25 +77,76 @@ const offersShadcn = variants.some((variant) => variant.cli === "shadcn")
   }</div>
   <div class="command-pickers">
     {
-      offersShadcn && (
-        <label>
-          <span class="command-sr">CLI</span>
-          <select data-command-pick="cli">
-            {CLIS.map((cli) => (
-              <option value={cli}>{cli}</option>
+      pickers.map((picker) => (
+        <div class="command-picker" data-command-picker={picker.pick}>
+          <button
+            type="button"
+            class="command-picker-trigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-label={picker.label}
+          >
+            {picker.options.map((option) => (
+              <span
+                class="command-picker-current"
+                {...{ [`data-${picker.pick}`]: option.value }}
+              >
+                {option.mark && (
+                  <svg
+                    class="command-picker-mark"
+                    viewBox={option.mark.viewBox}
+                    aria-hidden="true"
+                    set:html={option.mark.body}
+                  />
+                )}
+                {option.value}
+              </span>
             ))}
-          </select>
-        </label>
-      )
+            <svg class="command-picker-chevron" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m6 9 6 6 6-6"
+              />
+            </svg>
+          </button>
+          <ul class="command-picker-list" role="listbox" aria-label={picker.label} hidden>
+            {picker.options.map((option) => (
+              <li
+                class="command-picker-option"
+                role="option"
+                tabindex="-1"
+                aria-selected="false"
+                data-value={option.value}
+              >
+                {option.mark && (
+                  <svg
+                    class="command-picker-mark"
+                    viewBox={option.mark.viewBox}
+                    aria-hidden="true"
+                    set:html={option.mark.body}
+                  />
+                )}
+                <span>{option.value}</span>
+                <svg class="command-picker-check" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M20 6 9 17l-5-5"
+                  />
+                </svg>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
     }
-    <label>
-      <span class="command-sr">Package manager</span>
-      <select data-command-pick="pm">
-        {PACKAGE_MANAGERS.map((pm) => (
-          <option value={pm}>{pm}</option>
-        ))}
-      </select>
-    </label>
   </div>
   <span class="command-sr" role="status" aria-live="polite" data-command-status
   ></span>
@@ -86,41 +161,155 @@ const offersShadcn = variants.some((variant) => variant.cli === "shadcn")
 }
 
 <script>
+  import { DEFAULT_PACKAGE_MANAGER } from "../../lib/commands"
+
   /*
    * Delegated listeners on the document, registered once: a module script
    * runs once per real load while Blume's client router swaps pages in place.
    */
   const KEYS = { pm: "newt-ui:pm", cli: "newt-ui:cli" } as const
+  const DEFAULTS = { pm: DEFAULT_PACKAGE_MANAGER, cli: "newtui" } as const
   type Pick = keyof typeof KEYS
 
   function isPick(value: string | undefined): value is Pick {
     return value === "pm" || value === "cli"
   }
 
-  /* Point every picker on the page at what `<html>` already shows. */
+  function current(pick: Pick): string {
+    return document.documentElement.dataset[pick] ?? DEFAULTS[pick]
+  }
+
+  /* Mark the chosen option in every menu on the page. */
   function syncPickers() {
-    const root = document.documentElement
-    for (const select of document.querySelectorAll<HTMLSelectElement>(
-      "[data-command-pick]"
+    for (const picker of document.querySelectorAll<HTMLElement>(
+      "[data-command-picker]"
     )) {
-      const pick = select.dataset.commandPick
+      const pick = picker.dataset.commandPicker
       if (!isPick(pick)) continue
-      const current = root.dataset[pick]
-      if (current !== undefined) select.value = current
+      for (const option of picker.querySelectorAll<HTMLElement>("[role=option]")) {
+        option.setAttribute(
+          "aria-selected",
+          String(option.dataset.value === current(pick))
+        )
+      }
     }
   }
 
-  document.addEventListener("change", (event) => {
-    if (!(event.target instanceof HTMLSelectElement)) return
-    const pick = event.target.dataset.commandPick
+  function options(picker: Element): HTMLElement[] {
+    return [...picker.querySelectorAll<HTMLElement>("[role=option]")]
+  }
+
+  function open(picker: HTMLElement) {
+    closeAll()
+    const trigger = picker.querySelector<HTMLElement>(".command-picker-trigger")
+    const list = picker.querySelector<HTMLElement>("[role=listbox]")
+    if (!trigger || !list) return
+    list.hidden = false
+    trigger.setAttribute("aria-expanded", "true")
+    const all = options(picker)
+    const chosen =
+      all.find((option) => option.getAttribute("aria-selected") === "true") ??
+      all[0]
+    chosen?.focus()
+  }
+
+  function close(picker: Element, restoreFocus: boolean) {
+    const trigger = picker.querySelector<HTMLElement>(".command-picker-trigger")
+    const list = picker.querySelector<HTMLElement>("[role=listbox]")
+    if (!trigger || !list || list.hidden) return
+    list.hidden = true
+    trigger.setAttribute("aria-expanded", "false")
+    if (restoreFocus) trigger.focus()
+  }
+
+  function closeAll() {
+    for (const picker of document.querySelectorAll("[data-command-picker]")) {
+      close(picker, false)
+    }
+  }
+
+  function choose(picker: HTMLElement, value: string) {
+    const pick = picker.dataset.commandPicker
     if (!isPick(pick)) return
-    document.documentElement.dataset[pick] = event.target.value
+    document.documentElement.dataset[pick] = value
     try {
-      localStorage.setItem(KEYS[pick], event.target.value)
+      localStorage.setItem(KEYS[pick], value)
     } catch {
       // Storage can be blocked; the choice still holds for this page.
     }
     syncPickers()
+    close(picker, true)
+  }
+
+  document.addEventListener("click", (event) => {
+    const target = event.target instanceof Element ? event.target : null
+    const picker = target?.closest<HTMLElement>("[data-command-picker]")
+    if (!picker) {
+      closeAll()
+      return
+    }
+    const option = target?.closest<HTMLElement>("[role=option]")
+    if (option?.dataset.value) {
+      choose(picker, option.dataset.value)
+      return
+    }
+    if (target?.closest(".command-picker-trigger")) {
+      const expanded =
+        picker
+          .querySelector(".command-picker-trigger")
+          ?.getAttribute("aria-expanded") === "true"
+      if (expanded) close(picker, true)
+      else open(picker)
+    }
+  })
+
+  document.addEventListener("keydown", (event) => {
+    const target = event.target instanceof HTMLElement ? event.target : null
+    const picker = target?.closest<HTMLElement>("[data-command-picker]")
+    if (!target || !picker) return
+
+    if (target.classList.contains("command-picker-trigger")) {
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault()
+        open(picker)
+      }
+      return
+    }
+    if (target.getAttribute("role") !== "option") return
+
+    const all = options(picker)
+    const index = all.indexOf(target)
+    const move = (to: number) => all[(to + all.length) % all.length]?.focus()
+    switch (event.key) {
+      case "ArrowDown":
+        event.preventDefault()
+        move(index + 1)
+        break
+      case "ArrowUp":
+        event.preventDefault()
+        move(index - 1)
+        break
+      case "Home":
+        event.preventDefault()
+        move(0)
+        break
+      case "End":
+        event.preventDefault()
+        move(all.length - 1)
+        break
+      case "Enter":
+      case " ":
+        event.preventDefault()
+        if (target.dataset.value) choose(picker, target.dataset.value)
+        break
+      case "Escape":
+        event.preventDefault()
+        close(picker, true)
+        break
+      case "Tab":
+        close(picker, false)
+        break
+    }
   })
 
   document.addEventListener("click", async (event) => {

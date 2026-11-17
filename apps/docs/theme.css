@@ -3621,7 +3621,7 @@ html[data-framework="vue"] [data-framework="react"] {
 
 /*
  * Every variant of a command is in the markup; these rules show one. Package
- * manager first (pnpm when `<html>` has no choice), then the CLI where the
+ * manager first (npm when `<html>` has no choice), then the CLI where the
  * block offers both, then the framework. Each later rule is more specific than
  * the one it overrides, so the order of the rules is not what decides.
  */
@@ -3649,6 +3649,26 @@ html[data-framework="vue"] [data-framework="react"] {
   font-size: 0.875rem;
   line-height: 1.5;
   white-space: pre;
+  scrollbar-width: none;
+}
+
+.command-lines::-webkit-scrollbar {
+  display: none;
+}
+
+/* On a phone the command takes the first row and the menus the second. */
+@media (max-width: 40rem) {
+  .command {
+    flex-wrap: wrap;
+  }
+
+  .command-lines {
+    flex-basis: calc(100% - 2.5rem);
+  }
+
+  .command-pickers {
+    margin-left: auto;
+  }
 }
 
 .command-line {
@@ -3663,11 +3683,17 @@ html[data-framework="vue"] [data-framework="react"] {
   user-select: none;
 }
 
-html:not([data-pm]) .command .command-line[data-pm="pnpm"],
-html[data-pm="pnpm"] .command .command-line[data-pm="pnpm"],
+html:not([data-pm]) .command .command-line[data-pm="npm"],
 html[data-pm="npm"] .command .command-line[data-pm="npm"],
+html[data-pm="pnpm"] .command .command-line[data-pm="pnpm"],
 html[data-pm="yarn"] .command .command-line[data-pm="yarn"],
-html[data-pm="bun"] .command .command-line[data-pm="bun"] {
+html[data-pm="bun"] .command .command-line[data-pm="bun"],
+html[data-pm="deno"] .command .command-line[data-pm="deno"],
+html[data-pm="vlt"] .command .command-line[data-pm="vlt"],
+html[data-pm="vp"] .command .command-line[data-pm="vp"],
+html[data-pm="nub"] .command .command-line[data-pm="nub"],
+html[data-pm="ni"] .command .command-line[data-pm="ni"],
+html[data-pm="upm"] .command .command-line[data-pm="upm"] {
   display: block;
 }
 
@@ -3692,15 +3718,134 @@ html[data-framework="vue"]
   gap: 0.35rem;
 }
 
-.command-pickers select {
-  padding: 0.3rem 0.5rem;
+.command-picker {
+  position: relative;
+}
+
+.command-picker-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 2rem;
+  padding: 0 0.5rem;
   border: 1px solid var(--newt-border);
   border-radius: var(--newt-radius-sm);
   background: var(--newt-bg-base);
+  color: var(--newt-text-secondary);
+  font-family: var(--newt-font-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color var(--newt-duration-fast) var(--newt-ease);
+}
+
+.command-picker-trigger:hover,
+.command-picker-trigger[aria-expanded="true"] {
   color: var(--newt-text-primary);
-  font: inherit;
+}
+
+/* The trigger holds every option's name; the chosen one shows. */
+.command-picker-current {
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+html:not([data-pm]) .command .command-picker-current[data-pm="npm"],
+html[data-pm="npm"] .command .command-picker-current[data-pm="npm"],
+html[data-pm="pnpm"] .command .command-picker-current[data-pm="pnpm"],
+html[data-pm="yarn"] .command .command-picker-current[data-pm="yarn"],
+html[data-pm="bun"] .command .command-picker-current[data-pm="bun"],
+html[data-pm="deno"] .command .command-picker-current[data-pm="deno"],
+html[data-pm="vlt"] .command .command-picker-current[data-pm="vlt"],
+html[data-pm="vp"] .command .command-picker-current[data-pm="vp"],
+html[data-pm="nub"] .command .command-picker-current[data-pm="nub"],
+html[data-pm="ni"] .command .command-picker-current[data-pm="ni"],
+html[data-pm="upm"] .command .command-picker-current[data-pm="upm"],
+html:not([data-cli="shadcn"])
+  .command
+  .command-picker-current[data-cli="newtui"],
+html[data-cli="shadcn"] .command .command-picker-current[data-cli="shadcn"] {
+  display: inline-flex;
+}
+
+.command-picker-mark {
+  flex-shrink: 0;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.command-picker-chevron {
+  width: 0.75rem;
+  height: 0.75rem;
+  transition: transform var(--newt-duration-fast) var(--newt-ease);
+}
+
+.command-picker-trigger[aria-expanded="true"] .command-picker-chevron {
+  transform: rotate(180deg);
+}
+
+.command-picker-list {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  z-index: 30;
+  min-width: 9rem;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  border: 1px solid var(--newt-border);
+  border-radius: var(--newt-radius-md);
+  background: var(--newt-bg-floating);
+  box-shadow: var(--newt-shadow-elevation-high);
+}
+
+.command-picker-list[hidden] {
+  display: none;
+}
+
+.command-picker-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.4rem 0.5rem;
+  border-radius: var(--newt-radius-sm);
+  color: var(--newt-text-secondary);
+  font-family: var(--newt-font-mono);
   font-size: 0.8125rem;
   cursor: pointer;
+}
+
+.command-picker-option > span {
+  flex: 1;
+}
+
+.command-picker-option:hover,
+.command-picker-option:focus {
+  outline: none;
+  background: var(--newt-bg-hover);
+  color: var(--newt-text-primary);
+}
+
+.command-picker-option[aria-selected="true"] {
+  color: var(--newt-text-primary);
+}
+
+.command-picker-check {
+  width: 0.875rem;
+  height: 0.875rem;
+  visibility: hidden;
+  color: var(--newt-brand);
+}
+
+.command-picker-option[aria-selected="true"] .command-picker-check {
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .command-picker-chevron {
+    transition: none;
+  }
 }
 
 .command-copy {
@@ -3730,7 +3875,7 @@ html[data-framework="vue"]
 }
 
 .command-copy:focus-visible,
-.command-pickers select:focus-visible {
+.command-picker-trigger:focus-visible {
   outline: 2px solid var(--newt-text-link);
   outline-offset: 2px;
 }

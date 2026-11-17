@@ -14,7 +14,8 @@
     var f = localStorage.getItem("newt-ui:framework")
     document.documentElement.dataset.framework = f === "vue" ? "vue" : "react"
     var pm = localStorage.getItem("newt-ui:pm")
-    if (pm === "npm" || pm === "yarn" || pm === "bun") {
+    /* npm is the default, so it needs no attribute. */
+    if (/^(pnpm|yarn|bun|deno|vlt|vp|nub|ni|upm)$/.test(pm || "")) {
       document.documentElement.dataset.pm = pm
     }
     if (localStorage.getItem("newt-ui:cli") === "shadcn") {
