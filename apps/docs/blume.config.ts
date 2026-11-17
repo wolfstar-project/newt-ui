@@ -125,11 +125,19 @@ const tokensNote: ComponentMarkdown = ({ props }) => {
   return `${meta.title} reads its colours, radii and motion from the \`--newt-*\` tokens. Override a token rather than editing the component.`
 }
 
-const PmTabsProps = z.object({ cmd: z.string() })
+const PmTabsProps = z.union([
+  z.object({ cmd: z.string() }),
+  z.object({ install: z.string() }),
+])
 
 const pmTabs: ComponentMarkdown = ({ props }) => {
   const parsed = PmTabsProps.safeParse(props)
-  return parsed.success ? `\`\`\`bash\nnpx ${parsed.data.cmd}\n\`\`\`` : null
+  if (!parsed.success) return null
+  const line =
+    "cmd" in parsed.data
+      ? `npx ${parsed.data.cmd}`
+      : `npm install ${parsed.data.install}`
+  return `\`\`\`bash\n${line}\n\`\`\``
 }
 
 const pathTabs: ComponentMarkdown = ({ children }) =>

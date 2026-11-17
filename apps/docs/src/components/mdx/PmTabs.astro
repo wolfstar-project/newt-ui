@@ -1,36 +1,353 @@
 ---
-import CodeBlock from "blume/components/content/CodeBlock.astro"
-import Tab from "blume/components/content/Tab.astro"
-import Tabs from "blume/components/content/Tabs.astro"
+import {
+  CLIS,
+  commandVariants,
+  PACKAGE_MANAGERS,
+  type Command,
+  type Framework,
+} from "../../lib/commands"
+import { PACKAGE_MANAGER_MARKS } from "../../lib/pm-marks"
 
 /*
- * One command, four package managers. `cmd` is the bare package and arguments
- * — `newtui@latest add button` — and each tab prefixes its own runner, so a
- * page never has to spell the same command out four times.
+ * One command, every package manager. Pass `cmd` for a package to run once
+ * (`newtui@latest add button`) or `install` for packages to add to the
+ * project (`zod`); each package manager gets its own spelling. Pass `only`
+ * when one framework's registry alone has the items.
  *
- * The groups share `syncKey="pm"`: a reader who picks pnpm once sees pnpm in
- * every command on the page, and nothing else on the page moves with it.
+ * Every variant is server-rendered and CSS shows one, keyed on `data-pm` and
+ * `data-cli` on `<html>`. The pre-paint script writes both from
+ * `localStorage`, so a reader who picks pnpm once sees pnpm in every command
+ * on every page, with no flash of npm first. An `add` of newt/ui items also
+ * offers the shadcn CLIs, which install from the same registry.
+ *
+ * The menus are listboxes rather than `<select>`, because an option carries
+ * the package manager's mark. Focus moves onto the options while one is open.
  */
-interface Props {
-  readonly cmd: string
-}
+type Props =
+  | {
+      readonly cmd: string
+      readonly only?: Framework
+      readonly install?: undefined
+    }
+  | { readonly install: string; readonly cmd?: undefined }
 
-const { cmd } = Astro.props
+const props = Astro.props
+const command: Command =
+  props.install === undefined
+    ? { _tag: "run", cmd: props.cmd, only: props.only }
+    : { _tag: "install", packages: props.install }
 
-const RUNNERS = [
-  ["pnpm", `pnpm dlx ${cmd}`],
-  ["npm", `npx ${cmd}`],
-  ["yarn", `yarn dlx ${cmd}`],
-  ["bun", `bunx ${cmd}`],
+const variants = commandVariants(command)
+const offersShadcn = variants.some((variant) => variant.cli === "shadcn")
+
+const pickers = [
+  ...(offersShadcn
+    ? [
+        {
+          pick: "cli",
+          label: "CLI",
+          options: CLIS.map((value) => ({ value, mark: undefined })),
+        },
+      ]
+    : []),
+  {
+    pick: "pm",
+    label: "Package manager",
+    options: PACKAGE_MANAGERS.map((value) => ({
+      value,
+      mark: PACKAGE_MANAGER_MARKS[value],
+    })),
+  },
 ] as const
 ---
 
-<Tabs hash={false} syncKey="pm">
-  {
-    RUNNERS.map(([label, command]) => (
-      <Tab title={label}>
-        <CodeBlock code={command} lang="bash" icons={false} />
-      </Tab>
+<div class="command" data-clis={offersShadcn ? "both" : "one"}>
+  <button type="button" class="command-copy" data-command-copy>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M9 2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V6.4a2 2 0 0 0-.6-1.4l-2.4-2.4A2 2 0 0 0 15.6 2H9Zm0 2h6v3a1 1 0 0 0 1 1h2v6H9V4ZM5 7a1 1 0 0 1 1 1v10h9a1 1 0 1 1 0 2H6a2 2 0 0 1-2-2V8a1 1 0 0 1 1-1Z"
+      ></path>
+    </svg>
+    <span class="command-sr" data-command-copy-label>Copy command</span>
+  </button>
+  <div class="command-lines">{
+    variants.map((variant) => (
+      <code
+        class="command-line"
+        data-pm={variant.pm}
+        data-cli={variant.cli}
+        data-framework={variant.framework === "any" ? undefined : variant.framework}
+      ><span class="command-prompt" aria-hidden="true">$ </span>{variant.text}</code>
     ))
+  }</div>
+  <div class="command-pickers">
+    {
+      pickers.map((picker) => (
+        <div class="command-picker" data-command-picker={picker.pick}>
+          <button
+            type="button"
+            class="command-picker-trigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
+            <span class="command-sr">{picker.label}: </span>
+            {picker.options.map((option) => (
+              <span
+                class="command-picker-current"
+                {...{ [`data-${picker.pick}`]: option.value }}
+              >
+                {option.mark && (
+                  <svg
+                    class="command-picker-mark"
+                    viewBox={option.mark.viewBox}
+                    aria-hidden="true"
+                    set:html={option.mark.body}
+                  />
+                )}
+                {option.value}
+              </span>
+            ))}
+            <svg class="command-picker-chevron" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m6 9 6 6 6-6"
+              />
+            </svg>
+          </button>
+          <ul class="command-picker-list" role="listbox" aria-label={picker.label} hidden>
+            {picker.options.map((option) => (
+              <li
+                class="command-picker-option"
+                role="option"
+                tabindex="-1"
+                aria-selected="false"
+                data-value={option.value}
+              >
+                {option.mark && (
+                  <svg
+                    class="command-picker-mark"
+                    viewBox={option.mark.viewBox}
+                    aria-hidden="true"
+                    set:html={option.mark.body}
+                  />
+                )}
+                <span>{option.value}</span>
+                <svg class="command-picker-check" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M20 6 9 17l-5-5"
+                  />
+                </svg>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+  <span class="command-sr" role="status" aria-live="polite" data-command-status
+  ></span>
+</div>
+{
+  offersShadcn && (
+    <p class="command-hint">
+      The shadcn CLI needs the <code>@newtui</code> registry in your{" "}
+      <code>components.json</code>. <a href="/docs/shadcn">Set it up</a>.
+    </p>
+  )
+}
+
+<script>
+  import { DEFAULT_PACKAGE_MANAGER } from "../../lib/commands"
+
+  /*
+   * Delegated listeners on the document, registered once: a module script
+   * runs once per real load while Blume's client router swaps pages in place.
+   */
+  const KEYS = { pm: "newt-ui:pm", cli: "newt-ui:cli" } as const
+  const DEFAULTS = { pm: DEFAULT_PACKAGE_MANAGER, cli: "newtui" } as const
+  type Pick = keyof typeof KEYS
+
+  function isPick(value: string | undefined): value is Pick {
+    return value === "pm" || value === "cli"
   }
-</Tabs>
+
+  function current(pick: Pick): string {
+    return document.documentElement.dataset[pick] ?? DEFAULTS[pick]
+  }
+
+  /* Mark the chosen option in every menu on the page. */
+  function syncPickers() {
+    for (const picker of document.querySelectorAll<HTMLElement>(
+      "[data-command-picker]"
+    )) {
+      const pick = picker.dataset.commandPicker
+      if (!isPick(pick)) continue
+      for (const option of picker.querySelectorAll<HTMLElement>("[role=option]")) {
+        option.setAttribute(
+          "aria-selected",
+          String(option.dataset.value === current(pick))
+        )
+      }
+    }
+  }
+
+  function options(picker: Element): HTMLElement[] {
+    return [...picker.querySelectorAll<HTMLElement>("[role=option]")]
+  }
+
+  function open(picker: HTMLElement) {
+    closeAll()
+    const trigger = picker.querySelector<HTMLElement>(".command-picker-trigger")
+    const list = picker.querySelector<HTMLElement>("[role=listbox]")
+    if (!trigger || !list) return
+    list.hidden = false
+    trigger.setAttribute("aria-expanded", "true")
+    const all = options(picker)
+    const chosen =
+      all.find((option) => option.getAttribute("aria-selected") === "true") ??
+      all[0]
+    chosen?.focus()
+  }
+
+  function close(picker: Element, restoreFocus: boolean) {
+    const trigger = picker.querySelector<HTMLElement>(".command-picker-trigger")
+    const list = picker.querySelector<HTMLElement>("[role=listbox]")
+    if (!trigger || !list || list.hidden) return
+    list.hidden = true
+    trigger.setAttribute("aria-expanded", "false")
+    if (restoreFocus) trigger.focus()
+  }
+
+  function closeAll() {
+    for (const picker of document.querySelectorAll("[data-command-picker]")) {
+      close(picker, false)
+    }
+  }
+
+  function choose(picker: HTMLElement, value: string) {
+    const pick = picker.dataset.commandPicker
+    if (!isPick(pick)) return
+    document.documentElement.dataset[pick] = value
+    try {
+      localStorage.setItem(KEYS[pick], value)
+    } catch {
+      // Storage can be blocked; the choice still holds for this page.
+    }
+    syncPickers()
+    close(picker, true)
+  }
+
+  document.addEventListener("click", (event) => {
+    const target = event.target instanceof Element ? event.target : null
+    const picker = target?.closest<HTMLElement>("[data-command-picker]")
+    if (!picker) {
+      closeAll()
+      return
+    }
+    const option = target?.closest<HTMLElement>("[role=option]")
+    if (option?.dataset.value) {
+      choose(picker, option.dataset.value)
+      return
+    }
+    if (target?.closest(".command-picker-trigger")) {
+      const expanded =
+        picker
+          .querySelector(".command-picker-trigger")
+          ?.getAttribute("aria-expanded") === "true"
+      if (expanded) close(picker, true)
+      else open(picker)
+    }
+  })
+
+  document.addEventListener("keydown", (event) => {
+    const target = event.target instanceof HTMLElement ? event.target : null
+    const picker = target?.closest<HTMLElement>("[data-command-picker]")
+    if (!target || !picker) return
+
+    if (target.classList.contains("command-picker-trigger")) {
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault()
+        open(picker)
+      }
+      return
+    }
+    if (target.getAttribute("role") !== "option") return
+
+    const all = options(picker)
+    const index = all.indexOf(target)
+    const move = (to: number) => all[(to + all.length) % all.length]?.focus()
+    switch (event.key) {
+      case "ArrowDown":
+        event.preventDefault()
+        move(index + 1)
+        break
+      case "ArrowUp":
+        event.preventDefault()
+        move(index - 1)
+        break
+      case "Home":
+        event.preventDefault()
+        move(0)
+        break
+      case "End":
+        event.preventDefault()
+        move(all.length - 1)
+        break
+      case "Enter":
+      case " ":
+        event.preventDefault()
+        if (target.dataset.value) choose(picker, target.dataset.value)
+        break
+      case "Escape":
+        event.preventDefault()
+        close(picker, true)
+        break
+      case "Tab":
+        close(picker, false)
+        break
+    }
+  })
+
+  document.addEventListener("click", async (event) => {
+    const target = event.target instanceof Element ? event.target : null
+    const button = target?.closest<HTMLButtonElement>("[data-command-copy]")
+    if (!button) return
+    const block = button.closest(".command")
+    const line = [
+      ...(block?.querySelectorAll<HTMLElement>(".command-line") ?? []),
+    ].find((element) => element.checkVisibility())
+    const text = line?.textContent?.replace(/^\$ /, "") ?? ""
+    const label = button.querySelector<HTMLElement>(
+      "[data-command-copy-label]"
+    )
+    const status = block?.querySelector<HTMLElement>("[data-command-status]")
+    let message: string
+    try {
+      await navigator.clipboard.writeText(text)
+      message = "Copied"
+    } catch {
+      message = "Copy failed"
+    }
+    button.dataset.copied = message === "Copied" ? "true" : "false"
+    if (label) label.textContent = message
+    if (status) status.textContent = `Command ${message.toLowerCase()}`
+    setTimeout(() => {
+      delete button.dataset.copied
+      if (label) label.textContent = "Copy command"
+      if (status) status.textContent = ""
+    }, 1600)
+  })
+
+  syncPickers()
+  document.addEventListener("astro:page-load", syncPickers)
+</script>

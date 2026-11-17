@@ -1,0 +1,85 @@
+---
+title: "shadcn CLI"
+description: "Install newt/ui components with the shadcn or shadcn-vue CLI, in a project that already uses shadcn/ui."
+---
+
+The newt/ui registry uses the shadcn registry schema. The `shadcn` CLI for
+React and the `shadcn-vue` CLI for Vue install from it directly. You do not
+need `newtui` for this.
+
+Use this path when your project already runs `shadcn init`. In a new project,
+[`newtui init`](/docs/installation) sets up the same files in one step.
+
+## Add the registry [#registry]
+
+Add a `registries` entry to the `components.json` that `shadcn init` wrote.
+The name `@newtui` is the namespace every newt/ui item uses for the items it
+depends on, so keep that name.
+
+<div data-framework="react">
+
+```json title="components.json"
+{
+  "registries": {
+    "@newtui": "https://newtui.dev/r/{name}.json"
+  }
+}
+```
+
+</div>
+
+<div data-framework="vue">
+
+```json title="components.json"
+{
+  "registries": {
+    "@newtui": "https://newtui.dev/vue/r/{name}.json"
+  }
+}
+```
+
+</div>
+
+## Add the tokens [#tokens]
+
+Every component reads the `--newt-*` tokens. Add them once. The CLI appends
+the tokens and their Tailwind CSS v4 utilities to your global stylesheet.
+
+<div data-framework="react">
+
+<PmTabs cmd="shadcn@latest add @newtui/theme-newt" />
+
+</div>
+
+<div data-framework="vue">
+
+<PmTabs cmd="shadcn-vue@latest add @newtui/theme-newt" />
+
+</div>
+
+## Add components [#add]
+
+Add a component by its name in the `@newtui` namespace. The CLI also adds the
+newt/ui components it depends on, and rewrites their imports to your aliases.
+
+<div data-framework="react">
+
+<PmTabs cmd="shadcn@latest add @newtui/button @newtui/avatar-group" />
+
+</div>
+
+<div data-framework="vue">
+
+<PmTabs cmd="shadcn-vue@latest add @newtui/button @newtui/avatar-group" />
+
+</div>
+
+Each component page shows this command too. Select **shadcn** in the CLI menu
+of its install command.
+
+## What stays the same [#same]
+
+- The components import `cn` from your `utils` alias. `shadcn init` already
+  wrote it.
+- `newtui` and `shadcn` read the same `components.json`. You can use both CLIs
+  in one project.

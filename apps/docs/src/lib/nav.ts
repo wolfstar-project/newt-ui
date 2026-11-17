@@ -38,6 +38,7 @@ export const GUIDES: readonly NavGroup[] = [
       { href: "/docs/rtl", label: "RTL" },
       { href: "/docs/translating-labels", label: "Translating labels" },
       { href: "/docs/cli", label: "CLI" },
+      { href: "/docs/shadcn", label: "shadcn CLI" },
       { href: "/docs/javascript", label: "JavaScript" },
       { href: "/docs/html-css", label: "HTML & CSS" },
       { href: "/docs/using-with-ai", label: "Using with AI" },
