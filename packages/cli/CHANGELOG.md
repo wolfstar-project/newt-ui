@@ -1,5 +1,13 @@
 # newtui
 
+## 2.9.1
+
+### Patch Changes
+
+- [#113](https://github.com/wolfstar-project/newt-ui/pull/113) [`36296fd`](https://github.com/wolfstar-project/newt-ui/commit/36296fdea68bac87208e76f7e7b80795447e6ef8) - `add` now rewrites `@/registry/bases/newt/...` imports in Vue items. The Vue registry publishes its imports in that form, so the shadcn-vue CLI can install newt/ui items too.
+
+  If `add` writes a Vue item with an unresolved `@/registry/bases/newt/ui/...` import, your `newtui` is older than this release. Run `newtui@latest`.
+
 ## 2.9.0
 
 ### Minor Changes
