@@ -13,7 +13,7 @@
     "typecheck": "blume check"
   },
   "dependencies": {
-    "@astrojs/vue": "^7.1.5",
+    "@astrojs/vue": "^7.1.6",
     "@nanostores/react": "^2.0.1",
     "@nanostores/vue": "^1.1.0",
     "blume": "^2.2.7",
@@ -25,9 +25,9 @@
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
-    "astro": "^7.4.11",
+    "astro": "^7.4.13",
     "takumi-js": "2.20.0",
     "typescript": "^5.7.2",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.1"
   }
 }
